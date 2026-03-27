@@ -1,0 +1,41 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Job {
+  id          String     @id @default(cuid())
+  sourceId    String
+  source      String
+  title       String
+  company     String
+  location    String?
+  description String
+  url         String
+  jobType     String?
+  salary      String?
+  contentHash String
+  fetchedAt   DateTime   @default(now())
+  createdAt   DateTime   @default(now())
+  chunks      JobChunk[]
+
+  @@unique([source, sourceId])
+  @@index([source, contentHash])
+}
+
+model JobChunk {
+  id               String   @id @default(cuid())
+  jobId            String
+  chunkText        String
+  embeddingModel   String
+  embeddingVersion Int      @default(1)
+  createdAt        DateTime @default(now())
+  job              Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+}
