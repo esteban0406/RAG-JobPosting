@@ -1,5 +1,12 @@
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+  ServiceUnavailableException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GoogleGenAI } from '@google/genai';
 import type { Cache } from 'cache-manager';
@@ -10,7 +17,7 @@ const EMBEDDING_DIMENSIONS = 768;
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const BATCH_DELAY_MS = 2000;
 const MAX_RETRIES = 3;
-const RETRY_BASE_MS = 10_000; // 10s, 20s, 40s with jitter
+const RETRY_BASE_MS = 10_000;
 
 @Injectable()
 export class EmbeddingService {
@@ -60,25 +67,47 @@ export class EmbeddingService {
 
       return vector;
     } catch (err) {
-      const isQuotaError = this.isRateLimitError(err);
+      if (err instanceof HttpException) throw err;
 
-      if (isQuotaError && attempt < MAX_RETRIES) {
-        const jitter = Math.random() * 2000;
-        const delay = RETRY_BASE_MS * Math.pow(2, attempt) + jitter;
-        this.logger.warn(
-          `Rate limited by Gemini API, retrying in ${Math.round(delay / 1000)}s (attempt ${attempt + 1}/${MAX_RETRIES})`,
+      if (this.isQuotaError(err)) {
+        if (this.isDailyQuotaExhausted(err)) {
+          this.logger.error(`Gemini daily embedding quota exhausted`);
+          throw new ServiceUnavailableException(
+            'The embedding service has reached its daily request limit. Please try again tomorrow.',
+          );
+        }
+
+        if (attempt < MAX_RETRIES) {
+          const jitter = Math.random() * 2000;
+          const delay = RETRY_BASE_MS * Math.pow(2, attempt) + jitter;
+          this.logger.warn(
+            `Embedding rate limited, retrying in ${Math.round(delay / 1000)}s (attempt ${attempt + 1}/${MAX_RETRIES})`,
+          );
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          return this.embedWithRetry(text, attempt + 1);
+        }
+
+        this.logger.error(
+          `Embedding rate limit exceeded after ${MAX_RETRIES} retries`,
         );
-        await new Promise((resolve) => setTimeout(resolve, delay));
-        return this.embedWithRetry(text, attempt + 1);
+        throw new HttpException(
+          'The embedding service is temporarily rate limited. Please try again in a moment.',
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
       }
 
       throw err;
     }
   }
 
-  private isRateLimitError(err: unknown): boolean {
+  private isQuotaError(err: unknown): boolean {
     const msg = err instanceof Error ? err.message : String(err);
     return msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED');
+  }
+
+  private isDailyQuotaExhausted(err: unknown): boolean {
+    const msg = err instanceof Error ? err.message : String(err);
+    return msg.includes('PerDay') || msg.includes('per_day');
   }
 
   async embedBatch(texts: string[]): Promise<number[][]> {

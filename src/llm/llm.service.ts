@@ -1,4 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  ServiceUnavailableException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GoogleGenAI } from '@google/genai';
 
@@ -50,6 +56,34 @@ export class LlmService {
 
       return text;
     } catch (err) {
+      if (this.isQuotaError(err)) {
+        if (this.isDailyQuotaExhausted(err)) {
+          this.logger.error(
+            `Gemini daily quota exhausted for model ${this.model}`,
+          );
+          throw new ServiceUnavailableException(
+            'The AI service has reached its daily request limit. Please try again tomorrow.',
+          );
+        }
+
+        if (attempt < MAX_RETRIES) {
+          const delay = this.getRetryDelay(err, attempt);
+          this.logger.warn(
+            `LLM rate limited (attempt ${attempt + 1}/${MAX_RETRIES}), retrying in ${Math.round(delay / 1000)}s`,
+          );
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          return this.completeWithRetry(prompt, options, attempt + 1);
+        }
+
+        this.logger.error(
+          `LLM rate limit exceeded after ${MAX_RETRIES} retries`,
+        );
+        throw new HttpException(
+          'The AI service is temporarily rate limited. Please try again in a moment.',
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
+      }
+
       if (this.isTransientError(err) && attempt < MAX_RETRIES) {
         const delay = this.getRetryDelay(err, attempt);
         this.logger.warn(
@@ -58,8 +92,29 @@ export class LlmService {
         await new Promise((resolve) => setTimeout(resolve, delay));
         return this.completeWithRetry(prompt, options, attempt + 1);
       }
-      throw err;
+
+      this.logger.error(`LLM request failed: ${(err as Error).message}`);
+      throw new ServiceUnavailableException(
+        'The AI service is temporarily unavailable.',
+      );
     }
+  }
+
+  private isQuotaError(err: unknown): boolean {
+    const msg = err instanceof Error ? err.message : String(err);
+    return msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED');
+  }
+
+  private isDailyQuotaExhausted(err: unknown): boolean {
+    const msg = err instanceof Error ? err.message : String(err);
+    return msg.includes('PerDay') || msg.includes('per_day');
+  }
+
+  private isTransientError(err: unknown): boolean {
+    const msg = err instanceof Error ? err.message : String(err);
+    return (
+      msg.includes('503') || msg.includes('UNAVAILABLE') || msg.includes('500')
+    );
   }
 
   private getRetryDelay(err: unknown, attempt: number): number {
@@ -83,16 +138,5 @@ export class LlmService {
       const text = chunk.text;
       if (text) yield text;
     }
-  }
-
-  private isTransientError(err: unknown): boolean {
-    const msg = err instanceof Error ? err.message : String(err);
-    return (
-      msg.includes('429') ||
-      msg.includes('RESOURCE_EXHAUSTED') ||
-      msg.includes('503') ||
-      msg.includes('UNAVAILABLE') ||
-      msg.includes('500')
-    );
   }
 }
