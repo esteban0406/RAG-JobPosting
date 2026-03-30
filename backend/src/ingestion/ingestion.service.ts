@@ -135,6 +135,32 @@ export class IngestionService {
     return createHash('sha256').update(content).digest('hex');
   }
 
+  async exportToCsv(): Promise<{ csv: string; count: number }> {
+    const jobs = await this.jobRepo.findAll();
+    const headers = [
+      'id',
+      'sourceId',
+      'source',
+      'title',
+      'company',
+      'location',
+      'description',
+      'url',
+      'jobType',
+      'salary',
+      'fetchedAt',
+      'createdAt',
+    ];
+    const escape = (v: unknown): string => {
+      const s = v == null ? '' : String(v);
+      return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const rows = jobs.map((j) =>
+      headers.map((h) => escape(j[h as keyof typeof j])).join(','),
+    );
+    return { csv: [headers.join(','), ...rows].join('\n'), count: jobs.length };
+  }
+
   private buildChunkText(job: RawJobDto): string {
     const desc = job.description.slice(0, MAX_DESCRIPTION_CHARS);
     return `${job.title} — ${job.company} — ${desc}`;

@@ -7,6 +7,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from './auth/auth.module.js';
 import { validate } from './config/config.schema.js';
 import { EmbeddingModule } from './embedding/embedding.module.js';
+import { EvalModule } from './eval/eval.module.js';
 import { HealthModule } from './health/health.module.js';
 import { IngestionModule } from './ingestion/ingestion.module.js';
 import { LlmModule } from './llm/llm.module.js';
@@ -42,6 +43,7 @@ import { StorageModule } from './storage/storage.module.js';
     QueryModule,
     AuthModule,
     HealthModule,
+    EvalModule,
   ],
 })
 export class AppModule {}

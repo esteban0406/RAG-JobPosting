@@ -1,11 +1,14 @@
 import {
   Controller,
   Post,
+  Get,
   HttpCode,
   HttpStatus,
   Logger,
   UseGuards,
+  Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { JwtGuard } from '../auth/guards/jwt.guard.js';
 import { IngestionService } from './ingestion.service.js';
 
@@ -32,5 +35,15 @@ export class IngestionController {
       });
 
     return { message: 'Ingestion started' };
+  }
+
+  @Get('export')
+  async export(@Res() res: Response) {
+    const { csv, count } = await this.ingestionService.exportToCsv();
+    const filename = `jobs_export_${new Date().toISOString().slice(0, 10)}.csv`;
+    this.logger.log(`CSV export: ${count} jobs`);
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send(csv);
   }
 }
