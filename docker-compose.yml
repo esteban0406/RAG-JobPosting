@@ -16,5 +16,20 @@ services:
       timeout: 5s
       retries: 5
 
+  embedding-server:
+    build: ./embedding-server
+    container_name: job-posting-embeddings
+    ports:
+      - '8000:8000'
+    volumes:
+      - huggingface_cache:/root/.cache/huggingface
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:8000/docs || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
 volumes:
   postgres_data:
+  huggingface_cache:
