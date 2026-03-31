@@ -23,6 +23,12 @@ export interface QueryDefinition {
   keyword_groups?: string[][];
   /** Warn if auto-labeler finds fewer relevant jobs than this */
   min_relevant: number;
+  /**
+   * Cap the labeled set at this many jobs (sorted by match score, title > description).
+   * Prevents recall@K from becoming trivially low when many jobs match a broad query.
+   * Defaults to 20 when not set.
+   */
+  max_relevant?: number;
 }
 
 export const QUERIES: QueryDefinition[] = [
@@ -32,10 +38,7 @@ export const QUERIES: QueryDefinition[] = [
     category: 'exact',
     query: 'Senior Software Developer',
     expected_keywords: [],
-    keyword_groups: [
-      ['senior'],
-      ['software developer', 'software engineer'],
-    ],
+    keyword_groups: [['senior'], ['software developer', 'software engineer']],
     min_relevant: 3,
   },
   {
@@ -54,10 +57,7 @@ export const QUERIES: QueryDefinition[] = [
     category: 'exact',
     query: 'Python backend jobs',
     expected_keywords: [],
-    keyword_groups: [
-      ['python'],
-      ['backend', 'back-end', 'server', 'api'],
-    ],
+    keyword_groups: [['python'], ['backend', 'back-end', 'server', 'api']],
     min_relevant: 2,
   },
 
@@ -66,14 +66,22 @@ export const QUERIES: QueryDefinition[] = [
     id: 'q4',
     category: 'semantic',
     query: 'entry level developer jobs',
-    expected_keywords: ['junior', 'entry level', 'graduate', 'trainee'],
+    expected_keywords: [],
+    keyword_groups: [
+      ['junior', 'entry level', 'graduate', 'trainee'],
+      ['developer', 'engineer', 'programmer'],
+    ],
     min_relevant: 2,
   },
   {
     id: 'q5',
     category: 'semantic',
     query: 'jobs for React developers',
-    expected_keywords: ['react', 'reactjs', 'react.js'],
+    expected_keywords: [],
+    keyword_groups: [
+      ['react', 'reactjs', 'react.js'],
+      ['developer', 'engineer', 'frontend', 'front-end'],
+    ],
     min_relevant: 2,
   },
   {
@@ -94,11 +102,9 @@ export const QUERIES: QueryDefinition[] = [
     category: 'filtering',
     query: 'remote software jobs',
     expected_keywords: [],
-    keyword_groups: [
-      ['remote'],
-      ['developer', 'engineer', 'software'],
-    ],
+    keyword_groups: [['remote'], ['developer', 'engineer', 'software']],
     min_relevant: 3,
+    max_relevant: 300,
   },
   {
     id: 'q8',
@@ -106,6 +112,7 @@ export const QUERIES: QueryDefinition[] = [
     query: 'jobs in Berlin',
     expected_keywords: ['berlin'],
     min_relevant: 2,
+    max_relevant: 300,
   },
   {
     id: 'q9',
@@ -124,9 +131,20 @@ export const QUERIES: QueryDefinition[] = [
     id: 'q10',
     category: 'aggregation',
     query: 'most common programming language',
-    // OR only — the point is breadth across different languages
-    expected_keywords: ['javascript', 'python', 'java', 'typescript', 'golang', 'rust', 'c#', 'ruby'],
+    // OR only — the point is breadth across different languages; raise cap so
+    // recall isn't crushed by a large denominator on a legitimately broad query
+    expected_keywords: [
+      'javascript',
+      'python',
+      'java',
+      'typescript',
+      'golang',
+      'rust',
+      'c#',
+      'ruby',
+    ],
     min_relevant: 5,
+    max_relevant: 40,
   },
   {
     id: 'q11',
@@ -136,6 +154,7 @@ export const QUERIES: QueryDefinition[] = [
     keyword_groups: [
       ['developer', 'engineer', 'architect', 'devops', 'data scientist'],
       ['senior', 'lead', 'principal', 'staff'],
+      ['javascript', 'python', 'java', 'react', 'cloud', 'aws', 'kubernetes'],
     ],
     min_relevant: 5,
   },
@@ -148,7 +167,7 @@ export const QUERIES: QueryDefinition[] = [
     expected_keywords: [],
     keyword_groups: [
       ['developer', 'engineer'],
-      ['senior', 'mid', 'lead', 'full stack', 'fullstack'],
+      ['senior', 'mid-level', 'lead', 'full stack', 'fullstack'],
     ],
     min_relevant: 3,
   },
@@ -156,7 +175,131 @@ export const QUERIES: QueryDefinition[] = [
     id: 'q13',
     category: 'noisy',
     query: 'coding jobs for beginners',
-    expected_keywords: ['junior', 'entry level', 'beginner', 'trainee', 'apprentice'],
+    expected_keywords: [],
+    keyword_groups: [
+      ['junior', 'entry level', 'beginner', 'trainee', 'apprentice'],
+      ['developer', 'engineer', 'programmer'],
+    ],
     min_relevant: 2,
+  },
+
+  // F. Marketing & Communications
+  {
+    id: 'q14',
+    category: 'exact',
+    query: 'Digital Marketing Manager',
+    expected_keywords: [
+      'digital marketing manager',
+      'online marketing manager',
+      'head of marketing',
+      'marketing director',
+      'marketing leiter',
+    ],
+    min_relevant: 3,
+  },
+  {
+    id: 'q15',
+    category: 'exact',
+    query: 'Copywriter or Content Writer jobs',
+    expected_keywords: ['copywriter', 'content writer', 'texter', 'redakteur'],
+    min_relevant: 2,
+  },
+  {
+    id: 'q16',
+    category: 'semantic',
+    query: 'social media marketing jobs',
+    expected_keywords: [],
+    keyword_groups: [
+      ['social media', 'instagram', 'facebook', 'linkedin', 'tiktok'],
+      [
+        'social media manager',
+        'social media specialist',
+        'community manager',
+        'content creator',
+      ],
+    ],
+    min_relevant: 3,
+  },
+  {
+    id: 'q17',
+    category: 'filtering',
+    query: 'remote marketing jobs',
+    expected_keywords: [],
+    keyword_groups: [
+      ['marketing', 'content', 'seo', 'brand'],
+      ['remote', 'homeoffice', 'home office'],
+    ],
+    min_relevant: 2,
+    max_relevant: 300,
+  },
+  {
+    id: 'q18',
+    category: 'noisy',
+    query: 'jobs promoting products online',
+    expected_keywords: [],
+    keyword_groups: [
+      ['marketing', 'brand', 'campaign', 'advertising'],
+      ['online', 'digital', 'social media', 'content'],
+    ],
+    min_relevant: 3,
+    max_relevant: 40,
+  },
+
+  // G. Customer Support & Administration
+  {
+    id: 'q19',
+    category: 'exact',
+    query: 'Customer Service Representative',
+    expected_keywords: [],
+    keyword_groups: [
+      [
+        'customer service',
+        'customer support',
+        'kundenservice',
+        'kundenbetreuer',
+      ],
+      ['agent', 'representative', 'specialist'],
+    ],
+    min_relevant: 2,
+  },
+  {
+    id: 'q20',
+    category: 'exact',
+    query: 'Office Administration jobs',
+    expected_keywords: [
+      'büroassistenz',
+      'office manager',
+      'office assistant',
+      'sachbearbeiter',
+      'verwaltungsassistent',
+    ],
+    min_relevant: 2,
+  },
+  {
+    id: 'q21',
+    category: 'semantic',
+    query: 'IT helpdesk or technical support roles',
+    expected_keywords: [],
+    keyword_groups: [
+      ['it support', 'helpdesk', 'help desk', 'first level', 'service desk'],
+      ['techniker', 'specialist', 'engineer', 'mitarbeiter'],
+    ],
+    min_relevant: 2,
+  },
+  {
+    id: 'q22',
+    category: 'filtering',
+    query: 'customer support jobs in Berlin',
+    expected_keywords: [],
+    keyword_groups: [
+      [
+        'customer support',
+        'customer service',
+        'kundenservice',
+        'kundenbetreuer',
+      ],
+      ['berlin'],
+    ],
+    min_relevant: 1,
   },
 ];
