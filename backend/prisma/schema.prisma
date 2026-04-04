@@ -18,7 +18,8 @@ model Job {
   description String
   url         String
   jobType     String?
-  salary      String?
+  minSalary   Int?
+  maxSalary   Int?
   contentHash String
   fetchedAt   DateTime   @default(now())
   createdAt   DateTime   @default(now())

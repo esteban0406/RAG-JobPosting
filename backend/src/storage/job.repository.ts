@@ -11,7 +11,8 @@ export interface UpsertJobDto {
   description: string;
   url: string;
   jobType?: string;
-  salary?: string;
+  minSalary?: number;
+  maxSalary?: number;
   contentHash: string;
 }
 

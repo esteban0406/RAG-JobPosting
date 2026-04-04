@@ -7,7 +7,8 @@ export interface RawJobDto {
   description: string;
   url: string;
   jobType?: string;
-  salary?: string;
+  minSalary?: number;
+  maxSalary?: number;
 }
 
 export interface JobProvider {

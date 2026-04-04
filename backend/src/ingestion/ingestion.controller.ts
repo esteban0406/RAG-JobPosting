@@ -18,7 +18,7 @@ export class IngestionController {
 
   constructor(private readonly ingestionService: IngestionService) {}
 
-  @UseGuards(JwtGuard)
+  //@UseGuards(JwtGuard)
   @Post('trigger')
   @HttpCode(HttpStatus.ACCEPTED)
   trigger() {

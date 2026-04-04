@@ -4,8 +4,11 @@ import PQueue from 'p-queue';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { JobRepository } from '../storage/job.repository.js';
 import { VectorRepository } from '../storage/vector.repository.js';
-import { ArbeitnowProvider } from './providers/arbeitnow.provider.js';
-import { RawJobDto } from './dto/raw-job.dto.js';
+import { AdzunaProvider } from './providers/adzuna.provider.js';
+import { RemotiveProvider } from './providers/remotive.provider.js';
+import { WebNinjaProvider } from './providers/webninja.provider.js';
+import { JobicyProvider } from './providers/jobicy.provider.js';
+import { JobProvider, RawJobDto } from './dto/raw-job.dto.js';
 
 const MAX_DESCRIPTION_CHARS = 2000;
 
@@ -14,13 +17,18 @@ export class IngestionService {
   private readonly logger = new Logger(IngestionService.name);
   private isRunning = false;
   private readonly queue: PQueue;
+  private readonly providers: JobProvider[];
 
   constructor(
-    private readonly arbeitnow: ArbeitnowProvider,
+    adzuna: AdzunaProvider,
+    remotive: RemotiveProvider,
+    webninja: WebNinjaProvider,
+    jobicy: JobicyProvider,
     private readonly jobRepo: JobRepository,
     private readonly vectorRepo: VectorRepository,
     private readonly embeddingService: EmbeddingService,
   ) {
+    this.providers = [jobicy];
     const isGemini = embeddingService.provider === 'gemini';
     // Local model: no rate limits, run concurrently. Gemini: 30 RPM (2s interval)
     this.queue = new PQueue(
@@ -43,66 +51,70 @@ export class IngestionService {
 
     try {
       this.logger.log('Starting ingestion run');
-      const jobs = await this.fetchAllPages();
-      fetched = jobs.length;
-      this.logger.log(`Fetched ${fetched} jobs from Arbeitnow`);
 
-      for (const raw of jobs) {
-        const contentHash = this.hashJob(raw);
-        const existing = await this.jobRepo.findByContentHash(contentHash);
+      for (const provider of this.providers) {
+        const providerName = provider.constructor.name;
+        const jobs = await this.fetchAllPages(provider);
+        fetched += jobs.length;
+        this.logger.log(`Fetched ${jobs.length} jobs from ${providerName}`);
 
-        if (existing) {
-          const alreadyEmbedded = await this.vectorRepo.hasEmbedding(
-            existing.id,
-          );
-          if (alreadyEmbedded) {
-            skipped++;
+        for (const raw of jobs) {
+          const contentHash = this.hashJob(raw);
+          const existing = await this.jobRepo.findByContentHash(contentHash);
+
+          if (existing) {
+            const alreadyEmbedded = await this.vectorRepo.hasEmbedding(
+              existing.id,
+            );
+            if (alreadyEmbedded) {
+              skipped++;
+              continue;
+            }
+            // Job exists but has no embedding — re-enqueue for embedding only
+            const jobToEmbed = existing;
+            void this.queue.add(async () => {
+              try {
+                const chunkText = this.buildChunkText(raw);
+                const embedding = await this.embeddingService.embed(chunkText);
+                await this.vectorRepo.upsertChunk(
+                  jobToEmbed.id,
+                  chunkText,
+                  embedding,
+                  this.embeddingService.modelName,
+                );
+                this.logger.debug(
+                  `Re-embedded job: ${jobToEmbed.title} (${jobToEmbed.company})`,
+                );
+              } catch (err) {
+                this.logger.error(
+                  `Failed to embed job ${jobToEmbed.id}: ${(err as Error).message}`,
+                );
+              }
+            });
             continue;
           }
-          // Job exists but has no embedding — re-enqueue for embedding only
-          const jobToEmbed = existing;
-          this.queue.add(async () => {
+
+          const job = await this.jobRepo.upsertJob({ ...raw, contentHash });
+          stored++;
+
+          void this.queue.add(async () => {
             try {
               const chunkText = this.buildChunkText(raw);
               const embedding = await this.embeddingService.embed(chunkText);
               await this.vectorRepo.upsertChunk(
-                jobToEmbed.id,
+                job.id,
                 chunkText,
                 embedding,
                 this.embeddingService.modelName,
               );
-              this.logger.debug(
-                `Re-embedded job: ${jobToEmbed.title} (${jobToEmbed.company})`,
-              );
+              this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
             } catch (err) {
               this.logger.error(
-                `Failed to embed job ${jobToEmbed.id}: ${(err as Error).message}`,
+                `Failed to embed job ${job.id}: ${(err as Error).message}`,
               );
             }
           });
-          continue;
         }
-
-        const job = await this.jobRepo.upsertJob({ ...raw, contentHash });
-        stored++;
-
-        this.queue.add(async () => {
-          try {
-            const chunkText = this.buildChunkText(raw);
-            const embedding = await this.embeddingService.embed(chunkText);
-            await this.vectorRepo.upsertChunk(
-              job.id,
-              chunkText,
-              embedding,
-              this.embeddingService.modelName,
-            );
-            this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
-          } catch (err) {
-            this.logger.error(
-              `Failed to embed job ${job.id}: ${(err as Error).message}`,
-            );
-          }
-        });
       }
 
       await this.queue.onIdle();
@@ -116,13 +128,13 @@ export class IngestionService {
     return { fetched, stored, skipped };
   }
 
-  private async fetchAllPages(): Promise<RawJobDto[]> {
+  private async fetchAllPages(provider: JobProvider): Promise<RawJobDto[]> {
     const all: RawJobDto[] = [];
     let page = 1;
 
     while (true) {
-      const results = await this.arbeitnow.fetchJobs(page);
-      if (!this.arbeitnow.hasNextPage(page, results)) break;
+      const results = await provider.fetchJobs(page);
+      if (!provider.hasNextPage(page, results)) break;
       all.push(...results);
       page++;
     }
@@ -147,7 +159,8 @@ export class IngestionService {
       'description',
       'url',
       'jobType',
-      'salary',
+      'minSalary',
+      'maxSalary',
       'fetchedAt',
       'createdAt',
     ];
