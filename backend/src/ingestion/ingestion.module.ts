@@ -9,6 +9,7 @@ import { AdzunaProvider } from './providers/adzuna.provider.js';
 import { RemotiveProvider } from './providers/remotive.provider.js';
 import { WebNinjaProvider } from './providers/webninja.provider.js';
 import { JobicyProvider } from './providers/jobicy.provider.js';
+import { CareerjetProvider } from './providers/careerjet.provider.js';
 
 @Module({
   imports: [StorageModule, EmbeddingModule, AuthModule],
@@ -20,6 +21,7 @@ import { JobicyProvider } from './providers/jobicy.provider.js';
     RemotiveProvider,
     WebNinjaProvider,
     JobicyProvider,
+    CareerjetProvider,
   ],
 })
 export class IngestionModule {}

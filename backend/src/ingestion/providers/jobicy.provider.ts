@@ -89,7 +89,11 @@ export class JobicyProvider implements JobProvider {
         description: this.stripHtml(j.jobDescription ?? ''),
         url: j.url,
         jobType: Array.isArray(j.jobType) ? j.jobType[0] : j.jobType,
-        ...normalizeSalary({ min: j.salaryMin, max: j.salaryMax, period: j.salaryPeriod }),
+        ...normalizeSalary({
+          min: j.salaryMin,
+          max: j.salaryMax,
+          period: j.salaryPeriod,
+        }),
       }))
       .filter((j) => {
         if (this.seenIds.has(j.sourceId)) return false;

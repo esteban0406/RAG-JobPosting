@@ -8,6 +8,7 @@ import { AdzunaProvider } from './providers/adzuna.provider.js';
 import { RemotiveProvider } from './providers/remotive.provider.js';
 import { WebNinjaProvider } from './providers/webninja.provider.js';
 import { JobicyProvider } from './providers/jobicy.provider.js';
+import { CareerjetProvider } from './providers/careerjet.provider.js';
 import { JobProvider, RawJobDto } from './dto/raw-job.dto.js';
 
 const MAX_DESCRIPTION_CHARS = 2000;
@@ -24,11 +25,12 @@ export class IngestionService {
     remotive: RemotiveProvider,
     webninja: WebNinjaProvider,
     jobicy: JobicyProvider,
+    careerjet: CareerjetProvider,
     private readonly jobRepo: JobRepository,
     private readonly vectorRepo: VectorRepository,
     private readonly embeddingService: EmbeddingService,
   ) {
-    this.providers = [jobicy];
+    this.providers = [remotive, webninja, jobicy, adzuna];
     const isGemini = embeddingService.provider === 'gemini';
     // Local model: no rate limits, run concurrently. Gemini: 30 RPM (2s interval)
     this.queue = new PQueue(
@@ -54,7 +56,15 @@ export class IngestionService {
 
       for (const provider of this.providers) {
         const providerName = provider.constructor.name;
-        const jobs = await this.fetchAllPages(provider);
+        let jobs: RawJobDto[];
+        try {
+          jobs = await this.fetchAllPages(provider);
+        } catch (err) {
+          this.logger.error(
+            `Provider ${providerName} failed, skipping: ${(err as Error).message}`,
+          );
+          continue;
+        }
         fetched += jobs.length;
         this.logger.log(`Fetched ${jobs.length} jobs from ${providerName}`);
 
@@ -134,8 +144,8 @@ export class IngestionService {
 
     while (true) {
       const results = await provider.fetchJobs(page);
-      if (!provider.hasNextPage(page, results)) break;
       all.push(...results);
+      if (!provider.hasNextPage(page, results)) break;
       page++;
     }
 
