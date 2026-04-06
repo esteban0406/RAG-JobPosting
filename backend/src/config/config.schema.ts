@@ -51,6 +51,14 @@ class EnvironmentVariables {
   @IsOptional()
   INGESTION_CRON: string = '0 */6 * * *';
 
+  @IsString()
+  @IsOptional()
+  OLLAMA_URL: string = 'http://localhost:11434';
+
+  @IsString()
+  @IsOptional()
+  OLLAMA_MODEL: string = 'llama3.1:8b';
+
   @IsNumber()
   @Min(1)
   @IsOptional()

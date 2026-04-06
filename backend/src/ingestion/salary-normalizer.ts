@@ -33,10 +33,15 @@ export function normalizeSalary(input: RawSalary): NormalizedSalary {
   const period = input.period?.toLowerCase() ?? '';
   const multiplier = PERIOD_MULTIPLIERS[period] ?? 1;
 
-  const result: NormalizedSalary = {};
-  if (input.min != null) result.minSalary = Math.round(input.min * multiplier);
-  if (input.max != null) result.maxSalary = Math.round(input.max * multiplier);
-  return result;
+  let min = input.min != null ? Math.round(input.min * multiplier) : undefined;
+  let max = input.max != null ? Math.round(input.max * multiplier) : undefined;
+
+  if (!min) min = undefined;
+  if (!max) max = undefined;
+
+  if (min == null && max == null) return {};
+
+  return { minSalary: min ?? max, maxSalary: max ?? min };
 }
 
 function parseAmount(s: string): number {
@@ -45,25 +50,24 @@ function parseAmount(s: string): number {
   return /k$/i.test(cleaned) ? n * 1000 : n;
 }
 
+const HOURLY_PATTERN = /per\s*hour|\/\s*hour|\/\s*hr\b|hourly/i;
+
 function parseRawString(raw: string): NormalizedSalary {
   if (!raw) return {};
 
+  const isHourly = HOURLY_PATTERN.test(raw);
+
   // Match numbers like $60k, $60,000, 60000, 60.5k
   const numPattern = /\$?([\d,]+\.?\d*k?)/gi;
-  const matches = [...raw.matchAll(numPattern)].map((m) => parseAmount(m[1]));
+  const matches = [...raw.matchAll(numPattern)]
+    .map((m) => parseAmount(m[1]))
+    .map((n) => (isHourly ? Math.round(n * 2080) : n))
+    .filter((n) => n > 0);
 
   if (matches.length === 0) return {};
 
-  if (matches.length >= 2) {
-    return {
-      minSalary: Math.round(matches[0]),
-      maxSalary: Math.round(matches[1]),
-    };
-  }
+  const min = Math.round(matches[0]);
+  const max = Math.round(matches.length >= 2 ? matches[1] : matches[0]);
 
-  // Single number — "up to X" means maxSalary, everything else is minSalary
-  if (/up\s*to/i.test(raw)) {
-    return { maxSalary: Math.round(matches[0]) };
-  }
-  return { minSalary: Math.round(matches[0]) };
+  return { minSalary: min, maxSalary: max };
 }

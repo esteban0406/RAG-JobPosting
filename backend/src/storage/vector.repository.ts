@@ -9,6 +9,11 @@ export interface JobChunkResult {
   similarity: number;
 }
 
+export interface JobChunkWithJob extends JobChunkResult {
+  jobTitle: string;
+  jobDescription: string;
+}
+
 const EMBEDDING_VERSION = 1;
 
 @Injectable()
@@ -41,6 +46,31 @@ export class VectorRepository {
         WHERE id = ${chunk.id}
       `;
     });
+  }
+
+  async findSimilarWithJob(
+    queryVector: number[],
+    topK: number,
+    threshold: number,
+  ): Promise<JobChunkWithJob[]> {
+    const vectorLiteral = `[${queryVector.join(',')}]`;
+
+    return this.prisma.$queryRaw<JobChunkWithJob[]>`
+      SELECT
+        jc.id,
+        jc."jobId",
+        jc."chunkText",
+        jc."embeddingModel",
+        1 - (jc.embedding <=> ${vectorLiteral}::vector) AS similarity,
+        j.title AS "jobTitle",
+        j.description AS "jobDescription"
+      FROM "JobChunk" jc
+      JOIN "Job" j ON j.id = jc."jobId"
+      WHERE jc.embedding IS NOT NULL
+        AND 1 - (jc.embedding <=> ${vectorLiteral}::vector) >= ${threshold}
+      ORDER BY similarity DESC
+      LIMIT ${topK}
+    `;
   }
 
   async hasEmbedding(jobId: string): Promise<boolean> {

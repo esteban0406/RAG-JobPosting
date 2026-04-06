@@ -1,61 +1,65 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { VectorRepository } from '../storage/vector.repository.js';
-import { QueryCategory } from './dataset/queries.dataset.js';
-import { LabeledQuery, LabelingService } from './labeling.service.js';
+import { QUERIES, QueryCategory } from './dataset/queries.dataset.js';
+import { GeminiJudgeService } from './judge/gemini-judge.service.js';
+import { Verdict } from './judge/judge.interface.js';
+import { JudgmentCacheService } from './judge/judgment-cache.service.js';
+import { OllamaJudgeService } from './judge/ollama-judge.service.js';
 
 const MAX_K = 10;
 const KS = [1, 3, 5, 10] as const;
 const DEFAULT_K = 5;
 const SIMILARITY_THRESHOLD = 0.5;
-const CONCURRENCY = 5;
+const QUERY_CONCURRENCY = 3;
+const JUDGE_CONCURRENCY_LOCAL = 3;
+const JUDGE_CONCURRENCY_GEMINI = 1;
 
 interface KMetrics {
-  recall_at_k: number;
   precision_at_k: number;
   mrr: number;
   ndcg: number;
+}
+
+export interface RetrievedResult {
+  jobId: string;
+  score: number;
+  verdict: Verdict;
 }
 
 export interface QueryMetrics {
   queryId: string;
   category: QueryCategory;
   query: string;
-  // Top-level metrics at DEFAULT_K, thresholded
-  recall_at_k: number;
+  // Top-level metrics at DEFAULT_K
   precision_at_k: number;
   mrr: number;
   ndcg: number;
-  retrieved: { jobId: string; score: number }[];
-  relevant_ids: string[];
+  retrieved: RetrievedResult[];
   retrieved_count: number;
-  label_warning?: string;
-  // Multi-K breakdown (thresholded)
+  // Multi-K breakdown
   metrics_by_k: Record<number, KMetrics>;
-  // Threshold comparison at DEFAULT_K
-  unthresholded: {
-    retrieved_ids: string[];
-    recall_at_k: number;
-    precision_at_k: number;
-  };
+  // Verdict summary
+  verdict_counts: { relevant: number; marginal: number; not_relevant: number };
 }
 
 export interface EvalReport {
   run_at: string;
   top_k: number;
   similarity_threshold: number;
+  judge: 'local' | 'gemini';
+  marginal_count: number;
   aggregate: {
-    recall_at_k: number;
     precision_at_k: number;
     mrr: number;
     ndcg: number;
     query_count: number;
     queries_with_results: number;
+    queries_with_zero_relevant: number;
   };
   by_category: Record<
     QueryCategory,
     {
-      recall_at_k: number;
       precision_at_k: number;
       mrr: number;
       ndcg: number;
@@ -71,27 +75,36 @@ export class EvalService {
   private readonly logger = new Logger(EvalService.name);
 
   constructor(
-    private readonly labelingService: LabelingService,
     private readonly embeddingService: EmbeddingService,
     private readonly vectorRepo: VectorRepository,
+    private readonly ollamaJudge: OllamaJudgeService,
+    private readonly geminiJudge: GeminiJudgeService,
+    private readonly judgeCache: JudgmentCacheService,
   ) {}
 
-  async runEvaluation(): Promise<EvalReport> {
-    const labeled = await this.labelingService.labelAll();
-    this.logger.log(`Running evaluation for ${labeled.length} queries`);
+  async runEvaluation(judge: 'local' | 'gemini' = 'local'): Promise<EvalReport> {
+    this.logger.log(`Running evaluation (judge=${judge}) for ${QUERIES.length} queries`);
 
-    // Process queries in parallel with bounded concurrency
     const perQuery: QueryMetrics[] = [];
-    for (let i = 0; i < labeled.length; i += CONCURRENCY) {
-      const batch = labeled.slice(i, i + CONCURRENCY);
-      const results = await Promise.all(batch.map((q) => this.processQuery(q)));
+    for (let i = 0; i < QUERIES.length; i += QUERY_CONCURRENCY) {
+      const batch = QUERIES.slice(i, i + QUERY_CONCURRENCY);
+      const results = await Promise.all(
+        batch.map((q) => this.processQuery(q.id, q.query, q.category, judge)),
+      );
       perQuery.push(...results);
     }
+
+    const marginal_count = perQuery.reduce(
+      (sum, q) => sum + q.verdict_counts.marginal,
+      0,
+    );
 
     return {
       run_at: new Date().toISOString(),
       top_k: DEFAULT_K,
       similarity_threshold: SIMILARITY_THRESHOLD,
+      judge,
+      marginal_count,
       aggregate: this.computeAggregate(perQuery),
       by_category: this.computeByCategory(perQuery),
       by_k: this.computeByK(perQuery),
@@ -99,181 +112,152 @@ export class EvalService {
     };
   }
 
-  private async processQuery(q: LabeledQuery): Promise<QueryMetrics> {
-    const queryVector = await this.embeddingService.embedQuery(q.query);
+  private async processQuery(
+    queryId: string,
+    queryText: string,
+    category: QueryCategory,
+    judgeType: 'local' | 'gemini',
+  ): Promise<QueryMetrics> {
+    const queryVector = await this.embeddingService.embedQuery(queryText);
 
-    // Single DB call at MAX_K with no threshold — filter software-side to avoid a second round-trip
-    const allChunks = await this.vectorRepo.findSimilar(queryVector, MAX_K, 0);
-
-    const thresholded = allChunks.filter(
-      (c) => c.similarity >= SIMILARITY_THRESHOLD,
-    );
-    const relevantSet = new Set(q.relevant_job_ids);
-
-    // Top-level metrics at DEFAULT_K, thresholded
-    const topK = thresholded.slice(0, DEFAULT_K);
-    const topKIds = topK.map((c) => c.jobId);
-    const topKMetrics = this.computeMetrics(
-      topKIds,
-      relevantSet,
-      q.relevant_job_ids.length,
+    // Retrieve top MAX_K results with job data in a single SQL call
+    const chunks = await this.vectorRepo.findSimilarWithJob(
+      queryVector,
+      MAX_K,
+      SIMILARITY_THRESHOLD,
     );
 
-    // Unthresholded comparison at DEFAULT_K
-    const rawIds = allChunks.slice(0, DEFAULT_K).map((c) => c.jobId);
-    const rawRelevantFound = rawIds.filter((id) => relevantSet.has(id));
-    const unthresholded = {
-      retrieved_ids: rawIds,
-      recall_at_k:
-        q.relevant_job_ids.length === 0
-          ? 0
-          : Math.round(
-              (rawRelevantFound.length / q.relevant_job_ids.length) * 1000,
-            ) / 1000,
-      precision_at_k:
-        rawIds.length === 0
-          ? 0
-          : Math.round((rawRelevantFound.length / rawIds.length) * 1000) / 1000,
+    // Deduplicate by jobId — keep highest-similarity chunk per job
+    const seen = new Map<string, typeof chunks[0]>();
+    for (const chunk of chunks) {
+      if (!seen.has(chunk.jobId) || chunk.similarity > seen.get(chunk.jobId)!.similarity) {
+        seen.set(chunk.jobId, chunk);
+      }
+    }
+    const deduplicated = Array.from(seen.values())
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, MAX_K);
+
+    // Judge each retrieved result
+    const judgeService = judgeType === 'local' ? this.ollamaJudge : this.geminiJudge;
+    const concurrency =
+      judgeType === 'local' ? JUDGE_CONCURRENCY_LOCAL : JUDGE_CONCURRENCY_GEMINI;
+
+    const verdicts: Verdict[] = new Array(deduplicated.length).fill('not_relevant');
+    for (let i = 0; i < deduplicated.length; i += concurrency) {
+      const batch = deduplicated.slice(i, i + concurrency);
+      const batchVerdicts = await Promise.all(
+        batch.map(async (chunk, batchIdx) => {
+          const cached = this.judgeCache.get(judgeType, queryId, chunk.jobId);
+          if (cached !== undefined) return cached;
+          const verdict = await judgeService.judge(
+            queryText,
+            chunk.jobTitle,
+            chunk.jobDescription,
+          );
+          this.judgeCache.set(judgeType, queryId, chunk.jobId, verdict);
+          return verdict;
+        }),
+      );
+      for (let j = 0; j < batchVerdicts.length; j++) {
+        verdicts[i + j] = batchVerdicts[j];
+      }
+    }
+
+    const retrieved: RetrievedResult[] = deduplicated.map((chunk, i) => ({
+      jobId: chunk.jobId,
+      score: Math.round(chunk.similarity * 1000) / 1000,
+      verdict: verdicts[i],
+    }));
+
+    const verdict_counts = {
+      relevant: verdicts.filter((v) => v === 'relevant').length,
+      marginal: verdicts.filter((v) => v === 'marginal').length,
+      not_relevant: verdicts.filter((v) => v === 'not_relevant').length,
     };
 
-    // Multi-K breakdown (thresholded)
+    // Compute metrics at DEFAULT_K
+    const topK = retrieved.slice(0, DEFAULT_K);
+    const topKMetrics = this.computeMetrics(topK);
+
+    // Multi-K breakdown
     const metrics_by_k: QueryMetrics['metrics_by_k'] = {};
     for (const k of KS) {
-      const ids = thresholded.slice(0, k).map((c) => c.jobId);
-      metrics_by_k[k] = this.computeMetrics(
-        ids,
-        relevantSet,
-        q.relevant_job_ids.length,
-      );
+      metrics_by_k[k] = this.computeMetrics(retrieved.slice(0, k));
     }
 
     return {
-      queryId: q.id,
-      category: q.category,
-      query: q.query,
+      queryId,
+      category,
+      query: queryText,
       ...topKMetrics,
-      retrieved: topK.map((c) => ({
-        jobId: c.jobId,
-        score: Math.round(c.similarity * 1000) / 1000,
-      })),
-      relevant_ids: q.relevant_job_ids,
+      retrieved: topK,
       retrieved_count: topK.length,
-      label_warning: q.label_warning,
       metrics_by_k,
-      unthresholded,
+      verdict_counts,
     };
   }
 
-  private computeMetrics(
-    retrievedIds: string[],
-    relevantSet: Set<string>,
-    relevantTotal: number,
-  ): KMetrics {
-    const relevantFound = retrievedIds.filter((id) => relevantSet.has(id));
+  private computeMetrics(results: RetrievedResult[]): KMetrics {
+    if (results.length === 0) {
+      return { precision_at_k: 0, mrr: 0, ndcg: 0 };
+    }
 
-    const recall_at_k =
-      relevantTotal === 0
-        ? 0
-        : Math.round((relevantFound.length / relevantTotal) * 1000) / 1000;
+    const relevantFlags = results.map((r) => r.verdict === 'relevant');
+    const relevantCount = relevantFlags.filter(Boolean).length;
 
-    const precision_at_k =
-      retrievedIds.length === 0
-        ? 0
-        : Math.round((relevantFound.length / retrievedIds.length) * 1000) /
-          1000;
+    const precision_at_k = Math.round((relevantCount / results.length) * 1000) / 1000;
 
-    const firstRelevantRank = retrievedIds.findIndex((id) =>
-      relevantSet.has(id),
-    );
+    const firstRelevantIdx = relevantFlags.findIndex(Boolean);
     const mrr =
-      firstRelevantRank === -1
+      firstRelevantIdx === -1
         ? 0
-        : Math.round((1 / (firstRelevantRank + 1)) * 1000) / 1000;
+        : Math.round((1 / (firstRelevantIdx + 1)) * 1000) / 1000;
 
-    const ndcg = this.computeNDCG(retrievedIds, relevantSet);
-
-    return { recall_at_k, precision_at_k, mrr, ndcg };
-  }
-
-  private computeNDCG(
-    retrievedIds: string[],
-    relevantSet: Set<string>,
-  ): number {
     let dcg = 0;
-    for (let i = 0; i < retrievedIds.length; i++) {
-      if (relevantSet.has(retrievedIds[i])) {
-        dcg += 1 / Math.log2(i + 2);
-      }
-    }
     let idcg = 0;
-    for (let i = 0; i < Math.min(relevantSet.size, retrievedIds.length); i++) {
-      idcg += 1 / Math.log2(i + 2);
+    for (let i = 0; i < results.length; i++) {
+      const gain = relevantFlags[i] ? 1 : 0;
+      dcg += gain / Math.log2(i + 2);
+      if (i < relevantCount) idcg += 1 / Math.log2(i + 2);
     }
-    return idcg === 0 ? 0 : Math.round((dcg / idcg) * 1000) / 1000;
+    const ndcg = idcg === 0 ? 0 : Math.round((dcg / idcg) * 1000) / 1000;
+
+    return { precision_at_k, mrr, ndcg };
   }
 
   private computeAggregate(metrics: QueryMetrics[]): EvalReport['aggregate'] {
     const n = metrics.length;
     if (n === 0) {
-      return {
-        recall_at_k: 0,
-        precision_at_k: 0,
-        mrr: 0,
-        ndcg: 0,
-        query_count: 0,
-        queries_with_results: 0,
-      };
+      return { precision_at_k: 0, mrr: 0, ndcg: 0, query_count: 0, queries_with_results: 0, queries_with_zero_relevant: 0 };
     }
-    const avg = (key: keyof QueryMetrics) =>
-      Math.round(
-        (metrics.reduce((s, m) => s + (m[key] as number), 0) / n) * 1000,
-      ) / 1000;
+    const avg = (key: keyof Pick<QueryMetrics, 'precision_at_k' | 'mrr' | 'ndcg'>) =>
+      Math.round((metrics.reduce((s, m) => s + m[key], 0) / n) * 1000) / 1000;
+
     return {
-      recall_at_k: avg('recall_at_k'),
       precision_at_k: avg('precision_at_k'),
       mrr: avg('mrr'),
       ndcg: avg('ndcg'),
       query_count: n,
       queries_with_results: metrics.filter((m) => m.retrieved_count > 0).length,
+      queries_with_zero_relevant: metrics.filter((m) => m.verdict_counts.relevant === 0).length,
     };
   }
 
-  private computeByCategory(
-    metrics: QueryMetrics[],
-  ): EvalReport['by_category'] {
-    const categories: QueryCategory[] = [
-      'exact',
-      'semantic',
-      'filtering',
-      'aggregation',
-      'noisy',
-    ];
+  private computeByCategory(metrics: QueryMetrics[]): EvalReport['by_category'] {
+    const categories: QueryCategory[] = ['exact', 'semantic', 'filtering', 'aggregation', 'noisy'];
     const result = {} as EvalReport['by_category'];
 
     for (const cat of categories) {
       const group = metrics.filter((m) => m.category === cat);
       const count = group.length;
       if (count === 0) {
-        result[cat] = {
-          recall_at_k: 0,
-          precision_at_k: 0,
-          mrr: 0,
-          ndcg: 0,
-          count: 0,
-        };
+        result[cat] = { precision_at_k: 0, mrr: 0, ndcg: 0, count: 0 };
         continue;
       }
-      const avg = (key: keyof QueryMetrics) =>
-        Math.round(
-          (group.reduce((s, m) => s + (m[key] as number), 0) / count) * 1000,
-        ) / 1000;
-      result[cat] = {
-        recall_at_k: avg('recall_at_k'),
-        precision_at_k: avg('precision_at_k'),
-        mrr: avg('mrr'),
-        ndcg: avg('ndcg'),
-        count,
-      };
+      const avg = (key: keyof Pick<QueryMetrics, 'precision_at_k' | 'mrr' | 'ndcg'>) =>
+        Math.round((group.reduce((s, m) => s + m[key], 0) / count) * 1000) / 1000;
+      result[cat] = { precision_at_k: avg('precision_at_k'), mrr: avg('mrr'), ndcg: avg('ndcg'), count };
     }
 
     return result;
@@ -286,16 +270,13 @@ export class EvalService {
 
     for (const k of KS) {
       if (n === 0) {
-        result[k] = { recall_at_k: 0, precision_at_k: 0, mrr: 0, ndcg: 0 };
+        result[k] = { precision_at_k: 0, mrr: 0, ndcg: 0 };
         continue;
       }
-      const sum = (key: keyof KMetrics) =>
-        metrics.reduce((s, m) => s + m.metrics_by_k[k][key], 0);
       result[k] = {
-        recall_at_k: round(sum('recall_at_k') / n),
-        precision_at_k: round(sum('precision_at_k') / n),
-        mrr: round(sum('mrr') / n),
-        ndcg: round(sum('ndcg') / n),
+        precision_at_k: round(metrics.reduce((s, m) => s + m.metrics_by_k[k].precision_at_k, 0) / n),
+        mrr: round(metrics.reduce((s, m) => s + m.metrics_by_k[k].mrr, 0) / n),
+        ndcg: round(metrics.reduce((s, m) => s + m.metrics_by_k[k].ndcg, 0) / n),
       };
     }
 

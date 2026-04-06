@@ -49,7 +49,7 @@ export class JobRepository {
         }),
         ...(filters?.jobType && { jobType: filters.jobType }),
       },
-      orderBy: { fetchedAt: 'desc' },
+      orderBy: { id: 'asc' },
     });
   }
 }

@@ -6,8 +6,15 @@ import {
   QueryDefinition,
 } from './dataset/queries.dataset.js';
 
+export interface CandidateJob {
+  id: string;
+  title: string;
+  description: string;
+}
+
 export interface LabeledQuery extends QueryDefinition {
-  relevant_job_ids: string[];
+  candidate_job_ids: string[];
+  candidate_jobs: CandidateJob[];
   label_count: number;
   label_warning?: string;
 }
@@ -39,7 +46,7 @@ export class LabelingService {
 
     return QUERIES.map((q) => {
       const keywords = q.expected_keywords.map((kw) => kw.toLowerCase());
-      const maxRelevant: number = q.max_relevant ?? 20;
+      const maxRelevant: number = q.max_relevant ?? 40;
 
       // Score each job: 2 pts for title match, 1 pt for description-only.
       // AND logic between keyword_groups is preserved.
@@ -57,7 +64,7 @@ export class LabelingService {
             });
             // AND logic: every group must contribute at least one match
             if (groupScores.every((s) => s > 0)) {
-              score = groupScores.reduce((acc, s) => acc + s, 0);
+              score = groupScores.reduce((acc: number, s) => acc + s, 0);
             }
           } else {
             if (keywords.some((kw) => matchKeyword(titleHaystack, kw))) {
@@ -67,25 +74,36 @@ export class LabelingService {
             }
           }
 
-          return { id: job.id, score };
+          return {
+            id: job.id,
+            title: job.title,
+            description: job.description,
+            score,
+          };
         })
         .filter((entry) => entry.score > 0)
         .sort((a, b) => b.score - a.score)
         .slice(0, maxRelevant);
 
-      const relevant_job_ids = scored.map((entry) => entry.id);
-      const label_count = relevant_job_ids.length;
+      const candidate_job_ids = scored.map((entry) => entry.id);
+      const candidate_jobs: CandidateJob[] = scored.map((entry) => ({
+        id: entry.id,
+        title: entry.title,
+        description: entry.description,
+      }));
+      const label_count = candidate_job_ids.length;
 
       const label_warning =
         label_count < q.min_relevant
           ? `Only ${label_count} jobs matched (expected >= ${q.min_relevant})`
           : label_count === maxRelevant
-            ? `Capped at ${maxRelevant} relevant jobs — consider tuning max_relevant`
+            ? `Capped at ${maxRelevant} candidates — consider tuning max_relevant`
             : undefined;
 
       return {
         ...q,
-        relevant_job_ids,
+        candidate_job_ids,
+        candidate_jobs,
         label_count,
         label_warning,
       } as LabeledQuery & { category: QueryCategory };
