@@ -37,6 +37,23 @@ export class IngestionController {
     return { message: 'Ingestion started' };
   }
 
+  @Post('reset-from-csv')
+  @HttpCode(HttpStatus.ACCEPTED)
+  resetFromCsv() {
+    this.ingestionService
+      .resetAndRunFromCsv()
+      .then((result) => {
+        this.logger.log(
+          `Reset+ingest complete — loaded=${result.loaded} stored=${result.stored}`,
+        );
+      })
+      .catch((err: Error) => {
+        this.logger.error(`Reset+ingest failed: ${err.message}`);
+      });
+
+    return { message: 'Reset and ingest from CSV started' };
+  }
+
   @Get('export')
   async export(@Res() res: Response) {
     const { csv, count } = await this.ingestionService.exportToCsv();

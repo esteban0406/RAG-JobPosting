@@ -4,6 +4,7 @@ import { PrismaService } from './prisma.service.js';
 export interface JobChunkResult {
   id: string;
   jobId: string;
+  chunkType: string;
   chunkText: string;
   embeddingModel: string;
   similarity: number;
@@ -20,31 +21,30 @@ const EMBEDDING_VERSION = 1;
 export class VectorRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async upsertChunk(
+  async upsertChunks(
     jobId: string,
-    chunkText: string,
-    embedding: number[],
-    model: string,
+    chunks: Array<{ type: string; text: string; embedding: number[]; model: string }>,
   ): Promise<void> {
-    const vectorLiteral = `[${embedding.join(',')}]`;
-
     await this.prisma.$transaction(async (tx) => {
       await tx.jobChunk.deleteMany({ where: { jobId } });
 
-      const chunk = await tx.jobChunk.create({
-        data: {
-          jobId,
-          chunkText,
-          embeddingModel: model,
-          embeddingVersion: EMBEDDING_VERSION,
-        },
-      });
-
-      await tx.$executeRaw`
-        UPDATE "JobChunk"
-        SET embedding = ${vectorLiteral}::vector
-        WHERE id = ${chunk.id}
-      `;
+      for (const chunk of chunks) {
+        const vectorLiteral = `[${chunk.embedding.join(',')}]`;
+        const record = await tx.jobChunk.create({
+          data: {
+            jobId,
+            chunkType: chunk.type,
+            chunkText: chunk.text,
+            embeddingModel: chunk.model,
+            embeddingVersion: EMBEDDING_VERSION,
+          },
+        });
+        await tx.$executeRaw`
+          UPDATE "JobChunk"
+          SET embedding = ${vectorLiteral}::vector
+          WHERE id = ${record.id}
+        `;
+      }
     });
   }
 
@@ -59,6 +59,7 @@ export class VectorRepository {
       SELECT
         jc.id,
         jc."jobId",
+        jc."chunkType",
         jc."chunkText",
         jc."embeddingModel",
         1 - (jc.embedding <=> ${vectorLiteral}::vector) AS similarity,
@@ -85,18 +86,11 @@ export class VectorRepository {
   ): Promise<JobChunkResult[]> {
     const vectorLiteral = `[${queryVector.join(',')}]`;
 
-    const rows = await this.prisma.$queryRaw<
-      Array<{
-        id: string;
-        jobId: string;
-        chunkText: string;
-        embeddingModel: string;
-        similarity: number;
-      }>
-    >`
+    return this.prisma.$queryRaw<JobChunkResult[]>`
       SELECT
         id,
         "jobId",
+        "chunkType",
         "chunkText",
         "embeddingModel",
         1 - (embedding <=> ${vectorLiteral}::vector) AS similarity
@@ -106,7 +100,5 @@ export class VectorRepository {
       ORDER BY similarity DESC
       LIMIT ${topK}
     `;
-
-    return rows;
   }
 }

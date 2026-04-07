@@ -32,6 +32,7 @@ model Job {
 model JobChunk {
   id               String   @id @default(cuid())
   jobId            String
+  chunkType        String   @default("full")
   chunkText        String
   embeddingModel   String
   embeddingVersion Int      @default(1)

@@ -40,6 +40,10 @@ export class JobRepository {
     return this.prisma.job.findFirst({ where: { contentHash: hash } });
   }
 
+  async findByIds(ids: string[]): Promise<Job[]> {
+    return this.prisma.job.findMany({ where: { id: { in: ids } } });
+  }
+
   async findAll(filters?: JobFilters): Promise<Job[]> {
     return this.prisma.job.findMany({
       where: {
