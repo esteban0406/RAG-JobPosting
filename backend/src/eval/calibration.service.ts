@@ -3,7 +3,11 @@ import { Verdict } from './judge/judge.interface.js';
 import { GeminiJudgeService } from './judge/gemini-judge.service.js';
 import { JudgmentCacheService } from './judge/judgment-cache.service.js';
 import { OllamaJudgeService } from './judge/ollama-judge.service.js';
-import { CandidateJob, LabeledQuery, LabelingService } from './labeling.service.js';
+import {
+  CandidateJob,
+  LabeledQuery,
+  LabelingService,
+} from './labeling.service.js';
 
 /**
  * Stratified sampling:
@@ -34,7 +38,10 @@ export interface CalibrationReport {
   run_at: string;
   sample_size: number;
   agreement_pct: number;
-  agreement_by_tier: Record<'top' | 'bottom' | 'cross', { total: number; agreed: number; agreement_pct: number }>;
+  agreement_by_tier: Record<
+    'top' | 'bottom' | 'cross',
+    { total: number; agreed: number; agreement_pct: number }
+  >;
   confusion_matrix: Record<string, Record<string, number>>;
   disagreements: CalibrationDisagreement[];
 }
@@ -58,23 +65,43 @@ export class CalibrationService {
       `Running calibration on ${samples.length} samples (${SAMPLES_PER_TIER} per tier × 3 tiers × ${labeled.length} queries)`,
     );
 
-    const verdictPairs: { local: Verdict; gemini: Verdict; tier: Sample['tier'] }[] = [];
+    const verdictPairs: {
+      local: Verdict;
+      gemini: Verdict;
+      tier: Sample['tier'];
+    }[] = [];
     const disagreements: CalibrationDisagreement[] = [];
 
     // Run in sequence — Gemini has rate limits
     for (const sample of samples) {
-      const localCached = this.judgeCache.get('ollama', sample.queryId, sample.jobId);
+      const localCached = this.judgeCache.get(
+        'ollama',
+        sample.queryId,
+        sample.jobId,
+      );
       const local =
         localCached ??
-        (await this.ollamaJudge.judge(sample.query, sample.title, sample.description));
+        (await this.ollamaJudge.judge(
+          sample.query,
+          sample.title,
+          sample.description,
+        ));
       if (!localCached) {
         this.judgeCache.set('ollama', sample.queryId, sample.jobId, local);
       }
 
-      const geminiCached = this.judgeCache.get('gemini', sample.queryId, sample.jobId);
+      const geminiCached = this.judgeCache.get(
+        'gemini',
+        sample.queryId,
+        sample.jobId,
+      );
       const gemini =
         geminiCached ??
-        (await this.geminiJudge.judge(sample.query, sample.title, sample.description));
+        (await this.geminiJudge.judge(
+          sample.query,
+          sample.title,
+          sample.description,
+        ));
       if (!geminiCached) {
         this.judgeCache.set('gemini', sample.queryId, sample.jobId, gemini);
       }
@@ -94,7 +121,9 @@ export class CalibrationService {
 
     const agreed = verdictPairs.filter((p) => p.local === p.gemini).length;
     const agreement_pct =
-      samples.length === 0 ? 0 : Math.round((agreed / samples.length) * 1000) / 1000;
+      samples.length === 0
+        ? 0
+        : Math.round((agreed / samples.length) * 1000) / 1000;
 
     const agreement_by_tier = this.computeTierStats(verdictPairs);
     const confusion_matrix = this.buildConfusionMatrix(verdictPairs);
@@ -150,7 +179,11 @@ export class CalibrationService {
     return samples;
   }
 
-  private toSample(q: LabeledQuery, job: CandidateJob, tier: Sample['tier']): Sample {
+  private toSample(
+    q: LabeledQuery,
+    job: CandidateJob,
+    tier: Sample['tier'],
+  ): Sample {
     return {
       queryId: q.id,
       query: q.query,

@@ -25,6 +25,10 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
+  DATABASE_URL_READONLY: string;
+
+  @IsString()
+  @IsOptional()
   GEMINI_API_KEY: string;
 
   @IsString()

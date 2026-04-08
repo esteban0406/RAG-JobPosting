@@ -82,8 +82,12 @@ export class EvalService {
     private readonly judgeCache: JudgmentCacheService,
   ) {}
 
-  async runEvaluation(judge: 'local' | 'gemini' = 'local'): Promise<EvalReport> {
-    this.logger.log(`Running evaluation (judge=${judge}) for ${QUERIES.length} queries`);
+  async runEvaluation(
+    judge: 'local' | 'gemini' = 'local',
+  ): Promise<EvalReport> {
+    this.logger.log(
+      `Running evaluation (judge=${judge}) for ${QUERIES.length} queries`,
+    );
 
     const perQuery: QueryMetrics[] = [];
     for (let i = 0; i < QUERIES.length; i += QUERY_CONCURRENCY) {
@@ -128,9 +132,12 @@ export class EvalService {
     );
 
     // Deduplicate by jobId — keep highest-similarity chunk per job
-    const seen = new Map<string, typeof chunks[0]>();
+    const seen = new Map<string, (typeof chunks)[0]>();
     for (const chunk of chunks) {
-      if (!seen.has(chunk.jobId) || chunk.similarity > seen.get(chunk.jobId)!.similarity) {
+      if (
+        !seen.has(chunk.jobId) ||
+        chunk.similarity > seen.get(chunk.jobId)!.similarity
+      ) {
         seen.set(chunk.jobId, chunk);
       }
     }
@@ -139,11 +146,16 @@ export class EvalService {
       .slice(0, MAX_K);
 
     // Judge each retrieved result
-    const judgeService = judgeType === 'local' ? this.ollamaJudge : this.geminiJudge;
+    const judgeService =
+      judgeType === 'local' ? this.ollamaJudge : this.geminiJudge;
     const concurrency =
-      judgeType === 'local' ? JUDGE_CONCURRENCY_LOCAL : JUDGE_CONCURRENCY_GEMINI;
+      judgeType === 'local'
+        ? JUDGE_CONCURRENCY_LOCAL
+        : JUDGE_CONCURRENCY_GEMINI;
 
-    const verdicts: Verdict[] = new Array(deduplicated.length).fill('not_relevant');
+    const verdicts: Verdict[] = new Array(deduplicated.length).fill(
+      'not_relevant',
+    );
     for (let i = 0; i < deduplicated.length; i += concurrency) {
       const batch = deduplicated.slice(i, i + concurrency);
       const batchVerdicts = await Promise.all(
@@ -206,7 +218,8 @@ export class EvalService {
     const relevantFlags = results.map((r) => r.verdict === 'relevant');
     const relevantCount = relevantFlags.filter(Boolean).length;
 
-    const precision_at_k = Math.round((relevantCount / results.length) * 1000) / 1000;
+    const precision_at_k =
+      Math.round((relevantCount / results.length) * 1000) / 1000;
 
     const firstRelevantIdx = relevantFlags.findIndex(Boolean);
     const mrr =
@@ -229,9 +242,18 @@ export class EvalService {
   private computeAggregate(metrics: QueryMetrics[]): EvalReport['aggregate'] {
     const n = metrics.length;
     if (n === 0) {
-      return { precision_at_k: 0, mrr: 0, ndcg: 0, query_count: 0, queries_with_results: 0, queries_with_zero_relevant: 0 };
+      return {
+        precision_at_k: 0,
+        mrr: 0,
+        ndcg: 0,
+        query_count: 0,
+        queries_with_results: 0,
+        queries_with_zero_relevant: 0,
+      };
     }
-    const avg = (key: keyof Pick<QueryMetrics, 'precision_at_k' | 'mrr' | 'ndcg'>) =>
+    const avg = (
+      key: keyof Pick<QueryMetrics, 'precision_at_k' | 'mrr' | 'ndcg'>,
+    ) =>
       Math.round((metrics.reduce((s, m) => s + m[key], 0) / n) * 1000) / 1000;
 
     return {
@@ -240,12 +262,22 @@ export class EvalService {
       ndcg: avg('ndcg'),
       query_count: n,
       queries_with_results: metrics.filter((m) => m.retrieved_count > 0).length,
-      queries_with_zero_relevant: metrics.filter((m) => m.verdict_counts.relevant === 0).length,
+      queries_with_zero_relevant: metrics.filter(
+        (m) => m.verdict_counts.relevant === 0,
+      ).length,
     };
   }
 
-  private computeByCategory(metrics: QueryMetrics[]): EvalReport['by_category'] {
-    const categories: QueryCategory[] = ['exact', 'semantic', 'filtering', 'aggregation', 'noisy'];
+  private computeByCategory(
+    metrics: QueryMetrics[],
+  ): EvalReport['by_category'] {
+    const categories: QueryCategory[] = [
+      'exact',
+      'semantic',
+      'filtering',
+      'aggregation',
+      'noisy',
+    ];
     const result = {} as EvalReport['by_category'];
 
     for (const cat of categories) {
@@ -255,9 +287,17 @@ export class EvalService {
         result[cat] = { precision_at_k: 0, mrr: 0, ndcg: 0, count: 0 };
         continue;
       }
-      const avg = (key: keyof Pick<QueryMetrics, 'precision_at_k' | 'mrr' | 'ndcg'>) =>
-        Math.round((group.reduce((s, m) => s + m[key], 0) / count) * 1000) / 1000;
-      result[cat] = { precision_at_k: avg('precision_at_k'), mrr: avg('mrr'), ndcg: avg('ndcg'), count };
+      const avg = (
+        key: keyof Pick<QueryMetrics, 'precision_at_k' | 'mrr' | 'ndcg'>,
+      ) =>
+        Math.round((group.reduce((s, m) => s + m[key], 0) / count) * 1000) /
+        1000;
+      result[cat] = {
+        precision_at_k: avg('precision_at_k'),
+        mrr: avg('mrr'),
+        ndcg: avg('ndcg'),
+        count,
+      };
     }
 
     return result;
@@ -274,9 +314,13 @@ export class EvalService {
         continue;
       }
       result[k] = {
-        precision_at_k: round(metrics.reduce((s, m) => s + m.metrics_by_k[k].precision_at_k, 0) / n),
+        precision_at_k: round(
+          metrics.reduce((s, m) => s + m.metrics_by_k[k].precision_at_k, 0) / n,
+        ),
         mrr: round(metrics.reduce((s, m) => s + m.metrics_by_k[k].mrr, 0) / n),
-        ndcg: round(metrics.reduce((s, m) => s + m.metrics_by_k[k].ndcg, 0) / n),
+        ndcg: round(
+          metrics.reduce((s, m) => s + m.metrics_by_k[k].ndcg, 0) / n,
+        ),
       };
     }
 

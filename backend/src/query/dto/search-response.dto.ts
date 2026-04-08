@@ -1,7 +1,13 @@
-import type { JobSource, RagResponse } from '../../rag/dto/rag-response.dto.js';
+import type { JobSource } from '../../rag/dto/rag-response.dto.js';
+import type { TemplateKey } from '../aggregation/query-templates.js';
 
-export class SearchResponseDto implements RagResponse {
+export class SearchResponseDto {
+  type: 'retrieval' | 'aggregation' | 'hybrid';
   answer: string;
-  sources: JobSource[];
+  sources?: JobSource[];
+  aggregation?: {
+    intent: TemplateKey;
+    rows: Record<string, unknown>[];
+  };
   retrievedAt: Date;
 }

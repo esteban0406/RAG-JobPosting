@@ -23,7 +23,12 @@ export class VectorRepository {
 
   async upsertChunks(
     jobId: string,
-    chunks: Array<{ type: string; text: string; embedding: number[]; model: string }>,
+    chunks: Array<{
+      type: string;
+      text: string;
+      embedding: number[];
+      model: string;
+    }>,
   ): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
       await tx.jobChunk.deleteMany({ where: { jobId } });
