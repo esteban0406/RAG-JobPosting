@@ -67,6 +67,11 @@ class EnvironmentVariables {
   @Min(1)
   @IsOptional()
   PORT: number = 3000;
+
+  @IsNumber()
+  @Min(1)
+  @IsOptional()
+  BCRYPT_ROUNDS: number = 10;
 }
 
 export function validate(config: Record<string, unknown>) {

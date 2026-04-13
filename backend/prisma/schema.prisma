@@ -9,7 +9,7 @@ datasource db {
 }
 
 model Job {
-  id          String     @id @default(cuid())
+  id          String         @id @default(cuid())
   sourceId    String
   source      String
   title       String
@@ -21,12 +21,36 @@ model Job {
   minSalary   Int?
   maxSalary   Int?
   contentHash String
-  fetchedAt   DateTime   @default(now())
-  createdAt   DateTime   @default(now())
+  fetchedAt   DateTime       @default(now())
+  createdAt   DateTime       @default(now())
   chunks      JobChunk[]
+  favoritedBy UserFavorite[]
 
   @@unique([source, sourceId])
   @@index([source, contentHash])
+}
+
+model User {
+  id              String         @id @default(cuid())
+  email           String         @unique
+  passwordHash    String
+  name            String
+  skills          String[]
+  preferredFields String[]
+  location        String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  favorites       UserFavorite[]
+}
+
+model UserFavorite {
+  userId  String
+  jobId   String
+  savedAt DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  job     Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@id([userId, jobId])
 }
 
 model JobChunk {

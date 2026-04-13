@@ -26,12 +26,14 @@
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.2",
+    "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/schedule": "^6.1.1",
     "@nestjs/terminus": "^11.1.1",
     "@nestjs/throttler": "^6.5.0",
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
+    "bcrypt": "^6.0.0",
     "cache-manager": "^7.2.8",
     "chart.js": "^4.5.1",
     "class-transformer": "^0.5.1",
@@ -51,6 +53,7 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
@@ -76,6 +79,7 @@
     "onlyBuiltDependencies": [
       "@nestjs/core",
       "@prisma/engines",
+      "bcrypt",
       "unrs-resolver"
     ]
   },

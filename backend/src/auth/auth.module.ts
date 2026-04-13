@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { StorageModule } from '../storage/storage.module.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
+import { RolesGuard } from './guards/roles.guard.js';
 import { JwtGuard } from './guards/jwt.guard.js';
 
 @Module({
@@ -16,9 +18,10 @@ import { JwtGuard } from './guards/jwt.guard.js';
         },
       }),
     }),
+    StorageModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtGuard],
-  exports: [JwtGuard, JwtModule],
+  providers: [AuthService, JwtGuard, RolesGuard],
+  exports: [JwtGuard, RolesGuard, JwtModule],
 })
 export class AuthModule {}

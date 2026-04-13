@@ -10,10 +10,12 @@ import { EmbeddingModule } from './embedding/embedding.module.js';
 import { EvalModule } from './eval/eval.module.js';
 import { HealthModule } from './health/health.module.js';
 import { IngestionModule } from './ingestion/ingestion.module.js';
+import { JobModule } from './job/job.module.js';
 import { LlmModule } from './llm/llm.module.js';
 import { QueryModule } from './query/query.module.js';
 import { RagModule } from './rag/rag.module.js';
 import { StorageModule } from './storage/storage.module.js';
+import { UserModule } from './user/user.module.js';
 
 @Module({
   imports: [
@@ -42,6 +44,8 @@ import { StorageModule } from './storage/storage.module.js';
     RagModule,
     QueryModule,
     AuthModule,
+    UserModule,
+    JobModule,
     HealthModule,
     EvalModule,
   ],
