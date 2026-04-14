@@ -29,7 +29,11 @@ export class RagService {
     private readonly llmService: LlmService,
   ) {}
 
-  async query(userQuery: string, filters?: QueryFilters): Promise<RagResponse> {
+  async query(
+    userQuery: string,
+    filters?: QueryFilters,
+    contextJobIds?: string[],
+  ): Promise<RagResponse> {
     const queryVector = await this.embeddingService.embedQuery(userQuery);
 
     const rawChunks = await this.vectorRepo.findSimilar(
@@ -72,7 +76,8 @@ export class RagService {
       .filter((c): c is string => c !== null)
       .join('\n\n');
 
-    const prompt = this.buildPrompt(userQuery, contextChunks);
+    const savedJobsContext = await this.buildSavedJobsContext(contextJobIds);
+    const prompt = this.buildPrompt(userQuery, contextChunks, savedJobsContext);
     const answer = await this.llmService.complete(prompt);
 
     const sources: JobSource[] = topJobs
@@ -129,11 +134,33 @@ export class RagService {
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
   }
 
-  private buildPrompt(query: string, context: string): string {
+  private async buildSavedJobsContext(
+    contextJobIds?: string[],
+  ): Promise<string> {
+    if (!contextJobIds || contextJobIds.length === 0) return '';
+    const jobs = await this.jobRepo.findByIds(contextJobIds);
+    if (jobs.length === 0) return '';
+    const lines = jobs
+      .map((job, i) => {
+        const location = job.location ? ` — ${job.location}` : '';
+        const desc = job.description
+          ? `\n   Description: ${job.description.slice(0, 600)}`
+          : '';
+        return `${i + 1}. [${job.title} @ ${job.company}${location}]${desc}`;
+      })
+      .join('\n');
+    return `The user is asking about the following saved jobs:\n${lines}\n\nAnswer the user's question in relation to these jobs when relevant.\n\n`;
+  }
+
+  private buildPrompt(
+    query: string,
+    context: string,
+    savedJobsContext = '',
+  ): string {
     return `You are a helpful job search assistant. Answer the user's query based ONLY on the job postings provided below.
 Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details.
 
-Job Postings:
+${savedJobsContext}Job Postings:
 ${context}
 
 User Query: ${query}

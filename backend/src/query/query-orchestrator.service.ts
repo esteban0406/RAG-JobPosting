@@ -37,10 +37,11 @@ export class QueryOrchestratorService {
   private async handleRetrieval(
     dto: SearchQueryDto,
   ): Promise<SearchResponseDto> {
-    const result = await this.rag.query(dto.query, {
-      location: dto.location,
-      jobType: dto.type,
-    });
+    const result = await this.rag.query(
+      dto.query,
+      { location: dto.location, jobType: dto.type },
+      dto.contextJobIds,
+    );
     return {
       type: 'retrieval',
       answer: result.answer,
@@ -71,7 +72,7 @@ export class QueryOrchestratorService {
     dto: SearchQueryDto,
   ): Promise<SearchResponseDto> {
     const [ragSettled, aggSettled] = await Promise.allSettled([
-      this.rag.query(dto.query, { location: dto.location, jobType: dto.type }),
+      this.rag.query(dto.query, { location: dto.location, jobType: dto.type }, dto.contextJobIds),
       this.aggregation.queryRaw(c.intent!, c.params ?? []),
     ]);
 

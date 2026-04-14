@@ -18,11 +18,16 @@ export class JwtGuard implements CanActivate {
       .getRequest<Request & { user: JwtPayload }>();
     const authHeader = request.headers['authorization'];
 
-    if (!authHeader?.startsWith('Bearer ')) {
-      throw new UnauthorizedException();
+    let token: string | undefined;
+    if (authHeader?.startsWith('Bearer ')) {
+      token = authHeader.slice(7);
+    } else {
+      token = request.cookies?.['auth-token'] as string | undefined;
     }
 
-    const token = authHeader.slice(7);
+    if (!token) {
+      throw new UnauthorizedException();
+    }
     try {
       const payload = this.jwtService.verify<JwtPayload>(token);
       request.user = payload;

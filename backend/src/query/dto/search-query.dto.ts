@@ -1,8 +1,10 @@
 import {
+  IsArray,
   IsEnum,
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   MinLength,
 } from 'class-validator';
 
@@ -30,4 +32,9 @@ export class SearchQueryDto {
   @IsOptional()
   @IsEnum(JobType)
   type?: JobType;
+
+  @IsOptional()
+  @IsArray()
+  @IsUUID('4', { each: true })
+  contextJobIds?: string[];
 }
