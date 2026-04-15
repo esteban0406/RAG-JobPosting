@@ -172,30 +172,35 @@ export class JobParserService {
     text: string,
     attempt: number,
   ): Promise<ParsedJobDto> {
+    // Explicit raw log for production troubleshooting with Groq responses
+    console.error('Groq raw error response:', err);
+
     // Groq SDK wraps HTTP errors as APIError instances with a .status property
     const status = (err as { status?: number }).status;
     const message = (err as Error).message ?? '';
 
     if (status === 429) {
-      // Check if this is a daily quota error (no retry-after / explicit message)
-      const isDaily =
-        message.toLowerCase().includes('rate_limit_exceeded') &&
-        !this.hasRetryAfter(err);
-
-      if (isDaily) {
+      if (this.isRpdExhausted(err)) {
         this.logger.error('Groq daily quota exhausted — aborting parse queue');
         throw new DailyQuotaExhaustedException();
       }
 
-      // Per-minute rate limit — retry up to 3 times
+      // Per-minute rate limit (RPM or TPM) — retry up to 3 times
       if (attempt >= 3) {
-        this.logger.warn('Groq per-minute limit: max retries reached');
+        this.logger.warn('Groq rate limit: max retries reached');
         return NULL_PARSED_JOB;
       }
 
-      const retryAfter = this.getRetryAfter(err) ?? Math.pow(2, attempt) * 5;
+      const errorType = this.getErrorType(err); // "tokens" | "requests" | null
+      const retryAfter =
+        errorType === 'tokens'
+          ? (this.getTokenResetSeconds(err) ??
+            this.getRetryAfterSeconds(err) ??
+            Math.pow(2, attempt) * 5)
+          : (this.getRetryAfterSeconds(err) ?? Math.pow(2, attempt) * 5);
+
       this.logger.warn(
-        `Groq rate limited (429), retrying in ${retryAfter}s (attempt ${attempt + 1}/3)`,
+        `Groq rate limited (429, type=${errorType ?? 'unknown'}), retrying in ${retryAfter}s (attempt ${attempt + 1}/3)`,
       );
       await this.sleep(retryAfter * 1000);
       return this.parseWithGroq(text, attempt + 1);
@@ -206,19 +211,65 @@ export class JobParserService {
     return NULL_PARSED_JOB;
   }
 
-  private hasRetryAfter(err: unknown): boolean {
-    const headers = (err as { headers?: Record<string, string> }).headers;
-    return !!(
-      headers?.['retry-after'] || headers?.['x-ratelimit-reset-requests']
-    );
+  // Returns true only for RPD (daily request quota) exhaustion.
+  // TPM/RPM errors always have a short reset window and should be retried.
+  private isRpdExhausted(err: unknown): boolean {
+    const message = (err as Error).message ?? '';
+    // Groq error body contains "per day" or "(RPD)" for daily quota errors
+    if (
+      message.toLowerCase().includes('per day') ||
+      message.toLowerCase().includes('(rpd)')
+    ) {
+      return true;
+    }
+    // Belt-and-suspenders: remaining requests = 0 means daily quota is gone
+    return this.getHeader(err, 'x-ratelimit-remaining-requests') === '0';
   }
 
-  private getRetryAfter(err: unknown): number | null {
-    const headers = (err as { headers?: Record<string, string> }).headers;
-    const value = headers?.['retry-after'];
+  // Extracts the rate limit type ("tokens" or "requests") from the Groq error body
+  private getErrorType(err: unknown): string | null {
+    const type = (err as { error?: { error?: { type?: unknown } } }).error
+      ?.error?.type;
+    return typeof type === 'string' ? type : null;
+  }
+
+  // Parses x-ratelimit-reset-tokens header for TPM wait time (e.g. "32.299s", "1m30s")
+  private getTokenResetSeconds(err: unknown): number | null {
+    const value = this.getHeader(err, 'x-ratelimit-reset-tokens');
+    return value ? this.parseGroqDuration(value) : null;
+  }
+
+  // Parses the retry-after header (plain seconds value from Groq)
+  private getRetryAfterSeconds(err: unknown): number | null {
+    const value = this.getHeader(err, 'retry-after');
     if (!value) return null;
     const parsed = parseFloat(value);
     return isNaN(parsed) ? null : parsed;
+  }
+
+  // Reads a response header from a Groq SDK error, handling both
+  // Fetch API Headers objects (require .get()) and plain Record objects.
+  private getHeader(err: unknown, name: string): string | null {
+    const headers = (err as { headers?: unknown }).headers;
+    if (!headers) return null;
+    if (typeof (headers as { get?: unknown }).get === 'function') {
+      return (headers as { get: (n: string) => string | null }).get(name);
+    }
+    return (headers as Record<string, string>)[name] ?? null;
+  }
+
+  // Parses Groq duration strings: "370ms", "9.77s", "1m30.5s", "1h55m12s"
+  private parseGroqDuration(s: string): number {
+    let total = 0;
+    const h = s.match(/(\d+)h/);
+    const m = s.match(/(\d+)m(?!s)/); // "m" not followed by "s" (avoid "ms")
+    const sec = s.match(/([\d.]+)s/);
+    const ms = s.match(/([\d.]+)ms/);
+    if (h) total += parseInt(h[1]) * 3600;
+    if (m) total += parseInt(m[1]) * 60;
+    if (sec) total += parseFloat(sec[1]);
+    if (ms) total += parseFloat(ms[1]) / 1000;
+    return Math.ceil(total);
   }
 
   // ── JSON extraction ───────────────────────────────────────────────────────
