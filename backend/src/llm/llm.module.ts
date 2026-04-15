@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { LlmService } from './llm.service.js';
+import { JobParserService } from './job-parser.service.js';
 
 @Module({
-  providers: [LlmService],
-  exports: [LlmService],
+  providers: [LlmService, JobParserService],
+  exports: [LlmService, JobParserService],
 })
 export class LlmModule {}

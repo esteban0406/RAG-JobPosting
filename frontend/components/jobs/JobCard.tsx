@@ -77,7 +77,7 @@ export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
           title={isSaved ? "Unsave job" : "Save job"}
         >
           <Bookmark
-            size={18}
+            size={25}
             className={cn(
               "transition-colors",
               isSaved ? "fill-accent text-accent" : "text-text-muted hover:text-accent",

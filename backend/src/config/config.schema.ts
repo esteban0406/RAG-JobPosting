@@ -57,6 +57,14 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
+  FINDWORK_API_KEY: string;
+
+  @IsString()
+  @IsOptional()
+  GROQ_API_KEY: string;
+
+  @IsString()
+  @IsOptional()
   OLLAMA_URL: string = 'http://localhost:11434';
 
   @IsString()
@@ -92,6 +100,13 @@ export function validate(config: Record<string, unknown>) {
     !validatedConfig.GEMINI_API_KEY?.trim()
   ) {
     throw new Error('GEMINI_API_KEY is required in production');
+  }
+
+  if (
+    validatedConfig.NODE_ENV === Environment.Production &&
+    !validatedConfig.GROQ_API_KEY?.trim()
+  ) {
+    throw new Error('GROQ_API_KEY is required in production');
   }
 
   return validatedConfig;

@@ -7,38 +7,49 @@ import { EmbeddingService } from '../embedding/embedding.service.js';
 import { JobRepository } from '../storage/job.repository.js';
 import { VectorRepository } from '../storage/vector.repository.js';
 import { PrismaService } from '../storage/prisma.service.js';
-import { AdzunaProvider } from './providers/adzuna.provider.js';
 import { RemotiveProvider } from './providers/remotive.provider.js';
-import { WebNinjaProvider } from './providers/webninja.provider.js';
 import { JobicyProvider } from './providers/jobicy.provider.js';
-import { CareerjetProvider } from './providers/careerjet.provider.js';
+import { FindworkProvider } from './providers/findwork.provider.js';
 import { JobProvider, RawJobDto } from './dto/raw-job.dto.js';
 import { ChunkService } from './chunk.service.js';
+import {
+  DailyQuotaExhaustedException,
+  JobParserService,
+} from '../llm/job-parser.service.js';
+import { NULL_PARSED_JOB, ParsedJobDto } from '../llm/parsed-job.dto.js';
+import { normalizeSalary } from './salary-normalizer.js';
 
 @Injectable()
 export class IngestionService {
   private readonly logger = new Logger(IngestionService.name);
   private isRunning = false;
-  private readonly queue: PQueue;
+  private readonly embedQueue: PQueue;
+  private readonly parseQueue: PQueue;
   private readonly providers: JobProvider[];
 
   constructor(
-    adzuna: AdzunaProvider,
     remotive: RemotiveProvider,
-    webninja: WebNinjaProvider,
     jobicy: JobicyProvider,
-    careerjet: CareerjetProvider,
+    findwork: FindworkProvider,
     private readonly jobRepo: JobRepository,
     private readonly vectorRepo: VectorRepository,
     private readonly embeddingService: EmbeddingService,
     private readonly chunkService: ChunkService,
     private readonly prisma: PrismaService,
+    private readonly jobParser: JobParserService,
   ) {
-    this.providers = [remotive, webninja, jobicy, adzuna];
+    this.providers = [findwork];
+
     const isGemini = embeddingService.provider === 'gemini';
-    // Local model: no rate limits, run concurrently. Gemini: 30 RPM (2s interval)
-    this.queue = new PQueue(
+    this.embedQueue = new PQueue(
       isGemini
+        ? { concurrency: 1, interval: 2000, intervalCap: 1 }
+        : { concurrency: 5 },
+    );
+
+    const isProduction = process.env.NODE_ENV === 'production';
+    this.parseQueue = new PQueue(
+      isProduction
         ? { concurrency: 1, interval: 2000, intervalCap: 1 }
         : { concurrency: 5 },
     );
@@ -86,25 +97,10 @@ export class IngestionService {
             }
             // Job exists but has no embedding — re-enqueue for embedding only
             const jobToEmbed = existing;
-            void this.queue.add(async () => {
+            void this.embedQueue.add(async () => {
               try {
-                const chunks = this.chunkService.buildChunks(raw);
-                const embedded: Array<{
-                  type: string;
-                  text: string;
-                  embedding: number[];
-                  model: string;
-                }> = [];
-                for (const c of chunks) {
-                  const embedding = await this.embeddingService.embed(c.text);
-                  embedded.push({
-                    type: c.type,
-                    text: c.text,
-                    embedding,
-                    model: this.embeddingService.modelName,
-                  });
-                }
-                await this.vectorRepo.upsertChunks(jobToEmbed.id, embedded);
+                const chunks = this.chunkService.buildChunks(raw, jobToEmbed);
+                await this.embedAndStoreChunks(jobToEmbed.id, chunks);
                 this.logger.debug(
                   `Re-embedded job: ${jobToEmbed.title} (${jobToEmbed.company})`,
                 );
@@ -117,39 +113,74 @@ export class IngestionService {
             continue;
           }
 
-          const job = await this.jobRepo.upsertJob({ ...raw, contentHash });
-          stored++;
-
-          void this.queue.add(async () => {
+          // New job — parse then store
+          void this.parseQueue.add(async () => {
+            let parsed: ParsedJobDto;
             try {
-              const chunks = this.chunkService.buildChunks(raw);
-              const embedded: Array<{
-                type: string;
-                text: string;
-                embedding: number[];
-                model: string;
-              }> = [];
-              for (const c of chunks) {
-                const embedding = await this.embeddingService.embed(c.text);
-                embedded.push({
-                  type: c.type,
-                  text: c.text,
-                  embedding,
-                  model: this.embeddingService.modelName,
-                });
-              }
-              await this.vectorRepo.upsertChunks(job.id, embedded);
-              this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
+              parsed = await this.jobParser.parse(raw.description);
             } catch (err) {
-              this.logger.error(
-                `Failed to embed job ${job.id}: ${(err as Error).message}`,
-              );
+              if (err instanceof DailyQuotaExhaustedException) {
+                this.logger.warn(
+                  'Daily quota exhausted — draining parse queue with null results',
+                );
+                this.parseQueue.clear();
+                parsed = NULL_PARSED_JOB;
+              } else {
+                parsed = NULL_PARSED_JOB;
+              }
             }
+
+            const mergedTools = dedupeInsensitive([
+              ...(parsed.tools ?? []),
+              ...filterKeywords(raw.keywords ?? []),
+            ]);
+
+            const salaryNums =
+              raw.minSalary != null || raw.maxSalary != null
+                ? { minSalary: raw.minSalary, maxSalary: raw.maxSalary }
+                : normalizeSalary({ raw: parsed.salary ?? undefined });
+
+            const job = await this.jobRepo.upsertJob({
+              sourceId: raw.sourceId,
+              source: raw.source,
+              title: raw.title,
+              company: raw.company,
+              location: raw.location,
+              description: raw.description,
+              url: raw.url,
+              jobType: raw.jobType,
+              minSalary: salaryNums.minSalary,
+              maxSalary: salaryNums.maxSalary,
+              logo: raw.logo ?? null,
+              contentHash,
+              summary: parsed.summary,
+              salary: parsed.salary,
+              responsibilities: parsed.responsibilities ?? [],
+              requirements: parsed.requirements ?? [],
+              benefits: parsed.benefits ?? [],
+              tools: mergedTools,
+            });
+            stored++;
+
+            void this.embedQueue.add(async () => {
+              try {
+                const chunks = this.chunkService.buildChunks(raw, job);
+                await this.embedAndStoreChunks(job.id, chunks);
+                this.logger.debug(
+                  `Embedded job: ${job.title} (${job.company})`,
+                );
+              } catch (err) {
+                this.logger.error(
+                  `Failed to embed job ${job.id}: ${(err as Error).message}`,
+                );
+              }
+            });
           });
         }
       }
 
-      await this.queue.onIdle();
+      await this.parseQueue.onIdle();
+      await this.embedQueue.onIdle();
       this.logger.log(
         `Ingestion complete — fetched=${fetched} stored=${stored} skipped=${skipped}`,
       );
@@ -158,6 +189,28 @@ export class IngestionService {
     }
 
     return { fetched, stored, skipped };
+  }
+
+  private async embedAndStoreChunks(
+    jobId: string,
+    chunks: Array<{ type: string; text: string }>,
+  ): Promise<void> {
+    const embedded: Array<{
+      type: string;
+      text: string;
+      embedding: number[];
+      model: string;
+    }> = [];
+    for (const c of chunks) {
+      const embedding = await this.embeddingService.embed(c.text);
+      embedded.push({
+        type: c.type,
+        text: c.text,
+        embedding,
+        model: this.embeddingService.modelName,
+      });
+    }
+    await this.vectorRepo.upsertChunks(jobId, embedded);
   }
 
   private async fetchAllPages(provider: JobProvider): Promise<RawJobDto[]> {
@@ -219,25 +272,10 @@ export class IngestionService {
         const job = await this.jobRepo.upsertJob({ ...raw, contentHash });
         stored++;
 
-        void this.queue.add(async () => {
+        void this.embedQueue.add(async () => {
           try {
-            const chunks = this.chunkService.buildChunks(raw);
-            const embedded: Array<{
-              type: string;
-              text: string;
-              embedding: number[];
-              model: string;
-            }> = [];
-            for (const c of chunks) {
-              const embedding = await this.embeddingService.embed(c.text);
-              embedded.push({
-                type: c.type,
-                text: c.text,
-                embedding,
-                model: this.embeddingService.modelName,
-              });
-            }
-            await this.vectorRepo.upsertChunks(job.id, embedded);
+            const chunks = this.chunkService.buildChunks(raw, job);
+            await this.embedAndStoreChunks(job.id, chunks);
             this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
           } catch (err) {
             this.logger.error(
@@ -247,7 +285,7 @@ export class IngestionService {
         });
       }
 
-      await this.queue.onIdle();
+      await this.embedQueue.onIdle();
       this.logger.log(
         `Reset+ingest complete — loaded=${rows.length} stored=${stored}`,
       );
@@ -329,4 +367,33 @@ export class IngestionService {
     );
     return { csv: [headers.join(','), ...rows].join('\n'), count: jobs.length };
   }
+}
+
+function dedupeInsensitive(arr: string[]): string[] {
+  const seen = new Set<string>();
+  return arr.filter((item) => {
+    const key = item.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+// Generic words that provider keyword systems sometimes emit but are not tool names.
+const KEYWORD_STOPWORDS = new Set([
+  'ai', 'ml', 'api', 'qa', 'ux', 'ui',
+  'cloud', 'crm', 'erp', 'cms', 'seo', 'ads',
+  'agents', 'analytics', 'coverage', 'ancestry',
+  'prompting', 'remote', 'saas', 'paas', 'iaas',
+]);
+
+/**
+ * Filters a provider keyword array down to plausible tool/technology names.
+ * Rejects: single-character tokens, known stopwords, and pure-number strings.
+ */
+function filterKeywords(keywords: string[]): string[] {
+  return keywords.filter((kw) => {
+    const lower = kw.toLowerCase().trim();
+    return lower.length >= 2 && !KEYWORD_STOPWORDS.has(lower) && !/^\d+$/.test(lower);
+  });
 }

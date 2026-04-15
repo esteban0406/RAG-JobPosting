@@ -20,8 +20,15 @@ model Job {
   jobType     String?
   minSalary   Int?
   maxSalary   Int?
-  contentHash String
-  fetchedAt   DateTime       @default(now())
+  contentHash      String
+  summary          String?
+  salary           String?
+  responsibilities String[]       @default([])
+  requirements     String[]       @default([])
+  benefits         String[]       @default([])
+  tools            String[]       @default([])
+  logo             String?
+  fetchedAt        DateTime       @default(now())
   createdAt   DateTime       @default(now())
   chunks      JobChunk[]
   favoritedBy UserFavorite[]

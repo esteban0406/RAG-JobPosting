@@ -72,7 +72,11 @@ export class QueryOrchestratorService {
     dto: SearchQueryDto,
   ): Promise<SearchResponseDto> {
     const [ragSettled, aggSettled] = await Promise.allSettled([
-      this.rag.query(dto.query, { location: dto.location, jobType: dto.type }, dto.contextJobIds),
+      this.rag.query(
+        dto.query,
+        { location: dto.location, jobType: dto.type },
+        dto.contextJobIds,
+      ),
       this.aggregation.queryRaw(c.intent!, c.params ?? []),
     ]);
 

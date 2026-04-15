@@ -2,24 +2,122 @@ import { Injectable } from '@nestjs/common';
 import { RawJobDto } from './dto/raw-job.dto.js';
 
 export interface ChunkInput {
-  type: 'identity' | 'salary' | 'requirements' | 'description';
+  type: string;
   text: string;
+}
+
+/** Structured fields extracted by the LLM parser. Passed alongside RawJobDto. */
+export interface StructuredJobData {
+  summary?: string | null;
+  salary?: string | null;
+  responsibilities?: string[];
+  requirements?: string[];
+  benefits?: string[];
+  tools?: string[];
 }
 
 const WINDOW_SIZE = 800;
 const OVERLAP = 200;
-// requirements takes window[0], description takes up to 3 more
 const MAX_WINDOWS = 4;
 
 @Injectable()
 export class ChunkService {
-  buildChunks(job: RawJobDto): ChunkInput[] {
+  /**
+   * Build up to 4 chunks for a job.
+   *
+   * If structured fields are present (parsed by LLM), builds purpose-built chunks:
+   *   1. identity  — title + company + location + jobType + summary
+   *   2. requirements — requirements array
+   *   3. responsibilities + tools
+   *   4. benefits + salary
+   *
+   * Falls back to text-window strategy over `description` when all structured
+   * fields are null/empty (e.g. minimal job postings that the LLM couldn't parse).
+   */
+  buildChunks(job: RawJobDto, structured?: StructuredJobData): ChunkInput[] {
+    const hasStructured = this.hasAnyStructuredContent(structured);
+
+    if (hasStructured && structured) {
+      return this.buildStructuredChunks(job, structured);
+    }
+
+    return this.buildWindowChunks(job);
+  }
+
+  // ── Structured chunk strategy ─────────────────────────────────────────────
+
+  private buildStructuredChunks(
+    job: RawJobDto,
+    s: StructuredJobData,
+  ): ChunkInput[] {
     const chunks: ChunkInput[] = [];
 
-    chunks.push({ type: 'identity', text: this.buildIdentityText(job) });
+    // 1. Identity (always present)
+    chunks.push({ type: 'identity', text: this.buildIdentityText(job, s) });
+
+    // 2. Requirements
+    if (s.requirements?.length) {
+      chunks.push({
+        type: 'requirements',
+        text: `Requirements for ${job.title} at ${job.company}: ${s.requirements.join('. ')}`,
+      });
+    }
+
+    // 3. Responsibilities + Tools
+    const hasResponsibilities = (s.responsibilities?.length ?? 0) > 0;
+    const hasTools = (s.tools?.length ?? 0) > 0;
+    if (hasResponsibilities || hasTools) {
+      const parts: string[] = [];
+      if (hasResponsibilities)
+        parts.push(`Responsibilities: ${s.responsibilities!.join('. ')}`);
+      if (hasTools) parts.push(`Tools: ${s.tools!.join(', ')}`);
+      chunks.push({ type: 'responsibilities', text: parts.join('. ') });
+    }
+
+    // 4. Benefits + Salary
+    const hasBenefits = (s.benefits?.length ?? 0) > 0;
+    const hasSalary = !!s.salary;
+    if (hasBenefits || hasSalary) {
+      const parts: string[] = [];
+      if (hasBenefits)
+        parts.push(`Benefits at ${job.company}: ${s.benefits!.join('. ')}`);
+      if (hasSalary) parts.push(`Compensation: ${s.salary}`);
+      chunks.push({ type: 'benefits', text: parts.join('. ') });
+    }
+
+    return chunks;
+  }
+
+  private buildIdentityText(job: RawJobDto, s: StructuredJobData): string {
+    const parts = [`${job.title} at ${job.company}`];
+    if (job.location) parts.push(`in ${job.location}`);
+    else parts.push('Remote');
+    if (job.jobType) parts.push(job.jobType);
+    if (s.summary) parts.push(s.summary);
+    return parts.join('. ') + '.';
+  }
+
+  // ── Text-window fallback strategy ─────────────────────────────────────────
+
+  private buildWindowChunks(job: RawJobDto): ChunkInput[] {
+    const chunks: ChunkInput[] = [];
+
+    // Identity chunk (no summary available)
+    const identityParts = [`${job.title} at ${job.company}`];
+    if (job.location) identityParts.push(`in ${job.location}`);
+    if (job.jobType) identityParts.push(job.jobType);
+    chunks.push({ type: 'identity', text: identityParts.join('. ') + '.' });
 
     if (job.minSalary != null || job.maxSalary != null) {
-      chunks.push({ type: 'salary', text: this.buildSalaryText(job) });
+      const min =
+        job.minSalary != null ? `$${job.minSalary.toLocaleString()}` : null;
+      const max =
+        job.maxSalary != null ? `$${job.maxSalary.toLocaleString()}` : null;
+      const range = min && max ? `${min}–${max}` : (min ?? max)!;
+      chunks.push({
+        type: 'salary',
+        text: `${job.title} at ${job.company}. Salary: ${range} per year.`,
+      });
     }
 
     const windows = this.splitText(
@@ -38,20 +136,18 @@ export class ChunkService {
     return chunks;
   }
 
-  private buildIdentityText(job: RawJobDto): string {
-    const parts = [`${job.title} at ${job.company}`];
-    if (job.location) parts.push(`in ${job.location}`);
-    if (job.jobType) parts.push(job.jobType);
-    return parts.join('. ') + '.';
-  }
+  // ── Helpers ───────────────────────────────────────────────────────────────
 
-  private buildSalaryText(job: RawJobDto): string {
-    const min =
-      job.minSalary != null ? `$${job.minSalary.toLocaleString()}` : null;
-    const max =
-      job.maxSalary != null ? `$${job.maxSalary.toLocaleString()}` : null;
-    const range = min && max ? `${min}–${max}` : (min ?? max)!;
-    return `${job.title} at ${job.company}. Salary: ${range} per year.`;
+  private hasAnyStructuredContent(s?: StructuredJobData): boolean {
+    if (!s) return false;
+    return !!(
+      s.summary ||
+      s.salary ||
+      (s.responsibilities?.length ?? 0) > 0 ||
+      (s.requirements?.length ?? 0) > 0 ||
+      (s.benefits?.length ?? 0) > 0 ||
+      (s.tools?.length ?? 0) > 0
+    );
   }
 
   /**
@@ -77,13 +173,11 @@ export class ChunkService {
         currentWindow += seg;
         i++;
       } else if (currentWindow.length === 0) {
-        // Single segment larger than window — hard-slice it
         windows.push(seg.slice(0, windowSize));
         currentWindow = seg.slice(windowSize - overlap);
         i++;
       } else {
         windows.push(currentWindow.trim());
-        // Carry overlap from end of current window into next
         currentWindow = currentWindow.slice(
           Math.max(0, currentWindow.length - overlap),
         );
@@ -98,7 +192,6 @@ export class ChunkService {
   }
 
   private splitIntoSegments(text: string): string[] {
-    // Priority 1: paragraph breaks
     const paragraphs = text.split(/\n\n+/);
     const segments: string[] = [];
 
@@ -106,13 +199,11 @@ export class ChunkService {
       if (para.length <= WINDOW_SIZE) {
         segments.push(para + '\n\n');
       } else {
-        // Priority 2: bullet points
         const bullets = para.split(/(?=\n[-•*] )/);
         for (const bullet of bullets) {
           if (bullet.length <= WINDOW_SIZE) {
             segments.push(bullet);
           } else {
-            // Priority 3: sentence boundaries
             const sentences = bullet.split(/(?<=[.!?])\s+/);
             segments.push(...sentences.map((s) => s + ' '));
           }

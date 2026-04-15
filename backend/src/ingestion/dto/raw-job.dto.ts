@@ -9,6 +9,8 @@ export interface RawJobDto {
   jobType?: string;
   minSalary?: number;
   maxSalary?: number;
+  logo?: string;
+  keywords?: string[];
 }
 
 export interface JobProvider {

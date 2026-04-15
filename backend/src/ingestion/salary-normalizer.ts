@@ -51,23 +51,31 @@ function parseAmount(s: string): number {
 }
 
 const HOURLY_PATTERN = /per\s*hour|\/\s*hour|\/\s*hr\b|hourly/i;
+const MONTHLY_PATTERN = /per\s*month|\/\s*month|monthly/i;
+const WEEKLY_PATTERN = /per\s*week|\/\s*week|weekly/i;
+
+// Minimum plausible annual salary — filters out garbage like payment dates ("15th and 30th")
+const MIN_ANNUAL_SALARY = 1_000;
 
 function parseRawString(raw: string): NormalizedSalary {
   if (!raw) return {};
 
-  const isHourly = HOURLY_PATTERN.test(raw);
+  let multiplier = 1;
+  if (HOURLY_PATTERN.test(raw)) multiplier = 2080;
+  else if (MONTHLY_PATTERN.test(raw)) multiplier = 12;
+  else if (WEEKLY_PATTERN.test(raw)) multiplier = 52;
 
   // Match numbers like $60k, $60,000, 60000, 60.5k
   const numPattern = /\$?([\d,]+\.?\d*k?)/gi;
   const matches = [...raw.matchAll(numPattern)]
     .map((m) => parseAmount(m[1]))
-    .map((n) => (isHourly ? Math.round(n * 2080) : n))
-    .filter((n) => n > 0);
+    .map((n) => Math.round(n * multiplier))
+    .filter((n) => n >= MIN_ANNUAL_SALARY);
 
   if (matches.length === 0) return {};
 
-  const min = Math.round(matches[0]);
-  const max = Math.round(matches.length >= 2 ? matches[1] : matches[0]);
+  const min = matches[0];
+  const max = matches.length >= 2 ? matches[1] : matches[0];
 
   return { minSalary: min, maxSalary: max };
 }

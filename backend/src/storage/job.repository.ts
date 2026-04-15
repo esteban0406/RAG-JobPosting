@@ -14,6 +14,13 @@ export interface UpsertJobDto {
   minSalary?: number;
   maxSalary?: number;
   contentHash: string;
+  summary?: string | null;
+  salary?: string | null;
+  responsibilities?: string[];
+  requirements?: string[];
+  benefits?: string[];
+  tools?: string[];
+  logo?: string | null;
 }
 
 export interface JobFilters {

@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ProfileForm } from "@/components/profile/ProfileForm";
-import { SavedJobsList } from "@/components/profile/SavedJobsList";
 import { DeleteAccountDialog } from "@/components/profile/DeleteAccountDialog";
 import type { UserProfile } from "@/lib/auth-store";
 import type { Job } from "@/components/jobs/JobCard";
@@ -35,7 +34,7 @@ async function getProfileData() {
 }
 
 export default async function ProfilePage() {
-  const { user, favorites } = await getProfileData();
+  const { user } = await getProfileData();
 
   return (
     <div className="flex justify-center py-10 px-6">
