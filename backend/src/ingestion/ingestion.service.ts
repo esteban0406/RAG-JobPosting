@@ -130,10 +130,10 @@ export class IngestionService {
               }
             }
 
-            const mergedTools = dedupeInsensitive([
-              ...(parsed.tools ?? []),
+            const mergedSkills = dedupeSubstrings(dedupeInsensitive([
+              ...(parsed.skills ?? []),
               ...filterKeywords(raw.keywords ?? []),
-            ]);
+            ]));
 
             const salaryNums =
               raw.minSalary != null || raw.maxSalary != null
@@ -158,7 +158,7 @@ export class IngestionService {
               responsibilities: parsed.responsibilities ?? [],
               requirements: parsed.requirements ?? [],
               benefits: parsed.benefits ?? [],
-              tools: mergedTools,
+              skills: mergedSkills,
             });
             stored++;
 
@@ -367,6 +367,21 @@ export class IngestionService {
     );
     return { csv: [headers.join(','), ...rows].join('\n'), count: jobs.length };
   }
+}
+
+/**
+ * Removes entries that are a case-insensitive substring of another entry.
+ * Catches provider keywords like "aws" when "AWS/GCP serverless technologies"
+ * is already in the list from the LLM extraction.
+ */
+function dedupeSubstrings(arr: string[]): string[] {
+  const lower = arr.map((s) => s.toLowerCase());
+  return arr.filter((_, i) =>
+    lower.every(
+      (other, j) =>
+        i === j || !other.includes(lower[i]) || other.length === lower[i].length,
+    ),
+  );
 }
 
 function dedupeInsensitive(arr: string[]): string[] {

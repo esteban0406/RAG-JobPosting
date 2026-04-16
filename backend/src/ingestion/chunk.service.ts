@@ -13,7 +13,7 @@ export interface StructuredJobData {
   responsibilities?: string[];
   requirements?: string[];
   benefits?: string[];
-  tools?: string[];
+  skills?: string[];
 }
 
 const WINDOW_SIZE = 800;
@@ -28,7 +28,7 @@ export class ChunkService {
    * If structured fields are present (parsed by LLM), builds purpose-built chunks:
    *   1. identity  — title + company + location + jobType + summary
    *   2. requirements — requirements array
-   *   3. responsibilities + tools
+   *   3. responsibilities + skills
    *   4. benefits + salary
    *
    * Falls back to text-window strategy over `description` when all structured
@@ -63,14 +63,14 @@ export class ChunkService {
       });
     }
 
-    // 3. Responsibilities + Tools
+    // 3. Responsibilities + Skills
     const hasResponsibilities = (s.responsibilities?.length ?? 0) > 0;
-    const hasTools = (s.tools?.length ?? 0) > 0;
-    if (hasResponsibilities || hasTools) {
+    const hasSkills = (s.skills?.length ?? 0) > 0;
+    if (hasResponsibilities || hasSkills) {
       const parts: string[] = [];
       if (hasResponsibilities)
         parts.push(`Responsibilities: ${s.responsibilities!.join('. ')}`);
-      if (hasTools) parts.push(`Tools: ${s.tools!.join(', ')}`);
+      if (hasSkills) parts.push(`Skills: ${s.skills!.join(', ')}`);
       chunks.push({ type: 'responsibilities', text: parts.join('. ') });
     }
 
@@ -146,7 +146,7 @@ export class ChunkService {
       (s.responsibilities?.length ?? 0) > 0 ||
       (s.requirements?.length ?? 0) > 0 ||
       (s.benefits?.length ?? 0) > 0 ||
-      (s.tools?.length ?? 0) > 0
+      (s.skills?.length ?? 0) > 0
     );
   }
 

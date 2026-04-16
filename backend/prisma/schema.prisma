@@ -26,7 +26,7 @@ model Job {
   responsibilities String[]       @default([])
   requirements     String[]       @default([])
   benefits         String[]       @default([])
-  tools            String[]       @default([])
+  skills           String[]       @default([])
   logo             String?
   fetchedAt        DateTime       @default(now())
   createdAt   DateTime       @default(now())

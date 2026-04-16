@@ -19,7 +19,7 @@ export interface UpsertJobDto {
   responsibilities?: string[];
   requirements?: string[];
   benefits?: string[];
-  tools?: string[];
+  skills?: string[];
   logo?: string | null;
 }
 

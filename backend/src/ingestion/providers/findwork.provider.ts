@@ -5,7 +5,7 @@ import { JobProvider, RawJobDto } from '../dto/raw-job.dto.js';
 const SOURCE = 'findwork';
 const BASE_URL = 'https://findwork.dev/api/jobs/';
 const PAGE_SIZE = 50;
-const MAX_JOBS = 1000;
+const MAX_JOBS = 50;
 
 interface FindworkJob {
   id: string;
@@ -37,6 +37,7 @@ export class FindworkProvider implements JobProvider {
   private rateLimited = false;
   private seenIds = new Set<string>();
   private totalFetched = 0;
+  private hasNextPageFlag = false;
 
   constructor(config: ConfigService) {
     this.apiKey = config.get<string>('FINDWORK_API_KEY') ?? '';
@@ -47,6 +48,7 @@ export class FindworkProvider implements JobProvider {
       this.rateLimited = false;
       this.seenIds.clear();
       this.totalFetched = 0;
+      this.hasNextPageFlag = false;
     }
 
     if (this.rateLimited || !this.apiKey) {
@@ -106,15 +108,14 @@ export class FindworkProvider implements JobProvider {
         keywords: j.keywords ?? [],
       }));
 
+    this.hasNextPageFlag = data.next !== null;
     this.totalFetched += jobs.length;
     return jobs;
   }
 
-  hasNextPage(_page: number, results: RawJobDto[]): boolean {
+  hasNextPage(_page: number, _results: RawJobDto[]): boolean {
     return (
-      !this.rateLimited &&
-      results.length === PAGE_SIZE &&
-      this.totalFetched < MAX_JOBS
+      !this.rateLimited && this.hasNextPageFlag && this.totalFetched < MAX_JOBS
     );
   }
 

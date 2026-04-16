@@ -4,7 +4,7 @@ export interface ParsedJobDto {
   responsibilities: string[] | null;
   requirements: string[] | null;
   benefits: string[] | null;
-  tools: string[] | null;
+  skills: string[] | null;
 }
 
 export const NULL_PARSED_JOB: ParsedJobDto = {
@@ -13,5 +13,5 @@ export const NULL_PARSED_JOB: ParsedJobDto = {
   responsibilities: null,
   requirements: null,
   benefits: null,
-  tools: null,
+  skills: null,
 };

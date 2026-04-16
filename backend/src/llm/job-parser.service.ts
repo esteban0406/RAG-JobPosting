@@ -14,7 +14,7 @@ Return ONLY a valid JSON object with EXACTLY these keys:
   "responsibilities": string[] | null,
   "requirements": string[] | null,
   "benefits": string[] | null,
-  "tools": string[] | null
+  "skills": string[] | null
 }
 
 -----------------------
@@ -51,18 +51,47 @@ BENEFITS:
 - Include items like: bonuses, insurance, PTO, stock plans, wellness programs, etc.
 - Ignore generic company culture statements.
 
-TOOLS:
-- Extract ONLY specific named technologies, tools, platforms, frameworks, or software products.
-- Good examples: "React", "Node.js", "PostgreSQL", "AWS", "Salesforce Marketing Cloud", "Azure DevOps", "GitHub Actions"
+SKILLS:
+- Extract ALL skills that a qualified candidate would list on their resume or LinkedIn profile.
+- Capture both categories:
+  (a) Named software, tools, platforms, and technologies
+      ✓ "React", "AWS", "PostgreSQL", "Figma", "Salesforce Marketing Cloud", "GitHub Actions"
+  (b) Professional competencies, methodologies, and domain expertise
+      ✓ "A/B testing", "stakeholder management", "SEO", "content strategy", "agile",
+         "product roadmapping", "user research", "CI/CD", "ETL pipelines", "fraud detection",
+         "lifecycle marketing", "financial modeling", "supply chain management"
 
-STRICT TOOL RULES:
-- DO NOT include generic paradigms, techniques, industries, or concepts. Examples of things to EXCLUDE:
-  - paradigms/techniques: "restful", "rag", "etl", "nosql", "ci/cd", "microservices", "accessibility"
-  - industries/domains: "fintech", "govcon", "saas", "b2b"
-  - vague platform categories: "cloud", "crm", "ai", "analytics", "containers", "agents"
-  - partial/abbreviated names: "net" (use ".NET"), "node" (use "Node.js"), "react" (use "React")
-- DO NOT include company names unless they are explicitly used as a software tool or platform in the job description.
-- DEDUPLICATION: If a specific product name is already in the list (e.g. "Salesforce Marketing Cloud"), do NOT also add its parent brand as a separate entry (e.g. do NOT add "Salesforce" or "salesforce"). Keep only the most specific version. Apply this rule to all tool families (Azure, AWS, Google, Salesforce, Microsoft, etc.).
+STRICT SKILLS RULES:
+1. RESUME TEST — Only include terms a professional would explicitly claim as a skill.
+   Ask: "Would a recruiter meaningfully filter candidates on this term?" If not, exclude it.
+2. EXCLUDE generic soft skills: "communication", "teamwork", "leadership", "passion",
+   "problem-solving", "attention to detail", "innovative thinking", "fast learner"
+3. EXCLUDE pure industry or business model labels: "fintech", "saas", "b2b", "enterprise",
+   "govcon", "e-commerce" — these describe context, not ability.
+4. EXCLUDE vague capability categories: "cloud", "ai", "data", "analytics", "automation",
+   "mobile", "security" — too broad; include the specific technology or specialization instead.
+5. INCLUDE specific methodologies and techniques when named as requirements:
+   "agile", "scrum", "kanban", "CI/CD", "SEO", "A/B testing", "test-driven development",
+   "root cause analysis", "data modeling", "sprint planning", "OKRs"
+6. CANONICAL NAMES — Always use the standard, correctly capitalised name:
+   "Node.js" not "node", "React" not "react", ".NET" not "net",
+   "TypeScript" not "typescript", "PostgreSQL" not "postgres", "Kubernetes" not "k8s".
+   Never include both a full name and its abbreviated or lowercase variant in the same list.
+7. DEDUPLICATION — Keep only the most specific version. If "Salesforce Marketing Cloud"
+   is present, do NOT also add "Salesforce". Apply to all product families.
+8. CONCISENESS — Each entry must be a concise noun phrase of 1–6 words with NO parenthetical content.
+   Two patterns to handle:
+   (a) Parenthetical lists named items → split into separate entries, drop the wrapper label:
+       ✗ "ORMs (e.g., SQLAlchemy, Django ORM)"          → ✓ "SQLAlchemy", "Django ORM"
+       ✗ "AI tools (ChatGPT, Midjourney)"               → ✓ "ChatGPT", "Midjourney"
+       ✗ "LLMs (OpenAI, Anthropic)"                     → ✓ "OpenAI API", "Anthropic API"
+   (b) Parenthetical explains or abbreviates the main term → keep the main term only, drop the parenthetical:
+       ✗ "RBAC (Role-Based Access Control)"             → ✓ "RBAC"
+       ✗ "Azure DevOps (ADO)"                           → ✓ "Azure DevOps"
+       ✗ "Microsoft Dynamics 365 (Sales module)"        → ✓ "Microsoft Dynamics 365"
+   Never write explanatory clauses or full sentences as a single entry:
+       ✗ "Analytical ability and comfort with performance measurement: cohort retention..." → ✓ "cohort analysis"
+       ✗ "Experience designing for B2B SaaS dashboards as well as consumer-facing interfaces" → ✓ "dashboard design"
 
 SALARY:
 - Extract salary exactly as written (range, currency, format).
@@ -90,7 +119,7 @@ export class JobParserService {
   private readonly ollamaModel: string;
   private readonly groq: Groq | null = null;
 
-  constructor(private readonly config: ConfigService) {
+  constructor(config: ConfigService) {
     this.isDev = config.get<string>('NODE_ENV') !== 'production';
     this.ollamaUrl = `${config.get<string>('OLLAMA_URL') ?? 'http://localhost:11434'}/v1/chat/completions`;
     this.ollamaModel = config.get<string>('OLLAMA_MODEL') ?? 'llama3.1:8b';
@@ -307,7 +336,7 @@ export class JobParserService {
       responsibilities: this.toStringArray(o.responsibilities),
       requirements: this.toStringArray(o.requirements),
       benefits: this.toStringArray(o.benefits),
-      tools: this.deduplicateTools(this.toStringArray(o.tools)),
+      skills: this.deduplicateSkills(this.toStringArray(o.skills)),
     };
   }
 
@@ -318,14 +347,14 @@ export class JobParserService {
   }
 
   /**
-   * Removes tools that are a case-insensitive substring of another tool in
+   * Removes skills that are a case-insensitive substring of another skill in
    * the same list. This catches model dedup failures like returning both
    * "Salesforce Marketing Cloud" and "salesforce" — the shorter one is dropped.
    */
-  private deduplicateTools(tools: string[] | null): string[] | null {
-    if (!tools) return null;
-    const lower = tools.map((t) => t.toLowerCase());
-    const kept = tools.filter((_, i) =>
+  private deduplicateSkills(skills: string[] | null): string[] | null {
+    if (!skills) return null;
+    const lower = skills.map((t) => t.toLowerCase());
+    const kept = skills.filter((_, i) =>
       lower.every(
         (other, j) =>
           i === j ||
