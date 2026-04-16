@@ -52,15 +52,17 @@ BENEFITS:
 - Ignore generic company culture statements.
 
 TOOLS:
-- Extract ONLY specific technologies, tools, platforms, frameworks, or software.
-- Examples: "React", "Node.js", "PostgreSQL", "AWS", "Salesforce Marketing Cloud"
+- Extract ONLY specific named technologies, tools, platforms, frameworks, or software products.
+- Good examples: "React", "Node.js", "PostgreSQL", "AWS", "Salesforce Marketing Cloud", "Azure DevOps", "GitHub Actions"
 
 STRICT TOOL RULES:
-- DO NOT include:
-  - generic terms (e.g., "analytics", "AI", "cloud", "CRM", "agents")
-  - company names unless they are clearly tools or platforms
-  - random nouns, adjectives, or irrelevant words
-- Deduplicate tools (keep the most specific name, e.g. prefer "Salesforce Marketing Cloud" over "Salesforce")
+- DO NOT include generic paradigms, techniques, industries, or concepts. Examples of things to EXCLUDE:
+  - paradigms/techniques: "restful", "rag", "etl", "nosql", "ci/cd", "microservices", "accessibility"
+  - industries/domains: "fintech", "govcon", "saas", "b2b"
+  - vague platform categories: "cloud", "crm", "ai", "analytics", "containers", "agents"
+  - partial/abbreviated names: "net" (use ".NET"), "node" (use "Node.js"), "react" (use "React")
+- DO NOT include company names unless they are explicitly used as a software tool or platform in the job description.
+- DEDUPLICATION: If a specific product name is already in the list (e.g. "Salesforce Marketing Cloud"), do NOT also add its parent brand as a separate entry (e.g. do NOT add "Salesforce" or "salesforce"). Keep only the most specific version. Apply this rule to all tool families (Azure, AWS, Google, Salesforce, Microsoft, etc.).
 
 SALARY:
 - Extract salary exactly as written (range, currency, format).
@@ -305,7 +307,7 @@ export class JobParserService {
       responsibilities: this.toStringArray(o.responsibilities),
       requirements: this.toStringArray(o.requirements),
       benefits: this.toStringArray(o.benefits),
-      tools: this.toStringArray(o.tools),
+      tools: this.deduplicateTools(this.toStringArray(o.tools)),
     };
   }
 
@@ -313,6 +315,25 @@ export class JobParserService {
     if (!Array.isArray(val)) return null;
     const filtered = val.filter((v): v is string => typeof v === 'string');
     return filtered.length > 0 ? filtered : null;
+  }
+
+  /**
+   * Removes tools that are a case-insensitive substring of another tool in
+   * the same list. This catches model dedup failures like returning both
+   * "Salesforce Marketing Cloud" and "salesforce" — the shorter one is dropped.
+   */
+  private deduplicateTools(tools: string[] | null): string[] | null {
+    if (!tools) return null;
+    const lower = tools.map((t) => t.toLowerCase());
+    const kept = tools.filter((_, i) =>
+      lower.every(
+        (other, j) =>
+          i === j ||
+          !other.includes(lower[i]) ||
+          other.length === lower[i].length,
+      ),
+    );
+    return kept.length > 0 ? kept : null;
   }
 
   private sleep(ms: number): Promise<void> {
