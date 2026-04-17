@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { JobCard, type Job } from "./JobCard";
-import { JobDetailDrawer } from "./JobDetailDrawer";
+import { JobDetailModal } from "./JobDetailModal";
 import { AiDrawer } from "@/components/ai/AiDrawer";
 import { useAuthStore } from "@/lib/auth-store";
 import { fetchApi, ApiError } from "@/lib/api";
@@ -183,8 +183,8 @@ export function JobsGrid({
         Ask AI
       </button>
 
-      {/* Job Detail Drawer */}
-      <JobDetailDrawer
+      {/* Job Detail Modal */}
+      <JobDetailModal
         job={selectedJob}
         open={detailOpen}
         isSaved={selectedJob ? saved.has(selectedJob.id) : false}

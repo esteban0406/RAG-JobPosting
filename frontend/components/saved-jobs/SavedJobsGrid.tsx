@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { fetchApi } from "@/lib/api";
 import type { Job } from "@/components/jobs/JobCard";
 import { JobCard } from "@/components/jobs/JobCard";
-import { JobDetailDrawer } from "@/components/jobs/JobDetailDrawer";
+import { JobDetailModal } from "@/components/jobs/JobDetailModal";
 import { SavedJobsAiDrawer } from "./SavedJobsAiDrawer";
 
 interface SavedJobsGridProps {
@@ -155,8 +155,8 @@ export function SavedJobsGrid({ initialJobs }: SavedJobsGridProps) {
         contextJobIds={selectedIds}
       />
 
-      {/* Job detail drawer */}
-      <JobDetailDrawer
+      {/* Job detail modal */}
+      <JobDetailModal
         job={selectedJob}
         open={detailOpen}
         isSaved={true}

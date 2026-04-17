@@ -12,6 +12,12 @@ export interface Job {
   source: string;
   url: string;
   description: string;
+  summary: string | null;
+  responsibilities: string[];
+  requirements: string[];
+  benefits: string[];
+  skills: string[];
+  logo: string | null;
 }
 
 const JOB_TYPE_LABELS: Record<string, string> = {
@@ -26,12 +32,17 @@ function SalaryRange({ min, max }: { min: number | null; max: number | null }) {
   if (!min && !max) return null;
   const fmt = (n: number) =>
     n >= 1000 ? `$${Math.round(n / 1000)}k` : `$${n}`;
-  if (min && max) return <span>{fmt(min)}–{fmt(max)}</span>;
+  if (min && max)
+    return (
+      <span>
+        {fmt(min)}–{fmt(max)}
+      </span>
+    );
   if (min) return <span>from {fmt(min)}</span>;
   return <span>up to {fmt(max!)}</span>;
 }
 
-function JobTypeBadge({ type }: { type: string }) {
+export function JobTypeBadge({ type }: { type: string }) {
   const isRemote = type === "remote";
   return (
     <span
@@ -56,13 +67,15 @@ interface JobCardProps {
 
 export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
   const salary = <SalaryRange min={job.minSalary} max={job.maxSalary} />;
+  const visibleSkills = job.skills.slice(0, 3);
+  const extraSkills = job.skills.length - visibleSkills.length;
 
   return (
     <div
       onClick={onClick}
       className="bg-bg-surface border border-border rounded-[var(--radius-md)] p-5 flex flex-col gap-3 cursor-pointer hover:border-accent/50 transition-colors group"
     >
-      {/* Header */}
+      {/* Row 1 — Title + Bookmark */}
       <div className="flex items-start justify-between">
         <span className="text-text-primary font-bold text-base leading-snug group-hover:text-accent-glow transition-colors">
           {job.title}
@@ -80,26 +93,65 @@ export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
             size={25}
             className={cn(
               "transition-colors",
-              isSaved ? "fill-accent text-accent" : "text-text-muted hover:text-accent",
+              isSaved
+                ? "fill-accent text-accent"
+                : "text-text-muted hover:text-accent",
             )}
           />
         </button>
       </div>
 
-      {/* Company · Location · Salary */}
+      {/* Row 2 — Company · Location · Salary */}
       <span className="text-text-secondary text-sm">
         {job.company}
         {job.location ? ` · ${job.location}` : ""}
         {salary ? " · " : ""}
-        {salary}
+        <span className="text-green-600 font-semibold">{salary}</span>
       </span>
 
-      {/* Footer badges */}
+      {/* Row 3 — Summary */}
+      {job.summary && (
+        <p className="text-text-secondary text-sm leading-relaxed line-clamp-2">
+          {job.summary}
+        </p>
+      )}
+
+      {/* Row 4 — Skills + Logo */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          {job.jobType && <JobTypeBadge type={job.jobType} />}
+        <div className="flex items-center gap-2 flex-wrap">
+          {visibleSkills.length > 0 ? (
+            <>
+              {visibleSkills.map((skill) => (
+                <span
+                  key={skill}
+                  className="bg-bg-surface-2 text-text-secondary text-xs font-medium px-2.5 py-1 rounded-full"
+                >
+                  {skill}
+                </span>
+              ))}
+              {extraSkills > 0 && (
+                <span className="bg-bg-surface-2 text-text-muted text-xs font-medium px-2.5 py-1 rounded-full">
+                  +{extraSkills}
+                </span>
+              )}
+            </>
+          ) : (
+            job.jobType && <JobTypeBadge type={job.jobType} />
+          )}
         </div>
-        <span className="text-text-muted text-xs">via {job.source}</span>
+        {job.logo && (
+          <div className="w-8 h-8 rounded-md bg-bg-surface-2 flex items-center justify-center overflow-hidden shrink-0 ml-2">
+            <img
+              src={job.logo}
+              alt={`${job.company} logo`}
+              className="w-full h-full object-contain"
+              onError={(e) => {
+                const el = e.currentTarget;
+                if (el.parentElement) el.parentElement.style.display = "none";
+              }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

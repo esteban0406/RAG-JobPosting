@@ -42,7 +42,14 @@ export class AuthService {
 
     const passwordHash = await bcrypt.hash(dto.password, this.bcryptRounds);
     const user = await this.prisma.user.create({
-      data: { email: dto.email, passwordHash, name: dto.name },
+      data: {
+        email: dto.email,
+        passwordHash,
+        name: dto.name,
+        skills: dto.skills ?? [],
+        preferredFields: dto.preferredFields ?? [],
+        location: dto.location,
+      },
     });
 
     const accessToken = this.jwtService.sign({ sub: user.id, role: 'user' });

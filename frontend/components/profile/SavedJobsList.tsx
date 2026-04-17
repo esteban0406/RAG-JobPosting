@@ -5,7 +5,7 @@ import { Bookmark, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 import { fetchApi } from "@/lib/api";
 import type { Job } from "@/components/jobs/JobCard";
-import { JobDetailDrawer } from "@/components/jobs/JobDetailDrawer";
+import { JobDetailModal } from "@/components/jobs/JobDetailModal";
 
 interface SavedJobsListProps {
   initialJobs: Job[];
@@ -82,7 +82,7 @@ export function SavedJobsList({ initialJobs }: SavedJobsListProps) {
         ))}
       </div>
 
-      <JobDetailDrawer
+      <JobDetailModal
         job={selectedJob}
         open={drawerOpen}
         isSaved={true}

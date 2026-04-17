@@ -1,5 +1,5 @@
 {
-  "version": "2.10",
+  "version": "2.11",
   "children": [
     {
       "type": "frame",
@@ -2925,44 +2925,108 @@
                           "fontWeight": "normal"
                         },
                         {
-                          "type": "frame",
-                          "id": "PM5mJ",
-                          "name": "c1m",
+                          "type": "text",
+                          "id": "WHU8T",
+                          "name": "c1sum",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "gap": 8,
+                          "content": "Build the deployment UI, drive high-performance React architecture, and collaborate with design and infrastructure teams.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "k0ti3",
+                          "name": "c1footer",
+                          "width": "fill_container",
                           "justifyContent": "space_between",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "frame",
-                              "id": "A9f8O",
-                              "name": "c1badge",
-                              "fill": "$badge-remote",
-                              "cornerRadius": "$radius-pill",
-                              "padding": [
-                                4,
-                                10
-                              ],
+                              "id": "w73im",
+                              "name": "c1skL",
+                              "gap": 6,
+                              "alignItems": "center",
                               "children": [
                                 {
-                                  "type": "text",
-                                  "id": "RQ3LL",
-                                  "fill": "#6EE7B7",
-                                  "content": "Remote",
-                                  "fontFamily": "Inter",
-                                  "fontSize": 12,
-                                  "fontWeight": "500"
+                                  "type": "frame",
+                                  "id": "hGZL4",
+                                  "name": "c1sk1",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "SSSpD",
+                                      "fill": "$text-secondary",
+                                      "content": "React",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "SCEHt",
+                                  "name": "c1sk2",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "WYKXP",
+                                      "fill": "$text-secondary",
+                                      "content": "TypeScript",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "M0Q2B",
+                                  "name": "c1sk3",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "bGHOT",
+                                      "fill": "$text-secondary",
+                                      "content": "Next.js",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
                                 }
                               ]
                             },
                             {
-                              "type": "text",
-                              "id": "bKKCx",
-                              "fill": "$text-muted",
-                              "content": "via Adzuna",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "normal"
+                              "type": "rectangle",
+                              "cornerRadius": "$radius-sm",
+                              "id": "h0Krn",
+                              "fill": "$bg-surface-2",
+                              "width": 32,
+                              "height": 32
                             }
                           ]
                         }
@@ -3022,44 +3086,108 @@
                           "fontWeight": "normal"
                         },
                         {
-                          "type": "frame",
-                          "id": "FChdj",
-                          "name": "c3m",
+                          "type": "text",
+                          "id": "vmvMg",
+                          "name": "c3sum",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "gap": 8,
+                          "content": "Architect distributed payment systems at scale, mentor engineers, and collaborate across teams in New York and remote.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "DnmQR",
+                          "name": "c3footer",
+                          "width": "fill_container",
                           "justifyContent": "space_between",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "frame",
-                              "id": "M4mKi",
-                              "name": "c3badge",
-                              "fill": "$badge-fulltime",
-                              "cornerRadius": "$radius-pill",
-                              "padding": [
-                                4,
-                                10
-                              ],
+                              "id": "SMjbr",
+                              "name": "c3skL",
+                              "gap": 6,
+                              "alignItems": "center",
                               "children": [
                                 {
-                                  "type": "text",
-                                  "id": "J7Ouz",
-                                  "fill": "#93C5FD",
-                                  "content": "Full-time",
-                                  "fontFamily": "Inter",
-                                  "fontSize": 12,
-                                  "fontWeight": "500"
+                                  "type": "frame",
+                                  "id": "ivVwf",
+                                  "name": "c3sk1",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "cNEFk",
+                                      "fill": "$text-secondary",
+                                      "content": "Python",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "Jb72r",
+                                  "name": "c3sk2",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "LKIQe",
+                                      "fill": "$text-secondary",
+                                      "content": "Go",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "iLw0I",
+                                  "name": "c3sk3",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "4UTPc",
+                                      "fill": "$text-secondary",
+                                      "content": "PostgreSQL",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
                                 }
                               ]
                             },
                             {
-                              "type": "text",
-                              "id": "Xbd18",
-                              "fill": "$text-muted",
-                              "content": "via CareerJet",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "normal"
+                              "type": "rectangle",
+                              "cornerRadius": "$radius-sm",
+                              "id": "QuvTX",
+                              "fill": "$bg-surface-2",
+                              "width": 32,
+                              "height": 32
                             }
                           ]
                         }
@@ -3129,44 +3257,108 @@
                           "fontWeight": "normal"
                         },
                         {
-                          "type": "frame",
-                          "id": "ry2qG",
-                          "name": "c2m",
+                          "type": "text",
+                          "id": "hneP1",
+                          "name": "c2sum",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "gap": 8,
+                          "content": "Define visual systems, prototype complex interactions across Figma's core products, and partner with engineering teams.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "5etEj",
+                          "name": "c2footer",
+                          "width": "fill_container",
                           "justifyContent": "space_between",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "frame",
-                              "id": "3JITY",
-                              "name": "c2badge",
-                              "fill": "$badge-fulltime",
-                              "cornerRadius": "$radius-pill",
-                              "padding": [
-                                4,
-                                10
-                              ],
+                              "id": "1INW2",
+                              "name": "c2skL",
+                              "gap": 6,
+                              "alignItems": "center",
                               "children": [
                                 {
-                                  "type": "text",
-                                  "id": "rto2N",
-                                  "fill": "#93C5FD",
-                                  "content": "Full-time",
-                                  "fontFamily": "Inter",
-                                  "fontSize": 12,
-                                  "fontWeight": "500"
+                                  "type": "frame",
+                                  "id": "UjAME",
+                                  "name": "c2sk1",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "Y5ruK",
+                                      "fill": "$text-secondary",
+                                      "content": "Figma",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "qvh10",
+                                  "name": "c2sk2",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "gMpvD",
+                                      "fill": "$text-secondary",
+                                      "content": "Prototyping",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "aoSqL",
+                                  "name": "c2sk3",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "yd9Ff",
+                                      "fill": "$text-secondary",
+                                      "content": "Design Systems",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
                                 }
                               ]
                             },
                             {
-                              "type": "text",
-                              "id": "rNsMH",
-                              "fill": "$text-muted",
-                              "content": "via Remotive",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "normal"
+                              "type": "rectangle",
+                              "cornerRadius": "$radius-sm",
+                              "id": "exbBO",
+                              "fill": "$bg-surface-2",
+                              "width": 32,
+                              "height": 32
                             }
                           ]
                         }
@@ -3226,44 +3418,130 @@
                           "fontWeight": "normal"
                         },
                         {
-                          "type": "frame",
-                          "id": "D4nWS",
-                          "name": "c4m",
+                          "type": "text",
+                          "id": "KoLq5",
+                          "name": "c4sum",
+                          "fill": "$text-secondary",
+                          "textGrowth": "fixed-width",
                           "width": "fill_container",
-                          "gap": 8,
+                          "content": "Drive LLM research and model evaluation at OpenAI. Shape alignment techniques and safety research on cutting-edge models.",
+                          "lineHeight": 1.5,
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "leqyC",
+                          "name": "c4footer",
+                          "width": "fill_container",
                           "justifyContent": "space_between",
                           "alignItems": "center",
                           "children": [
                             {
                               "type": "frame",
-                              "id": "fbr6U",
-                              "name": "c4badge",
-                              "fill": "$badge-remote",
-                              "cornerRadius": "$radius-pill",
-                              "padding": [
-                                4,
-                                10
-                              ],
+                              "id": "Q2Zfk",
+                              "name": "c4skL",
+                              "gap": 6,
+                              "alignItems": "center",
                               "children": [
                                 {
-                                  "type": "text",
-                                  "id": "yqQws",
-                                  "fill": "#6EE7B7",
-                                  "content": "Remote",
-                                  "fontFamily": "Inter",
-                                  "fontSize": 12,
-                                  "fontWeight": "500"
+                                  "type": "frame",
+                                  "id": "wRm1d",
+                                  "name": "c4sk1",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "xUeFR",
+                                      "fill": "$text-secondary",
+                                      "content": "Python",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "gFqWg",
+                                  "name": "c4sk2",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "u43dH",
+                                      "fill": "$text-secondary",
+                                      "content": "PyTorch",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "SjmV5",
+                                  "name": "c4sk3",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "rceGM",
+                                      "fill": "$text-secondary",
+                                      "content": "LLMs",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "frame",
+                                  "id": "xF3py",
+                                  "name": "c4more",
+                                  "fill": "$bg-surface-2",
+                                  "cornerRadius": "$radius-pill",
+                                  "padding": [
+                                    4,
+                                    10
+                                  ],
+                                  "children": [
+                                    {
+                                      "type": "text",
+                                      "id": "IOQz9",
+                                      "fill": "$text-muted",
+                                      "content": "+3",
+                                      "fontFamily": "Inter",
+                                      "fontSize": 12,
+                                      "fontWeight": "normal"
+                                    }
+                                  ]
                                 }
                               ]
                             },
                             {
-                              "type": "text",
-                              "id": "rGdmY",
-                              "fill": "$text-muted",
-                              "content": "via Jobicy",
-                              "fontFamily": "Inter",
-                              "fontSize": 12,
-                              "fontWeight": "normal"
+                              "type": "rectangle",
+                              "cornerRadius": "$radius-sm",
+                              "id": "RQeOJ",
+                              "fill": "$bg-surface-2",
+                              "width": 32,
+                              "height": 32
                             }
                           ]
                         }
@@ -3328,16 +3606,15 @@
       "id": "h51eA",
       "x": 7600,
       "y": 700,
-      "name": "06 Job Detail — Drawer",
+      "name": "06 Job Detail — Modal",
       "clip": true,
-      "width": 560,
+      "width": 640,
       "height": 900,
       "fill": "$bg-surface",
+      "cornerRadius": "$radius-lg",
       "stroke": {
         "align": "inside",
-        "thickness": {
-          "left": 1
-        },
+        "thickness": 1,
         "fill": "$border"
       },
       "layout": "vertical",
@@ -3401,23 +3678,41 @@
                 },
                 {
                   "type": "frame",
-                  "id": "AleiV",
-                  "name": "closeBtn",
-                  "width": 32,
-                  "height": 32,
-                  "fill": "$bg-surface-2",
-                  "cornerRadius": "$radius-sm",
-                  "justifyContent": "center",
+                  "id": "qrCso",
+                  "name": "rightGroup",
+                  "gap": 8,
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
-                      "id": "8O0Sm",
-                      "width": 16,
-                      "height": 16,
-                      "iconFontName": "x",
-                      "iconFontFamily": "lucide",
-                      "fill": "$text-secondary"
+                      "type": "rectangle",
+                      "cornerRadius": "$radius-sm",
+                      "id": "PdzDE",
+                      "name": "logoSlot",
+                      "fill": "$bg-surface-2",
+                      "width": 40,
+                      "height": 40
+                    },
+                    {
+                      "type": "frame",
+                      "id": "hsyK8",
+                      "name": "closeBtn",
+                      "width": 32,
+                      "height": 32,
+                      "fill": "$bg-surface-2",
+                      "cornerRadius": "$radius-sm",
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "rZSsW",
+                          "width": 16,
+                          "height": 16,
+                          "iconFontName": "x",
+                          "iconFontFamily": "lucide",
+                          "fill": "$text-secondary"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -3482,28 +3777,6 @@
                       "fontFamily": "Inter",
                       "fontSize": 13,
                       "fontWeight": "500"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "4dACA",
-                  "name": "srcBadge",
-                  "fill": "$bg-surface-2",
-                  "cornerRadius": "$radius-pill",
-                  "padding": [
-                    5,
-                    12
-                  ],
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "AOTGz",
-                      "fill": "$text-muted",
-                      "content": "via Adzuna",
-                      "fontFamily": "Inter",
-                      "fontSize": 13,
-                      "fontWeight": "normal"
                     }
                   ]
                 }
@@ -3630,6 +3903,19 @@
             },
             {
               "type": "text",
+              "id": "C5KHb",
+              "name": "summaryNode",
+              "fill": "$text-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Lead the frontend platform at Vercel. Drive React performance, own the deployment UI, and collaborate across product and infra teams.",
+              "lineHeight": 1.6,
+              "fontFamily": "Inter",
+              "fontSize": 14,
+              "fontWeight": "600"
+            },
+            {
+              "type": "text",
               "id": "QYllR",
               "fill": "$text-secondary",
               "textGrowth": "fixed-width",
@@ -3639,6 +3925,122 @@
               "fontFamily": "Inter",
               "fontSize": 15,
               "fontWeight": "normal"
+            },
+            {
+              "type": "rectangle",
+              "id": "Lihhy",
+              "name": "divResp",
+              "fill": "$border",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "ZEaaJ",
+              "name": "respSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JZY8X",
+                  "fill": "$text-primary",
+                  "content": "Responsibilities",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "PecUx",
+                  "name": "resp1",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "nc9bz",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "aYMvC",
+                      "fill": "$text-secondary",
+                      "content": "Own end-to-end architecture of the deployment pipeline UI",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "1euOe",
+                  "name": "resp2",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "IoYuk",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Ikk1R",
+                      "fill": "$text-secondary",
+                      "content": "Mentor junior engineers and drive frontend best practices",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "TOPLy",
+                  "name": "resp3",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "P7Ul9",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$accent"
+                    },
+                    {
+                      "type": "text",
+                      "id": "cJ9zw",
+                      "fill": "$text-secondary",
+                      "content": "Collaborate with design and infra teams on new product features",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "8gn1u",
+              "name": "divReq",
+              "fill": "$border",
+              "width": "fill_container",
+              "height": 1
             },
             {
               "type": "frame",
@@ -3766,6 +4168,114 @@
             {
               "type": "rectangle",
               "id": "z2oO0",
+              "fill": "$border",
+              "width": "fill_container",
+              "height": 1
+            },
+            {
+              "type": "frame",
+              "id": "9JrUi",
+              "name": "benSection",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "snOhF",
+                  "fill": "$text-primary",
+                  "content": "Benefits",
+                  "fontFamily": "Inter",
+                  "fontSize": 15,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "frame",
+                  "id": "uqYeO",
+                  "name": "ben1",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "2oJzO",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$success"
+                    },
+                    {
+                      "type": "text",
+                      "id": "uKvjd",
+                      "fill": "$text-secondary",
+                      "content": "Competitive salary and meaningful equity",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "7JzQE",
+                  "name": "ben2",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "M7Iv2",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$success"
+                    },
+                    {
+                      "type": "text",
+                      "id": "C8Ept",
+                      "fill": "$text-secondary",
+                      "content": "Remote-first with flexible, async-friendly culture",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "atSuQ",
+                  "name": "ben3",
+                  "gap": 10,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "LSr5U",
+                      "width": 16,
+                      "height": 16,
+                      "iconFontName": "check",
+                      "iconFontFamily": "lucide",
+                      "fill": "$success"
+                    },
+                    {
+                      "type": "text",
+                      "id": "0Wzp2",
+                      "fill": "$text-secondary",
+                      "content": "Top-tier health, dental, and vision coverage",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "90Uk0",
+              "name": "divCompany",
               "fill": "$border",
               "width": "fill_container",
               "height": 1
