@@ -80,6 +80,10 @@ class EnvironmentVariables {
   @Min(1)
   @IsOptional()
   BCRYPT_ROUNDS: number = 10;
+
+  @IsString()
+  @IsOptional()
+  RESUME_UPLOAD_DIR: string = 'uploads/resumes';
 }
 
 export function validate(config: Record<string, unknown>) {

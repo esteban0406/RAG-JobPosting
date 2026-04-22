@@ -197,13 +197,22 @@ export function JobsGrid({
       <AiDrawer
         open={aiOpen}
         onClose={() => setAiOpen(false)}
-        onSourceClick={(job) => {
+        isLoggedIn={isLoggedIn}
+        onSourceClick={async (job) => {
           setAiOpen(false);
-          // Small delay so AI drawer closes before detail opens
-          setTimeout(() => {
-            setSelectedJob(job as Job);
-            setDetailOpen(true);
-          }, 200);
+          try {
+            const full = await fetchApi<Job>(`/jobs/${job.id}`);
+            setTimeout(() => {
+              setSelectedJob(full);
+              setDetailOpen(true);
+            }, 200);
+          } catch {
+            // Fallback to partial data if fetch fails
+            setTimeout(() => {
+              setSelectedJob(job as Job);
+              setDetailOpen(true);
+            }, 200);
+          }
         }}
       />
     </div>

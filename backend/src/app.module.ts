@@ -13,8 +13,8 @@ import { IngestionModule } from './ingestion/ingestion.module.js';
 import { JobModule } from './job/job.module.js';
 import { LlmModule } from './llm/llm.module.js';
 import { QueryModule } from './query/query.module.js';
-import { RagModule } from './rag/rag.module.js';
 import { StorageModule } from './storage/storage.module.js';
+import { ResumeModule } from './resume/resume.module.js';
 import { UserModule } from './user/user.module.js';
 
 @Module({
@@ -41,10 +41,10 @@ import { UserModule } from './user/user.module.js';
     EmbeddingModule,
     IngestionModule,
     LlmModule,
-    RagModule,
     QueryModule,
     AuthModule,
     UserModule,
+    ResumeModule,
     JobModule,
     HealthModule,
     EvalModule,

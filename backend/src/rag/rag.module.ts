@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { EmbeddingModule } from '../embedding/embedding.module.js';
 import { LlmModule } from '../llm/llm.module.js';
+import { ResumeModule } from '../resume/resume.module.js';
 import { StorageModule } from '../storage/storage.module.js';
 import { RagService } from './rag.service.js';
 
 @Module({
-  imports: [EmbeddingModule, StorageModule, LlmModule],
+  imports: [EmbeddingModule, StorageModule, LlmModule, ResumeModule],
   providers: [RagService],
   exports: [RagService],
 })

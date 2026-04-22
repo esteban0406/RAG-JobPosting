@@ -22,25 +22,27 @@ export class QueryOrchestratorService {
     private readonly llm: LlmService,
   ) {}
 
-  async handle(dto: SearchQueryDto): Promise<SearchResponseDto> {
+  async handle(dto: SearchQueryDto, userId?: string): Promise<SearchResponseDto> {
     const classification = await this.classifier.classify(dto.query);
 
     if (classification.type === 'retrieval') {
-      return this.handleRetrieval(dto);
+      return this.handleRetrieval(dto, userId);
     }
     if (classification.type === 'aggregation') {
       return this.handleAggregation(classification, dto.query);
     }
-    return this.handleHybrid(classification, dto);
+    return this.handleHybrid(classification, dto, userId);
   }
 
   private async handleRetrieval(
     dto: SearchQueryDto,
+    userId?: string,
   ): Promise<SearchResponseDto> {
     const result = await this.rag.query(
       dto.query,
       { location: dto.location, jobType: dto.type },
       dto.contextJobIds,
+      userId,
     );
     return {
       type: 'retrieval',
@@ -70,12 +72,14 @@ export class QueryOrchestratorService {
   private async handleHybrid(
     c: ClassificationResult,
     dto: SearchQueryDto,
+    userId?: string,
   ): Promise<SearchResponseDto> {
     const [ragSettled, aggSettled] = await Promise.allSettled([
       this.rag.query(
         dto.query,
         { location: dto.location, jobType: dto.type },
         dto.contextJobIds,
+        userId,
       ),
       this.aggregation.queryRaw(c.intent!, c.params ?? []),
     ]);

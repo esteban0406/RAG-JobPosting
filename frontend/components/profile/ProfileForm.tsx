@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Pencil, Check, X } from "lucide-react";
+import { Pencil, Check, X, FileText, UploadCloud, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { ProfileSchema, type ProfileInput } from "@/lib/schemas";
-import { fetchApi } from "@/lib/api";
+import { fetchApi, uploadFile, ApiError } from "@/lib/api";
 import { useAuthStore } from "@/lib/auth-store";
 import { TagInput } from "./TagInput";
 import type { UserProfile } from "@/lib/auth-store";
@@ -14,6 +14,19 @@ import type { UserProfile } from "@/lib/auth-store";
 interface ProfileFormProps {
   user: UserProfile;
 }
+
+interface ParsedResume {
+  name: string | null;
+  email: string | null;
+  location: string | null;
+  summary: string | null;
+  skills: string[];
+  experience: { company: string; title: string; startDate: string | null; endDate: string | null; description: string }[];
+  education: { institution: string; degree: string | null; field: string | null; graduationYear: string | null }[];
+  certifications: string[];
+}
+
+const MAX_SIZE = 5 * 1024 * 1024;
 
 function SectionHeader({
   title,
@@ -48,6 +61,9 @@ export function ProfileForm({ user }: ProfileFormProps) {
   const setUser = useAuthStore((s) => s.setUser);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [resumeStatus, setResumeStatus] = useState<"loading" | "none" | "exists">("loading");
+  const [uploadingResume, setUploadingResume] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { register, handleSubmit, setValue, watch, reset, formState: { errors } } =
     useForm<ProfileInput>({
@@ -62,6 +78,12 @@ export function ProfileForm({ user }: ProfileFormProps) {
 
   const skills = watch("skills");
   const preferredFields = watch("preferredFields");
+
+  useEffect(() => {
+    fetchApi<{ id: string } | null>("/resume")
+      .then((data) => setResumeStatus(data ? "exists" : "none"))
+      .catch(() => setResumeStatus("none"));
+  }, []);
 
   async function onSubmit(data: ProfileInput) {
     setSaving(true);
@@ -94,6 +116,44 @@ export function ProfileForm({ user }: ProfileFormProps) {
       preferredFields: user.preferredFields,
     });
     setEditing(false);
+  }
+
+  function handleResumeButtonClick() {
+    fileInputRef.current?.click();
+  }
+
+  async function handleResumeFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    // Reset so same file can be re-selected
+    e.target.value = "";
+
+    if (file.type !== "application/pdf") {
+      toast.error("Only PDF files are accepted");
+      return;
+    }
+    if (file.size > MAX_SIZE) {
+      toast.error("File must be 5 MB or smaller");
+      return;
+    }
+
+    setUploadingResume(true);
+    try {
+      const formData = new FormData();
+      formData.append("resume", file);
+      const parsed = await uploadFile<ParsedResume>("/resume/upload", formData);
+
+      if (parsed.skills.length > 0) setValue("skills", parsed.skills);
+      if (parsed.location) setValue("location", parsed.location);
+      setEditing(true);
+      setResumeStatus("exists");
+      toast.success("Resume parsed — review and save your updated profile");
+    } catch (err) {
+      const msg = err instanceof ApiError ? err.message : "Upload failed";
+      toast.error(msg);
+    } finally {
+      setUploadingResume(false);
+    }
   }
 
   const initials = user.name
@@ -244,6 +304,57 @@ export function ProfileForm({ user }: ProfileFormProps) {
           </div>
         )}
       </div>
+
+      <div className="h-px bg-border" />
+
+      {/* Resume */}
+      <div className="flex flex-col gap-4">
+        <span className="text-text-primary text-base font-bold">Resume</span>
+
+        <div className="flex items-center justify-between px-4 py-3 bg-bg-surface border border-border rounded-[var(--radius-sm)]">
+          {resumeStatus === "loading" ? (
+            <span className="text-text-muted text-sm">Checking…</span>
+          ) : resumeStatus === "exists" ? (
+            <div className="flex items-center gap-2 text-text-secondary text-sm">
+              <CheckCircle2 size={15} className="text-accent shrink-0" />
+              Resume on file
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-text-muted text-sm">
+              <FileText size={15} className="shrink-0" />
+              No resume uploaded
+            </div>
+          )}
+
+          <button
+            type="button"
+            onClick={handleResumeButtonClick}
+            disabled={uploadingResume}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-base border border-border-subtle text-text-secondary text-xs font-medium rounded-[var(--radius-sm)] hover:border-accent/50 transition-colors disabled:opacity-60"
+          >
+            <UploadCloud size={13} />
+            {uploadingResume
+              ? "Parsing…"
+              : resumeStatus === "exists"
+              ? "Update resume"
+              : "Upload resume"}
+          </button>
+        </div>
+
+        {resumeStatus !== "loading" && (
+          <p className="text-text-muted text-xs -mt-2">
+            Uploading will auto-fill your skills and location. PDF only · max 5 MB.
+          </p>
+        )}
+      </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".pdf,application/pdf"
+        className="hidden"
+        onChange={handleResumeFileChange}
+      />
     </form>
   );
 }

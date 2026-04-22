@@ -154,7 +154,7 @@ export function JobDetailModal({
             )}
           </div>
           {/*Skills */}
-          {job.skills.length > 0 && (
+          {job.skills?.length > 0 && (
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
@@ -174,7 +174,7 @@ export function JobDetailModal({
           )}
 
           {/* Responsibilities */}
-          {job.responsibilities.length > 0 && (
+          {job.responsibilities?.length > 0 && (
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
@@ -191,7 +191,7 @@ export function JobDetailModal({
           )}
 
           {/* Requirements */}
-          {job.requirements.length > 0 && (
+          {job.requirements?.length > 0 && (
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
@@ -208,7 +208,7 @@ export function JobDetailModal({
           )}
 
           {/* Benefits */}
-          {job.benefits.length > 0 && (
+          {job.benefits?.length > 0 && (
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">

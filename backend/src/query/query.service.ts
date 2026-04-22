@@ -7,7 +7,7 @@ import { QueryOrchestratorService } from './query-orchestrator.service.js';
 export class QueryService {
   constructor(private readonly orchestrator: QueryOrchestratorService) {}
 
-  async search(dto: SearchQueryDto): Promise<SearchResponseDto> {
-    return this.orchestrator.handle(dto);
+  async search(dto: SearchQueryDto, userId?: string): Promise<SearchResponseDto> {
+    return this.orchestrator.handle(dto, userId);
   }
 }

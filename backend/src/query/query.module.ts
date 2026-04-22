@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { AuthModule } from '../auth/auth.module.js';
 import { LlmModule } from '../llm/llm.module.js';
 import { RagModule } from '../rag/rag.module.js';
 import { AggregationRepository } from './aggregation/aggregation.repository.js';
@@ -9,7 +10,7 @@ import { QueryOrchestratorService } from './query-orchestrator.service.js';
 import { QueryService } from './query.service.js';
 
 @Module({
-  imports: [RagModule, LlmModule],
+  imports: [RagModule, LlmModule, AuthModule],
   controllers: [QueryController],
   providers: [
     QueryService,

@@ -43,9 +43,10 @@ interface AiDrawerProps {
   onClose: () => void;
   onSourceClick?: (job: Partial<Job> & { id: string }) => void;
   contextJobIds?: string[];
+  isLoggedIn?: boolean;
 }
 
-export function AiDrawer({ open, onClose, onSourceClick, contextJobIds }: AiDrawerProps) {
+export function AiDrawer({ open, onClose, onSourceClick, contextJobIds, isLoggedIn }: AiDrawerProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -111,6 +112,11 @@ export function AiDrawer({ open, onClose, onSourceClick, contextJobIds }: AiDraw
             <SheetTitle className="text-text-primary text-base font-semibold">
               Ask AI
             </SheetTitle>
+            {isLoggedIn && (
+              <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-accent-subtle text-accent-glow border border-accent/20">
+                Resume &amp; profile context active
+              </span>
+            )}
           </div>
           <button
             onClick={onClose}
@@ -129,11 +135,18 @@ export function AiDrawer({ open, onClose, onSourceClick, contextJobIds }: AiDraw
                 Ask me anything about jobs — I&apos;ll search and synthesize an answer for you.
               </p>
               <div className="flex flex-col gap-2 mt-2 w-full max-w-sm">
-                {[
-                  "Find remote React jobs with 150k+ salary",
-                  "What are the top companies hiring data scientists?",
-                  "Compare frontend vs backend salaries",
-                ].map((hint) => (
+                {(isLoggedIn
+                  ? [
+                      "Recommend jobs that match my skills and experience",
+                      "Am I a good fit for a senior React engineer role?",
+                      "What skills should I develop to get a data science job?",
+                    ]
+                  : [
+                      "Find remote React jobs with 150k+ salary",
+                      "What are the top companies hiring data scientists?",
+                      "Compare frontend vs backend salaries",
+                    ]
+                ).map((hint) => (
                   <button
                     key={hint}
                     onClick={() => setInput(hint)}
@@ -142,6 +155,11 @@ export function AiDrawer({ open, onClose, onSourceClick, contextJobIds }: AiDraw
                     {hint}
                   </button>
                 ))}
+                {!isLoggedIn && (
+                  <p className="text-text-muted text-xs mt-1">
+                    Log in and upload your resume for personalised results
+                  </p>
+                )}
               </div>
             </div>
           )}

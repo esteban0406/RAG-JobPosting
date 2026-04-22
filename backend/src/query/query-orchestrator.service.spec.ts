@@ -91,10 +91,12 @@ describe('QueryOrchestratorService', () => {
 
       await service.handle(dto);
 
-      expect(mockRag.query).toHaveBeenCalledWith(dto.query, {
-        location: 'Austin',
-        jobType: undefined,
-      });
+      expect(mockRag.query).toHaveBeenCalledWith(
+        dto.query,
+        { location: 'Austin', jobType: undefined },
+        undefined,
+        undefined,
+      );
     });
   });
 

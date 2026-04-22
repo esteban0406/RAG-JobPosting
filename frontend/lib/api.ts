@@ -61,3 +61,33 @@ export async function fetchApi<T = unknown>(
   if (!raw) return undefined as T;
   return JSON.parse(raw) as T;
 }
+
+// No Content-Type header — browser sets multipart/form-data + boundary automatically.
+export async function uploadFile<T = unknown>(
+  path: string,
+  formData: FormData,
+): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: "POST",
+    body: formData,
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    let message = res.statusText;
+    try {
+      const raw = await res.text();
+      if (raw) {
+        const body = JSON.parse(raw) as { message?: string };
+        message = body.message ?? message;
+      }
+    } catch {
+      // ignore
+    }
+    throw new ApiError(res.status, message);
+  }
+
+  const raw = await res.text();
+  if (!raw) return undefined as T;
+  return JSON.parse(raw) as T;
+}

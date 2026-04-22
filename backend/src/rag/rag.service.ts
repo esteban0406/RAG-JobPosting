@@ -1,6 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { LlmService } from '../llm/llm.service.js';
+import type { ParsedResume } from '../resume/interfaces/parsed-resume.interface.js';
+import { ResumeService } from '../resume/resume.service.js';
 import { JobRepository } from '../storage/job.repository.js';
 import {
   JobChunkResult,
@@ -27,14 +29,24 @@ export class RagService {
     private readonly vectorRepo: VectorRepository,
     private readonly jobRepo: JobRepository,
     private readonly llmService: LlmService,
+    private readonly resumeService: ResumeService,
   ) {}
 
   async query(
     userQuery: string,
     filters?: QueryFilters,
     contextJobIds?: string[],
+    userId?: string,
   ): Promise<RagResponse> {
-    const queryVector = await this.embeddingService.embedQuery(userQuery);
+    const [resumeEmbedding, resumeParsed] = userId
+      ? await Promise.all([
+          this.resumeService.getEmbedding(userId),
+          this.resumeService.getParsedData(userId),
+        ])
+      : [null, null];
+
+    const queryVector =
+      resumeEmbedding ?? (await this.embeddingService.embedQuery(userQuery));
 
     const rawChunks = await this.vectorRepo.findSimilar(
       queryVector,
@@ -77,7 +89,15 @@ export class RagService {
       .join('\n\n');
 
     const savedJobsContext = await this.buildSavedJobsContext(contextJobIds);
-    const prompt = this.buildPrompt(userQuery, contextChunks, savedJobsContext);
+    const userProfileContext = resumeParsed
+      ? this.buildUserProfileContext(resumeParsed)
+      : '';
+    const prompt = this.buildPrompt(
+      userQuery,
+      contextChunks,
+      savedJobsContext,
+      userProfileContext,
+    );
     const answer = await this.llmService.complete(prompt);
 
     const sources: JobSource[] = topJobs
@@ -156,15 +176,39 @@ export class RagService {
     query: string,
     context: string,
     savedJobsContext = '',
+    userProfileContext = '',
   ): string {
     return `You are a helpful job search assistant. Answer the user's query based ONLY on the job postings provided below.
 Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details.
 
-${savedJobsContext}Job Postings:
+${userProfileContext}${savedJobsContext}Job Postings:
 ${context}
 
 User Query: ${query}
 
 Answer:`;
+  }
+
+  private buildUserProfileContext(resume: ParsedResume): string {
+    const lines: string[] = [];
+
+    if (resume.name) lines.push(`  Name: ${resume.name}`);
+    if (resume.summary) lines.push(`  Summary: ${resume.summary}`);
+    if (resume.skills.length > 0)
+      lines.push(`  Skills: ${resume.skills.join(', ')}`);
+    if (resume.experience.length > 0) {
+      const exp = resume.experience
+        .slice(0, 3)
+        .map(
+          (e) =>
+            `${e.title} at ${e.company}${e.startDate ? ` (${e.startDate}–${e.endDate ?? 'Present'})` : ''}`,
+        )
+        .join('; ');
+      lines.push(`  Experience: ${exp}`);
+    }
+    if (resume.location) lines.push(`  Location: ${resume.location}`);
+
+    if (lines.length === 0) return '';
+    return `User Profile:\n${lines.join('\n')}\n\n`;
   }
 }
