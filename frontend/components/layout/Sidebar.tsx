@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Briefcase, Sparkles, Bookmark, User, LogOut } from "lucide-react";
+import { Briefcase, Bookmark, User, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/lib/auth-store";
 import { toast } from "sonner";
 
 const NAV = [
   { href: "/jobs", label: "Browse Jobs", icon: Briefcase },
-  { href: "/jobs?ai=1", label: "AI Search", icon: Sparkles },
   { href: "/saved-jobs", label: "Saved Jobs", icon: Bookmark },
   { href: "/profile", label: "Profile", icon: User },
 ];

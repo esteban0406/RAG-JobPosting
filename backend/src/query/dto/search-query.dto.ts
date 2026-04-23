@@ -4,7 +4,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  IsUUID,
   MinLength,
 } from 'class-validator';
 
@@ -35,6 +34,6 @@ export class SearchQueryDto {
 
   @IsOptional()
   @IsArray()
-  @IsUUID('4', { each: true })
+  @IsString({ each: true })
   contextJobIds?: string[];
 }

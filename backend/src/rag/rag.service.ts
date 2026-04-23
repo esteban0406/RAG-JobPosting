@@ -38,6 +38,41 @@ export class RagService {
     contextJobIds?: string[],
     userId?: string,
   ): Promise<RagResponse> {
+    const ctx = await this.buildContext(userQuery, filters, contextJobIds, userId);
+    if (!ctx) {
+      return {
+        answer:
+          'No relevant job postings found for your query. Try different keywords or broaden your search.',
+        sources: [],
+        retrievedAt: new Date(),
+      };
+    }
+    const answer = await this.llmService.complete(ctx.prompt);
+    return { answer, sources: ctx.sources, retrievedAt: new Date() };
+  }
+
+  async *queryStream(
+    userQuery: string,
+    filters?: QueryFilters,
+    contextJobIds?: string[],
+    userId?: string,
+  ): AsyncGenerator<string | { done: true; sources: JobSource[] }> {
+    const ctx = await this.buildContext(userQuery, filters, contextJobIds, userId);
+
+    if (!ctx) {
+      yield { done: true, sources: [] };
+      return;
+    }
+    yield* this.llmService.completeStream(ctx.prompt);
+    yield { done: true, sources: ctx.sources };
+  }
+
+  async buildContext(
+    userQuery: string,
+    _filters?: QueryFilters,
+    contextJobIds?: string[],
+    userId?: string,
+  ): Promise<{ prompt: string; sources: JobSource[] } | null> {
     const [resumeEmbedding, resumeParsed] = userId
       ? await Promise.all([
           this.resumeService.getEmbedding(userId),
@@ -58,14 +93,7 @@ export class RagService {
       `Retrieved ${rawChunks.length} raw chunks (threshold=${SIMILARITY_THRESHOLD})`,
     );
 
-    if (rawChunks.length === 0) {
-      return {
-        answer:
-          'No relevant job postings found for your query. Try different keywords or broaden your search.',
-        sources: [],
-        retrievedAt: new Date(),
-      };
-    }
+    if (rawChunks.length === 0) return null;
 
     const grouped = this.groupByJob(rawChunks);
     const topJobs = grouped.slice(0, RESULT_JOBS);
@@ -98,7 +126,6 @@ export class RagService {
       savedJobsContext,
       userProfileContext,
     );
-    const answer = await this.llmService.complete(prompt);
 
     const sources: JobSource[] = topJobs
       .map((group) => {
@@ -114,7 +141,7 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { answer, sources, retrievedAt: new Date() };
+    return { prompt, sources };
   }
 
   private groupByJob(chunks: JobChunkResult[]): Array<{

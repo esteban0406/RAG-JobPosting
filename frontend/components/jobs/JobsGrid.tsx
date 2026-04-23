@@ -2,12 +2,12 @@
 
 import { useState, useCallback } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import { JobCard, type Job } from "./JobCard";
 import { JobDetailModal } from "./JobDetailModal";
-import { AiDrawer } from "@/components/ai/AiDrawer";
 import { useAuthStore } from "@/lib/auth-store";
+import { useAiStore } from "@/lib/ai-store";
 import { fetchApi, ApiError } from "@/lib/api";
 
 interface JobsGridProps {
@@ -30,10 +30,10 @@ export function JobsGrid({
   const searchParams = useSearchParams();
 
   const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
+  const { isOpen } = useAiStore();
 
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
-  const [aiOpen, setAiOpen] = useState(false);
   const [saved, setSaved] = useState<Set<string>>(new Set(savedJobIds));
 
   const totalPages = Math.ceil(total / limit);
@@ -65,7 +65,6 @@ export function JobsGrid({
       }
 
       const wasSaved = saved.has(jobId);
-      // Optimistic update
       setSaved((prev) => {
         const next = new Set(prev);
         wasSaved ? next.delete(jobId) : next.add(jobId);
@@ -79,7 +78,6 @@ export function JobsGrid({
           await fetchApi(`/users/me/favorites/${jobId}`, { method: "POST" });
         }
       } catch (err) {
-        // Revert on error
         setSaved((prev) => {
           const next = new Set(prev);
           wasSaved ? next.add(jobId) : next.delete(jobId);
@@ -107,17 +105,17 @@ export function JobsGrid({
 
   return (
     <div className="relative flex-1">
-      {/* Results count + sort */}
+      {/* Results count */}
       <div className="flex items-center justify-between h-11 px-6">
         <span className="text-text-primary text-sm font-semibold">
           {total.toLocaleString()} jobs found
         </span>
       </div>
 
-      {/* 2-column card grid */}
-      <div className="flex gap-4 px-6 pb-6">
-        <div className="flex flex-col gap-4 flex-1">
-          {col1.map((job) => (
+      {/* Card grid — 1 column when AI panel is open, 2 columns otherwise */}
+      {isOpen ? (
+        <div className="flex flex-col gap-4 px-6 pb-6">
+          {jobs.map((job) => (
             <JobCard
               key={job.id}
               job={job}
@@ -127,18 +125,32 @@ export function JobsGrid({
             />
           ))}
         </div>
-        <div className="flex flex-col gap-4 flex-1">
-          {col2.map((job) => (
-            <JobCard
-              key={job.id}
-              job={job}
-              isSaved={saved.has(job.id)}
-              onClick={() => openJob(job)}
-              onSaveToggle={() => handleSaveToggle(job.id)}
-            />
-          ))}
+      ) : (
+        <div className="flex gap-4 px-6 pb-6">
+          <div className="flex flex-col gap-4 flex-1">
+            {col1.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                isSaved={saved.has(job.id)}
+                onClick={() => openJob(job)}
+                onSaveToggle={() => handleSaveToggle(job.id)}
+              />
+            ))}
+          </div>
+          <div className="flex flex-col gap-4 flex-1">
+            {col2.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                isSaved={saved.has(job.id)}
+                onClick={() => openJob(job)}
+                onSaveToggle={() => handleSaveToggle(job.id)}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Empty state */}
       {jobs.length === 0 && (
@@ -173,16 +185,6 @@ export function JobsGrid({
         </div>
       )}
 
-      {/* Floating Ask AI button */}
-      <button
-        onClick={() => setAiOpen(true)}
-        className="fixed bottom-8 right-8 flex items-center gap-2.5 bg-accent text-white font-semibold text-[15px] px-5 py-3.5 rounded-full hover:opacity-90 transition-opacity z-10"
-        style={{ boxShadow: "0 4px 24px #7C3AED60" }}
-      >
-        <Sparkles size={18} />
-        Ask AI
-      </button>
-
       {/* Job Detail Modal */}
       <JobDetailModal
         job={selectedJob}
@@ -191,29 +193,6 @@ export function JobsGrid({
         onClose={closeDetail}
         onSaveToggle={() => selectedJob && handleSaveToggle(selectedJob.id)}
         onCompanyFilter={handleCompanyFilter}
-      />
-
-      {/* AI Drawer */}
-      <AiDrawer
-        open={aiOpen}
-        onClose={() => setAiOpen(false)}
-        isLoggedIn={isLoggedIn}
-        onSourceClick={async (job) => {
-          setAiOpen(false);
-          try {
-            const full = await fetchApi<Job>(`/jobs/${job.id}`);
-            setTimeout(() => {
-              setSelectedJob(full);
-              setDetailOpen(true);
-            }, 200);
-          } catch {
-            // Fallback to partial data if fetch fails
-            setTimeout(() => {
-              setSelectedJob(job as Job);
-              setDetailOpen(true);
-            }, 200);
-          }
-        }}
       />
     </div>
   );

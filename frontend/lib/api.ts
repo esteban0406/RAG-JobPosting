@@ -62,6 +62,72 @@ export async function fetchApi<T = unknown>(
   return JSON.parse(raw) as T;
 }
 
+export interface StreamSearchEvent {
+  type: "start" | "token" | "done" | "error";
+  queryType?: string;
+  content?: string;
+  sources?: { jobId: string; title: string; company: string; url: string; similarity: number }[];
+  aggregation?: { intent: string; rows: Record<string, unknown>[] } | null;
+  status?: number;
+  message?: string;
+}
+
+export async function* streamSearch(
+  body: { query: string; contextJobIds?: string[] },
+): AsyncGenerator<StreamSearchEvent> {
+  const res = await fetch(`${API_BASE}/jobs/search/stream`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    let message = res.statusText;
+    try {
+      const raw = await res.text();
+      if (raw) {
+        const parsed = JSON.parse(raw) as { message?: string };
+        message = parsed.message ?? message;
+      }
+    } catch {
+      // ignore parse errors
+    }
+    throw new ApiError(res.status, message);
+  }
+
+  const reader = res.body!.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() ?? "";
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      try {
+        yield JSON.parse(trimmed) as StreamSearchEvent;
+      } catch {
+        // skip malformed lines
+      }
+    }
+  }
+
+  if (buffer.trim()) {
+    try {
+      yield JSON.parse(buffer.trim()) as StreamSearchEvent;
+    } catch {
+      // skip malformed trailing data
+    }
+  }
+}
+
 // No Content-Type header — browser sets multipart/form-data + boundary automatically.
 export async function uploadFile<T = unknown>(
   path: string,

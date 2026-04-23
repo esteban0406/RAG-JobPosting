@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api/v1";
 
@@ -26,10 +26,5 @@ export default async function AppLayout({
 }) {
   const user = await getUser();
 
-  return (
-    <div className="flex h-screen bg-bg-base overflow-hidden">
-      <Sidebar user={user} />
-      <main className="flex-1 overflow-y-auto">{children}</main>
-    </div>
-  );
+  return <AppShell user={user}>{children}</AppShell>;
 }

@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import type { RagResponse } from '../rag/dto/rag-response.dto.js';
+import type { JobSource } from '../rag/dto/rag-response.dto.js';
 import { RagService } from '../rag/rag.service.js';
 import { LlmService } from '../llm/llm.service.js';
 import { AggregationService } from './aggregation/aggregation.service.js';
@@ -10,6 +10,11 @@ import {
 } from './query-classifier.service.js';
 import { SearchQueryDto } from './dto/search-query.dto.js';
 import { SearchResponseDto } from './dto/search-response.dto.js';
+
+export type StreamEvent =
+  | { type: 'start'; queryType: string }
+  | { type: 'token'; content: string }
+  | { type: 'done'; sources?: JobSource[]; aggregation?: { intent: string; rows: Record<string, unknown>[] } | null };
 
 @Injectable()
 export class QueryOrchestratorService {
@@ -119,7 +124,7 @@ export class QueryOrchestratorService {
     const aggRows = aggSettled.value;
 
     const combined = await this.llm.complete(
-      buildHybridPrompt(dto.query, ragResult, aggRows),
+      buildHybridPrompt(dto.query, ragResult.sources, aggRows),
     );
     return {
       type: 'hybrid',
@@ -129,14 +134,96 @@ export class QueryOrchestratorService {
       retrievedAt: new Date(),
     };
   }
+
+  async *handleStream(dto: SearchQueryDto, userId?: string): AsyncGenerator<StreamEvent> {
+    const classification = await this.classifier.classify(dto.query);
+
+    if (classification.type === 'aggregation') {
+      yield { type: 'start', queryType: 'aggregation' };
+      const result = await this.aggregation.execute(
+        classification.intent!,
+        classification.params ?? [],
+        dto.query,
+      );
+      yield {
+        type: 'done',
+        aggregation: { intent: result.intent, rows: result.rows },
+      };
+      return;
+    }
+
+    if (classification.type === 'retrieval') {
+      yield { type: 'start', queryType: 'retrieval' };
+      yield* this.streamRetrieval(dto, userId);
+      return;
+    }
+
+    yield { type: 'start', queryType: 'hybrid' };
+    yield* this.streamHybrid(classification, dto, userId);
+  }
+
+  private async *streamRetrieval(
+    dto: SearchQueryDto,
+    userId?: string,
+  ): AsyncGenerator<StreamEvent> {
+    for await (const chunk of this.rag.queryStream(
+      dto.query,
+      { location: dto.location, jobType: dto.type },
+      dto.contextJobIds,
+      userId,
+    )) {
+      if (typeof chunk === 'string') {
+        yield { type: 'token', content: chunk };
+      } else {
+        yield { type: 'done', sources: chunk.sources };
+      }
+    }
+  }
+
+  private async *streamHybrid(
+    c: ClassificationResult,
+    dto: SearchQueryDto,
+    userId?: string,
+  ): AsyncGenerator<StreamEvent> {
+    const [ragCtx, aggRows] = await Promise.all([
+      this.rag.buildContext(
+        dto.query,
+        { location: dto.location, jobType: dto.type },
+        dto.contextJobIds,
+        userId,
+      ),
+      this.aggregation.queryRaw(c.intent!, c.params ?? []),
+    ]);
+
+    if (!ragCtx) {
+      const agg = await this.aggregation.execute(
+        c.intent!,
+        c.params ?? [],
+        dto.query,
+      );
+      yield { type: 'done', aggregation: { intent: agg.intent, rows: agg.rows } };
+      return;
+    }
+
+    for await (const token of this.llm.completeStream(
+      buildHybridPrompt(dto.query, ragCtx.sources, aggRows),
+    )) {
+      yield { type: 'token', content: token };
+    }
+    yield {
+      type: 'done',
+      sources: ragCtx.sources,
+      aggregation: { intent: c.intent as TemplateKey, rows: aggRows },
+    };
+  }
 }
 
 function buildHybridPrompt(
   query: string,
-  rag: RagResponse,
+  sources: JobSource[],
   aggRows: Record<string, unknown>[],
 ): string {
-  const listings = rag.sources
+  const listings = sources
     .map((s) => `- ${s.title} at ${s.company}`)
     .join('\n');
   return `You are a job search assistant. Answer the user's question using BOTH the job listings and the statistical data below.

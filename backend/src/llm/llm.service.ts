@@ -148,15 +148,33 @@ export class LlmService {
   }
 
   async *completeStream(prompt: string): AsyncGenerator<string> {
-    const stream = await this.genai.models.generateContentStream({
-      model: this.model,
-      contents: prompt,
-      config: { temperature: 0.2 },
-    });
+    let stream: AsyncIterable<{ text?: string }>;
+
+    try {
+      stream = await this.genai.models.generateContentStream({
+        model: this.model,
+        contents: prompt,
+        config: { temperature: 0.2, maxOutputTokens: 1024 },
+      });
+    } catch (err) {
+      if (this.isModelNotFoundError(err)) {
+        throw new ServiceUnavailableException(
+          `The AI model "${this.model}" is unavailable or does not exist.`,
+        );
+      }
+      if (this.isQuotaError(err)) {
+        throw new HttpException(
+          'The AI service is temporarily rate limited. Please try again in a moment.',
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
+      }
+      throw new ServiceUnavailableException(
+        'The AI service is temporarily unavailable.',
+      );
+    }
 
     for await (const chunk of stream) {
-      const text = chunk.text;
-      if (text) yield text;
+      if (chunk.text) yield chunk.text;
     }
   }
 }
