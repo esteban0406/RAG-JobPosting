@@ -14,7 +14,11 @@ import { SearchResponseDto } from './dto/search-response.dto.js';
 export type StreamEvent =
   | { type: 'start'; queryType: string }
   | { type: 'token'; content: string }
-  | { type: 'done'; sources?: JobSource[]; aggregation?: { intent: string; rows: Record<string, unknown>[] } | null };
+  | {
+      type: 'done';
+      sources?: JobSource[];
+      aggregation?: { intent: string; rows: Record<string, unknown>[] } | null;
+    };
 
 @Injectable()
 export class QueryOrchestratorService {
@@ -27,8 +31,18 @@ export class QueryOrchestratorService {
     private readonly llm: LlmService,
   ) {}
 
-  async handle(dto: SearchQueryDto, userId?: string): Promise<SearchResponseDto> {
+  async handle(
+    dto: SearchQueryDto,
+    userId?: string,
+  ): Promise<SearchResponseDto> {
+    // contextJobIds always implies retrieval — skip LLM classification
+    if (dto.contextJobIds?.length) {
+      return this.handleRetrieval(dto, userId);
+    }
+
+    const t0 = Date.now();
     const classification = await this.classifier.classify(dto.query);
+    this.logger.debug(`Classification took ${Date.now() - t0}ms — type=${classification.type}`);
 
     if (classification.type === 'retrieval') {
       return this.handleRetrieval(dto, userId);
@@ -135,8 +149,20 @@ export class QueryOrchestratorService {
     };
   }
 
-  async *handleStream(dto: SearchQueryDto, userId?: string): AsyncGenerator<StreamEvent> {
+  async *handleStream(
+    dto: SearchQueryDto,
+    userId?: string,
+  ): AsyncGenerator<StreamEvent> {
+    // contextJobIds always implies retrieval — skip LLM classification
+    if (dto.contextJobIds?.length) {
+      yield { type: 'start', queryType: 'retrieval' };
+      yield* this.streamRetrieval(dto, userId);
+      return;
+    }
+
+    const t0 = Date.now();
     const classification = await this.classifier.classify(dto.query);
+    this.logger.debug(`Classification took ${Date.now() - t0}ms — type=${classification.type}`);
 
     if (classification.type === 'aggregation') {
       yield { type: 'start', queryType: 'aggregation' };
@@ -201,7 +227,10 @@ export class QueryOrchestratorService {
         c.params ?? [],
         dto.query,
       );
-      yield { type: 'done', aggregation: { intent: agg.intent, rows: agg.rows } };
+      yield {
+        type: 'done',
+        aggregation: { intent: agg.intent, rows: agg.rows },
+      };
       return;
     }
 

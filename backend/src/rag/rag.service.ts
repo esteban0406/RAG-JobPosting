@@ -57,13 +57,19 @@ export class RagService {
     contextJobIds?: string[],
     userId?: string,
   ): AsyncGenerator<string | { done: true; sources: JobSource[] }> {
+    const t0 = Date.now();
     const ctx = await this.buildContext(userQuery, filters, contextJobIds, userId);
+    this.logger.debug(`buildContext took ${Date.now() - t0}ms`);
 
     if (!ctx) {
       yield { done: true, sources: [] };
       return;
     }
+
+    const t1 = Date.now();
     yield* this.llmService.completeStream(ctx.prompt);
+    this.logger.debug(`LLM stream took ${Date.now() - t1}ms`);
+
     yield { done: true, sources: ctx.sources };
   }
 
@@ -73,6 +79,12 @@ export class RagService {
     contextJobIds?: string[],
     userId?: string,
   ): Promise<{ prompt: string; sources: JobSource[] } | null> {
+    // When specific jobs are provided, skip embedding and vector search entirely
+    if (contextJobIds && contextJobIds.length > 0) {
+      return this.buildContextFromIds(contextJobIds, userQuery, userId);
+    }
+
+    const t0 = Date.now();
     const [resumeEmbedding, resumeParsed] = userId
       ? await Promise.all([
           this.resumeService.getEmbedding(userId),
@@ -82,15 +94,16 @@ export class RagService {
 
     const queryVector =
       resumeEmbedding ?? (await this.embeddingService.embedQuery(userQuery));
+    this.logger.debug(`Embedding took ${Date.now() - t0}ms`);
 
+    const t1 = Date.now();
     const rawChunks = await this.vectorRepo.findSimilar(
       queryVector,
       RETRIEVAL_K,
       SIMILARITY_THRESHOLD,
     );
-
     this.logger.debug(
-      `Retrieved ${rawChunks.length} raw chunks (threshold=${SIMILARITY_THRESHOLD})`,
+      `Vector search took ${Date.now() - t1}ms — ${rawChunks.length} chunks (threshold=${SIMILARITY_THRESHOLD})`,
     );
 
     if (rawChunks.length === 0) return null;
@@ -98,8 +111,10 @@ export class RagService {
     const grouped = this.groupByJob(rawChunks);
     const topJobs = grouped.slice(0, RESULT_JOBS);
 
+    const t2 = Date.now();
     const jobIds = topJobs.map((g) => g.jobId);
     const jobs = await this.jobRepo.findByIds(jobIds);
+    this.logger.debug(`Job fetch took ${Date.now() - t2}ms`);
     const jobMap = new Map(jobs.map((j) => [j.id, j]));
 
     const contextChunks = topJobs
@@ -116,16 +131,10 @@ export class RagService {
       .filter((c): c is string => c !== null)
       .join('\n\n');
 
-    const savedJobsContext = await this.buildSavedJobsContext(contextJobIds);
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
       : '';
-    const prompt = this.buildPrompt(
-      userQuery,
-      contextChunks,
-      savedJobsContext,
-      userProfileContext,
-    );
+    const prompt = this.buildPrompt(userQuery, contextChunks, userProfileContext);
 
     const sources: JobSource[] = topJobs
       .map((group) => {
@@ -137,6 +146,75 @@ export class RagService {
           company: job.company,
           url: job.url,
           similarity: Math.round(group.maxSimilarity * 100) / 100,
+        };
+      })
+      .filter((s): s is JobSource => s !== null);
+
+    return { prompt, sources };
+  }
+
+  private async buildContextFromIds(
+    contextJobIds: string[],
+    userQuery: string,
+    userId?: string,
+  ): Promise<{ prompt: string; sources: JobSource[] } | null> {
+    const t0 = Date.now();
+
+    const [[resumeEmbedding, resumeParsed], jobs] = await Promise.all([
+      userId
+        ? Promise.all([
+            this.resumeService.getEmbedding(userId),
+            this.resumeService.getParsedData(userId),
+          ])
+        : Promise.resolve([null, null] as [null, null]),
+      this.jobRepo.findByIds(contextJobIds),
+    ]);
+
+    if (jobs.length === 0) return null;
+
+    const queryVector =
+      resumeEmbedding ?? (await this.embeddingService.embedQuery(userQuery));
+
+    const chunks = await this.vectorRepo.findSimilarByJobIds(queryVector, contextJobIds);
+    this.logger.debug(`Context jobs fetch + similarity took ${Date.now() - t0}ms`);
+
+    const jobMap = new Map(jobs.map((j) => [j.id, j]));
+    const grouped = this.groupByJob(chunks);
+
+    const ranked = contextJobIds
+      .map((id) => {
+        const g = grouped.find((gr) => gr.jobId === id);
+        return { jobId: id, maxSimilarity: g?.maxSimilarity ?? 0 };
+      })
+      .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
+
+    const contextChunks = ranked
+      .map(({ jobId, maxSimilarity }) => {
+        const job = jobMap.get(jobId);
+        if (!job) return null;
+        const location = job.location ? ` | Location: ${job.location}` : '';
+        const jobType = job.jobType ? ` | Type: ${job.jobType}` : '';
+        const body = job.description?.slice(0, MAX_JOB_CONTEXT_CHARS) ?? '';
+        return `---\nJob: ${job.title} at ${job.company}${location}${jobType} | Similarity: ${maxSimilarity.toFixed(2)}\n${body}`;
+      })
+      .filter((c): c is string => c !== null)
+      .join('\n\n');
+
+    const userProfileContext = resumeParsed
+      ? this.buildUserProfileContext(resumeParsed)
+      : '';
+    const prompt = this.buildPrompt(userQuery, contextChunks, userProfileContext);
+
+    const sources: JobSource[] = ranked
+      .map(({ jobId, maxSimilarity }) => {
+        const job = jobMap.get(jobId);
+        if (!job) return null;
+        return {
+          jobId: job.id,
+          title: job.title,
+          company: job.company,
+          url: job.url,
+          similarity: Math.round(maxSimilarity * 100) / 100,
         };
       })
       .filter((s): s is JobSource => s !== null);
@@ -181,34 +259,15 @@ export class RagService {
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
   }
 
-  private async buildSavedJobsContext(
-    contextJobIds?: string[],
-  ): Promise<string> {
-    if (!contextJobIds || contextJobIds.length === 0) return '';
-    const jobs = await this.jobRepo.findByIds(contextJobIds);
-    if (jobs.length === 0) return '';
-    const lines = jobs
-      .map((job, i) => {
-        const location = job.location ? ` — ${job.location}` : '';
-        const desc = job.description
-          ? `\n   Description: ${job.description.slice(0, 600)}`
-          : '';
-        return `${i + 1}. [${job.title} @ ${job.company}${location}]${desc}`;
-      })
-      .join('\n');
-    return `The user is asking about the following saved jobs:\n${lines}\n\nAnswer the user's question in relation to these jobs when relevant.\n\n`;
-  }
-
   private buildPrompt(
     query: string,
     context: string,
-    savedJobsContext = '',
     userProfileContext = '',
   ): string {
     return `You are a helpful job search assistant. Answer the user's query based ONLY on the job postings provided below.
 Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details.
 
-${userProfileContext}${savedJobsContext}Job Postings:
+${userProfileContext}Job Postings:
 ${context}
 
 User Query: ${query}

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '../../generated/prisma/client.js';
 import { PrismaService } from './prisma.service.js';
 
 export interface JobChunkResult {
@@ -76,6 +77,29 @@ export class VectorRepository {
         AND 1 - (jc.embedding <=> ${vectorLiteral}::vector) >= ${threshold}
       ORDER BY similarity DESC
       LIMIT ${topK}
+    `;
+  }
+
+  async findSimilarByJobIds(
+    queryVector: number[],
+    jobIds: string[],
+  ): Promise<JobChunkResult[]> {
+    if (jobIds.length === 0) return [];
+    const vectorLiteral = `[${queryVector.join(',')}]`;
+    const idList = Prisma.join(jobIds.map((id) => Prisma.sql`${id}`));
+
+    return this.prisma.$queryRaw<JobChunkResult[]>`
+      SELECT
+        id,
+        "jobId",
+        "chunkType",
+        "chunkText",
+        "embeddingModel",
+        1 - (embedding <=> ${vectorLiteral}::vector) AS similarity
+      FROM "JobChunk"
+      WHERE embedding IS NOT NULL
+        AND "jobId" IN (${idList})
+      ORDER BY similarity DESC
     `;
   }
 

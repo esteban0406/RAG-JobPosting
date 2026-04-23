@@ -75,7 +75,7 @@ export interface StreamSearchEvent {
 export async function* streamSearch(
   body: { query: string; contextJobIds?: string[] },
 ): AsyncGenerator<StreamSearchEvent> {
-  const res = await fetch(`${API_BASE}/jobs/search/stream`, {
+  const res = await fetch(`${API_BASE}/query/stream`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",

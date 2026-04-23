@@ -38,7 +38,7 @@ export class IngestionService {
     private readonly prisma: PrismaService,
     private readonly jobParser: JobParserService,
   ) {
-    this.providers = [findwork];
+    this.providers = [remotive, jobicy, findwork];
 
     const isGemini = embeddingService.provider === 'gemini';
     this.embedQueue = new PQueue(
@@ -50,7 +50,7 @@ export class IngestionService {
     const isProduction = process.env.NODE_ENV === 'production';
     this.parseQueue = new PQueue(
       isProduction
-        ? { concurrency: 1, interval: 2000, intervalCap: 1 }
+        ? { concurrency: 2, interval: 2000, intervalCap: 1 }
         : { concurrency: 5 },
     );
   }
@@ -69,114 +69,115 @@ export class IngestionService {
     try {
       this.logger.log('Starting ingestion run');
 
-      for (const provider of this.providers) {
-        const providerName = provider.constructor.name;
-        let jobs: RawJobDto[];
-        try {
-          jobs = await this.fetchAllPages(provider);
-        } catch (err) {
-          this.logger.error(
-            `Provider ${providerName} failed, skipping: ${(err as Error).message}`,
-          );
+      const providerResults = await Promise.allSettled(
+        this.providers.map((p) => this.fetchAllPages(p).then((jobs) => ({ provider: p, jobs }))),
+      );
+
+      const allJobs: RawJobDto[] = [];
+      for (const result of providerResults) {
+        if (result.status === 'rejected') {
+          this.logger.error(`Provider fetch failed: ${(result.reason as Error).message}`);
           continue;
         }
+        const { provider, jobs } = result.value;
         fetched += jobs.length;
-        this.logger.log(`Fetched ${jobs.length} jobs from ${providerName}`);
+        this.logger.log(`Fetched ${jobs.length} jobs from ${provider.constructor.name}`);
+        allJobs.push(...jobs);
+      }
 
-        for (const raw of jobs) {
-          const contentHash = this.hashJob(raw);
-          const existing = await this.jobRepo.findByContentHash(contentHash);
+      for (const raw of allJobs) {
+        const contentHash = this.hashJob(raw);
+        const existing = await this.jobRepo.findByContentHash(contentHash);
 
-          if (existing) {
-            const alreadyEmbedded = await this.vectorRepo.hasEmbedding(
-              existing.id,
-            );
-            if (alreadyEmbedded) {
-              skipped++;
-              continue;
-            }
-            // Job exists but has no embedding — re-enqueue for embedding only
-            const jobToEmbed = existing;
-            void this.embedQueue.add(async () => {
-              try {
-                const chunks = this.chunkService.buildChunks(raw, jobToEmbed);
-                await this.embedAndStoreChunks(jobToEmbed.id, chunks);
-                this.logger.debug(
-                  `Re-embedded job: ${jobToEmbed.title} (${jobToEmbed.company})`,
-                );
-              } catch (err) {
-                this.logger.error(
-                  `Failed to embed job ${jobToEmbed.id}: ${(err as Error).message}`,
-                );
-              }
-            });
+        if (existing) {
+          const alreadyEmbedded = await this.vectorRepo.hasEmbedding(
+            existing.id,
+          );
+          if (alreadyEmbedded) {
+            skipped++;
             continue;
           }
-
-          // New job — parse then store
-          void this.parseQueue.add(async () => {
-            let parsed: ParsedJobDto;
+          // Job exists but has no embedding — re-enqueue for embedding only
+          const jobToEmbed = existing;
+          void this.embedQueue.add(async () => {
             try {
-              parsed = await this.jobParser.parse(raw.description);
+              const chunks = this.chunkService.buildChunks(raw, jobToEmbed);
+              await this.embedAndStoreChunks(jobToEmbed.id, chunks);
+              this.logger.debug(
+                `Re-embedded job: ${jobToEmbed.title} (${jobToEmbed.company})`,
+              );
             } catch (err) {
-              if (err instanceof DailyQuotaExhaustedException) {
-                this.logger.warn(
-                  'Daily quota exhausted — draining parse queue with null results',
-                );
-                this.parseQueue.clear();
-                parsed = NULL_PARSED_JOB;
-              } else {
-                parsed = NULL_PARSED_JOB;
-              }
+              this.logger.error(
+                `Failed to embed job ${jobToEmbed.id}: ${(err as Error).message}`,
+              );
             }
+          });
+          continue;
+        }
 
-            const mergedSkills = dedupeSubstrings(dedupeInsensitive([
+        // New job — parse then store
+        void this.parseQueue.add(async () => {
+          let parsed: ParsedJobDto;
+          try {
+            parsed = await this.jobParser.parse(raw.description);
+          } catch (err) {
+            if (err instanceof DailyQuotaExhaustedException) {
+              this.logger.warn(
+                'Daily quota exhausted — draining parse queue with null results',
+              );
+              this.parseQueue.clear();
+              parsed = NULL_PARSED_JOB;
+            } else {
+              parsed = NULL_PARSED_JOB;
+            }
+          }
+
+          const mergedSkills = dedupeSubstrings(
+            dedupeInsensitive([
               ...(parsed.skills ?? []),
               ...filterKeywords(raw.keywords ?? []),
-            ]));
+            ]),
+          );
 
-            const salaryNums =
-              raw.minSalary != null || raw.maxSalary != null
-                ? { minSalary: raw.minSalary, maxSalary: raw.maxSalary }
-                : normalizeSalary({ raw: parsed.salary ?? undefined });
+          const salaryNums =
+            raw.minSalary != null || raw.maxSalary != null
+              ? { minSalary: raw.minSalary, maxSalary: raw.maxSalary }
+              : normalizeSalary({ raw: parsed.salary ?? undefined });
 
-            const job = await this.jobRepo.upsertJob({
-              sourceId: raw.sourceId,
-              source: raw.source,
-              title: raw.title,
-              company: raw.company,
-              location: raw.location,
-              description: raw.description,
-              url: raw.url,
-              jobType: raw.jobType,
-              minSalary: salaryNums.minSalary,
-              maxSalary: salaryNums.maxSalary,
-              logo: raw.logo ?? null,
-              contentHash,
-              summary: parsed.summary,
-              salary: parsed.salary,
-              responsibilities: parsed.responsibilities ?? [],
-              requirements: parsed.requirements ?? [],
-              benefits: parsed.benefits ?? [],
-              skills: mergedSkills,
-            });
-            stored++;
-
-            void this.embedQueue.add(async () => {
-              try {
-                const chunks = this.chunkService.buildChunks(raw, job);
-                await this.embedAndStoreChunks(job.id, chunks);
-                this.logger.debug(
-                  `Embedded job: ${job.title} (${job.company})`,
-                );
-              } catch (err) {
-                this.logger.error(
-                  `Failed to embed job ${job.id}: ${(err as Error).message}`,
-                );
-              }
-            });
+          const job = await this.jobRepo.upsertJob({
+            sourceId: raw.sourceId,
+            source: raw.source,
+            title: raw.title,
+            company: raw.company,
+            location: raw.location,
+            description: raw.description,
+            url: raw.url,
+            jobType: raw.jobType,
+            minSalary: salaryNums.minSalary,
+            maxSalary: salaryNums.maxSalary,
+            logo: raw.logo ?? null,
+            contentHash,
+            summary: parsed.summary,
+            salary: parsed.salary,
+            responsibilities: parsed.responsibilities ?? [],
+            requirements: parsed.requirements ?? [],
+            benefits: parsed.benefits ?? [],
+            skills: mergedSkills,
           });
-        }
+          stored++;
+
+          void this.embedQueue.add(async () => {
+            try {
+              const chunks = this.chunkService.buildChunks(raw, job);
+              await this.embedAndStoreChunks(job.id, chunks);
+              this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
+            } catch (err) {
+              this.logger.error(
+                `Failed to embed job ${job.id}: ${(err as Error).message}`,
+              );
+            }
+          });
+        });
       }
 
       await this.parseQueue.onIdle();

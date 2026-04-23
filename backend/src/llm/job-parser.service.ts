@@ -181,13 +181,13 @@ export class JobParserService {
   ): Promise<ParsedJobDto> {
     try {
       const completion = await this.groq!.chat.completions.create({
-        model: 'qwen/qwen3-32b',
+        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: text },
         ],
         temperature: 0.1,
-        max_completion_tokens: 2048,
+        max_completion_tokens: 1500,
         stream: false,
       });
 
@@ -224,11 +224,9 @@ export class JobParserService {
 
       const errorType = this.getErrorType(err); // "tokens" | "requests" | null
       const retryAfter =
-        errorType === 'tokens'
-          ? (this.getTokenResetSeconds(err) ??
-            this.getRetryAfterSeconds(err) ??
-            Math.pow(2, attempt) * 5)
-          : (this.getRetryAfterSeconds(err) ?? Math.pow(2, attempt) * 5);
+        this.getRetryAfterSeconds(err) ??
+        this.getTokenResetSeconds(err) ??
+        Math.pow(2, attempt) * 5;
 
       this.logger.warn(
         `Groq rate limited (429, type=${errorType ?? 'unknown'}), retrying in ${retryAfter}s (attempt ${attempt + 1}/3)`,
@@ -307,7 +305,10 @@ export class JobParserService {
 
   private extractJson(raw: string): ParsedJobDto {
     // Strip markdown code fences if the model ignored the instruction
-    const stripped = raw.replace(/```(?:json)?\s*/gi, '').replace(/```/g, '');
+    const stripped = raw
+      .trim()
+      .replace(/```(?:json)?\s*/gi, '')
+      .replace(/```/g, '');
 
     // Try direct parse first
     try {
@@ -322,7 +323,9 @@ export class JobParserService {
           // fall through
         }
       }
-      this.logger.warn('Could not extract valid JSON from LLM response');
+      this.logger.warn(
+        `Could not extract valid JSON from LLM response. Raw (first 300 chars): ${raw.slice(0, 300)}`,
+      );
       return NULL_PARSED_JOB;
     }
   }

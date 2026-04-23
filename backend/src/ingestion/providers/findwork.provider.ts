@@ -5,7 +5,7 @@ import { JobProvider, RawJobDto } from '../dto/raw-job.dto.js';
 const SOURCE = 'findwork';
 const BASE_URL = 'https://findwork.dev/api/jobs/';
 const PAGE_SIZE = 50;
-const MAX_JOBS = 50;
+const MAX_JOBS = 100;
 
 interface FindworkJob {
   id: string;
