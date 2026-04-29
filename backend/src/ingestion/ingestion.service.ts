@@ -70,18 +70,24 @@ export class IngestionService {
       this.logger.log('Starting ingestion run');
 
       const providerResults = await Promise.allSettled(
-        this.providers.map((p) => this.fetchAllPages(p).then((jobs) => ({ provider: p, jobs }))),
+        this.providers.map((p) =>
+          this.fetchAllPages(p).then((jobs) => ({ provider: p, jobs })),
+        ),
       );
 
       const allJobs: RawJobDto[] = [];
       for (const result of providerResults) {
         if (result.status === 'rejected') {
-          this.logger.error(`Provider fetch failed: ${(result.reason as Error).message}`);
+          this.logger.error(
+            `Provider fetch failed: ${(result.reason as Error).message}`,
+          );
           continue;
         }
         const { provider, jobs } = result.value;
         fetched += jobs.length;
-        this.logger.log(`Fetched ${jobs.length} jobs from ${provider.constructor.name}`);
+        this.logger.log(
+          `Fetched ${jobs.length} jobs from ${provider.constructor.name}`,
+        );
         allJobs.push(...jobs);
       }
 
@@ -380,7 +386,9 @@ function dedupeSubstrings(arr: string[]): string[] {
   return arr.filter((_, i) =>
     lower.every(
       (other, j) =>
-        i === j || !other.includes(lower[i]) || other.length === lower[i].length,
+        i === j ||
+        !other.includes(lower[i]) ||
+        other.length === lower[i].length,
     ),
   );
 }
@@ -397,10 +405,27 @@ function dedupeInsensitive(arr: string[]): string[] {
 
 // Generic words that provider keyword systems sometimes emit but are not tool names.
 const KEYWORD_STOPWORDS = new Set([
-  'ai', 'ml', 'api', 'qa', 'ux', 'ui',
-  'cloud', 'crm', 'erp', 'cms', 'seo', 'ads',
-  'agents', 'analytics', 'coverage', 'ancestry',
-  'prompting', 'remote', 'saas', 'paas', 'iaas',
+  'ai',
+  'ml',
+  'api',
+  'qa',
+  'ux',
+  'ui',
+  'cloud',
+  'crm',
+  'erp',
+  'cms',
+  'seo',
+  'ads',
+  'agents',
+  'analytics',
+  'coverage',
+  'ancestry',
+  'prompting',
+  'remote',
+  'saas',
+  'paas',
+  'iaas',
 ]);
 
 /**
@@ -410,6 +435,8 @@ const KEYWORD_STOPWORDS = new Set([
 function filterKeywords(keywords: string[]): string[] {
   return keywords.filter((kw) => {
     const lower = kw.toLowerCase().trim();
-    return lower.length >= 2 && !KEYWORD_STOPWORDS.has(lower) && !/^\d+$/.test(lower);
+    return (
+      lower.length >= 2 && !KEYWORD_STOPWORDS.has(lower) && !/^\d+$/.test(lower)
+    );
   });
 }

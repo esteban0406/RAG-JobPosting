@@ -13,8 +13,8 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    const { passwordHash: _omit, ...profile } = user;
-    return profile;
+    const { passwordHash: _omit, resume, ...rest } = user;
+    return { ...rest, hasResume: resume !== null };
   }
 
   async updateProfile(
@@ -26,8 +26,8 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
     const updated = await this.userRepository.update(userId, dto);
-    const { passwordHash: _omit, ...profile } = updated;
-    return profile;
+    const { passwordHash: _omit, ...rest } = updated;
+    return { ...rest, hasResume: user.resume !== null };
   }
 
   async deleteAccount(userId: string): Promise<void> {

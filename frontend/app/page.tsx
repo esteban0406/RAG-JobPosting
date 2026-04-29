@@ -1,27 +1,18 @@
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
-import {
-  Briefcase,
-  Globe,
-  Search,
-  Layers,
-  Database,
-  Sparkles,
-} from "lucide-react";
+import { Globe, Layers, Database, Sparkles } from "lucide-react";
 
 const PROVIDERS = [
-  { icon: Briefcase, name: "Adzuna", desc: "US job market listings" },
   { icon: Globe, name: "Remotive", desc: "Remote-only positions" },
-  { icon: Search, name: "CareerJet", desc: "Keyword-driven search" },
   { icon: Layers, name: "Jobicy", desc: "Remote by industry" },
-  { icon: Database, name: "WebNinja", desc: "Aggregated job listings" },
+  { icon: Database, name: "FindWork", desc: "Aggregated job listings" },
 ];
 
 const HOW_IT_WORKS = [
   {
     n: "1",
     title: "Browse Jobs",
-    desc: "Explore thousands of listings from 5 providers, filtered by role, location, and salary.",
+    desc: "Explore thousands of listings from 3 providers, filtered by role, location, and salary.",
   },
   {
     n: "2",
@@ -57,9 +48,8 @@ export default function LandingPage() {
           powered by AI.
         </h1>
         <p className="text-text-secondary text-[17px] leading-[1.65] max-w-[560px]">
-          Aggregate jobs from 5 providers — Adzuna, Remotive, CareerJet, Jobicy
-          &amp; WebNinja — with an AI assistant that understands what you
-          actually need.
+          Aggregate jobs from 3 providers — Remotive, Jobicy, FindWork — with an
+          AI assistant that understands what you actually need.
         </p>
 
         {/* CTAs */}
@@ -81,12 +71,12 @@ export default function LandingPage() {
         {/* Stats */}
         <div className="flex items-center mt-2">
           <div className="flex flex-col items-center gap-1 px-10 py-6">
-            <span className="text-text-primary text-[32px] font-bold">5+</span>
+            <span className="text-text-primary text-[32px] font-bold">3</span>
             <span className="text-text-muted text-sm">Job Providers</span>
           </div>
           <div className="w-px h-10 bg-border" />
           <div className="flex flex-col items-center gap-1 px-10 py-6">
-            <span className="text-text-primary text-[32px] font-bold">10K+</span>
+            <span className="text-text-primary text-[32px] font-bold">5K+</span>
             <span className="text-text-muted text-sm">Live Jobs</span>
           </div>
           <div className="w-px h-10 bg-border" />
@@ -109,8 +99,12 @@ export default function LandingPage() {
               className="w-[248px] flex flex-col items-center gap-3 p-5 bg-bg-base border border-border rounded-[var(--radius-md)]"
             >
               <Icon size={28} className="text-accent" />
-              <span className="text-text-primary font-bold text-base">{name}</span>
-              <span className="text-text-muted text-sm text-center">{desc}</span>
+              <span className="text-text-primary font-bold text-base">
+                {name}
+              </span>
+              <span className="text-text-muted text-sm text-center">
+                {desc}
+              </span>
             </div>
           ))}
         </div>
@@ -185,7 +179,9 @@ export default function LandingPage() {
               <div className="w-10 h-10 rounded-full bg-accent-subtle flex items-center justify-center">
                 <span className="text-accent text-base font-bold">{n}</span>
               </div>
-              <span className="text-text-primary text-lg font-bold">{title}</span>
+              <span className="text-text-primary text-lg font-bold">
+                {title}
+              </span>
               <p className="text-text-secondary text-[15px] leading-[1.6] text-center">
                 {desc}
               </p>
@@ -198,13 +194,22 @@ export default function LandingPage() {
       <footer className="h-[100px] bg-bg-surface border-t border-border flex items-center justify-between px-20">
         <span className="text-text-primary font-bold text-lg">⚡ JobAI</span>
         <div className="flex items-center gap-8">
-          <Link href="/jobs" className="text-text-muted text-sm hover:text-text-secondary">
+          <Link
+            href="/jobs"
+            className="text-text-muted text-sm hover:text-text-secondary"
+          >
             Browse Jobs
           </Link>
-          <Link href="/jobs" className="text-text-muted text-sm hover:text-text-secondary">
+          <Link
+            href="/jobs"
+            className="text-text-muted text-sm hover:text-text-secondary"
+          >
             AI Search
           </Link>
-          <Link href="/login" className="text-text-muted text-sm hover:text-text-secondary">
+          <Link
+            href="/login"
+            className="text-text-muted text-sm hover:text-text-secondary"
+          >
             Login
           </Link>
         </div>

@@ -106,7 +106,7 @@ export class LabelingService {
         candidate_jobs,
         label_count,
         label_warning,
-      } as LabeledQuery & { category: QueryCategory };
+      };
     });
   }
 }

@@ -40,20 +40,15 @@ interface Message {
 
 interface AiPanelProps {
   isLoggedIn?: boolean;
+  hasResume?: boolean;
   onClose: () => void;
 }
 
-function getHints(isLoggedIn: boolean, hasContext: boolean) {
-  if (!isLoggedIn) {
-    return {
-      items: [
-        "Find remote React jobs with 150k+ salary",
-        "What are the top companies hiring data scientists?",
-        "Compare frontend vs backend salaries",
-      ],
-      tip: "Log in and upload your resume for personalised results",
-    };
-  }
+function getHints(
+  isLoggedIn: boolean,
+  hasResume: boolean,
+  hasContext: boolean,
+) {
   if (hasContext) {
     return {
       items: [
@@ -64,17 +59,29 @@ function getHints(isLoggedIn: boolean, hasContext: boolean) {
       tip: null,
     };
   }
+  if (isLoggedIn && hasResume) {
+    return {
+      items: [
+        "Recommend jobs that match my skills and experience",
+        "Am I a good fit for a Devops engineer role?",
+        "What skills should I develop to get a data science job?",
+      ],
+      tip: "Tap the briefcase icon to add saved jobs and ask specific questions about them.",
+    };
+  }
   return {
     items: [
-      "Recommend jobs that match my skills and experience",
-      "Am I a good fit for a senior React engineer role?",
-      "What skills should I develop to get a data science job?",
+      "Find remote Devops jobs with 150k+ salary",
+      "What are the top skills requested for designers positions?",
+      "Compare frontend vs backend salaries",
     ],
-    tip: "Tap the briefcase icon to add saved jobs and ask specific questions about them.",
+    tip: isLoggedIn
+      ? "Upload your resume for personalised job recommendations."
+      : "Log in and upload your resume for personalised results",
   };
 }
 
-export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
+export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
   const { contextJobIds } = useAiStore();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -103,14 +110,20 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
 
       for await (const event of streamSearch(body)) {
         if (event.type === "start") {
-          setMessages((prev) => [...prev, { role: "ai", text: "", streaming: true }]);
+          setMessages((prev) => [
+            ...prev,
+            { role: "ai", text: "", streaming: true },
+          ]);
           streamingStarted = true;
         } else if (event.type === "token") {
           setMessages((prev) => {
             const copy = [...prev];
             const last = copy[copy.length - 1];
             if (last?.role === "ai") {
-              copy[copy.length - 1] = { ...last, text: last.text + (event.content ?? "") };
+              copy[copy.length - 1] = {
+                ...last,
+                text: last.text + (event.content ?? ""),
+              };
             }
             return copy;
           });
@@ -132,13 +145,18 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
           const isRateLimit = event.status === 429;
           const text = isRateLimit
             ? "Rate limit reached — please wait a moment and try again."
-            : event.message ?? "Something went wrong. Please try again.";
+            : (event.message ?? "Something went wrong. Please try again.");
           if (streamingStarted) {
             setMessages((prev) => {
               const copy = [...prev];
               const last = copy[copy.length - 1];
               if (last?.role === "ai") {
-                copy[copy.length - 1] = { ...last, text, error: true, streaming: false };
+                copy[copy.length - 1] = {
+                  ...last,
+                  text,
+                  error: true,
+                  streaming: false,
+                };
               }
               return copy;
             });
@@ -157,7 +175,12 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
           const copy = [...prev];
           const last = copy[copy.length - 1];
           if (last?.role === "ai") {
-            copy[copy.length - 1] = { ...last, text, error: true, streaming: false };
+            copy[copy.length - 1] = {
+              ...last,
+              text,
+              error: true,
+              streaming: false,
+            };
           }
           return copy;
         });
@@ -198,7 +221,7 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
   }
 
   const hasContext = contextJobIds.size > 0;
-  const hints = getHints(!!isLoggedIn, hasContext);
+  const hints = getHints(!!isLoggedIn, !!hasResume, hasContext);
 
   return (
     <div className="h-full flex flex-col bg-bg-surface">
@@ -206,8 +229,10 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
       <div className="flex flex-row items-center justify-between px-5 h-14 bg-bg-surface-2 border-b border-border shrink-0">
         <div className="flex items-center gap-2">
           <Sparkles size={18} className="text-accent" />
-          <span className="text-text-primary text-base font-semibold">Ask AI</span>
-          {isLoggedIn && (
+          <span className="text-text-primary text-base font-semibold">
+            Ask AI
+          </span>
+          {isLoggedIn && hasResume && (
             <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-accent-subtle text-accent-glow border border-accent/20">
               Resume &amp; profile context active
             </span>
@@ -227,7 +252,8 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
           <div className="flex flex-col items-center justify-center h-full gap-3 text-center">
             <Sparkles size={32} className="text-accent opacity-50" />
             <p className="text-text-secondary text-sm">
-              Ask me anything about jobs — I&apos;ll search and synthesize an answer for you.
+              Ask me anything about jobs — I&apos;ll search and synthesize an
+              answer for you.
             </p>
             <div className="flex flex-col gap-2 mt-2 w-full max-w-sm">
               {hints.items.map((hint) => (
@@ -259,12 +285,17 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
               <>
                 {msg.error ? (
                   <div className="flex items-start gap-2 bg-bg-surface-2 border border-border text-text-secondary text-sm px-3.5 py-2.5 rounded-[2px_12px_12px_12px] max-w-[90%]">
-                    <AlertCircle size={14} className="text-danger shrink-0 mt-0.5" />
+                    <AlertCircle
+                      size={14}
+                      className="text-danger shrink-0 mt-0.5"
+                    />
                     {msg.text}
                   </div>
                 ) : (
                   <div className="bg-bg-surface-2 border border-border text-text-secondary text-sm px-3.5 py-2.5 rounded-[2px_12px_12px_12px] leading-relaxed prose prose-sm prose-invert max-w-none">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.text}</ReactMarkdown>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {msg.text}
+                    </ReactMarkdown>
                   </div>
                 )}
 
@@ -283,7 +314,8 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
                           {src.title}
                         </span>
                         <span className="text-text-muted text-xs">
-                          {src.company} · {Math.round(src.similarity * 100)}% match
+                          {src.company} · {Math.round(src.similarity * 100)}%
+                          match
                         </span>
                       </button>
                     ))}
@@ -295,9 +327,15 @@ export function AiPanel({ isLoggedIn, onClose }: AiPanelProps) {
                     <table className="w-full text-sm">
                       <tbody>
                         {msg.aggregation.rows.slice(0, 5).map((row, ri) => (
-                          <tr key={ri} className="border-b border-border last:border-0">
+                          <tr
+                            key={ri}
+                            className="border-b border-border last:border-0"
+                          >
                             {Object.entries(row).map(([k, v]) => (
-                              <td key={k} className="px-3 py-2 text-text-secondary text-xs">
+                              <td
+                                key={k}
+                                className="px-3 py-2 text-text-secondary text-xs"
+                              >
                                 {String(v)}
                               </td>
                             ))}

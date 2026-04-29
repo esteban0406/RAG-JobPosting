@@ -7,8 +7,11 @@ import type { UpdateProfileDto } from './dto/update-profile.dto.js';
 export class UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  findById(id: string): Promise<User | null> {
-    return this.prisma.user.findUnique({ where: { id } });
+  findById(id: string) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      include: { resume: { select: { id: true } } },
+    });
   }
 
   findByEmail(email: string): Promise<User | null> {

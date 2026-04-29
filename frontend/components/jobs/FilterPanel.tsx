@@ -97,15 +97,15 @@ export function FilterPanel({ searchParams, onApply, onClose }: FilterPanelProps
             value={minSalary}
             onChange={(e) => setMinSalary(e.target.value)}
             placeholder="Min"
-            className="flex-1 h-9 px-3 bg-bg-base border border-border-subtle rounded-[var(--radius-sm)] text-text-primary text-sm outline-none focus:border-accent transition-colors"
+            className="min-w-0 flex-1 h-9 px-3 bg-bg-base border border-border-subtle rounded-[var(--radius-sm)] text-text-primary text-sm outline-none focus:border-accent transition-colors"
           />
-          <span className="text-text-muted text-sm">–</span>
+          <span className="text-text-muted text-sm shrink-0">–</span>
           <input
             type="number"
             value={maxSalary}
             onChange={(e) => setMaxSalary(e.target.value)}
             placeholder="Max"
-            className="flex-1 h-9 px-3 bg-bg-base border border-border-subtle rounded-[var(--radius-sm)] text-text-primary text-sm outline-none focus:border-accent transition-colors"
+            className="min-w-0 flex-1 h-9 px-3 bg-bg-base border border-border-subtle rounded-[var(--radius-sm)] text-text-primary text-sm outline-none focus:border-accent transition-colors"
           />
         </div>
       </div>

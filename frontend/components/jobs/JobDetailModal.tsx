@@ -1,11 +1,7 @@
 "use client";
 
 import { Banknote, ExternalLink, Bookmark, X } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { type Job } from "./JobCard";
 
@@ -73,7 +69,8 @@ export function JobDetailModal({
                     className="w-full h-full object-contain"
                     onError={(e) => {
                       const el = e.currentTarget;
-                      if (el.parentElement) el.parentElement.style.display = "none";
+                      if (el.parentElement)
+                        el.parentElement.style.display = "none";
                     }}
                   />
                 </div>
@@ -112,7 +109,9 @@ export function JobDetailModal({
           {salary && (
             <div className="flex items-center gap-2">
               <Banknote size={16} className="text-success" />
-              <span className="text-success text-[15px] font-semibold">{salary}</span>
+              <span className="text-success text-[15px] font-semibold">
+                {salary}
+              </span>
             </div>
           )}
 
@@ -146,19 +145,25 @@ export function JobDetailModal({
         <div className="flex-1 overflow-y-auto flex flex-col gap-5 p-6">
           {/* About the role */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-text-primary font-bold text-base">About the role</h3>
-            {job.summary && (
-              <p className="text-text-primary text-sm font-medium leading-[1.7]">
-                {job.summary}
-              </p>
-            )}
+            {job.summary ? (
+              <>
+                <h3 className="text-text-primary font-bold text-base">
+                  About the role
+                </h3>
+                <p className="text-text-primary text-sm font-medium leading-[1.7]">
+                  {job.summary}
+                </p>
+              </>
+            ) : null}
           </div>
           {/*Skills */}
           {job.skills?.length > 0 && (
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
-                <h3 className="text-text-primary font-bold text-base">Skills</h3>
+                <h3 className="text-text-primary font-bold text-base">
+                  Skills
+                </h3>
                 <div className="flex flex-wrap gap-2">
                   {job.skills.map((skill, i) => (
                     <span
@@ -178,10 +183,15 @@ export function JobDetailModal({
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
-                <h3 className="text-text-primary font-bold text-base">Responsibilities</h3>
+                <h3 className="text-text-primary font-bold text-base">
+                  Responsibilities
+                </h3>
                 <ul className="flex flex-col gap-1.5 pl-4 list-disc">
                   {job.responsibilities.map((item, i) => (
-                    <li key={i} className="text-text-secondary text-sm leading-[1.7]">
+                    <li
+                      key={i}
+                      className="text-text-secondary text-sm leading-[1.7]"
+                    >
                       {item}
                     </li>
                   ))}
@@ -195,10 +205,15 @@ export function JobDetailModal({
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
-                <h3 className="text-text-primary font-bold text-base">Requirements</h3>
+                <h3 className="text-text-primary font-bold text-base">
+                  Requirements
+                </h3>
                 <ul className="flex flex-col gap-1.5 pl-4 list-disc">
                   {job.requirements.map((item, i) => (
-                    <li key={i} className="text-text-secondary text-sm leading-[1.7]">
+                    <li
+                      key={i}
+                      className="text-text-secondary text-sm leading-[1.7]"
+                    >
                       {item}
                     </li>
                   ))}
@@ -212,10 +227,15 @@ export function JobDetailModal({
             <>
               <div className="h-px bg-border" />
               <div className="flex flex-col gap-3">
-                <h3 className="text-text-primary font-bold text-base">Benefits</h3>
+                <h3 className="text-text-primary font-bold text-base">
+                  Benefits
+                </h3>
                 <ul className="flex flex-col gap-1.5 pl-4 list-disc">
                   {job.benefits.map((item, i) => (
-                    <li key={i} className="text-text-secondary text-sm leading-[1.7]">
+                    <li
+                      key={i}
+                      className="text-text-secondary text-sm leading-[1.7]"
+                    >
                       {item}
                     </li>
                   ))}
@@ -225,10 +245,12 @@ export function JobDetailModal({
           )}
 
           {/* Description */}
-          <h3 className="text-text-primary font-bold text-base">Job description</h3>
+          <h3 className="text-text-primary font-bold text-base">
+            Job description
+          </h3>
           <p className="text-text-secondary text-sm leading-[1.7] whitespace-pre-line">
-              {job.description}
-            </p>
+            {job.description}
+          </p>
 
           {/* More from company */}
           <div className="h-px bg-border" />

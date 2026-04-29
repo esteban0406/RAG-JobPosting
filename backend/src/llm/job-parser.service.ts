@@ -153,6 +153,7 @@ export class JobParserService {
           ],
           stream: false,
           temperature: 0.1,
+          response_format: { type: 'json_object' },
         }),
         signal: AbortSignal.timeout(60_000),
       });
@@ -189,6 +190,7 @@ export class JobParserService {
         temperature: 0.1,
         max_completion_tokens: 1500,
         stream: false,
+        response_format: { type: 'json_object' },
       });
 
       const content = completion.choices[0]?.message?.content ?? '';

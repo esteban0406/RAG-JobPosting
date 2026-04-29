@@ -42,13 +42,18 @@ export class QueryOrchestratorService {
 
     const t0 = Date.now();
     const classification = await this.classifier.classify(dto.query);
-    this.logger.debug(`Classification took ${Date.now() - t0}ms — type=${classification.type}`);
+    this.logger.debug(
+      `Classification took ${Date.now() - t0}ms — type=${classification.type}`,
+    );
 
     if (classification.type === 'retrieval') {
       return this.handleRetrieval(dto, userId);
     }
     if (classification.type === 'aggregation') {
       return this.handleAggregation(classification, dto.query);
+    }
+    if (!classification.intent) {
+      return this.handleRetrieval(dto, userId);
     }
     return this.handleHybrid(classification, dto, userId);
   }
@@ -162,7 +167,9 @@ export class QueryOrchestratorService {
 
     const t0 = Date.now();
     const classification = await this.classifier.classify(dto.query);
-    this.logger.debug(`Classification took ${Date.now() - t0}ms — type=${classification.type}`);
+    this.logger.debug(
+      `Classification took ${Date.now() - t0}ms — type=${classification.type}`,
+    );
 
     if (classification.type === 'aggregation') {
       yield { type: 'start', queryType: 'aggregation' };
@@ -184,6 +191,11 @@ export class QueryOrchestratorService {
       return;
     }
 
+    if (!classification.intent) {
+      yield { type: 'start', queryType: 'retrieval' };
+      yield* this.streamRetrieval(dto, userId);
+      return;
+    }
     yield { type: 'start', queryType: 'hybrid' };
     yield* this.streamHybrid(classification, dto, userId);
   }

@@ -36,8 +36,6 @@ export class AggregationRepository implements OnModuleInit, OnModuleDestroy {
     if (!sql) {
       throw new BadRequestException(`Unknown aggregation template: ${key}`);
     }
-    return this.client.$queryRawUnsafe(sql, ...params) as Promise<
-      Record<string, unknown>[]
-    >;
+    return this.client.$queryRawUnsafe(sql, ...params);
   }
 }

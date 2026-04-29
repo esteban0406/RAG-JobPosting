@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Bookmark } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -66,6 +67,7 @@ interface JobCardProps {
 }
 
 export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
+  const [logoError, setLogoError] = useState(false);
   const salary = <SalaryRange min={job.minSalary} max={job.maxSalary} />;
   const visibleSkills = job.skills.slice(0, 3);
   const extraSkills = job.skills.length - visibleSkills.length;
@@ -119,36 +121,30 @@ export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
       {/* Row 4 — Skills + Logo */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 flex-wrap">
-          {visibleSkills.length > 0 ? (
-            <>
-              {visibleSkills.map((skill) => (
-                <span
-                  key={skill}
-                  className="bg-bg-surface-2 text-text-secondary text-xs font-medium px-2.5 py-1 rounded-full"
-                >
-                  {skill}
-                </span>
-              ))}
-              {extraSkills > 0 && (
-                <span className="bg-bg-surface-2 text-text-muted text-xs font-medium px-2.5 py-1 rounded-full">
-                  +{extraSkills}
-                </span>
-              )}
-            </>
-          ) : (
-            job.jobType && <JobTypeBadge type={job.jobType} />
-          )}
+          {job.jobType && <JobTypeBadge type={job.jobType} />}
+          <>
+            {visibleSkills.map((skill) => (
+              <span
+                key={skill}
+                className="bg-bg-surface-2 text-text-secondary text-xs font-medium px-2.5 py-1 rounded-full"
+              >
+                {skill}
+              </span>
+            ))}
+            {extraSkills > 0 && (
+              <span className="bg-bg-surface-2 text-text-muted text-xs font-medium px-2.5 py-1 rounded-full">
+                +{extraSkills}
+              </span>
+            )}
+          </>
         </div>
-        {job.logo && (
+        {job.logo && !logoError && (
           <div className="w-8 h-8 rounded-md bg-bg-surface-2 flex items-center justify-center overflow-hidden shrink-0 ml-2">
             <img
               src={job.logo}
               alt={`${job.company} logo`}
               className="w-full h-full object-contain"
-              onError={(e) => {
-                const el = e.currentTarget;
-                if (el.parentElement) el.parentElement.style.display = "none";
-              }}
+              onError={() => setLogoError(true)}
             />
           </div>
         )}

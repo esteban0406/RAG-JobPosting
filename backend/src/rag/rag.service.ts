@@ -38,7 +38,12 @@ export class RagService {
     contextJobIds?: string[],
     userId?: string,
   ): Promise<RagResponse> {
-    const ctx = await this.buildContext(userQuery, filters, contextJobIds, userId);
+    const ctx = await this.buildContext(
+      userQuery,
+      filters,
+      contextJobIds,
+      userId,
+    );
     if (!ctx) {
       return {
         answer:
@@ -58,7 +63,12 @@ export class RagService {
     userId?: string,
   ): AsyncGenerator<string | { done: true; sources: JobSource[] }> {
     const t0 = Date.now();
-    const ctx = await this.buildContext(userQuery, filters, contextJobIds, userId);
+    const ctx = await this.buildContext(
+      userQuery,
+      filters,
+      contextJobIds,
+      userId,
+    );
     this.logger.debug(`buildContext took ${Date.now() - t0}ms`);
 
     if (!ctx) {
@@ -134,7 +144,11 @@ export class RagService {
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
       : '';
-    const prompt = this.buildPrompt(userQuery, contextChunks, userProfileContext);
+    const prompt = this.buildPrompt(
+      userQuery,
+      contextChunks,
+      userProfileContext,
+    );
 
     const sources: JobSource[] = topJobs
       .map((group) => {
@@ -175,8 +189,13 @@ export class RagService {
     const queryVector =
       resumeEmbedding ?? (await this.embeddingService.embedQuery(userQuery));
 
-    const chunks = await this.vectorRepo.findSimilarByJobIds(queryVector, contextJobIds);
-    this.logger.debug(`Context jobs fetch + similarity took ${Date.now() - t0}ms`);
+    const chunks = await this.vectorRepo.findSimilarByJobIds(
+      queryVector,
+      contextJobIds,
+    );
+    this.logger.debug(
+      `Context jobs fetch + similarity took ${Date.now() - t0}ms`,
+    );
 
     const jobMap = new Map(jobs.map((j) => [j.id, j]));
     const grouped = this.groupByJob(chunks);
@@ -203,7 +222,11 @@ export class RagService {
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
       : '';
-    const prompt = this.buildPrompt(userQuery, contextChunks, userProfileContext);
+    const prompt = this.buildPrompt(
+      userQuery,
+      contextChunks,
+      userProfileContext,
+    );
 
     const sources: JobSource[] = ranked
       .map(({ jobId, maxSimilarity }) => {

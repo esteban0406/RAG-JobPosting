@@ -43,9 +43,12 @@ export function FilterBar() {
     return () => clearTimeout(timer);
   }, [keyword]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const activeFilters = ["location", "jobType", "minSalary", "maxSalary"].filter(
-    (k) => searchParams.has(k),
-  );
+  const activeFilters = [
+    "location",
+    "jobType",
+    "minSalary",
+    "maxSalary",
+  ].filter((k) => searchParams.has(k));
 
   function clearFilter(key: string) {
     pushParams({ [key]: null });
@@ -70,7 +73,10 @@ export function FilterBar() {
             className="flex-1 bg-transparent text-text-primary text-sm outline-none placeholder:text-text-muted"
           />
           {keyword && (
-            <button onClick={() => setKeyword("")} className="text-text-muted hover:text-text-secondary">
+            <button
+              onClick={() => setKeyword("")}
+              className="text-text-muted hover:text-text-secondary"
+            >
               <X size={14} />
             </button>
           )}
@@ -112,7 +118,10 @@ export function FilterBar() {
               className="flex items-center gap-1.5 bg-accent-subtle text-accent-glow text-xs font-medium px-3 py-1.5 rounded-full"
             >
               {FILTER_LABELS[key]}: {searchParams.get(key)}
-              <button onClick={() => clearFilter(key)} className="hover:text-white">
+              <button
+                onClick={() => clearFilter(key)}
+                className="hover:text-white"
+              >
                 <X size={12} />
               </button>
             </span>

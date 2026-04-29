@@ -5,6 +5,7 @@ export class UserProfileDto {
   skills: string[];
   preferredFields: string[];
   location: string | null;
+  hasResume: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

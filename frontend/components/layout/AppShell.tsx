@@ -6,7 +6,7 @@ import { AiFab } from "@/components/ai/AiFab";
 import { useAiStore } from "@/lib/ai-store";
 
 interface AppShellProps {
-  user?: { name: string; email: string } | null;
+  user?: { name: string; email: string; hasResume?: boolean } | null;
   children: React.ReactNode;
 }
 
@@ -25,7 +25,7 @@ export function AppShell({ user, children }: AppShellProps) {
       </main>
       {isOpen && (
         <div className="w-[40%] h-full overflow-hidden border-l border-border shrink-0">
-          <AiPanel isLoggedIn={!!user} onClose={close} />
+          <AiPanel isLoggedIn={!!user} hasResume={!!user?.hasResume} onClose={close} />
         </div>
       )}
       <AiFab />

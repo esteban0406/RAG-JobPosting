@@ -30,7 +30,10 @@ export class QueryClassifierService {
     const isAggregation = AGGREGATION_PATTERN.test(query);
     const isRetrieval = RETRIEVAL_PATTERN.test(query);
 
-    if (isAggregation && isRetrieval) return { type: 'hybrid' };
+    if (isAggregation && isRetrieval) {
+      const llmResult = await this.classifyWithLlm(query);
+      return { ...llmResult, type: 'hybrid' };
+    }
     if (isAggregation) return { type: 'aggregation' };
     if (isRetrieval) return { type: 'retrieval' };
 
@@ -38,11 +41,47 @@ export class QueryClassifierService {
   }
 
   private async classifyWithLlm(query: string): Promise<ClassificationResult> {
-    const prompt = `Classify this job search query. Available aggregation templates: ${TEMPLATE_KEYS.join(', ')}.
-Searchable fields: title, company, location, jobType, minSalary, maxSalary.
+    const prompt = `Classify this job search query into one of three types and pick the best aggregation template.
+
+Query types:
+- "retrieval"    — find/show/list specific job postings (use RAG search)
+- "aggregation"  — statistical or analytical question (use SQL template only)
+- "hybrid"       — both: find jobs AND compute a stat (use both)
+
+Available SQL templates and their required params ($1, $2 are positional):
+- count_total                   — no params
+- count_by_location             — no params
+- count_by_job_type             — no params
+- count_by_company              — no params
+- count_remote                  — no params
+- salary_stats_overall          — no params
+- salary_stats_by_title         — $1='%keyword%'
+- salary_stats_by_location      — no params
+- salary_stats_by_job_type      — no params
+- jobs_above_salary             — $1=threshold e.g. '150000'
+- jobs_between_salary           — $1=lower, $2=upper e.g. '80000','120000'
+- list_jobs_by_title            — $1='%keyword%'
+- list_jobs_by_location         — $1='%city%'
+- list_jobs_by_company          — $1='%company%'
+- list_jobs_by_type             — $1='%type%' e.g. '%contract%'
+- list_remote_jobs              — no params
+- list_jobs_by_skill            — $1=exact skill e.g. 'Python'
+- list_distinct_titles          — $1='%keyword%'
+- list_distinct_locations       — no params
+- list_distinct_skills          — no params
+- list_distinct_companies       — $1='%keyword%'
+- top_hiring_companies          — no params
+- skills_demand                 — no params
+- recent_jobs                   — no params
+
+Rules:
+- Use null for intent when type is "retrieval".
+- For salary threshold queries (">150K", "above 100K") use jobs_above_salary with $1 as the number in dollars (e.g. "150000").
+- Always wrap ILIKE params with % wildcards.
+- Params are always strings, even for numbers.
 
 Respond with ONLY valid JSON (no markdown, no explanation):
-{"type":"retrieval|aggregation|hybrid","intent":"<template_key_or_null>","params":["<keyword_if_needed>"]}
+{"type":"retrieval|aggregation|hybrid","intent":"<template_key or null>","params":["<param1>","<param2>"]}
 
 Query: "${query}"`;
 
