@@ -151,7 +151,12 @@ export class JobParserService {
       if (keys.length === 0)
         throw new Error('GROQ_API_KEY is required in production');
       this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));
+      this.logger.log(`Groq initialized with ${keys.length} key(s)`);
     }
+  }
+
+  resetKeyIndex(): void {
+    this.groqClientIdx = 0;
   }
 
   async parse(text: string): Promise<ParsedJobDto> {

@@ -12,6 +12,8 @@ import { PrismaService } from '../storage/prisma.service.js';
 export class HealthController {
   private readonly localEmbeddingUrl: string;
 
+  private readonly isProduction: boolean;
+
   constructor(
     private readonly health: HealthCheckService,
     private readonly prisma: PrismaService,
@@ -21,15 +23,17 @@ export class HealthController {
       'LOCAL_EMBEDDING_URL',
       'http://localhost:8000',
     );
+    this.isProduction = config.get<string>('NODE_ENV') === 'production';
   }
 
   @Get()
   @HealthCheck()
   check() {
-    return this.health.check([
-      () => this.checkDatabase(),
-      () => this.checkEmbeddingServer(),
-    ]);
+    const checks = [() => this.checkDatabase()];
+    if (!this.isProduction) {
+      checks.push(() => this.checkEmbeddingServer());
+    }
+    return this.health.check(checks);
   }
 
   private async checkDatabase(): Promise<HealthIndicatorResult> {

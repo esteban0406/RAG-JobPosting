@@ -48,12 +48,7 @@ export class IngestionService {
         : { concurrency: 5 },
     );
 
-    const isProduction = process.env.NODE_ENV === 'production';
-    this.parseQueue = new PQueue(
-      isProduction
-        ? { concurrency: 2, interval: 2000, intervalCap: 1 }
-        : { concurrency: 1 },
-    );
+    this.parseQueue = new PQueue({ concurrency: 1 });
   }
 
   async run(): Promise<{ fetched: number; stored: number; skipped: number }> {
@@ -63,6 +58,7 @@ export class IngestionService {
     }
 
     this.isRunning = true;
+    this.jobParser.resetKeyIndex();
     let fetched = 0;
     let stored = 0;
     let skipped = 0;
