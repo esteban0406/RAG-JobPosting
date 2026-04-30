@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: job-posting-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/esteban0406/rag-jobposting-backend:latest
+    container_name: job-posting-backend
+    ports:
+      - '4002:4000'
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_API_KEY2: ${GEMINI_API_KEY2}
+      GROQ_API_KEY: ${GROQ_API_KEY}
+      GROQ_API_KEY2: ${GROQ_API_KEY2}
+      FINDWORK_API_KEY: ${FINDWORK_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_API_KEY: ${ADMIN_API_KEY}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-24h}
+      LLM_MODEL: ${LLM_MODEL}
+      INGESTION_CRON: ${INGESTION_CRON:-0 */6 * * *}
+      FRONTEND_URL: ${FRONTEND_URL:-https://esteban-jobai.duckdns.org}
+      NODE_ENV: production
+      BACKEND_PORT: 4000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    image: ghcr.io/esteban0406/rag-jobposting-frontend:latest
+    container_name: job-posting-frontend
+    ports:
+      - '3002:3000'
+    environment:
+      PORT: 3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

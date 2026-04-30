@@ -6,7 +6,7 @@ import { normalizeJobType } from './normalize-job-type.js';
 const SOURCE = 'findwork';
 const BASE_URL = 'https://findwork.dev/api/jobs/';
 const PAGE_SIZE = 50;
-const MAX_JOBS = 100;
+const MAX_JOBS = 1000;
 
 interface FindworkJob {
   id: string;
