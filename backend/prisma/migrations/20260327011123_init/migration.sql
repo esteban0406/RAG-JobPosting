@@ -1,3 +1,6 @@
+-- Enable pgvector extension (required for vector columns)
+CREATE EXTENSION IF NOT EXISTS vector;
+
 -- CreateTable
 CREATE TABLE "Job" (
     "id" TEXT NOT NULL,
