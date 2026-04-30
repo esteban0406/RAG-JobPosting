@@ -10,7 +10,8 @@ export interface UpsertJobDto {
   location?: string;
   description: string;
   url: string;
-  jobType?: string;
+  jobType?: string | null;
+  isRemote?: boolean;
   minSalary?: number;
   maxSalary?: number;
   contentHash: string;
@@ -27,6 +28,7 @@ export interface JobFilters {
   source?: string;
   location?: string;
   jobType?: string;
+  isRemote?: boolean;
   keyword?: string;
   minSalary?: number;
   maxSalary?: number;
@@ -96,6 +98,7 @@ export class JobRepository {
         location: { contains: filters.location, mode: 'insensitive' as const },
       }),
       ...(filters?.jobType && { jobType: filters.jobType }),
+      ...(filters?.isRemote !== undefined && { isRemote: filters.isRemote }),
       ...(filters?.keyword && {
         OR: [
           {

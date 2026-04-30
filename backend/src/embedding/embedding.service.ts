@@ -24,7 +24,8 @@ const RETRY_BASE_MS = 10_000;
 export class EmbeddingService {
   private readonly logger = new Logger(EmbeddingService.name);
   readonly provider: 'local' | 'gemini';
-  private readonly genai?: GoogleGenAI;
+  private readonly genaiClients: GoogleGenAI[] = [];
+  private embedClientIdx = 0;
   private readonly localEmbeddingUrl: string;
 
   constructor(
@@ -39,12 +40,20 @@ export class EmbeddingService {
     );
 
     if (this.provider === 'gemini') {
-      this.genai = new GoogleGenAI({
-        apiKey: config.getOrThrow<string>('GEMINI_API_KEY'),
-      });
+      const keys = [
+        config.getOrThrow<string>('GEMINI_API_KEY'),
+        config.get<string>('GEMINI_API_KEY_2'),
+      ].filter(Boolean) as string[];
+      this.genaiClients = keys.map((apiKey) => new GoogleGenAI({ apiKey }));
     }
 
-    this.logger.log(`Embedding provider: ${this.provider}`);
+    this.logger.log(
+      `Embedding provider: ${this.provider} (${this.genaiClients.length} key(s))`,
+    );
+  }
+
+  private get currentGenai(): GoogleGenAI {
+    return this.genaiClients[this.embedClientIdx];
   }
 
   get modelName(): string {
@@ -108,7 +117,7 @@ export class EmbeddingService {
 
   private async embedWithGemini(text: string, attempt = 0): Promise<number[]> {
     try {
-      const result = await this.genai!.models.embedContent({
+      const result = await this.currentGenai.models.embedContent({
         model: GEMINI_MODEL_NAME,
         contents: text,
         config: { outputDimensionality: EMBEDDING_DIMENSIONS },
@@ -127,7 +136,16 @@ export class EmbeddingService {
 
       if (this.isQuotaError(err)) {
         if (this.isDailyQuotaExhausted(err)) {
-          this.logger.error(`Gemini daily embedding quota exhausted`);
+          if (this.embedClientIdx < this.genaiClients.length - 1) {
+            this.embedClientIdx++;
+            this.logger.warn(
+              `Gemini embedding daily quota exhausted — rotating to key ${this.embedClientIdx + 1}`,
+            );
+            return this.embedWithGemini(text, 0);
+          }
+          this.logger.error(
+            'Gemini embedding daily quota exhausted on all keys',
+          );
           throw new ServiceUnavailableException(
             'The embedding service has reached its daily request limit. Please try again tomorrow.',
           );

@@ -33,11 +33,15 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
+  GEMINI_API_KEY_2: string;
+
+  @IsString()
+  @IsOptional()
   LOCAL_EMBEDDING_URL: string = 'http://localhost:8000';
 
   @IsString()
   @IsOptional()
-  LLM_MODEL: string = 'gemini-3.1-flash-lite-preview';
+  LLM_MODEL: string = 'qwen/qwen3-32b';
 
   @IsString()
   @MinLength(16)
@@ -62,6 +66,10 @@ class EnvironmentVariables {
   @IsString()
   @IsOptional()
   GROQ_API_KEY: string;
+
+  @IsString()
+  @IsOptional()
+  GROQ_API_KEY_2: string;
 
   @IsString()
   @IsOptional()

@@ -1,10 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JobRepository } from '../storage/job.repository.js';
-import {
-  QUERIES,
-  QueryCategory,
-  QueryDefinition,
-} from './dataset/queries.dataset.js';
+import { QUERIES, QueryDefinition } from './dataset/queries.dataset.js';
 
 export interface CandidateJob {
   id: string;

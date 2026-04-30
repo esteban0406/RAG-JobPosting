@@ -13,7 +13,8 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    const { passwordHash: _omit, resume, ...rest } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordHash: _, resume, ...rest } = user;
     return { ...rest, hasResume: resume !== null };
   }
 
@@ -26,7 +27,8 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
     const updated = await this.userRepository.update(userId, dto);
-    const { passwordHash: _omit, ...rest } = updated;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordHash: _, ...rest } = updated;
     return { ...rest, hasResume: user.resume !== null };
   }
 

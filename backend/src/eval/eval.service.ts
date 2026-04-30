@@ -153,13 +153,13 @@ export class EvalService {
         ? JUDGE_CONCURRENCY_LOCAL
         : JUDGE_CONCURRENCY_GEMINI;
 
-    const verdicts: Verdict[] = new Array(deduplicated.length).fill(
+    const verdicts = new Array<Verdict>(deduplicated.length).fill(
       'not_relevant',
     );
     for (let i = 0; i < deduplicated.length; i += concurrency) {
       const batch = deduplicated.slice(i, i + concurrency);
       const batchVerdicts = await Promise.all(
-        batch.map(async (chunk, batchIdx) => {
+        batch.map(async (chunk, _batchIdx) => {
           const cached = this.judgeCache.get(judgeType, queryId, chunk.jobId);
           if (cached !== undefined) return cached;
           const verdict = await judgeService.judge(

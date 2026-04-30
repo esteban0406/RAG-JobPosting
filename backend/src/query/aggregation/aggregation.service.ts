@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { LlmService } from '../../llm/llm.service.js';
 import { AggregationRepository } from './aggregation.repository.js';
+import { type JobFilters } from './job-filter-builder.js';
 import { type TemplateKey } from './query-templates.js';
 
 export interface AggregationResult {
@@ -23,6 +24,10 @@ export class AggregationService {
     return this.repo.execute(intent, params);
   }
 
+  async queryFiltered(filters: JobFilters): Promise<Record<string, unknown>[]> {
+    return this.repo.executeFiltered(filters);
+  }
+
   async execute(
     intent: TemplateKey,
     params: string[],
@@ -36,6 +41,19 @@ export class AggregationService {
       buildAggregationPrompt(originalQuery, rows),
     );
     return { intent, rows, summary };
+  }
+
+  async *executeStream(
+    intent: TemplateKey,
+    params: string[],
+    originalQuery: string,
+  ): AsyncGenerator<string> {
+    const rows = await this.queryRaw(intent, params);
+    if (rows.length === 0) {
+      yield 'No data found for this query.';
+      return;
+    }
+    yield* this.llm.completeStream(buildAggregationPrompt(originalQuery, rows));
   }
 }
 

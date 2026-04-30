@@ -91,7 +91,7 @@ describe('AggregationService', () => {
         'what job types are there',
       );
 
-      const promptArg: string = mockLlm.complete.mock.calls[0][0] as string;
+      const promptArg = (mockLlm.complete.mock.calls[0] as [string])[0];
       expect(promptArg).toContain('what job types are there');
       expect(promptArg).toContain(JSON.stringify(rows, null, 2));
     });

@@ -14,6 +14,7 @@ export interface StructuredJobData {
   requirements?: string[];
   benefits?: string[];
   skills?: string[];
+  isRemote?: boolean;
 }
 
 const WINDOW_SIZE = 800;
@@ -92,7 +93,12 @@ export class ChunkService {
     const parts = [`${job.title} at ${job.company}`];
     if (job.location) parts.push(`in ${job.location}`);
     else parts.push('Remote');
-    if (job.jobType) parts.push(job.jobType);
+    const type = job.jobType
+      ? `${job.jobType}${s.isRemote ? ', remote' : ''}`
+      : s.isRemote
+        ? 'remote'
+        : null;
+    if (type) parts.push(type);
     if (s.summary) parts.push(s.summary);
     return parts.join('. ') + '.';
   }

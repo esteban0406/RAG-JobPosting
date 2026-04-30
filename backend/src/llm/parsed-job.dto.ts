@@ -1,3 +1,5 @@
+import { JobType } from './job-type.enum.js';
+
 export interface ParsedJobDto {
   summary: string | null;
   salary: string | null;
@@ -5,6 +7,8 @@ export interface ParsedJobDto {
   requirements: string[] | null;
   benefits: string[] | null;
   skills: string[] | null;
+  jobType: JobType | null;
+  isRemote: boolean | null;
 }
 
 export const NULL_PARSED_JOB: ParsedJobDto = {
@@ -14,4 +18,6 @@ export const NULL_PARSED_JOB: ParsedJobDto = {
   requirements: null,
   benefits: null,
   skills: null,
+  jobType: null,
+  isRemote: null,
 };

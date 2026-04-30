@@ -18,6 +18,7 @@ import {
 } from '../llm/job-parser.service.js';
 import { NULL_PARSED_JOB, ParsedJobDto } from '../llm/parsed-job.dto.js';
 import { normalizeSalary } from './salary-normalizer.js';
+import { normalizeJobType } from './providers/normalize-job-type.js';
 
 @Injectable()
 export class IngestionService {
@@ -51,7 +52,7 @@ export class IngestionService {
     this.parseQueue = new PQueue(
       isProduction
         ? { concurrency: 2, interval: 2000, intervalCap: 1 }
-        : { concurrency: 5 },
+        : { concurrency: 1 },
     );
   }
 
@@ -150,6 +151,10 @@ export class IngestionService {
               ? { minSalary: raw.minSalary, maxSalary: raw.maxSalary }
               : normalizeSalary({ raw: parsed.salary ?? undefined });
 
+          const jobType =
+            normalizeJobType(raw.jobType) ?? parsed.jobType ?? null;
+          const isRemote = raw.isRemote ?? parsed.isRemote ?? false;
+
           const job = await this.jobRepo.upsertJob({
             sourceId: raw.sourceId,
             source: raw.source,
@@ -158,7 +163,8 @@ export class IngestionService {
             location: raw.location,
             description: raw.description,
             url: raw.url,
-            jobType: raw.jobType,
+            jobType: jobType ?? undefined,
+            isRemote,
             minSalary: salaryNums.minSalary,
             maxSalary: salaryNums.maxSalary,
             logo: raw.logo ?? null,
@@ -365,8 +371,10 @@ export class IngestionService {
       'fetchedAt',
       'createdAt',
     ];
-    const escape = (v: unknown): string => {
-      const s = v == null ? '' : String(v);
+    const escape = (
+      v: string | number | boolean | Date | string[] | null | undefined,
+    ): string => {
+      const s = v == null ? '' : Array.isArray(v) ? v.join(', ') : String(v);
       return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
     };
     const rows = jobs.map((j) =>

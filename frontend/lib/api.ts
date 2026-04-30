@@ -67,7 +67,6 @@ export interface StreamSearchEvent {
   queryType?: string;
   content?: string;
   sources?: { jobId: string; title: string; company: string; url: string; similarity: number }[];
-  aggregation?: { intent: string; rows: Record<string, unknown>[] } | null;
   status?: number;
   message?: string;
 }

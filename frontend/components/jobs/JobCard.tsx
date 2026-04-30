@@ -8,6 +8,7 @@ export interface Job {
   company: string;
   location: string | null;
   jobType: string | null;
+  isRemote: boolean;
   minSalary: number | null;
   maxSalary: number | null;
   source: string;
@@ -26,7 +27,7 @@ const JOB_TYPE_LABELS: Record<string, string> = {
   part_time: "Part-time",
   contract: "Contract",
   internship: "Internship",
-  remote: "Remote",
+  freelance: "Freelance",
 };
 
 function SalaryRange({ min, max }: { min: number | null; max: number | null }) {
@@ -44,17 +45,17 @@ function SalaryRange({ min, max }: { min: number | null; max: number | null }) {
 }
 
 export function JobTypeBadge({ type }: { type: string }) {
-  const isRemote = type === "remote";
   return (
-    <span
-      className={cn(
-        "text-xs font-medium px-2.5 py-1 rounded-full",
-        isRemote
-          ? "bg-badge-remote text-[#6EE7B7]"
-          : "bg-badge-fulltime text-[#93C5FD]",
-      )}
-    >
+    <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-badge-fulltime text-[#93C5FD]">
       {JOB_TYPE_LABELS[type] ?? type}
+    </span>
+  );
+}
+
+export function RemoteBadge() {
+  return (
+    <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-badge-remote text-[#6EE7B7]">
+      Remote
     </span>
   );
 }
@@ -106,7 +107,11 @@ export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
       {/* Row 2 — Company · Location · Salary */}
       <span className="text-text-secondary text-sm">
         {job.company}
-        {job.location ? ` · ${job.location}` : ""}
+        {job.location
+          ? ` · ${job.location}${job.isRemote ? " · Remote" : ""}`
+          : job.isRemote
+            ? " · Remote"
+            : ""}
         {salary ? " · " : ""}
         <span className="text-green-600 font-semibold">{salary}</span>
       </span>
@@ -122,6 +127,7 @@ export function JobCard({ job, isSaved, onClick, onSaveToggle }: JobCardProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 flex-wrap">
           {job.jobType && <JobTypeBadge type={job.jobType} />}
+          {job.isRemote && <RemoteBadge />}
           <>
             {visibleSkills.map((skill) => (
               <span

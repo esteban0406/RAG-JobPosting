@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Groq from 'groq-sdk';
 import { NULL_PARSED_JOB, ParsedJobDto } from './parsed-job.dto.js';
+import { JobType } from './job-type.enum.js';
 
 const SYSTEM_PROMPT = `You are a strict information extraction system for job postings.
 
@@ -14,7 +15,9 @@ Return ONLY a valid JSON object with EXACTLY these keys:
   "responsibilities": string[] | null,
   "requirements": string[] | null,
   "benefits": string[] | null,
-  "skills": string[] | null
+  "skills": string[] | null,
+  "jobType": "full_time" | "part_time" | "contract" | "internship" | "freelance" | null,
+  "isRemote": true | false | null
 }
 
 -----------------------
@@ -27,6 +30,21 @@ GENERAL:
 - If a field is not present, return null.
 - Prefer completeness over brevity (do not limit the number of items).
 - Use null instead of empty arrays.
+
+JOB TYPE:
+- Extract the employment type from the title, description, or any "Job Type" / "Employment Type" section.
+- Map to exactly one canonical value; return null if genuinely ambiguous.
+- "Permanent", "Full time", "Full-time" → "full_time"
+- "Part time", "Part-time" → "part_time"
+- "Contractor", "Contract-to-hire" → "contract"
+- "Intern", "Internship" → "internship"
+- "Freelance", "Freelancer" → "freelance"
+- "Remote" alone is NOT a job type — do not return it as jobType.
+
+IS REMOTE:
+- Return true if the job is fully remote: "remote", "work from anywhere", "100% remote", "distributed team", "fully remote".
+- Return false if explicitly on-site or hybrid only.
+- Return null only if no remote signal exists anywhere in the text.
 
 SUMMARY:
 - 2–3 sentence high-level overview of the role.
@@ -117,7 +135,8 @@ export class JobParserService {
   private readonly isDev: boolean;
   private readonly ollamaUrl: string;
   private readonly ollamaModel: string;
-  private readonly groq: Groq | null = null;
+  private readonly groqClients: Groq[] = [];
+  private groqClientIdx = 0;
 
   constructor(config: ConfigService) {
     this.isDev = config.get<string>('NODE_ENV') !== 'production';
@@ -125,9 +144,13 @@ export class JobParserService {
     this.ollamaModel = config.get<string>('OLLAMA_MODEL') ?? 'llama3.1:8b';
 
     if (!this.isDev) {
-      const apiKey = config.get<string>('GROQ_API_KEY');
-      if (!apiKey) throw new Error('GROQ_API_KEY is required in production');
-      this.groq = new Groq({ apiKey });
+      const keys = [
+        config.get<string>('GROQ_API_KEY'),
+        config.get<string>('GROQ_API_KEY_2'),
+      ].filter(Boolean) as string[];
+      if (keys.length === 0)
+        throw new Error('GROQ_API_KEY is required in production');
+      this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));
     }
   }
 
@@ -153,9 +176,8 @@ export class JobParserService {
           ],
           stream: false,
           temperature: 0.1,
-          response_format: { type: 'json_object' },
         }),
-        signal: AbortSignal.timeout(60_000),
+        signal: AbortSignal.timeout(90_000),
       });
 
       if (!res.ok) {
@@ -181,7 +203,9 @@ export class JobParserService {
     attempt = 0,
   ): Promise<ParsedJobDto> {
     try {
-      const completion = await this.groq!.chat.completions.create({
+      const completion = await this.groqClients[
+        this.groqClientIdx
+      ].chat.completions.create({
         model: 'meta-llama/llama-4-scout-17b-16e-instruct',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
@@ -214,7 +238,16 @@ export class JobParserService {
 
     if (status === 429) {
       if (this.isRpdExhausted(err)) {
-        this.logger.error('Groq daily quota exhausted — aborting parse queue');
+        if (this.groqClientIdx < this.groqClients.length - 1) {
+          this.groqClientIdx++;
+          this.logger.warn(
+            `Groq daily quota exhausted — rotating to key ${this.groqClientIdx + 1}`,
+          );
+          return this.parseWithGroq(text, 0);
+        }
+        this.logger.error(
+          'Groq daily quota exhausted on all keys — aborting parse queue',
+        );
         throw new DailyQuotaExhaustedException();
       }
 
@@ -342,7 +375,16 @@ export class JobParserService {
       requirements: this.toStringArray(o.requirements),
       benefits: this.toStringArray(o.benefits),
       skills: this.deduplicateSkills(this.toStringArray(o.skills)),
+      jobType: this.toJobType(o.jobType),
+      isRemote: typeof o.isRemote === 'boolean' ? o.isRemote : null,
     };
+  }
+
+  private toJobType(val: unknown): JobType | null {
+    if (typeof val !== 'string') return null;
+    return Object.values(JobType).includes(val as JobType)
+      ? (val as JobType)
+      : null;
   }
 
   private toStringArray(val: unknown): string[] | null {

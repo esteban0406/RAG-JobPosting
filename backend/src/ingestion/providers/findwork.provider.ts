@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JobProvider, RawJobDto } from '../dto/raw-job.dto.js';
+import { normalizeJobType } from './normalize-job-type.js';
 
 const SOURCE = 'findwork';
 const BASE_URL = 'https://findwork.dev/api/jobs/';
@@ -103,7 +104,8 @@ export class FindworkProvider implements JobProvider {
         location: j.location ?? undefined,
         description: this.stripHtml(j.text),
         url: j.url,
-        jobType: j.employment_type ?? undefined,
+        jobType: normalizeJobType(j.employment_type) ?? undefined,
+        isRemote: j.remote,
         logo: j.logo || undefined,
         keywords: j.keywords ?? [],
       }));

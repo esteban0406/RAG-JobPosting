@@ -22,10 +22,6 @@ interface SearchResponse {
   type: "retrieval" | "aggregation" | "hybrid";
   answer: string;
   sources?: JobSource[];
-  aggregation?: {
-    intent: string;
-    rows: Record<string, unknown>[];
-  };
   retrievedAt: string;
 }
 
@@ -33,7 +29,6 @@ interface Message {
   role: "user" | "ai";
   text: string;
   sources?: JobSource[];
-  aggregation?: SearchResponse["aggregation"];
   error?: boolean;
   streaming?: boolean;
 }
@@ -135,7 +130,6 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
               copy[copy.length - 1] = {
                 ...last,
                 sources: event.sources,
-                aggregation: event.aggregation ?? undefined,
                 streaming: false,
               };
             }
@@ -206,6 +200,7 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
         description: "",
         location: null,
         jobType: null,
+        isRemote: false,
         minSalary: null,
         maxSalary: null,
         source: "",
@@ -322,29 +317,6 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
                   </div>
                 )}
 
-                {msg.aggregation && msg.aggregation.rows.length > 0 && (
-                  <div className="border border-border rounded-[var(--radius-md)] overflow-hidden">
-                    <table className="w-full text-sm">
-                      <tbody>
-                        {msg.aggregation.rows.slice(0, 5).map((row, ri) => (
-                          <tr
-                            key={ri}
-                            className="border-b border-border last:border-0"
-                          >
-                            {Object.entries(row).map(([k, v]) => (
-                              <td
-                                key={k}
-                                className="px-3 py-2 text-text-secondary text-xs"
-                              >
-                                {String(v)}
-                              </td>
-                            ))}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
               </>
             )}
           </div>

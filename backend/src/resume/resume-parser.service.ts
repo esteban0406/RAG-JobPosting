@@ -111,7 +111,8 @@ export class ResumeParserService {
   private readonly isDev: boolean;
   private readonly ollamaUrl: string;
   private readonly ollamaModel: string;
-  private readonly groq: Groq | null = null;
+  private readonly groqClients: Groq[] = [];
+  private resumeClientIdx = 0;
 
   constructor(config: ConfigService) {
     this.isDev = config.get<string>('NODE_ENV') !== 'production';
@@ -119,9 +120,13 @@ export class ResumeParserService {
     this.ollamaModel = config.get<string>('OLLAMA_MODEL') ?? 'llama3.1:8b';
 
     if (!this.isDev) {
-      const apiKey = config.get<string>('GROQ_API_KEY');
-      if (!apiKey) throw new Error('GROQ_API_KEY is required in production');
-      this.groq = new Groq({ apiKey });
+      const keys = [
+        config.get<string>('GROQ_API_KEY'),
+        config.get<string>('GROQ_API_KEY_2'),
+      ].filter(Boolean) as string[];
+      if (keys.length === 0)
+        throw new Error('GROQ_API_KEY is required in production');
+      this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));
     }
   }
 
@@ -174,7 +179,9 @@ export class ResumeParserService {
     attempt = 0,
   ): Promise<ParsedResume> {
     try {
-      const completion = await this.groq!.chat.completions.create({
+      const completion = await this.groqClients[
+        this.resumeClientIdx
+      ].chat.completions.create({
         model: 'qwen/qwen3-32b',
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
@@ -202,7 +209,16 @@ export class ResumeParserService {
 
     if (status === 429) {
       if (this.isRpdExhausted(err)) {
-        this.logger.error('Groq daily quota exhausted — aborting resume parse');
+        if (this.resumeClientIdx < this.groqClients.length - 1) {
+          this.resumeClientIdx++;
+          this.logger.warn(
+            `Groq daily quota exhausted — rotating to key ${this.resumeClientIdx + 1}`,
+          );
+          return this.parseWithGroq(text, 0);
+        }
+        this.logger.error(
+          'Groq daily quota exhausted on all keys — aborting resume parse',
+        );
         throw new DailyQuotaExhaustedException();
       }
 

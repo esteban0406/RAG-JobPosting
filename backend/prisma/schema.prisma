@@ -18,6 +18,7 @@ model Job {
   description String
   url         String
   jobType     String?
+  isRemote    Boolean        @default(false)
   minSalary   Int?
   maxSalary   Int?
   contentHash      String

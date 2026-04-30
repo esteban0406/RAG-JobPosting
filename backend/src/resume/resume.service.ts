@@ -69,10 +69,6 @@ export class ResumeService {
     return resume.parsedData as unknown as ParsedResume;
   }
 
-  async getEmbedding(userId: string): Promise<number[] | null> {
-    return this.resumeRepo.getEmbedding(userId);
-  }
-
   async deleteResume(userId: string): Promise<void> {
     const resume = await this.resumeRepo.findByUserId(userId);
     if (!resume) throw new NotFoundException('Resume not found');

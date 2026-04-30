@@ -9,6 +9,7 @@ const FILTER_LABELS: Record<string, string> = {
   keyword: "Keyword",
   location: "Location",
   jobType: "Type",
+  isRemote: "Remote",
   minSalary: "Min salary",
   maxSalary: "Max salary",
 };
@@ -46,6 +47,7 @@ export function FilterBar() {
   const activeFilters = [
     "location",
     "jobType",
+    "isRemote",
     "minSalary",
     "maxSalary",
   ].filter((k) => searchParams.has(k));
@@ -117,7 +119,9 @@ export function FilterBar() {
               key={key}
               className="flex items-center gap-1.5 bg-accent-subtle text-accent-glow text-xs font-medium px-3 py-1.5 rounded-full"
             >
-              {FILTER_LABELS[key]}: {searchParams.get(key)}
+              {key === "isRemote"
+                ? FILTER_LABELS[key]
+                : `${FILTER_LABELS[key]}: ${searchParams.get(key)}`}
               <button
                 onClick={() => clearFilter(key)}
                 className="hover:text-white"

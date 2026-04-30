@@ -15,6 +15,61 @@ const RESULT_JOBS = 5;
 const SIMILARITY_THRESHOLD = 0.5;
 const MAX_JOB_CONTEXT_CHARS = 2400;
 
+const FIELD_PATTERNS: Array<[RegExp, string]> = [
+  [/\b(salary|pay|compensation|wage|earning)/i, 'salary'],
+  [/\b(benefit|perk|pto|vacation|insurance|401)/i, 'benefits'],
+  [
+    /\b(requirement|qualification|experience|degree|background)/i,
+    'requirements',
+  ],
+  [/\b(skill|tech stack|language|framework|tool)/i, 'skills'],
+  [/\b(responsibilit|dut)/i, 'responsibilities'],
+];
+
+function detectFields(query: string): Set<string> {
+  const fields = new Set<string>();
+  for (const [pattern, field] of FIELD_PATTERNS) {
+    if (pattern.test(query)) fields.add(field);
+  }
+  return fields;
+}
+
+function buildFieldAppendix(
+  job: {
+    requirements: string[];
+    responsibilities: string[];
+    benefits: string[];
+    skills: string[];
+  },
+  requiredFields: Set<string>,
+  existingText: string,
+): string {
+  const lines: string[] = [];
+  const append = (chunkType: string, values: string[]): void => {
+    if (
+      requiredFields.has(chunkType) &&
+      values.length > 0 &&
+      !existingText.includes(`[${chunkType}]:`)
+    ) {
+      lines.push(`[${chunkType}]: ${values.join(', ')}`);
+    }
+  };
+  append('requirements', job.requirements);
+  append('responsibilities', job.responsibilities);
+  append('benefits', job.benefits);
+  append('skills', job.skills);
+  return lines.length > 0 ? '\n' + lines.join('\n') : '';
+}
+
+function salaryHeader(
+  minSalary: number | null,
+  maxSalary: number | null,
+): string {
+  if (!minSalary) return '';
+  const max = maxSalary ? `–$${maxSalary.toLocaleString()}` : '+';
+  return ` | Salary: $${minSalary.toLocaleString()}${max}`;
+}
+
 export interface QueryFilters {
   location?: string;
   jobType?: string;
@@ -72,6 +127,7 @@ export class RagService {
     this.logger.debug(`buildContext took ${Date.now() - t0}ms`);
 
     if (!ctx) {
+      yield 'No relevant job postings found for your query. Try different keywords or broaden your search.';
       yield { done: true, sources: [] };
       return;
     }
@@ -88,22 +144,26 @@ export class RagService {
     _filters?: QueryFilters,
     contextJobIds?: string[],
     userId?: string,
-  ): Promise<{ prompt: string; sources: JobSource[] } | null> {
+  ): Promise<{
+    prompt: string;
+    sources: JobSource[];
+    contextChunks: string;
+  } | null> {
     // When specific jobs are provided, skip embedding and vector search entirely
     if (contextJobIds && contextJobIds.length > 0) {
       return this.buildContextFromIds(contextJobIds, userQuery, userId);
     }
 
     const t0 = Date.now();
-    const [resumeEmbedding, resumeParsed] = userId
-      ? await Promise.all([
-          this.resumeService.getEmbedding(userId),
-          this.resumeService.getParsedData(userId),
-        ])
-      : [null, null];
+    const resumeParsed = userId
+      ? await this.resumeService.getParsedData(userId)
+      : null;
 
-    const queryVector =
-      resumeEmbedding ?? (await this.embeddingService.embedQuery(userQuery));
+    const searchQuery = resumeParsed
+      ? this.buildResumeSearchQuery(resumeParsed, userQuery)
+      : userQuery;
+
+    const queryVector = await this.embeddingService.embedQuery(searchQuery);
     this.logger.debug(`Embedding took ${Date.now() - t0}ms`);
 
     const t1 = Date.now();
@@ -127,16 +187,22 @@ export class RagService {
     this.logger.debug(`Job fetch took ${Date.now() - t2}ms`);
     const jobMap = new Map(jobs.map((j) => [j.id, j]));
 
+    const requiredFields = detectFields(userQuery);
     const contextChunks = topJobs
       .map((group) => {
         const job = jobMap.get(group.jobId);
         if (!job) return null;
         const location = job.location ? ` | Location: ${job.location}` : '';
         const jobType = job.jobType ? ` | Type: ${job.jobType}` : '';
+        const salary = salaryHeader(
+          job.minSalary ?? null,
+          job.maxSalary ?? null,
+        );
         const similarity = group.maxSimilarity.toFixed(2);
-        const header = `Job: ${job.title} at ${job.company}${location}${jobType} | Similarity: ${similarity}`;
+        const header = `Job: ${job.title} at ${job.company}${location}${jobType}${salary} | Similarity: ${similarity}`;
         const body = group.mergedText.slice(0, MAX_JOB_CONTEXT_CHARS);
-        return `---\n${header}\n${body}`;
+        const appendix = buildFieldAppendix(job, requiredFields, body);
+        return `---\n${header}\n${body}${appendix}`;
       })
       .filter((c): c is string => c !== null)
       .join('\n\n');
@@ -164,30 +230,32 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { prompt, sources };
+    return { prompt, sources, contextChunks };
   }
 
   private async buildContextFromIds(
     contextJobIds: string[],
     userQuery: string,
     userId?: string,
-  ): Promise<{ prompt: string; sources: JobSource[] } | null> {
+  ): Promise<{
+    prompt: string;
+    sources: JobSource[];
+    contextChunks: string;
+  } | null> {
     const t0 = Date.now();
 
-    const [[resumeEmbedding, resumeParsed], jobs] = await Promise.all([
-      userId
-        ? Promise.all([
-            this.resumeService.getEmbedding(userId),
-            this.resumeService.getParsedData(userId),
-          ])
-        : Promise.resolve([null, null] as [null, null]),
+    const [resumeParsed, jobs] = await Promise.all([
+      userId ? this.resumeService.getParsedData(userId) : Promise.resolve(null),
       this.jobRepo.findByIds(contextJobIds),
     ]);
 
     if (jobs.length === 0) return null;
 
-    const queryVector =
-      resumeEmbedding ?? (await this.embeddingService.embedQuery(userQuery));
+    const searchQuery = resumeParsed
+      ? this.buildResumeSearchQuery(resumeParsed, userQuery)
+      : userQuery;
+
+    const queryVector = await this.embeddingService.embedQuery(searchQuery);
 
     const chunks = await this.vectorRepo.findSimilarByJobIds(
       queryVector,
@@ -207,14 +275,20 @@ export class RagService {
       })
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
 
+    const requiredFields = detectFields(userQuery);
     const contextChunks = ranked
       .map(({ jobId, maxSimilarity }) => {
         const job = jobMap.get(jobId);
         if (!job) return null;
         const location = job.location ? ` | Location: ${job.location}` : '';
         const jobType = job.jobType ? ` | Type: ${job.jobType}` : '';
+        const salary = salaryHeader(
+          job.minSalary ?? null,
+          job.maxSalary ?? null,
+        );
         const body = job.description?.slice(0, MAX_JOB_CONTEXT_CHARS) ?? '';
-        return `---\nJob: ${job.title} at ${job.company}${location}${jobType} | Similarity: ${maxSimilarity.toFixed(2)}\n${body}`;
+        const appendix = buildFieldAppendix(job, requiredFields, body);
+        return `---\nJob: ${job.title} at ${job.company}${location}${jobType}${salary} | Similarity: ${maxSimilarity.toFixed(2)}\n${body}${appendix}`;
       })
       .filter((c): c is string => c !== null)
       .join('\n\n');
@@ -242,7 +316,7 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { prompt, sources };
+    return { prompt, sources, contextChunks };
   }
 
   private groupByJob(chunks: JobChunkResult[]): Array<{
@@ -280,6 +354,23 @@ export class RagService {
           .join('\n\n'),
       }))
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
+  }
+
+  private buildResumeSearchQuery(
+    resume: ParsedResume,
+    fallbackQuery: string,
+  ): string {
+    const titles = resume.experience
+      .slice(0, 3)
+      .map((e) => e.title)
+      .filter(Boolean);
+    const skills = resume.skills.slice(0, 15);
+
+    const parts: string[] = [];
+    if (titles.length > 0) parts.push(titles.join(' '));
+    if (skills.length > 0) parts.push(skills.join(' '));
+
+    return parts.length > 0 ? parts.join(' ') : fallbackQuery;
   }
 
   private buildPrompt(

@@ -7,6 +7,7 @@ export interface RawJobDto {
   description: string;
   url: string;
   jobType?: string;
+  isRemote?: boolean;
   minSalary?: number;
   maxSalary?: number;
   logo?: string;

@@ -5,11 +5,9 @@ import {
   HttpCode,
   HttpStatus,
   Logger,
-  UseGuards,
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import { JwtGuard } from '../auth/guards/jwt.guard.js';
 import { IngestionService } from './ingestion.service.js';
 
 @Controller('ingestion')

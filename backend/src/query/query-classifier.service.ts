@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { LlmService } from '../llm/llm.service.js';
+import { type JobFilters } from './aggregation/job-filter-builder.js';
 import {
   TEMPLATE_KEYS,
   type TemplateKey,
@@ -9,8 +10,9 @@ export type QueryType = 'retrieval' | 'aggregation' | 'hybrid';
 
 export interface ClassificationResult {
   type: QueryType;
-  intent?: TemplateKey;
+  intent?: TemplateKey | 'filter_jobs';
   params?: string[];
+  filters?: JobFilters;
 }
 
 const AGGREGATION_PATTERN =
@@ -49,6 +51,7 @@ Query types:
 - "hybrid"       — both: find jobs AND compute a stat (use both)
 
 Available SQL templates and their required params ($1, $2 are positional):
+- filter_jobs                   — compound filter: title + salary + location + jobType (any combination)
 - count_total                   — no params
 - count_by_location             — no params
 - count_by_job_type             — no params
@@ -76,12 +79,16 @@ Available SQL templates and their required params ($1, $2 are positional):
 
 Rules:
 - Use null for intent when type is "retrieval".
+- Use filter_jobs (type: "hybrid") when the query combines a job title/keyword with salary, location, or job-type constraints. Example: "devops jobs paying 150k+" or "remote Python engineer roles".
+- For filter_jobs, output a "filters" object instead of "params". Include only the relevant keys. Salary values are numbers. title/location/jobType use % wildcards for ILIKE.
+- For salary-only queries (no title/keyword) use jobs_above_salary or jobs_between_salary, not filter_jobs.
 - For salary threshold queries (">150K", "above 100K") use jobs_above_salary with $1 as the number in dollars (e.g. "150000").
 - Always wrap ILIKE params with % wildcards.
 - Params are always strings, even for numbers.
 
-Respond with ONLY valid JSON (no markdown, no explanation):
-{"type":"retrieval|aggregation|hybrid","intent":"<template_key or null>","params":["<param1>","<param2>"]}
+Respond with ONLY valid JSON (no markdown, no explanation).
+For standard intents: {"type":"retrieval|aggregation|hybrid","intent":"<template_key or null>","params":["<param1>"]}
+For filter_jobs: {"type":"hybrid","intent":"filter_jobs","filters":{"title":"%devops%","minSalary":150000}}
 
 Query: "${query}"`;
 
@@ -110,12 +117,40 @@ Query: "${query}"`;
 
       const intent = json['intent'] as string | null | undefined;
       const params = json['params'] as string[] | undefined;
+      const filtersRaw = json['filters'] as Record<string, unknown> | undefined;
 
       const result: ClassificationResult = { type };
 
-      if (intent && TEMPLATE_KEYS.includes(intent as TemplateKey)) {
+      if (intent === 'filter_jobs') {
+        result.intent = 'filter_jobs';
+        if (filtersRaw && typeof filtersRaw === 'object') {
+          result.filters = {
+            title:
+              typeof filtersRaw['title'] === 'string'
+                ? filtersRaw['title']
+                : undefined,
+            minSalary:
+              filtersRaw['minSalary'] !== undefined
+                ? Number(filtersRaw['minSalary'])
+                : undefined,
+            maxSalary:
+              filtersRaw['maxSalary'] !== undefined
+                ? Number(filtersRaw['maxSalary'])
+                : undefined,
+            location:
+              typeof filtersRaw['location'] === 'string'
+                ? filtersRaw['location']
+                : undefined,
+            jobType:
+              typeof filtersRaw['jobType'] === 'string'
+                ? filtersRaw['jobType']
+                : undefined,
+          };
+        }
+      } else if (intent && TEMPLATE_KEYS.includes(intent as TemplateKey)) {
         result.intent = intent as TemplateKey;
       }
+
       if (Array.isArray(params) && params.length > 0) {
         result.params = params.filter((p) => typeof p === 'string');
       }

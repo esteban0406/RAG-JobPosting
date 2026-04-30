@@ -3,6 +3,7 @@ import type { JobSource } from '../rag/dto/rag-response.dto.js';
 import { RagService } from '../rag/rag.service.js';
 import { LlmService } from '../llm/llm.service.js';
 import { AggregationService } from './aggregation/aggregation.service.js';
+import { type JobFilters } from './aggregation/job-filter-builder.js';
 import type { TemplateKey } from './aggregation/query-templates.js';
 import {
   QueryClassifierService,
@@ -14,11 +15,7 @@ import { SearchResponseDto } from './dto/search-response.dto.js';
 export type StreamEvent =
   | { type: 'start'; queryType: string }
   | { type: 'token'; content: string }
-  | {
-      type: 'done';
-      sources?: JobSource[];
-      aggregation?: { intent: string; rows: Record<string, unknown>[] } | null;
-    };
+  | { type: 'done'; sources?: JobSource[] };
 
 @Injectable()
 export class QueryOrchestratorService {
@@ -52,6 +49,9 @@ export class QueryOrchestratorService {
     if (classification.type === 'aggregation') {
       return this.handleAggregation(classification, dto.query);
     }
+    if (classification.intent === 'filter_jobs' && classification.filters) {
+      return this.handleFilterJobs(classification.filters, dto, userId);
+    }
     if (!classification.intent) {
       return this.handleRetrieval(dto, userId);
     }
@@ -81,14 +81,13 @@ export class QueryOrchestratorService {
     query: string,
   ): Promise<SearchResponseDto> {
     const result = await this.aggregation.execute(
-      c.intent!,
+      c.intent! as TemplateKey,
       c.params ?? [],
       query,
     );
     return {
       type: 'aggregation',
       answer: result.summary,
-      aggregation: { intent: result.intent, rows: result.rows },
       retrievedAt: new Date(),
     };
   }
@@ -98,30 +97,28 @@ export class QueryOrchestratorService {
     dto: SearchQueryDto,
     userId?: string,
   ): Promise<SearchResponseDto> {
-    const [ragSettled, aggSettled] = await Promise.allSettled([
-      this.rag.query(
+    const [ragCtxSettled, aggSettled] = await Promise.allSettled([
+      this.rag.buildContext(
         dto.query,
         { location: dto.location, jobType: dto.type },
         dto.contextJobIds,
         userId,
       ),
-      this.aggregation.queryRaw(c.intent!, c.params ?? []),
+      this.aggregation.queryRaw(c.intent! as TemplateKey, c.params ?? []),
     ]);
 
-    if (ragSettled.status === 'rejected') {
+    if (ragCtxSettled.status === 'rejected') {
       this.logger.warn(
-        `Hybrid RAG pipeline failed: ${String(ragSettled.reason)}`,
+        `Hybrid RAG pipeline failed: ${String(ragCtxSettled.reason)}`,
       );
-      const rows = aggSettled.status === 'fulfilled' ? aggSettled.value : [];
       const agg = await this.aggregation.execute(
-        c.intent!,
+        c.intent! as TemplateKey,
         c.params ?? [],
         dto.query,
       );
       return {
         type: 'aggregation',
         answer: agg.summary,
-        aggregation: { intent: c.intent as TemplateKey, rows },
         retrievedAt: new Date(),
       };
     }
@@ -130,26 +127,47 @@ export class QueryOrchestratorService {
       this.logger.warn(
         `Hybrid aggregation pipeline failed: ${String(aggSettled.reason)}`,
       );
-      const r = ragSettled.value;
+      const ragCtx = ragCtxSettled.value;
+      if (!ragCtx) {
+        return {
+          type: 'retrieval',
+          answer:
+            'No relevant job postings found for your query. Try different keywords or broaden your search.',
+          retrievedAt: new Date(),
+        };
+      }
+      const answer = await this.llm.complete(ragCtx.prompt);
       return {
         type: 'retrieval',
-        answer: r.answer,
-        sources: r.sources,
-        retrievedAt: r.retrievedAt,
+        answer,
+        sources: ragCtx.sources,
+        retrievedAt: new Date(),
       };
     }
 
-    const ragResult = ragSettled.value;
+    const ragCtx = ragCtxSettled.value;
     const aggRows = aggSettled.value;
 
+    if (!ragCtx) {
+      const agg = await this.aggregation.execute(
+        c.intent! as TemplateKey,
+        c.params ?? [],
+        dto.query,
+      );
+      return {
+        type: 'aggregation',
+        answer: agg.summary,
+        retrievedAt: new Date(),
+      };
+    }
+
     const combined = await this.llm.complete(
-      buildHybridPrompt(dto.query, ragResult.sources, aggRows),
+      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
     );
     return {
       type: 'hybrid',
       answer: combined,
-      sources: ragResult.sources,
-      aggregation: { intent: c.intent as TemplateKey, rows: aggRows },
+      sources: ragCtx.sources,
       retrievedAt: new Date(),
     };
   }
@@ -173,21 +191,26 @@ export class QueryOrchestratorService {
 
     if (classification.type === 'aggregation') {
       yield { type: 'start', queryType: 'aggregation' };
-      const result = await this.aggregation.execute(
-        classification.intent!,
+      for await (const token of this.aggregation.executeStream(
+        classification.intent! as TemplateKey,
         classification.params ?? [],
         dto.query,
-      );
-      yield {
-        type: 'done',
-        aggregation: { intent: result.intent, rows: result.rows },
-      };
+      )) {
+        yield { type: 'token', content: token };
+      }
+      yield { type: 'done' };
       return;
     }
 
     if (classification.type === 'retrieval') {
       yield { type: 'start', queryType: 'retrieval' };
       yield* this.streamRetrieval(dto, userId);
+      return;
+    }
+
+    if (classification.intent === 'filter_jobs' && classification.filters) {
+      yield { type: 'start', queryType: 'hybrid' };
+      yield* this.streamFilterJobs(classification.filters, dto, userId);
       return;
     }
 
@@ -198,6 +221,90 @@ export class QueryOrchestratorService {
     }
     yield { type: 'start', queryType: 'hybrid' };
     yield* this.streamHybrid(classification, dto, userId);
+  }
+
+  private async handleFilterJobs(
+    filters: JobFilters,
+    dto: SearchQueryDto,
+    userId?: string,
+  ): Promise<SearchResponseDto> {
+    const aggRows = await this.aggregation
+      .queryFiltered(filters)
+      .catch((err: unknown) => {
+        this.logger.warn(`Filter jobs aggregation failed: ${String(err)}`);
+        return [] as Record<string, unknown>[];
+      });
+
+    const aggJobIds = aggRows.map((r) => r['id'] as string).filter(Boolean);
+
+    const ragCtx = await this.rag
+      .buildContext(
+        dto.query,
+        { location: dto.location, jobType: dto.type },
+        aggJobIds.length > 0 ? aggJobIds : undefined,
+        userId,
+      )
+      .catch(() => null);
+
+    if (!ragCtx) {
+      return {
+        type: 'retrieval',
+        answer:
+          'No relevant job postings found for your query. Try different keywords or broaden your search.',
+        retrievedAt: new Date(),
+      };
+    }
+
+    const answer = await this.llm.complete(
+      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
+    );
+    return {
+      type: 'hybrid',
+      answer,
+      sources: ragCtx.sources,
+      retrievedAt: new Date(),
+    };
+  }
+
+  private async *streamFilterJobs(
+    filters: JobFilters,
+    dto: SearchQueryDto,
+    userId?: string,
+  ): AsyncGenerator<StreamEvent> {
+    const aggRows = await this.aggregation
+      .queryFiltered(filters)
+      .catch((err: unknown) => {
+        this.logger.warn(`Filter jobs aggregation failed: ${String(err)}`);
+        return [] as Record<string, unknown>[];
+      });
+
+    const aggJobIds = aggRows.map((r) => r['id'] as string).filter(Boolean);
+
+    const ragCtx = await this.rag
+      .buildContext(
+        dto.query,
+        { location: dto.location, jobType: dto.type },
+        aggJobIds.length > 0 ? aggJobIds : undefined,
+        userId,
+      )
+      .catch(() => null);
+
+    if (!ragCtx) {
+      yield {
+        type: 'token',
+        content:
+          'No relevant job postings found for your query. Try different keywords or broaden your search.',
+      };
+      yield { type: 'done' };
+      return;
+    }
+
+    for await (const token of this.llm.completeStream(
+      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
+    )) {
+      yield { type: 'token', content: token };
+    }
+    yield { type: 'done', sources: ragCtx.sources };
   }
 
   private async *streamRetrieval(
@@ -230,48 +337,40 @@ export class QueryOrchestratorService {
         dto.contextJobIds,
         userId,
       ),
-      this.aggregation.queryRaw(c.intent!, c.params ?? []),
+      this.aggregation.queryRaw(c.intent! as TemplateKey, c.params ?? []),
     ]);
 
     if (!ragCtx) {
-      const agg = await this.aggregation.execute(
-        c.intent!,
+      for await (const token of this.aggregation.executeStream(
+        c.intent! as TemplateKey,
         c.params ?? [],
         dto.query,
-      );
-      yield {
-        type: 'done',
-        aggregation: { intent: agg.intent, rows: agg.rows },
-      };
+      )) {
+        yield { type: 'token', content: token };
+      }
+      yield { type: 'done' };
       return;
     }
 
     for await (const token of this.llm.completeStream(
-      buildHybridPrompt(dto.query, ragCtx.sources, aggRows),
+      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
     )) {
       yield { type: 'token', content: token };
     }
-    yield {
-      type: 'done',
-      sources: ragCtx.sources,
-      aggregation: { intent: c.intent as TemplateKey, rows: aggRows },
-    };
+    yield { type: 'done', sources: ragCtx.sources };
   }
 }
 
 function buildHybridPrompt(
   query: string,
-  sources: JobSource[],
+  contextChunks: string,
   aggRows: Record<string, unknown>[],
 ): string {
-  const listings = sources
-    .map((s) => `- ${s.title} at ${s.company}`)
-    .join('\n');
   return `You are a job search assistant. Answer the user's question using BOTH the job listings and the statistical data below.
-Be concise. Do not fabricate details.
+Be concise and specific. Do not fabricate details. If salary or other details are not available for a listing, say so.
 
-Relevant job listings:
-${listings}
+Job listings:
+${contextChunks}
 
 Statistical data:
 ${JSON.stringify(aggRows, null, 2)}

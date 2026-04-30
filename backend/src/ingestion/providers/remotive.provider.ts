@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JobProvider, RawJobDto } from '../dto/raw-job.dto.js';
 import { normalizeSalary } from '../salary-normalizer.js';
+import { normalizeJobType } from './normalize-job-type.js';
 
 const SOURCE = 'remotive';
 const MAX_LIMIT = 100;
@@ -90,7 +91,14 @@ export class RemotiveProvider implements JobProvider {
         location: j.candidate_required_location,
         description: this.stripHtml(j.description),
         url: j.url,
-        jobType: j.job_type,
+        jobType:
+          normalizeJobType(j.job_type !== 'remote' ? j.job_type : null) ??
+          undefined,
+        isRemote:
+          j.job_type === 'remote' ||
+          j.candidate_required_location?.toLowerCase().includes('remote')
+            ? true
+            : undefined,
         ...normalizeSalary({ raw: j.salary }),
       }))
       .filter((j) => {

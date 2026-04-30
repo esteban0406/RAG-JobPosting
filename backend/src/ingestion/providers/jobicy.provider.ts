@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JobProvider, RawJobDto } from '../dto/raw-job.dto';
 import { normalizeSalary } from '../salary-normalizer';
+import { normalizeJobType } from './normalize-job-type.js';
 
 const INDUSTRIES: (string | null)[] = [
   null,
@@ -88,7 +89,10 @@ export class JobicyProvider implements JobProvider {
         location: j.jobGeo ?? undefined,
         description: this.stripHtml(j.jobDescription ?? ''),
         url: j.url,
-        jobType: Array.isArray(j.jobType) ? j.jobType[0] : j.jobType,
+        jobType:
+          normalizeJobType(
+            Array.isArray(j.jobType) ? j.jobType[0] : j.jobType,
+          ) ?? undefined,
         ...normalizeSalary({
           min: j.salaryMin,
           max: j.salaryMax,

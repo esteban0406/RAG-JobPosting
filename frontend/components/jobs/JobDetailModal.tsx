@@ -3,14 +3,14 @@
 import { Banknote, ExternalLink, Bookmark, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { type Job } from "./JobCard";
+import { type Job, JobTypeBadge, RemoteBadge } from "./JobCard";
 
 const JOB_TYPE_LABELS: Record<string, string> = {
   full_time: "Full-time",
   part_time: "Part-time",
   contract: "Contract",
   internship: "Internship",
-  remote: "Remote",
+  freelance: "Freelance",
 };
 
 function formatSalary(min: number | null, max: number | null) {
@@ -42,7 +42,6 @@ export function JobDetailModal({
   if (!job) return null;
 
   const salary = formatSalary(job.minSalary, job.maxSalary);
-  const isRemote = job.jobType === "remote";
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
@@ -91,18 +90,8 @@ export function JobDetailModal({
                 {job.location}
               </span>
             )}
-            {job.jobType && (
-              <span
-                className={cn(
-                  "text-xs font-medium px-3 py-1.5 rounded-full",
-                  isRemote
-                    ? "bg-badge-remote text-[#6EE7B7]"
-                    : "bg-badge-fulltime text-[#93C5FD]",
-                )}
-              >
-                {JOB_TYPE_LABELS[job.jobType] ?? job.jobType}
-              </span>
-            )}
+            {job.isRemote && <RemoteBadge />}
+            {job.jobType && <JobTypeBadge type={job.jobType} />}
           </div>
 
           {/* Salary */}

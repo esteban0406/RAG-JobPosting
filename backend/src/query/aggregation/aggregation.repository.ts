@@ -7,6 +7,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '../../../generated/prisma/client.js';
+import { buildFilterQuery, type JobFilters } from './job-filter-builder.js';
 import { QUERY_TEMPLATES, type TemplateKey } from './query-templates.js';
 
 @Injectable()
@@ -37,5 +38,16 @@ export class AggregationRepository implements OnModuleInit, OnModuleDestroy {
       throw new BadRequestException(`Unknown aggregation template: ${key}`);
     }
     return this.client.$queryRawUnsafe(sql, ...params);
+  }
+
+  async executeFiltered(
+    filters: JobFilters,
+  ): Promise<Record<string, unknown>[]> {
+    const { sql, params } = buildFilterQuery(filters);
+    if (params.length === 0) return [];
+    return this.client.$queryRawUnsafe<Record<string, unknown>[]>(
+      sql,
+      ...params,
+    );
   }
 }

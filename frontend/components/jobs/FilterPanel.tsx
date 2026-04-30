@@ -9,7 +9,7 @@ const JOB_TYPES = [
   { value: "part_time", label: "Part-time" },
   { value: "contract", label: "Contract" },
   { value: "internship", label: "Internship" },
-  { value: "remote", label: "Remote" },
+  { value: "freelance", label: "Freelance" },
 ];
 
 interface FilterPanelProps {
@@ -18,12 +18,23 @@ interface FilterPanelProps {
   onClose: () => void;
 }
 
-export function FilterPanel({ searchParams, onApply, onClose }: FilterPanelProps) {
+export function FilterPanel({
+  searchParams,
+  onApply,
+  onClose,
+}: FilterPanelProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [location, setLocation] = useState(searchParams.get("location") ?? "");
   const [jobType, setJobType] = useState(searchParams.get("jobType") ?? "");
-  const [minSalary, setMinSalary] = useState(searchParams.get("minSalary") ?? "");
-  const [maxSalary, setMaxSalary] = useState(searchParams.get("maxSalary") ?? "");
+  const [isRemote, setIsRemote] = useState(
+    searchParams.get("isRemote") === "true",
+  );
+  const [minSalary, setMinSalary] = useState(
+    searchParams.get("minSalary") ?? "",
+  );
+  const [maxSalary, setMaxSalary] = useState(
+    searchParams.get("maxSalary") ?? "",
+  );
 
   // Close on outside click
   useEffect(() => {
@@ -38,6 +49,7 @@ export function FilterPanel({ searchParams, onApply, onClose }: FilterPanelProps
     onApply({
       location: location || null,
       jobType: jobType || null,
+      isRemote: isRemote ? "true" : null,
       minSalary: minSalary || null,
       maxSalary: maxSalary || null,
     });
@@ -50,7 +62,10 @@ export function FilterPanel({ searchParams, onApply, onClose }: FilterPanelProps
     >
       <div className="flex items-center justify-between">
         <span className="text-text-primary font-semibold text-sm">Filters</span>
-        <button onClick={onClose} className="text-text-muted hover:text-text-secondary">
+        <button
+          onClick={onClose}
+          className="text-text-muted hover:text-text-secondary"
+        >
           <X size={16} />
         </button>
       </div>
@@ -85,6 +100,30 @@ export function FilterPanel({ searchParams, onApply, onClose }: FilterPanelProps
           ))}
         </select>
       </div>
+
+      {/* Remote toggle */}
+      <label className="flex items-center justify-between cursor-pointer">
+        <span className="text-text-secondary text-xs font-medium uppercase tracking-wide">
+          Remote only
+        </span>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={isRemote}
+          onClick={() => setIsRemote((v) => !v)}
+          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+            isRemote
+              ? "bg-accent"
+              : "bg-bg-surface-2 border border-border-subtle"
+          }`}
+        >
+          <span
+            className={`inline-block h-3.5 w-3.5 rounded-full bg-white shadow transition-transform ${
+              isRemote ? "translate-x-4.5" : "translate-x-0.5"
+            }`}
+          />
+        </button>
+      </label>
 
       {/* Salary range */}
       <div className="flex flex-col gap-1.5">

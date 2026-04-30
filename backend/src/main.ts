@@ -20,4 +20,4 @@ async function bootstrap() {
   );
   await app.listen(process.env.BACKEND_PORT ?? 4000);
 }
-bootstrap();
+void bootstrap();

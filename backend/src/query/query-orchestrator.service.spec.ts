@@ -16,22 +16,35 @@ import { QueryClassifierService } from './query-classifier.service.js';
 import { QueryOrchestratorService } from './query-orchestrator.service.js';
 
 const mockClassifier = { classify: jest.fn() };
-const mockRag = { query: jest.fn() };
-const mockAggregation = { execute: jest.fn(), queryRaw: jest.fn() };
+const mockRag = { query: jest.fn(), buildContext: jest.fn() };
+const mockAggregation = {
+  execute: jest.fn(),
+  queryRaw: jest.fn(),
+  executeStream: jest.fn(),
+};
 const mockLlm = { complete: jest.fn() };
+
+const RAG_SOURCES = [
+  {
+    jobId: '1',
+    title: 'Engineer',
+    company: 'Acme',
+    url: 'http://example.com',
+    similarity: 0.9,
+  },
+];
 
 const RAG_RESULT = {
   answer: 'Here are some jobs.',
-  sources: [
-    {
-      jobId: '1',
-      title: 'Engineer',
-      company: 'Acme',
-      url: 'http://example.com',
-      similarity: 0.9,
-    },
-  ],
+  sources: RAG_SOURCES,
   retrievedAt: new Date('2026-01-01'),
+};
+
+const RAG_CTX = {
+  prompt: 'Job context prompt...\nAnswer:',
+  sources: RAG_SOURCES,
+  contextChunks:
+    '---\nJob: Engineer at Acme | Similarity: 0.90\nDescription...',
 };
 
 const AGG_RESULT = {
@@ -77,7 +90,7 @@ describe('QueryOrchestratorService', () => {
       expect(result.type).toBe('retrieval');
       expect(result.answer).toBe(RAG_RESULT.answer);
       expect(result.sources).toEqual(RAG_RESULT.sources);
-      expect(result.aggregation).toBeUndefined();
+      expect((result as { aggregation?: unknown }).aggregation).toBeUndefined();
       expect(mockAggregation.execute).not.toHaveBeenCalled();
       expect(mockAggregation.queryRaw).not.toHaveBeenCalled();
     });
@@ -113,7 +126,7 @@ describe('QueryOrchestratorService', () => {
 
       expect(result.type).toBe('aggregation');
       expect(result.answer).toBe(AGG_RESULT.summary);
-      expect(result.aggregation?.rows).toEqual(AGG_RESULT.rows);
+      expect((result as { aggregation?: unknown }).aggregation).toBeUndefined();
       expect(mockRag.query).not.toHaveBeenCalled();
     });
   });
@@ -125,7 +138,7 @@ describe('QueryOrchestratorService', () => {
         intent: 'count_by_location',
         params: [],
       });
-      mockRag.query.mockResolvedValueOnce(RAG_RESULT);
+      mockRag.buildContext.mockResolvedValueOnce(RAG_CTX);
       mockAggregation.queryRaw.mockResolvedValueOnce(AGG_RESULT.rows);
       mockLlm.complete.mockResolvedValueOnce('Combined answer.');
 
@@ -133,10 +146,26 @@ describe('QueryOrchestratorService', () => {
 
       expect(result.type).toBe('hybrid');
       expect(result.answer).toBe('Combined answer.');
-      expect(result.sources).toEqual(RAG_RESULT.sources);
-      expect(result.aggregation?.rows).toEqual(AGG_RESULT.rows);
+      expect(result.sources).toEqual(RAG_SOURCES);
+      expect((result as { aggregation?: unknown }).aggregation).toBeUndefined();
       expect(mockLlm.complete).toHaveBeenCalledTimes(1);
       expect(mockAggregation.execute).not.toHaveBeenCalled();
+    });
+
+    it('passes full job context (contextChunks) to the hybrid LLM prompt', async () => {
+      mockClassifier.classify.mockResolvedValueOnce({
+        type: 'hybrid',
+        intent: 'count_by_location',
+        params: [],
+      });
+      mockRag.buildContext.mockResolvedValueOnce(RAG_CTX);
+      mockAggregation.queryRaw.mockResolvedValueOnce(AGG_RESULT.rows);
+      mockLlm.complete.mockResolvedValueOnce('Answer with context.');
+
+      await service.handle(makeDto());
+
+      const promptArg = (mockLlm.complete.mock.calls[0] as [string])[0];
+      expect(promptArg).toContain(RAG_CTX.contextChunks);
     });
 
     it('degrades to aggregation-only when RagService fails', async () => {
@@ -145,7 +174,7 @@ describe('QueryOrchestratorService', () => {
         intent: 'count_by_location',
         params: [],
       });
-      mockRag.query.mockRejectedValueOnce(new Error('vector DB down'));
+      mockRag.buildContext.mockRejectedValueOnce(new Error('vector DB down'));
       mockAggregation.queryRaw.mockResolvedValueOnce(AGG_RESULT.rows);
       mockAggregation.execute.mockResolvedValueOnce(AGG_RESULT);
 
@@ -163,15 +192,16 @@ describe('QueryOrchestratorService', () => {
         intent: 'count_by_location',
         params: [],
       });
-      mockRag.query.mockResolvedValueOnce(RAG_RESULT);
+      mockRag.buildContext.mockResolvedValueOnce(RAG_CTX);
       mockAggregation.queryRaw.mockRejectedValueOnce(new Error('DB timeout'));
+      mockLlm.complete.mockResolvedValueOnce('Retrieval answer.');
 
       const result = await service.handle(makeDto());
 
       expect(result.type).toBe('retrieval');
-      expect(result.answer).toBe(RAG_RESULT.answer);
-      expect(result.aggregation).toBeUndefined();
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(result.answer).toBe('Retrieval answer.');
+      expect((result as { aggregation?: unknown }).aggregation).toBeUndefined();
+      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
     });
   });
 });
