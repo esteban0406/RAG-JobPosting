@@ -26,7 +26,7 @@ export class LlmService {
   constructor(config: ConfigService) {
     const keys = [
       config.get<string>('GROQ_API_KEY'),
-      config.get<string>('GROQ_API_KEY_2'),
+      config.get<string>('GROQ_API_KEY2'),
     ].filter(Boolean) as string[];
     if (keys.length === 0) throw new Error('GROQ_API_KEY is required');
     this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));

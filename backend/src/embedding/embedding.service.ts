@@ -42,7 +42,7 @@ export class EmbeddingService {
     if (this.provider === 'gemini') {
       const keys = [
         config.getOrThrow<string>('GEMINI_API_KEY'),
-        config.get<string>('GEMINI_API_KEY_2'),
+        config.get<string>('GEMINI_API_KEY2'),
       ].filter(Boolean) as string[];
       this.genaiClients = keys.map((apiKey) => new GoogleGenAI({ apiKey }));
     }

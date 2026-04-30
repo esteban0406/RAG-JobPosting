@@ -33,7 +33,7 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
-  GEMINI_API_KEY_2: string;
+  GEMINI_API_KEY2: string;
 
   @IsString()
   @IsOptional()
@@ -69,7 +69,7 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
-  GROQ_API_KEY_2: string;
+  GROQ_API_KEY2: string;
 
   @IsString()
   @IsOptional()
