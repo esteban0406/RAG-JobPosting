@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "Portfolio Case Study Writer": {
+      "source": "paramchoudhary/resumeskills",
+      "sourceType": "github",
+      "skillPath": "skills/portfolio-case-study-writer/SKILL.md",
+      "computedHash": "a7e523d4f31e5e7240f198521f82f0202939830f673933e030ca9dfc2963fd44"
+    },
     "brainstorming": {
       "source": "obra/superpowers",
       "sourceType": "github",
