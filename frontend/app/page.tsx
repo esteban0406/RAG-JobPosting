@@ -33,7 +33,7 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section
-        className="flex flex-col items-center justify-center gap-6 px-[200px] py-[60px] min-h-[640px] text-center relative overflow-hidden"
+        className="flex flex-col items-center justify-center gap-6 px-4 sm:px-8 lg:px-[200px] py-[60px] min-h-[640px] text-center relative overflow-hidden"
         style={{
           background:
             "radial-gradient(70% 80% at 50% 0%, #7C3AED8C 0%, transparent 100%), var(--color-bg-base)",
@@ -42,7 +42,7 @@ export default function LandingPage() {
         <span className="text-accent-glow text-xs font-semibold tracking-[2px] uppercase">
           AI-Powered Job Search
         </span>
-        <h1 className="text-[68px] font-extrabold leading-[1.1] text-text-primary max-w-[800px]">
+        <h1 className="text-3xl sm:text-5xl lg:text-[68px] font-extrabold leading-[1.1] text-text-primary max-w-[800px]">
           Find your next role,
           <br />
           powered by AI.
@@ -53,7 +53,7 @@ export default function LandingPage() {
         </p>
 
         {/* CTAs */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap justify-center">
           <Link
             href="/jobs"
             className="bg-accent text-white font-semibold text-base px-7 py-3.5 rounded-[var(--radius-md)] hover:opacity-90 transition-opacity"
@@ -69,18 +69,18 @@ export default function LandingPage() {
         </div>
 
         {/* Stats */}
-        <div className="flex items-center mt-2">
-          <div className="flex flex-col items-center gap-1 px-10 py-6">
+        <div className="flex items-center mt-2 flex-wrap justify-center">
+          <div className="flex flex-col items-center gap-1 px-6 sm:px-10 py-6">
             <span className="text-text-primary text-[32px] font-bold">3</span>
             <span className="text-text-muted text-sm">Job Providers</span>
           </div>
           <div className="w-px h-10 bg-border" />
-          <div className="flex flex-col items-center gap-1 px-10 py-6">
-            <span className="text-text-primary text-[32px] font-bold">5K+</span>
+          <div className="flex flex-col items-center gap-1 px-6 sm:px-10 py-6">
+            <span className="text-text-primary text-[32px] font-bold">1K+</span>
             <span className="text-text-muted text-sm">Live Jobs</span>
           </div>
           <div className="w-px h-10 bg-border" />
-          <div className="flex flex-col items-center gap-1 px-10 py-6">
+          <div className="flex flex-col items-center gap-1 px-6 sm:px-10 py-6">
             <span className="text-accent-glow text-[32px] font-bold">RAG</span>
             <span className="text-text-muted text-sm">AI Powered</span>
           </div>
@@ -88,7 +88,7 @@ export default function LandingPage() {
       </section>
 
       {/* Providers */}
-      <section className="bg-bg-surface flex flex-col items-center gap-10 p-20">
+      <section className="bg-bg-surface flex flex-col items-center gap-10 px-4 sm:px-8 lg:px-20 py-16 lg:py-20">
         <span className="text-text-muted text-xs font-semibold tracking-[2px] uppercase">
           Aggregating from trusted sources
         </span>
@@ -96,7 +96,7 @@ export default function LandingPage() {
           {PROVIDERS.map(({ icon: Icon, name, desc }) => (
             <div
               key={name}
-              className="w-[248px] flex flex-col items-center gap-3 p-5 bg-bg-base border border-border rounded-[var(--radius-md)]"
+              className="w-full sm:w-[248px] flex flex-col items-center gap-3 p-5 bg-bg-base border border-border rounded-[var(--radius-md)]"
             >
               <Icon size={28} className="text-accent" />
               <span className="text-text-primary font-bold text-base">
@@ -111,13 +111,13 @@ export default function LandingPage() {
       </section>
 
       {/* AI Section */}
-      <section className="bg-bg-base flex items-center gap-20 px-[120px] py-20">
+      <section className="bg-bg-base flex flex-col lg:flex-row items-center gap-10 lg:gap-20 px-4 sm:px-8 lg:px-[120px] py-16 lg:py-20">
         {/* Left */}
         <div className="flex flex-col gap-6 flex-1">
           <span className="text-accent-glow text-xs font-semibold tracking-[2px] uppercase">
             Intelligent Search
           </span>
-          <h2 className="text-text-primary text-[42px] font-extrabold leading-[1.2]">
+          <h2 className="text-text-primary text-3xl sm:text-[42px] font-extrabold leading-[1.2]">
             An AI assistant that
             <br />
             understands your needs.
@@ -141,7 +141,7 @@ export default function LandingPage() {
         </div>
 
         {/* Right — Chat mockup */}
-        <div className="w-[420px] bg-bg-surface border border-border rounded-[var(--radius-lg)] overflow-hidden flex flex-col shrink-0">
+        <div className="w-full sm:w-[420px] bg-bg-surface border border-border rounded-[var(--radius-lg)] overflow-hidden flex flex-col shrink-0">
           <div className="h-12 bg-bg-surface-2 flex items-center gap-2 px-4">
             <Sparkles size={16} className="text-accent" />
             <span className="text-text-primary text-sm font-semibold">
@@ -166,11 +166,11 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="bg-bg-surface flex flex-col items-center gap-12 px-[120px] py-20">
-        <h2 className="text-text-primary text-[40px] font-extrabold text-center">
+      <section className="bg-bg-surface flex flex-col items-center gap-12 px-4 sm:px-8 lg:px-[120px] py-16 lg:py-20">
+        <h2 className="text-text-primary text-3xl sm:text-[40px] font-extrabold text-center">
           How it works
         </h2>
-        <div className="flex gap-6 w-full">
+        <div className="flex flex-col sm:flex-row gap-6 w-full">
           {HOW_IT_WORKS.map(({ n, title, desc }) => (
             <div
               key={n}
@@ -191,7 +191,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="h-[100px] bg-bg-surface border-t border-border flex items-center justify-between px-20">
+      <footer className="bg-bg-surface border-t border-border px-4 sm:px-8 lg:px-20 py-6 lg:h-[100px] flex flex-col lg:flex-row items-center justify-between gap-4">
         <span className="text-text-primary font-bold text-lg">⚡ JobAI</span>
         <div className="flex items-center gap-8">
           <Link

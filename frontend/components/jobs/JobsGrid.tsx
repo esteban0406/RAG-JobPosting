@@ -100,57 +100,31 @@ export function JobsGrid({
     router.push(`${pathname}?${params.toString()}`);
   }
 
-  const col1 = jobs.filter((_, i) => i % 2 === 0);
-  const col2 = jobs.filter((_, i) => i % 2 !== 0);
-
   return (
     <div className="relative flex-1">
       {/* Results count */}
-      <div className="flex items-center justify-between h-11 px-6">
+      <div className="flex items-center justify-between h-11 px-4 sm:px-6">
         <span className="text-text-primary text-sm font-semibold">
           {total.toLocaleString()} jobs found
         </span>
       </div>
 
-      {/* Card grid — 1 column when AI panel is open, 2 columns otherwise */}
-      {isOpen ? (
-        <div className="flex flex-col gap-4 px-6 pb-6">
-          {jobs.map((job) => (
-            <JobCard
-              key={job.id}
-              job={job}
-              isSaved={saved.has(job.id)}
-              onClick={() => openJob(job)}
-              onSaveToggle={() => handleSaveToggle(job.id)}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="flex gap-4 px-6 pb-6">
-          <div className="flex flex-col gap-4 flex-1">
-            {col1.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                isSaved={saved.has(job.id)}
-                onClick={() => openJob(job)}
-                onSaveToggle={() => handleSaveToggle(job.id)}
-              />
-            ))}
-          </div>
-          <div className="flex flex-col gap-4 flex-1">
-            {col2.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                isSaved={saved.has(job.id)}
-                onClick={() => openJob(job)}
-                onSaveToggle={() => handleSaveToggle(job.id)}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Card grid — 1 column on mobile/tablet, 2 columns on desktop (collapses to 1 when AI panel open) */}
+      <div
+        className={`grid gap-4 px-4 sm:px-6 pb-6 ${
+          isOpen ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"
+        }`}
+      >
+        {jobs.map((job) => (
+          <JobCard
+            key={job.id}
+            job={job}
+            isSaved={saved.has(job.id)}
+            onClick={() => openJob(job)}
+            onSaveToggle={() => handleSaveToggle(job.id)}
+          />
+        ))}
+      </div>
 
       {/* Empty state */}
       {jobs.length === 0 && (

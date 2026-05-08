@@ -14,11 +14,15 @@ const NAV = [
 ];
 
 interface SidebarProps {
-  /** Passed from server layout — user from cookie-backed API call */
   user?: { name: string; email: string } | null;
 }
 
-export function Sidebar({ user }: SidebarProps) {
+interface SidebarContentProps {
+  user?: { name: string; email: string } | null;
+  onNavigate?: () => void;
+}
+
+export function SidebarContent({ user, onNavigate }: SidebarContentProps) {
   const pathname = usePathname();
   const router = useRouter();
   const storeUser = useAuthStore((s) => s.user);
@@ -41,12 +45,16 @@ export function Sidebar({ user }: SidebarProps) {
   }
 
   return (
-    <aside className="w-60 flex flex-col justify-between bg-bg-surface border-r border-border shrink-0 h-full">
+    <div className="flex flex-col justify-between h-full">
       {/* Top */}
       <div className="flex flex-col">
         {/* Logo */}
         <div className="h-16 flex items-center px-6">
-          <Link href="/" className="text-text-primary font-bold text-lg hover:opacity-90">
+          <Link
+            href="/"
+            onClick={onNavigate}
+            className="text-text-primary font-bold text-lg hover:opacity-90"
+          >
             ⚡ JobAI
           </Link>
         </div>
@@ -63,6 +71,7 @@ export function Sidebar({ user }: SidebarProps) {
               <Link
                 key={label}
                 href={href}
+                onClick={onNavigate}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-[var(--radius-md)] text-sm transition-colors",
                   isActive
@@ -107,12 +116,21 @@ export function Sidebar({ user }: SidebarProps) {
         ) : (
           <Link
             href="/login"
+            onClick={onNavigate}
             className="text-accent-glow text-sm font-semibold hover:underline"
           >
             Log in
           </Link>
         )}
       </div>
+    </div>
+  );
+}
+
+export function Sidebar({ user }: SidebarProps) {
+  return (
+    <aside className="hidden lg:flex w-60 flex-col bg-bg-surface border-r border-border shrink-0 h-full">
+      <SidebarContent user={user} />
     </aside>
   );
 }

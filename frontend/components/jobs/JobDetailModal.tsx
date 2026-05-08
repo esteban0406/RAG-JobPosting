@@ -47,7 +47,7 @@ export function JobDetailModal({
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
       <DialogContent
         aria-describedby={undefined}
-        className="max-w-[60vw] max-h-[90vh] w-full bg-bg-surface border-border p-0 flex flex-col overflow-hidden [&>button]:hidden"
+        className="max-w-[95vw] sm:max-w-[80vw] lg:max-w-[60vw] max-h-[90vh] w-full bg-bg-surface border-border p-0 flex flex-col overflow-hidden [&>button]:hidden"
       >
         {/* Fixed header */}
         <div className="flex flex-col gap-4 px-6 py-6 border-b border-border">

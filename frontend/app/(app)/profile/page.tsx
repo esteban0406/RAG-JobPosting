@@ -37,8 +37,8 @@ export default async function ProfilePage() {
   const { user } = await getProfileData();
 
   return (
-    <div className="flex justify-center py-10 px-6">
-      <div className="w-[680px] flex flex-col gap-8">
+    <div className="flex justify-center py-10 px-4 sm:px-6">
+      <div className="w-full max-w-2xl flex flex-col gap-8">
         {/* Profile header + personal info + skills + preferred fields */}
         <ProfileForm user={user} />
 

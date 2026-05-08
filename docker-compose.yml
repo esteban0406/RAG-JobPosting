@@ -7,11 +7,11 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: jobpostings
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -20,11 +20,11 @@ services:
     build: ./embedding-server
     container_name: job-posting-embeddings
     ports:
-      - '8000:8000'
+      - "8000:8000"
     volumes:
       - huggingface_cache:/root/.cache/huggingface
     healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:8000/docs || exit 1']
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/docs || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,4 +32,9 @@ services:
 
 volumes:
   postgres_data:
+    external: true
+    name: rag-jobposting_postgres_data
+
   huggingface_cache:
+    external: true
+    name: rag-jobposting_huggingface_cache

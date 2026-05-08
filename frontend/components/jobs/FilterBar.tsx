@@ -64,7 +64,7 @@ export function FilterBar() {
   return (
     <div className="flex flex-col">
       {/* Search + Filters button */}
-      <div className="flex items-center gap-3 h-16 px-6 bg-bg-surface border-b border-border">
+      <div className="flex items-center gap-3 h-16 px-4 sm:px-6 bg-bg-surface border-b border-border">
         <div className="flex items-center gap-2.5 flex-1 h-10 px-3.5 bg-bg-base border border-border-subtle rounded-[var(--radius-sm)] focus-within:border-accent transition-colors">
           <Search size={16} className="text-text-muted shrink-0" />
           <input
@@ -113,7 +113,7 @@ export function FilterBar() {
 
       {/* Active filter chips */}
       {activeFilters.length > 0 && (
-        <div className="flex items-center gap-2 px-6 py-2.5 flex-wrap">
+        <div className="flex items-center gap-2 px-4 sm:px-6 py-2.5 flex-wrap">
           {activeFilters.map((key) => (
             <span
               key={key}
