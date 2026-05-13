@@ -1,40 +1,38 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import mammoth from 'mammoth';
 import { PDFParse } from 'pdf-parse';
 import type { Resume } from '../../generated/prisma/client.js';
 import { EmbeddingService } from '../embedding/embedding.service.js';
+import { R2StorageService } from '../storage/r2-storage.service.js';
 import type { ParsedResume } from './interfaces/parsed-resume.interface.js';
 import { ResumeParserService } from './resume-parser.service.js';
 import { ResumeRepository } from './resume.repository.js';
 
+const DOCX_MIMETYPE =
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+
 @Injectable()
 export class ResumeService {
   private readonly logger = new Logger(ResumeService.name);
-  private readonly uploadDir: string;
 
   constructor(
     private readonly resumeRepo: ResumeRepository,
     private readonly resumeParser: ResumeParserService,
     private readonly embeddingService: EmbeddingService,
-    config: ConfigService,
-  ) {
-    this.uploadDir = config.get<string>('RESUME_UPLOAD_DIR', 'uploads/resumes');
-  }
+    private readonly r2: R2StorageService,
+  ) {}
 
   async upload(
     userId: string,
     file: Express.Multer.File,
   ): Promise<ParsedResume> {
-    await fs.mkdir(this.uploadDir, { recursive: true });
+    const ext = file.mimetype === DOCX_MIMETYPE ? 'docx' : 'pdf';
+    const key = `resumes/${userId}.${ext}`;
 
-    const filePath = join(this.uploadDir, `${userId}.pdf`);
-    await fs.writeFile(filePath, file.buffer);
-
-    const parser = new PDFParse({ data: file.buffer });
-    const result = await parser.getText();
-    const rawText = result.text;
+    const [rawText] = await Promise.all([
+      this.extractText(file.buffer, file.mimetype),
+      this.r2.uploadFile(key, file.buffer, file.mimetype),
+    ]);
 
     this.logger.debug(
       `Extracted ${rawText.length} chars from resume for user ${userId}`,
@@ -46,7 +44,7 @@ export class ResumeService {
     ]);
 
     await this.resumeRepo.upsert(userId, {
-      filePath,
+      filePath: key,
       rawText,
       parsedData,
       embeddingModel: this.embeddingService.modelName,
@@ -69,18 +67,25 @@ export class ResumeService {
     return resume.parsedData as unknown as ParsedResume;
   }
 
+  async getDownloadUrl(userId: string): Promise<string> {
+    const resume = await this.resumeRepo.findByUserId(userId);
+    if (!resume) throw new NotFoundException('Resume not found');
+    return this.r2.getPresignedUrl(resume.filePath);
+  }
+
   async deleteResume(userId: string): Promise<void> {
     const resume = await this.resumeRepo.findByUserId(userId);
     if (!resume) throw new NotFoundException('Resume not found');
-
     await this.resumeRepo.delete(userId);
+  }
 
-    try {
-      await fs.unlink(resume.filePath);
-    } catch (err) {
-      if ((err as NodeJS.ErrnoException).code !== 'ENOENT') {
-        this.logger.warn(`Could not delete resume file: ${resume.filePath}`);
-      }
+  private async extractText(buffer: Buffer, mimetype: string): Promise<string> {
+    if (mimetype === DOCX_MIMETYPE) {
+      const result = await mammoth.extractRawText({ buffer });
+      return result.value;
     }
+    const parser = new PDFParse({ data: buffer });
+    const result = await parser.getText();
+    return result.text;
   }
 }

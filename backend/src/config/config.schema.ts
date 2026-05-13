@@ -92,6 +92,22 @@ class EnvironmentVariables {
   @IsString()
   @IsOptional()
   RESUME_UPLOAD_DIR: string = 'uploads/resumes';
+
+  @IsString()
+  R2_ENDPOINT: string;
+
+  @IsString()
+  R2_BUCKET_NAME: string;
+
+  @IsString()
+  R2_ACCESS_KEY_ID: string;
+
+  @IsString()
+  R2_SECRET_ACCESS_KEY: string;
+
+  @IsNumber()
+  @IsOptional()
+  R2_PRESIGNED_URL_EXPIRY: number = 3600;
 }
 
 export function validate(config: Record<string, unknown>) {

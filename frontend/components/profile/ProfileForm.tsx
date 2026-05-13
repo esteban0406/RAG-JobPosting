@@ -122,14 +122,27 @@ export function ProfileForm({ user }: ProfileFormProps) {
     fileInputRef.current?.click();
   }
 
+  async function handleDownloadResume() {
+    try {
+      const { url } = await fetchApi<{ url: string }>("/resume/download-url");
+      window.open(url, "_blank");
+    } catch {
+      toast.error("Could not generate download link");
+    }
+  }
+
   async function handleResumeFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     // Reset so same file can be re-selected
     e.target.value = "";
 
-    if (file.type !== "application/pdf") {
-      toast.error("Only PDF files are accepted");
+    const ALLOWED_TYPES = [
+      "application/pdf",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      toast.error("Only PDF and DOCX files are accepted");
       return;
     }
     if (file.size > MAX_SIZE) {
@@ -326,24 +339,36 @@ export function ProfileForm({ user }: ProfileFormProps) {
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={handleResumeButtonClick}
-            disabled={uploadingResume}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-base border border-border-subtle text-text-secondary text-xs font-medium rounded-[var(--radius-sm)] hover:border-accent/50 transition-colors disabled:opacity-60"
-          >
-            <UploadCloud size={13} />
-            {uploadingResume
-              ? "Parsing…"
-              : resumeStatus === "exists"
-              ? "Update resume"
-              : "Upload resume"}
-          </button>
+          <div className="flex items-center gap-2">
+            {resumeStatus === "exists" && (
+              <button
+                type="button"
+                onClick={handleDownloadResume}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-base border border-border-subtle text-text-secondary text-xs font-medium rounded-[var(--radius-sm)] hover:border-accent/50 transition-colors"
+              >
+                <FileText size={13} />
+                Download
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleResumeButtonClick}
+              disabled={uploadingResume}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-bg-base border border-border-subtle text-text-secondary text-xs font-medium rounded-[var(--radius-sm)] hover:border-accent/50 transition-colors disabled:opacity-60"
+            >
+              <UploadCloud size={13} />
+              {uploadingResume
+                ? "Parsing…"
+                : resumeStatus === "exists"
+                ? "Update resume"
+                : "Upload resume"}
+            </button>
+          </div>
         </div>
 
         {resumeStatus !== "loading" && (
           <p className="text-text-muted text-xs -mt-2">
-            Uploading will auto-fill your skills and location. PDF only · max 5 MB.
+            Uploading will auto-fill your skills and location. PDF or DOCX · max 5 MB.
           </p>
         )}
       </div>
@@ -351,7 +376,7 @@ export function ProfileForm({ user }: ProfileFormProps) {
       <input
         ref={fileInputRef}
         type="file"
-        accept=".pdf,application/pdf"
+        accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         className="hidden"
         onChange={handleResumeFileChange}
       />

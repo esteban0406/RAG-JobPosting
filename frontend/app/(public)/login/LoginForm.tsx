@@ -8,11 +8,14 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { Eye, EyeOff } from "lucide-react";
 import { LoginSchema, type LoginInput } from "@/lib/schemas";
+import { useAuthStore, type UserProfile } from "@/lib/auth-store";
+import { fetchApi } from "@/lib/api";
 
 export function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
   const next = params.get("next") ?? "/jobs";
+  const setUser = useAuthStore((s) => s.setUser);
 
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,6 +39,8 @@ export function LoginForm() {
         toast.error(err.message ?? "Login failed");
         return;
       }
+      const profile = await fetchApi<UserProfile>("/users/me");
+      setUser(profile);
       router.push(next);
       router.refresh();
     } catch {

@@ -21,6 +21,11 @@ import { JwtGuard } from '../auth/guards/jwt.guard.js';
 import type { ParsedResume } from './interfaces/parsed-resume.interface.js';
 import { ResumeService } from './resume.service.js';
 
+const ALLOWED_MIMETYPES = [
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+];
+
 @Controller('resume')
 @UseGuards(JwtGuard)
 export class ResumeController {
@@ -32,8 +37,11 @@ export class ResumeController {
       storage: memoryStorage(),
       limits: { fileSize: 5 * 1024 * 1024 },
       fileFilter: (_req, file, cb) => {
-        if (file.mimetype !== 'application/pdf') {
-          cb(new BadRequestException('Only PDF files are allowed'), false);
+        if (!ALLOWED_MIMETYPES.includes(file.mimetype)) {
+          cb(
+            new BadRequestException('Only PDF and DOCX files are allowed'),
+            false,
+          );
         } else {
           cb(null, true);
         }
@@ -46,6 +54,14 @@ export class ResumeController {
   ): Promise<ParsedResume> {
     if (!file) throw new BadRequestException('Resume file is required');
     return this.resumeService.upload(user.sub, file);
+  }
+
+  @Get('download-url')
+  async getDownloadUrl(
+    @CurrentUser() user: JwtPayload,
+  ): Promise<{ url: string }> {
+    const url = await this.resumeService.getDownloadUrl(user.sub);
+    return { url };
   }
 
   @Get()
