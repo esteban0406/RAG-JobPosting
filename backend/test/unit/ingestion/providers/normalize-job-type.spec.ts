@@ -1,5 +1,5 @@
-import { normalizeJobType } from './normalize-job-type.js';
-import { JobType } from '../../llm/job-type.enum.js';
+import { normalizeJobType } from '../../../../src/ingestion/providers/normalize-job-type.js';
+import { JobType } from '../../../../src/llm/job-type.enum.js';
 
 describe('normalizeJobType', () => {
   it.each([

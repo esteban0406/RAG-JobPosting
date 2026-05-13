@@ -1,4 +1,7 @@
-import { buildFilterQuery, type JobFilters } from './job-filter-builder.js';
+import {
+  buildFilterQuery,
+  type JobFilters,
+} from '../../../../src/query/aggregation/job-filter-builder.js';
 
 describe('buildFilterQuery', () => {
   it('returns no WHERE clause and empty params when filters are empty', () => {

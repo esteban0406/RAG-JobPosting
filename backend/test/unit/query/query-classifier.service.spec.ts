@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LlmService } from '../llm/llm.service.js';
-import { QueryClassifierService } from './query-classifier.service.js';
+import { LlmService } from '../../../src/llm/llm.service.js';
+import { QueryClassifierService } from '../../../src/query/query-classifier.service.js';
 
 const mockLlm = { complete: jest.fn() };
 
@@ -37,12 +37,15 @@ describe('QueryClassifierService', () => {
       expect(mockLlm.complete).not.toHaveBeenCalled();
     });
 
-    it('classifies hybrid when both signals match', async () => {
+    it('classifies hybrid when both signals match, calling LLM for intent', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"hybrid","intent":"count_remote","params":[]}',
+      );
       const result = await service.classify(
         'find frontend jobs and how many are remote',
       );
       expect(result.type).toBe('hybrid');
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
     });
 
     it('detects "types of" as aggregation signal', async () => {

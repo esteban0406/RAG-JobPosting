@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-jest.mock('../../generated/prisma/client', () => ({
+jest.mock('../../../generated/prisma/client', () => ({
   PrismaClient: jest.fn().mockImplementation(() => ({
     $connect: jest.fn(),
     $disconnect: jest.fn(),
@@ -8,12 +8,12 @@ jest.mock('../../generated/prisma/client', () => ({
   })),
 }));
 jest.mock('@prisma/adapter-pg', () => ({ PrismaPg: jest.fn() }));
-import { LlmService } from '../llm/llm.service.js';
-import { RagService } from '../rag/rag.service.js';
-import { AggregationService } from './aggregation/aggregation.service.js';
-import { SearchQueryDto } from './dto/search-query.dto.js';
-import { QueryClassifierService } from './query-classifier.service.js';
-import { QueryOrchestratorService } from './query-orchestrator.service.js';
+import { LlmService } from '../../../src/llm/llm.service.js';
+import { RagService } from '../../../src/rag/rag.service.js';
+import { AggregationService } from '../../../src/query/aggregation/aggregation.service.js';
+import { SearchQueryDto } from '../../../src/query/dto/search-query.dto.js';
+import { QueryClassifierService } from '../../../src/query/query-classifier.service.js';
+import { QueryOrchestratorService } from '../../../src/query/query-orchestrator.service.js';
 
 const mockClassifier = { classify: jest.fn() };
 const mockRag = { query: jest.fn(), buildContext: jest.fn() };

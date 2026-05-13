@@ -1,14 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
-import { AggregationRepository } from './aggregation.repository.js';
-import { QUERY_TEMPLATES } from './query-templates.js';
+import { AggregationRepository } from '../../../../src/query/aggregation/aggregation.repository.js';
+import { QUERY_TEMPLATES } from '../../../../src/query/aggregation/query-templates.js';
 
 const mockQueryRawUnsafe = jest.fn();
 const mockConnect = jest.fn();
 const mockDisconnect = jest.fn();
 
-jest.mock('../../../generated/prisma/client', () => ({
+jest.mock('../../../../generated/prisma/client', () => ({
   PrismaClient: jest.fn().mockImplementation(() => ({
     $connect: mockConnect,
     $disconnect: mockDisconnect,

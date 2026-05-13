@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-jest.mock('../../../generated/prisma/client', () => ({
+jest.mock('../../../../generated/prisma/client', () => ({
   PrismaClient: jest.fn().mockImplementation(() => ({
     $connect: jest.fn(),
     $disconnect: jest.fn(),
@@ -8,9 +8,9 @@ jest.mock('../../../generated/prisma/client', () => ({
   })),
 }));
 jest.mock('@prisma/adapter-pg', () => ({ PrismaPg: jest.fn() }));
-import { LlmService } from '../../llm/llm.service.js';
-import { AggregationRepository } from './aggregation.repository.js';
-import { AggregationService } from './aggregation.service.js';
+import { LlmService } from '../../../../src/llm/llm.service.js';
+import { AggregationRepository } from '../../../../src/query/aggregation/aggregation.repository.js';
+import { AggregationService } from '../../../../src/query/aggregation/aggregation.service.js';
 
 const mockRepo = { execute: jest.fn() };
 const mockLlm = { complete: jest.fn() };
