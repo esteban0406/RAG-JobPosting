@@ -41,7 +41,15 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
-  LLM_MODEL: string = 'qwen/qwen3-32b';
+  LLM_MODEL: string = 'qwen/qwen3.6-27b';
+
+  @IsString()
+  @IsOptional()
+  RESUME_PARSER_MODEL: string = 'qwen/qwen3.6-27b';
+
+  @IsString()
+  @IsOptional()
+  JOB_PARSER_MODEL: string = 'openai/gpt-oss-120b';
 
   @IsString()
   @MinLength(16)
@@ -53,7 +61,12 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
-  JWT_EXPIRES_IN: string = '24h';
+  JWT_EXPIRES_IN: string = '15m';
+
+  @IsNumber()
+  @Min(1)
+  @IsOptional()
+  REFRESH_TOKEN_TTL_DAYS: number = 30;
 
   @IsString()
   @IsOptional()

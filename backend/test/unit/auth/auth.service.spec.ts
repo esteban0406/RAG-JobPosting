@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from '../../../src/auth/auth.service.js';
 import { PrismaService } from '../../../src/storage/prisma.service.js';
+import { RefreshTokenRepository } from '../../../src/auth/refresh-token.repository.js';
 
 jest.mock('bcrypt');
 
@@ -14,6 +15,12 @@ const mockPrisma = {
     findUnique: jest.fn(),
     create: jest.fn(),
   },
+};
+const mockRefreshTokenRepo = {
+  create: jest.fn(),
+  findByHash: jest.fn(),
+  revoke: jest.fn(),
+  revokeFamily: jest.fn(),
 };
 const mockConfig = {
   getOrThrow: jest.fn().mockReturnValue('secret-api-key'),
@@ -26,6 +33,7 @@ async function buildModule(): Promise<AuthService> {
       AuthService,
       { provide: JwtService, useValue: mockJwt },
       { provide: PrismaService, useValue: mockPrisma },
+      { provide: RefreshTokenRepository, useValue: mockRefreshTokenRepo },
       { provide: ConfigService, useValue: mockConfig },
     ],
   }).compile();
@@ -40,6 +48,7 @@ describe('AuthService', () => {
     mockJwt.sign.mockReturnValue('signed-token');
     mockConfig.getOrThrow.mockReturnValue('secret-api-key');
     mockConfig.get.mockReturnValue(10);
+    mockRefreshTokenRepo.create.mockResolvedValue(undefined);
     service = await buildModule();
   });
 
@@ -66,7 +75,7 @@ describe('AuthService', () => {
       expect(mockPrisma.user.create).not.toHaveBeenCalled();
     });
 
-    it('creates user and returns accessToken on success', async () => {
+    it('creates user and returns an access+refresh token pair on success', async () => {
       mockPrisma.user.findUnique.mockResolvedValueOnce(null);
       (bcrypt.hash as jest.Mock).mockResolvedValueOnce('hashed-password');
       mockPrisma.user.create.mockResolvedValueOnce({ id: 'user-1' });
@@ -87,7 +96,17 @@ describe('AuthService', () => {
         }),
       );
       expect(result.accessToken).toBe('signed-token');
+      expect(typeof result.refreshToken).toBe('string');
+      expect(result.refreshToken.length).toBeGreaterThan(0);
       expect(mockJwt.sign).toHaveBeenCalledWith({ sub: 'user-1', role: 'user' });
+      expect(mockRefreshTokenRepo.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          userId: 'user-1',
+          tokenHash: expect.any(String),
+          familyId: expect.any(String),
+          expiresAt: expect.any(Date),
+        }),
+      );
     });
   });
 
@@ -112,7 +131,7 @@ describe('AuthService', () => {
       ).rejects.toThrow(UnauthorizedException);
     });
 
-    it('returns accessToken when credentials are valid', async () => {
+    it('returns an access+refresh token pair when credentials are valid', async () => {
       mockPrisma.user.findUnique.mockResolvedValueOnce({
         id: 'user-1',
         passwordHash: 'hashed',
@@ -125,7 +144,83 @@ describe('AuthService', () => {
       });
 
       expect(result.accessToken).toBe('signed-token');
+      expect(typeof result.refreshToken).toBe('string');
       expect(mockJwt.sign).toHaveBeenCalledWith({ sub: 'user-1', role: 'user' });
+    });
+  });
+
+  describe('refresh', () => {
+    it('throws UnauthorizedException when the token is unknown', async () => {
+      mockRefreshTokenRepo.findByHash.mockResolvedValueOnce(null);
+
+      await expect(service.refresh('unknown-token')).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    it('revokes the whole family and throws when a rotated token is reused', async () => {
+      mockRefreshTokenRepo.findByHash.mockResolvedValueOnce({
+        id: 'rt-1',
+        userId: 'user-1',
+        familyId: 'family-1',
+        revokedAt: new Date(),
+        expiresAt: new Date(Date.now() + 1000 * 60),
+      });
+
+      await expect(service.refresh('reused-token')).rejects.toThrow(
+        UnauthorizedException,
+      );
+      expect(mockRefreshTokenRepo.revokeFamily).toHaveBeenCalledWith('family-1');
+    });
+
+    it('throws UnauthorizedException when the token is expired', async () => {
+      mockRefreshTokenRepo.findByHash.mockResolvedValueOnce({
+        id: 'rt-1',
+        userId: 'user-1',
+        familyId: 'family-1',
+        revokedAt: null,
+        expiresAt: new Date(Date.now() - 1000),
+      });
+
+      await expect(service.refresh('expired-token')).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    it('rotates: revokes the old token and issues a new pair in the same family', async () => {
+      mockRefreshTokenRepo.findByHash.mockResolvedValueOnce({
+        id: 'rt-1',
+        userId: 'user-1',
+        familyId: 'family-1',
+        revokedAt: null,
+        expiresAt: new Date(Date.now() + 1000 * 60),
+      });
+
+      const result = await service.refresh('valid-token');
+
+      expect(mockRefreshTokenRepo.revoke).toHaveBeenCalledWith('rt-1');
+      expect(result.accessToken).toBe('signed-token');
+      expect(typeof result.refreshToken).toBe('string');
+      expect(mockRefreshTokenRepo.create).toHaveBeenCalledWith(
+        expect.objectContaining({ userId: 'user-1', familyId: 'family-1' }),
+      );
+    });
+  });
+
+  describe('logout', () => {
+    it('revokes the matching refresh token', async () => {
+      mockRefreshTokenRepo.findByHash.mockResolvedValueOnce({ id: 'rt-1' });
+
+      await service.logout('some-token');
+
+      expect(mockRefreshTokenRepo.revoke).toHaveBeenCalledWith('rt-1');
+    });
+
+    it('is a no-op when the token is unknown (idempotent)', async () => {
+      mockRefreshTokenRepo.findByHash.mockResolvedValueOnce(null);
+
+      await expect(service.logout('unknown-token')).resolves.toBeUndefined();
+      expect(mockRefreshTokenRepo.revoke).not.toHaveBeenCalled();
     });
   });
 });

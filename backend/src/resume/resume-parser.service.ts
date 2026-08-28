@@ -112,12 +112,17 @@ export class ResumeParserService {
   private readonly ollamaUrl: string;
   private readonly ollamaModel: string;
   private readonly groqClients: Groq[] = [];
+  private readonly groqModel: string;
   private resumeClientIdx = 0;
 
   constructor(config: ConfigService) {
     this.isDev = config.get<string>('NODE_ENV') !== 'production';
     this.ollamaUrl = `${config.get<string>('OLLAMA_URL') ?? 'http://localhost:11434'}/v1/chat/completions`;
     this.ollamaModel = config.get<string>('OLLAMA_MODEL') ?? 'llama3.1:8b';
+    this.groqModel = config.get<string>(
+      'RESUME_PARSER_MODEL',
+      'qwen/qwen3.6-27b',
+    );
 
     if (!this.isDev) {
       const keys = [
@@ -182,7 +187,7 @@ export class ResumeParserService {
       const completion = await this.groqClients[
         this.resumeClientIdx
       ].chat.completions.create({
-        model: 'qwen/qwen3-32b',
+        model: this.groqModel,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: text },
@@ -190,6 +195,10 @@ export class ResumeParserService {
         temperature: 0.1,
         max_completion_tokens: 4096,
         stream: false,
+        // Matches llm.service.ts — ask Groq not to emit the model's <think>
+        // block at all, rather than relying only on stripping it afterward.
+        reasoning_format: 'hidden',
+        reasoning_effort: 'none',
       });
 
       const content = completion.choices[0]?.message?.content ?? '';
@@ -300,7 +309,15 @@ export class ResumeParserService {
   // ── JSON extraction ───────────────────────────────────────────────────────
 
   private extractJson(raw: string): ParsedResume {
-    const stripped = raw.replace(/```(?:json)?\s*/gi, '').replace(/```/g, '');
+    // Reasoning models (e.g. qwen3.6) prepend a <think>...</think> block that
+    // often contains its own brace-delimited draft of the answer — left in
+    // place, the regex fallback below would greedily match from the first
+    // "{" inside that draft through to the real answer's closing "}".
+    const withoutThinking = raw.replace(/<think>[\s\S]*?<\/think>/gi, '');
+    const stripped = withoutThinking
+      .replace(/```(?:json)?\s*/gi, '')
+      .replace(/```/g, '')
+      .trim();
 
     try {
       return this.validate(JSON.parse(stripped));

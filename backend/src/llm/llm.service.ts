@@ -16,6 +16,11 @@ export interface LlmOptions {
   maxOutputTokens?: number;
 }
 
+export interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
 @Injectable()
 export class LlmService {
   private readonly logger = new Logger(LlmService.name);
@@ -30,7 +35,7 @@ export class LlmService {
     ].filter(Boolean) as string[];
     if (keys.length === 0) throw new Error('GROQ_API_KEY is required');
     this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));
-    this.model = config.get<string>('LLM_MODEL', 'qwen/qwen3-32b');
+    this.model = config.get<string>('LLM_MODEL', 'qwen/qwen3.6-27b');
   }
 
   private get currentClient(): Groq {
@@ -38,21 +43,30 @@ export class LlmService {
   }
 
   async complete(prompt: string, options: LlmOptions = {}): Promise<string> {
-    return this.completeWithRetry(prompt, options);
+    return this.completeChat([{ role: 'user', content: prompt }], options);
+  }
+
+  async completeChat(
+    messages: ChatMessage[],
+    options: LlmOptions = {},
+  ): Promise<string> {
+    return this.completeWithRetry(messages, options);
   }
 
   private async completeWithRetry(
-    prompt: string,
+    messages: ChatMessage[],
     options: LlmOptions,
     attempt = 0,
   ): Promise<string> {
     try {
       const completion = await this.currentClient.chat.completions.create({
         model: this.model,
-        messages: [{ role: 'user', content: prompt }],
+        messages,
         stream: false,
         temperature: options.temperature ?? 0.2,
-        max_completion_tokens: options.maxOutputTokens ?? 1024,
+        max_completion_tokens: options.maxOutputTokens ?? 2048,
+        reasoning_format: 'hidden',
+        reasoning_effort: 'none',
       });
 
       const raw = completion.choices[0]?.message?.content ?? '';
@@ -80,7 +94,7 @@ export class LlmService {
             this.logger.warn(
               `Groq LLM daily quota exhausted — rotating to key ${this.llmClientIdx + 1}`,
             );
-            return this.completeWithRetry(prompt, options, 0);
+            return this.completeWithRetry(messages, options, 0);
           }
           this.logger.error(
             `Groq daily quota exhausted on all keys for model ${this.model}`,
@@ -96,7 +110,7 @@ export class LlmService {
             `LLM rate limited (attempt ${attempt + 1}/${MAX_RETRIES}), retrying in ${Math.round(delay / 1000)}s`,
           );
           await new Promise((resolve) => setTimeout(resolve, delay));
-          return this.completeWithRetry(prompt, options, attempt + 1);
+          return this.completeWithRetry(messages, options, attempt + 1);
         }
 
         this.logger.error(
@@ -114,7 +128,7 @@ export class LlmService {
           `LLM request failed (attempt ${attempt + 1}/${MAX_RETRIES}), retrying in ${Math.round(delay / 1000)}s`,
         );
         await new Promise((resolve) => setTimeout(resolve, delay));
-        return this.completeWithRetry(prompt, options, attempt + 1);
+        return this.completeWithRetry(messages, options, attempt + 1);
       }
 
       this.logger.error(`LLM request failed: ${(err as Error).message}`);
@@ -152,13 +166,19 @@ export class LlmService {
   }
 
   async *completeStream(prompt: string): AsyncGenerator<string> {
+    yield* this.completeChatStream([{ role: 'user', content: prompt }]);
+  }
+
+  async *completeChatStream(messages: ChatMessage[]): AsyncGenerator<string> {
     try {
       const stream = await this.currentClient.chat.completions.create({
         model: this.model,
-        messages: [{ role: 'user', content: prompt }],
+        messages,
         stream: true,
         temperature: 0.2,
-        max_completion_tokens: 1024,
+        max_completion_tokens: 2048,
+        reasoning_format: 'hidden',
+        reasoning_effort: 'none',
       });
 
       yield* this.streamWithoutThinking(stream);

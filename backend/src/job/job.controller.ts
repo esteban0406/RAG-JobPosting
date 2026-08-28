@@ -13,7 +13,6 @@ import {
 } from '@nestjs/common';
 import type { Job } from '../../generated/prisma/client.js';
 import { Roles } from '../auth/decorators/roles.decorator.js';
-import { JwtGuard } from '../auth/guards/jwt.guard.js';
 import { RolesGuard } from '../auth/guards/roles.guard.js';
 import { CreateJobDto } from './dto/create-job.dto.js';
 import { JobFilterDto } from './dto/job-filter.dto.js';
@@ -35,7 +34,7 @@ export class JobController {
   }
 
   @Post()
-  @UseGuards(JwtGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles('admin')
   @HttpCode(HttpStatus.CREATED)
   create(@Body() dto: CreateJobDto): Promise<Job> {
@@ -43,14 +42,14 @@ export class JobController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles('admin')
   update(@Param('id') id: string, @Body() dto: UpdateJobDto): Promise<Job> {
     return this.jobService.update(id, dto);
   }
 
   @Delete(':id')
-  @UseGuards(JwtGuard, RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles('admin')
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id') id: string): Promise<void> {

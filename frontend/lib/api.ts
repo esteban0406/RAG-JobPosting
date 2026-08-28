@@ -1,4 +1,6 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api/v1";
+// Every call here targets our own same-origin proxy (app/api/backend/[...path]),
+// never the backend directly — see lib/backend-fetch.ts for why.
+const API_BASE = "/api/backend";
 
 export class ApiError extends Error {
   constructor(
@@ -10,37 +12,19 @@ export class ApiError extends Error {
   }
 }
 
-type FetchOptions = RequestInit & {
-  token?: string;
-};
-
-/**
- * Unified fetch wrapper for both server-side (token passed explicitly)
- * and client-side (credentials: 'include' so httpOnly cookie is sent automatically).
- */
 export async function fetchApi<T = unknown>(
   path: string,
-  options: FetchOptions = {},
+  options: RequestInit = {},
 ): Promise<T> {
-  const { token, ...init } = options;
-
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    ...(init.headers as Record<string, string>),
+    ...(options.headers as Record<string, string>),
   };
 
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-
-  const isServer = typeof window === "undefined";
-
   const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
+    ...options,
     headers,
-    // On the client, include the httpOnly cookie automatically.
-    // On the server, we rely on the explicit `token` param.
-    credentials: isServer ? "omit" : "include",
+    credentials: "include",
   });
 
   if (!res.ok) {
@@ -71,8 +55,17 @@ export interface StreamSearchEvent {
   message?: string;
 }
 
+export interface ChatHistoryMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
 export async function* streamSearch(
-  body: { query: string; contextJobIds?: string[] },
+  body: {
+    query: string;
+    contextJobIds?: string[];
+    history?: ChatHistoryMessage[];
+  },
 ): AsyncGenerator<StreamSearchEvent> {
   const res = await fetch(`${API_BASE}/query/stream`, {
     method: "POST",

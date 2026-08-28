@@ -21,7 +21,12 @@ import { AggregationRepository } from '../../../src/query/aggregation/aggregatio
 import { ResumeService } from '../../../src/resume/resume.service.js';
 import { SearchQueryDto } from '../../../src/query/dto/search-query.dto.js';
 
-const mockLlm = { complete: jest.fn(), completeStream: jest.fn() };
+const mockLlm = {
+  complete: jest.fn(),
+  completeStream: jest.fn(),
+  completeChat: jest.fn(),
+  completeChatStream: jest.fn(),
+};
 const mockEmbedding = {
   embedQuery: jest.fn(),
   embed: jest.fn(),
@@ -172,7 +177,7 @@ describe('Query Pipeline Integration', () => {
     it('routes through Classifier → RagService and returns type=retrieval', async () => {
       mockVectorRepo.findSimilar.mockResolvedValueOnce(CHUNK_RESULTS);
       mockJobRepo.findByIds.mockResolvedValueOnce(JOB_RECORDS);
-      mockLlm.complete.mockResolvedValueOnce('Here are some matching jobs.');
+      mockLlm.completeChat.mockResolvedValueOnce('Here are some matching jobs.');
 
       const result = await orchestrator.handle(makeDto('find software engineers'));
 
@@ -183,7 +188,7 @@ describe('Query Pipeline Integration', () => {
       expect(mockEmbedding.embedQuery).toHaveBeenCalledTimes(1);
       expect(mockVectorRepo.findSimilar).toHaveBeenCalledWith(QUERY_VECTOR, 15, 0.5);
       expect(mockJobRepo.findByIds).toHaveBeenCalledWith(['job-1', 'job-2']);
-      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(mockLlm.completeChat).toHaveBeenCalledTimes(1);
     });
 
     it('returns no-results answer when vector search returns empty', async () => {
@@ -194,13 +199,13 @@ describe('Query Pipeline Integration', () => {
       expect(result.answer).toContain('No relevant job postings found');
       expect(result.sources).toHaveLength(0);
       expect(mockJobRepo.findByIds).not.toHaveBeenCalled();
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(mockLlm.completeChat).not.toHaveBeenCalled();
     });
 
     it('skips vector-search embedding and uses findSimilarByJobIds when contextJobIds are provided', async () => {
       mockVectorRepo.findSimilarByJobIds.mockResolvedValueOnce([CHUNK_RESULTS[0]]);
       mockJobRepo.findByIds.mockResolvedValueOnce([JOB_RECORDS[0]]);
-      mockLlm.complete.mockResolvedValueOnce('Context answer.');
+      mockLlm.completeChat.mockResolvedValueOnce('Context answer.');
 
       const result = await orchestrator.handle(
         makeDto('find software engineers', { contextJobIds: ['job-1'] } as Partial<SearchQueryDto>),
@@ -222,7 +227,7 @@ describe('Query Pipeline Integration', () => {
       });
       mockVectorRepo.findSimilar.mockResolvedValueOnce(CHUNK_RESULTS);
       mockJobRepo.findByIds.mockResolvedValueOnce(JOB_RECORDS);
-      mockLlm.complete.mockResolvedValueOnce('Resume-aware answer.');
+      mockLlm.completeChat.mockResolvedValueOnce('Resume-aware answer.');
 
       await orchestrator.handle(makeDto('find software engineers'), 'user-123');
 
@@ -259,9 +264,10 @@ describe('Query Pipeline Integration', () => {
   describe('hybrid flow end-to-end', () => {
     it('calls both pipelines and combines with LLM', async () => {
       // This query matches both AGGREGATION_PATTERN and RETRIEVAL_PATTERN → triggers classifyWithLlm
-      mockLlm.complete
-        .mockResolvedValueOnce('{"type":"hybrid","intent":"count_by_location","params":[]}')
-        .mockResolvedValueOnce('Combined hybrid answer.');
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"hybrid","intent":"count_by_location","params":[]}',
+      );
+      mockLlm.completeChat.mockResolvedValueOnce('Combined hybrid answer.');
 
       mockVectorRepo.findSimilar.mockResolvedValueOnce([CHUNK_RESULTS[0]]);
       mockJobRepo.findByIds.mockResolvedValueOnce([JOB_RECORDS[0]]);
@@ -274,7 +280,8 @@ describe('Query Pipeline Integration', () => {
       expect(result.type).toBe('hybrid');
       expect(result.answer).toBe('Combined hybrid answer.');
       expect(result.sources).toHaveLength(1);
-      expect(mockLlm.complete).toHaveBeenCalledTimes(2);
+      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(mockLlm.completeChat).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -298,9 +305,10 @@ describe('Query Pipeline Integration', () => {
     });
 
     it('falls back to retrieval-only when AggregationRepository rejects during hybrid', async () => {
-      mockLlm.complete
-        .mockResolvedValueOnce('{"type":"hybrid","intent":"count_by_location","params":[]}')
-        .mockResolvedValueOnce('Retrieval fallback answer.');
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"hybrid","intent":"count_by_location","params":[]}',
+      );
+      mockLlm.completeChat.mockResolvedValueOnce('Retrieval fallback answer.');
 
       mockVectorRepo.findSimilar.mockResolvedValueOnce([CHUNK_RESULTS[0]]);
       mockJobRepo.findByIds.mockResolvedValueOnce([JOB_RECORDS[0]]);

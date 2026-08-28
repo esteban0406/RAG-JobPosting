@@ -1,37 +1,16 @@
 "use client";
 
-import { useState, useRef, useEffect, Suspense } from "react";
-import { Sparkles, Send, X, AlertCircle } from "lucide-react";
+import { useRef, useState, useEffect, Suspense } from "react";
+import { Sparkles, Send, X, AlertCircle, RotateCcw } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { fetchApi, streamSearch, ApiError } from "@/lib/api";
-import { useAiStore } from "@/lib/ai-store";
+import { useAiStore, type JobSource } from "@/lib/ai-store";
 import { ContextPickerButton } from "./ContextPickerButton";
 import { JobDetailModal } from "@/components/jobs/JobDetailModal";
 import type { Job } from "@/components/jobs/JobCard";
 
-interface JobSource {
-  jobId: string;
-  title: string;
-  company: string;
-  url: string;
-  similarity: number;
-}
-
-interface SearchResponse {
-  type: "retrieval" | "aggregation" | "hybrid";
-  answer: string;
-  sources?: JobSource[];
-  retrievedAt: string;
-}
-
-interface Message {
-  role: "user" | "ai";
-  text: string;
-  sources?: JobSource[];
-  error?: boolean;
-  streaming?: boolean;
-}
+const HISTORY_WINDOW = 10;
 
 interface AiPanelProps {
   isLoggedIn?: boolean;
@@ -77,8 +56,14 @@ function getHints(
 }
 
 export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
-  const { contextJobIds } = useAiStore();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const {
+    contextJobIds,
+    addContextJobIds,
+    messages,
+    setMessages,
+    setLastSources,
+    newChat,
+  } = useAiStore();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
@@ -93,6 +78,16 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
     const query = input.trim();
     if (!query || loading) return;
 
+    const history = messages
+      .filter((m) => !m.error)
+      .slice(-HISTORY_WINDOW)
+      .map((m) => ({
+        role: (m.role === "ai" ? "assistant" : "user") as
+          | "assistant"
+          | "user",
+        content: m.text,
+      }));
+
     setInput("");
     setMessages((prev) => [...prev, { role: "user", text: query }]);
     setLoading(true);
@@ -101,7 +96,11 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
 
     try {
       const ids = Array.from(contextJobIds);
-      const body = { query, ...(ids.length > 0 ? { contextJobIds: ids } : {}) };
+      const body = {
+        query,
+        ...(ids.length > 0 ? { contextJobIds: ids } : {}),
+        ...(history.length > 0 ? { history } : {}),
+      };
 
       for await (const event of streamSearch(body)) {
         if (event.type === "start") {
@@ -135,6 +134,10 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
             }
             return copy;
           });
+          if (event.sources && event.sources.length > 0) {
+            setLastSources(event.sources);
+            addContextJobIds(event.sources.map((s) => s.jobId));
+          }
         } else if (event.type === "error") {
           const isRateLimit = event.status === 429;
           const text = isRateLimit
@@ -233,12 +236,23 @@ export function AiPanel({ isLoggedIn, hasResume, onClose }: AiPanelProps) {
             </span>
           )}
         </div>
-        <button
-          onClick={onClose}
-          className="w-8 h-8 flex items-center justify-center bg-bg-surface rounded-[var(--radius-sm)] text-text-muted hover:text-text-primary transition-colors"
-        >
-          <X size={16} />
-        </button>
+        <div className="flex items-center gap-1">
+          {messages.length > 0 && (
+            <button
+              onClick={newChat}
+              title="New chat"
+              className="w-8 h-8 flex items-center justify-center bg-bg-surface rounded-[var(--radius-sm)] text-text-muted hover:text-text-primary transition-colors"
+            >
+              <RotateCcw size={15} />
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            className="w-8 h-8 flex items-center justify-center bg-bg-surface rounded-[var(--radius-sm)] text-text-muted hover:text-text-primary transition-colors"
+          >
+            <X size={16} />
+          </button>
+        </div>
       </div>
 
       {/* Message list */}

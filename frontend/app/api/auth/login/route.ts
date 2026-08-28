@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { setAuthCookies } from "@/lib/auth-cookies";
 
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api/v1";
+const API = process.env.BACKEND_INTERNAL_URL ?? "http://localhost:4000/api/v1";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -20,15 +21,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { accessToken } = await res.json();
+  const { accessToken, refreshToken } = await res.json();
   const cookieStore = await cookies();
-  cookieStore.set("auth-token", accessToken, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    // 24h to match backend default
-    maxAge: 60 * 60 * 24,
-  });
+  setAuthCookies(cookieStore, { accessToken, refreshToken });
 
   return NextResponse.json({ ok: true });
 }

@@ -9,7 +9,12 @@ import { ResumeService } from '../../../src/resume/resume.service.js';
 const mockEmbedding = { embedQuery: jest.fn(), embed: jest.fn(), modelName: 'test-model', provider: 'openai' };
 const mockVector = { findSimilar: jest.fn(), findSimilarByJobIds: jest.fn() };
 const mockJobRepo = { findByIds: jest.fn() };
-const mockLlm = { complete: jest.fn(), completeStream: jest.fn() };
+const mockLlm = {
+  complete: jest.fn(),
+  completeStream: jest.fn(),
+  completeChat: jest.fn(),
+  completeChatStream: jest.fn(),
+};
 const mockResume = { getParsedData: jest.fn() };
 
 async function buildModule(): Promise<RagService> {
@@ -67,21 +72,48 @@ describe('RagService', () => {
 
       expect(result.answer).toContain('No relevant job postings found');
       expect(result.sources).toHaveLength(0);
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(mockLlm.completeChat).not.toHaveBeenCalled();
     });
 
     it('calls LLM once and returns answer + sources on success', async () => {
       mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
       mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
       mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
-      mockLlm.complete.mockResolvedValueOnce('Here are some jobs.');
+      mockLlm.completeChat.mockResolvedValueOnce('Here are some jobs.');
 
       const result = await service.query('find a job');
 
-      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(mockLlm.completeChat).toHaveBeenCalledTimes(1);
       expect(result.answer).toBe('Here are some jobs.');
       expect(result.sources).toHaveLength(1);
       expect(result.sources[0].jobId).toBe('job-1');
+    });
+
+    it('passes conversation history and the query as the final message', async () => {
+      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
+      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
+      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockLlm.completeChat.mockResolvedValueOnce('Job 1 is a great fit.');
+
+      const history = [
+        { role: 'user' as const, content: 'recommend me jobs' },
+        { role: 'assistant' as const, content: 'Here are some jobs.' },
+      ];
+      await service.query(
+        'why is job 1 good?',
+        undefined,
+        undefined,
+        undefined,
+        history,
+      );
+
+      const messages = mockLlm.completeChat.mock.calls[0][0];
+      expect(messages[0].role).toBe('system');
+      expect(messages.slice(1, 3)).toEqual(history);
+      expect(messages[messages.length - 1]).toEqual({
+        role: 'user',
+        content: 'why is job 1 good?',
+      });
     });
   });
 
@@ -95,7 +127,7 @@ describe('RagService', () => {
       expect(ctx).toBeNull();
     });
 
-    it('returns context with prompt, sources, and contextChunks', async () => {
+    it('returns context with systemMessage, sources, and contextChunks', async () => {
       mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
       mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
       mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
@@ -103,7 +135,7 @@ describe('RagService', () => {
       const ctx = await service.buildContext('python jobs');
 
       expect(ctx).not.toBeNull();
-      expect(ctx!.prompt).toContain('python jobs');
+      expect(ctx!.systemMessage).toContain('Engineer at Acme');
       expect(ctx!.sources).toHaveLength(1);
       expect(ctx!.contextChunks).toContain('Engineer at Acme');
     });

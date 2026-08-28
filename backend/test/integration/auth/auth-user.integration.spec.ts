@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { AuthService } from '../../../src/auth/auth.service.js';
+import { RefreshTokenRepository } from '../../../src/auth/refresh-token.repository.js';
 import { UserService } from '../../../src/user/user.service.js';
 import { UserRepository } from '../../../src/user/user.repository.js';
 import { PrismaService } from '../../../src/storage/prisma.service.js';
@@ -14,6 +15,12 @@ const mockJwt = { sign: jest.fn() };
 const mockConfig = {
   getOrThrow: jest.fn().mockReturnValue('test-api-key'),
   get: jest.fn().mockReturnValue(10),
+};
+const mockRefreshTokenRepo = {
+  create: jest.fn().mockResolvedValue(undefined),
+  findByHash: jest.fn(),
+  revoke: jest.fn(),
+  revokeFamily: jest.fn(),
 };
 const mockPrisma = {
   user: {
@@ -52,6 +59,7 @@ async function buildModule(): Promise<{ auth: AuthService; user: UserService }> 
       { provide: JwtService, useValue: mockJwt },
       { provide: ConfigService, useValue: mockConfig },
       { provide: PrismaService, useValue: mockPrisma },
+      { provide: RefreshTokenRepository, useValue: mockRefreshTokenRepo },
     ],
   }).compile();
   return {

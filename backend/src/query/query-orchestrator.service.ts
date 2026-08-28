@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import type { JobSource } from '../rag/dto/rag-response.dto.js';
 import { RagService } from '../rag/rag.service.js';
-import { LlmService } from '../llm/llm.service.js';
+import { ChatMessage, LlmService } from '../llm/llm.service.js';
 import { AggregationService } from './aggregation/aggregation.service.js';
 import { type JobFilters } from './aggregation/job-filter-builder.js';
 import type { TemplateKey } from './aggregation/query-templates.js';
@@ -67,6 +67,7 @@ export class QueryOrchestratorService {
       { location: dto.location, jobType: dto.type },
       dto.contextJobIds,
       userId,
+      dto.history ?? [],
     );
     return {
       type: 'retrieval',
@@ -136,7 +137,13 @@ export class QueryOrchestratorService {
           retrievedAt: new Date(),
         };
       }
-      const answer = await this.llm.complete(ragCtx.prompt);
+      const answer = await this.llm.completeChat(
+        this.rag.buildMessages(
+          ragCtx.systemMessage,
+          dto.history ?? [],
+          dto.query,
+        ),
+      );
       return {
         type: 'retrieval',
         answer,
@@ -161,8 +168,13 @@ export class QueryOrchestratorService {
       };
     }
 
-    const combined = await this.llm.complete(
-      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
+    const combined = await this.llm.completeChat(
+      buildHybridMessages(
+        dto.query,
+        ragCtx.contextChunks,
+        aggRows,
+        dto.history ?? [],
+      ),
     );
     return {
       type: 'hybrid',
@@ -255,8 +267,13 @@ export class QueryOrchestratorService {
       };
     }
 
-    const answer = await this.llm.complete(
-      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
+    const answer = await this.llm.completeChat(
+      buildHybridMessages(
+        dto.query,
+        ragCtx.contextChunks,
+        aggRows,
+        dto.history ?? [],
+      ),
     );
     return {
       type: 'hybrid',
@@ -299,8 +316,13 @@ export class QueryOrchestratorService {
       return;
     }
 
-    for await (const token of this.llm.completeStream(
-      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
+    for await (const token of this.llm.completeChatStream(
+      buildHybridMessages(
+        dto.query,
+        ragCtx.contextChunks,
+        aggRows,
+        dto.history ?? [],
+      ),
     )) {
       yield { type: 'token', content: token };
     }
@@ -316,6 +338,7 @@ export class QueryOrchestratorService {
       { location: dto.location, jobType: dto.type },
       dto.contextJobIds,
       userId,
+      dto.history ?? [],
     )) {
       if (typeof chunk === 'string') {
         yield { type: 'token', content: chunk };
@@ -352,8 +375,13 @@ export class QueryOrchestratorService {
       return;
     }
 
-    for await (const token of this.llm.completeStream(
-      buildHybridPrompt(dto.query, ragCtx.contextChunks, aggRows),
+    for await (const token of this.llm.completeChatStream(
+      buildHybridMessages(
+        dto.query,
+        ragCtx.contextChunks,
+        aggRows,
+        dto.history ?? [],
+      ),
     )) {
       yield { type: 'token', content: token };
     }
@@ -361,21 +389,24 @@ export class QueryOrchestratorService {
   }
 }
 
-function buildHybridPrompt(
+function buildHybridMessages(
   query: string,
   contextChunks: string,
   aggRows: Record<string, unknown>[],
-): string {
-  return `You are a job search assistant. Answer the user's question using BOTH the job listings and the statistical data below.
-Be concise and specific. Do not fabricate details. If salary or other details are not available for a listing, say so.
+  history: ChatMessage[],
+): ChatMessage[] {
+  const systemMessage = `You are a job search assistant. Answer the user's question using BOTH the job listings and the statistical data below.
+Be concise and specific. Do not fabricate details. If salary or other details are not available for a listing, say so. If the conversation includes prior turns, use them to understand follow-up questions.
 
 Job listings:
 ${contextChunks}
 
 Statistical data:
-${JSON.stringify(aggRows, null, 2)}
+${JSON.stringify(aggRows, null, 2)}`;
 
-User question: ${query}
-
-Answer:`;
+  return [
+    { role: 'system', content: systemMessage },
+    ...history,
+    { role: 'user', content: query },
+  ];
 }

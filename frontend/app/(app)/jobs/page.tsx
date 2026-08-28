@@ -4,8 +4,9 @@ import { FilterBar } from "@/components/jobs/FilterBar";
 import { JobsGrid } from "@/components/jobs/JobsGrid";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Job } from "@/components/jobs/JobCard";
+import { ACCESS_TOKEN_COOKIE } from "@/lib/auth-cookies";
 
-const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api/v1";
+const API = process.env.BACKEND_INTERNAL_URL ?? "http://localhost:4000/api/v1";
 
 interface JobsResponse {
   jobs: Job[];
@@ -31,7 +32,7 @@ async function fetchJobs(params: Record<string, string>): Promise<JobsResponse> 
 async function fetchSavedJobIds(): Promise<string[]> {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("auth-token")?.value;
+    const token = cookieStore.get(ACCESS_TOKEN_COOKIE)?.value;
     if (!token) return [];
     const res = await fetch(`${API}/users/me/favorites`, {
       headers: { Authorization: `Bearer ${token}` },

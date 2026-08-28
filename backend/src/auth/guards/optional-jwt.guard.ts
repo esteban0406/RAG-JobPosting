@@ -12,13 +12,7 @@ export class OptionalJwtGuard implements CanActivate {
       .switchToHttp()
       .getRequest<Request & { user?: JwtPayload }>();
     const authHeader = request.headers['authorization'];
-
-    let token: string | undefined;
-    if (authHeader?.startsWith('Bearer ')) {
-      token = authHeader.slice(7);
-    } else {
-      token = request.cookies?.['auth-token'] as string | undefined;
-    }
+    const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
 
     if (!token) return true;
 

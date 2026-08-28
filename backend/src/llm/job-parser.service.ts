@@ -136,12 +136,17 @@ export class JobParserService {
   private readonly ollamaUrl: string;
   private readonly ollamaModel: string;
   private readonly groqClients: Groq[] = [];
+  private readonly groqModel: string;
   private groqClientIdx = 0;
 
   constructor(config: ConfigService) {
     this.isDev = config.get<string>('NODE_ENV') !== 'production';
     this.ollamaUrl = `${config.get<string>('OLLAMA_URL') ?? 'http://localhost:11434'}/v1/chat/completions`;
     this.ollamaModel = config.get<string>('OLLAMA_MODEL') ?? 'llama3.1:8b';
+    this.groqModel = config.get<string>(
+      'JOB_PARSER_MODEL',
+      'openai/gpt-oss-120b',
+    );
 
     if (!this.isDev) {
       const keys = [
@@ -211,13 +216,14 @@ export class JobParserService {
       const completion = await this.groqClients[
         this.groqClientIdx
       ].chat.completions.create({
-        model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+        model: this.groqModel,
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
           { role: 'user', content: text },
         ],
         temperature: 0.1,
-        max_completion_tokens: 1500,
+        max_completion_tokens: 4096,
+        reasoning_effort: 'low',
         stream: false,
         response_format: { type: 'json_object' },
       });

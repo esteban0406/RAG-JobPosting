@@ -16,13 +16,17 @@ import { QueryClassifierService } from '../../../src/query/query-classifier.serv
 import { QueryOrchestratorService } from '../../../src/query/query-orchestrator.service.js';
 
 const mockClassifier = { classify: jest.fn() };
-const mockRag = { query: jest.fn(), buildContext: jest.fn() };
+const mockRag = {
+  query: jest.fn(),
+  buildContext: jest.fn(),
+  buildMessages: jest.fn(),
+};
 const mockAggregation = {
   execute: jest.fn(),
   queryRaw: jest.fn(),
   executeStream: jest.fn(),
 };
-const mockLlm = { complete: jest.fn() };
+const mockLlm = { completeChat: jest.fn(), completeChatStream: jest.fn() };
 
 const RAG_SOURCES = [
   {
@@ -41,7 +45,7 @@ const RAG_RESULT = {
 };
 
 const RAG_CTX = {
-  prompt: 'Job context prompt...\nAnswer:',
+  systemMessage: 'Job context system message...',
   sources: RAG_SOURCES,
   contextChunks:
     '---\nJob: Engineer at Acme | Similarity: 0.90\nDescription...',
@@ -77,6 +81,13 @@ describe('QueryOrchestratorService', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    mockRag.buildMessages.mockImplementation(
+      (systemMessage: string, history: unknown[], userQuery: string) => [
+        { role: 'system', content: systemMessage },
+        ...history,
+        { role: 'user', content: userQuery },
+      ],
+    );
     service = await buildModule();
   });
 
@@ -109,6 +120,7 @@ describe('QueryOrchestratorService', () => {
         { location: 'Austin', jobType: undefined },
         undefined,
         undefined,
+        [],
       );
     });
   });
@@ -140,7 +152,7 @@ describe('QueryOrchestratorService', () => {
       });
       mockRag.buildContext.mockResolvedValueOnce(RAG_CTX);
       mockAggregation.queryRaw.mockResolvedValueOnce(AGG_RESULT.rows);
-      mockLlm.complete.mockResolvedValueOnce('Combined answer.');
+      mockLlm.completeChat.mockResolvedValueOnce('Combined answer.');
 
       const result = await service.handle(makeDto());
 
@@ -148,7 +160,7 @@ describe('QueryOrchestratorService', () => {
       expect(result.answer).toBe('Combined answer.');
       expect(result.sources).toEqual(RAG_SOURCES);
       expect((result as { aggregation?: unknown }).aggregation).toBeUndefined();
-      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(mockLlm.completeChat).toHaveBeenCalledTimes(1);
       expect(mockAggregation.execute).not.toHaveBeenCalled();
     });
 
@@ -160,12 +172,16 @@ describe('QueryOrchestratorService', () => {
       });
       mockRag.buildContext.mockResolvedValueOnce(RAG_CTX);
       mockAggregation.queryRaw.mockResolvedValueOnce(AGG_RESULT.rows);
-      mockLlm.complete.mockResolvedValueOnce('Answer with context.');
+      mockLlm.completeChat.mockResolvedValueOnce('Answer with context.');
 
       await service.handle(makeDto());
 
-      const promptArg = (mockLlm.complete.mock.calls[0] as [string])[0];
-      expect(promptArg).toContain(RAG_CTX.contextChunks);
+      const messagesArg = mockLlm.completeChat.mock.calls[0][0] as Array<{
+        role: string;
+        content: string;
+      }>;
+      const systemMsg = messagesArg.find((m) => m.role === 'system');
+      expect(systemMsg?.content).toContain(RAG_CTX.contextChunks);
     });
 
     it('degrades to aggregation-only when RagService fails', async () => {
@@ -183,7 +199,7 @@ describe('QueryOrchestratorService', () => {
       expect(result.type).toBe('aggregation');
       expect(result.answer).toBe(AGG_RESULT.summary);
       expect(result.sources).toBeUndefined();
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(mockLlm.completeChat).not.toHaveBeenCalled();
     });
 
     it('degrades to retrieval-only when AggregationService fails', async () => {
@@ -194,14 +210,19 @@ describe('QueryOrchestratorService', () => {
       });
       mockRag.buildContext.mockResolvedValueOnce(RAG_CTX);
       mockAggregation.queryRaw.mockRejectedValueOnce(new Error('DB timeout'));
-      mockLlm.complete.mockResolvedValueOnce('Retrieval answer.');
+      mockLlm.completeChat.mockResolvedValueOnce('Retrieval answer.');
 
       const result = await service.handle(makeDto());
 
       expect(result.type).toBe('retrieval');
       expect(result.answer).toBe('Retrieval answer.');
       expect((result as { aggregation?: unknown }).aggregation).toBeUndefined();
-      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(mockLlm.completeChat).toHaveBeenCalledTimes(1);
+      expect(mockRag.buildMessages).toHaveBeenCalledWith(
+        RAG_CTX.systemMessage,
+        [],
+        expect.any(String),
+      );
     });
   });
 });

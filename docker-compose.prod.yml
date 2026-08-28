@@ -29,7 +29,8 @@ services:
       FINDWORK_API_KEY: ${FINDWORK_API_KEY}
       JWT_SECRET: ${JWT_SECRET}
       ADMIN_API_KEY: ${ADMIN_API_KEY}
-      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-24h}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-15m}
+      REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS:-30}
       LLM_MODEL: ${LLM_MODEL}
       INGESTION_CRON: ${INGESTION_CRON:-0 */6 * * *}
       FRONTEND_URL: ${FRONTEND_URL:-https://esteban-jobai.duckdns.org}
@@ -47,6 +48,10 @@ services:
       - '3002:3000'
     environment:
       PORT: 3000
+      # Docker-internal address — this is a server-to-server call from the
+      # frontend's Node process, so it never needs to go through the public
+      # nginx hostname or be baked in at image build time.
+      BACKEND_INTERNAL_URL: http://backend:4000/api/v1
     depends_on:
       - backend
     restart: unless-stopped

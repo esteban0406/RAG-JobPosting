@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmbeddingService } from '../embedding/embedding.service.js';
-import { LlmService } from '../llm/llm.service.js';
+import { ChatMessage, LlmService } from '../llm/llm.service.js';
 import type { ParsedResume } from '../resume/interfaces/parsed-resume.interface.js';
 import { ResumeService } from '../resume/resume.service.js';
 import { JobRepository } from '../storage/job.repository.js';
@@ -92,6 +92,7 @@ export class RagService {
     filters?: QueryFilters,
     contextJobIds?: string[],
     userId?: string,
+    history: ChatMessage[] = [],
   ): Promise<RagResponse> {
     const ctx = await this.buildContext(
       userQuery,
@@ -107,7 +108,9 @@ export class RagService {
         retrievedAt: new Date(),
       };
     }
-    const answer = await this.llmService.complete(ctx.prompt);
+    const answer = await this.llmService.completeChat(
+      this.buildMessages(ctx.systemMessage, history, userQuery),
+    );
     return { answer, sources: ctx.sources, retrievedAt: new Date() };
   }
 
@@ -116,6 +119,7 @@ export class RagService {
     filters?: QueryFilters,
     contextJobIds?: string[],
     userId?: string,
+    history: ChatMessage[] = [],
   ): AsyncGenerator<string | { done: true; sources: JobSource[] }> {
     const t0 = Date.now();
     const ctx = await this.buildContext(
@@ -133,10 +137,24 @@ export class RagService {
     }
 
     const t1 = Date.now();
-    yield* this.llmService.completeStream(ctx.prompt);
+    yield* this.llmService.completeChatStream(
+      this.buildMessages(ctx.systemMessage, history, userQuery),
+    );
     this.logger.debug(`LLM stream took ${Date.now() - t1}ms`);
 
     yield { done: true, sources: ctx.sources };
+  }
+
+  buildMessages(
+    systemMessage: string,
+    history: ChatMessage[],
+    userQuery: string,
+  ): ChatMessage[] {
+    return [
+      { role: 'system', content: systemMessage },
+      ...history,
+      { role: 'user', content: userQuery },
+    ];
   }
 
   async buildContext(
@@ -145,7 +163,7 @@ export class RagService {
     contextJobIds?: string[],
     userId?: string,
   ): Promise<{
-    prompt: string;
+    systemMessage: string;
     sources: JobSource[];
     contextChunks: string;
   } | null> {
@@ -210,8 +228,7 @@ export class RagService {
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
       : '';
-    const prompt = this.buildPrompt(
-      userQuery,
+    const systemMessage = this.buildSystemMessage(
       contextChunks,
       userProfileContext,
     );
@@ -230,7 +247,7 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { prompt, sources, contextChunks };
+    return { systemMessage, sources, contextChunks };
   }
 
   private async buildContextFromIds(
@@ -238,7 +255,7 @@ export class RagService {
     userQuery: string,
     userId?: string,
   ): Promise<{
-    prompt: string;
+    systemMessage: string;
     sources: JobSource[];
     contextChunks: string;
   } | null> {
@@ -296,8 +313,7 @@ export class RagService {
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
       : '';
-    const prompt = this.buildPrompt(
-      userQuery,
+    const systemMessage = this.buildSystemMessage(
       contextChunks,
       userProfileContext,
     );
@@ -316,7 +332,7 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { prompt, sources, contextChunks };
+    return { systemMessage, sources, contextChunks };
   }
 
   private groupByJob(chunks: JobChunkResult[]): Array<{
@@ -373,20 +389,12 @@ export class RagService {
     return parts.length > 0 ? parts.join(' ') : fallbackQuery;
   }
 
-  private buildPrompt(
-    query: string,
-    context: string,
-    userProfileContext = '',
-  ): string {
+  private buildSystemMessage(context: string, userProfileContext = ''): string {
     return `You are a helpful job search assistant. Answer the user's query based ONLY on the job postings provided below.
-Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details.
+Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details. If the conversation includes prior turns, use them to understand follow-up questions and references to previously discussed jobs.
 
 ${userProfileContext}Job Postings:
-${context}
-
-User Query: ${query}
-
-Answer:`;
+${context}`;
   }
 
   private buildUserProfileContext(resume: ParsedResume): string {
