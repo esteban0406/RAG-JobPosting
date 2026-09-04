@@ -1,4 +1,5 @@
 allowBuilds:
+  '@google/genai': true
   '@nestjs/core': true
   '@prisma/engines': true
   bcrypt: true
