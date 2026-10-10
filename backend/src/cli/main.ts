@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { parseArgs } from 'util';
 import { CliModule } from './cli.module.js';
 import { annQuick } from './commands/ann-quick.command.js';
+import { evalGenerate } from './commands/eval-generate.command.js';
 import { evalJudge } from './commands/eval-judge.command.js';
 import { evalPool } from './commands/eval-pool.command.js';
 import {
@@ -23,7 +24,9 @@ Commands:
       Pool the systems' top results per information need.
   eval:judge --run <run dir> [--judge-provider openai-compatible|anthropic]
              [--judge-model llama3.1:8b] [--judge-base-url URL] [--concurrency 2]
-      Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.`;
+      Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.
+  eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n]
+      Answer the retrieval queries through the RAG path; cache answers, record timings.`;
 
 function required(value: string | undefined, flag: string): string {
   if (!value) throw new Error(`Missing required option ${flag}`);
@@ -50,6 +53,9 @@ async function main(): Promise<number> {
       'judge-model': { type: 'string', default: 'llama3.1:8b' },
       'judge-base-url': { type: 'string' },
       concurrency: { type: 'string', default: '2' },
+      temperature: { type: 'string', default: '0' },
+      'delay-ms': { type: 'string', default: '2000' },
+      limit: { type: 'string' },
       help: { type: 'boolean', default: false },
     },
   });
@@ -108,6 +114,15 @@ async function main(): Promise<number> {
             apiKey: process.env.JUDGE_API_KEY,
           },
           concurrency: Number(values.concurrency),
+        });
+        return 0;
+      case 'eval:generate':
+        await evalGenerate(app, {
+          dataset: required(values.dataset, '--dataset'),
+          label: values.label,
+          temperature: Number(values.temperature),
+          delayMs: Number(values['delay-ms']),
+          limit: values.limit ? Number(values.limit) : undefined,
         });
         return 0;
       default:

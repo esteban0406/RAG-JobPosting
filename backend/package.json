@@ -24,7 +24,8 @@
     "ann:quick": "node dist/src/cli/main.js ann:quick",
     "eval:retrieve": "node dist/src/cli/main.js eval:retrieve",
     "eval:pool": "node dist/src/cli/main.js eval:pool",
-    "eval:judge": "node dist/src/cli/main.js eval:judge"
+    "eval:judge": "node dist/src/cli/main.js eval:judge",
+    "eval:generate": "node dist/src/cli/main.js eval:generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1045.0",

@@ -169,14 +169,21 @@ export class LlmService {
     yield* this.completeChatStream([{ role: 'user', content: prompt }]);
   }
 
-  async *completeChatStream(messages: ChatMessage[]): AsyncGenerator<string> {
+  get modelName(): string {
+    return this.model;
+  }
+
+  async *completeChatStream(
+    messages: ChatMessage[],
+    options: LlmOptions = {},
+  ): AsyncGenerator<string> {
     try {
       const stream = await this.currentClient.chat.completions.create({
         model: this.model,
         messages,
         stream: true,
-        temperature: 0.2,
-        max_completion_tokens: 2048,
+        temperature: options.temperature ?? 0.2,
+        max_completion_tokens: options.maxOutputTokens ?? 2048,
         reasoning_format: 'hidden',
         reasoning_effort: 'none',
       });

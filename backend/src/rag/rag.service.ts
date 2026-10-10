@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
+import { performance } from 'perf_hooks';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { ChatMessage, LlmService } from '../llm/llm.service.js';
 import type { ParsedResume } from '../resume/interfaces/parsed-resume.interface.js';
@@ -11,6 +12,21 @@ import {
 } from '../storage/vector-store/vector-store.interface.js';
 import { JobSource, RagResponse } from './dto/rag-response.dto.js';
 import { rankJobsFromChunks } from './job-ranking.js';
+
+export interface RagTimings {
+  embedMs: number;
+  retrieveMs: number;
+  fetchMs: number;
+}
+
+export interface RagContext {
+  systemMessage: string;
+  sources: JobSource[];
+  contextChunks: string;
+  // One block per job, as passed to the LLM; used to score faithfulness.
+  contexts: string[];
+  timings: RagTimings;
+}
 
 const RETRIEVAL_K = 15;
 const RESULT_JOBS = 5;
@@ -164,17 +180,13 @@ export class RagService {
     _filters?: QueryFilters,
     contextJobIds?: string[],
     userId?: string,
-  ): Promise<{
-    systemMessage: string;
-    sources: JobSource[];
-    contextChunks: string;
-  } | null> {
+  ): Promise<RagContext | null> {
     // When specific jobs are provided, skip embedding and vector search entirely
     if (contextJobIds && contextJobIds.length > 0) {
       return this.buildContextFromIds(contextJobIds, userQuery, userId);
     }
 
-    const t0 = Date.now();
+    const t0 = performance.now();
     const resumeParsed = userId
       ? await this.resumeService.getParsedData(userId)
       : null;
@@ -184,16 +196,18 @@ export class RagService {
       : userQuery;
 
     const queryVector = await this.embeddingService.embedQuery(searchQuery);
-    this.logger.debug(`Embedding took ${Date.now() - t0}ms`);
+    const embedMs = performance.now() - t0;
+    this.logger.debug(`Embedding took ${embedMs.toFixed(1)}ms`);
 
-    const t1 = Date.now();
+    const t1 = performance.now();
     const rawChunks = await this.vectorRepo.findSimilar(
       queryVector,
       RETRIEVAL_K,
       SIMILARITY_THRESHOLD,
     );
+    const retrieveMs = performance.now() - t1;
     this.logger.debug(
-      `Vector search took ${Date.now() - t1}ms — ${rawChunks.length} chunks (threshold=${SIMILARITY_THRESHOLD})`,
+      `Vector search took ${retrieveMs.toFixed(1)}ms — ${rawChunks.length} chunks (threshold=${SIMILARITY_THRESHOLD})`,
     );
 
     if (rawChunks.length === 0) return null;
@@ -201,14 +215,15 @@ export class RagService {
     const grouped = this.groupByJob(rawChunks);
     const topJobs = grouped.slice(0, RESULT_JOBS);
 
-    const t2 = Date.now();
+    const t2 = performance.now();
     const jobIds = topJobs.map((g) => g.jobId);
     const jobs = await this.jobRepo.findByIds(jobIds);
-    this.logger.debug(`Job fetch took ${Date.now() - t2}ms`);
+    const fetchMs = performance.now() - t2;
+    this.logger.debug(`Job fetch took ${fetchMs.toFixed(1)}ms`);
     const jobMap = new Map(jobs.map((j) => [j.id, j]));
 
     const requiredFields = detectFields(userQuery);
-    const contextChunks = topJobs
+    const contexts = topJobs
       .map((group) => {
         const job = jobMap.get(group.jobId);
         if (!job) return null;
@@ -224,8 +239,8 @@ export class RagService {
         const appendix = buildFieldAppendix(job, requiredFields, body);
         return `---\n${header}\n${body}${appendix}`;
       })
-      .filter((c): c is string => c !== null)
-      .join('\n\n');
+      .filter((c): c is string => c !== null);
+    const contextChunks = contexts.join('\n\n');
 
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
@@ -249,19 +264,21 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { systemMessage, sources, contextChunks };
+    return {
+      systemMessage,
+      sources,
+      contextChunks,
+      contexts,
+      timings: { embedMs, retrieveMs, fetchMs },
+    };
   }
 
   private async buildContextFromIds(
     contextJobIds: string[],
     userQuery: string,
     userId?: string,
-  ): Promise<{
-    systemMessage: string;
-    sources: JobSource[];
-    contextChunks: string;
-  } | null> {
-    const t0 = Date.now();
+  ): Promise<RagContext | null> {
+    const t0 = performance.now();
 
     const [resumeParsed, jobs] = await Promise.all([
       userId ? this.resumeService.getParsedData(userId) : Promise.resolve(null),
@@ -274,14 +291,19 @@ export class RagService {
       ? this.buildResumeSearchQuery(resumeParsed, userQuery)
       : userQuery;
 
+    const fetchMs = performance.now() - t0;
+    const t1 = performance.now();
     const queryVector = await this.embeddingService.embedQuery(searchQuery);
+    const embedMs = performance.now() - t1;
 
+    const t2 = performance.now();
     const chunks = await this.vectorRepo.findSimilarByJobIds(
       queryVector,
       contextJobIds,
     );
+    const retrieveMs = performance.now() - t2;
     this.logger.debug(
-      `Context jobs fetch + similarity took ${Date.now() - t0}ms`,
+      `Context jobs fetch + similarity took ${(performance.now() - t0).toFixed(1)}ms`,
     );
 
     const jobMap = new Map(jobs.map((j) => [j.id, j]));
@@ -295,7 +317,7 @@ export class RagService {
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
 
     const requiredFields = detectFields(userQuery);
-    const contextChunks = ranked
+    const contexts = ranked
       .map(({ jobId, maxSimilarity }) => {
         const job = jobMap.get(jobId);
         if (!job) return null;
@@ -309,8 +331,8 @@ export class RagService {
         const appendix = buildFieldAppendix(job, requiredFields, body);
         return `---\nJob: ${job.title} at ${job.company}${location}${jobType}${salary} | Similarity: ${maxSimilarity.toFixed(2)}\n${body}${appendix}`;
       })
-      .filter((c): c is string => c !== null)
-      .join('\n\n');
+      .filter((c): c is string => c !== null);
+    const contextChunks = contexts.join('\n\n');
 
     const userProfileContext = resumeParsed
       ? this.buildUserProfileContext(resumeParsed)
@@ -334,7 +356,13 @@ export class RagService {
       })
       .filter((s): s is JobSource => s !== null);
 
-    return { systemMessage, sources, contextChunks };
+    return {
+      systemMessage,
+      sources,
+      contextChunks,
+      contexts,
+      timings: { embedMs, retrieveMs, fetchMs },
+    };
   }
 
   private groupByJob(chunks: JobChunkResult[]): Array<{
