@@ -10,6 +10,7 @@ import {
   type VectorStore,
 } from '../storage/vector-store/vector-store.interface.js';
 import { JobSource, RagResponse } from './dto/rag-response.dto.js';
+import { rankJobsFromChunks } from './job-ranking.js';
 
 const RETRIEVAL_K = 15;
 const RESULT_JOBS = 5;
@@ -341,36 +342,13 @@ export class RagService {
     maxSimilarity: number;
     mergedText: string;
   }> {
-    const map = new Map<
-      string,
-      { maxSimilarity: number; chunks: JobChunkResult[] }
-    >();
-
-    for (const chunk of chunks) {
-      const existing = map.get(chunk.jobId);
-      if (!existing) {
-        map.set(chunk.jobId, {
-          maxSimilarity: chunk.similarity,
-          chunks: [chunk],
-        });
-      } else {
-        if (chunk.similarity > existing.maxSimilarity) {
-          existing.maxSimilarity = chunk.similarity;
-        }
-        existing.chunks.push(chunk);
-      }
-    }
-
-    return Array.from(map.entries())
-      .map(([jobId, { maxSimilarity, chunks }]) => ({
-        jobId,
-        maxSimilarity,
-        mergedText: chunks
-          .sort((a, b) => b.similarity - a.similarity)
-          .map((c) => `[${c.chunkType}]: ${c.chunkText}`)
-          .join('\n\n'),
-      }))
-      .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
+    return rankJobsFromChunks(chunks).map(({ jobId, score, chunks }) => ({
+      jobId,
+      maxSimilarity: score,
+      mergedText: chunks
+        .map((c) => `[${c.chunkType}]: ${c.chunkText}`)
+        .join('\n\n'),
+    }));
   }
 
   // Prepends the user's profile to the query so retrieval is personalized
