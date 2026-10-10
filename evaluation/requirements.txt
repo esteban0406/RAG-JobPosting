@@ -1,0 +1,7 @@
+# Pinned analysis environment (Python 3.14). Use evaluation/Dockerfile, or a local
+# venv: python3 -m venv evaluation/.venv (Debian/Ubuntu: needs python3.14-venv).
+ir-measures==0.4.3
+numpy==2.5.3
+scipy==1.18.1
+pandas==3.0.6
+matplotlib==3.11.2

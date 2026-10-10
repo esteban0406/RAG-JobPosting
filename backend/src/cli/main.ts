@@ -2,6 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { parseArgs } from 'util';
 import { CliModule } from './cli.module.js';
 import { annQuick } from './commands/ann-quick.command.js';
+import { evalJudge } from './commands/eval-judge.command.js';
+import { evalPool } from './commands/eval-pool.command.js';
+import {
+  SYSTEM_NAMES,
+  evalRetrieve,
+} from './commands/eval-retrieve.command.js';
 import { qdrantBackfill } from './commands/qdrant-backfill.command.js';
 
 const USAGE = `Usage: pnpm cli <command> [options]
@@ -10,7 +16,19 @@ Commands:
   qdrant:backfill [--recreate] [--batch-size 500]
       Copy all JobChunk vectors from Postgres into Qdrant and verify counts.
   ann:quick [--queries 200] [--k 10] [--ef 16,64,256] [--repetitions 3]
-      Recall@k vs. exact search and latency for pgvector and Qdrant HNSW.`;
+      Recall@k vs. exact search and latency for pgvector and Qdrant HNSW.
+  eval:retrieve --dataset <queries.jsonl> [--systems a,b] [--depth 10] [--ef-search 40] [--label name]
+      Run the retrieval systems and write TREC runs to evaluation/runs/.
+  eval:pool --run <run dir> [--depth 10]
+      Pool the systems' top results per information need.
+  eval:judge --run <run dir> [--judge-provider openai-compatible|anthropic]
+             [--judge-model llama3.1:8b] [--judge-base-url URL] [--concurrency 2]
+      Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.`;
+
+function required(value: string | undefined, flag: string): string {
+  if (!value) throw new Error(`Missing required option ${flag}`);
+  return value;
+}
 
 async function main(): Promise<number> {
   const { positionals, values } = parseArgs({
@@ -22,6 +40,16 @@ async function main(): Promise<number> {
       k: { type: 'string', default: '10' },
       ef: { type: 'string', default: '16,64,256' },
       repetitions: { type: 'string', default: '3' },
+      dataset: { type: 'string' },
+      systems: { type: 'string', default: SYSTEM_NAMES.join(',') },
+      depth: { type: 'string', default: '10' },
+      'ef-search': { type: 'string', default: '40' },
+      label: { type: 'string', default: 'run' },
+      run: { type: 'string' },
+      'judge-provider': { type: 'string', default: 'openai-compatible' },
+      'judge-model': { type: 'string', default: 'llama3.1:8b' },
+      'judge-base-url': { type: 'string' },
+      concurrency: { type: 'string', default: '2' },
       help: { type: 'boolean', default: false },
     },
   });
@@ -30,6 +58,12 @@ async function main(): Promise<number> {
   if (!command || values.help) {
     console.log(USAGE);
     return command ? 0 : 1;
+  }
+
+  // Pure file-processing commands need no database or application context.
+  if (command === 'eval:pool') {
+    evalPool(required(values.run, '--run'), Number(values.depth));
+    return 0;
   }
 
   const app = await NestFactory.createApplicationContext(CliModule, {
@@ -50,6 +84,30 @@ async function main(): Promise<number> {
           k: Number(values.k),
           efValues: values.ef.split(',').map(Number),
           repetitions: Number(values.repetitions),
+        });
+        return 0;
+      case 'eval:retrieve':
+        await evalRetrieve(app, {
+          dataset: required(values.dataset, '--dataset'),
+          systems: values.systems.split(','),
+          depth: Number(values.depth),
+          efSearch: Number(values['ef-search']),
+          label: values.label,
+        });
+        return 0;
+      case 'eval:judge':
+        await evalJudge(app, {
+          runDir: required(values.run, '--run'),
+          judge: {
+            provider:
+              values['judge-provider'] === 'anthropic'
+                ? 'anthropic'
+                : 'openai-compatible',
+            model: values['judge-model'],
+            baseUrl: values['judge-base-url'],
+            apiKey: process.env.JUDGE_API_KEY,
+          },
+          concurrency: Number(values.concurrency),
         });
         return 0;
       default:

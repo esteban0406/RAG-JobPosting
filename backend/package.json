@@ -21,7 +21,10 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "cli": "node dist/src/cli/main.js",
     "qdrant:backfill": "node dist/src/cli/main.js qdrant:backfill",
-    "ann:quick": "node dist/src/cli/main.js ann:quick"
+    "ann:quick": "node dist/src/cli/main.js ann:quick",
+    "eval:retrieve": "node dist/src/cli/main.js eval:retrieve",
+    "eval:pool": "node dist/src/cli/main.js eval:pool",
+    "eval:judge": "node dist/src/cli/main.js eval:judge"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1045.0",
