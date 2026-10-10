@@ -5,3 +5,7 @@ numpy==2.5.3
 scipy==1.18.1
 pandas==3.0.6
 matplotlib==3.11.2
+# Vector-store benchmark clients
+psycopg[binary]==3.3.6
+qdrant-client==1.19.1
+pgvector==0.5.0

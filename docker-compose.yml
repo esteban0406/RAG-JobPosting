@@ -2,6 +2,9 @@ services:
   postgres:
     image: pgvector/pgvector:0.8.2-pg16
     container_name: job-posting-db
+    # Parallel HNSW index builds allocate dynamic shared memory in /dev/shm,
+    # which Docker caps at 64 MB by default.
+    shm_size: 4gb
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

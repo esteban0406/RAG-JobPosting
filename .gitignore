@@ -25,3 +25,4 @@ evaluation/**/.venv/
 evaluation/**/__pycache__/
 Tesis/Plantilla/main.pdf
 evaluation/snapshots/*.log
+evaluation/bench/data/
