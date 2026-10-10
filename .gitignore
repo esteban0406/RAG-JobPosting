@@ -2,3 +2,25 @@
 .claude/
 .vscode/
 .env
+# Thesis: copyrighted papers and LaTeX build artifacts
+Tesis/Literatura/*.pdf
+Tesis/Plantilla/*.aux
+Tesis/Plantilla/*.bbl
+Tesis/Plantilla/*.blg
+Tesis/Plantilla/*.brf
+Tesis/Plantilla/*.fdb_latexmk
+Tesis/Plantilla/*.fls
+Tesis/Plantilla/*.log
+Tesis/Plantilla/*.lof
+Tesis/Plantilla/*.lot
+Tesis/Plantilla/*.out
+Tesis/Plantilla/*.toc
+Tesis/Plantilla/*.synctex.gz
+Icon?
+Plantilla - Tesis/
+
+# Evaluation: corpus snapshots (source terms of use) and Python envs
+evaluation/snapshots/*.dump
+evaluation/**/.venv/
+evaluation/**/__pycache__/
+Tesis/Plantilla/main.pdf
