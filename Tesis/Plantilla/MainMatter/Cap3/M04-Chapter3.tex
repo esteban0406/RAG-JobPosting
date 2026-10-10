@@ -94,7 +94,7 @@ Se evalúa una configuración congelada de JobAI, identificada por el \textit{co
         \hline
         Índice vectorial & HNSW con $m=16$ y $ef_{construction}=128$ en pgvector y en Qdrant; $ef_{search}=40$ \\
         \hline
-        Modelo generador & \texttt{qwen/qwen3-32b} servido por Groq, temperatura 0 durante la evaluación \\
+        Modelo generador & \texttt{qwen/qwen3.8-27b} servido por Groq, temperatura 0 durante la evaluación \\
         \hline
         Clasificación de consultas & Patrones \textit{regex} más un clasificador basado en LLM restringido a un catálogo cerrado de plantillas SQL \\
         \hline
@@ -257,7 +257,7 @@ Las comparaciones entre sistemas de recuperación son pareadas: todos los sistem
     \end{itemize}
     \item[Validez externa.] Los resultados corresponden a un dominio (empleo remoto, mayoritariamente tecnológico), a un idioma de las ofertas (inglés) y a un único modelo de \textit{embeddings}. No se generalizan a otros dominios ni modelos. El tamaño del corpus real limita las conclusiones sobre escalabilidad; el benchmark sintético las complementa, pero no las sustituye.
     \item[Validez de constructo.] La relevancia juzgada, ya sea por un modelo o por el autor, aproxima pero no equivale a la utilidad que un usuario real percibiría. La evaluación con usuarios queda fuera del alcance (Sección~\ref{sec:problema}).
-    \item[Confiabilidad.] Los modelos de lenguaje no son deterministas, incluso a temperatura 0. Se mitiga almacenando en caché todas las respuestas y veredictos utilizados en el análisis.
+    \item[Confiabilidad.] Los modelos de lenguaje no son deterministas, incluso a temperatura 0. Además, los proveedores retiran modelos sin previo aviso: durante este trabajo dejaron de estar disponibles los dos modelos generadores configurados originalmente en JobAI (\texttt{qwen3-32b} y \texttt{qwen3.6-27b}), y se adoptó su sucesor, \texttt{qwen3.8-27b}. Ambos riesgos se mitigan registrando cada respuesta y cada veredicto con el identificador exacto del modelo y la fecha, y ejecutando el análisis sobre esa caché.
 \end{description}
 
 \section{Reproducibilidad}

@@ -35,7 +35,7 @@ export class LlmService {
     ].filter(Boolean) as string[];
     if (keys.length === 0) throw new Error('GROQ_API_KEY is required');
     this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));
-    this.model = config.get<string>('LLM_MODEL', 'qwen/qwen3.6-27b');
+    this.model = config.get<string>('LLM_MODEL', 'qwen/qwen3.8-27b');
   }
 
   private get currentClient(): Groq {

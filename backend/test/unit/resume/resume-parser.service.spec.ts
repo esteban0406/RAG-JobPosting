@@ -16,7 +16,7 @@ const mockConfig = {
     if (key === 'NODE_ENV') return 'production';
     if (key === 'GROQ_API_KEY') return 'test-key';
     if (key === 'GROQ_API_KEY2') return undefined;
-    if (key === 'RESUME_PARSER_MODEL') return fallback ?? 'qwen/qwen3.6-27b';
+    if (key === 'RESUME_PARSER_MODEL') return fallback ?? 'qwen/qwen3.8-27b';
     return fallback;
   }),
 };

@@ -47,11 +47,11 @@ class EnvironmentVariables {
 
   @IsString()
   @IsOptional()
-  LLM_MODEL: string = 'qwen/qwen3.6-27b';
+  LLM_MODEL: string = 'qwen/qwen3.8-27b';
 
   @IsString()
   @IsOptional()
-  RESUME_PARSER_MODEL: string = 'qwen/qwen3.6-27b';
+  RESUME_PARSER_MODEL: string = 'qwen/qwen3.8-27b';
 
   @IsString()
   @IsOptional()

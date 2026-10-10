@@ -15,7 +15,7 @@ const mockConfig = {
   get: jest.fn((key: string, fallback?: unknown) => {
     if (key === 'GROQ_API_KEY') return 'test-key';
     if (key === 'GROQ_API_KEY2') return undefined;
-    if (key === 'LLM_MODEL') return fallback ?? 'qwen/qwen3.6-27b';
+    if (key === 'LLM_MODEL') return fallback ?? 'qwen/qwen3.8-27b';
     return fallback;
   }),
 };

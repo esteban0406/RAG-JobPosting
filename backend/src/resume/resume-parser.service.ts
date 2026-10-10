@@ -121,7 +121,7 @@ export class ResumeParserService {
     this.ollamaModel = config.get<string>('OLLAMA_MODEL') ?? 'llama3.1:8b';
     this.groqModel = config.get<string>(
       'RESUME_PARSER_MODEL',
-      'qwen/qwen3.6-27b',
+      'qwen/qwen3.8-27b',
     );
 
     if (!this.isDev) {

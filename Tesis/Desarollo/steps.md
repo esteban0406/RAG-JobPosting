@@ -15,7 +15,7 @@ El proyecto iba ~3 semanas atrasado (Fase 2 sin empezar). Se replanificó el 10-
 
 - Migrar a Qdrant **y** comparar contra pgvector: corpus real + escalamiento sintético (100k/500k), con y sin filtros.
 - Relevancia: LLM-juez (estilo UMBRELA) + validación humana del 20 % de los pares (kappa de Cohen). Juez local (Ollama) para desarrollar; juez de pago solo en la corrida final.
-- Embeddings de evaluación: e5-base-v2 local. Generador: Groq `qwen/qwen3-32b` (temperatura 0 en evaluación).
+- Embeddings de evaluación: e5-base-v2 local. Generador: Groq `qwen/qwen3.8-27b` (temperatura 0 en evaluación).
 - Corpus: ingesta local nueva en la base `jobpostings_eval`, congelada en un snapshot.
 - Consultas: 75 en inglés (5 categorías × 15) + 25 en español (paralelas).
 - Líneas base: ILIKE (lo que ofrece la plataforma) y **BM25** (línea base fuerte).

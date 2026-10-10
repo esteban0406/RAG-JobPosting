@@ -142,7 +142,7 @@ Antes de cerrar el contexto, una etapa de \emph{detección de campos} identifica
 
 \subsection{Generación}
 
-El prompt de sistema instruye al modelo a responder \emph{únicamente} a partir de las ofertas proporcionadas, a indicar explícitamente cuando estas no contienen la información solicitada y a no inventar detalles. El historial reciente de la conversación, hasta 12 mensajes, se incluye para resolver preguntas de seguimiento. La generación usa el modelo \texttt{qwen/qwen3-32b} servido por Groq, con temperatura 0,2 en producción y respuesta incremental. En la ruta híbrida, los resultados de la recuperación y de la agregación se ejecutan en paralelo y se combinan en un único prompt; si una de las dos rutas falla, se responde con la otra.
+El prompt de sistema instruye al modelo a responder \emph{únicamente} a partir de las ofertas proporcionadas, a indicar explícitamente cuando estas no contienen la información solicitada y a no inventar detalles. El historial reciente de la conversación, hasta 12 mensajes, se incluye para resolver preguntas de seguimiento. La generación usa el modelo \texttt{qwen/qwen3.8-27b} servido por Groq, con temperatura 0,2 en producción y respuesta incremental. En la ruta híbrida, los resultados de la recuperación y de la agregación se ejecutan en paralelo y se combinan en un único prompt; si una de las dos rutas falla, se responde con la otra.
 
 \section{Iteración de diseño: almacenamiento vectorial}
 \label{sec:art-vectorial}
