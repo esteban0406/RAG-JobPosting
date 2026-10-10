@@ -9,18 +9,33 @@
 - **Cambio de arquitectura decidido:** la plataforma migrará su almacenamiento vectorial de PostgreSQL+pgvector a una base de datos vectorial dedicada (Qdrant). Esto sí es desarrollo nuevo (migración de embeddings, actualización de ingesta y del módulo de retrieval), pero encaja dentro de DSR como una iteración del ciclo diseño-evaluación, y abre la puerta a una comparación empírica pgvector vs. Qdrant (latencia/recall) que enriquece la evaluación sin salirse del alcance.
 - **Pedido actual del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos.
 
-## Cronograma resumen
+## Estado al 10-oct-2026 (replanificación)
 
-| Semana | Fase | Entregable |
+El proyecto iba ~3 semanas atrasado (Fase 2 sin empezar). Se replanificó el 10-oct; el plan detallado está en `~/.claude/plans/vamos-a-continuar-con-parallel-cloud.md`. Decisiones tomadas ese día:
+
+- Migrar a Qdrant **y** comparar contra pgvector: corpus real + escalamiento sintético (100k/500k), con y sin filtros.
+- Relevancia: LLM-juez (estilo UMBRELA) + validación humana del 20 % de los pares (kappa de Cohen). Juez local (Ollama) para desarrollar; juez de pago solo en la corrida final.
+- Embeddings de evaluación: e5-base-v2 local. Generador: Groq `qwen/qwen3-32b` (temperatura 0 en evaluación).
+- Corpus: ingesta local nueva en la base `jobpostings_eval`, congelada en un snapshot.
+- Consultas: 75 en inglés (5 categorías × 15) + 25 en español (paralelas).
+- Líneas base: ILIKE (lo que ofrece la plataforma) y **BM25** (línea base fuerte).
+- Estadística: prueba de aleatorización pareada + IC bootstrap + Holm (Smucker et al. 2007 desaconseja Wilcoxon en IR).
+- Claude redacta los capítulos; el autor revisa. Trabajo en la rama `thesis/qdrant-eval`.
+- Primera entrega al profesor: **martes 13-oct** (PDF + nota `nota-profesor-2026-10-13.md` + demo del cambio pgvector/Qdrant).
+
+## Cronograma resumen (replanificado 10-oct)
+
+| Fechas | Fase | Entregable |
 |---|---|---|
-| 1 (7-14 sep) | Problemática y objetivos | Enviar a director |
-| 2-3 | Marco teórico / estado del arte | Capítulo de antecedentes con citas |
-| 2-4 | Migración a Qdrant + metodología (DSR) + diseño de métricas | Base vectorial migrada + definición de métricas y diseño experimental |
-| 5-7 | Instrumentar y ejecutar evaluación | Resultados cuantitativos |
-| 7-9 | Redacción de capítulos | Documento en plantilla LaTeX |
-| 9-10 | Front/back matter, formato NTC1486, bibliografía | Documento formateado completo |
-| 10-11 | Revisión con director, ajustes | Versión revisada |
-| 12 (~23-30 nov) | Entrega final | Documento + preparación de sustentación |
+| 7 sep | Problemática, objetivos, marco teórico, estado del arte | Cap1 y Cap2 (hecho) |
+| 10-12 oct | Migración a Qdrant, correcciones, metodología, Cap0/Cap3/Cap4 | **Martes 13-oct:** PDF + nota + demo al profesor |
+| 13-18 oct | Ajustes del director, dataset de consultas, BM25/ILIKE, harness de evaluación | Cap4 completo |
+| 19-25 oct | Benchmark sintético, generación (RAGAS), latencia; anotación humana para kappa | Resultados preliminares |
+| 26 oct-1 nov | Corrida final con juez de pago, estadística, figuras | Resultados congelados |
+| 2-8 nov | Cap5, Conclusiones, Cap0 final, resumen ES/EN | Borrador completo |
+| 9-15 nov | Envío al director, formato NTC1486 | Versión 1 |
+| 16-22 nov | Ajustes del director | Versión revisada |
+| 23-30 nov | Entrega final + sustentación | Entrega |
 
 ---
 
@@ -43,8 +58,9 @@
   3. Definir una metodología de evaluación con métricas cuantitativas (precisión de recuperación, fidelidad/groundedness de respuestas, tiempo de respuesta) para validar la plataforma.
   4. Evaluar los resultados obtenidos y contrastarlos frente a un enfoque de búsqueda tradicional por palabras clave.
   - Hecho, con un cambio: el objetivo específico 2 en `Cap1/M02-Chapter1.tex` quedó extendido para mencionar explícitamente "incluyendo la migración del almacenamiento vectorial de pgvector a una base de datos vectorial dedicada" (no estaba en el borrador original). Si se envía al director, aclarar que es una actualización intencional (coherente con la decisión de migrar a Qdrant), no un error de transcripción.
-- [ ] Revisar la problemática y objetivos contra la plantilla (`Plantilla - Tesis/MainMatter/Cap0/M01-Introduction.tex`, `FrontMatter/F04-Abstract.tex`) — pendiente; es una revisión rápida de forma (tono impersonal, que no se adelanten resultados/conclusiones) y puede hacerse antes o después de enviar al director.
-- [ ] **Enviar borrador al director — pendiente y ahora es la acción más urgente del proyecto.** Usar como base el contenido ya redactado en `Cap1/M02-Chapter1.tex` §§"Planteamiento del problema", "Formulación del problema" y "Objetivos" (condensándolo si se prefiere un formato más breve para esta primera revisión).
+- [x] Revisar la problemática y objetivos contra la plantilla — hecho 10-oct (tono impersonal; Cap0 redactado sin adelantar resultados).
+- [ ] **Enviar borrador al director — programado para el martes 13-oct** junto con el PDF completo y la nota `nota-profesor-2026-10-13.md` (incluye las preguntas de validación).
+  - Las preguntas al director están en la nota: validar problemática/objetivos, aceptación del LLM-juez con validación humana, extensión esperada y fechas intermedias.
 
 ---
 
@@ -87,26 +103,29 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 
 ## Fase 2 (semanas 2-4) — Migración a Qdrant, metodología y diseño de evaluación
 
-- [ ] Migrar el almacenamiento de embeddings de PostgreSQL+pgvector a Qdrant (crear colección, definir esquema de payload, reingestar vectores existentes de jobs y resúmenes).
-- [ ] Actualizar el módulo de Embedding/RAG y el pipeline de ingestión para escribir/consultar Qdrant en vez de pgvector.
-- [ ] (Recomendado) Conservar temporalmente el backend pgvector para poder comparar pgvector vs. Qdrant en la Fase 3 (latencia, recall) — esto también sirve como resultado adicional para el capítulo de evaluación.
-- [ ] Formalizar el marco DSR: definir el "artefacto" (JobAI), la "pregunta de investigación", y el ciclo de diseño-evaluación.
-- [ ] Definir métricas de evaluación:
-  - Precisión de retrieval (relevancia de los chunks recuperados).
-  - Fidelidad/groundedness de las respuestas (evitar alucinación del LLM).
-  - Tiempo de respuesta del pipeline (latencia end-to-end).
-  - Si se conservó pgvector: latencia y recall comparados entre pgvector y Qdrant.
-- [ ] Diseñar el experimento de comparación contra un baseline de búsqueda por palabra clave (dataset de consultas de prueba, criterio de éxito).
-- [ ] Redactar el capítulo de metodología.
+- [x] Abstracción `VectorStore` con dos backends (`PgVectorStore`, `QdrantVectorStore`) seleccionables con `VECTOR_BACKEND`; colección Qdrant con payload (texto, tipo, salario, modalidad, fuente) y mismos parámetros HNSW (m=16, ef_construction=128). Hecho 10-oct (commit 155a4c0).
+- [x] pgvector corregido: la consulta ordenaba por una expresión derivada y nunca usaba el índice (evidencia `EXPLAIN ANALYZE` en `evaluation/evidence/`); IVFFlat reemplazado por HNSW; modos auto/ann/exact.
+- [x] Comando `qdrant:backfill` (carga idempotente + verificación de conteos) y `ann:quick` (recall@10 vs exacto + latencia). Paridad exacta pgvector = Qdrant verificada en la base de desarrollo.
+- [x] Conservar pgvector para la comparación — hecho (ambos backends conviven).
+- [ ] Backfill y `EXPLAIN` sobre el corpus de evaluación completo (cuando termine la ingesta).
+- [x] Bugs corregidos: currículo reemplazaba la consulta; ruta de agregación fallaba sin plantilla; `findAll` topado en 20; cron no desactivable.
+- [x] Formalizar el marco DSR (Cap3 §1, incluye las 3 iteraciones previas registradas en git: P@5 66,7 % → 92,0 % → 90,7/98,7 % según juez).
+- [x] Métricas definidas (Cap3 §6): P@5/10, nDCG@10, MRR, Recall@10; faithfulness y answer relevancy (RAGAS); latencia por etapa; recall-latencia, QPS, memoria para pgvector vs Qdrant.
+- [x] Diseño del experimento contra baseline (Cap3 §4-5): ILIKE + BM25, pooling profundidad 10, LLM-juez validado con kappa.
+- [x] Borrador del capítulo de metodología (Cap3) — 10-oct.
 
 ---
 
 ## Fase 3 (semanas 5-7) — Ejecución de la evaluación
 
-- [ ] Instrumentar JobAI para capturar las métricas definidas en la Fase 2 (logging de resultados de retrieval, tiempos, respuestas).
-- [ ] Construir el dataset de consultas de prueba.
-- [ ] Ejecutar la evaluación (pipeline RAG vs. baseline keyword-search).
-- [ ] Recolectar y tabular los resultados cuantitativos.
+- [ ] Congelar el snapshot del corpus (`evaluation/snapshots/`, manifest con sha256 y conteos).
+- [ ] Instrumentar JobAI para capturar las métricas definidas en la Fase 2 (timings por etapa en `RagService`, contextos recuperados, temperatura configurable en el stream).
+- [ ] Construir el dataset de consultas de prueba (`evaluation/datasets/queries.v2.jsonl`).
+- [ ] Implementar las líneas base `ilike` y `bm25` y los comandos `eval:retrieve`, `eval:pool`, `eval:judge`, `eval:kappa-export`.
+- [ ] Anotación humana de la muestra para kappa (~250-300 pares, 2-3 h).
+- [ ] Generación + RAGAS (Python, versión fijada) y latencias.
+- [ ] Benchmark de almacenes vectoriales (`evaluation/bench/`, Python): corpus real + 100k/500k sintéticos, filtros 1/10/50 %.
+- [ ] Corrida final con juez de pago; análisis estadístico (aleatorización pareada + Holm) y figuras.
 
 ---
 
@@ -114,11 +133,11 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 
 Mapeo de capítulos de la plantilla a su contenido:
 
-- [ ] Introducción (`Cap0`) — contexto, problemática, objetivos, alcance, metodología (resumen).
-- [ ] Capítulo 1 (`Cap1`) — Planteamiento del problema y marco teórico.
-- [ ] Capítulo 2 (`Cap2`) — Estado del arte (literatura de la Fase 1).
-- [ ] Capítulo 3 (`Cap3`) — Metodología (DSR, métricas, diseño experimental de la Fase 2).
-- [ ] Capítulo 4 (`Cap4`) — Desarrollo/Arquitectura (reusar y adaptar contenido de `caseStudy.md`; reescribir la sección de decisiones de arquitectura sobre almacenamiento vectorial para reflejar la migración de pgvector a Qdrant, con justificación académica).
+- [~] Introducción (`Cap0`) — borrador 10-oct; revisar al final con los resultados (sin adelantarlos).
+- [x] Capítulo 1 (`Cap1`) — Planteamiento del problema y marco teórico (7-sep; referencias a capítulos ahora con `\ref`).
+- [x] Capítulo 2 (`Cap2`) — Estado del arte (7-sep; corregido 10-oct: índice IVFFlat real, descripción del clasificador).
+- [~] Capítulo 3 (`Cap3`) — Metodología: borrador completo 10-oct; quedan `\pendiente{}` con estadísticas del corpus y el modelo del juez final.
+- [~] Capítulo 4 (`Cap4`) — Diseño y desarrollo: borrador 10-oct (arquitectura corregida contra el código, migración a Qdrant, defectos corregidos); falta la evidencia `EXPLAIN` sobre el corpus completo.
 - [ ] Capítulo 5 (`Cap5`) — Resultados y evaluación (datos de la Fase 3).
 - [ ] Conclusiones y recomendaciones (`Cap9`) — respuesta a cada objetivo específico + trabajo futuro.
 

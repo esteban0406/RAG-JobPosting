@@ -1,1 +1,22 @@
-Se deben incluir tantos cap\'{\i}tulos como se requieran; sin embargo, se recomienda que la tesis  o trabajo de investigaci\'{o}n tenga un m\'{\i}nimo 3 cap\'{\i}tulos y m\'{a}ximo de 6 cap\'{\i}tulos (incluyendo las conclusiones).\\
+\pendiente{Este capítulo se redacta con los resultados de la evaluación (semanas del 19-oct al 1-nov). La estructura prevista es la siguiente.}
+
+\section{Corpus y conjunto de consultas}
+\pendiente{Estadísticas del corpus congelado: ofertas por fuente, fragmentos por tipo, tasa de análisis estructurado fallido. Descripción del conjunto de consultas por categoría e idioma.}
+
+\section{Validación del juez de relevancia}
+\pendiente{Tabla: kappa binario y ponderado (con IC 95\,\%) del juez local y del juez final frente a los juicios humanos; matriz de confusión.}
+
+\section{Calidad de recuperación (PE1)}
+\pendiente{Tabla: P@5, P@10, nDCG@10, MRR y Recall@10 por sistema (ILIKE, BM25, pgvector exacto, pgvector HNSW, Qdrant HNSW), con significancia frente a cada línea base. Figura: nDCG@10 por categoría de consulta. Tabla: resultados del subconjunto en español. Exactitud del enrutamiento en consultas de agregación.}
+
+\section{Fidelidad de la generación (PE2)}
+\pendiente{Tabla: fidelidad y relevancia de la respuesta por categoría; análisis de casos de baja fidelidad.}
+
+\section{Latencia del pipeline (PE3)}
+\pendiente{Tabla: p50 y p95 por etapa (\textit{embedding}, búsqueda, construcción del contexto, TTFT, total) con cada almacén vectorial.}
+
+\section{pgvector frente a Qdrant (PE4)}
+\pendiente{Figuras: curvas \textit{recall}@10 frente a latencia por escala (corpus real, 100k, 500k) y por selectividad del filtro (sin filtro, 50\,\%, 10\,\%, 1\,\%). Tabla: tiempo de construcción, tamaño del índice, memoria pico y QPS.}
+
+\section{Discusión}
+\pendiente{Respuesta a cada pregunta de evaluación, relación con la literatura revisada en el Capítulo~\ref{cap:estado-arte} y limitaciones observadas.}

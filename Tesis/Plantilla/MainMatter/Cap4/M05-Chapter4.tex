@@ -1,1 +1,204 @@
-Se deben incluir tantos cap\'{\i}tulos como se requieran; sin embargo, se recomienda que la tesis  o trabajo de investigaci\'{o}n tenga un m\'{\i}nimo 3 cap\'{\i}tulos y m\'{a}ximo de 6 cap\'{\i}tulos (incluyendo las conclusiones).\\
+Este capítulo documenta el artefacto evaluado. Las primeras secciones describen la arquitectura de JobAI, el proceso de ingesta y el pipeline de consulta tal como están implementados. Las dos secciones finales corresponden a la iteración de diseño realizada en este trabajo: el diagnóstico y la migración del almacenamiento vectorial, y los defectos detectados y corregidos durante la revisión del código previa a la evaluación.
+
+\section{Visión general de la arquitectura}
+\label{sec:art-arquitectura}
+
+JobAI es una plataforma de agregación de ofertas de empleo remoto cuyo componente central es un copiloto conversacional basado en RAG. El sistema se organiza en tres capas (Figura~\ref{fig:art-arquitectura}):
+\begin{itemize}
+    \item un cliente web en Next.js, responsable de la autenticación, la navegación del catálogo y el panel conversacional;
+    \item un servidor en NestJS, que orquesta la ingesta, la recuperación y la generación;
+    \item una capa de datos compuesta por PostgreSQL, como almacén relacional, y un almacén vectorial que, tras la iteración descrita en la Sección~\ref{sec:art-vectorial}, puede ser pgvector o Qdrant.
+\end{itemize}
+Los modelos de lenguaje y de \textit{embeddings} se consumen como servicios: localmente en desarrollo y mediante proveedores externos en producción.
+
+\begin{figure}[htbp!]
+    \centering
+    \caption{Arquitectura de JobAI}
+    \label{fig:art-arquitectura}
+    \begin{tikzpicture}[
+        box/.style={draw, rounded corners, align=center, minimum height=1cm, text width=3.2cm, font=\small},
+        store/.style={draw, cylinder, shape border rotate=90, aspect=0.15, align=center, minimum height=1.2cm, text width=2.4cm, font=\small},
+        arr/.style={->, >=stealth}
+    ]
+        \node[box, text width=2.2cm] (fe) at (0,0) {Cliente web\\(Next.js)};
+        \node[box, text width=2.2cm] (be) at (5.4,0) {Servidor\\(NestJS)};
+        \node[box] (models) at (10.2,1.4) {Modelos de lenguaje y de \textit{embeddings}};
+        \node[box] (sources) at (10.2,-1.4) {Fuentes de ofertas\\(Remotive, Jobicy, Findwork)};
+        \node[store] (pg) at (3.8,-3.2) {PostgreSQL\\(+ pgvector)};
+        \node[store] (qd) at (7.0,-3.2) {Qdrant};
+        \draw[arr] (fe) -- node[above, font=\scriptsize] {REST / NDJSON} (be);
+        \draw[arr] (be) -- (models);
+        \draw[arr] (sources) -- (be);
+        \draw[arr] (be) -- (pg);
+        \draw[arr, dashed] (be) -- (qd);
+    \end{tikzpicture}
+\end{figure}
+
+El servidor se organiza en módulos con responsabilidades separadas (Tabla~\ref{tab:art-modulos}). La consulta conversacional se expone mediante un \textit{endpoint} que transmite la respuesta de forma incremental como una secuencia de objetos JSON delimitados por saltos de línea (NDJSON). Los eventos son de cuatro tipos: inicio, \textit{token}, fin con las fuentes citadas y error.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Módulos del servidor de JobAI}
+    \label{tab:art-modulos}
+    \begin{tabular}{|p{3.2cm}|p{11cm}|}
+        \hline
+        \textbf{Módulo} & \textbf{Responsabilidad} \\
+        \hline
+        Ingesta & Obtención periódica de ofertas, deduplicación, análisis estructurado y fragmentación \\
+        \hline
+        \textit{Embeddings} & Generación de vectores de consultas y fragmentos, con caché y control de cuotas \\
+        \hline
+        Consulta & Clasificación de la consulta y orquestación de las rutas de recuperación, agregación e híbrida \\
+        \hline
+        RAG & Recuperación de fragmentos, construcción del contexto y del prompt \\
+        \hline
+        LLM & Acceso a los modelos generativos, con reintentos y rotación de claves \\
+        \hline
+        Almacenamiento & Repositorios relacionales y almacenes vectoriales (pgvector y Qdrant) \\
+        \hline
+        Currículo & Carga, extracción de texto y análisis estructurado del currículo del usuario \\
+        \hline
+        Autenticación y usuario & Tokens JWT con rotación, perfil y ofertas guardadas \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Ingesta de datos}
+\label{sec:art-ingesta}
+
+Un proceso programado consulta las tres fuentes públicas cada seis horas. Puede desactivarse mediante configuración, como se hizo para congelar el corpus de evaluación. Cada ciclo sigue cuatro pasos:
+\begin{enumerate}
+    \item \textbf{Deduplicación.} Cada oferta se identifica mediante el resumen SHA-256 de su título, empresa, descripción y ubicación. Las ofertas ya almacenadas y con \textit{embeddings} se omiten.
+    \item \textbf{Análisis estructurado.} Las ofertas nuevas pasan por un modelo de lenguaje que extrae en formato JSON los siguientes campos: resumen, salario, responsabilidades, requisitos, beneficios, habilidades, tipo de contrato y modalidad. Ese modelo es Llama 3.1 8B local en desarrollo y \texttt{gpt-oss-120b} vía Groq en producción. El prompt instruye explícitamente al modelo a devolver \texttt{null} cuando un campo no aparece en el texto, en lugar de inferirlo.
+    \item \textbf{Fragmentación.} Si el análisis estructurado produce al menos un campo, la oferta se divide en fragmentos \emph{tipados}:
+    \begin{itemize}
+        \item un fragmento de identidad (título, empresa, ubicación, modalidad y resumen);
+        \item uno de requisitos;
+        \item uno de responsabilidades y habilidades;
+        \item uno de beneficios y salario.
+    \end{itemize}
+    Si el análisis falla, se aplica una ventana deslizante de 800 caracteres con solapamiento de 200, que respeta los límites de párrafo, viñeta y oración, con un máximo de cuatro ventanas por oferta.
+    \item \textbf{\textit{Embeddings} y almacenamiento.} Cada fragmento se convierte en un vector de 768 dimensiones y se almacena junto con su texto, su tipo y el modelo que lo produjo.
+\end{enumerate}
+
+La fragmentación tipada responde a un hallazgo de una iteración previa (Sección~\ref{sec:met-ciclos-previos}). Un fragmento que mezcla requisitos, beneficios y descripción compite peor en la recuperación que un fragmento que contiene solo la información por la que se pregunta.
+
+\section{Pipeline de consulta}
+\label{sec:art-consulta}
+
+La Figura~\ref{fig:art-pipeline} resume el recorrido de una consulta.
+
+\begin{figure}[htbp!]
+    \centering
+    \caption{Pipeline de consulta de JobAI}
+    \label{fig:art-pipeline}
+    \begin{tikzpicture}[
+        stage/.style={draw, rounded corners, align=center, text width=4.2cm, minimum height=0.9cm, font=\small},
+        decision/.style={draw, diamond, aspect=2.2, align=center, inner sep=1pt, font=\small},
+        arr/.style={->, >=stealth}
+    ]
+        \node[stage] (q) at (0,0) {Consulta del usuario};
+        \node[decision] (cls) at (0,-1.5) {Clasificación};
+        \node[stage] (rag) at (-3.2,-3.0) {Ruta de recuperación};
+        \node[stage] (agg) at (3.2,-3.0) {Ruta de agregación\\(plantilla SQL)};
+        \node[stage] (emb) at (-3.2,-4.4) {Perfil + consulta $\rightarrow$ \textit{embedding}};
+        \node[stage] (vs) at (-3.2,-5.8) {15 fragmentos más similares};
+        \node[stage] (grp) at (-3.2,-7.3) {Agrupar por oferta (5 mejores) + campos estructurados};
+        \node[stage] (sum) at (3.2,-4.4) {Resumen de la agregación};
+        \node[stage] (llm) at (0,-9.0) {Prompt + generación (LLM)};
+        \node[stage] (out) at (0,-10.4) {Respuesta incremental con fuentes};
+        \draw[arr] (q) -- (cls);
+        \draw[arr] (cls) -| node[above, pos=0.25, font=\scriptsize] {recuperación} (rag);
+        \draw[arr] (cls) -| node[above, pos=0.25, font=\scriptsize] {agregación} (agg);
+        \draw[arr] (rag) -- (emb);
+        \draw[arr] (emb) -- (vs);
+        \draw[arr] (vs) -- (grp);
+        \draw[arr] (agg) -- (sum);
+        \draw[arr] (grp) |- (llm);
+        \draw[arr] (sum) |- (llm);
+        \draw[arr] (llm) -- (out);
+    \end{tikzpicture}
+\end{figure}
+
+\subsection{Clasificación de la consulta}
+
+Un conjunto de patrones \textit{regex} detecta señales léxicas de dos tipos de intención:
+\begin{itemize}
+    \item de recuperación (\textit{find}, \textit{looking for}, \textit{jobs with});
+    \item de agregación (\textit{how many}, \textit{average}, \textit{salary}, \textit{list all}).
+\end{itemize}
+Las consultas con señales de recuperación y sin señales de agregación van directamente a la ruta semántica, sin invocar ningún modelo de lenguaje. En los demás casos, un clasificador basado en LLM, con temperatura 0, decide entre recuperación, agregación o una ruta híbrida y, en los dos últimos casos, selecciona una plantilla de un catálogo cerrado:
+\begin{itemize}
+    \item 24 consultas SQL parametrizadas, como conteos, estadísticas salariales o listados por habilidad;
+    \item un filtro compuesto por título, salario, ubicación y tipo de contrato.
+\end{itemize}
+El modelo nunca genera SQL libre, y las consultas de agregación se ejecutan con una conexión de solo lectura. Si el clasificador no logra asociar la consulta a una plantilla válida, el sistema recurre a la ruta de recuperación.
+
+\subsection{Recuperación y construcción del contexto}
+
+En la ruta de recuperación, la consulta se convierte en un vector y se buscan los 15 fragmentos más similares por coseno, con un umbral mínimo de similitud de 0,5. Si el usuario cargó un currículo, se antepone a la consulta un perfil breve con sus tres cargos más recientes y sus diez habilidades principales. Los fragmentos recuperados se agrupan por oferta, se ordenan por su máxima similitud y se conservan las cinco mejores ofertas. Para cada una se arma un bloque de contexto con un encabezado (título, empresa, ubicación, modalidad, salario y similitud) y el texto de sus fragmentos, limitado a 2.400 caracteres.
+
+Antes de cerrar el contexto, una etapa de \emph{detección de campos} identifica si la consulta pregunta por salario, beneficios, requisitos, habilidades o responsabilidades. Si el campo solicitado no aparece en los fragmentos recuperados, se añade desde los datos estructurados de la oferta. Esta etapa reduce el riesgo de que el modelo complete con información plausible pero inexistente un dato que sí está en la base de datos y simplemente no fue recuperado.
+
+\subsection{Generación}
+
+El prompt de sistema instruye al modelo a responder \emph{únicamente} a partir de las ofertas proporcionadas, a indicar explícitamente cuando estas no contienen la información solicitada y a no inventar detalles. El historial reciente de la conversación, hasta 12 mensajes, se incluye para resolver preguntas de seguimiento. La generación usa el modelo \texttt{qwen/qwen3-32b} servido por Groq, con temperatura 0,2 en producción y respuesta incremental. En la ruta híbrida, los resultados de la recuperación y de la agregación se ejecutan en paralelo y se combinan en un único prompt; si una de las dos rutas falla, se responde con la otra.
+
+\section{Iteración de diseño: almacenamiento vectorial}
+\label{sec:art-vectorial}
+
+\subsection{Diagnóstico del estado inicial}
+
+En su versión inicial, JobAI almacenaba los vectores en una columna \texttt{vector(768)} de PostgreSQL, mediante la extensión pgvector \citep{Pgvector}. El esquema incluía un índice IVFFlat creado en la migración inicial, es decir, sobre una tabla todavía vacía y con los parámetros por defecto. La consulta de similitud, sin embargo, ordenaba los resultados por la expresión derivada $1 - d(\mathbf{q}, \mathbf{v})$ y filtraba por umbral sobre esa misma expresión. El planificador de PostgreSQL solo puede servir una búsqueda de vecinos cercanos desde el índice cuando la consulta ordena directamente por el operador de distancia (\texttt{ORDER BY embedding <=> q LIMIT k}).
+
+La inspección con \texttt{EXPLAIN ANALYZE} sobre la base de desarrollo, con 342 fragmentos, lo confirma:
+\begin{itemize}
+    \item La consulta original ejecuta un barrido secuencial de la tabla completa seguido de un ordenamiento.
+    \item La misma búsqueda reescrita con el operador de distancia es servida por el índice.
+\end{itemize}
+La misma inspección reveló un segundo hecho: los 342 fragmentos superaban el umbral de similitud de 0,5. Las similitudes coseno de e5-base-v2 se concentran en valores altos, de modo que con este modelo el umbral prácticamente no filtra. \pendiente{repetir la inspección sobre el corpus de evaluación completo y reportar la distribución de similitudes.}
+
+\subsection{Diseño de la migración}
+
+La migración se diseñó para cumplir dos requisitos: que la plataforma pueda servirse desde Qdrant \citep{QdrantDocs}, y que ambos motores puedan compararse en igualdad de condiciones. Las decisiones principales fueron cinco.
+
+\begin{description}
+    \item[Abstracción del almacén vectorial.] Se definió una interfaz única con estas operaciones:
+    \begin{itemize}
+        \item escritura de los fragmentos de una oferta;
+        \item búsqueda con número de resultados, umbral, filtros estructurados, modo y parámetro $ef_{search}$;
+        \item búsqueda restringida a un conjunto de ofertas;
+        \item verificación de existencia y borrado.
+    \end{itemize}
+    Los módulos de ingesta, RAG y gestión de ofertas dependen de la interfaz y no de una implementación concreta. Una variable de configuración selecciona el motor que sirve a la aplicación.
+    \item[Corrección de la consulta en pgvector.] La búsqueda se reescribió para ordenar por el operador de distancia, y el umbral se aplica después de obtener los $k$ vecinos, lo cual es equivalente porque la similitud decrece monótonamente con la distancia. El índice IVFFlat se reemplazó por un índice HNSW \citep{Malkov2020} con $m = 16$ y $ef_{construction} = 128$. La búsqueda admite tres modos:
+    \begin{itemize}
+        \item \emph{automático}: decide el planificador, que en tablas pequeñas puede preferir el barrido secuencial;
+        \item \emph{aproximado}: fuerza el uso del índice;
+        \item \emph{exacto}: fuerza la fuerza bruta, que es la referencia para medir el \textit{recall}.
+    \end{itemize}
+    Para búsquedas con filtros se activan los barridos iterativos del índice, mediante el parámetro \texttt{hnsw.\allowbreak iterative\_scan}. Sin ellos, un filtro selectivo puede devolver menos de $k$ resultados.
+    \item[Colección en Qdrant.] La colección usa distancia coseno y los mismos parámetros HNSW que pgvector. Cada punto almacena como carga útil (\textit{payload}) el texto y el tipo del fragmento y los atributos de la oferta usados en los filtros: salario, tipo de contrato, modalidad y fuente, con índices de \textit{payload} sobre los campos filtrables. Los identificadores de fragmento de PostgreSQL no son UUID, por lo que el identificador de cada punto se deriva de forma determinista mediante un UUID versión 5. Se redujo además el umbral a partir del cual Qdrant construye el índice HNSW de un segmento: con el valor por defecto, un corpus de unos pocos miles de vectores se resolvería por fuerza bruta y la comparación no mediría el índice.
+    \item[PostgreSQL como fuente de verdad.] El texto de los fragmentos y su relación con las ofertas permanecen en PostgreSQL, con borrado en cascada e integridad referencial. Al escribir, el almacén de Qdrant primero confirma la transacción en PostgreSQL y luego reemplaza los puntos de la oferta. La verificación de si una oferta ya tiene \textit{embeddings} se hace contra Qdrant, de modo que una escritura fallida en Qdrant se repara en el siguiente ciclo de ingesta.
+    \item[Carga y verificación.] Un comando de línea copia en lotes todos los vectores existentes de PostgreSQL a Qdrant. La operación es idempotente, porque los identificadores son deterministas. Al terminar, el comando espera a que Qdrant indexe la colección y verifica que coincidan tres conteos: filas en PostgreSQL, puntos en Qdrant y vectores indexados.
+\end{description}
+
+En la base de desarrollo, la búsqueda exacta en ambos motores devolvió los mismos 10 resultados para las 50 consultas de prueba, lo que confirma que los dos almacenes contienen los mismos datos y usan la misma métrica. La comparación de desempeño entre ambos motores se reporta en el Capítulo~\ref{cap:resultados}.
+
+\section{Defectos detectados en la revisión previa a la evaluación}
+\label{sec:art-defectos}
+
+Antes de evaluar el artefacto se revisó su código frente a su documentación. La revisión encontró cuatro defectos, que se corrigieron dentro de esta iteración porque habrían invalidado parte de la evaluación:
+
+\begin{enumerate}
+    \item \textbf{La personalización por currículo reemplazaba la consulta.} La documentación del artefacto indicaba que el perfil se antepone a la consulta del usuario. La implementación, en cambio, construía la búsqueda \emph{solo} con el perfil, de modo que un usuario con currículo recibía las mismas ofertas fuera cual fuera su pregunta. Se corrigió para anteponer el perfil.
+    \item \textbf{La ruta de agregación fallaba con las consultas que solo contenían señales de agregación.} Los patrones \textit{regex} clasificaban la consulta como agregación sin seleccionar ninguna plantilla SQL, y la ejecución fallaba al no encontrar la plantilla. Las pruebas de integración no lo detectaban porque simulaban el repositorio SQL. Se corrigió delegando la selección de la plantilla al clasificador LLM, con recuperación como alternativa; las pruebas ahora verifican la plantilla seleccionada.
+    \item \textbf{Las consultas de similitud no usaban el índice vectorial.} Se describe en la Sección~\ref{sec:art-vectorial}.
+    \item \textbf{Otros defectos menores con efecto en la evaluación.}
+    \begin{itemize}
+        \item El listado de ofertas usado para exportar el catálogo estaba limitado a 20 registros.
+        \item La ingesta programada no podía desactivarse, lo que habría alterado el corpus congelado.
+    \end{itemize}
+\end{enumerate}
+
+En términos de DSR, estos hallazgos son resultados de una evaluación \emph{formativa} del artefacto, realizada durante el ciclo de diseño y no después de él. Ilustran por qué la evaluación de un sistema existente debe comenzar por verificar que el artefacto implementa lo que su documentación describe.

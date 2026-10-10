@@ -1,58 +1,46 @@
-% En ella, el autor presenta y señala la importancia, el origen (los antecedentes teóricos y prácticos), los objetivos, los alcances, las limitaciones, la metodología empleada, el significado que el estudio tiene en el avance del campo respectivo y su aplicación en el área investigada.
+% De acuerdo con la NTC 1486, la introducción presenta la importancia, el origen, los objetivos, el alcance, las limitaciones y la metodología del trabajo, sin anticipar resultados ni conclusiones (2 a 4 páginas).
 
-De acuerdo con la NTC1486, la introducción es un espacio dónde el autor presenta y señala la importancia, el origen (los antecedentes teóricos y prácticos), los objetivos, los alcances, las limitaciones, la metodología empleada, el significado que el estudio tiene en el avance del campo respectivo y su aplicación en el área investigada. No debe confundirse con el resumen, ni contener un recuento detallado de la teoría, el método o los resultados, como tampoco anticipar las conclusiones y recomendaciones~\cite{NTC14862008}, y se recomienda que la introducci\'{o}n tenga una extensi\'{o}n de m\'{\i}nimo 2 p\'{a}ginas y m\'{a}ximo de 4 p\'{a}ginas.\\
+Buscar empleo remoto exige hoy recorrer varias plataformas, cada una con su propio catálogo, sus propios filtros y un mecanismo de búsqueda que, en lo esencial, compara las palabras de la consulta con las palabras de la oferta. Ese mecanismo funciona cuando quien busca y quien publica describen el cargo con los mismos términos, y falla en cuanto no lo hacen. "Backend Developer" y "Software Engineer", "JS" y "JavaScript", "trabajo con datos" y "Analytics Engineer" pueden referirse a lo mismo sin compartir una sola palabra. La literatura de recuperación de información conoce este problema como \emph{desajuste de vocabulario}. La industria del reclutamiento a gran escala lo ha abordado desde hace casi una década con representaciones semánticas densas \citep{HaThuc2017,Shen2024}, pero las herramientas a disposición de quien busca empleo apenas lo reflejan.
 
-Para el desarrollo del documento utilizando la plantilla en \LaTeX se recomienda la guía \textit{the not so short guide to \LaTeX}~\cite{Oetiker2016} que brinda una introducci\'on breve pero muy completa. En donde se presentan entro otras cosas los comandos y ambeintes para el trabajo con gr\'aficas y tablas, como las que se muestran a continuaci\'on:
+La generación aumentada por recuperación (\textit{Retrieval-Augmented Generation}, RAG) \citep{Lewis2020} ofrece una alternativa. En lugar de exigir coincidencias exactas, recupera los fragmentos de información semánticamente más cercanos a la consulta y delega en un modelo de lenguaje la síntesis de una respuesta fundamentada en ellos. Aplicado a la búsqueda de empleo, este enfoque permite formular preguntas que un panel de filtros no puede expresar: qué ofertas de \textit{backend} en el propio \textit{stack} superan cierto salario, o cuáles de las ofertas guardadas se ajustan a la experiencia descrita en un currículo.
 
-\begin{figure}[htbp!]
-    \caption{Muestra de inclusio\'on de un elemento gr\'afico}
-    \centering
-    \includegraphics[width=0.8\textwidth]{Images/ImagenYoda.jpg}
-    \label{fig:yoda}
-\end{figure}
+Este trabajo parte de JobAI, una plataforma de búsqueda de empleo remoto construida previamente por el autor, que agrega ofertas de tres fuentes públicas y expone un copiloto conversacional basado en un pipeline RAG. JobAI existe y funciona, pero nunca se había evaluado de forma sistemática. No se sabía, con evidencia cuantitativa, en qué medida su recuperación semántica supera a la búsqueda por palabra clave que pretende reemplazar. Tampoco se sabía qué tan fieles son sus respuestas a los datos recuperados, ni si la decisión inicial de almacenar los vectores en PostgreSQL mediante pgvector era adecuada frente a una base de datos vectorial dedicada. Esos tres vacíos dan origen a la investigación.
 
-As\'i la Figura~\ref{fig:yoda} muestra una imagen que se encuentra en el directorio images, mientras la tabla~\ref{tab:tablasEx}, muestra dos ejemplos de información tabular con combinaci\'on de columnas, y combinaci\'on de filas.
+\section*{Objetivos}
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Ejemplo de tabla con multi columnas (arriba) y multi filas(abajo)}
-    \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
-        \hline
-        \multicolumn{4}{|c|}{Country List} \\
-        \hline
-        Country Name or Area Name& ISO ALPHA 2 Code &ISO ALPHA 3 Code&ISO numeric Code\\
-        \hline
-        Afghanistan   & AF    &AFG&   004\\
-        Aland Islands&   AX  & ALA   &248\\
-        Albania &AL & ALB&  008\\
-        Algeria    &DZ & DZA&  012\\
-        American Samoa&   AS  & ASM&016\\
-        Andorra& AD  & AND   &020\\
-        Angola& AO  & AGO&024\\
-        \hline
-    \end{tabular}\\
-    \vspace{0.5cm}
-    \begin{tabular}{ |c|c|c|c| } 
-        \hline
-        col1 & col2 & col3 \\
-        \hline
-        \multirow{3}{4em}{Multiple row} & cell2 & cell3 \\ 
-        & cell5 & cell6 \\ 
-        & cell8 & cell9 \\ 
-        \hline
-    \end{tabular}
+El objetivo general es desarrollar y evaluar una plataforma de búsqueda de empleo remoto que utiliza un pipeline RAG para permitir la búsqueda semántica y conversacional sobre ofertas laborales, superando las limitaciones de precisión de la búsqueda por palabras clave. Para alcanzarlo se plantean cuatro objetivos específicos:
+\begin{enumerate}
+    \item Caracterizar, a partir de la literatura, las limitaciones de los sistemas actuales de búsqueda de empleo y las oportunidades que ofrece RAG.
+    \item Diseñar y documentar la arquitectura del pipeline, incluida la migración del almacenamiento vectorial a una base de datos dedicada.
+    \item Definir una metodología de evaluación con métricas cuantitativas.
+    \item Evaluar el artefacto frente a un enfoque de búsqueda tradicional por palabras clave.
+\end{enumerate}
+El Capítulo~\ref{cap:problema} desarrolla el planteamiento completo.
 
-    \label{tab:tablasEx}
-\end{table}
+\section*{Metodología}
 
-Adem\'as se recomienda consultar los manuales que aparecen en al secci\'on de aprendizaje de overleaf, por ejemplo el de \href{https://www.overleaf.com/learn/latex/Tables}{tablas}.
+El trabajo se enmarca en el paradigma de Design Science Research \citep{Hevner2004,Peffers2007}, que concibe la investigación como el diseño y la evaluación rigurosa de un artefacto que resuelve un problema relevante. Como el artefacto ya existía, se adopta el punto de entrada del proceso centrado en el diseño y desarrollo, y el trabajo se plantea como una nueva iteración del ciclo de diseño-evaluación. Esa iteración tiene dos partes. La de diseño consiste en corregir y migrar el almacenamiento vectorial y en revisar el artefacto frente a su documentación. La de evaluación incluye tres mediciones:
+\begin{itemize}
+    \item La calidad de la recuperación, frente a dos líneas base léxicas, sobre un corpus real congelado y un conjunto de consultas en cinco categorías.
+    \item La fidelidad de las respuestas generadas, con las métricas de RAGAS \citep{Es2024}.
+    \item La latencia del pipeline y un benchmark de pgvector frente a Qdrant, con datos reales y sintéticos, con y sin filtros estructurados.
+\end{itemize}
+Los juicios de relevancia los asigna un modelo de lenguaje, validado contra una muestra de juicios humanos.
 
-La presente plantilla tiene en cuenta aspectos importantes de la Norma T\'{e}cnica Colombiana - NTC 1486~\cite{NTC14862008}. Las m\'{a}rgenes, numeraci\'{o}n, tama\~{n}o de las fuentes y dem\'{a}s aspectos de formato, deben ser conservada de acuerdo con esta plantilla, la cual esta dise\~{n}ada para imprimir por lado y lado en hojas tama\~{n}o carta. Se sugiere que los encabezados cambien seg\'{u}n la secci\'{o}n/cap\'{i}tulo del documento.\\
+\section*{Alcance y aporte}
 
-La redacci\'{o}n debe ser impersonal y gen\'{e}rica. La numeraci\'{o}n de las hojas sugiere que las p\'{a}ginas preliminares se realicen en n\'{u}meros romanos en may\'{u}scula y las dem\'{a}s en n\'{u}meros ar\'{a}bigos, en forma consecutiva a partir de la introducci\'{o}n que comenzar\'{a} con el n\'{u}mero 1. La cubierta y la portada no se numeran pero si se cuentan como p\'{a}ginas.\\
+El estudio se limita a JobAI y a su dominio: ofertas de empleo remoto en inglés, mayoritariamente del sector tecnológico, obtenidas de Remotive, Jobicy y Findwork. Evalúa la calidad técnica del pipeline y no la experiencia de usuarios reales, y compara dos representantes de los enfoques de almacenamiento vectorial, una extensión sobre un motor relacional y un motor dedicado, sin pretender una revisión exhaustiva del mercado.
 
-Para trabajos muy extensos se recomienda publicar m\'{a}s de un volumen. Se debe tener en cuenta que algunas facultades tienen reglamentada la extensi\'{o}n m\'{a}xima de las tesis  o trabajo de investigaci\'{o}n; en caso que no sea as\'{\i}, se sugiere que el documento no supere 120 p\'{a}ginas.\\
+El aporte es doble. En lo aplicado, ofrece una evaluación cuantitativa e integrada de un sistema RAG completo en producción en un dominio donde la literatura de RAG y la de emparejamiento de empleo rara vez se han cruzado \citep{RojasGaleano2022}. En lo metodológico, documenta cómo aplicar Design Science Research a un artefacto preexistente, incluido el hallazgo de que la propia preparación de la evaluación reveló defectos que la habrían invalidado.
 
-No se debe utilizar numeraci\'{o}n compuesta como 13A, 14B \'{o} 17 bis, entre otros, que indican superposici\'{o}n de texto en el documento. Para resaltar, puede usarse letra cursiva o negrilla. Los t\'{e}rminos de otras lenguas que aparezcan dentro del texto se escriben en cursiva.\\
+\section*{Estructura del documento}
 
-El contenido de este documento esta basado principalmente en la NTC1486~\cite{NTC14862008} y la plantilla de Tesis de maestr\'ia y doctorado de la Universidad Nacional de colombia~\cite{Unal2014DocTesis}.
+Además de esta introducción, el documento tiene seis capítulos:
+\begin{itemize}
+    \item El Capítulo~\ref{cap:problema} plantea el problema, los objetivos y el marco conceptual.
+    \item El Capítulo~\ref{cap:estado-arte} revisa el estado del arte en seis líneas: RAG, emparejamiento de empleo, límites de la búsqueda léxica, Design Science Research, bases de datos vectoriales y clasificación híbrida de consultas.
+    \item El Capítulo~\ref{cap:metodologia} detalla la metodología de evaluación.
+    \item El Capítulo~\ref{cap:artefacto} documenta la arquitectura de JobAI y la iteración de diseño realizada.
+    \item El Capítulo~\ref{cap:resultados} presenta y discute los resultados.
+    \item El último capítulo responde a cada objetivo específico y propone trabajo futuro.
+\end{itemize}

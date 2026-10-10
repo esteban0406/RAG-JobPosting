@@ -10,8 +10,8 @@
 
 \usepackage[pagebackref=true,breaklinks=true]{hyperref}
 \hypersetup{
-	pdftitle={Documento de trabajo Final Maestría Inteligencia Artificial}, 
-	pdfauthor={MIA-D.Martinez}, 
+	pdftitle={JobAI: dise\~no y evaluaci\'on de una plataforma de b\'usqueda de empleo remoto basada en Retrieval-Augmented Generation},
+	pdfauthor={Luis Esteban Pe\~na Rodriguez}, 
 	pdfsubject={}, 
 	pdfcreator={DarMart with Latex}, 
 	colorlinks=true,
@@ -24,12 +24,21 @@
 
 \graphicspath{{Images/}}
 
+% babel (espa\~nol) vuelve activos < y >; esta librer\'ia evita el conflicto con las flechas de TikZ.
+\usetikzlibrary{babel}
+% NTC 1486 usa "Tabla"; babel en espa\~nol usa "Cuadro" por defecto.
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
 
-\title{T\'itulo del proyecto}
-\author{Nombres y apellidos Estudiante}
-\documenttype{Docuemnto Final de Maestr\'ia}
+% Marca visible para datos que se completar\'an con los resultados de la evaluaci\'on.
+\newcommand{\pendiente}[1]{\textcolor{red}{[Pendiente: #1]}}
 
-\advisor{Nombres y apellidos Asesor}
+
+\title{JobAI: dise\~no y evaluaci\'on de una plataforma de b\'usqueda de empleo remoto basada en \textit{Retrieval-Augmented Generation}}
+\author{Luis Esteban Pe\~na Rodriguez}
+\documenttype{Documento final de Maestr\'ia}
+
+% TODO: confirmar la ortograf\'ia exacta del nombre del asesor (Cinfuentes / Cifuentes, tildes).
+\advisor{Joaquin Fernando Sanchez Cinfuentes}
 
 % Si hay un coasesor 
 % \coadvisor{Nombres y apellidos Co-Asesor}
@@ -41,12 +50,10 @@
     % \layout{}
 	
 	\maketitle
-	% Incluye la pagina de acptación (Opcional)
-	\input{FrontMatter/F01-Approval}
-	% Incluye la dedicatoria (Opcional)
-	\input{FrontMatter/F02-Dedication}
-	% Incluye los agradecimientos (Opcional)
-	\input{FrontMatter/F03-Acknowledgements}
+	% P\'aginas opcionales de plantilla: se completan en la versi\'on final.
+	% \input{FrontMatter/F01-Approval}
+	% \input{FrontMatter/F02-Dedication}
+	% \input{FrontMatter/F03-Acknowledgements}
 	% Resumen
  	\input{FrontMatter/F04-Abstract}
 	
@@ -57,10 +64,9 @@
     \listoffigures
     % Crea la lista de tablas (Opcional)
     \listoftables
-    % Incluye la lista de simbolos (Opcional)
-    \input{FrontMatter/F05-Symbols}
-    % Glosario (Opcional)
- 	\input{FrontMatter/F06-Glossary}
+    % Lista de s\'imbolos y glosario: se completan en la versi\'on final.
+    % \input{FrontMatter/F05-Symbols}
+ 	% \input{FrontMatter/F06-Glossary}
     
     
     % A partir de este punto se crea la estructura del documento con un archivo por capitulo conservando la siguiente jerarquía
@@ -73,28 +79,34 @@
     \chapter{Introducci\'on}
     \input{MainMatter/Cap0/M01-Introduction}
     
-    % Capitulo 2
-    \chapter{Cap\'{i}tulo 1}
+    % Capitulo 1
+    \chapter{Planteamiento del problema y marco te\'orico}
+    \label{cap:problema}
     \input{MainMatter/Cap1/M02-Chapter1}
     
     % Capitulo 2
-    \chapter{Cap\'{i}tulo 2}
+    \chapter{Estado del arte}
+    \label{cap:estado-arte}
     \input{MainMatter/Cap2/M03-Chapter2}
     
     % Capitulo 3
-    \chapter{Cap\'{i}tulo 3}
+    \chapter{Metodolog\'ia}
+    \label{cap:metodologia}
     \input{MainMatter/Cap3/M04-Chapter3}
     
     % Capitulo 4
-    \chapter{Cap\'{i}tulo 4}
+    \chapter{Dise\~no y desarrollo del artefacto}
+    \label{cap:artefacto}
     \input{MainMatter/Cap4/M05-Chapter4}
     
     % Capitulo 5
-    \chapter{Cap\'{i}tulo 5}
+    \chapter{Resultados y evaluaci\'on}
+    \label{cap:resultados}
     \input{MainMatter/Cap5/M06-Chapter5}
     
     % Capitulo 10
     \chapter{Conclusiones y recomendaciones}
+    \label{cap:conclusiones}
     \input{MainMatter/Cap9/M10-Conclusiones}
     
     
