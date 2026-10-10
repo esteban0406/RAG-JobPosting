@@ -1,0 +1,12 @@
+# RAGAS environment, isolated from the main analysis image because of its
+# dependency tree. Versions contemporary with ragas 0.4.3 (January 2026);
+# the full resolved set is frozen in requirements.lock.
+ragas==0.4.3
+langchain==1.2.6
+langchain-openai==1.1.7
+langchain-community==0.4.1
+openai==2.15.0
+instructor==1.14.4
+datasets==4.5.0
+langchain-core==1.2.7
+numpy==2.4.1
