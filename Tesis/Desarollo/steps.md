@@ -118,14 +118,19 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 
 ## Fase 3 (semanas 5-7) — Ejecución de la evaluación
 
-- [ ] Congelar el snapshot del corpus (`evaluation/snapshots/`, manifest con sha256 y conteos).
-- [ ] Instrumentar JobAI para capturar las métricas definidas en la Fase 2 (timings por etapa en `RagService`, contextos recuperados, temperatura configurable en el stream).
-- [ ] Construir el dataset de consultas de prueba (`evaluation/datasets/queries.v2.jsonl`).
-- [ ] Implementar las líneas base `ilike` y `bm25` y los comandos `eval:retrieve`, `eval:pool`, `eval:judge`, `eval:kappa-export`.
-- [ ] Anotación humana de la muestra para kappa (~250-300 pares, 2-3 h).
-- [ ] Generación + RAGAS (Python, versión fijada) y latencias.
-- [ ] Benchmark de almacenes vectoriales (`evaluation/bench/`, Python): corpus real + 100k/500k sintéticos, filtros 1/10/50 %.
+- [ ] Congelar el snapshot del corpus (`evaluation/snapshots/`, manifest con sha256 y conteos). Ingesta en curso desde el 10-oct 17:41 (~1.070 ofertas: Findwork 895, Jobicy 162, Remotive 11).
+- [x] Instrumentar JobAI: `buildContext` devuelve contextos por oferta y tiempos por etapa; temperatura configurable en el stream (10-oct).
+- [~] Dataset de consultas: borrador en `evaluation/datasets/queries.v2.draft.jsonl` (75 EN + 25 ES, 75 necesidades). **Pendiente: revisión del autor** y verificar contra el corpus congelado que cada necesidad tenga ofertas relevantes.
+- [x] Líneas base `ilike` y `bm25` + comandos `eval:retrieve`, `eval:pool`, `eval:judge` (UMBRELA, caché), `eval:kappa-export`, `eval:generate`; análisis en `evaluation/analysis/{metrics,kappa}.py` (imagen Docker fijada). Probados de punta a punta en la base de desarrollo (10-oct).
+- [ ] Anotación humana de la muestra para kappa (~250-300 pares, 2-3 h) — el CSV ciego sale de `eval:kappa-export`.
+- [~] Generación + RAGAS: `eval:generate` probado; `evaluation/ragas/` (ragas 0.4.3, imagen aislada) instanciado; falta la prueba completa con el juez local.
+- [~] Benchmark de almacenes vectoriales (`evaluation/bench/`): implementado y probado a pequeña escala (5k). Ya muestra el problema de post-filtrado de pgvector: filtro 10 % con ef=16 sin iterative scan → recall 0,19; con `relaxed_order` → 0,995. Requiere recrear el contenedor de Postgres (`shm_size: 4gb`) antes de la corrida real.
 - [ ] Corrida final con juez de pago; análisis estadístico (aleatorización pareada + Holm) y figuras.
+
+**Hallazgos pendientes de decisión (10-oct):**
+- La plantilla `count_remote` cuenta remotos por `location ILIKE '%remote%'` e ignora la columna `isRemote` del parser → subestima mucho las ofertas remotas. ¿Corregir (nueva iteración) o reportar como defecto encontrado en la evaluación?
+- El normalizador de salarios no convierte monedas ni algunos montos por hora (p. ej. 86.528.000 USD para un "Dispatch Specialist"; salarios en SEK). 5 de 253 ofertas con salario son atípicas; mediana 175 k. Se documenta como limitación de calidad de datos.
+- Groq retiró `qwen3-32b` y `qwen3.6-27b`: revisar el `LLM_MODEL` de producción.
 
 ---
 
