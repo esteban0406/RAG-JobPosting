@@ -9,21 +9,33 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
 export class R2StorageService {
-  private readonly client: S3Client;
-  private readonly bucket: string;
+  private readonly client: S3Client | null;
+  private readonly bucket: string | undefined;
   private readonly expiresIn: number;
 
+  // R2 is optional outside production; the client is only required when a
+  // resume is actually stored or read.
   constructor(config: ConfigService) {
-    this.client = new S3Client({
-      region: 'auto',
-      endpoint: config.getOrThrow<string>('R2_ENDPOINT'),
-      credentials: {
-        accessKeyId: config.getOrThrow<string>('R2_ACCESS_KEY_ID'),
-        secretAccessKey: config.getOrThrow<string>('R2_SECRET_ACCESS_KEY'),
-      },
-    });
-    this.bucket = config.getOrThrow<string>('R2_BUCKET_NAME');
+    const endpoint = config.get<string>('R2_ENDPOINT');
+    const accessKeyId = config.get<string>('R2_ACCESS_KEY_ID');
+    const secretAccessKey = config.get<string>('R2_SECRET_ACCESS_KEY');
+    this.client =
+      endpoint && accessKeyId && secretAccessKey
+        ? new S3Client({
+            region: 'auto',
+            endpoint,
+            credentials: { accessKeyId, secretAccessKey },
+          })
+        : null;
+    this.bucket = config.get<string>('R2_BUCKET_NAME');
     this.expiresIn = config.get<number>('R2_PRESIGNED_URL_EXPIRY', 3600);
+  }
+
+  private requireClient(): { client: S3Client; bucket: string } {
+    if (!this.client || !this.bucket) {
+      throw new Error('R2 storage is not configured (R2_* variables missing)');
+    }
+    return { client: this.client, bucket: this.bucket };
   }
 
   async uploadFile(
@@ -31,9 +43,10 @@ export class R2StorageService {
     buffer: Buffer,
     contentType: string,
   ): Promise<string> {
-    await this.client.send(
+    const { client, bucket } = this.requireClient();
+    await client.send(
       new PutObjectCommand({
-        Bucket: this.bucket,
+        Bucket: bucket,
         Key: key,
         Body: buffer,
         ContentType: contentType,
@@ -43,9 +56,10 @@ export class R2StorageService {
   }
 
   async getPresignedUrl(key: string): Promise<string> {
+    const { client, bucket } = this.requireClient();
     return getSignedUrl(
-      this.client,
-      new GetObjectCommand({ Bucket: this.bucket, Key: key }),
+      client,
+      new GetObjectCommand({ Bucket: bucket, Key: key }),
       { expiresIn: this.expiresIn },
     );
   }

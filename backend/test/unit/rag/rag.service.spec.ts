@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RagService } from '../../../src/rag/rag.service.js';
 import { EmbeddingService } from '../../../src/embedding/embedding.service.js';
-import { VectorRepository } from '../../../src/storage/vector.repository.js';
+import { VECTOR_STORE } from '../../../src/storage/vector-store/vector-store.interface.js';
 import { JobRepository } from '../../../src/storage/job.repository.js';
 import { LlmService } from '../../../src/llm/llm.service.js';
 import { ResumeService } from '../../../src/resume/resume.service.js';
+import { NULL_PARSED_RESUME } from '../../../src/resume/interfaces/parsed-resume.interface.js';
 
 const mockEmbedding = { embedQuery: jest.fn(), embed: jest.fn(), modelName: 'test-model', provider: 'openai' };
 const mockVector = { findSimilar: jest.fn(), findSimilarByJobIds: jest.fn() };
@@ -22,7 +23,7 @@ async function buildModule(): Promise<RagService> {
     providers: [
       RagService,
       { provide: EmbeddingService, useValue: mockEmbedding },
-      { provide: VectorRepository, useValue: mockVector },
+      { provide: VECTOR_STORE, useValue: mockVector },
       { provide: JobRepository, useValue: mockJobRepo },
       { provide: LlmService, useValue: mockLlm },
       { provide: ResumeService, useValue: mockResume },
@@ -118,6 +119,49 @@ describe('RagService', () => {
   });
 
   describe('buildContext', () => {
+    it('prepends the resume profile to the user query instead of replacing it', async () => {
+      mockResume.getParsedData.mockResolvedValueOnce({
+        ...NULL_PARSED_RESUME,
+        skills: ['Python', 'AWS'],
+        experience: [
+          {
+            company: 'Acme',
+            title: 'Backend Engineer',
+            startDate: null,
+            endDate: null,
+            description: '',
+          },
+        ],
+      });
+      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
+      mockVector.findSimilar.mockResolvedValueOnce([]);
+
+      await service.buildContext(
+        'roles in fintech',
+        undefined,
+        undefined,
+        'user-1',
+      );
+
+      expect(mockEmbedding.embedQuery).toHaveBeenCalledWith(
+        'Backend Engineer; Python, AWS. roles in fintech',
+      );
+    });
+
+    it('embeds the raw query when the user has no resume', async () => {
+      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
+      mockVector.findSimilar.mockResolvedValueOnce([]);
+
+      await service.buildContext(
+        'roles in fintech',
+        undefined,
+        undefined,
+        'user-1',
+      );
+
+      expect(mockEmbedding.embedQuery).toHaveBeenCalledWith('roles in fintech');
+    });
+
     it('returns null when vector repo returns no chunks', async () => {
       mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
       mockVector.findSimilar.mockResolvedValueOnce([]);
@@ -164,7 +208,11 @@ describe('RagService', () => {
 
   describe('groupByJob (via buildContext)', () => {
     it('deduplicates multiple chunks for the same job', async () => {
-      const chunk2 = { ...SAMPLE_CHUNK, chunkType: 'requirements', similarity: 0.75 };
+      const chunk2 = {
+        ...SAMPLE_CHUNK,
+        chunkType: 'requirements',
+        similarity: 0.75,
+      };
       mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
       mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK, chunk2]);
       mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
@@ -176,8 +224,18 @@ describe('RagService', () => {
     });
 
     it('ranks jobs by highest chunk similarity', async () => {
-      const job2 = { ...SAMPLE_JOB, id: 'job-2', title: 'Designer', company: 'Beta' };
-      const chunk2 = { jobId: 'job-2', chunkText: 'Design work.', chunkType: 'description', similarity: 0.95 };
+      const job2 = {
+        ...SAMPLE_JOB,
+        id: 'job-2',
+        title: 'Designer',
+        company: 'Beta',
+      };
+      const chunk2 = {
+        jobId: 'job-2',
+        chunkText: 'Design work.',
+        chunkType: 'description',
+        similarity: 0.95,
+      };
       mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
       mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK, chunk2]);
       mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB, job2]);

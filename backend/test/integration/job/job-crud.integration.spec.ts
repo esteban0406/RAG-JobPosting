@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { JobService } from '../../../src/job/job.service.js';
 import { JobRepository } from '../../../src/storage/job.repository.js';
 import { PrismaService } from '../../../src/storage/prisma.service.js';
+import { VECTOR_STORE } from '../../../src/storage/vector-store/vector-store.interface.js';
 
 const mockPrisma = {
   job: {
@@ -43,12 +44,15 @@ const JOB = {
   logo: null,
 };
 
+const mockVectorStore = { deleteByJobIds: jest.fn() };
+
 async function buildModule(): Promise<{ job: JobService }> {
   const module: TestingModule = await Test.createTestingModule({
     providers: [
       JobService,
       JobRepository,
       { provide: PrismaService, useValue: mockPrisma },
+      { provide: VECTOR_STORE, useValue: mockVectorStore },
     ],
   }).compile();
   return { job: module.get(JobService) };
@@ -244,6 +248,7 @@ describe('Job CRUD Integration', () => {
       await job.delete('job-1');
 
       expect(mockPrisma.job.delete).toHaveBeenCalledWith({ where: { id: 'job-1' } });
+      expect(mockVectorStore.deleteByJobIds).toHaveBeenCalledWith(['job-1']);
     });
 
     it('throws NotFoundException and does NOT call delete when job does not exist', async () => {

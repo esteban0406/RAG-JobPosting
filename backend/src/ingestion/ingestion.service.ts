@@ -1,11 +1,16 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { createHash } from 'crypto';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import PQueue from 'p-queue';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { JobRepository } from '../storage/job.repository.js';
-import { VectorRepository } from '../storage/vector.repository.js';
+import {
+  VECTOR_STORE,
+  type VectorJobMeta,
+  type VectorStore,
+} from '../storage/vector-store/vector-store.interface.js';
 import { PrismaService } from '../storage/prisma.service.js';
 import { RemotiveProvider } from './providers/remotive.provider.js';
 import { JobicyProvider } from './providers/jobicy.provider.js';
@@ -33,11 +38,12 @@ export class IngestionService {
     jobicy: JobicyProvider,
     findwork: FindworkProvider,
     private readonly jobRepo: JobRepository,
-    private readonly vectorRepo: VectorRepository,
+    @Inject(VECTOR_STORE) private readonly vectorRepo: VectorStore,
     private readonly embeddingService: EmbeddingService,
     private readonly chunkService: ChunkService,
     private readonly prisma: PrismaService,
     private readonly jobParser: JobParserService,
+    config: ConfigService,
   ) {
     this.providers = [remotive, jobicy, findwork];
 
@@ -48,7 +54,9 @@ export class IngestionService {
         : { concurrency: 5 },
     );
 
-    this.parseQueue = new PQueue({ concurrency: 1 });
+    this.parseQueue = new PQueue({
+      concurrency: config.get<number>('INGESTION_PARSE_CONCURRENCY', 1),
+    });
   }
 
   async run(): Promise<{ fetched: number; stored: number; skipped: number }> {
@@ -105,7 +113,7 @@ export class IngestionService {
           void this.embedQueue.add(async () => {
             try {
               const chunks = this.chunkService.buildChunks(raw, jobToEmbed);
-              await this.embedAndStoreChunks(jobToEmbed.id, chunks);
+              await this.embedAndStoreChunks(jobToEmbed, chunks);
               this.logger.debug(
                 `Re-embedded job: ${jobToEmbed.title} (${jobToEmbed.company})`,
               );
@@ -177,7 +185,7 @@ export class IngestionService {
           void this.embedQueue.add(async () => {
             try {
               const chunks = this.chunkService.buildChunks(raw, job);
-              await this.embedAndStoreChunks(job.id, chunks);
+              await this.embedAndStoreChunks(job, chunks);
               this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
             } catch (err) {
               this.logger.error(
@@ -201,7 +209,7 @@ export class IngestionService {
   }
 
   private async embedAndStoreChunks(
-    jobId: string,
+    job: VectorJobMeta,
     chunks: Array<{ type: string; text: string }>,
   ): Promise<void> {
     const embedded: Array<{
@@ -219,7 +227,7 @@ export class IngestionService {
         model: this.embeddingService.modelName,
       });
     }
-    await this.vectorRepo.upsertChunks(jobId, embedded);
+    await this.vectorRepo.upsertChunks(job, embedded);
   }
 
   private async fetchAllPages(provider: JobProvider): Promise<RawJobDto[]> {
@@ -256,6 +264,7 @@ export class IngestionService {
         this.prisma.jobChunk.deleteMany(),
         this.prisma.job.deleteMany(),
       ]);
+      await this.vectorRepo.clear();
 
       this.logger.log(`Parsing CSV: ${csvPath}`);
       const content = readFileSync(csvPath, 'utf-8');
@@ -284,7 +293,7 @@ export class IngestionService {
         void this.embedQueue.add(async () => {
           try {
             const chunks = this.chunkService.buildChunks(raw, job);
-            await this.embedAndStoreChunks(job.id, chunks);
+            await this.embedAndStoreChunks(job, chunks);
             this.logger.debug(`Embedded job: ${job.title} (${job.company})`);
           } catch (err) {
             this.logger.error(
@@ -351,7 +360,7 @@ export class IngestionService {
   }
 
   async exportToCsv(): Promise<{ csv: string; count: number }> {
-    const jobs = await this.jobRepo.findAll();
+    const jobs = await this.jobRepo.findAllUnpaged();
     const headers = [
       'id',
       'sourceId',

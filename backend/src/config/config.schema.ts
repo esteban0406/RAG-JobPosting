@@ -1,6 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import {
   IsEnum,
+  IsIn,
   IsNumber,
   IsOptional,
   IsString,
@@ -8,6 +9,11 @@ import {
   MinLength,
   validateSync,
 } from 'class-validator';
+
+enum VectorBackend {
+  Pgvector = 'pgvector',
+  Qdrant = 'qdrant',
+}
 
 enum Environment {
   Development = 'development',
@@ -72,6 +78,31 @@ class EnvironmentVariables {
   @IsOptional()
   INGESTION_CRON: string = '0 */6 * * *';
 
+  @IsIn(['true', 'false'])
+  @IsOptional()
+  INGESTION_CRON_ENABLED: string = 'true';
+
+  @IsNumber()
+  @Min(1)
+  @IsOptional()
+  INGESTION_PARSE_CONCURRENCY: number = 1;
+
+  @IsEnum(VectorBackend)
+  @IsOptional()
+  VECTOR_BACKEND: VectorBackend = VectorBackend.Pgvector;
+
+  @IsString()
+  @IsOptional()
+  QDRANT_URL: string = 'http://localhost:6333';
+
+  @IsString()
+  @IsOptional()
+  QDRANT_API_KEY: string;
+
+  @IsString()
+  @IsOptional()
+  QDRANT_COLLECTION: string = 'job_chunks';
+
   @IsString()
   @IsOptional()
   FINDWORK_API_KEY: string;
@@ -107,15 +138,19 @@ class EnvironmentVariables {
   RESUME_UPLOAD_DIR: string = 'uploads/resumes';
 
   @IsString()
+  @IsOptional()
   R2_ENDPOINT: string;
 
   @IsString()
+  @IsOptional()
   R2_BUCKET_NAME: string;
 
   @IsString()
+  @IsOptional()
   R2_ACCESS_KEY_ID: string;
 
   @IsString()
+  @IsOptional()
   R2_SECRET_ACCESS_KEY: string;
 
   @IsNumber()
@@ -148,6 +183,16 @@ export function validate(config: Record<string, unknown>) {
     !validatedConfig.GROQ_API_KEY?.trim()
   ) {
     throw new Error('GROQ_API_KEY is required in production');
+  }
+
+  const missingR2 = [
+    'R2_ENDPOINT',
+    'R2_BUCKET_NAME',
+    'R2_ACCESS_KEY_ID',
+    'R2_SECRET_ACCESS_KEY',
+  ].filter((key) => !validatedConfig[key as keyof EnvironmentVariables]);
+  if (validatedConfig.NODE_ENV === Environment.Production && missingR2.length) {
+    throw new Error(`${missingR2.join(', ')} required in production`);
   }
 
   return validatedConfig;

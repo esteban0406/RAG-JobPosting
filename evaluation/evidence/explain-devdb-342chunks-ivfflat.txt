@@ -1,0 +1,37 @@
+== database: jobpostings_scratch | query: senior backend engineer with python and aws experience
+== indexes
+indexname|indexdef
+JobChunk_embedding_idx|CREATE INDEX "JobChunk_embedding_idx" ON public."JobChunk" USING ivfflat (embedding vector_cosine_ops)
+(1 row)
+chunks
+342
+(1 row)
+== legacy query: ORDER BY derived similarity + threshold filter
+QUERY PLAN
+Limit (actual time=2.532..2.535 rows=15 loops=1)
+  Buffers: shared hit=2115
+  ->  Sort (actual time=2.531..2.532 rows=15 loops=1)
+        Sort Key: (('1'::double precision - (embedding <=> '[query vector]'::vector))) DESC
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=2115
+        ->  Seq Scan on "JobChunk" (actual time=0.058..2.420 rows=342 loops=1)
+              Filter: ((embedding IS NOT NULL) AND (('1'::double precision - (embedding <=> '[query vector]'::vector)) >= '0.5'::double precision))
+              Buffers: shared hit=2112
+Planning:
+  Buffers: shared hit=143
+Planning Time: 0.461 ms
+Execution Time: 2.565 ms
+(13 rows)
+== reshaped query: ORDER BY distance operator + LIMIT
+QUERY PLAN
+Limit (actual time=0.487..0.626 rows=15 loops=1)
+  Buffers: shared hit=287
+  ->  Index Scan using "JobChunk_embedding_idx" on "JobChunk" jc (actual time=0.487..0.624 rows=15 loops=1)
+        Order By: (embedding <=> '[query vector]'::vector)
+        Filter: (embedding IS NOT NULL)
+        Buffers: shared hit=287
+Planning:
+  Buffers: shared hit=148
+Planning Time: 0.466 ms
+Execution Time: 0.674 ms
+(10 rows)

@@ -1,13 +1,14 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { ChatMessage, LlmService } from '../llm/llm.service.js';
 import type { ParsedResume } from '../resume/interfaces/parsed-resume.interface.js';
 import { ResumeService } from '../resume/resume.service.js';
 import { JobRepository } from '../storage/job.repository.js';
 import {
-  JobChunkResult,
-  VectorRepository,
-} from '../storage/vector.repository.js';
+  VECTOR_STORE,
+  type JobChunkResult,
+  type VectorStore,
+} from '../storage/vector-store/vector-store.interface.js';
 import { JobSource, RagResponse } from './dto/rag-response.dto.js';
 
 const RETRIEVAL_K = 15;
@@ -81,7 +82,7 @@ export class RagService {
 
   constructor(
     private readonly embeddingService: EmbeddingService,
-    private readonly vectorRepo: VectorRepository,
+    @Inject(VECTOR_STORE) private readonly vectorRepo: VectorStore,
     private readonly jobRepo: JobRepository,
     private readonly llmService: LlmService,
     private readonly resumeService: ResumeService,
@@ -372,21 +373,25 @@ export class RagService {
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
   }
 
+  // Prepends the user's profile to the query so retrieval is personalized
+  // without discarding what the user actually asked for.
   private buildResumeSearchQuery(
     resume: ParsedResume,
-    fallbackQuery: string,
+    userQuery: string,
   ): string {
     const titles = resume.experience
       .slice(0, 3)
       .map((e) => e.title)
       .filter(Boolean);
-    const skills = resume.skills.slice(0, 15);
+    const skills = resume.skills.slice(0, 10);
 
-    const parts: string[] = [];
-    if (titles.length > 0) parts.push(titles.join(' '));
-    if (skills.length > 0) parts.push(skills.join(' '));
+    const profile: string[] = [];
+    if (titles.length > 0) profile.push(titles.join(', '));
+    if (skills.length > 0) profile.push(skills.join(', '));
 
-    return parts.length > 0 ? parts.join(' ') : fallbackQuery;
+    return profile.length > 0
+      ? `${profile.join('; ')}. ${userQuery}`
+      : userQuery;
   }
 
   private buildSystemMessage(context: string, userProfileContext = ''): string {

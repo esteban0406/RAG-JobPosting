@@ -23,12 +23,34 @@ describe('QueryClassifierService', () => {
   });
 
   describe('rule-based fast path', () => {
-    it('classifies aggregation signals without LLM', async () => {
+    it('uses the LLM to pick the template when only aggregation signals match', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":"count_remote","params":[]}',
+      );
       const result = await service.classify(
         'how many remote jobs are available',
       );
       expect(result.type).toBe('aggregation');
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(result.intent).toBe('count_remote');
+      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+    });
+
+    it('falls back to retrieval when an aggregation query gets no template', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":null,"params":[]}',
+      );
+      const result = await service.classify('what is the average salary');
+      expect(result.type).toBe('retrieval');
+      expect(result.intent).toBeUndefined();
+    });
+
+    it('routes an aggregation filter_jobs answer through the hybrid path', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":"filter_jobs","filters":{"minSalary":150000}}',
+      );
+      const result = await service.classify('salary above 150k for devops');
+      expect(result.type).toBe('hybrid');
+      expect(result.intent).toBe('filter_jobs');
     });
 
     it('classifies retrieval signals without LLM', async () => {
@@ -49,11 +71,17 @@ describe('QueryClassifierService', () => {
     });
 
     it('detects "types of" as aggregation signal', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":"list_distinct_titles","params":["%driving%"]}',
+      );
       const result = await service.classify('what types of driving jobs exist');
       expect(result.type).toBe('aggregation');
     });
 
     it('detects "list all" as aggregation signal', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":"list_distinct_locations","params":[]}',
+      );
       const result = await service.classify('list all available locations');
       expect(result.type).toBe('aggregation');
     });
@@ -115,7 +143,7 @@ describe('QueryClassifierService', () => {
         '{"type":"aggregation","intent":"drop_table","params":[]}',
       );
       const result = await service.classify('something ambiguous');
-      expect(result.type).toBe('aggregation');
+      expect(result.type).toBe('retrieval');
       expect(result.intent).toBeUndefined();
     });
   });

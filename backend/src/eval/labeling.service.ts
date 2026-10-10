@@ -37,7 +37,7 @@ export class LabelingService {
   constructor(private readonly jobRepo: JobRepository) {}
 
   async labelAll(): Promise<LabeledQuery[]> {
-    const jobs = await this.jobRepo.findAll();
+    const jobs = await this.jobRepo.findAllUnpaged();
     this.logger.debug(`Labeling against ${jobs.length} jobs`);
 
     return QUERIES.map((q) => {

@@ -18,7 +18,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:integration": "jest --config ./test/jest-integration.json",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "cli": "node dist/src/cli/main.js",
+    "qdrant:backfill": "node dist/src/cli/main.js qdrant:backfill",
+    "ann:quick": "node dist/src/cli/main.js ann:quick"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1045.0",
@@ -36,6 +39,7 @@
     "@nestjs/throttler": "^6.5.0",
     "@prisma/adapter-pg": "^7.7.0",
     "@prisma/client": "^7.7.0",
+    "@qdrant/js-client-rest": "1.19.0",
     "bcrypt": "^6.0.0",
     "cache-manager": "^7.2.8",
     "chart.js": "^4.5.1",

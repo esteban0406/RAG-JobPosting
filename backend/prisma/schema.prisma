@@ -1,3 +1,7 @@
+// WARNING: JobChunk.embedding and Resume.embedding (pgvector) and their
+// indexes live only in raw SQL migrations. Apply migrations with
+// `prisma migrate deploy`; `prisma migrate dev` would generate a migration
+// that drops them.
 generator client {
   provider     = "prisma-client"
   output       = "../generated/prisma"

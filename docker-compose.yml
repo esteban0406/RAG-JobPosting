@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: pgvector/pgvector:pg16
+    image: pgvector/pgvector:0.8.2-pg16
     container_name: job-posting-db
     environment:
       POSTGRES_USER: postgres
@@ -29,7 +29,17 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
-      
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.1
+    container_name: job-posting-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
 volumes:
   postgres_data:
   huggingface_cache:
+  qdrant_data:

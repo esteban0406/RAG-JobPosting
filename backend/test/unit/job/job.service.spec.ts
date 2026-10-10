@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { JobService } from '../../../src/job/job.service.js';
+import { VECTOR_STORE } from '../../../src/storage/vector-store/vector-store.interface.js';
 import { JobRepository } from '../../../src/storage/job.repository.js';
 
 const mockRepo = {
@@ -12,11 +13,14 @@ const mockRepo = {
   deleteJob: jest.fn(),
 };
 
+const mockVectorStore = { deleteByJobIds: jest.fn() };
+
 async function buildModule(): Promise<JobService> {
   const module: TestingModule = await Test.createTestingModule({
     providers: [
       JobService,
       { provide: JobRepository, useValue: mockRepo },
+      { provide: VECTOR_STORE, useValue: mockVectorStore },
     ],
   }).compile();
   return module.get(JobService);

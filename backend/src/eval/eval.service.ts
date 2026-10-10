@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EmbeddingService } from '../embedding/embedding.service.js';
-import { VectorRepository } from '../storage/vector.repository.js';
+import { PgVectorStore } from '../storage/vector-store/pgvector.store.js';
 import { QUERIES, QueryCategory } from './dataset/queries.dataset.js';
 import { GeminiJudgeService } from './judge/gemini-judge.service.js';
 import { Verdict } from './judge/judge.interface.js';
@@ -76,7 +76,7 @@ export class EvalService {
 
   constructor(
     private readonly embeddingService: EmbeddingService,
-    private readonly vectorRepo: VectorRepository,
+    private readonly vectorRepo: PgVectorStore,
     private readonly ollamaJudge: OllamaJudgeService,
     private readonly geminiJudge: GeminiJudgeService,
     private readonly judgeCache: JudgmentCacheService,

@@ -1,5 +1,6 @@
 # compiled output
 /dist
+/dist-ingest
 /node_modules
 /build
 

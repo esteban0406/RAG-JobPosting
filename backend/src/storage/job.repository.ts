@@ -69,6 +69,11 @@ export class JobRepository {
     });
   }
 
+  // Every job, unpaginated — for exports and offline evaluation, not the API.
+  async findAllUnpaged(): Promise<Job[]> {
+    return this.prisma.job.findMany({ orderBy: { createdAt: 'desc' } });
+  }
+
   async count(filters?: JobFilters): Promise<number> {
     return this.prisma.job.count({ where: this.buildWhere(filters) });
   }

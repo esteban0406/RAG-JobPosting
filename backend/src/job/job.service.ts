@@ -1,7 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { createHash } from 'crypto';
 import type { Job } from '../../generated/prisma/client.js';
 import { JobRepository } from '../storage/job.repository.js';
+import {
+  VECTOR_STORE,
+  type VectorStore,
+} from '../storage/vector-store/vector-store.interface.js';
 import type { CreateJobDto } from './dto/create-job.dto.js';
 import type { JobFilterDto } from './dto/job-filter.dto.js';
 import type { UpdateJobDto } from './dto/update-job.dto.js';
@@ -15,7 +19,10 @@ export interface JobListResult {
 
 @Injectable()
 export class JobService {
-  constructor(private readonly jobRepository: JobRepository) {}
+  constructor(
+    private readonly jobRepository: JobRepository,
+    @Inject(VECTOR_STORE) private readonly vectorStore: VectorStore,
+  ) {}
 
   async list(filters: JobFilterDto): Promise<JobListResult> {
     const page = filters.page ?? 1;
@@ -65,5 +72,6 @@ export class JobService {
   async delete(id: string): Promise<void> {
     await this.getById(id);
     await this.jobRepository.deleteJob(id);
+    await this.vectorStore.deleteByJobIds([id]);
   }
 }

@@ -15,7 +15,7 @@ import { RagService } from '../../../src/rag/rag.service.js';
 import { AggregationService } from '../../../src/query/aggregation/aggregation.service.js';
 import { LlmService } from '../../../src/llm/llm.service.js';
 import { EmbeddingService } from '../../../src/embedding/embedding.service.js';
-import { VectorRepository } from '../../../src/storage/vector.repository.js';
+import { VECTOR_STORE } from '../../../src/storage/vector-store/vector-store.interface.js';
 import { JobRepository } from '../../../src/storage/job.repository.js';
 import { AggregationRepository } from '../../../src/query/aggregation/aggregation.repository.js';
 import { ResumeService } from '../../../src/resume/resume.service.js';
@@ -149,7 +149,7 @@ async function buildModule(): Promise<QueryOrchestratorService> {
       AggregationService,
       { provide: LlmService, useValue: mockLlm },
       { provide: EmbeddingService, useValue: mockEmbedding },
-      { provide: VectorRepository, useValue: mockVectorRepo },
+      { provide: VECTOR_STORE, useValue: mockVectorRepo },
       { provide: JobRepository, useValue: mockJobRepo },
       { provide: AggregationRepository, useValue: mockAggRepo },
       { provide: ResumeService, useValue: mockResumeService },
@@ -238,6 +238,10 @@ describe('Query Pipeline Integration', () => {
 
   describe('aggregation flow end-to-end', () => {
     it('routes through Classifier → AggregationService and returns type=aggregation', async () => {
+      // The regex flags aggregation; the LLM picks the SQL template.
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":"count_by_location","params":[]}',
+      );
       mockAggRepo.execute.mockResolvedValueOnce(AGG_ROWS);
       mockLlm.complete.mockResolvedValueOnce('There are 5 jobs in NYC.');
 
@@ -247,17 +251,34 @@ describe('Query Pipeline Integration', () => {
       expect(result.answer).toBe('There are 5 jobs in NYC.');
       expect(mockEmbedding.embedQuery).not.toHaveBeenCalled();
       expect(mockVectorRepo.findSimilar).not.toHaveBeenCalled();
-      expect(mockAggRepo.execute).toHaveBeenCalledTimes(1);
-      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(mockAggRepo.execute).toHaveBeenCalledWith('count_by_location', []);
+      expect(mockLlm.complete).toHaveBeenCalledTimes(2);
     });
 
     it('returns "No data found" when aggregation rows are empty', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":"count_remote","params":[]}',
+      );
       mockAggRepo.execute.mockResolvedValueOnce([]);
 
       const result = await orchestrator.handle(makeDto('how many remote jobs exist'));
 
       expect(result.answer).toBe('No data found for this query.');
-      expect(mockLlm.complete).not.toHaveBeenCalled();
+      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+    });
+
+    it('falls back to retrieval when no aggregation template is chosen', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"aggregation","intent":null,"params":[]}',
+      );
+      mockVectorRepo.findSimilar.mockResolvedValueOnce(CHUNK_RESULTS);
+      mockJobRepo.findByIds.mockResolvedValueOnce(JOB_RECORDS);
+      mockLlm.completeChat.mockResolvedValueOnce('Salary details for these jobs.');
+
+      const result = await orchestrator.handle(makeDto('what is the salary for these roles'));
+
+      expect(result.type).toBe('retrieval');
+      expect(mockAggRepo.execute).not.toHaveBeenCalled();
     });
   });
 

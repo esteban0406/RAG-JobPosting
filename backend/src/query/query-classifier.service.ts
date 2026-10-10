@@ -36,10 +36,20 @@ export class QueryClassifierService {
       const llmResult = await this.classifyWithLlm(query);
       return { ...llmResult, type: 'hybrid' };
     }
-    if (isAggregation) return { type: 'aggregation' };
     if (isRetrieval) return { type: 'retrieval' };
 
-    return this.classifyWithLlm(query);
+    // The aggregation regex only detects intent; choosing the SQL template
+    // still requires the LLM, same as for queries no rule matches.
+    return this.normalize(await this.classifyWithLlm(query));
+  }
+
+  // An aggregation without a known template cannot be executed: route
+  // filter_jobs through the hybrid path and anything else to retrieval.
+  private normalize(result: ClassificationResult): ClassificationResult {
+    if (result.type !== 'aggregation') return result;
+    if (result.intent === 'filter_jobs') return { ...result, type: 'hybrid' };
+    if (!result.intent) return FALLBACK_RESULT;
+    return result;
   }
 
   private async classifyWithLlm(query: string): Promise<ClassificationResult> {

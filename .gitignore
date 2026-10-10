@@ -24,3 +24,4 @@ evaluation/snapshots/*.dump
 evaluation/**/.venv/
 evaluation/**/__pycache__/
 Tesis/Plantilla/main.pdf
+evaluation/snapshots/*.log
