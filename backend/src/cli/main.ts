@@ -4,6 +4,7 @@ import { CliModule } from './cli.module.js';
 import { annQuick } from './commands/ann-quick.command.js';
 import { evalGenerate } from './commands/eval-generate.command.js';
 import { evalJudge } from './commands/eval-judge.command.js';
+import { evalKappaExport } from './commands/eval-kappa-export.command.js';
 import { evalPool } from './commands/eval-pool.command.js';
 import {
   SYSTEM_NAMES,
@@ -26,7 +27,9 @@ Commands:
              [--judge-model llama3.1:8b] [--judge-base-url URL] [--concurrency 2]
       Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.
   eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n]
-      Answer the retrieval queries through the RAG path; cache answers, record timings.`;
+      Answer the retrieval queries through the RAG path; cache answers, record timings.
+  eval:kappa-export --run <run dir> --judgments <judge.jsonl> [--rate 0.2] [--calibration-share 0.25] [--seed 42]
+      Blind, stratified sample of judged pairs for manual labeling (Cohen's kappa).`;
 
 function required(value: string | undefined, flag: string): string {
   if (!value) throw new Error(`Missing required option ${flag}`);
@@ -56,6 +59,10 @@ async function main(): Promise<number> {
       temperature: { type: 'string', default: '0' },
       'delay-ms': { type: 'string', default: '2000' },
       limit: { type: 'string' },
+      judgments: { type: 'string' },
+      rate: { type: 'string', default: '0.2' },
+      'calibration-share': { type: 'string', default: '0.25' },
+      seed: { type: 'string', default: '42' },
       help: { type: 'boolean', default: false },
     },
   });
@@ -123,6 +130,15 @@ async function main(): Promise<number> {
           temperature: Number(values.temperature),
           delayMs: Number(values['delay-ms']),
           limit: values.limit ? Number(values.limit) : undefined,
+        });
+        return 0;
+      case 'eval:kappa-export':
+        await evalKappaExport(app, {
+          runDir: required(values.run, '--run'),
+          judgmentsFile: required(values.judgments, '--judgments'),
+          rate: Number(values.rate),
+          calibrationShare: Number(values['calibration-share']),
+          seed: Number(values.seed),
         });
         return 0;
       default:

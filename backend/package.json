@@ -25,7 +25,8 @@
     "eval:retrieve": "node dist/src/cli/main.js eval:retrieve",
     "eval:pool": "node dist/src/cli/main.js eval:pool",
     "eval:judge": "node dist/src/cli/main.js eval:judge",
-    "eval:generate": "node dist/src/cli/main.js eval:generate"
+    "eval:generate": "node dist/src/cli/main.js eval:generate",
+    "eval:kappa-export": "node dist/src/cli/main.js eval:kappa-export"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1045.0",
