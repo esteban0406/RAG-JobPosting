@@ -1,0 +1,6 @@
+{"key": "f4dd70195a0120d222f0a0130d4177c5c493e030a4e0cd6df15facf3130f04a7", "judge": "http://localhost:11434/v1|llama3.1:8b", "metric": "faithfulness", "value": 0.6666666666666666, "error": null}
+{"key": "cd7a80fe5f11883aa9de8e79c1f21da5e0b537553d7ff03071057834d193a444", "judge": "http://localhost:11434/v1|llama3.1:8b", "metric": "faithfulness", "value": 1.0, "error": null}
+{"key": "b772689380655099ace296eb39231d4fd07662ecd141c4e4c6bb592216874e41", "judge": "http://localhost:11434/v1|llama3.1:8b", "metric": "faithfulness", "value": 1.0, "error": null}
+{"key": "8df8537932c5ab5977430a352057faf5e79502d0dcd8748a84468afc4b0b07cc", "judge": "http://localhost:11434/v1|llama3.1:8b", "metric": "answer_relevancy", "value": 0.9020735839296115, "error": null}
+{"key": "d4236eb91b51ad6c22a9e30120a207fddaf85790289b8db55f9d7868e5e86350", "judge": "http://localhost:11434/v1|llama3.1:8b", "metric": "answer_relevancy", "value": 0.8820313914322501, "error": null}
+{"key": "31c61a7fbab7e9c27e83fdebdc3a8a5bf97b2440dc25c30cd4c83e89a1d24e5a", "judge": "http://localhost:11434/v1|llama3.1:8b", "metric": "answer_relevancy", "value": 0.9242802806674194, "error": null}

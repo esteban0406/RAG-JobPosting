@@ -1,0 +1,4 @@
+queryId,category,lang,faithfulness,faithfulness_error,answer_relevancy,answer_relevancy_error
+en-ex-01,exact,en,0.6666666666666666,,0.9020735839296115,
+es-ex-01,exact,es,1.0,,0.8820313914322501,
+en-ex-02,exact,en,1.0,,0.9242802806674194,

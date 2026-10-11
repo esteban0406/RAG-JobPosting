@@ -11,7 +11,9 @@ Adjunto el borrador del documento en PDF. Contiene la introducción, el planteam
   - **Diagnóstico de pgvector:** la búsqueda vectorial nunca usaba el índice, según la evidencia de `EXPLAIN ANALYZE`, y el umbral de similitud no filtraba nada.
   - **Migración a Qdrant:** el almacén vectorial quedó detrás de una interfaz común, de modo que la plataforma funciona con pgvector o con Qdrant cambiando una variable de configuración. Ambos motores usan el mismo índice HNSW para compararlos en igualdad de condiciones.
   - **Defectos corregidos:** la revisión del código encontró cinco, entre ellos que la personalización por currículo descartaba la pregunta del usuario.
-- **Corpus de evaluación:** se ingirió un corpus nuevo y fijo de unas 1.000 ofertas reales (Remotive, Jobicy y Findwork) para que los experimentos sean reproducibles.
+- **Corpus de evaluación:** se ingirió y congeló un corpus de 1.068 ofertas reales (4.013 fragmentos) de Remotive, Jobicy y Findwork, para que los experimentos sean reproducibles.
+- **Primer resultado técnico** (Cap. 5, preliminar): con el plan que elige PostgreSQL, la búsqueda en pgvector recorre la tabla completa (23,6 ms); servida desde Qdrant tarda 3,1 ms con un *recall* de 0,988. Forzando el índice en pgvector se obtiene 2,2 ms, lo que muestra que a esta escala la diferencia se debe al planificador y no al motor; el benchmark completo con datos sintéticos y filtros lo dirá a mayor escala.
+- **Arnés de evaluación listo:** cinco sistemas de recuperación, juez de relevancia con caché, validación con kappa, métricas RAGAS y benchmark de almacenes vectoriales, probados de punta a punta.
 
 ## Decisiones metodológicas
 

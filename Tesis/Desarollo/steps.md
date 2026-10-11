@@ -118,12 +118,13 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 
 ## Fase 3 (semanas 5-7) — Ejecución de la evaluación
 
-- [ ] Congelar el snapshot del corpus (`evaluation/snapshots/`, manifest con sha256 y conteos). Ingesta en curso desde el 10-oct 17:41 (~1.070 ofertas: Findwork 895, Jobicy 162, Remotive 11).
+- [x] Snapshot congelado (11-oct): 1.068 ofertas (Findwork 895, Jobicy 162, Remotive 11), 4.013 chunks; `evaluation/snapshots/corpus-2026-10-10.dump` (fuera de git, respaldar en Drive) + `manifest.json` (sha256 `8106c29a…`). Restauración verificada. HNSW aplicado a `jobpostings_eval`; Qdrant `eval_job_chunks` con backfill verificado (4.013/4.013 indexados).
+- [x] `ann:quick` sobre el corpus real (200 consultas): pgvector en modo automático hace barrido completo (23,6 ms) porque el planificador descarta el HNSW a esta escala; forzado: 2,2 ms (recall 0,995 con ef=64); Qdrant: 3,1 ms (recall 0,988). Tabla preliminar en Cap5.
 - [x] Instrumentar JobAI: `buildContext` devuelve contextos por oferta y tiempos por etapa; temperatura configurable en el stream (10-oct).
 - [~] Dataset de consultas: borrador en `evaluation/datasets/queries.v2.draft.jsonl` (75 EN + 25 ES, 75 necesidades). **Pendiente: revisión del autor** y verificar contra el corpus congelado que cada necesidad tenga ofertas relevantes.
 - [x] Líneas base `ilike` y `bm25` + comandos `eval:retrieve`, `eval:pool`, `eval:judge` (UMBRELA, caché), `eval:kappa-export`, `eval:generate`; análisis en `evaluation/analysis/{metrics,kappa}.py` (imagen Docker fijada). Probados de punta a punta en la base de desarrollo (10-oct).
 - [ ] Anotación humana de la muestra para kappa (~250-300 pares, 2-3 h) — el CSV ciego sale de `eval:kappa-export`.
-- [~] Generación + RAGAS: `eval:generate` probado; `evaluation/ragas/` (ragas 0.4.3, imagen aislada) instanciado; falta la prueba completa con el juez local.
+- [x] Generación + RAGAS probados de punta a punta (piloto de 3 consultas, juez local): faithfulness 0,889, answer relevancy 0,903, 0 % NaN; ~50 s por respuesta con el juez local.
 - [~] Benchmark de almacenes vectoriales (`evaluation/bench/`): implementado y probado a pequeña escala (5k). Ya muestra el problema de post-filtrado de pgvector: filtro 10 % con ef=16 sin iterative scan → recall 0,19; con `relaxed_order` → 0,995. Requiere recrear el contenedor de Postgres (`shm_size: 4gb`) antes de la corrida real.
 - [ ] Corrida final con juez de pago; análisis estadístico (aleatorización pareada + Holm) y figuras.
 
