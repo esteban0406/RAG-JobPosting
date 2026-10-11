@@ -1,0 +1,62 @@
+{
+  "snapshot": "corpus-2026-10-10.dump",
+  "format": "pg_dump custom (-Fc), tables Job and JobChunk",
+  "sha256": "8106c29a430167a3f40d9d0122d801d2d581d6a257e02e38bcec4d8b80c09935",
+  "bytes": 18262588,
+  "ingested": {
+    "started": "2026-10-10T22:41:00Z",
+    "finished": "2026-10-11T01:12:09Z",
+    "database": "jobpostings_eval",
+    "code": "commit 2dd5540 (ingestion code unchanged by this branch at that point)",
+    "settings": {
+      "NODE_ENV": "development",
+      "INGESTION_CRON_ENABLED": "false",
+      "INGESTION_PARSE_CONCURRENCY": 2
+    }
+  },
+  "sources": {
+    "findwork": 895,
+    "jobicy": 162,
+    "remotive": 11
+  },
+  "source_notes": [
+    "Findwork stopped at its API rate limit (HTTP 429) after 895 jobs.",
+    "Remotive and Jobicy connectors drop postings without an explicit salary."
+  ],
+  "jobs": 1068,
+  "chunks": {
+    "total_with_embedding": 4013,
+    "by_type": {
+      "identity": 1068,
+      "responsibilities": 1044,
+      "requirements": 1022,
+      "benefits": 855,
+      "description": 20,
+      "salary": 4
+    },
+    "mean_chars": 467,
+    "max_chars": 4163
+  },
+  "parsing": {
+    "parser_model": "llama3.1:8b (Ollama, local)",
+    "failed_completely": 25,
+    "partial_without_summary": 231,
+    "jobs_with_sliding_window_chunks": 7
+  },
+  "attributes": {
+    "remote": 682,
+    "with_salary": 504,
+    "job_type": {
+      "full_time": 904,
+      "contract": 71,
+      "null": 61,
+      "internship": 19,
+      "freelance": 8,
+      "part_time": 5
+    },
+    "salary_outliers_note": "A few salaries are not normalized to USD/year (e.g. SEK amounts, an hourly rate scaled to 86,528,000); median 175,000, p95 322,000."
+  },
+  "embedding_model": "intfloat/e5-base-v2 (768 dimensions, local embedding-server)",
+  "pgvector": "0.8.2 (pgvector/pgvector:0.8.2-pg16)",
+  "restore": "createdb <db>; CREATE EXTENSION vector; pg_restore --no-owner -d <db> corpus-2026-10-10.dump (verified: 1068 jobs, 4013 chunks)"
+}

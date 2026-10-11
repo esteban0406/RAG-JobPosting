@@ -1,0 +1,53 @@
+== database: jobpostings_eval | query: senior backend engineer with python and aws experience
+== indexes
+indexname|indexdef
+JobChunk_embedding_hnsw_idx|CREATE INDEX "JobChunk_embedding_hnsw_idx" ON public."JobChunk" USING hnsw (embedding vector_cosine_ops) WITH (m='16', ef_construction='128')
+(1 row)
+chunks
+4013
+(1 row)
+== legacy query: ORDER BY derived similarity + threshold filter
+QUERY PLAN
+Limit (actual time=24.808..24.811 rows=15 loops=1)
+  Buffers: shared hit=24445
+  ->  Sort (actual time=24.807..24.808 rows=15 loops=1)
+        Sort Key: (('1'::double precision - (embedding <=> '[query vector]'::vector))) DESC
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=24445
+        ->  Seq Scan on "JobChunk" (actual time=0.048..23.961 rows=4013 loops=1)
+              Filter: ((embedding IS NOT NULL) AND (('1'::double precision - (embedding <=> '[query vector]'::vector)) >= '0.5'::double precision))
+              Buffers: shared hit=24442
+Planning:
+  Buffers: shared hit=152
+Planning Time: 0.436 ms
+Execution Time: 24.841 ms
+(13 rows)
+== reshaped query: ORDER BY distance operator + LIMIT
+QUERY PLAN
+Limit (actual time=24.727..24.731 rows=15 loops=1)
+  Buffers: shared hit=24445
+  ->  Sort (actual time=24.726..24.728 rows=15 loops=1)
+        Sort Key: ((embedding <=> '[query vector]'::vector))
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=24445
+        ->  Seq Scan on "JobChunk" jc (actual time=0.050..23.852 rows=4013 loops=1)
+              Filter: (embedding IS NOT NULL)
+              Buffers: shared hit=24442
+Planning:
+  Buffers: shared hit=156 read=1
+Planning Time: 0.500 ms
+Execution Time: 24.771 ms
+(13 rows)
+== reshaped query with enable_seqscan = off (forces the HNSW index)
+QUERY PLAN
+Limit  (cost=952.57..983.97 rows=15 width=68) (actual time=1.746..1.973 rows=15 loops=1)
+  Buffers: shared hit=807
+  ->  Index Scan using "JobChunk_embedding_hnsw_idx" on "JobChunk" jc  (cost=952.57..9352.32 rows=4013 width=68) (actual time=1.745..1.971 rows=15 loops=1)
+        Order By: (embedding <=> '[query vector]'::vector)
+        Filter: (embedding IS NOT NULL)
+        Buffers: shared hit=807
+Planning:
+  Buffers: shared hit=157
+Planning Time: 0.491 ms
+Execution Time: 2.041 ms
+(10 rows)
