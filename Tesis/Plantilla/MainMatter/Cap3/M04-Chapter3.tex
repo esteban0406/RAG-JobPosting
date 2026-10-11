@@ -108,10 +108,13 @@ En producción la temperatura de generación es 0,2. Para la evaluación se fija
 
 El corpus se obtuvo el 10 de octubre de 2026 mediante una ejecución completa del proceso de ingesta de JobAI sobre sus tres fuentes públicas: Remotive, Jobicy y Findwork. El proceso se ejecutó sobre una base de datos dedicada y con el programador de ingesta periódica desactivado, para que el catálogo no cambiara durante la evaluación. El resultado se congeló en una copia de seguridad (\textit{snapshot}) identificada por su resumen SHA-256. Todas las corridas de evaluación parten de esa copia.
 
-El corpus contiene \pendiente{número de ofertas} ofertas y \pendiente{número de fragmentos} fragmentos. En \pendiente{porcentaje}\,\% de las ofertas el análisis estructurado con el modelo local Llama 3.1 8B falló y se aplicó la fragmentación por ventana deslizante. El corpus tiene dos sesgos conocidos, que se tienen en cuenta al interpretar los resultados:
+El corpus contiene 1.068 ofertas: 895 de Findwork, 162 de Jobicy y 11 de Remotive. De ellas, 682 están marcadas como remotas y 504 informan salario. Las ofertas se dividen en 4.013 fragmentos, todos con su \textit{embedding}, con una longitud media de 467 caracteres. El análisis estructurado con el modelo local Llama 3.1 8B falló por completo en 25 ofertas (2,3\,\%), a las que se aplicó la fragmentación por ventana deslizante, y fue parcial, sin resumen, en otras 231.
+
+El corpus tiene tres sesgos conocidos, que se tienen en cuenta al interpretar los resultados:
 \begin{itemize}
-    \item Los conectores de Remotive y Jobicy descartan las ofertas sin salario explícito.
-    \item La API de Findwork limita el número de solicitudes, de modo que el corpus está dominado por una sola fuente.
+    \item Los conectores de Remotive y Jobicy descartan las ofertas sin salario explícito, lo que explica su baja participación.
+    \item La API de Findwork interrumpió la descarga al alcanzar su límite de solicitudes, y aun así aporta el 84\,\% del corpus, de modo que este está dominado por una sola fuente.
+    \item El normalizador de salarios del artefacto no convierte monedas ni algunos montos por hora, por lo que unas pocas ofertas tienen salarios atípicos. La mediana de los salarios informados es de 175.000 dólares anuales.
 \end{itemize}
 
 \section{Conjunto de consultas de prueba}

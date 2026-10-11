@@ -26,6 +26,9 @@
 
 % babel (espa\~nol) vuelve activos < y >; esta librer\'ia evita el conflicto con las flechas de TikZ.
 \usetikzlibrary{babel}
+% Numeraci\'on progresiva cap\'itulo.secci\'on (NTC 1486), para que las referencias
+% cruzadas entre cap\'itulos no sean ambiguas.
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
 % NTC 1486 usa "Tabla"; babel en espa\~nol usa "Cuadro" por defecto.
 \addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
 

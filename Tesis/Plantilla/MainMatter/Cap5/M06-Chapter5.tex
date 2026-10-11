@@ -16,6 +16,47 @@
 \pendiente{Tabla: p50 y p95 por etapa (\textit{embedding}, búsqueda, construcción del contexto, TTFT, total) con cada almacén vectorial.}
 
 \section{pgvector frente a Qdrant (PE4)}
+
+\subsection{Resultado preliminar sobre el corpus real}
+
+La Tabla~\ref{tab:res-ann-real} resume una primera comparación sobre el corpus de evaluación (4.013 fragmentos). Se usaron 200 consultas formadas por títulos de ofertas del corpus y 3 repeticiones; la referencia es la búsqueda exacta en pgvector. La latencia se mide desde el cliente y corresponde a la búsqueda de 10 vecinos, sin el \textit{embedding} de la consulta.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Recall@10 y latencia de búsqueda sobre el corpus real (resultado preliminar)}
+    \label{tab:res-ann-real}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Configuración} & \textbf{Recall@10} & \textbf{p50 (ms)} & \textbf{p95 (ms)} \\
+        \hline
+        pgvector, exacta & 1{,}000 & 24{,}3 & 27{,}2 \\
+        \hline
+        Qdrant, exacta & 0{,}999 & 3{,}9 & 4{,}8 \\
+        \hline
+        pgvector, plan automático & 1{,}000 & 23{,}6 & 25{,}3 \\
+        \hline
+        pgvector, HNSW $ef=16$ & 0{,}976 & 2{,}0 & 2{,}7 \\
+        \hline
+        Qdrant, HNSW $ef=16$ & 0{,}925 & 3{,}0 & 3{,}7 \\
+        \hline
+        pgvector, HNSW $ef=64$ & 0{,}995 & 2{,}2 & 2{,}8 \\
+        \hline
+        Qdrant, HNSW $ef=64$ & 0{,}988 & 3{,}1 & 3{,}6 \\
+        \hline
+        pgvector, HNSW $ef=256$ & 0{,}999 & 3{,}2 & 3{,}8 \\
+        \hline
+        Qdrant, HNSW $ef=256$ & 0{,}998 & 3{,}5 & 4{,}1 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+A esta escala se observan tres hechos que el benchmark completo deberá contrastar:
+\begin{itemize}
+    \item Con el plan automático, pgvector recorre la tabla completa (Sección~\ref{sec:art-vectorial}), por lo que la aplicación servida desde pgvector tarda unas ocho veces más que servida desde Qdrant.
+    \item Forzando el índice, pgvector es ligeramente más rápido que Qdrant y alcanza un \textit{recall} mayor con el mismo $ef_{search}$. A este tamaño, la latencia de Qdrant está dominada por la sobrecarga del cliente y del protocolo.
+    \item Las diferencias de \textit{recall} entre los dos motores en modo exacto se deben a empates entre fragmentos idénticos.
+\end{itemize}
+
 \pendiente{Figuras: curvas \textit{recall}@10 frente a latencia por escala (corpus real, 100k, 500k) y por selectividad del filtro (sin filtro, 50\,\%, 10\,\%, 1\,\%). Tabla: tiempo de construcción, tamaño del índice, memoria pico y QPS.}
 
 \section{Discusión}

@@ -151,12 +151,35 @@ El prompt de sistema instruye al modelo a responder \emph{únicamente} a partir 
 
 En su versión inicial, JobAI almacenaba los vectores en una columna \texttt{vector(768)} de PostgreSQL, mediante la extensión pgvector \citep{Pgvector}. El esquema incluía un índice IVFFlat creado en la migración inicial, es decir, sobre una tabla todavía vacía y con los parámetros por defecto. La consulta de similitud, sin embargo, ordenaba los resultados por la expresión derivada $1 - d(\mathbf{q}, \mathbf{v})$ y filtraba por umbral sobre esa misma expresión. El planificador de PostgreSQL solo puede servir una búsqueda de vecinos cercanos desde el índice cuando la consulta ordena directamente por el operador de distancia (\texttt{ORDER BY embedding <=> q LIMIT k}).
 
-La inspección con \texttt{EXPLAIN ANALYZE} sobre la base de desarrollo, con 342 fragmentos, lo confirma:
+La Tabla~\ref{tab:art-explain} resume la inspección con \texttt{EXPLAIN ANALYZE} sobre el corpus de evaluación (4.013 fragmentos), antes y después de la migración del índice.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Plan de ejecución de la búsqueda de 15 vecinos en pgvector sobre el corpus de evaluación}
+    \label{tab:art-explain}
+    \begin{tabular}{|p{5.2cm}|p{2.2cm}|p{4.6cm}|r|}
+        \hline
+        \textbf{Consulta} & \textbf{Índice} & \textbf{Plan elegido} & \textbf{Tiempo} \\
+        \hline
+        Original (orden por $1-d$) & IVFFlat & Barrido secuencial + ordenamiento & 25,7 ms \\
+        \hline
+        Reescrita (orden por $d$) & IVFFlat & Recorrido del índice & 2,8 ms \\
+        \hline
+        Reescrita (orden por $d$) & HNSW & Barrido secuencial + ordenamiento & 24,8 ms \\
+        \hline
+        Reescrita, índice forzado & HNSW & Recorrido del índice & 2,0 ms \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La inspección confirma tres hechos.
 \begin{itemize}
-    \item La consulta original ejecuta un barrido secuencial de la tabla completa seguido de un ordenamiento.
-    \item La misma búsqueda reescrita con el operador de distancia es servida por el índice.
+    \item La consulta original nunca usaba el índice: recorría y ordenaba la tabla completa.
+    \item El índice IVFFlat creado sobre la tabla vacía no perdía \textit{recall} (1,000 frente a la búsqueda exacta en 100 consultas), probablemente porque todos los vectores quedaron en una sola lista; en la práctica se comportaba como un recorrido completo.
+    \item Con el índice HNSW y la consulta ya corregida, el planificador de PostgreSQL sigue prefiriendo el barrido secuencial a esta escala, aunque el recorrido del índice es 12 veces más rápido. El modelo de costos de pgvector sobrestima el costo de arranque del índice en tablas de pocos miles de filas. Por eso la búsqueda admite un modo que fuerza el índice, y la evaluación mide ambos comportamientos.
 \end{itemize}
-La misma inspección reveló un segundo hecho: los 342 fragmentos superaban el umbral de similitud de 0,5. Las similitudes coseno de e5-base-v2 se concentran en valores altos, de modo que con este modelo el umbral prácticamente no filtra. \pendiente{repetir la inspección sobre el corpus de evaluación completo y reportar la distribución de similitudes.}
+
+La misma inspección reveló que el umbral de similitud de 0,5 no filtra nada con este modelo. En 20 consultas de prueba, la similitud coseno mínima entre la consulta y \emph{cualquier} fragmento del corpus fue 0,66, y la mediana 0,75. Las similitudes de e5-base-v2 se concentran en valores altos, así que todos los fragmentos superan el umbral.
 
 \subsection{Diseño de la migración}
 
@@ -183,7 +206,7 @@ La migración se diseñó para cumplir dos requisitos: que la plataforma pueda s
     \item[Carga y verificación.] Un comando de línea copia en lotes todos los vectores existentes de PostgreSQL a Qdrant. La operación es idempotente, porque los identificadores son deterministas. Al terminar, el comando espera a que Qdrant indexe la colección y verifica que coincidan tres conteos: filas en PostgreSQL, puntos en Qdrant y vectores indexados.
 \end{description}
 
-En la base de desarrollo, la búsqueda exacta en ambos motores devolvió los mismos 10 resultados para las 50 consultas de prueba, lo que confirma que los dos almacenes contienen los mismos datos y usan la misma métrica. La comparación de desempeño entre ambos motores se reporta en el Capítulo~\ref{cap:resultados}.
+Sobre el corpus de evaluación, la búsqueda exacta en ambos motores coincidió en el 99,85\,\% de los 10 primeros resultados de 200 consultas. Las diferencias corresponden a empates entre fragmentos de texto idéntico, que cada motor ordena de forma distinta. Esto confirma que los dos almacenes contienen los mismos datos y usan la misma métrica. La comparación de desempeño entre ambos motores se reporta en el Capítulo~\ref{cap:resultados}.
 
 \section{Defectos detectados en la revisión previa a la evaluación}
 \label{sec:art-defectos}

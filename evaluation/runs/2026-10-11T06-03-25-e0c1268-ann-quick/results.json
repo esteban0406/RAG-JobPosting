@@ -1,0 +1,92 @@
+[
+  {
+    "system": "pg-exact",
+    "backend": "pgvector",
+    "mode": "exact",
+    "efSearch": null,
+    "recallAtK": 1,
+    "p50Ms": 24.30788599999869,
+    "p95Ms": 27.15280514999904,
+    "meanMs": 24.59909751833328
+  },
+  {
+    "system": "qdrant-exact",
+    "backend": "qdrant",
+    "mode": "exact",
+    "efSearch": null,
+    "recallAtK": 0.9985,
+    "p50Ms": 3.8979664999969827,
+    "p95Ms": 4.781650099995019,
+    "meanMs": 3.9707142466665757
+  },
+  {
+    "system": "pg-auto",
+    "backend": "pgvector",
+    "mode": "auto",
+    "efSearch": null,
+    "recallAtK": 1,
+    "p50Ms": 23.643175000001065,
+    "p95Ms": 25.329286250003857,
+    "meanMs": 23.871267559999808
+  },
+  {
+    "system": "pg-hnsw-ef16",
+    "backend": "pgvector",
+    "mode": "ann",
+    "efSearch": 16,
+    "recallAtK": 0.9755,
+    "p50Ms": 1.9843460000010964,
+    "p95Ms": 2.6708569500005974,
+    "meanMs": 2.0925550333332406
+  },
+  {
+    "system": "qdrant-hnsw-ef16",
+    "backend": "qdrant",
+    "mode": "ann",
+    "efSearch": 16,
+    "recallAtK": 0.9255,
+    "p50Ms": 2.981916499993531,
+    "p95Ms": 3.672993500007578,
+    "meanMs": 3.234065010000086
+  },
+  {
+    "system": "pg-hnsw-ef64",
+    "backend": "pgvector",
+    "mode": "ann",
+    "efSearch": 64,
+    "recallAtK": 0.995,
+    "p50Ms": 2.1998114999951213,
+    "p95Ms": 2.787961049997829,
+    "meanMs": 2.296653291666056
+  },
+  {
+    "system": "qdrant-hnsw-ef64",
+    "backend": "qdrant",
+    "mode": "ann",
+    "efSearch": 64,
+    "recallAtK": 0.988,
+    "p50Ms": 3.109324999997625,
+    "p95Ms": 3.61563055000006,
+    "meanMs": 3.1274086399998002
+  },
+  {
+    "system": "pg-hnsw-ef256",
+    "backend": "pgvector",
+    "mode": "ann",
+    "efSearch": 256,
+    "recallAtK": 0.999,
+    "p50Ms": 3.1876789999951143,
+    "p95Ms": 3.840058249999128,
+    "meanMs": 3.264783748333308
+  },
+  {
+    "system": "qdrant-hnsw-ef256",
+    "backend": "qdrant",
+    "mode": "ann",
+    "efSearch": 256,
+    "recallAtK": 0.9975,
+    "p50Ms": 3.4899755000005825,
+    "p95Ms": 4.138788699990982,
+    "meanMs": 3.5573778416663844
+  }
+]
