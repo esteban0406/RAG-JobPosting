@@ -188,12 +188,13 @@ En la base de desarrollo, la búsqueda exacta en ambos motores devolvió los mis
 \section{Defectos detectados en la revisión previa a la evaluación}
 \label{sec:art-defectos}
 
-Antes de evaluar el artefacto se revisó su código frente a su documentación. La revisión encontró cuatro defectos, que se corrigieron dentro de esta iteración porque habrían invalidado parte de la evaluación:
+Antes de evaluar el artefacto se revisó su código frente a su documentación. La revisión encontró cinco defectos, que se corrigieron dentro de esta iteración porque habrían invalidado parte de la evaluación:
 
 \begin{enumerate}
     \item \textbf{La personalización por currículo reemplazaba la consulta.} La documentación del artefacto indicaba que el perfil se antepone a la consulta del usuario. La implementación, en cambio, construía la búsqueda \emph{solo} con el perfil, de modo que un usuario con currículo recibía las mismas ofertas fuera cual fuera su pregunta. Se corrigió para anteponer el perfil.
     \item \textbf{La ruta de agregación fallaba con las consultas que solo contenían señales de agregación.} Los patrones \textit{regex} clasificaban la consulta como agregación sin seleccionar ninguna plantilla SQL, y la ejecución fallaba al no encontrar la plantilla. Las pruebas de integración no lo detectaban porque simulaban el repositorio SQL. Se corrigió delegando la selección de la plantilla al clasificador LLM, con recuperación como alternativa; las pruebas ahora verifican la plantilla seleccionada.
     \item \textbf{Las consultas de similitud no usaban el índice vectorial.} Se describe en la Sección~\ref{sec:art-vectorial}.
+    \item \textbf{Las plantillas de agregación sobre ofertas remotas ignoraban el atributo de modalidad.} Las plantillas que cuentan y listan ofertas remotas buscaban la palabra \textit{remote} en el texto de la ubicación. No usaban el atributo booleano de modalidad que la ingesta obtiene de la fuente o del análisis estructurado. Sobre el corpus de evaluación, la plantilla original reconocía como remotas 39 ofertas, frente a más de 570 marcadas como tales. Se corrigió para usar el atributo, conservando el texto de la ubicación como respaldo.
     \item \textbf{Otros defectos menores con efecto en la evaluación.}
     \begin{itemize}
         \item El listado de ofertas usado para exportar el catálogo estaba limitado a 20 registros.

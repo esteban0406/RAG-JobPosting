@@ -10,7 +10,7 @@ Adjunto el borrador del documento en PDF. Contiene la introducción, el planteam
 - **Iteración de diseño sobre el artefacto** (Cap. 4):
   - **Diagnóstico de pgvector:** la búsqueda vectorial nunca usaba el índice, según la evidencia de `EXPLAIN ANALYZE`, y el umbral de similitud no filtraba nada.
   - **Migración a Qdrant:** el almacén vectorial quedó detrás de una interfaz común, de modo que la plataforma funciona con pgvector o con Qdrant cambiando una variable de configuración. Ambos motores usan el mismo índice HNSW para compararlos en igualdad de condiciones.
-  - **Defectos corregidos:** la revisión del código encontró cuatro, entre ellos que la personalización por currículo descartaba la pregunta del usuario.
+  - **Defectos corregidos:** la revisión del código encontró cinco, entre ellos que la personalización por currículo descartaba la pregunta del usuario.
 - **Corpus de evaluación:** se ingirió un corpus nuevo y fijo de unas 1.000 ofertas reales (Remotive, Jobicy y Findwork) para que los experimentos sean reproducibles.
 
 ## Decisiones metodológicas

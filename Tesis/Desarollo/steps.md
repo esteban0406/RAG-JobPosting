@@ -128,9 +128,10 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 - [ ] Corrida final con juez de pago; análisis estadístico (aleatorización pareada + Holm) y figuras.
 
 **Hallazgos pendientes de decisión (10-oct):**
-- La plantilla `count_remote` cuenta remotos por `location ILIKE '%remote%'` e ignora la columna `isRemote` del parser → subestima mucho las ofertas remotas. ¿Corregir (nueva iteración) o reportar como defecto encontrado en la evaluación?
+- [x] La plantilla `count_remote` (y `list_remote_jobs`) contaba remotos por `location ILIKE '%remote%'` e ignoraba la columna `isRemote` → 39 vs. 614 en el corpus de evaluación. **Corregida el 10-oct por decisión del autor**; documentada en Cap4 como quinto defecto.
 - El normalizador de salarios no convierte monedas ni algunos montos por hora (p. ej. 86.528.000 USD para un "Dispatch Specialist"; salarios en SEK). 5 de 253 ofertas con salario son atípicas; mediana 175 k. Se documenta como limitación de calidad de datos.
-- Groq retiró `qwen3-32b` y `qwen3.6-27b`: revisar el `LLM_MODEL` de producción.
+- [x] Groq retiró `qwen3-32b` y `qwen3.6-27b`; producción ya usa `qwen/qwen3.8-27b` (confirmado por el autor).
+- [x] Apellido del profesor confirmado: Cifuentes.
 
 ---
 

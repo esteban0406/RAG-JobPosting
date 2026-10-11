@@ -56,9 +56,12 @@ export const QUERY_TEMPLATES: Record<TemplateKey, string> = {
      ORDER BY count DESC
      LIMIT 20`,
 
+  // isRemote comes from the source or the LLM parser; the location text is a
+  // fallback for postings where neither marked the job as remote.
   count_remote: `SELECT COUNT(*) AS count
      FROM "Job"
-     WHERE location ILIKE '%remote%'
+     WHERE "isRemote"
+        OR location ILIKE '%remote%'
         OR "jobType" ILIKE '%remote%'`,
 
   // ── Salary statistics ────────────────────────────────────────────────────
@@ -159,7 +162,8 @@ export const QUERY_TEMPLATES: Record<TemplateKey, string> = {
 
   list_remote_jobs: `SELECT title, company, "jobType", "minSalary", "maxSalary", url
      FROM "Job"
-     WHERE location ILIKE '%remote%'
+     WHERE "isRemote"
+        OR location ILIKE '%remote%'
         OR "jobType" ILIKE '%remote%'
      ORDER BY "fetchedAt" DESC
      LIMIT 20`,
