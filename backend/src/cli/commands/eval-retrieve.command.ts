@@ -29,7 +29,12 @@ import { JobRepository } from '../../storage/job.repository.js';
 import { PrismaService } from '../../storage/prisma.service.js';
 import { PgVectorStore } from '../../storage/vector-store/pgvector.store.js';
 import { QdrantVectorStore } from '../../storage/vector-store/qdrant.store.js';
-import { createRunDir, gitSha, writeJson } from '../run-context.js';
+import {
+  createRunDir,
+  gitSha,
+  withOverrides,
+  writeJson,
+} from '../run-context.js';
 
 // Baselines, the embedding-model ablation, the three dense engines and the
 // ablation ladder of the production pipeline (each rung adds one component).
@@ -54,19 +59,6 @@ export interface EvalRetrieveOptions {
   // e5-base-v2 vectors and query server for the qdrant-e5base system.
   ablationCollection: string;
   ablationEmbedUrl: string;
-}
-
-// The same configuration with a few keys replaced.
-function withOverrides(
-  config: ConfigService,
-  overrides: Record<string, string>,
-): ConfigService {
-  return {
-    get: (key: string, fallback?: unknown) =>
-      overrides[key] ?? config.get<unknown>(key) ?? fallback,
-    getOrThrow: (key: string) =>
-      overrides[key] ?? config.getOrThrow<unknown>(key),
-  } as unknown as ConfigService;
 }
 
 // Runs every retrieval system over the non-aggregation queries and writes one

@@ -23,7 +23,7 @@ import {
   JobParserService,
 } from '../llm/job-parser.service.js';
 import { NULL_PARSED_JOB, ParsedJobDto } from '../llm/parsed-job.dto.js';
-import { normalizeSalary } from './salary-normalizer.js';
+import { normalizeSalary, plausibleSalary } from './salary-normalizer.js';
 import { normalizeJobType } from './providers/normalize-job-type.js';
 
 @Injectable()
@@ -152,10 +152,11 @@ export class IngestionService {
             ]),
           );
 
-          const salaryNums =
+          const salaryNums = plausibleSalary(
             raw.minSalary != null || raw.maxSalary != null
               ? { minSalary: raw.minSalary, maxSalary: raw.maxSalary }
-              : normalizeSalary({ raw: parsed.salary ?? undefined });
+              : normalizeSalary({ raw: parsed.salary ?? undefined }),
+          );
 
           const jobType =
             normalizeJobType(raw.jobType) ?? parsed.jobType ?? null;
@@ -277,6 +278,10 @@ export class IngestionService {
 
       let stored = 0;
       for (const row of rows) {
+        const salary = plausibleSalary({
+          minSalary: row.minSalary ? parseFloat(row.minSalary) : undefined,
+          maxSalary: row.maxSalary ? parseFloat(row.maxSalary) : undefined,
+        });
         const raw: RawJobDto = {
           sourceId: row.sourceId,
           source: row.source,
@@ -286,8 +291,8 @@ export class IngestionService {
           description: row.description,
           url: row.url,
           jobType: row.jobType || undefined,
-          minSalary: row.minSalary ? parseFloat(row.minSalary) : undefined,
-          maxSalary: row.maxSalary ? parseFloat(row.maxSalary) : undefined,
+          minSalary: salary.minSalary,
+          maxSalary: salary.maxSalary,
         };
 
         const contentHash = this.hashJob(raw);

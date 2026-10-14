@@ -1,4 +1,7 @@
-import { normalizeSalary } from '../../../src/ingestion/salary-normalizer.js';
+import {
+  normalizeSalary,
+  plausibleSalary,
+} from '../../../src/ingestion/salary-normalizer.js';
 
 describe('normalizeSalary', () => {
   describe('structured input with period multipliers', () => {
@@ -9,7 +12,11 @@ describe('normalizeSalary', () => {
     });
 
     it('multiplies monthly rate by 12', () => {
-      const result = normalizeSalary({ min: 5000, max: 7000, period: 'monthly' });
+      const result = normalizeSalary({
+        min: 5000,
+        max: 7000,
+        period: 'monthly',
+      });
       expect(result.minSalary).toBe(60000);
       expect(result.maxSalary).toBe(84000);
     });
@@ -21,13 +28,21 @@ describe('normalizeSalary', () => {
     });
 
     it('passes annual salary through unchanged', () => {
-      const result = normalizeSalary({ min: 80000, max: 120000, period: 'yearly' });
+      const result = normalizeSalary({
+        min: 80000,
+        max: 120000,
+        period: 'yearly',
+      });
       expect(result.minSalary).toBe(80000);
       expect(result.maxSalary).toBe(120000);
     });
 
     it('treats unknown period as multiplier 1', () => {
-      const result = normalizeSalary({ min: 90000, max: 110000, period: 'biweekly' });
+      const result = normalizeSalary({
+        min: 90000,
+        max: 110000,
+        period: 'biweekly',
+      });
       expect(result.minSalary).toBe(90000);
       expect(result.maxSalary).toBe(110000);
     });
@@ -105,5 +120,42 @@ describe('normalizeSalary', () => {
       const result = normalizeSalary({ raw: null });
       expect(result).toEqual({});
     });
+  });
+});
+
+describe('plausibleSalary', () => {
+  it('passes a valid range through unchanged, without filling bounds', () => {
+    expect(plausibleSalary({ minSalary: 90000, maxSalary: 120000 })).toEqual({
+      minSalary: 90000,
+      maxSalary: 120000,
+    });
+    expect(plausibleSalary({ minSalary: 90000, maxSalary: null })).toEqual({
+      minSalary: 90000,
+    });
+  });
+
+  it('drops values outside 10k-1M USD per year', () => {
+    expect(
+      plausibleSalary({ minSalary: 86528000, maxSalary: 99507200 }),
+    ).toEqual({});
+    expect(plausibleSalary({ minSalary: 168, maxSalary: 220 })).toEqual({});
+    expect(
+      plausibleSalary({ minSalary: 150000000, maxSalary: 165000 }),
+    ).toEqual({
+      maxSalary: 165000,
+    });
+  });
+
+  it('keeps the bounds of the range', () => {
+    expect(plausibleSalary({ minSalary: 10000, maxSalary: 1000000 })).toEqual({
+      minSalary: 10000,
+      maxSalary: 1000000,
+    });
+  });
+
+  it('drops an inverted range', () => {
+    expect(plausibleSalary({ minSalary: 216000, maxSalary: 12000 })).toEqual(
+      {},
+    );
   });
 });

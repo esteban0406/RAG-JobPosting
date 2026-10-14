@@ -1,3 +1,4 @@
+import type { ConfigService } from '@nestjs/config';
 import { execSync } from 'child_process';
 import { mkdirSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
@@ -47,4 +48,17 @@ export function mulberry32(seed: number): () => number {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+}
+
+// The same configuration with a few keys replaced.
+export function withOverrides(
+  config: ConfigService,
+  overrides: Record<string, string>,
+): ConfigService {
+  return {
+    get: (key: string, fallback?: unknown) =>
+      overrides[key] ?? config.get<unknown>(key) ?? fallback,
+    getOrThrow: (key: string) =>
+      overrides[key] ?? config.getOrThrow<unknown>(key),
+  } as unknown as ConfigService;
 }

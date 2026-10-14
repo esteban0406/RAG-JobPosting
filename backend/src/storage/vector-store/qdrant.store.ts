@@ -202,6 +202,19 @@ export class QdrantVectorStore implements VectorStore {
     await this.recreateCollection();
   }
 
+  // Rewrites the salary copied into a job's points (used after cleaning).
+  async setJobSalary(
+    jobId: string,
+    salary: { minSalary: number | null; maxSalary: number | null },
+  ): Promise<void> {
+    await this.ensureCollection();
+    await this.client.setPayload(this.collection, {
+      payload: salary,
+      filter: { must: [{ key: 'jobId', match: { value: jobId } }] },
+      wait: true,
+    });
+  }
+
   async recreateCollection(): Promise<void> {
     const { exists } = await this.client.collectionExists(this.collection);
     if (exists) await this.client.deleteCollection(this.collection);

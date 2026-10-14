@@ -79,3 +79,36 @@ function parseRawString(raw: string): NormalizedSalary {
 
   return { minSalary: min, maxSalary: max };
 }
+
+// Plausible annual salary in USD. Values outside this range are currency or
+// period errors the normalizer cannot fix (e.g. SEK amounts, an hourly rate
+// scaled to tens of millions); they are dropped rather than guessed.
+export const MIN_PLAUSIBLE_SALARY = 10_000;
+export const MAX_PLAUSIBLE_SALARY = 1_000_000;
+
+export interface SalaryRange {
+  minSalary?: number | null;
+  maxSalary?: number | null;
+}
+
+// Drops implausible values and inverted ranges; never fills a missing bound,
+// so a valid range passes through unchanged.
+export function plausibleSalary(range: SalaryRange): NormalizedSalary {
+  const valid = (v?: number | null) =>
+    v != null && v >= MIN_PLAUSIBLE_SALARY && v <= MAX_PLAUSIBLE_SALARY
+      ? v
+      : undefined;
+  const minSalary = valid(range.minSalary);
+  const maxSalary = valid(range.maxSalary);
+  if (
+    minSalary !== undefined &&
+    maxSalary !== undefined &&
+    minSalary > maxSalary
+  ) {
+    return {};
+  }
+  return {
+    ...(minSalary !== undefined && { minSalary }),
+    ...(maxSalary !== undefined && { maxSalary }),
+  };
+}

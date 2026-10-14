@@ -1,16 +1,16 @@
 {
-  "snapshot": "corpus-2026-10-14-multilingual-e5.dump",
+  "snapshot": "corpus-2026-10-14-clean.dump",
   "format": "pg_dump custom (-Fc), tables Job and JobChunk",
-  "sha256": "405e2522b47097784949be53b5f8afc5db8451a80551f53390c6ba7e540ca624",
-  "bytes": 18276673,
-  "created": "2026-10-14T15:16:00Z",
+  "sha256": "5c23afbe57112d8e48f1444e54cf138ac1c4ed6b349dc25c2d9339b8f0ca9871",
+  "bytes": 18276346,
+  "created": "2026-10-14T16:10:00Z",
   "database": "jobpostings_eval",
   "base_snapshot": {
     "snapshot": "corpus-2026-10-10.dump",
     "sha256": "8106c29a430167a3f40d9d0122d801d2d581d6a257e02e38bcec4d8b80c09935",
     "manifest": "manifest.json"
   },
-  "change": "Every JobChunk re-embedded in place with `embeddings:reembed` (commit a5d0782); chunk ids, texts and job rows unchanged. HNSW index rebuilt (REINDEX).",
+  "change": "Two steps over the base snapshot, both with the artifact's own commands: (1) `embeddings:reembed` re-embedded every JobChunk in place with multilingual-e5-base (chunk ids, texts and job rows unchanged; HNSW index rebuilt); (2) `jobs:clean-salaries` applied the plausible-salary rule now used at ingestion (annual USD within 10,000-1,000,000 and min <= max, otherwise not stated) to 12 jobs, in Postgres and in the salary payload of both Qdrant collections.",
   "same_corpus_check": {
     "query": "SELECT md5(string_agg(id || md5(\"chunkText\"), ',' ORDER BY id)) FROM \"JobChunk\"",
     "base": "14cfb90229f289efd743508fc5522e00",
@@ -26,5 +26,28 @@
     "eval_job_chunks_e5base": "e5-base-v2 vectors copied before re-embedding, for the embedding-model ablation (4013/4013 indexed; exact top-10 identical to pgvector on 20 queries)"
   },
   "parity": "ann:quick (200 title queries): Qdrant exact vs pgvector exact recall@10 = 0.9975 (ties between identical chunks)",
-  "restore": "createdb <db>; CREATE EXTENSION vector; pg_restore --no-owner -d <db> corpus-2026-10-14-multilingual-e5.dump (verified 14-oct: 1068 jobs, 4013 chunks, same text fingerprint as the base snapshot)"
+  "restore": "createdb <db>; CREATE EXTENSION vector; pg_restore --no-owner -d <db> corpus-2026-10-14-clean.dump (verified 14-oct: 1068 jobs, 4013 chunks, same text fingerprint as the base snapshot, 493 jobs with salary)",
+  "salary_cleaning": {
+    "rule": "backend/src/ingestion/salary-normalizer.ts plausibleSalary",
+    "jobs_changed": 12,
+    "out_of_range": [
+      "Dispatch Specialist 86,528,000-99,507,200",
+      "IT Lead Consultant 18,000,000-33,000,000",
+      "Commercial Account Executive (Sweden) 1,400,000-1,800,000 (SEK)",
+      "Head of Design 168-220",
+      "Enterprise Account Executive min 150,000,000 (max 165,000 kept)"
+    ],
+    "inverted_ranges_dropped": [
+      "Remote Office Assistant 353,000-52,000",
+      "Founding Business Development Representative 80,000-40,000",
+      "Founding BDR 80,000-40,000",
+      "New Patient Appointment Conversion Specialist 216,000-12,000",
+      "Anthropic Fellows Program x3 200,200-120,120"
+    ],
+    "jobs_with_salary": {
+      "before": 504,
+      "after": 493
+    },
+    "max_salary_after": 530000
+  }
 }

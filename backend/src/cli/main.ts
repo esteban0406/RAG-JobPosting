@@ -3,6 +3,7 @@ import { parseArgs } from 'util';
 import { CliModule } from './cli.module.js';
 import { annQuick } from './commands/ann-quick.command.js';
 import { embeddingsReembed } from './commands/embeddings-reembed.command.js';
+import { jobsCleanSalaries } from './commands/jobs-clean-salaries.command.js';
 import { evalAggregation } from './commands/eval-aggregation.command.js';
 import { evalGenerate } from './commands/eval-generate.command.js';
 import { evalJudge } from './commands/eval-judge.command.js';
@@ -21,6 +22,9 @@ Commands:
   embeddings:reembed [--batch-size 500]
       Re-embed every JobChunk in place with LOCAL_EMBEDDING_MODEL (same ids and
       texts) and rebuild the HNSW index; then run qdrant:backfill --recreate.
+  jobs:clean-salaries [--collections a,b] [--dry-run]
+      Apply the plausible-salary rule (10k-1M USD/year, min <= max) to stored
+      jobs and to the salary in the given Qdrant collections' payloads.
   qdrant:backfill [--recreate] [--batch-size 500]
       Copy all JobChunk vectors from Postgres into Qdrant and verify counts.
   ann:quick [--queries 200] [--k 10] [--ef 16,64,256] [--repetitions 3]
@@ -54,6 +58,8 @@ async function main(): Promise<number> {
     allowPositionals: true,
     options: {
       recreate: { type: 'boolean', default: false },
+      collections: { type: 'string' },
+      'dry-run': { type: 'boolean', default: false },
       'batch-size': { type: 'string', default: '500' },
       queries: { type: 'string', default: '200' },
       k: { type: 'string', default: '10' },
@@ -112,6 +118,19 @@ async function main(): Promise<number> {
       case 'embeddings:reembed':
         return (await embeddingsReembed(app, {
           batchSize: Number(values['batch-size']),
+        }))
+          ? 0
+          : 1;
+      case 'jobs:clean-salaries':
+        return (await jobsCleanSalaries(app, {
+          collections: (
+            values.collections ??
+            process.env.QDRANT_COLLECTION ??
+            'job_chunks'
+          )
+            .split(',')
+            .filter(Boolean),
+          dryRun: values['dry-run'],
         }))
           ? 0
           : 1;
