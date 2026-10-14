@@ -18,6 +18,15 @@ describe('toVectorFilter', () => {
     expect(toVectorFilter({ jobType: 'gig' })).toBeUndefined();
   });
 
+  it('accepts contract postings when asked for freelance work', () => {
+    expect(toVectorFilter({ jobType: 'freelance' })).toEqual({
+      jobType: ['contract', 'freelance'],
+    });
+    expect(toVectorFilter({ jobType: 'contract' })).toEqual({
+      jobType: 'contract',
+    });
+  });
+
   it('reads remote work from isRemote, or from a "remote" location', () => {
     expect(toVectorFilter({ isRemote: false })).toEqual({ isRemote: false });
     expect(toVectorFilter({ location: '%remote%' })).toEqual({

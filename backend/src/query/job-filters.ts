@@ -1,4 +1,5 @@
 import { normalizeJobType } from '../ingestion/providers/normalize-job-type.js';
+import { JobType } from '../llm/job-type.enum.js';
 import type { VectorFilter } from '../storage/vector-store/vector-store.interface.js';
 
 // Structured constraints the classifier extracts from a query.
@@ -10,6 +11,15 @@ export interface JobFilters {
   location?: string;
   jobType?: string;
   isRemote?: boolean;
+}
+
+// The sources label most freelance work as contract (e.g. "Freelance Product
+// and Brand Designers" is a contract posting), so asking for freelance work
+// accepts both.
+function jobTypeFilter(jobType: JobType): string | string[] {
+  return jobType === JobType.FREELANCE
+    ? [JobType.CONTRACT, JobType.FREELANCE]
+    : jobType;
 }
 
 function isPositive(value: unknown): value is number {
@@ -25,7 +35,7 @@ export function toVectorFilter(filters?: JobFilters): VectorFilter | undefined {
   if (isPositive(filters.minSalary)) filter.salaryAtLeast = filters.minSalary;
   if (isPositive(filters.maxSalary)) filter.maxSalary = filters.maxSalary;
   const jobType = normalizeJobType(filters.jobType?.replace(/%/g, ''));
-  if (jobType) filter.jobType = jobType;
+  if (jobType) filter.jobType = jobTypeFilter(jobType);
   if (typeof filters.isRemote === 'boolean') {
     filter.isRemote = filters.isRemote;
   } else if (/remote/i.test(filters.location ?? '')) {
@@ -60,7 +70,7 @@ export function filterFromRequest(request: {
     filter.isRemote = true;
   } else {
     const jobType = normalizeJobType(request.type);
-    if (jobType) filter.jobType = jobType;
+    if (jobType) filter.jobType = jobTypeFilter(jobType);
   }
   if (/^\s*remote\s*$/i.test(request.location ?? '')) filter.isRemote = true;
   return Object.keys(filter).length > 0 ? filter : undefined;

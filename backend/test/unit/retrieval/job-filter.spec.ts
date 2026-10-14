@@ -35,6 +35,13 @@ describe('matchesFilter', () => {
     expect(matchesFilter(job, { maxSalary: 180000 })).toBe(true);
   });
 
+  it('matches any of several job types, never a missing one', () => {
+    const filter = { jobType: ['contract', 'freelance'] };
+    expect(matchesFilter({ ...job, jobType: 'contract' }, filter)).toBe(true);
+    expect(matchesFilter(job, filter)).toBe(false);
+    expect(matchesFilter({ ...job, jobType: null }, filter)).toBe(false);
+  });
+
   it('matches job type and work arrangement exactly', () => {
     expect(matchesFilter(job, { jobType: 'full_time', isRemote: true })).toBe(
       true,

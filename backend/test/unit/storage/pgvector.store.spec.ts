@@ -99,6 +99,21 @@ describe('PgVectorStore', () => {
     expect(query.values).toEqual(expect.arrayContaining([150000]));
   });
 
+  it('matches any of several job types', async () => {
+    const { store, tx } = buildStore();
+
+    await store.search([0.1], {
+      topK: 10,
+      filter: { jobType: ['contract', 'freelance'] },
+    });
+
+    const query = (tx.$queryRaw.mock.calls as unknown[][])[0][0] as SqlLike;
+    expect(query.sql).toContain('j."jobType" = ANY(');
+    expect(query.values).toEqual(
+      expect.arrayContaining([['contract', 'freelance']]),
+    );
+  });
+
   it('rejects an invalid ef_search', async () => {
     const { store } = buildStore();
 

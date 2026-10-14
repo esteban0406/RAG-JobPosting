@@ -3,6 +3,7 @@ import { Prisma } from '../../../generated/prisma/client.js';
 import { PrismaService } from '../prisma.service.js';
 import {
   DEFAULT_EF_SEARCH,
+  jobTypesOf,
   type EmbeddedChunk,
   type JobChunkResult,
   type SearchOptions,
@@ -199,8 +200,11 @@ export class PgVectorStore implements VectorStore {
         Prisma.sql`COALESCE(j."maxSalary", j."minSalary") >= ${filter.salaryAtLeast}`,
       );
     }
-    if (filter.jobType !== undefined) {
-      conditions.push(Prisma.sql`j."jobType" = ${filter.jobType}`);
+    const jobTypes = jobTypesOf(filter);
+    if (jobTypes?.length === 1) {
+      conditions.push(Prisma.sql`j."jobType" = ${jobTypes[0]}`);
+    } else if (jobTypes) {
+      conditions.push(Prisma.sql`j."jobType" = ANY(${jobTypes})`);
     }
     if (filter.isRemote !== undefined) {
       conditions.push(Prisma.sql`j."isRemote" = ${filter.isRemote}`);

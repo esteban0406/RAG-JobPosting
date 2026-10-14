@@ -8,6 +8,7 @@ import {
   HNSW_EF_CONSTRUCTION,
   HNSW_M,
   VECTOR_SIZE,
+  jobTypesOf,
   type EmbeddedChunk,
   type JobChunkResult,
   type SearchOptions,
@@ -279,8 +280,11 @@ export class QdrantVectorStore implements VectorStore {
         ],
       });
     }
-    if (filter.jobType !== undefined) {
-      must.push({ key: 'jobType', match: { value: filter.jobType } });
+    const jobTypes = jobTypesOf(filter);
+    if (jobTypes?.length === 1) {
+      must.push({ key: 'jobType', match: { value: jobTypes[0] } });
+    } else if (jobTypes) {
+      must.push({ key: 'jobType', match: { any: jobTypes } });
     }
     if (filter.isRemote !== undefined) {
       must.push({ key: 'isRemote', match: { value: filter.isRemote } });

@@ -44,8 +44,14 @@ export interface VectorFilter {
   // The job can pay at least this much: COALESCE(maxSalary, minSalary) >= X.
   // Used for queries such as "paying over 150k"; the benchmark keeps minSalary.
   salaryAtLeast?: number;
-  jobType?: string;
+  // One job type, or any of several.
+  jobType?: string | string[];
   isRemote?: boolean;
+}
+
+export function jobTypesOf(filter: VectorFilter): string[] | undefined {
+  if (filter.jobType === undefined) return undefined;
+  return Array.isArray(filter.jobType) ? filter.jobType : [filter.jobType];
 }
 
 export type SearchMode = 'auto' | 'ann' | 'exact';

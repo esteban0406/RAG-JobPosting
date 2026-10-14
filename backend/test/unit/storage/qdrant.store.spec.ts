@@ -190,6 +190,24 @@ describe('QdrantVectorStore', () => {
     });
   });
 
+  it('matches any of several job types', async () => {
+    const { store, client } = buildStore();
+    client.query.mockResolvedValueOnce({ points: [] });
+
+    await store.search([0.1], {
+      topK: 5,
+      filter: { jobType: ['contract', 'freelance'] },
+    });
+
+    const [, request] = client.query.mock.calls[0] as [
+      string,
+      { filter: unknown },
+    ];
+    expect(request.filter).toEqual({
+      must: [{ key: 'jobType', match: { any: ['contract', 'freelance'] } }],
+    });
+  });
+
   it('uses exact search and the default ef when requested', async () => {
     const { store, client } = buildStore();
 

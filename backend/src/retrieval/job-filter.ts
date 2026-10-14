@@ -1,6 +1,7 @@
-import type {
-  VectorFilter,
-  VectorJobMeta,
+import {
+  jobTypesOf,
+  type VectorFilter,
+  type VectorJobMeta,
 } from '../storage/vector-store/vector-store.interface.js';
 
 export type FilterableJob = Pick<
@@ -32,7 +33,8 @@ export function matchesFilter(
     const top = job.maxSalary ?? job.minSalary;
     if (top === null || top < filter.salaryAtLeast) return false;
   }
-  if (filter.jobType !== undefined && job.jobType !== filter.jobType) {
+  const jobTypes = jobTypesOf(filter);
+  if (jobTypes && (job.jobType === null || !jobTypes.includes(job.jobType))) {
     return false;
   }
   if (filter.isRemote !== undefined && job.isRemote !== filter.isRemote) {

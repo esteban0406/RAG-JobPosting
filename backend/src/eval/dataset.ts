@@ -1,5 +1,6 @@
 import { readFileSync } from 'fs';
 import type { TemplateKey } from '../query/aggregation/query-templates.js';
+import type { VectorFilter } from '../storage/vector-store/vector-store.interface.js';
 
 export type QueryCategory =
   | 'exact'
@@ -31,6 +32,51 @@ export interface EvalQuery {
   // interchangeable) and a hand-written reference query.
   expectedTemplates?: TemplateKey[];
   goldSql?: string;
+  // The vector-store filter production should apply to this query ({} when
+  // the query states no salary, remote or job-type constraint). Used to score
+  // constraint extraction; absent means not scored.
+  expectedFilters?: VectorFilter;
+}
+
+const FILTER_KEYS = new Set([
+  'minSalary',
+  'maxSalary',
+  'salaryAtLeast',
+  'jobType',
+  'isRemote',
+]);
+
+function checkFilter(filter: unknown, line: number): void {
+  if (typeof filter !== 'object' || filter === null || Array.isArray(filter)) {
+    throw new Error(`Line ${line}: expectedFilters must be an object`);
+  }
+  for (const [key, value] of Object.entries(filter)) {
+    const valid =
+      key === 'isRemote'
+        ? typeof value === 'boolean'
+        : key === 'jobType'
+          ? typeof value === 'string' ||
+            (Array.isArray(value) && value.every((v) => typeof v === 'string'))
+          : typeof value === 'number' && value > 0;
+    if (!FILTER_KEYS.has(key) || !valid) {
+      throw new Error(`Line ${line}: invalid expectedFilters.${key}`);
+    }
+  }
+}
+
+// Order-insensitive equality of two filters; undefined counts as {}.
+export function sameFilter(a?: VectorFilter, b?: VectorFilter): boolean {
+  const canonical = (f?: VectorFilter) =>
+    JSON.stringify(
+      Object.entries(f ?? {})
+        .filter(([, v]) => v !== undefined)
+        .map(([k, v]: [string, unknown]) => [
+          k,
+          Array.isArray(v) ? v.map(String).sort() : v,
+        ])
+        .sort(([x], [y]) => String(x).localeCompare(String(y))),
+    );
+  return canonical(a) === canonical(b);
 }
 
 export function loadDataset(path: string): EvalQuery[] {
@@ -53,6 +99,8 @@ export function loadDataset(path: string): EvalQuery[] {
       if (!QUERY_CATEGORIES.includes(q.category)) {
         throw new Error(`Line ${i + 1}: unknown category "${q.category}"`);
       }
+      if (q.expectedFilters !== undefined)
+        checkFilter(q.expectedFilters, i + 1);
       return q;
     });
 

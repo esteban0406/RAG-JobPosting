@@ -2,7 +2,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { evalPool } from '../../../src/cli/commands/eval-pool.command.js';
-import { loadDataset } from '../../../src/eval/dataset.js';
+import { loadDataset, sameFilter } from '../../../src/eval/dataset.js';
 import {
   JudgmentStore,
   judgmentKey,
@@ -171,5 +171,48 @@ describe('loadDataset', () => {
       [query('q1', 'n1'), query('q1', 'n2')].join('\n'),
     );
     expect(() => loadDataset(join(dir, 'dup.jsonl'))).toThrow('Duplicate');
+  });
+
+  it('accepts valid expectedFilters and rejects invalid ones', () => {
+    const dir = tmp();
+    writeFileSync(
+      join(dir, 'ok.jsonl'),
+      query('q1', 'n1', {
+        expectedFilters: { jobType: ['contract', 'freelance'], isRemote: true },
+      }),
+    );
+    expect(loadDataset(join(dir, 'ok.jsonl'))[0].expectedFilters).toEqual({
+      jobType: ['contract', 'freelance'],
+      isRemote: true,
+    });
+    for (const bad of [{ isRemote: 'yes' }, { city: 'Austin' }, []]) {
+      writeFileSync(
+        join(dir, 'bad.jsonl'),
+        query('q1', 'n1', { expectedFilters: bad }),
+      );
+      expect(() => loadDataset(join(dir, 'bad.jsonl'))).toThrow(
+        'expectedFilters',
+      );
+    }
+  });
+});
+
+describe('sameFilter', () => {
+  it('ignores key order, array order and undefined values', () => {
+    expect(
+      sameFilter(
+        { isRemote: true, jobType: ['freelance', 'contract'] },
+        {
+          jobType: ['contract', 'freelance'],
+          isRemote: true,
+          maxSalary: undefined,
+        },
+      ),
+    ).toBe(true);
+  });
+
+  it('treats a missing filter as an empty one', () => {
+    expect(sameFilter({}, undefined)).toBe(true);
+    expect(sameFilter({ isRemote: true }, undefined)).toBe(false);
   });
 });

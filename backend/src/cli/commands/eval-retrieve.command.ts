@@ -7,7 +7,7 @@ import { join } from 'path';
 import { performance } from 'perf_hooks';
 import { EmbeddingService } from '../../embedding/embedding.service.js';
 import { ClassificationCache } from '../../eval/classification-cache.js';
-import { loadDataset } from '../../eval/dataset.js';
+import { loadDataset, sameFilter } from '../../eval/dataset.js';
 import { Bm25System } from '../../eval/systems/bm25.system.js';
 import {
   DenseSystem,
@@ -176,6 +176,31 @@ export async function evalRetrieve(
   }
   writeFileSync(join(dir, 'latency.jsonl'), latencies.join('\n') + '\n');
   copyFileSync(options.dataset, join(dir, 'queries.jsonl'));
+  // Constraint extraction against the dataset, when a filtered system ran
+  // (the classifications are already cached, so this makes no LLM calls).
+  let filterExtraction: { scored: number; exact: number } | null = null;
+  if (classifications.usedEntries().length > 0) {
+    const rows: string[] = [];
+    let exact = 0;
+    const scored = queries.filter((q) => q.expectedFilters !== undefined);
+    for (const q of scored) {
+      const extracted = (await classifications.filterFor(q.text)) ?? {};
+      const match = sameFilter(q.expectedFilters, extracted);
+      if (match) exact++;
+      rows.push(
+        JSON.stringify({
+          queryId: q.id,
+          expected: q.expectedFilters,
+          extracted,
+          exact: match,
+        }),
+      );
+    }
+    writeFileSync(join(dir, 'filters.jsonl'), rows.join('\n') + '\n');
+    filterExtraction = { scored: scored.length, exact };
+    logger.log(`Filter extraction: ${exact}/${scored.length} exact`);
+  }
+
   const used = classifications.usedEntries();
   if (used.length > 0) {
     writeFileSync(
@@ -198,6 +223,7 @@ export async function evalRetrieve(
     embeddingModel: embedding.modelName,
     embeddingServer: await serverInfo(config),
     classifier: used.length > 0 ? classifications.version : null,
+    filterExtraction,
     corpus: { jobs: jobCount, chunks },
     queries: queries.length,
     ...options,
