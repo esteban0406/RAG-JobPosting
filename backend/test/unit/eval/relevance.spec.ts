@@ -59,6 +59,14 @@ describe('UMBRELA judge prompt', () => {
       'Search need: remote data jobs',
     );
   });
+
+  it('caps postings that miss a hard condition at category 1', () => {
+    const prompt = umbrelaPrompt('remote data jobs over 150k', 'card');
+    expect(prompt).toContain(
+      'or does not state the attribute, can receive at most category 1',
+    );
+    expect(prompt).toContain('Seniority and skills are not hard conditions');
+  });
 });
 
 describe('judgment cache', () => {

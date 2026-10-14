@@ -7,7 +7,8 @@ import { join } from 'path';
 import { performance } from 'perf_hooks';
 import { EmbeddingService } from '../../embedding/embedding.service.js';
 import { ClassificationCache } from '../../eval/classification-cache.js';
-import { loadDataset, sameFilter } from '../../eval/dataset.js';
+import { complianceAtK } from '../../eval/compliance.js';
+import { loadDataset, sameFilter, type EvalQuery } from '../../eval/dataset.js';
 import { Bm25System } from '../../eval/systems/bm25.system.js';
 import {
   DenseSystem,
@@ -17,6 +18,7 @@ import { IlikeSystem } from '../../eval/systems/ilike.system.js';
 import { PipelineSystem } from '../../eval/systems/pipeline.system.js';
 import { LlmService } from '../../llm/llm.service.js';
 import { QueryClassifierService } from '../../query/query-classifier.service.js';
+import type { FilterableJob } from '../../retrieval/job-filter.js';
 import { RetrievalPipeline } from '../../retrieval/retrieval-pipeline.service.js';
 import type {
   RetrievalSystem,
@@ -151,6 +153,7 @@ export async function evalRetrieve(
 
   const dir = createRunDir(`retrieve-${options.label}`);
   const latencies: string[] = [];
+  const runs = new Map<string, Map<string, RetrievedJob[]>>();
   for (const name of options.systems) {
     const factory = factories[name];
     if (!factory)
@@ -171,6 +174,7 @@ export async function evalRetrieve(
       );
     }
     writeTrecRun(join(dir, `${name}.trec`), name, results);
+    runs.set(name, results);
     const empty = [...results.values()].filter((r) => r.length === 0).length;
     logger.log(`${name}: ${queries.length} queries, ${empty} with no results`);
   }
@@ -201,6 +205,8 @@ export async function evalRetrieve(
     logger.log(`Filter extraction: ${exact}/${scored.length} exact`);
   }
 
+  const constraintCompliance = await writeCompliance(dir, queries, runs, jobs);
+
   const used = classifications.usedEntries();
   if (used.length > 0) {
     writeFileSync(
@@ -224,12 +230,60 @@ export async function evalRetrieve(
     embeddingServer: await serverInfo(config),
     classifier: used.length > 0 ? classifications.version : null,
     filterExtraction,
+    constraintCompliance,
     corpus: { jobs: jobCount, chunks },
     queries: queries.length,
     ...options,
   });
   logger.log(`Run written to ${dir}`);
   return dir;
+}
+
+// For queries that state a constraint, the share of each system's top 5 and
+// top 10 that meets it, read from the job attributes (judge-free).
+async function writeCompliance(
+  dir: string,
+  queries: EvalQuery[],
+  runs: Map<string, Map<string, RetrievedJob[]>>,
+  jobRepo: JobRepository,
+): Promise<Record<string, { queries: number; at5: number; at10: number }>> {
+  const constrained = queries.filter(
+    (q) => q.expectedFilters && Object.keys(q.expectedFilters).length > 0,
+  );
+  if (constrained.length === 0) return {};
+  const jobs = new Map<string, FilterableJob>(
+    (await jobRepo.findAllUnpaged()).map((j) => [j.id, j]),
+  );
+  const rows: string[] = [];
+  const summary: Record<
+    string,
+    { queries: number; at5: number; at10: number }
+  > = {};
+  for (const [system, results] of runs) {
+    const at5: number[] = [];
+    const at10: number[] = [];
+    for (const q of constrained) {
+      const ids = (results.get(q.id) ?? []).map((r) => r.jobId);
+      const c5 = complianceAtK(ids, jobs, q.expectedFilters!, 5);
+      const c10 = complianceAtK(ids, jobs, q.expectedFilters!, 10);
+      if (c5 !== null) at5.push(c5);
+      if (c10 !== null) at10.push(c10);
+      rows.push(
+        JSON.stringify({
+          system,
+          queryId: q.id,
+          returned: ids.length,
+          at5: c5,
+          at10: c10,
+        }),
+      );
+    }
+    const mean = (v: number[]) =>
+      v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0;
+    summary[system] = { queries: at5.length, at5: mean(at5), at10: mean(at10) };
+  }
+  writeFileSync(join(dir, 'compliance.jsonl'), rows.join('\n') + '\n');
+  return summary;
 }
 
 // Models and device reported by the embedding/reranking server.

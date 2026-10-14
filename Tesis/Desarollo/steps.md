@@ -172,7 +172,9 @@ Decisiones del autor: híbrida BM25-en-la-app + RRF y *reranking* con bge-rerank
 6. Corrida con juez local: `eval:retrieve` (todos los sistemas) → `eval:pool` → `eval:judge` → `metrics.py`; `eval:generate` + RAGAS; `eval:aggregation`; `eval:latency`.
 7. Regenerar la muestra kappa sobre el pool final (**no anotar el CSV del 13-oct**) y anotarla.
 8. Benchmark sintético: `bench.py export/queries/synth/truth` y `run_bench.sh real synth-100000 synth-500000`.
-- [ ] **Autor:** revisar el dataset y agregar `expectedFilters` a las consultas "con restricciones".
+- [x] `expectedFilters` en las 24 consultas con restricciones (o que podrían leerse así), `{}` donde no debe extraerse nada (14-oct, commit 3a80b50). Decisiones del autor: **las ofertas sin salario no califican** cuando se pide un mínimo (explícito en el `infoNeed` de las 8 necesidades salariales); **"freelance" acepta `contract` o `freelance`** (las fuentes etiquetan el trabajo freelance como contract; `infoNeed` de n-co-08 ajustado).
+- [x] **Juez `umbrela-jobs-v2`** (decisión del autor): salario, modalidad remota, tipo de contrato y ubicación explícitos son condiciones duras; una oferta que las contradice o no las informa recibe como máximo 1 (antes recibía 2 y contaba como relevante). Seniority y habilidades siguen siendo blandas. **Todos los pares se vuelven a juzgar** con el juez local.
+- [x] Métrica determinista de **cumplimiento de restricciones** (% del top-5/top-10 que cumple `expectedFilters`, sin juez): `compliance.jsonl` y `constraintCompliance` en `config.json` de `eval:retrieve`; exactitud de la extracción en `filters.jsonl`. Línea base de humo: BM25 cumple 38 % en el top-5. Pendiente integrarla a `metrics.py` (prueba pareada como las demás).
 - [ ] Documento: Cap0 ("en producción" → configuración de referencia), Cap1 §Alcance (conversación), Cap2 (RRF, fusión híbrida, *reranking*, BGE-M3, Multilingual E5, ANN con filtros — verificar autores), Cap3 (escalera, hardware), Cap4 ("Iteración 5"), Cap5 (tablas nuevas).
 
 ---

@@ -2,7 +2,9 @@ import type { Job } from '../../../generated/prisma/client.js';
 
 // Bump whenever the prompt or the job card changes: cached judgments are keyed
 // by this version, so old verdicts are never mixed with new ones.
-export const PROMPT_VERSION = 'umbrela-jobs-v1';
+// v2 (14-oct-2026): explicit salary, remote, job-type and location conditions
+// are hard; a posting that misses one is at most category 1.
+export const PROMPT_VERSION = 'umbrela-jobs-v2';
 
 const DESCRIPTION_CHARS = 1500;
 
@@ -48,9 +50,10 @@ export function umbrelaPrompt(infoNeed: string, card: string): string {
   return `Given a job seeker's search need and a job posting, you must provide a score on an integer scale of 0 to 3 with the following meanings:
 0 = represents that the posting has nothing to do with the search need,
 1 = represents that the posting seems related to the search need but does not satisfy it,
-2 = represents that the posting satisfies the main part of the search need, but a secondary requirement is missing, unclear, or contradicted,
+2 = represents that the posting satisfies the main part of the search need, but a secondary requirement (such as seniority or a skill) is missing, unclear, or contradicted,
 3 = represents that the posting is dedicated to the search need and satisfies all of it.
 Important Instruction: Assign category 1 if the posting is somewhat related to the need but not completely, category 2 if the posting matches the core of the need but not every stated condition, and category 3 if the posting fully matches every stated condition (role, skills, seniority, salary, location or contract type when mentioned). If none of the above satisfies give it category 0.
+Hard conditions: if the search need states a salary threshold, remote work, a job or contract type, or a location, the posting must state that attribute and meet it. A posting that contradicts any of these conditions, or does not state the attribute, can receive at most category 1, however well it matches the rest. Seniority and skills are not hard conditions: a posting that misses them can still receive category 2.
 
 Search need: ${infoNeed}
 
