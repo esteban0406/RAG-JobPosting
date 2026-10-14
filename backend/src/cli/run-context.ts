@@ -36,3 +36,15 @@ export function percentile(values: number[], p: number): number {
   const hi = Math.ceil(rank);
   return sorted[lo] + (sorted[hi] - sorted[lo]) * (rank - lo);
 }
+
+// Small deterministic PRNG so samples are reproducible from the seed.
+export function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}

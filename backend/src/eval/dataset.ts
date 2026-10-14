@@ -1,4 +1,5 @@
 import { readFileSync } from 'fs';
+import type { TemplateKey } from '../query/aggregation/query-templates.js';
 
 export type QueryCategory =
   | 'exact'
@@ -25,6 +26,10 @@ export interface EvalQuery {
   lang: 'en' | 'es';
   category: QueryCategory;
   expectedRoute?: 'retrieval' | 'aggregation' | 'hybrid';
+  // Aggregation queries: the templates a correct router picks (the closest in
+  // the catalog when none returns the answer directly; some are
+  // interchangeable) and a hand-written reference query.
+  expectedTemplates?: TemplateKey[];
   goldSql?: string;
 }
 

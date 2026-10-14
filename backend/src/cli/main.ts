@@ -2,9 +2,11 @@ import { NestFactory } from '@nestjs/core';
 import { parseArgs } from 'util';
 import { CliModule } from './cli.module.js';
 import { annQuick } from './commands/ann-quick.command.js';
+import { evalAggregation } from './commands/eval-aggregation.command.js';
 import { evalGenerate } from './commands/eval-generate.command.js';
 import { evalJudge } from './commands/eval-judge.command.js';
 import { evalKappaExport } from './commands/eval-kappa-export.command.js';
+import { evalLatency } from './commands/eval-latency.command.js';
 import { evalPool } from './commands/eval-pool.command.js';
 import {
   SYSTEM_NAMES,
@@ -29,7 +31,12 @@ Commands:
   eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n]
       Answer the retrieval queries through the RAG path; cache answers, record timings.
   eval:kappa-export --run <run dir> --judgments <judge.jsonl> [--rate 0.2] [--calibration-share 0.25] [--seed 42]
-      Blind, stratified sample of judged pairs for manual labeling (Cohen's kappa).`;
+      Blind, stratified sample of judged pairs for manual labeling (Cohen's kappa).
+  eval:latency --dataset <queries.jsonl> [--label name] [--warmup 5] [--repetitions 30]
+               [--generation-queries 30] [--generation-repetitions 3] [--delay-ms 2000] [--seed 42]
+      Per-stage latency of the RAG path with the configured VECTOR_BACKEND.
+  eval:aggregation --dataset <queries.jsonl> [--label name] [--delay-ms 2000]
+      Routing accuracy and result rows vs. the reference SQL for aggregation queries.`;
 
 function required(value: string | undefined, flag: string): string {
   if (!value) throw new Error(`Missing required option ${flag}`);
@@ -45,7 +52,11 @@ async function main(): Promise<number> {
       queries: { type: 'string', default: '200' },
       k: { type: 'string', default: '10' },
       ef: { type: 'string', default: '16,64,256' },
-      repetitions: { type: 'string', default: '3' },
+      // ann:quick defaults to 3, eval:latency to 30.
+      repetitions: { type: 'string' },
+      warmup: { type: 'string', default: '5' },
+      'generation-queries': { type: 'string', default: '30' },
+      'generation-repetitions': { type: 'string', default: '3' },
       dataset: { type: 'string' },
       systems: { type: 'string', default: SYSTEM_NAMES.join(',') },
       depth: { type: 'string', default: '10' },
@@ -96,7 +107,7 @@ async function main(): Promise<number> {
           queries: Number(values.queries),
           k: Number(values.k),
           efValues: values.ef.split(',').map(Number),
-          repetitions: Number(values.repetitions),
+          repetitions: Number(values.repetitions ?? '3'),
         });
         return 0;
       case 'eval:retrieve':
@@ -139,6 +150,26 @@ async function main(): Promise<number> {
           rate: Number(values.rate),
           calibrationShare: Number(values['calibration-share']),
           seed: Number(values.seed),
+        });
+        return 0;
+      case 'eval:latency':
+        await evalLatency(app, {
+          dataset: required(values.dataset, '--dataset'),
+          label: values.label,
+          warmup: Number(values.warmup),
+          repetitions: Number(values.repetitions ?? '30'),
+          generationQueries: Number(values['generation-queries']),
+          generationRepetitions: Number(values['generation-repetitions']),
+          temperature: Number(values.temperature),
+          delayMs: Number(values['delay-ms']),
+          seed: Number(values.seed),
+        });
+        return 0;
+      case 'eval:aggregation':
+        await evalAggregation(app, {
+          dataset: required(values.dataset, '--dataset'),
+          label: values.label,
+          delayMs: Number(values['delay-ms']),
         });
         return 0;
       default:

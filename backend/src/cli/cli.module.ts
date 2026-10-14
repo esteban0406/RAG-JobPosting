@@ -4,6 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { validate } from '../config/config.schema.js';
 import { EmbeddingModule } from '../embedding/embedding.module.js';
+import { LlmModule } from '../llm/llm.module.js';
+import { AggregationRepository } from '../query/aggregation/aggregation.repository.js';
+import { AggregationService } from '../query/aggregation/aggregation.service.js';
+import { QueryClassifierService } from '../query/query-classifier.service.js';
 import { RagModule } from '../rag/rag.module.js';
 import { StorageModule } from '../storage/storage.module.js';
 
@@ -17,6 +21,13 @@ import { StorageModule } from '../storage/storage.module.js';
     StorageModule,
     EmbeddingModule,
     RagModule,
+    LlmModule,
+  ],
+  // The aggregation path without QueryModule, whose controller needs auth.
+  providers: [
+    QueryClassifierService,
+    AggregationRepository,
+    AggregationService,
   ],
 })
 export class CliModule {}
