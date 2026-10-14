@@ -14,7 +14,7 @@ QD=job-posting-qdrant
 RESULTS=evaluation/bench/results
 
 bench() {
-  docker run --rm --network host --user "$(id -u):$(id -g)" \
+  docker run --rm --network host --user "$(id -u):$(id -g)" -e PYTHONUNBUFFERED=1 \
     -v "$PWD":/work -w /work jobai-analysis python evaluation/bench/bench.py "$@"
 }
 
