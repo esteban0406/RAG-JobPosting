@@ -1,0 +1,30 @@
+{
+  "snapshot": "corpus-2026-10-14-multilingual-e5.dump",
+  "format": "pg_dump custom (-Fc), tables Job and JobChunk",
+  "sha256": "405e2522b47097784949be53b5f8afc5db8451a80551f53390c6ba7e540ca624",
+  "bytes": 18276673,
+  "created": "2026-10-14T15:16:00Z",
+  "database": "jobpostings_eval",
+  "base_snapshot": {
+    "snapshot": "corpus-2026-10-10.dump",
+    "sha256": "8106c29a430167a3f40d9d0122d801d2d581d6a257e02e38bcec4d8b80c09935",
+    "manifest": "manifest.json"
+  },
+  "change": "Every JobChunk re-embedded in place with `embeddings:reembed` (commit a5d0782); chunk ids, texts and job rows unchanged. HNSW index rebuilt (REINDEX).",
+  "same_corpus_check": {
+    "query": "SELECT md5(string_agg(id || md5(\"chunkText\"), ',' ORDER BY id)) FROM \"JobChunk\"",
+    "base": "14cfb90229f289efd743508fc5522e00",
+    "this": "14cfb90229f289efd743508fc5522e00"
+  },
+  "jobs": 1068,
+  "chunks_with_embedding": 4013,
+  "embedding_model": "intfloat/multilingual-e5-base (768 dimensions, local embedding-server, CUDA on an RTX 3060, fp32)",
+  "embedding_server": "sentence-transformers 5.7.0, transformers 5.15.0, torch 2.13.0 (embedding-server/requirements.txt)",
+  "pgvector": "0.8.2 (pgvector/pgvector:0.8.2-pg16)",
+  "qdrant": {
+    "eval_job_chunks": "multilingual-e5-base vectors, backfilled from this database (4013/4013 indexed)",
+    "eval_job_chunks_e5base": "e5-base-v2 vectors copied before re-embedding, for the embedding-model ablation (4013/4013 indexed; exact top-10 identical to pgvector on 20 queries)"
+  },
+  "parity": "ann:quick (200 title queries): Qdrant exact vs pgvector exact recall@10 = 0.9975 (ties between identical chunks)",
+  "restore": "createdb <db>; CREATE EXTENSION vector; pg_restore --no-owner -d <db> corpus-2026-10-14-multilingual-e5.dump (verified 14-oct: 1068 jobs, 4013 chunks, same text fingerprint as the base snapshot)"
+}

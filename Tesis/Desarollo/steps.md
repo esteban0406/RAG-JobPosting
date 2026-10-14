@@ -164,10 +164,14 @@ Decisiones del autor: híbrida BM25-en-la-app + RRF y *reranking* con bge-rerank
 - [x] Benchmark sintético 100k/500k con vectores e5-base-v2 commiteado como **provisional** (cfcce3f); se repite con los vectores nuevos (sirve además como prueba de robustez).
 
 **Pasos con datos (pendientes; requieren Postgres, Qdrant y la GPU):**
-1. **Autor:** instalar `nvidia-container-toolkit` (guía oficial de NVIDIA), `sudo nvidia-ctk runtime configure --runtime=docker`, reiniciar Docker; verificar con `docker run --rm --gpus all <imagen CUDA base> nvidia-smi`.
-2. `docker compose up -d postgres qdrant`. Ablación: copiar los vectores e5 actuales **antes** de re-embeber: `DATABASE_URL=…/jobpostings_eval QDRANT_COLLECTION=eval_job_chunks_e5base pnpm qdrant:backfill --recreate`.
-3. `docker compose build embedding-server && docker compose up -d embedding-server` (multilingual-e5-base + reranker en GPU); `curl localhost:8000/health` debe decir `cuda`. Para la ablación: `docker compose --profile ablation up -d embedding-server-e5` (puerto 8001).
-4. `DATABASE_URL=…/jobpostings_eval pnpm embeddings:reembed`, luego `QDRANT_COLLECTION=eval_job_chunks pnpm qdrant:backfill --recreate` y `ann:quick` (paridad exacta pg = Qdrant). Nuevo snapshot + `manifest.json`; regenerar evidencia `EXPLAIN`.
+1. [x] **Autor:** instalar `nvidia-container-toolkit` (guía oficial de NVIDIA), `sudo nvidia-ctk runtime configure --runtime=docker`, reiniciar Docker; verificar con `docker run --rm --gpus all <imagen CUDA base> nvidia-smi`.
+2. [x] (14-oct) `docker compose up -d postgres qdrant`. Ablación: copiar los vectores e5 actuales **antes** de re-embeber: `DATABASE_URL=…/jobpostings_eval QDRANT_COLLECTION=eval_job_chunks_e5base pnpm qdrant:backfill --recreate`.
+3. [x] (14-oct; e5 de ablación en CPU, puerto 8001) `docker compose build embedding-server && docker compose up -d embedding-server` (multilingual-e5-base + reranker en GPU); `curl localhost:8000/health` debe decir `cuda`. Para la ablación: `docker compose --profile ablation up -d embedding-server-e5` (puerto 8001).
+4. [x] (14-oct) `DATABASE_URL=…/jobpostings_eval pnpm embeddings:reembed`, luego `QDRANT_COLLECTION=eval_job_chunks pnpm qdrant:backfill --recreate` y `ann:quick` (paridad exacta pg = Qdrant). Nuevo snapshot + `manifest.json`; regenerar evidencia `EXPLAIN`.
+   - Resultado: 4.013 fragmentos re-embebidos en 48 s (GPU); snapshot `corpus-2026-10-14-multilingual-e5.dump` (sha256 `405e2522…`, fuera de git: **respaldar en Drive** junto al del 10-oct) con `manifest-2026-10-14.json`; misma huella de ids y textos que el snapshot del 10-oct (`14cfb902…`), restauración verificada.
+   - Colección de ablación `eval_job_chunks_e5base`: top-10 exacto idéntico a pgvector-e5 en 20 consultas.
+   - `ann:quick`: paridad exacta 0,9975; **con vectores multilingües HNSW pierde más recall a ef bajo** (ef=16: pg 0,918 / Qdrant 0,850, frente a 0,976 / 0,925 con e5); ef=64: 0,990 / 0,977. Mencionar en Cap5.
+   - `EXPLAIN` (`explain-evalcorpus-multilingual-e5.txt`): igual que antes sin filtro (barrido 24,6 ms; índice forzado 1,6 ms); con el filtro de producción (remoto, ≥150k) el planificador hace búsqueda exacta sobre 863 filas (hash join, 8,7 ms).
 5. Umbral: comparar el puntaje del *reranker* de las 85 consultas frente a ~20 fuera de dominio; fijar `RERANK_MIN_SCORE` o documentar que no separa.
 6. Corrida con juez local: `eval:retrieve` (todos los sistemas) → `eval:pool` → `eval:judge` → `metrics.py`; `eval:generate` + RAGAS; `eval:aggregation`; `eval:latency`.
 7. Regenerar la muestra kappa sobre el pool final (**no anotar el CSV del 13-oct**) y anotarla.

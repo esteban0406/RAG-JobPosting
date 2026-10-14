@@ -40,3 +40,30 @@ FROM "JobChunk" jc
 WHERE jc.embedding IS NOT NULL
 ORDER BY jc.embedding <=> '$VEC'::vector LIMIT 15;
 SQL
+
+echo "== reshaped query with enable_seqscan = off (forces the HNSW index)"
+psql_run <<SQL
+BEGIN;
+SET LOCAL enable_seqscan = off;
+EXPLAIN (ANALYZE, BUFFERS, COSTS OFF)
+SELECT jc.id, jc."jobId", 1 - (jc.embedding <=> '$VEC'::vector) AS similarity
+FROM "JobChunk" jc
+WHERE jc.embedding IS NOT NULL
+ORDER BY jc.embedding <=> '$VEC'::vector LIMIT 15;
+COMMIT;
+SQL
+
+echo "== retrieval pipeline query with a structured filter (remote, salary >= 150k), iterative scan, LIMIT 50"
+psql_run <<SQL
+BEGIN;
+SET LOCAL hnsw.iterative_scan = relaxed_order;
+EXPLAIN (ANALYZE, BUFFERS, COSTS OFF)
+SELECT jc.id, jc."jobId", 1 - (jc.embedding <=> '$VEC'::vector) AS similarity
+FROM "JobChunk" jc
+JOIN "Job" j ON j.id = jc."jobId"
+WHERE jc.embedding IS NOT NULL
+  AND j."isRemote" = true
+  AND COALESCE(j."maxSalary", j."minSalary") >= 150000
+ORDER BY jc.embedding <=> '$VEC'::vector LIMIT 50;
+COMMIT;
+SQL

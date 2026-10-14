@@ -1,0 +1,79 @@
+== database: jobpostings_eval | query: senior backend engineer with python and aws experience
+== indexes
+indexname|indexdef
+JobChunk_embedding_hnsw_idx|CREATE INDEX "JobChunk_embedding_hnsw_idx" ON public."JobChunk" USING hnsw (embedding vector_cosine_ops) WITH (m='16', ef_construction='128')
+(1 row)
+chunks
+4013
+(1 row)
+== legacy query: ORDER BY derived similarity + threshold filter
+QUERY PLAN
+Limit (actual time=24.585..24.587 rows=15 loops=1)
+  Buffers: shared hit=24648
+  ->  Sort (actual time=24.584..24.585 rows=15 loops=1)
+        Sort Key: (('1'::double precision - (embedding <=> '[query vector]'::vector))) DESC
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=24648
+        ->  Seq Scan on "JobChunk" (actual time=0.067..23.843 rows=4013 loops=1)
+              Filter: ((embedding IS NOT NULL) AND (('1'::double precision - (embedding <=> '[query vector]'::vector)) >= '0.5'::double precision))
+              Buffers: shared hit=24645
+Planning:
+  Buffers: shared hit=152
+Planning Time: 0.393 ms
+Execution Time: 24.617 ms
+(13 rows)
+== reshaped query: ORDER BY distance operator + LIMIT
+QUERY PLAN
+Limit (actual time=24.565..24.568 rows=15 loops=1)
+  Buffers: shared hit=24648
+  ->  Sort (actual time=24.564..24.565 rows=15 loops=1)
+        Sort Key: ((embedding <=> '[query vector]'::vector))
+        Sort Method: top-N heapsort  Memory: 28kB
+        Buffers: shared hit=24648
+        ->  Seq Scan on "JobChunk" jc (actual time=0.053..23.768 rows=4013 loops=1)
+              Filter: (embedding IS NOT NULL)
+              Buffers: shared hit=24645
+Planning:
+  Buffers: shared hit=157
+Planning Time: 0.402 ms
+Execution Time: 24.601 ms
+(13 rows)
+== reshaped query with enable_seqscan = off (forces the HNSW index)
+QUERY PLAN
+Limit (actual time=1.314..1.543 rows=15 loops=1)
+  Buffers: shared hit=834
+  ->  Index Scan using "JobChunk_embedding_hnsw_idx" on "JobChunk" jc (actual time=1.313..1.541 rows=15 loops=1)
+        Order By: (embedding <=> '[query vector]'::vector)
+        Filter: (embedding IS NOT NULL)
+        Buffers: shared hit=834
+Planning:
+  Buffers: shared hit=157
+Planning Time: 0.405 ms
+Execution Time: 1.582 ms
+(10 rows)
+== retrieval pipeline query with a structured filter (remote, salary >= 150k), iterative scan, LIMIT 50
+QUERY PLAN
+Limit (actual time=8.603..8.609 rows=50 loops=1)
+  Buffers: shared hit=5964
+  ->  Sort (actual time=8.602..8.605 rows=50 loops=1)
+        Sort Key: ((jc.embedding <=> '[query vector]'::vector))
+        Sort Method: top-N heapsort  Memory: 36kB
+        Buffers: shared hit=5964
+        ->  Hash Join (actual time=0.548..8.386 rows=863 loops=1)
+              Hash Cond: (jc."jobId" = j.id)
+              Buffers: shared hit=5961
+              ->  Seq Scan on "JobChunk" jc (actual time=0.003..1.949 rows=4013 loops=1)
+                    Filter: (embedding IS NOT NULL)
+                    Buffers: shared hit=544
+              ->  Hash (actual time=0.459..0.459 rows=216 loops=1)
+                    Buckets: 1024  Batches: 1  Memory Usage: 21kB
+                    Buffers: shared hit=216
+                    ->  Seq Scan on "Job" j (actual time=0.002..0.417 rows=216 loops=1)
+                          Filter: ("isRemote" AND (COALESCE("maxSalary", "minSalary") >= 150000))
+                          Rows Removed by Filter: 852
+                          Buffers: shared hit=216
+Planning:
+  Buffers: shared hit=355
+Planning Time: 0.870 ms
+Execution Time: 8.652 ms
+(23 rows)
