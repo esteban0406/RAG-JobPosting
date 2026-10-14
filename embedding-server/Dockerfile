@@ -14,7 +14,7 @@ COPY . .
 
 ENV HF_HOME=/root/.cache/huggingface
 ARG EMBEDDING_MODEL=intfloat/multilingual-e5-base
-ARG RERANKER_MODEL=BAAI/bge-reranker-v2-m3
+ARG RERANKER_MODEL=Qwen/Qwen3-Reranker-0.6B
 ENV EMBEDDING_MODEL=${EMBEDDING_MODEL} RERANKER_MODEL=${RERANKER_MODEL}
 RUN python -c "import os; from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer(os.environ['EMBEDDING_MODEL']); os.environ['RERANKER_MODEL'] and CrossEncoder(os.environ['RERANKER_MODEL'])"
 

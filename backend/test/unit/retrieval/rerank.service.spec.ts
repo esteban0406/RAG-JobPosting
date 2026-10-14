@@ -60,6 +60,21 @@ describe('RerankService', () => {
     expect(fetchSpy.mock.calls[0][0]).toBe('http://gpu:9000/rerank');
   });
 
+  it('rejects scores from a model other than RERANKER_MODEL', async () => {
+    jest
+      .spyOn(global, 'fetch')
+      .mockResolvedValue(
+        new Response(JSON.stringify({ scores: [1], model: 'BAAI/bge' })),
+      );
+    const service = new RerankService(
+      config({ RERANKER_MODEL: 'Qwen/Qwen3-Reranker-0.6B' }),
+    );
+
+    await expect(service.score('q', ['d'])).rejects.toThrow(
+      'expected "Qwen/Qwen3-Reranker-0.6B"',
+    );
+  });
+
   it('rejects a response with the wrong number of scores', async () => {
     jest
       .spyOn(global, 'fetch')

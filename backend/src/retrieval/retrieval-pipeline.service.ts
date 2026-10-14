@@ -31,7 +31,9 @@ export interface RetrievalOptions {
   // Defaults: RETRIEVAL_HYBRID and RERANK_ENABLED.
   hybrid?: boolean;
   rerank?: boolean;
-  // Drops reranked jobs scoring below this; defaults to RERANK_MIN_SCORE.
+  // No-results gate: if even the best reranked job scores below this, the
+  // query has no relevant postings and no hits are returned. Defaults to
+  // RERANK_MIN_SCORE.
   minRerankScore?: number;
   // Defaults: RERANK_CANDIDATES and RERANK_FUSION.
   rerankCandidates?: number;
@@ -236,10 +238,11 @@ export class RetrievalPipeline {
           options.rerankFusion ?? this.rerankFusion,
         );
         reranked = true;
+        // Calibrated on each query's best score (development set), so it
+        // gates the whole result list instead of trimming individual jobs.
         const minScore = options.minRerankScore ?? this.minRerankScore;
-        if (minScore !== undefined) {
-          hits = hits.filter((h) => (h.rerankScore ?? 0) >= minScore);
-        }
+        const best = Math.max(...hits.map((h) => h.rerankScore ?? 0));
+        if (minScore !== undefined && best < minScore) hits = [];
       } catch (err) {
         if (options.strictRerank) throw err;
         this.logger.warn(

@@ -112,11 +112,18 @@ class EnvironmentVariables {
   @IsOptional()
   RERANKER_URL: string;
 
-  // Fused candidates passed to the reranker.
+  // Reranker the server must serve (checked on every call); empty skips the
+  // check. Chosen on the development set (Tesis/Desarollo/steps.md, 5b).
+  @IsString()
+  @IsOptional()
+  RERANKER_MODEL: string = 'Qwen/Qwen3-Reranker-0.6B';
+
+  // Fused candidates passed to the reranker (20 vs 30 chosen on the
+  // development set: same nDCG@10, about 400 ms less).
   @IsNumber()
   @Min(1)
   @IsOptional()
-  RERANK_CANDIDATES: number = 30;
+  RERANK_CANDIDATES: number = 20;
 
   // Task instruction sent to instruction-aware rerankers (e.g. Qwen3-Reranker).
   @IsString()
@@ -129,10 +136,12 @@ class EnvironmentVariables {
   @IsOptional()
   RERANK_FUSION: string = 'replace';
 
-  // Jobs whose rerank score falls below this are dropped; unset keeps all.
+  // No-results gate on the best rerank probability of a query; unset disables
+  // it. 0.134 was calibrated on the development set for Qwen3-Reranker-0.6B
+  // (Tesis/Desarollo/steps.md, step 5b) and only applies to that model.
   @IsNumber()
   @IsOptional()
-  RERANK_MIN_SCORE: number;
+  RERANK_MIN_SCORE: number = 0.134;
 
   @IsString()
   @IsOptional()

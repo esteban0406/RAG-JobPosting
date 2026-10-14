@@ -1,0 +1,63 @@
+{
+  "command": "eval:retrieve",
+  "gitSha": "9d6d504-dirty",
+  "createdAt": "2026-10-14T18:27:14.670Z",
+  "embeddingModel": "multilingual-e5-base",
+  "embeddingServer": {
+    "embeddingModel": "intfloat/multilingual-e5-base",
+    "rerankerModel": "BAAI/bge-reranker-v2-m3",
+    "device": "cuda"
+  },
+  "classifier": "1a83eda83188",
+  "filterExtraction": {
+    "scored": 8,
+    "exact": 8
+  },
+  "constraintCompliance": {
+    "qdrant-hybrid": {
+      "queries": 8,
+      "at5": 1,
+      "at10": 1
+    },
+    "rr-bge": {
+      "queries": 8,
+      "at5": 1,
+      "at10": 1
+    },
+    "rr-bge-rrf": {
+      "queries": 8,
+      "at5": 1,
+      "at10": 1
+    },
+    "rr-qwen": {
+      "queries": 8,
+      "at5": 1,
+      "at10": 1
+    },
+    "rr-qwen-instr": {
+      "queries": 8,
+      "at5": 1,
+      "at10": 1
+    },
+    "rr-qwen-instr-rrf": {
+      "queries": 8,
+      "at5": 1,
+      "at10": 1
+    }
+  },
+  "variants": "../evaluation/datasets/rerank-variants.dev.json",
+  "corpus": {
+    "jobs": 1068,
+    "chunks": 4013
+  },
+  "queries": 28,
+  "dataset": "../evaluation/datasets/queries.dev.jsonl",
+  "systems": [
+    "qdrant-hybrid"
+  ],
+  "depth": 10,
+  "efSearch": 40,
+  "label": "dev-rerank-s1",
+  "ablationCollection": "eval_job_chunks_e5base",
+  "ablationEmbedUrl": "http://localhost:8001"
+}

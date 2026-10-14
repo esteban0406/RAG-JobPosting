@@ -1,0 +1,14 @@
+[
+  {
+    "name": "rr-qwen",
+    "rerankerUrl": "http://localhost:8000",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "candidates": 30
+  },
+  {
+    "name": "rr-qwen-20",
+    "rerankerUrl": "http://localhost:8000",
+    "candidates": 20,
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B"
+  }
+]

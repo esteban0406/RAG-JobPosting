@@ -8,7 +8,7 @@ from sentence_transformers import CrossEncoder, SentenceTransformer
 
 EMBEDDING_MODEL = os.environ.get("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
 # Empty disables the /rerank endpoint (e.g. for the e5-base-v2 ablation server).
-RERANKER_MODEL = os.environ.get("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3")
+RERANKER_MODEL = os.environ.get("RERANKER_MODEL", "Qwen/Qwen3-Reranker-0.6B")
 RERANKER_MAX_LENGTH = int(os.environ.get("RERANKER_MAX_LENGTH", "512"))
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

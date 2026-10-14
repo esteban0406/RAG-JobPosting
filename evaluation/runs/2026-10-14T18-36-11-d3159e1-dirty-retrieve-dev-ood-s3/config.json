@@ -1,0 +1,32 @@
+{
+  "command": "eval:retrieve",
+  "gitSha": "d3159e1-dirty",
+  "createdAt": "2026-10-14T18:36:33.524Z",
+  "embeddingModel": "multilingual-e5-base",
+  "embeddingServer": {
+    "embeddingModel": "intfloat/multilingual-e5-base",
+    "rerankerModel": "BAAI/bge-reranker-v2-m3",
+    "device": "cuda"
+  },
+  "classifier": "1a83eda83188",
+  "filterExtraction": {
+    "scored": 0,
+    "exact": 0
+  },
+  "constraintCompliance": {},
+  "variants": "../evaluation/datasets/rerank-variants.dev-stage2.json",
+  "corpus": {
+    "jobs": 1068,
+    "chunks": 4013
+  },
+  "queries": 10,
+  "dataset": "../evaluation/datasets/queries.dev-ood.jsonl",
+  "systems": [
+    "qdrant-hybrid"
+  ],
+  "depth": 10,
+  "efSearch": 40,
+  "label": "dev-ood-s3",
+  "ablationCollection": "eval_job_chunks_e5base",
+  "ablationEmbedUrl": "http://localhost:8001"
+}

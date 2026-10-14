@@ -221,7 +221,22 @@ describe('RetrievalPipeline', () => {
     expect(reranker.score.mock.calls[0][1]).toHaveLength(2);
   });
 
-  it('drops reranked jobs below the minimum score', async () => {
+  it('returns no hits when even the best job is below the minimum score', async () => {
+    const { pipeline } = build({
+      dense: [chunk('a', 0.9), chunk('b', 0.8)],
+      rerankScores: (docs) => docs.map(() => 0.05),
+    });
+
+    const result = await pipeline.retrieve('q', {
+      depth: 5,
+      hybrid: false,
+      minRerankScore: 0.1,
+    });
+
+    expect(result.hits).toEqual([]);
+  });
+
+  it('keeps every job when the best one reaches the minimum score', async () => {
     const { pipeline } = build({
       dense: [chunk('a', 0.9), chunk('b', 0.8)],
       rerankScores: (docs) =>
@@ -234,7 +249,7 @@ describe('RetrievalPipeline', () => {
       minRerankScore: 0.1,
     });
 
-    expect(ids(result)).toEqual(['a']);
+    expect(ids(result)).toEqual(['a', 'b']);
   });
 
   it('keeps the fused order when the reranker fails', async () => {

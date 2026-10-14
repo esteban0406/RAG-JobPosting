@@ -1,26 +1,36 @@
 [
   {
     "name": "rr-bge",
-    "rerankerUrl": "http://localhost:8000"
+    "rerankerUrl": "http://localhost:8002",
+    "rerankerModel": "BAAI/bge-reranker-v2-m3",
+    "candidates": 30
   },
   {
     "name": "rr-bge-rrf",
-    "rerankerUrl": "http://localhost:8000",
-    "fusion": "rrf"
+    "rerankerUrl": "http://localhost:8002",
+    "fusion": "rrf",
+    "rerankerModel": "BAAI/bge-reranker-v2-m3",
+    "candidates": 30
   },
   {
     "name": "rr-qwen",
-    "rerankerUrl": "http://localhost:8002"
+    "rerankerUrl": "http://localhost:8000",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "candidates": 30
   },
   {
     "name": "rr-qwen-instr",
-    "rerankerUrl": "http://localhost:8002",
-    "instruction": "Given a job seeker's search need, judge whether the job posting is a role that satisfies the need"
+    "rerankerUrl": "http://localhost:8000",
+    "instruction": "Given a job seeker's search need, judge whether the job posting is a role that satisfies the need",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "candidates": 30
   },
   {
     "name": "rr-qwen-instr-rrf",
-    "rerankerUrl": "http://localhost:8002",
+    "rerankerUrl": "http://localhost:8000",
     "instruction": "Given a job seeker's search need, judge whether the job posting is a role that satisfies the need",
-    "fusion": "rrf"
+    "fusion": "rrf",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "candidates": 30
   }
 ]

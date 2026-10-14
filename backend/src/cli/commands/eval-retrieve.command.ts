@@ -72,6 +72,8 @@ export interface EvalRetrieveOptions {
 export interface RerankVariant {
   name: string;
   rerankerUrl?: string;
+  // Expected model at rerankerUrl; checked on every call when set.
+  rerankerModel?: string;
   instruction?: string;
   fusion?: RerankFusion;
   candidates?: number;
@@ -131,6 +133,7 @@ export async function evalRetrieve(
         const reranker = new RerankService(
           withOverrides(config, {
             ...(v.rerankerUrl && { RERANKER_URL: v.rerankerUrl }),
+            RERANKER_MODEL: v.rerankerModel ?? '',
             RERANK_INSTRUCTION: v.instruction ?? '',
           }),
         );

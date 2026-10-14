@@ -1,0 +1,8 @@
+{"queryId":"dev-en-co-01","expected":{"isRemote":true,"salaryAtLeast":150000},"extracted":{"salaryAtLeast":150000,"isRemote":true},"exact":true}
+{"queryId":"dev-es-co-01","expected":{"isRemote":true,"salaryAtLeast":150000},"extracted":{"salaryAtLeast":150000,"isRemote":true},"exact":true}
+{"queryId":"dev-en-co-02","expected":{"jobType":["contract","freelance"]},"extracted":{"jobType":["contract","freelance"]},"exact":true}
+{"queryId":"dev-en-co-03","expected":{"jobType":"full_time","isRemote":true},"extracted":{"jobType":"full_time","isRemote":true},"exact":true}
+{"queryId":"dev-en-co-04","expected":{"salaryAtLeast":50000},"extracted":{"salaryAtLeast":50000},"exact":true}
+{"queryId":"dev-en-co-05","expected":{"jobType":["contract","freelance"]},"extracted":{"jobType":["contract","freelance"]},"exact":true}
+{"queryId":"dev-es-co-05","expected":{"jobType":["contract","freelance"]},"extracted":{"jobType":["contract","freelance"]},"exact":true}
+{"queryId":"dev-en-no-04","expected":{"isRemote":true},"extracted":{"isRemote":true},"exact":true}
