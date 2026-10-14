@@ -23,14 +23,14 @@ El proyecto iba ~3 semanas atrasado (Fase 2 sin empezar). Se replanificó el 10-
 - Claude redacta los capítulos; el autor revisa. Trabajo en la rama `thesis/qdrant-eval`.
 - Primera entrega al profesor: **martes 13-oct** (PDF + nota `nota-profesor-2026-10-13.md` + demo del cambio pgvector/Qdrant).
 
-## Cronograma resumen (replanificado 10-oct)
+## Cronograma resumen (replanificado 10-oct; iteración 5 agregada el 14-oct)
 
 | Fechas | Fase | Entregable |
 |---|---|---|
 | 7 sep | Problemática, objetivos, marco teórico, estado del arte | Cap1 y Cap2 (hecho) |
 | 10-12 oct | Migración a Qdrant, correcciones, metodología, Cap0/Cap3/Cap4 | **Martes 13-oct:** PDF + nota + demo al profesor |
-| 13-18 oct | Ajustes del director, dataset de consultas, BM25/ILIKE, harness de evaluación | Cap4 completo |
-| 19-25 oct | Benchmark sintético, generación (RAGAS), latencia; anotación humana para kappa | Resultados preliminares |
+| 14-21 oct | **Iteración 5 del artefacto** (filtros, híbrida, *reranking*, e5 multilingüe) + revisión del dataset | Código y corpus re-embebido |
+| 22-25 oct | Corrida completa con juez local, benchmark sintético con vectores nuevos, anotación kappa, Cap3/Cap4 | Resultados preliminares |
 | 26 oct-1 nov | Corrida final con juez de pago, estadística, figuras | Resultados congelados |
 | 2-8 nov | Cap5, Conclusiones, Cap0 final, resumen ES/EN | Borrador completo |
 | 9-15 nov | Envío al director, formato NTC1486 | Versión 1 |
@@ -123,7 +123,7 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 - [x] Instrumentar JobAI: `buildContext` devuelve contextos por oferta y tiempos por etapa; temperatura configurable en el stream (10-oct).
 - [~] Dataset de consultas: borrador en `evaluation/datasets/queries.v2.draft.jsonl` (75 EN + 25 ES, 75 necesidades). **Pendiente: revisión del autor** y verificar contra el corpus congelado que cada necesidad tenga ofertas relevantes.
 - [x] Líneas base `ilike` y `bm25` + comandos `eval:retrieve`, `eval:pool`, `eval:judge` (UMBRELA, caché), `eval:kappa-export`, `eval:generate`; análisis en `evaluation/analysis/{metrics,kappa}.py` (imagen Docker fijada). Probados de punta a punta en la base de desarrollo (10-oct).
-- [ ] Anotación humana de la muestra para kappa — **CSV listo (13-oct):** `evaluation/runs/2026-10-14T00-03-00-717ba41-dirty-retrieve-full/kappa-sample.csv` (286 pares: 75 de calibración, 211 de validación). Pendiente que el autor lo anote.
+- [ ] Anotación humana de la muestra para kappa — **⚠️ no anotar todavía (14-oct): la muestra se regenera sobre el pool final de la iteración 5.** CSV anterior (13-oct): `evaluation/runs/2026-10-14T00-03-00-717ba41-dirty-retrieve-full/kappa-sample.csv` (286 pares: 75 de calibración, 211 de validación). Pendiente que el autor lo anote.
 - [x] Generación + RAGAS probados de punta a punta (piloto de 3 consultas, juez local): faithfulness 0,889, answer relevancy 0,903, 0 % NaN; ~50 s por respuesta con el juez local.
 - [~] Benchmark de almacenes vectoriales (`evaluation/bench/`): **corpus real completo (13-oct)** → `evaluation/bench/results/` y Cap5 §PE4 (Tabla `tab:res-bench-real`). Postgres ya tiene `shm_size: 4gb`. Datos sintéticos de 100k y 500k y su verdad de referencia **ya generados** en `evaluation/bench/data/` (fuera de git; σ=0,5, KS=0,23). **Pausado por el autor antes de 100k/500k.**
   - **Para correr mañana (1,5-2,5 h, la máquina debe quedar libre):**
@@ -145,6 +145,35 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 - El normalizador de salarios no convierte monedas ni algunos montos por hora (p. ej. 86.528.000 USD para un "Dispatch Specialist"; salarios en SEK). 5 de 253 ofertas con salario son atípicas; mediana 175 k. Se documenta como limitación de calidad de datos.
 - [x] Groq retiró `qwen3-32b` y `qwen3.6-27b`; producción ya usa `qwen/qwen3.8-27b` (confirmado por el autor).
 - [x] Apellido del profesor confirmado: Cifuentes.
+
+---
+
+## Iteración 5 (14-23 oct) — De Naive a Advanced RAG
+
+Decidida el 14-oct tras revisar si el artefacto tenía nivel de tesis (plan: `~/.claude/plans/estoy-desarrollando-mi-tesis-shiny-lagoon.md`). Veredicto: no refactorizar; cerrar brechas de coherencia entre lo que se mide y lo que el artefacto hace. Hallazgos: los filtros (salario, modalidad, tipo) nunca llegaban a la búsqueda vectorial —PE4 medía búsqueda filtrada que la app no usaba—; sin búsqueda híbrida ni *reranking*; respuestas en inglés a consultas en español; e5-base-v2 solo inglés; producción (Gemini + pgvector) ≠ configuración evaluada.
+
+Decisiones del autor: híbrida BM25-en-la-app + RRF y *reranking* con bge-reranker-v2-m3 en la GPU (obligatorios); embeddings multilingual-e5-base con ablación e5-base-v2; la tesis defiende la **configuración de referencia** (`docker-compose.yml`), el despliegue público se actualiza después; lo conversacional se **acota** (historial solo en la generación). PE1 se reporta como **escalera de ablación**: denso → +filtros → +híbrida → +*reranking*.
+
+**Código (hecho 14-oct, commits 6dd5ecb y 4060e34; 267 pruebas unitarias + 41 de integración):**
+- [x] Respuesta en el idioma de la pregunta (`ANSWER_LANGUAGE_RULE` en los tres *prompts*).
+- [x] Servidor de embeddings: modelo por variable de entorno, CUDA, `/health`, `/rerank`; dependencias fijadas; el backend rechaza vectores de otro modelo y la caché incluye el modelo.
+- [x] Filtros en la recuperación: compuerta de restricciones EN/ES en el clasificador → `filter_jobs` (ahora ruta de recuperación) → `VectorFilter` (nuevo `salaryAtLeast`). Eliminado el filtro SQL por `title ILIKE` y su contexto de 30 ofertas.
+- [x] `RetrievalPipeline` (`backend/src/retrieval/`): densa + BM25 con el mismo filtro → RRF (k=60) → *reranking* de 30 candidatas → 5 ofertas; respaldo sin filtro si no hay coincidencias (y aviso al LLM); orden fusionado si el *reranker* cae. El índice BM25 se reconstruye tras cada ingesta.
+- [x] Arnés: sistemas `qdrant-e5base`, `qdrant-filtered`, `qdrant-hybrid`, `qdrant-hybrid-rerank`; caché de clasificaciones compartida (`evaluation/classifications/`); latencia de clasificación, BM25, fusión y *reranking*; `eval:aggregation` sin la ruta SQL de `filter_jobs`.
+- [x] Comando `embeddings:reembed` (re-embebe en el lugar, mismos ids y textos, `REINDEX`).
+- [x] Benchmark sintético 100k/500k con vectores e5-base-v2 commiteado como **provisional** (cfcce3f); se repite con los vectores nuevos (sirve además como prueba de robustez).
+
+**Pasos con datos (pendientes; requieren Postgres, Qdrant y la GPU):**
+1. **Autor:** instalar `nvidia-container-toolkit` (guía oficial de NVIDIA), `sudo nvidia-ctk runtime configure --runtime=docker`, reiniciar Docker; verificar con `docker run --rm --gpus all <imagen CUDA base> nvidia-smi`.
+2. `docker compose up -d postgres qdrant`. Ablación: copiar los vectores e5 actuales **antes** de re-embeber: `DATABASE_URL=…/jobpostings_eval QDRANT_COLLECTION=eval_job_chunks_e5base pnpm qdrant:backfill --recreate`.
+3. `docker compose build embedding-server && docker compose up -d embedding-server` (multilingual-e5-base + reranker en GPU); `curl localhost:8000/health` debe decir `cuda`. Para la ablación: `docker compose --profile ablation up -d embedding-server-e5` (puerto 8001).
+4. `DATABASE_URL=…/jobpostings_eval pnpm embeddings:reembed`, luego `QDRANT_COLLECTION=eval_job_chunks pnpm qdrant:backfill --recreate` y `ann:quick` (paridad exacta pg = Qdrant). Nuevo snapshot + `manifest.json`; regenerar evidencia `EXPLAIN`.
+5. Umbral: comparar el puntaje del *reranker* de las 85 consultas frente a ~20 fuera de dominio; fijar `RERANK_MIN_SCORE` o documentar que no separa.
+6. Corrida con juez local: `eval:retrieve` (todos los sistemas) → `eval:pool` → `eval:judge` → `metrics.py`; `eval:generate` + RAGAS; `eval:aggregation`; `eval:latency`.
+7. Regenerar la muestra kappa sobre el pool final (**no anotar el CSV del 13-oct**) y anotarla.
+8. Benchmark sintético: `bench.py export/queries/synth/truth` y `run_bench.sh real synth-100000 synth-500000`.
+- [ ] **Autor:** revisar el dataset y agregar `expectedFilters` a las consultas "con restricciones".
+- [ ] Documento: Cap0 ("en producción" → configuración de referencia), Cap1 §Alcance (conversación), Cap2 (RRF, fusión híbrida, *reranking*, BGE-M3, Multilingual E5, ANN con filtros — verificar autores), Cap3 (escalera, hardware), Cap4 ("Iteración 5"), Cap5 (tablas nuevas).
 
 ---
 
