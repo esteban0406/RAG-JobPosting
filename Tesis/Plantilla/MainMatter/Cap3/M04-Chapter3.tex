@@ -196,7 +196,7 @@ Sobre las listas de 10 ofertas se calculan cinco métricas:
 \end{itemize}
 Las métricas binarias consideran relevante una oferta con etiqueta $\geq 2$. El cálculo se realiza con la biblioteca \texttt{ir\_measures} \citep{MacAvaney2022}, que unifica las implementaciones de referencia de la comunidad. Los resultados se desagregan por categoría de consulta y por idioma.
 
-Las consultas de agregación no producen una lista de ofertas. Para ellas se miden dos cosas: la exactitud del enrutamiento, es decir, si el clasificador elige la ruta y la plantilla SQL esperadas, y la exactitud de la respuesta frente al resultado de una consulta SQL de referencia escrita a mano.
+Las consultas de agregación no producen una lista de ofertas. Para ellas se miden dos cosas: la exactitud del enrutamiento, es decir, si el clasificador elige la ruta y la plantilla SQL esperadas, y la exactitud de la respuesta frente al resultado de una consulta SQL de referencia escrita a mano. La respuesta se compara a nivel de las filas que devuelve la plantilla elegida, y no del texto que redacta el modelo, para que la comparación sea determinista. Una fila de la referencia se considera cubierta si alguna fila del sistema contiene todos sus valores, con independencia de los nombres de las columnas. La respuesta es exacta cuando todas las filas de la referencia quedan cubiertas; se reporta además la proporción de filas cubiertas. Cuando ninguna plantilla del catálogo devuelve directamente el dato pedido, la plantilla esperada es la más cercana, de modo que el enrutamiento puede ser correcto aunque la respuesta no lo sea.
 
 \subsection{Fidelidad de la generación (PE2)}
 
@@ -213,6 +213,8 @@ Para las consultas de recuperación se generan respuestas mediante la ruta real 
     AR = \frac{1}{n}\sum_{i=1}^{n} \cos(\mathbf{e}_q, \mathbf{e}_{q_i}).
     \]
 \end{itemize}
+
+El juez debe recibir completo el contexto recuperado. Por eso su ventana de contexto se fija en 16.384 \textit{tokens} y su salida admite hasta 4.096: con valores menores, la verificación de las respuestas largas queda truncada y la métrica no puede calcularse. Se reporta la proporción de respuestas en las que alguna métrica no pudo calcularse.
 
 \subsection{Latencia (PE3)}
 

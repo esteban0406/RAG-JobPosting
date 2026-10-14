@@ -1,29 +1,295 @@
-\pendiente{Este capítulo se redacta con los resultados de la evaluación (semanas del 19-oct al 1-nov). La estructura prevista es la siguiente.}
+\pendiente{Resultados provisionales. Se obtuvieron con el juez local (Llama 3.1 8B), sobre el borrador del conjunto de consultas y sin la validación humana del juez. Las cifras se actualizarán con la corrida final.}
 
 \section{Corpus y conjunto de consultas}
-\pendiente{Estadísticas del corpus congelado: ofertas por fuente, fragmentos por tipo, tasa de análisis estructurado fallido. Descripción del conjunto de consultas por categoría e idioma.}
+\label{sec:res-corpus}
+
+Todas las corridas de este capítulo parten del corpus congelado descrito en la Sección~\ref{sec:met-corpus}: 1.068 ofertas divididas en 4.013 fragmentos. El conjunto de consultas contiene 75 consultas en inglés, 15 por categoría, y 25 en español: 7 exactas, 7 de desajuste de vocabulario, 6 con restricciones y 5 ruidosas. Las 15 consultas de agregación, todas en inglés, se evalúan aparte (Sección~\ref{sec:res-agregacion}). Las 85 consultas restantes, 60 en inglés y 25 en español, corresponden a 60 necesidades de información y son las que se usan para medir la recuperación, la generación y la latencia.
 
 \section{Validación del juez de relevancia}
 \pendiente{Tabla: kappa binario y ponderado (con IC 95\,\%) del juez local y del juez final frente a los juicios humanos; matriz de confusión.}
 
 \section{Calidad de recuperación (PE1)}
-\pendiente{Tabla: P@5, P@10, nDCG@10, MRR y Recall@10 por sistema (ILIKE, BM25, pgvector exacto, pgvector HNSW, Qdrant HNSW), con significancia frente a cada línea base. Figura: nDCG@10 por categoría de consulta. Tabla: resultados del subconjunto en español. Exactitud del enrutamiento en consultas de agregación.}
+\label{sec:res-pe1}
 
-\section{Fidelidad de la generación (PE2)}
-\pendiente{Tabla: fidelidad y relevancia de la respuesta por categoría; análisis de casos de baja fidelidad.}
+\subsection{Juicios de relevancia}
 
-\section{Latencia del pipeline (PE3)}
-\pendiente{Tabla: p50 y p95 por etapa (\textit{embedding}, búsqueda, construcción del contexto, TTFT, total) con cada almacén vectorial.}
+El agrupamiento de profundidad 10 de los cinco sistemas produjo 1.403 pares de necesidad y oferta para las 60 necesidades de información. El juez local asignó la etiqueta 3 a 521 pares (37,1\,\%), la 2 a 317 (22,6\,\%), la 1 a 103 (7,3\,\%) y la 0 a 450 (32,1\,\%). En 12 pares (0,9\,\%) su respuesta no pudo interpretarse; esos pares se excluyen de los juicios y cuentan como no relevantes. En promedio, cada necesidad tiene 14 ofertas relevantes (etiqueta $\geq 2$) en el agrupamiento, más de las 10 posiciones evaluadas, por lo que el Recall@10 de un sistema no puede llegar a 1.
 
-\section{pgvector frente a Qdrant (PE4)}
+\subsection{Resultados globales}
 
-\subsection{Resultado preliminar sobre el corpus real}
-
-La Tabla~\ref{tab:res-ann-real} resume una primera comparación sobre el corpus de evaluación (4.013 fragmentos). Se usaron 200 consultas formadas por títulos de ofertas del corpus y 3 repeticiones; la referencia es la búsqueda exacta en pgvector. La latencia se mide desde el cliente y corresponde a la búsqueda de 10 vecinos, sin el \textit{embedding} de la consulta.
+La Tabla~\ref{tab:res-pe1-global} resume las métricas de los cinco sistemas sobre las 85 consultas de recuperación.
 
 \begin{table}[htbp!]
     \centering
-    \caption{Recall@10 y latencia de búsqueda sobre el corpus real (resultado preliminar)}
+    \caption{Calidad de recuperación por sistema (85 consultas; juez local)}
+    \label{tab:res-pe1-global}
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Sistema} & \textbf{P@5} & \textbf{P@10} & \textbf{nDCG@10} & \textbf{MRR} & \textbf{R@10} \\
+        \hline
+        ILIKE & 0{,}056 & 0{,}051 & 0{,}056 & 0{,}082 & 0{,}026 \\
+        \hline
+        BM25 & 0{,}581 & 0{,}555 & 0{,}560 & 0{,}752 & 0{,}401 \\
+        \hline
+        Denso, pgvector exacto & 0{,}765 & 0{,}711 & 0{,}728 & 0{,}899 & 0{,}493 \\
+        \hline
+        Denso, pgvector HNSW & 0{,}762 & 0{,}716 & 0{,}732 & 0{,}897 & 0{,}498 \\
+        \hline
+        Denso, Qdrant HNSW & 0{,}769 & 0{,}715 & 0{,}732 & 0{,}902 & 0{,}498 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La búsqueda ILIKE no devuelve ningún resultado en 78 de las 85 consultas, porque exige que la consulta completa aparezca como subcadena del título o de la empresa. BM25 devuelve resultados en 84. Los tres sistemas densos devuelven resultados en todas.
+
+Los tres sistemas densos obtienen valores prácticamente iguales: la mayor diferencia entre ellos, en cualquier métrica, es de 0,007. La búsqueda aproximada con HNSW, en pgvector o en Qdrant, no pierde calidad frente a la búsqueda exacta a esta escala.
+
+La Tabla~\ref{tab:res-pe1-signif} muestra la diferencia entre la recuperación densa servida por Qdrant y cada línea base. Las diferencias de los otros dos sistemas densos son del mismo orden; en nDCG@10 frente a BM25 van de 0,169 (pgvector exacto) a 0,173 (pgvector HNSW). Las 30 comparaciones (tres sistemas densos frente a dos líneas base en cinco métricas) son significativas con la prueba de aleatorización pareada y la corrección de Holm ($p_{Holm} \leq 0{,}003$, el mínimo que permiten 10.000 permutaciones con 30 comparaciones).
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Diferencia de medias de Qdrant HNSW frente a cada línea base, con IC bootstrap del 95\,\% (85 consultas)}
+    \label{tab:res-pe1-signif}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Métrica} & \textbf{frente a BM25} & \textbf{frente a ILIKE} \\
+        \hline
+        P@5 & $+0{,}188$ $[0{,}120;\ 0{,}259]$ & $+0{,}713$ $[0{,}645;\ 0{,}776]$ \\
+        \hline
+        P@10 & $+0{,}160$ $[0{,}102;\ 0{,}220]$ & $+0{,}665$ $[0{,}604;\ 0{,}725]$ \\
+        \hline
+        nDCG@10 & $+0{,}172$ $[0{,}115;\ 0{,}228]$ & $+0{,}676$ $[0{,}618;\ 0{,}731]$ \\
+        \hline
+        MRR & $+0{,}150$ $[0{,}080;\ 0{,}221]$ & $+0{,}819$ $[0{,}746;\ 0{,}888]$ \\
+        \hline
+        R@10 & $+0{,}097$ $[0{,}048;\ 0{,}147]$ & $+0{,}472$ $[0{,}431;\ 0{,}513]$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Resultados por categoría de consulta}
+
+La Figura~\ref{fig:res-ndcg-categoria} y la Tabla~\ref{tab:res-pe1-categoria} desagregan el nDCG@10 por categoría. Cada categoría incluye sus consultas en inglés y en español.
+
+\begin{figure}[htbp!]
+    \centering
+    \includegraphics[width=0.85\textwidth]{resultados/ndcg-by-category.pdf}
+    \caption{nDCG@10 por categoría de consulta. Los tres sistemas densos difieren en menos de 0,01, por lo que se muestra solo Qdrant HNSW; los valores de todos los sistemas están en la Tabla~\ref{tab:res-pe1-categoria}.}
+    \label{fig:res-ndcg-categoria}
+\end{figure}
+
+\begin{table}[htbp!]
+    \centering
+    \caption{nDCG@10 por categoría de consulta}
+    \label{tab:res-pe1-categoria}
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Categoría} & \textbf{ILIKE} & \textbf{BM25} & \shortstack{\textbf{pgvector}\\\textbf{exacto}} & \shortstack{\textbf{pgvector}\\\textbf{HNSW}} & \shortstack{\textbf{Qdrant}\\\textbf{HNSW}} \\
+        \hline
+        Exactas & 0{,}215 & 0{,}732 & 0{,}891 & 0{,}898 & 0{,}901 \\
+        \hline
+        Desajuste de vocabulario & 0{,}000 & 0{,}462 & 0{,}677 & 0{,}675 & 0{,}674 \\
+        \hline
+        Con restricciones & 0{,}000 & 0{,}469 & 0{,}643 & 0{,}650 & 0{,}647 \\
+        \hline
+        Ruidosas & 0{,}000 & 0{,}572 & 0{,}695 & 0{,}699 & 0{,}698 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+ILIKE solo encuentra resultados en consultas exactas. Frente a BM25, la recuperación densa (Qdrant HNSW) gana en las cuatro categorías. La mayor diferencia está en las consultas con desajuste de vocabulario ($+0{,}212$, un 46\,\% más), seguida de las consultas con restricciones ($+0{,}178$), las exactas ($+0{,}168$) y las ruidosas ($+0{,}126$).
+
+\subsection{Consultas en español}
+
+Para comparar los idiomas sobre las mismas necesidades, la Tabla~\ref{tab:res-pe1-idioma} contrasta las 25 consultas en español con las 25 consultas en inglés de las mismas necesidades de información.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{nDCG@10 y P@5 en las 25 necesidades con consulta en ambos idiomas}
+    \label{tab:res-pe1-idioma}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Sistema}} & \multicolumn{2}{c|}{\textbf{nDCG@10}} & \multicolumn{2}{c|}{\textbf{P@5}} \\
+        \cline{2-5}
+         & \textbf{Inglés} & \textbf{Español} & \textbf{Inglés} & \textbf{Español} \\
+        \hline
+        ILIKE & 0{,}078 & 0{,}000 & 0{,}080 & 0{,}000 \\
+        \hline
+        BM25 & 0{,}621 & 0{,}341 & 0{,}656 & 0{,}344 \\
+        \hline
+        Denso, pgvector exacto & 0{,}811 & 0{,}637 & 0{,}872 & 0{,}696 \\
+        \hline
+        Denso, pgvector HNSW & 0{,}811 & 0{,}656 & 0{,}864 & 0{,}704 \\
+        \hline
+        Denso, Qdrant HNSW & 0{,}812 & 0{,}644 & 0{,}872 & 0{,}704 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Todos los sistemas rinden menos en español, como se anticipó en la Sección~\ref{sec:met-consultas}. En la recuperación densa con Qdrant, el nDCG@10 baja de 0,812 a 0,644 (un 21\,\% menos). En BM25 baja de 0,621 a 0,341 (un 45\,\% menos), porque las ofertas están en inglés y las coincidencias léxicas con una consulta en español son escasas. ILIKE no recupera ninguna oferta relevante en español.
+
+\subsection{Consultas de agregación}
+\label{sec:res-agregacion}
+
+La Tabla~\ref{tab:res-agregacion} muestra, para cada una de las 15 consultas de agregación, la ruta y la plantilla que eligió el clasificador y la proporción de filas de la consulta de referencia que cubre el resultado (Sección~\ref{sec:met-metricas}).
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Enrutamiento y exactitud de la respuesta en las consultas de agregación}
+    \label{tab:res-agregacion}
+    \small
+    \begin{tabular}{|l|p{4.6cm}|l|l|c|c|}
+        \hline
+        \textbf{Id} & \textbf{Consulta} & \textbf{Ruta} & \textbf{Plantilla} & \textbf{Acierto} & \textbf{Filas} \\
+        \hline
+        ag-01 & how many jobs are in the database & agregación & {\footnotesize \texttt{count\_total}} & sí & 1/1 \\
+        \hline
+        ag-02 & how many remote jobs are there & agregación & {\footnotesize \texttt{count\_remote}} & sí & 1/1 \\
+        \hline
+        ag-03 & what is the average salary across all jobs & agregación & {\footnotesize \texttt{salary\_stats\_overall}} & sí & 1/1 \\
+        \hline
+        ag-04 & how many full time versus contract jobs are listed & agregación & {\footnotesize \texttt{count\_by\_job\_type}} & sí & 5/6 \\
+        \hline
+        ag-05 & which companies have the most open positions & agregación & {\footnotesize \texttt{top\_hiring\_companies}} & sí & 10/10 \\
+        \hline
+        ag-06 & what are the most in-demand skills & agregación & {\footnotesize \texttt{skills\_demand}} & sí & 10/10 \\
+        \hline
+        ag-07 & how many jobs require python & recuperación & --- & no & 0/1 \\
+        \hline
+        ag-08 & which locations have the most job openings & agregación & {\footnotesize \texttt{count\_by\_location}} & sí & 10/10 \\
+        \hline
+        ag-09 & what is the salary range for data scientist roles & agregación & {\footnotesize \texttt{salary\_stats\_by\_title}} & sí & 1/1 \\
+        \hline
+        ag-10 & how many jobs pay more than 200k & agregación & {\footnotesize \texttt{jobs\_above\_salary}} & sí & 0/1 \\
+        \hline
+        ag-11 & what is the average salary by job type & agregación & {\footnotesize \texttt{salary\_stats\_by\_job\_type}} & sí & 5/6 \\
+        \hline
+        ag-12 & list all companies hiring engineers & híbrida & {\footnotesize \texttt{list\_jobs\_by\_title}} & no & 18/316 \\
+        \hline
+        ag-13 & count the contract positions & agregación & {\footnotesize \texttt{count\_by\_job\_type}} & sí & 1/1 \\
+        \hline
+        ag-14 & how many different companies are hiring & híbrida & {\footnotesize \texttt{count\_by\_company}} & no & 0/1 \\
+        \hline
+        ag-15 & what are the most recent job postings & agregación & {\footnotesize \texttt{recent\_jobs}} & sí & 10/10 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La columna Acierto indica si el clasificador eligió la ruta y la plantilla esperadas. Lo hace en 12 de las 15 consultas (80\,\%), y la plantilla correcta en 14 (93\,\%). Los tres errores de enrutamiento tienen dos causas. En ag-07 el clasificador no encontró una plantilla y la consulta cayó en la ruta de recuperación. En ag-12 y ag-14 la plantilla es la esperada, pero la palabra \textit{hiring} activa el patrón de recuperación y la consulta se trata como híbrida.
+
+La respuesta es exacta en 9 de las 15 consultas (60\,\%), con una cobertura media de filas de 0,715. Los seis fallos se explican así:
+\begin{itemize}
+    \item En ag-04 y ag-11 falta solo una fila: la de las ofertas sin tipo de contrato, que la plantilla excluye y la consulta de referencia incluye.
+    \item En ag-10 y ag-14 el catálogo no tiene una plantilla que devuelva el dato pedido: \texttt{jobs\_above\_salary} lista hasta 20 ofertas en lugar de contarlas, y no existe una plantilla que cuente empresas distintas.
+    \item En ag-12 la plantilla devuelve 20 ofertas, que cubren 18 de las 316 empresas de la referencia.
+    \item En ag-07 la ruta de recuperación no ejecuta ninguna consulta SQL.
+\end{itemize}
+Las respuestas sobre salario promedio (ag-03 y ag-11) heredan además el problema de normalización descrito en la Sección~\ref{sec:met-corpus}. Unas pocas ofertas tienen montos no convertidos, y por eso el promedio del corpus resulta de 544.127 dólares anuales y el de las ofertas de tiempo completo, de 713.624.
+
+\section{Fidelidad de la generación (PE2)}
+\label{sec:res-pe2}
+
+Las 85 consultas de recuperación se respondieron mediante la ruta real del pipeline, servida desde Qdrant, con el modelo generador a temperatura 0. Ninguna respuesta quedó vacía. Las métricas de RAGAS se calcularon con el juez local (Llama 3.1 8B).
+
+En una primera pasada, el juez se ejecutó con su ventana de contexto por defecto, de 4.096 \textit{tokens}. Esa ventana no alcanza para el contexto recuperado (hasta cinco ofertas de 2.400 caracteres) más las instrucciones y la salida, de modo que la verificación de la fidelidad quedó truncada en 21 de las 85 respuestas (24,7\,\%), 12 de ellas de consultas exactas. Por eso todas las respuestas se puntuaron de nuevo con el mismo modelo y una ventana de 16.384 \textit{tokens}. Con esa configuración la fidelidad se obtuvo en las 85 respuestas, y la relevancia en 81: en las otras 4 la salida del juez no tuvo el formato esperado. La Tabla~\ref{tab:res-pe2} muestra los resultados.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Fidelidad y relevancia de la respuesta (RAGAS, juez local), por categoría e idioma}
+    \label{tab:res-pe2}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Grupo} & \textbf{Fidelidad} & \textbf{$n$} & \textbf{Relevancia} & \textbf{$n$} \\
+        \hline
+        Todas & 0{,}663 & 85 & 0{,}599 & 81 \\
+        \hline
+        Exactas & 0{,}690 & 22 & 0{,}700 & 20 \\
+        \hline
+        Desajuste de vocabulario & 0{,}569 & 22 & 0{,}701 & 21 \\
+        \hline
+        Con restricciones & 0{,}739 & 21 & 0{,}508 & 21 \\
+        \hline
+        Ruidosas & 0{,}657 & 20 & 0{,}482 & 19 \\
+        \hline
+        Inglés & 0{,}714 & 60 & 0{,}653 & 57 \\
+        \hline
+        Español & 0{,}540 & 25 & 0{,}472 & 24 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Las dos métricas tienen distribuciones muy dispersas. La mediana de la fidelidad es 0,75: 9 respuestas obtienen 1 y 19 quedan por debajo de 0,5. La mediana de la relevancia es 0,828, pero 25 respuestas reciben 0, el valor que RAGAS asigna cuando juzga que la respuesta es evasiva.
+
+Una revisión de los casos extremos muestra que una parte de esos valores bajos son errores del juez y no del pipeline:
+\begin{itemize}
+    \item Cuatro respuestas tienen fidelidad 0. Tres de ellas citan datos concretos de las ofertas, y en las tres las 10 cifras de salario y los 11 títulos de cargo citados aparecen literalmente en el contexto recuperado.
+    \item Entre las respuestas con relevancia 0 hay respuestas directas, que enumeran ofertas que cumplen la consulta, por ejemplo las de las consultas exactas sobre DevOps con Kubernetes y Terraform, desarrollo \textit{full stack} con React y Node.js, y \textit{customer success manager}.
+\end{itemize}
+Por lo tanto, con este juez los valores de la Tabla~\ref{tab:res-pe2} no pueden tomarse como una medida fiable de la fidelidad del pipeline, y quedan pendientes de la corrida con el juez final.
+
+Por último, en 21 de las 25 consultas en español la respuesta se redactó en inglés, el idioma de las ofertas. La relevancia de la respuesta compara la pregunta con preguntas generadas a partir de la respuesta, mediante el modelo de \textit{embeddings} entrenado en inglés, lo que puede contribuir a la menor relevancia medida en español.
+
+\section{Latencia del pipeline (PE3)}
+\label{sec:res-pe3}
+
+\subsection{Etapas propias del artefacto}
+
+La Tabla~\ref{tab:res-pe3-local} muestra la latencia de las etapas que ejecuta el propio artefacto, medida en las 85 consultas de recuperación con 30 repeticiones cada una (2.550 mediciones por etapa y por almacén). La búsqueda usa la configuración de producción, en la que PostgreSQL elige el plan de ejecución (Sección~\ref{sec:art-vectorial}).
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Latencia de las etapas locales del pipeline, en milisegundos}
+    \label{tab:res-pe3-local}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Etapa}} & \multicolumn{2}{c|}{\textbf{pgvector}} & \multicolumn{2}{c|}{\textbf{Qdrant}} \\
+        \cline{2-5}
+         & \textbf{p50} & \textbf{p95} & \textbf{p50} & \textbf{p95} \\
+        \hline
+        \textit{Embedding} de la consulta & 53{,}8 & 65{,}8 & 53{,}7 & 66{,}0 \\
+        \hline
+        Búsqueda vectorial & 25{,}3 & 28{,}0 & 3{,}7 & 5{,}2 \\
+        \hline
+        Lectura de las ofertas & 1{,}1 & 1{,}5 & 1{,}2 & 1{,}8 \\
+        \hline
+        Contexto completo & 80{,}5 & 93{,}1 & 59{,}0 & 71{,}5 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+El \textit{embedding} de la consulta es la etapa local más lenta y no depende del almacén. La búsqueda vectorial es la única etapa que cambia: servida desde pgvector tarda 25,3~ms en la mediana, porque el planificador recorre la tabla completa, y servida desde Qdrant tarda 3,7~ms. Con Qdrant, el contexto completo se construye en 59,0~ms en lugar de 80,5~ms, un 27\,\% menos.
+
+\subsection{Generación}
+
+La generación depende del servicio externo (Groq) y se midió con 3 repeticiones sobre un subconjunto fijo de 30 consultas, servido desde Qdrant (90 mediciones). Las llamadas rechazadas por el límite de tasa del servicio se repitieron desde cero y no forman parte de la medición. La Tabla~\ref{tab:res-pe3-gen} muestra los resultados.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Latencia del servicio de generación, en milisegundos (90 mediciones)}
+    \label{tab:res-pe3-gen}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Medida} & \textbf{p50} & \textbf{p95} \\
+        \hline
+        Tiempo hasta el primer \textit{token} (TTFT) & 475 & 926 \\
+        \hline
+        Tiempo total de generación & 1.149 & 1.702 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La generación domina la latencia del pipeline: su mediana es unas 20 veces la del contexto completo. Al sumar la mediana del contexto servido desde Qdrant (59,0~ms) a la del servicio externo, el primer \textit{token} llega al usuario en unos 0,53~s y la respuesta completa en unos 1,21~s. Se usan las medianas de la Tabla~\ref{tab:res-pe3-local} porque, durante la medición de la generación, se calculaban en paralelo las métricas de RAGAS en la misma máquina, lo que elevó la mediana del contexto registrado junto a cada respuesta a 74~ms.
+
+\section{pgvector frente a Qdrant (PE4)}
+\label{sec:res-pe4}
+
+\subsection{Medición desde la aplicación}
+
+La Tabla~\ref{tab:res-ann-real} resume una primera comparación sobre el corpus de evaluación (4.013 fragmentos), medida con el cliente de la propia aplicación. Se usaron 200 consultas formadas por títulos de ofertas del corpus y 3 repeticiones; la referencia es la búsqueda exacta en pgvector. La latencia se mide desde el cliente y corresponde a la búsqueda de 10 vecinos, sin el \textit{embedding} de la consulta.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Recall@10 y latencia de búsqueda sobre el corpus real, medidas desde la aplicación}
     \label{tab:res-ann-real}
     \begin{tabular}{|l|c|c|c|}
         \hline
@@ -50,14 +316,68 @@ La Tabla~\ref{tab:res-ann-real} resume una primera comparación sobre el corpus 
     \end{tabular}
 \end{table}
 
-A esta escala se observan tres hechos que el benchmark completo deberá contrastar:
+A esta escala se observan tres hechos:
 \begin{itemize}
     \item Con el plan automático, pgvector recorre la tabla completa (Sección~\ref{sec:art-vectorial}), por lo que la aplicación servida desde pgvector tarda unas ocho veces más que servida desde Qdrant.
     \item Forzando el índice, pgvector es ligeramente más rápido que Qdrant y alcanza un \textit{recall} mayor con el mismo $ef_{search}$. A este tamaño, la latencia de Qdrant está dominada por la sobrecarga del cliente y del protocolo.
     \item Las diferencias de \textit{recall} entre los dos motores en modo exacto se deben a empates entre fragmentos idénticos.
 \end{itemize}
 
-\pendiente{Figuras: curvas \textit{recall}@10 frente a latencia por escala (corpus real, 100k, 500k) y por selectividad del filtro (sin filtro, 50\,\%, 10\,\%, 1\,\%). Tabla: tiempo de construcción, tamaño del índice, memoria pico y QPS.}
+\subsection{Benchmark sobre el corpus real}
+
+El benchmark de la Sección~\ref{sec:met-benchmark} se ejecutó sobre los 4.013 vectores del corpus real, con 1.000 consultas y cada motor solo en la máquina. A diferencia de la medición anterior, en la búsqueda sin filtro se fuerza el índice HNSW de pgvector, y con filtro se deja decidir al planificador. La Tabla~\ref{tab:res-bench-real} resume configuraciones representativas; la completitud es la proporción de consultas que devolvieron los 10 resultados pedidos.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Benchmark sobre el corpus real (mediana de 3 corridas; latencia p50 en milisegundos)}
+    \label{tab:res-bench-real}
+    \small
+    \begin{tabular}{|l|l|c|c|c|c|l|}
+        \hline
+        \textbf{Filtro} & \textbf{Motor} & \textbf{$ef$} & \textbf{Recall@10} & \textbf{Complet.} & \textbf{p50} & \textbf{Plan} \\
+        \hline
+        Ninguno & pgvector & 16 & 0{,}958 & 1{,}000 & 0{,}41 & HNSW \\
+        \hline
+        Ninguno & pgvector & 64 & 0{,}994 & 1{,}000 & 0{,}74 & HNSW \\
+        \hline
+        Ninguno & Qdrant & 16 & 0{,}917 & 1{,}000 & 1{,}37 & HNSW \\
+        \hline
+        Ninguno & Qdrant & 64 & 0{,}990 & 1{,}000 & 1{,}53 & HNSW \\
+        \hline
+        50\,\% & pgvector, sin barrido iterativo & 16 & 0{,}782 & 0{,}257 & 0{,}40 & HNSW \\
+        \hline
+        50\,\% & pgvector, \texttt{relaxed\_order} & 16 & 0{,}960 & 1{,}000 & 0{,}53 & HNSW \\
+        \hline
+        50\,\% & pgvector & 64 & 0{,}989 & 1{,}000 & 0{,}76 & HNSW \\
+        \hline
+        50\,\% & Qdrant & 16 & 1{,}000 & 1{,}000 & 2{,}09 & HNSW \\
+        \hline
+        10\,\% & pgvector & todos & 1{,}000 & 1{,}000 & 0{,}40--0{,}43 & B-tree + orden \\
+        \hline
+        10\,\% & Qdrant & todos & 1{,}000 & 1{,}000 & 1{,}24--1{,}38 & HNSW \\
+        \hline
+        1\,\% & pgvector & todos & 1{,}000 & 1{,}000 & 0{,}18--0{,}20 & B-tree + orden \\
+        \hline
+        1\,\% & Qdrant & todos & 1{,}000 & 1{,}000 & 1{,}18--1{,}41 & HNSW \\
+        \hline
+    \end{tabular}
+\end{table}
+
+A esta escala se observan cuatro hechos:
+\begin{itemize}
+    \item Sin filtro, con el mismo $ef_{search}$, pgvector alcanza un \textit{recall} igual o mayor que Qdrant y, hasta $ef = 128$, una latencia menor: 0,74~ms frente a 1,53~ms con $ef = 64$. Con $ef = 256$ las latencias se igualan y con $ef = 512$ Qdrant es más rápido (2,34~ms frente a 2,99~ms). Con 8 clientes concurrentes, pgvector atiende entre 1.700 y 6.700 consultas por segundo según $ef$, y Qdrant entre 850 y 950.
+    \item Con el filtro del 50\,\% y $ef = 16$, pgvector sin barrido iterativo devuelve los 10 resultados solo en el 25,7\,\% de las consultas y su \textit{recall} cae a 0,782: el índice entrega los vecinos más cercanos y el filtro se aplica después, descartando la mitad. El barrido iterativo (\texttt{relaxed\_order}) corrige el problema (completitud 1,000 y \textit{recall} 0,960). Desde $ef = 128$, el planificador abandona el índice y recorre la tabla. Qdrant, que aplica el filtro durante el recorrido del grafo, mantiene un \textit{recall} de 1,000 en todos los casos.
+    \item Con filtros del 10\,\% y del 1\,\%, el planificador de pgvector no usa el índice vectorial: selecciona las filas con el índice B-tree del atributo filtrado y las ordena por distancia, una búsqueda exacta sobre unos 400 vectores o menos. Por eso el \textit{recall} es 1,000 con cualquier $ef$.
+    \item La latencia de Qdrant no baja de 1,1~ms en ninguna configuración, lo que es coherente con una sobrecarga fija del cliente y del protocolo que, a esta escala, domina sobre el costo de la búsqueda (Sección~\ref{sec:met-validez}).
+\end{itemize}
+
+La construcción del índice tomó 4,1~s en pgvector y 1,0~s en Qdrant, después de una carga de 1,3~s. A esta escala, los tamaños en disco y la memoria pico reflejan sobre todo la configuración de cada motor y no el índice, por lo que se reportan junto con los conjuntos sintéticos.
+
+\subsection{Escalamiento con datos sintéticos}
+
+Los conjuntos sintéticos de 100.000 y 500.000 vectores y su verdad de referencia ya están generados. La calibración eligió una desviación del ruido de $\sigma = 0{,}5$, con la que la distribución de similitudes al vecino más cercano difiere de la del corpus real en un estadístico de Kolmogórov-Smirnov de 0,23 (mediana de 0,932 frente a 0,919).
+
+\pendiente{Benchmark de 100.000 y 500.000 vectores (corrida programada): curvas \textit{recall}@10 frente a latencia por escala y por selectividad del filtro, y tabla de tiempo de construcción, tamaño del índice, memoria pico y QPS.}
 
 \section{Discusión}
 \pendiente{Respuesta a cada pregunta de evaluación, relación con la literatura revisada en el Capítulo~\ref{cap:estado-arte} y limitaciones observadas.}

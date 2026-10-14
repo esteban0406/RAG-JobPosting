@@ -123,10 +123,22 @@ Nota de proceso: Perplexity mezcló/inventó el autor real en 6 de 16 fuentes (m
 - [x] Instrumentar JobAI: `buildContext` devuelve contextos por oferta y tiempos por etapa; temperatura configurable en el stream (10-oct).
 - [~] Dataset de consultas: borrador en `evaluation/datasets/queries.v2.draft.jsonl` (75 EN + 25 ES, 75 necesidades). **Pendiente: revisión del autor** y verificar contra el corpus congelado que cada necesidad tenga ofertas relevantes.
 - [x] Líneas base `ilike` y `bm25` + comandos `eval:retrieve`, `eval:pool`, `eval:judge` (UMBRELA, caché), `eval:kappa-export`, `eval:generate`; análisis en `evaluation/analysis/{metrics,kappa}.py` (imagen Docker fijada). Probados de punta a punta en la base de desarrollo (10-oct).
-- [ ] Anotación humana de la muestra para kappa (~250-300 pares, 2-3 h) — el CSV ciego sale de `eval:kappa-export`.
+- [ ] Anotación humana de la muestra para kappa — **CSV listo (13-oct):** `evaluation/runs/2026-10-14T00-03-00-717ba41-dirty-retrieve-full/kappa-sample.csv` (286 pares: 75 de calibración, 211 de validación). Pendiente que el autor lo anote.
 - [x] Generación + RAGAS probados de punta a punta (piloto de 3 consultas, juez local): faithfulness 0,889, answer relevancy 0,903, 0 % NaN; ~50 s por respuesta con el juez local.
-- [~] Benchmark de almacenes vectoriales (`evaluation/bench/`): implementado y probado a pequeña escala (5k). Ya muestra el problema de post-filtrado de pgvector: filtro 10 % con ef=16 sin iterative scan → recall 0,19; con `relaxed_order` → 0,995. Requiere recrear el contenedor de Postgres (`shm_size: 4gb`) antes de la corrida real.
-- [ ] Corrida final con juez de pago; análisis estadístico (aleatorización pareada + Holm) y figuras.
+- [~] Benchmark de almacenes vectoriales (`evaluation/bench/`): **corpus real completo (13-oct)** → `evaluation/bench/results/` y Cap5 §PE4 (Tabla `tab:res-bench-real`). Postgres ya tiene `shm_size: 4gb`. Datos sintéticos de 100k y 500k y su verdad de referencia **ya generados** en `evaluation/bench/data/` (fuera de git; σ=0,5, KS=0,23). **Pausado por el autor antes de 100k/500k.**
+  - **Para correr mañana (1,5-2,5 h, la máquina debe quedar libre):**
+    1. Descargar los modelos de Ollama: `ollama stop llama3.1:8b-ctx16k` (y cualquiera que muestre `ollama ps`). No correr nada pesado en paralelo.
+    2. Desde la raíz del repo: `bash evaluation/bench/run_bench.sh synth-100000 synth-500000` (detiene y reinicia Postgres y Qdrant por turnos; al final ejecuta `bench report`, que junta también los resultados del corpus real).
+    3. Al terminar, dejar los servicios como estaban: `docker exec job-posting-db psql -U postgres -tAc "SHOW shared_buffers"` debe dar 128MB (el script lo restablece) y `docker start job-posting-qdrant` si quedó detenido.
+    4. Con `evaluation/bench/results/summary.csv` y las figuras `recall-latency-*.pdf`: llenar el `\pendiente` de Cap5 §"Escalamiento con datos sintéticos" y el del resumen. Las figuras de `bench report` usan el estilo por defecto de matplotlib y punto decimal: regenerarlas con el estilo de `evaluation/analysis/figures.py` antes de incluirlas.
+    5. El resumen está en 494 palabras y ocupa una página justa: al agregar PE4 hay que recortar otra parte.
+    6. 1M vectores: decidir según la memoria pico de 500k (la máquina tiene 15 GB; el contenedor se limita a 10 GB).
+  - Nota: `run_bench.sh` deja a `job-posting-db` y `job-posting-qdrant` limitados a 8 CPU / 10 GB (`docker update` no permite quitar el límite). Para volver a ilimitado: `docker compose up -d --force-recreate postgres qdrant` (conserva los volúmenes).
+- [x] **Corrida completa provisional (13-oct), juez local + dataset borrador:** recuperación de los 5 sistemas, pool (1.403 pares), juez llama3.1:8b, métricas y significancia, generación (85 respuestas), RAGAS, latencia por etapa (comandos nuevos `eval:latency` y `eval:aggregation`), agregación y benchmark de almacenes (real, 100k, 500k). Resultados en Cap5; resumen ES redactado con estas cifras.
+  - RAGAS con la ventana por defecto de Ollama (4.096 tokens) truncó la fidelidad en 21/85 respuestas → se repuntuó todo con `llama3.1:8b-ctx16k` (modelo local creado con `num_ctx 16384`) y `--max-tokens 4096`. Aun así, la revisión de casos con puntaje 0 muestra errores del juez de 8B: PE2 no es fiable hasta la corrida con el juez final.
+  - `expectedTemplates` de las 15 consultas de agregación redactadas por Claude — **revisar**. Dos `goldSql` (en-ag-04, en-ag-11) incluyen el grupo `jobType` nulo que la plantilla excluye; decidir si se ajustan.
+  - Las cifras del Cap5 y del resumen **cambiarán** con el juez de pago, el kappa y el dataset revisado.
+- [ ] Corrida final con juez de pago (elegir modelo y poner `JUDGE_API_KEY`); kappa; actualizar Cap5 y resumen.
 
 **Hallazgos pendientes de decisión (10-oct):**
 - [x] La plantilla `count_remote` (y `list_remote_jobs`) contaba remotos por `location ILIKE '%remote%'` e ignoraba la columna `isRemote` → 39 vs. 614 en el corpus de evaluación. **Corregida el 10-oct por decisión del autor**; documentada en Cap4 como quinto defecto.
@@ -145,14 +157,14 @@ Mapeo de capítulos de la plantilla a su contenido:
 - [x] Capítulo 2 (`Cap2`) — Estado del arte (7-sep; corregido 10-oct: índice IVFFlat real, descripción del clasificador).
 - [~] Capítulo 3 (`Cap3`) — Metodología: borrador completo 10-oct; quedan `\pendiente{}` con estadísticas del corpus y el modelo del juez final.
 - [~] Capítulo 4 (`Cap4`) — Diseño y desarrollo: borrador 10-oct (arquitectura corregida contra el código, migración a Qdrant, defectos corregidos); falta la evidencia `EXPLAIN` sobre el corpus completo.
-- [ ] Capítulo 5 (`Cap5`) — Resultados y evaluación (datos de la Fase 3).
+- [~] Capítulo 5 (`Cap5`) — Resultados y evaluación: tablas y texto de PE1-PE4 con la corrida provisional (13-oct); pendientes la validación del juez (kappa) y la Discusión.
 - [ ] Conclusiones y recomendaciones (`Cap9`) — respuesta a cada objetivo específico + trabajo futuro.
 
 ---
 
 ## Fase 5 (semanas 9-10) — Formato final
 
-- [ ] Resumen/Abstract bilingüe con palabras clave (`FrontMatter/F04-Abstract.tex`).
+- [~] Resumen/Abstract bilingüe con palabras clave (`FrontMatter/F04-Abstract.tex`): resumen en español redactado con cifras provisionales (13-oct); Abstract en inglés pendiente (se traduce cuando el autor apruebe el español).
 - [ ] Glosario y lista de símbolos si aplica (`F05-Symbols.tex`, `F06-Glossary.tex`).
 - [ ] Anexos si aplica (`BackMatter/B01-Anexos.tex`).
 - [ ] Verificar cumplimiento de formato NTC1486 (márgenes, numeración, extensión de la introducción 2-4 páginas, documento completo ≤120 páginas salvo reglamento distinto).
