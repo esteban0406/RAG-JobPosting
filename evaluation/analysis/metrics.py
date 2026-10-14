@@ -8,6 +8,9 @@ Writes to <run dir>/analysis-<qrels name>/:
     summary.csv        mean per system and measure, overall / by category / by language
     significance.csv   dense systems vs. lexical baselines: mean difference,
                        bootstrap 95% CI, paired randomization p-value, Holm-adjusted p
+    ladder.csv         the same test between consecutive rungs of the ablation ladder
+                       (embedding model, ANN, engine, filters, hybrid, reranking),
+                       Holm-adjusted as a separate family
 """
 
 from __future__ import annotations
@@ -120,6 +123,55 @@ def holm(pvalues: list[float]) -> list[float]:
     return adjusted.tolist()
 
 
+# (system, reference, subsets): each rung adds one component to its reference.
+# The embedding-model ablation is also tested per language (its hypothesis is
+# about Spanish queries).
+LADDER = [
+    ("qdrant-hnsw", "qdrant-e5base", ["all", "lang=en", "lang=es"]),
+    ("pg-hnsw", "pg-exact", ["all"]),
+    ("qdrant-hnsw", "pg-hnsw", ["all"]),
+    ("qdrant-filtered", "qdrant-hnsw", ["all"]),
+    ("qdrant-hybrid", "qdrant-filtered", ["all"]),
+    ("qdrant-hybrid-rerank", "qdrant-hybrid", ["all"]),
+    ("qdrant-hybrid-rerank", "qdrant-hnsw", ["all"]),
+]
+
+
+def compare(table: pd.DataFrame, system: str, reference: str, rng: np.random.Generator) -> dict:
+    pair = table[[system, reference]].dropna()
+    diff = (pair[system] - pair[reference]).to_numpy()
+    low, high = bootstrap_ci(diff, rng)
+    return {
+        "n": diff.size,
+        "mean_system": pair[system].mean(),
+        "mean_reference": pair[reference].mean(),
+        "mean_diff": diff.mean(),
+        "ci95_low": low,
+        "ci95_high": high,
+        "p_value": randomization_test(diff, rng),
+    }
+
+
+def ladder_significance(scores: pd.DataFrame) -> pd.DataFrame:
+    rng = np.random.default_rng(SEED)
+    systems = set(scores["system"])
+    rows = []
+    for measure in MEASURES:
+        measured = scores[scores["measure"] == measure]
+        for system, reference, subsets in LADDER:
+            if system not in systems or reference not in systems:
+                continue
+            for subset in subsets:
+                part = measured if subset == "all" else measured[measured["lang"] == subset.split("=")[1]]
+                table = part.pivot(index="query_id", columns="system", values="value")
+                rows.append({"measure": measure, "system": system, "reference": reference, "subset": subset,
+                             **compare(table, system, reference, rng)})
+    result = pd.DataFrame(rows)
+    if not result.empty:
+        result["p_holm"] = holm(result["p_value"].tolist())
+    return result
+
+
 def significance(scores: pd.DataFrame) -> pd.DataFrame:
     rng = np.random.default_rng(SEED)
     systems = sorted(scores["system"].unique())
@@ -166,6 +218,7 @@ def main() -> None:
     summary = summarize(scores)
     summary.to_csv(out / "summary.csv", index=False)
     significance(scores).to_csv(out / "significance.csv", index=False)
+    ladder_significance(scores).to_csv(out / "ladder.csv", index=False)
 
     overall = summary[summary["group"] == "all"].set_index("system")[list(MEASURES)]
     print(overall.round(3).to_string())
