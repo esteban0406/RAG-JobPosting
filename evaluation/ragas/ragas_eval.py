@@ -4,6 +4,7 @@ eval:generate run.
 Usage (inside the jobai-ragas image, host network):
     python evaluation/ragas/ragas_eval.py <generate run dir> \
         [--judge-base-url http://localhost:11434/v1] [--judge-model llama3.1:8b]
+        [--max-tokens 4096]
 
 The judge is any OpenAI-compatible endpoint (API key from JUDGE_API_KEY);
 answer relevancy embeds with the local e5 server, the same model the
@@ -104,7 +105,10 @@ async def main_async(args: argparse.Namespace) -> None:
                 cache[entry["key"]] = entry
 
     client = AsyncOpenAI(base_url=args.judge_base_url, api_key=os.environ.get("JUDGE_API_KEY", "ollama"))
-    llm = llm_factory(args.judge_model, provider="openai", client=client)
+    # RAGAS defaults to max_tokens=1024, which truncates the faithfulness
+    # verdicts for long answers. The judge's context window must also fit the
+    # retrieved contexts (with Ollama, set num_ctx in the model, e.g. 16384).
+    llm = llm_factory(args.judge_model, provider="openai", client=client, max_tokens=args.max_tokens)
     metrics = {
         "faithfulness": Faithfulness(llm=llm),
         "answer_relevancy": AnswerRelevancy(llm=llm, embeddings=E5Embeddings(args.embed_url)),
@@ -139,6 +143,7 @@ def main() -> None:
     parser.add_argument("--judge-model", default="llama3.1:8b")
     parser.add_argument("--embed-url", default="http://localhost:8000/embed")
     parser.add_argument("--concurrency", type=int, default=2)
+    parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--limit", type=int)
     asyncio.run(main_async(parser.parse_args()))
 

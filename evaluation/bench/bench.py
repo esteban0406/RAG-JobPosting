@@ -89,7 +89,7 @@ def cmd_queries(args: argparse.Namespace) -> None:
     texts: list[str] = []
     if args.dataset:
         for line in Path(args.dataset).read_text().splitlines():
-            if line.strip():
+            if line.strip() and not line.startswith("//"):
                 texts.append(json.loads(line)["text"])
     with psycopg.connect(args.db_url) as conn:
         titles = conn.execute(

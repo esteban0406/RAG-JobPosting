@@ -37,7 +37,9 @@ SEED = 42
 
 
 def load_queries(run_dir: Path) -> pd.DataFrame:
-    rows = [json.loads(line) for line in (run_dir / "queries.jsonl").read_text().splitlines() if line.strip()]
+    lines = (run_dir / "queries.jsonl").read_text().splitlines()
+    # Same rule as the CLI's loadDataset: "//" lines are comments.
+    rows = [json.loads(line) for line in lines if line.strip() and not line.startswith("//")]
     queries = pd.DataFrame(rows).set_index("id")
     return queries[queries["category"] != "aggregation"]
 
@@ -67,6 +69,7 @@ def per_query_scores(run_dir: Path, qrels_path: Path, queries: pd.DataFrame) -> 
                         "value": value,
                         "category": queries.at[query_id, "category"],
                         "lang": queries.at[query_id, "lang"],
+                        "info_need": queries.at[query_id, "infoNeedId"],
                     }
                 )
     return pd.DataFrame(frames)
@@ -76,6 +79,11 @@ def summarize(scores: pd.DataFrame) -> pd.DataFrame:
     parts = [scores.assign(group="all")]
     parts += [scores.assign(group="category=" + scores["category"])]
     parts += [scores.assign(group="lang=" + scores["lang"])]
+    # English queries of the needs that also have a Spanish query, so the two
+    # languages are compared on the same information needs.
+    es_needs = set(scores.loc[scores["lang"] == "es", "info_need"])
+    parallel = scores[(scores["lang"] == "en") & scores["info_need"].isin(es_needs)]
+    parts += [parallel.assign(group="lang=en-parallel")]
     combined = pd.concat(parts)
     return (
         combined.groupby(["group", "system", "measure"])["value"]
