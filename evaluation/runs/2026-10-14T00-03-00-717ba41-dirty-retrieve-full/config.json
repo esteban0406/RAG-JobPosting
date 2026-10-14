@@ -1,0 +1,22 @@
+{
+  "command": "eval:retrieve",
+  "gitSha": "717ba41-dirty",
+  "createdAt": "2026-10-14T00:03:04.916Z",
+  "embeddingModel": "e5-base-v2",
+  "corpus": {
+    "jobs": 1068,
+    "chunks": 4013
+  },
+  "queries": 85,
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "systems": [
+    "ilike",
+    "bm25",
+    "pg-exact",
+    "pg-hnsw",
+    "qdrant-hnsw"
+  ],
+  "depth": 10,
+  "efSearch": 40,
+  "label": "full"
+}

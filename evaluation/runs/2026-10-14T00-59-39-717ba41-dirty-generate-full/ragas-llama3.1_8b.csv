@@ -1,0 +1,261 @@
+queryId,category,lang,faithfulness,faithfulness_error,answer_relevancy,answer_relevancy_error
+en-ex-01,exact,en,0.6666666666666666,,0.9020735839296115,
+es-ex-01,exact,es,1.0,,0.8820313914322501,
+en-ex-02,exact,en,1.0,,0.9242802806674194,
+es-ex-02,exact,es,0.5714285714285714,,0.7429514937103839,
+en-ex-03,exact,en,0.9090909090909091,,0.8793354779236108,
+es-ex-03,exact,es,0.0,,0.8616468524133211,
+en-ex-04,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-647', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8770911001841508,
+es-ex-04,exact,es,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-314', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.0,
+en-ex-05,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-610', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.9114345790871682,
+es-ex-05,exact,es,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-850', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8598691459060608,
+en-ex-06,exact,en,0.5555555555555556,,0.8578196150686136,
+es-ex-06,exact,es,0.8,,0.7759534082378754,
+en-ex-07,exact,en,0.8888888888888888,,0.9053451353650076,
+es-ex-07,exact,es,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-557', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8792862420875048,
+en-ex-08,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-104', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8793847103405361,
+en-ex-09,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-771', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.9152457700244946,
+en-ex-10,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-555', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.9214444754946957,
+en-ex-11,exact,en,0.8,,0.8655970770079446,
+en-ex-12,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-508', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.9075909602134725,
+en-ex-13,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-280', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8618524264958158,
+en-ex-14,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-894', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.9170070031052887,
+en-ex-15,exact,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-495', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    2 validation errors for AnswerRelevanceOutput
+question
+  Field required [type=missing, input_value={'description': 'Structur...tput', 'type': 'object'}, input_type=dict]
+    For further information visit https://err"
+en-sv-01,semantic_vocab_mismatch,en,0.8,,0.7705985978739381,
+es-sv-01,semantic_vocab_mismatch,es,0.8,,0.8298253360361153,
+en-sv-02,semantic_vocab_mismatch,en,0.2857142857142857,,0.940932242139899,
+es-sv-02,semantic_vocab_mismatch,es,0.2222222222222222,,0.0,
+en-sv-03,semantic_vocab_mismatch,en,0.5714285714285714,,0.9494725189548974,
+es-sv-03,semantic_vocab_mismatch,es,0.0,,0.7681573432317313,
+en-sv-04,semantic_vocab_mismatch,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-313', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.9140723534872581,
+es-sv-04,semantic_vocab_mismatch,es,0.4,,0.0,
+en-sv-05,semantic_vocab_mismatch,en,0.8181818181818182,,0.8856720049894559,
+es-sv-05,semantic_vocab_mismatch,es,0.375,,0.0,
+en-sv-06,semantic_vocab_mismatch,en,0.8333333333333334,,0.9125999249347547,
+es-sv-06,semantic_vocab_mismatch,es,0.0,,0.8535936657574795,
+en-sv-07,semantic_vocab_mismatch,en,1.0,,0.9136116777212222,
+es-sv-07,semantic_vocab_mismatch,es,0.5,,0.8266948083775475,
+en-sv-08,semantic_vocab_mismatch,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-685', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    2 validation errors for AnswerRelevanceOutput
+question
+  Field required [type=missing, input_value={'description': 'Structur...tput', 'type': 'object'}, input_type=dict]
+    For further information visit https://err"
+en-sv-09,semantic_vocab_mismatch,en,0.5714285714285714,,0.0,
+en-sv-10,semantic_vocab_mismatch,en,0.625,,0.9380502476643878,
+en-sv-11,semantic_vocab_mismatch,en,0.2857142857142857,,0.7758837228772588,
+en-sv-12,semantic_vocab_mismatch,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-479', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.7996030689809475,
+en-sv-13,semantic_vocab_mismatch,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-443', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    2 validation errors for AnswerRelevanceOutput
+question
+  Field required [type=missing, input_value={'description': 'Structur...tput', 'type': 'object'}, input_type=dict]
+    For further information visit https://err"
+en-sv-14,semantic_vocab_mismatch,en,0.45454545454545453,,0.9130505394864862,
+en-sv-15,semantic_vocab_mismatch,en,0.7777777777777778,,0.8105407778183734,
+en-co-01,constraint,en,0.75,,0.0,
+es-co-01,constraint,es,0.5833333333333334,,0.0,
+en-co-02,constraint,en,0.45454545454545453,,0.0,
+es-co-02,constraint,es,0.8888888888888888,,0.7821917564379066,
+en-co-03,constraint,en,0.4,,0.9719071056772336,
+es-co-03,constraint,es,0.4444444444444444,,0.0,
+en-co-04,constraint,en,0.5,,0.9681689712307934,
+es-co-04,constraint,es,0.6666666666666666,,0.0,
+en-co-05,constraint,en,1.0,,0.9483924757109913,
+es-co-05,constraint,es,1.0,,0.0,
+en-co-06,constraint,en,0.6666666666666666,,0.9612853648615699,
+es-co-06,constraint,es,0.9,,0.719012680928969,
+en-co-07,constraint,en,0.5,,0.9425325438087525,
+en-co-08,constraint,en,0.8571428571428571,,0.9259897824653107,
+en-co-09,constraint,en,1.0,,0.9634283307790602,
+en-co-10,constraint,en,0.6666666666666666,,0.869303663711032,
+en-co-11,constraint,en,0.75,,0.9728374104595249,
+en-co-12,constraint,en,0.5,,0.0,
+en-co-13,constraint,en,0.5,,0.8584674338312467,
+en-co-14,constraint,en,0.5,,0.0,
+en-co-15,constraint,en,0.7142857142857143,,0.825278944812838,
+en-no-01,noisy,en,0.5,,0.0,
+es-no-01,noisy,es,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-566', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8881179014291122,
+en-no-02,noisy,en,0.8333333333333334,,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    2 validation errors for AnswerRelevanceOutput
+question
+  Field required [type=missing, input_value={'description': 'Structur...tput', 'type': 'object'}, input_type=dict]
+    For further information visit https://err"
+es-no-02,noisy,es,0.5,,0.7333226757369715,
+en-no-03,noisy,en,0.75,,0.8535372733507424,
+es-no-03,noisy,es,0.0,,0.8223403131133836,
+en-no-04,noisy,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-574', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8036882910810292,
+es-no-04,noisy,es,0.8333333333333334,,0.0,
+en-no-05,noisy,en,0.7272727272727273,,0.0,
+es-no-05,noisy,es,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-429', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.0,
+en-no-06,noisy,en,0.42857142857142855,,0.0,
+en-no-07,noisy,en,0.8,,0.8447213010304844,
+en-no-08,noisy,en,0.6666666666666666,,0.7664475700767966,
+en-no-09,noisy,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-202', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8340801451183143,
+en-no-10,noisy,en,nan,"InstructorRetryException: <failed_attempts>
+
+<generation number=""1"">
+<exception>
+    The output is incomplete due to a max_tokens length limit.
+</exception>
+<completion>
+    ChatCompletion(id='chatcmpl-364', choices=[Choice(finish_reason='length', index=0, logprobs=None, message=ChatCompletionMessag",0.8829349854771338,
+en-no-11,noisy,en,0.6,,0.0,
+en-no-12,noisy,en,0.6,,0.9120269204166064,
+en-no-13,noisy,en,0.875,,0.0,
+en-no-14,noisy,en,0.8888888888888888,,0.8229612564867962,
+en-no-15,noisy,en,0.2,,0.867895376357101,

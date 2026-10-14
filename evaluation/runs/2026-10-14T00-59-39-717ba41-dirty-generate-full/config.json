@@ -1,0 +1,13 @@
+{
+  "command": "eval:generate",
+  "gitSha": "717ba41-dirty",
+  "createdAt": "2026-10-14T01:02:46.613Z",
+  "model": "qwen/qwen3.8-27b",
+  "vectorBackend": "qdrant",
+  "queries": 85,
+  "newlyGenerated": 5,
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "label": "full",
+  "temperature": 0,
+  "delayMs": 35000
+}
