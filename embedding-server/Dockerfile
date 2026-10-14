@@ -8,7 +8,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 ENV HF_HOME=/root/.cache/huggingface
-RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('intfloat/e5-base-v2')"
+ARG EMBEDDING_MODEL=intfloat/multilingual-e5-base
+ARG RERANKER_MODEL=BAAI/bge-reranker-v2-m3
+ENV EMBEDDING_MODEL=${EMBEDDING_MODEL} RERANKER_MODEL=${RERANKER_MODEL}
+RUN python -c "import os; from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer(os.environ['EMBEDDING_MODEL']); os.environ['RERANKER_MODEL'] and CrossEncoder(os.environ['RERANKER_MODEL'])"
 
 EXPOSE 8000
 

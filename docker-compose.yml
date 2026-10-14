@@ -19,19 +19,45 @@ services:
       timeout: 5s
       retries: 5
 
+  # Embeddings (multilingual-e5-base) and reranking (bge-reranker-v2-m3) on the
+  # GPU. Requires the NVIDIA Container Toolkit on the host.
   embedding-server:
     build: ./embedding-server
     container_name: job-posting-embeddings
+    environment:
+      EMBEDDING_MODEL: intfloat/multilingual-e5-base
+      RERANKER_MODEL: BAAI/bge-reranker-v2-m3
     ports:
       - "8000:8000"
     volumes:
       - huggingface_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/docs || exit 1"]
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\""]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 30s
+      start_period: 60s
+
+  # e5-base-v2 query embeddings for the embedding-model ablation only:
+  # docker compose --profile ablation up -d embedding-server-e5
+  embedding-server-e5:
+    build: ./embedding-server
+    container_name: job-posting-embeddings-e5
+    profiles: [ablation]
+    environment:
+      EMBEDDING_MODEL: intfloat/e5-base-v2
+      RERANKER_MODEL: ""
+    ports:
+      - "8001:8000"
+    volumes:
+      - huggingface_cache:/root/.cache/huggingface
 
   qdrant:
     image: qdrant/qdrant:v1.19.1

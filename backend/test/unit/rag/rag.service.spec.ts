@@ -4,6 +4,7 @@ import { EmbeddingService } from '../../../src/embedding/embedding.service.js';
 import { VECTOR_STORE } from '../../../src/storage/vector-store/vector-store.interface.js';
 import { JobRepository } from '../../../src/storage/job.repository.js';
 import { LlmService } from '../../../src/llm/llm.service.js';
+import { ANSWER_LANGUAGE_RULE } from '../../../src/llm/prompt-rules.js';
 import { ResumeService } from '../../../src/resume/resume.service.js';
 import { NULL_PARSED_RESUME } from '../../../src/resume/interfaces/parsed-resume.interface.js';
 
@@ -182,6 +183,16 @@ describe('RagService', () => {
       expect(ctx!.systemMessage).toContain('Engineer at Acme');
       expect(ctx!.sources).toHaveLength(1);
       expect(ctx!.contextChunks).toContain('Engineer at Acme');
+    });
+
+    it('instructs the model to answer in the language of the question', async () => {
+      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
+      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
+      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+
+      const ctx = await service.buildContext('trabajos de python');
+
+      expect(ctx!.systemMessage).toContain(ANSWER_LANGUAGE_RULE);
     });
 
     it('includes job header with similarity score in contextChunks', async () => {

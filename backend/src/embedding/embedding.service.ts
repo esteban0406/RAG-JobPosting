@@ -13,8 +13,10 @@ import type { Cache } from 'cache-manager';
 import { createHash } from 'crypto';
 
 const GEMINI_MODEL_NAME = 'gemini-embedding-001';
-const LOCAL_MODEL_NAME = 'e5-base-v2';
+const DEFAULT_LOCAL_MODEL_NAME = 'multilingual-e5-base';
 const EMBEDDING_DIMENSIONS = 768;
+// Texts per request to the local server when embedding in bulk.
+const LOCAL_BATCH_SIZE = 32;
 const CACHE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const BATCH_DELAY_MS = 2000;
 const MAX_RETRIES = 3;
@@ -27,6 +29,7 @@ export class EmbeddingService {
   private readonly genaiClients: GoogleGenAI[] = [];
   private embedClientIdx = 0;
   private readonly localEmbeddingUrl: string;
+  private readonly localModelName: string;
 
   constructor(
     config: ConfigService,
@@ -37,6 +40,10 @@ export class EmbeddingService {
     this.localEmbeddingUrl = config.get<string>(
       'LOCAL_EMBEDDING_URL',
       'http://localhost:8000',
+    );
+    this.localModelName = config.get<string>(
+      'LOCAL_EMBEDDING_MODEL',
+      DEFAULT_LOCAL_MODEL_NAME,
     );
 
     if (this.provider === 'gemini') {
@@ -57,11 +64,17 @@ export class EmbeddingService {
   }
 
   get modelName(): string {
-    return this.provider === 'gemini' ? GEMINI_MODEL_NAME : LOCAL_MODEL_NAME;
+    return this.provider === 'gemini' ? GEMINI_MODEL_NAME : this.localModelName;
+  }
+
+  // Keyed by model so switching models never serves a stale vector.
+  private cacheKey(text: string): string {
+    const hash = createHash('sha256').update(text).digest('hex');
+    return `embed:${this.modelName}:${hash}`;
   }
 
   async embed(text: string): Promise<number[]> {
-    const cacheKey = `embed:${createHash('sha256').update(text).digest('hex')}`;
+    const cacheKey = this.cacheKey(text);
     const cached = await this.cache.get<number[]>(cacheKey);
     if (cached) {
       this.logger.debug(`Cache hit for embedding (model=${this.modelName})`);
@@ -91,10 +104,18 @@ export class EmbeddingService {
     text: string,
     type: 'query' | 'passage' = 'passage',
   ): Promise<number[]> {
+    const [vector] = await this.embedManyWithLocal([text], type);
+    return vector;
+  }
+
+  private async embedManyWithLocal(
+    texts: string[],
+    type: 'query' | 'passage',
+  ): Promise<number[][]> {
     const response = await fetch(`${this.localEmbeddingUrl}/embed`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texts: [text], type }),
+      body: JSON.stringify({ texts, type }),
     });
 
     if (!response.ok) {
@@ -103,16 +124,30 @@ export class EmbeddingService {
       );
     }
 
-    const data = (await response.json()) as { embeddings: number[][] };
-    const vector = data.embeddings?.[0];
-
-    if (!vector || vector.length !== EMBEDDING_DIMENSIONS) {
+    const data = (await response.json()) as {
+      embeddings: number[][];
+      model?: string;
+    };
+    // The server reports a Hugging Face id (e.g. intfloat/multilingual-e5-base);
+    // refuse vectors from a model other than the configured one, which would
+    // silently mix vector spaces in the store.
+    if (!data.model || data.model.split('/').pop() !== this.localModelName) {
       throw new Error(
-        `Unexpected embedding dimensions from local server: got ${vector?.length}, expected ${EMBEDDING_DIMENSIONS}`,
+        `Local embedding server serves "${data.model ?? 'unknown'}", expected "${this.localModelName}"`,
       );
     }
 
-    return vector;
+    const vectors = data.embeddings ?? [];
+    if (
+      vectors.length !== texts.length ||
+      vectors.some((v) => v.length !== EMBEDDING_DIMENSIONS)
+    ) {
+      throw new Error(
+        `Unexpected embeddings from local server: got ${vectors.length} of dimension ${vectors[0]?.length}, expected ${texts.length} of ${EMBEDDING_DIMENSIONS}`,
+      );
+    }
+
+    return vectors;
   }
 
   private async embedWithGemini(text: string, attempt = 0): Promise<number[]> {
@@ -185,6 +220,21 @@ export class EmbeddingService {
   }
 
   async embedBatch(texts: string[]): Promise<number[][]> {
+    if (this.provider === 'local') {
+      const results: number[][] = [];
+      for (let i = 0; i < texts.length; i += LOCAL_BATCH_SIZE) {
+        const batch = texts.slice(i, i + LOCAL_BATCH_SIZE);
+        const vectors = await this.embedManyWithLocal(batch, 'passage');
+        await Promise.all(
+          batch.map((text, j) =>
+            this.cache.set(this.cacheKey(text), vectors[j], CACHE_TTL_MS),
+          ),
+        );
+        results.push(...vectors);
+      }
+      return results;
+    }
+
     const results: number[][] = [];
     for (const text of texts) {
       results.push(await this.embed(text));

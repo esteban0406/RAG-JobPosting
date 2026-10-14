@@ -45,6 +45,12 @@ class EnvironmentVariables {
   @IsOptional()
   LOCAL_EMBEDDING_URL: string = 'http://localhost:8000';
 
+  // Must match the model the local embedding server reports; stored with
+  // each chunk in JobChunk.embeddingModel.
+  @IsString()
+  @IsOptional()
+  LOCAL_EMBEDDING_MODEL: string = 'multilingual-e5-base';
+
   @IsString()
   @IsOptional()
   LLM_MODEL: string = 'qwen/qwen3.8-27b';

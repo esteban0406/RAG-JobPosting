@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { performance } from 'perf_hooks';
 import { EmbeddingService } from '../embedding/embedding.service.js';
 import { ChatMessage, LlmService } from '../llm/llm.service.js';
+import { ANSWER_LANGUAGE_RULE } from '../llm/prompt-rules.js';
 import type { ParsedResume } from '../resume/interfaces/parsed-resume.interface.js';
 import { ResumeService } from '../resume/resume.service.js';
 import { JobRepository } from '../storage/job.repository.js';
@@ -403,6 +404,7 @@ export class RagService {
   private buildSystemMessage(context: string, userProfileContext = ''): string {
     return `You are a helpful job search assistant. Answer the user's query based ONLY on the job postings provided below.
 Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details. If the conversation includes prior turns, use them to understand follow-up questions and references to previously discussed jobs.
+${ANSWER_LANGUAGE_RULE}
 
 ${userProfileContext}Job Postings:
 ${context}`;

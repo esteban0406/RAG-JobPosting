@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LlmService } from '../../llm/llm.service.js';
+import { ANSWER_LANGUAGE_RULE } from '../../llm/prompt-rules.js';
 import { AggregationRepository } from './aggregation.repository.js';
 import { type JobFilters } from './job-filter-builder.js';
 import { type TemplateKey } from './query-templates.js';
@@ -63,6 +64,7 @@ function buildAggregationPrompt(
 ): string {
   return `You are a job search assistant. Summarize the following data in 2-3 sentences to answer the user's question.
 Be concise and factual. Do not fabricate details.
+${ANSWER_LANGUAGE_RULE}
 
 Data:
 ${JSON.stringify(rows, null, 2)}

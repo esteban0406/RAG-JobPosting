@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import type { JobSource } from '../rag/dto/rag-response.dto.js';
 import { RagService } from '../rag/rag.service.js';
 import { ChatMessage, LlmService } from '../llm/llm.service.js';
+import { ANSWER_LANGUAGE_RULE } from '../llm/prompt-rules.js';
 import { AggregationService } from './aggregation/aggregation.service.js';
 import { type JobFilters } from './aggregation/job-filter-builder.js';
 import type { TemplateKey } from './aggregation/query-templates.js';
@@ -397,6 +398,7 @@ function buildHybridMessages(
 ): ChatMessage[] {
   const systemMessage = `You are a job search assistant. Answer the user's question using BOTH the job listings and the statistical data below.
 Be concise and specific. Do not fabricate details. If salary or other details are not available for a listing, say so. If the conversation includes prior turns, use them to understand follow-up questions.
+${ANSWER_LANGUAGE_RULE}
 
 Job listings:
 ${contextChunks}
