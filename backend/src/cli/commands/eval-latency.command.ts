@@ -23,6 +23,7 @@ import {
   percentile,
   writeJson,
 } from '../run-context.js';
+import { retryRateLimited } from '../rate-limit.js';
 
 export interface EvalLatencyOptions {
   dataset: string;
@@ -67,61 +68,38 @@ function stratifiedSample(
   return sample;
 }
 
-const RATE_LIMIT_WAIT_MS = 60_000;
-const MAX_RATE_LIMIT_RETRIES = 10;
-
-function isRateLimited(err: unknown): boolean {
-  const e = err as { status?: number; getStatus?: () => number };
-  return e.status === 429 || e.getStatus?.() === 429;
-}
-
-// One timed streaming generation. A rate-limited call is waited out and
-// measured again from scratch, since these measurements have no cache to
-// resume from.
-async function timedGeneration(
+// One timed streaming generation; a rate-limited call is measured again.
+function timedGeneration(
   llm: LlmService,
   messages: ChatMessage[],
   temperature: number,
   logger: Logger,
 ): Promise<{ ttftMs: number; generationMs: number; chars: number }> {
-  for (let attempt = 0; ; attempt++) {
-    try {
-      const g0 = performance.now();
-      let ttftMs = -1;
-      let chars = 0;
-      for await (const token of llm.completeChatStream(messages, {
-        temperature,
-      })) {
-        if (ttftMs < 0) ttftMs = performance.now() - g0;
-        chars += token.length;
-      }
-      return { ttftMs, generationMs: performance.now() - g0, chars };
-    } catch (err) {
-      if (!isRateLimited(err) || attempt >= MAX_RATE_LIMIT_RETRIES) throw err;
-      logger.warn(`Rate limited; retrying in ${RATE_LIMIT_WAIT_MS / 1000}s`);
-      await new Promise((r) => setTimeout(r, RATE_LIMIT_WAIT_MS));
+  return retryRateLimited(async () => {
+    const g0 = performance.now();
+    let ttftMs = -1;
+    let chars = 0;
+    for await (const token of llm.completeChatStream(messages, {
+      temperature,
+    })) {
+      if (ttftMs < 0) ttftMs = performance.now() - g0;
+      chars += token.length;
     }
-  }
+    return { ttftMs, generationMs: performance.now() - g0, chars };
+  }, logger);
 }
 
-// The classification as production runs it (no cache), timed. Rate-limited
-// calls are waited out and measured again from scratch.
-async function timedClassification(
+// The classification as production runs it (no cache), timed.
+function timedClassification(
   classifier: QueryClassifierService,
   query: string,
   logger: Logger,
 ): Promise<{ classifyMs: number; result: ClassificationResult }> {
-  for (let attempt = 0; ; attempt++) {
-    try {
-      const t0 = performance.now();
-      const result = await classifier.classify(query, { strict: true });
-      return { classifyMs: performance.now() - t0, result };
-    } catch (err) {
-      if (!isRateLimited(err) || attempt >= MAX_RATE_LIMIT_RETRIES) throw err;
-      logger.warn(`Rate limited; retrying in ${RATE_LIMIT_WAIT_MS / 1000}s`);
-      await new Promise((r) => setTimeout(r, RATE_LIMIT_WAIT_MS));
-    }
-  }
+  return retryRateLimited(async () => {
+    const t0 = performance.now();
+    const result = await classifier.classify(query, { strict: true });
+    return { classifyMs: performance.now() - t0, result };
+  }, logger);
 }
 
 function stats(values: number[]) {

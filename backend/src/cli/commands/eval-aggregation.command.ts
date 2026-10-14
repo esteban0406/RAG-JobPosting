@@ -14,6 +14,7 @@ import type { TemplateKey } from '../../query/aggregation/query-templates.js';
 import { QueryClassifierService } from '../../query/query-classifier.service.js';
 import { PrismaService } from '../../storage/prisma.service.js';
 import { createRunDir, gitSha, writeJson } from '../run-context.js';
+import { retryRateLimited } from '../rate-limit.js';
 
 export interface EvalAggregationOptions {
   dataset: string;
@@ -49,7 +50,11 @@ export async function evalAggregation(
     if (!q.goldSql || !q.expectedTemplates?.length)
       throw new Error(`${q.id}: missing goldSql or expectedTemplates`);
 
-    const c = await classifier.classify(q.text);
+    // Strict: a rate-limited call must not count as a routing error.
+    const c = await retryRateLimited(
+      () => classifier.classify(q.text, { strict: true }),
+      logger,
+    );
     const routeCorrect =
       c.type === q.expectedRoute &&
       q.expectedTemplates.includes(c.intent as TemplateKey);

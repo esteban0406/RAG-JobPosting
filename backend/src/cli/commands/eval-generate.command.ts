@@ -20,6 +20,7 @@ import {
   VECTOR_STORE,
   type VectorStore,
 } from '../../storage/vector-store/vector-store.interface.js';
+import { retryRateLimited } from '../rate-limit.js';
 import { createRunDir, gitSha, writeJson } from '../run-context.js';
 
 export interface EvalGenerateOptions {
@@ -105,22 +106,23 @@ export async function evalGenerate(
     const cached = cache.get(key);
     let entry = cached;
     if (!entry) {
-      const g0 = performance.now();
-      let ttftMs = -1;
-      let answer = '';
-      for await (const token of llm.completeChatStream(messages, {
-        temperature: options.temperature,
-      })) {
-        if (ttftMs < 0) ttftMs = performance.now() - g0;
-        answer += token;
-      }
+      const generated = await retryRateLimited(async () => {
+        const g0 = performance.now();
+        let ttftMs = -1;
+        let answer = '';
+        for await (const token of llm.completeChatStream(messages, {
+          temperature: options.temperature,
+        })) {
+          if (ttftMs < 0) ttftMs = performance.now() - g0;
+          answer += token;
+        }
+        return { answer, ttftMs, generationMs: performance.now() - g0 };
+      }, logger);
       entry = {
         key,
         model: llm.modelName,
         temperature: options.temperature,
-        answer,
-        ttftMs,
-        generationMs: performance.now() - g0,
+        ...generated,
         generatedAt: new Date().toISOString(),
       };
       mkdirSync(dirname(cachePath), { recursive: true });
