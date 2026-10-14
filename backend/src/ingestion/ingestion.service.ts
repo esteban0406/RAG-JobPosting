@@ -5,6 +5,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import PQueue from 'p-queue';
 import { EmbeddingService } from '../embedding/embedding.service.js';
+import { Bm25IndexService } from '../retrieval/bm25-index.service.js';
 import { JobRepository } from '../storage/job.repository.js';
 import {
   VECTOR_STORE,
@@ -43,6 +44,7 @@ export class IngestionService {
     private readonly chunkService: ChunkService,
     private readonly prisma: PrismaService,
     private readonly jobParser: JobParserService,
+    private readonly bm25: Bm25IndexService,
     config: ConfigService,
   ) {
     this.providers = [remotive, jobicy, findwork];
@@ -203,6 +205,8 @@ export class IngestionService {
       );
     } finally {
       this.isRunning = false;
+      // New or removed jobs reach hybrid retrieval on the next search.
+      this.bm25.invalidate();
     }
 
     return { fetched, stored, skipped };
@@ -310,6 +314,8 @@ export class IngestionService {
       return { loaded: rows.length, stored };
     } finally {
       this.isRunning = false;
+      // New or removed jobs reach hybrid retrieval on the next search.
+      this.bm25.invalidate();
     }
   }
 

@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { parseArgs } from 'util';
 import { CliModule } from './cli.module.js';
 import { annQuick } from './commands/ann-quick.command.js';
+import { embeddingsReembed } from './commands/embeddings-reembed.command.js';
 import { evalAggregation } from './commands/eval-aggregation.command.js';
 import { evalGenerate } from './commands/eval-generate.command.js';
 import { evalJudge } from './commands/eval-judge.command.js';
@@ -17,12 +18,17 @@ import { qdrantBackfill } from './commands/qdrant-backfill.command.js';
 const USAGE = `Usage: pnpm cli <command> [options]
 
 Commands:
+  embeddings:reembed [--batch-size 500]
+      Re-embed every JobChunk in place with LOCAL_EMBEDDING_MODEL (same ids and
+      texts) and rebuild the HNSW index; then run qdrant:backfill --recreate.
   qdrant:backfill [--recreate] [--batch-size 500]
       Copy all JobChunk vectors from Postgres into Qdrant and verify counts.
   ann:quick [--queries 200] [--k 10] [--ef 16,64,256] [--repetitions 3]
       Recall@k vs. exact search and latency for pgvector and Qdrant HNSW.
   eval:retrieve --dataset <queries.jsonl> [--systems a,b] [--depth 10] [--ef-search 40] [--label name]
-      Run the retrieval systems and write TREC runs to evaluation/runs/.
+                [--ablation-collection eval_job_chunks_e5base] [--ablation-embed-url http://localhost:8001]
+      Run the retrieval systems and write TREC runs to evaluation/runs/. Filtered
+      systems classify each query once (evaluation/classifications/ cache).
   eval:pool --run <run dir> [--depth 10]
       Pool the systems' top results per information need.
   eval:judge --run <run dir> [--judge-provider openai-compatible|anthropic]
@@ -61,6 +67,14 @@ async function main(): Promise<number> {
       systems: { type: 'string', default: SYSTEM_NAMES.join(',') },
       depth: { type: 'string', default: '10' },
       'ef-search': { type: 'string', default: '40' },
+      'ablation-collection': {
+        type: 'string',
+        default: 'eval_job_chunks_e5base',
+      },
+      'ablation-embed-url': {
+        type: 'string',
+        default: 'http://localhost:8001',
+      },
       label: { type: 'string', default: 'run' },
       run: { type: 'string' },
       'judge-provider': { type: 'string', default: 'openai-compatible' },
@@ -95,6 +109,12 @@ async function main(): Promise<number> {
   });
   try {
     switch (command) {
+      case 'embeddings:reembed':
+        return (await embeddingsReembed(app, {
+          batchSize: Number(values['batch-size']),
+        }))
+          ? 0
+          : 1;
       case 'qdrant:backfill':
         return (await qdrantBackfill(app, {
           recreate: values.recreate,
@@ -117,6 +137,8 @@ async function main(): Promise<number> {
           depth: Number(values.depth),
           efSearch: Number(values['ef-search']),
           label: values.label,
+          ablationCollection: values['ablation-collection'],
+          ablationEmbedUrl: values['ablation-embed-url'],
         });
         return 0;
       case 'eval:judge':

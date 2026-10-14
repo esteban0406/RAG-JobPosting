@@ -5,20 +5,21 @@ import { ChatMessage, LlmService } from '../llm/llm.service.js';
 import { ANSWER_LANGUAGE_RULE } from '../llm/prompt-rules.js';
 import type { ParsedResume } from '../resume/interfaces/parsed-resume.interface.js';
 import { ResumeService } from '../resume/resume.service.js';
+import { chunksText, jobHeader } from '../retrieval/job-text.js';
+import {
+  RetrievalPipeline,
+  type RetrievalTimings,
+} from '../retrieval/retrieval-pipeline.service.js';
 import { JobRepository } from '../storage/job.repository.js';
 import {
   VECTOR_STORE,
-  type JobChunkResult,
+  type VectorFilter,
   type VectorStore,
 } from '../storage/vector-store/vector-store.interface.js';
 import { JobSource, RagResponse } from './dto/rag-response.dto.js';
 import { rankJobsFromChunks } from './job-ranking.js';
 
-export interface RagTimings {
-  embedMs: number;
-  retrieveMs: number;
-  fetchMs: number;
-}
+export type RagTimings = RetrievalTimings;
 
 export interface RagContext {
   systemMessage: string;
@@ -27,12 +28,15 @@ export interface RagContext {
   // One block per job, as passed to the LLM; used to score faithfulness.
   contexts: string[];
   timings: RagTimings;
+  // No job matched the filter and retrieval was repeated without it.
+  filterRelaxed: boolean;
 }
 
-const RETRIEVAL_K = 15;
 const RESULT_JOBS = 5;
-const SIMILARITY_THRESHOLD = 0.5;
 const MAX_JOB_CONTEXT_CHARS = 2400;
+
+const RELAXED_FILTER_NOTE =
+  "No job posting matched every constraint in the user's question (salary, remote work or job type). The postings below are the closest matches: say so explicitly before presenting them.\n";
 
 const FIELD_PATTERNS: Array<[RegExp, string]> = [
   [/\b(salary|pay|compensation|wage|earning)/i, 'salary'],
@@ -80,20 +84,6 @@ function buildFieldAppendix(
   return lines.length > 0 ? '\n' + lines.join('\n') : '';
 }
 
-function salaryHeader(
-  minSalary: number | null,
-  maxSalary: number | null,
-): string {
-  if (!minSalary) return '';
-  const max = maxSalary ? `–$${maxSalary.toLocaleString()}` : '+';
-  return ` | Salary: $${minSalary.toLocaleString()}${max}`;
-}
-
-export interface QueryFilters {
-  location?: string;
-  jobType?: string;
-}
-
 @Injectable()
 export class RagService {
   private readonly logger = new Logger(RagService.name);
@@ -104,18 +94,19 @@ export class RagService {
     private readonly jobRepo: JobRepository,
     private readonly llmService: LlmService,
     private readonly resumeService: ResumeService,
+    private readonly retrieval: RetrievalPipeline,
   ) {}
 
   async query(
     userQuery: string,
-    filters?: QueryFilters,
+    filter?: VectorFilter,
     contextJobIds?: string[],
     userId?: string,
     history: ChatMessage[] = [],
   ): Promise<RagResponse> {
     const ctx = await this.buildContext(
       userQuery,
-      filters,
+      filter,
       contextJobIds,
       userId,
     );
@@ -135,7 +126,7 @@ export class RagService {
 
   async *queryStream(
     userQuery: string,
-    filters?: QueryFilters,
+    filter?: VectorFilter,
     contextJobIds?: string[],
     userId?: string,
     history: ChatMessage[] = [],
@@ -143,7 +134,7 @@ export class RagService {
     const t0 = Date.now();
     const ctx = await this.buildContext(
       userQuery,
-      filters,
+      filter,
       contextJobIds,
       userId,
     );
@@ -178,7 +169,7 @@ export class RagService {
 
   async buildContext(
     userQuery: string,
-    _filters?: QueryFilters,
+    filter?: VectorFilter,
     contextJobIds?: string[],
     userId?: string,
   ): Promise<RagContext | null> {
@@ -187,7 +178,6 @@ export class RagService {
       return this.buildContextFromIds(contextJobIds, userQuery, userId);
     }
 
-    const t0 = performance.now();
     const resumeParsed = userId
       ? await this.resumeService.getParsedData(userId)
       : null;
@@ -196,51 +186,27 @@ export class RagService {
       ? this.buildResumeSearchQuery(resumeParsed, userQuery)
       : userQuery;
 
-    const queryVector = await this.embeddingService.embedQuery(searchQuery);
-    const embedMs = performance.now() - t0;
-    this.logger.debug(`Embedding took ${embedMs.toFixed(1)}ms`);
-
-    const t1 = performance.now();
-    const rawChunks = await this.vectorRepo.findSimilar(
-      queryVector,
-      RETRIEVAL_K,
-      SIMILARITY_THRESHOLD,
-    );
-    const retrieveMs = performance.now() - t1;
+    const result = await this.retrieval.retrieve(searchQuery, {
+      depth: RESULT_JOBS,
+      filter,
+    });
+    const { timings } = result;
     this.logger.debug(
-      `Vector search took ${retrieveMs.toFixed(1)}ms — ${rawChunks.length} chunks (threshold=${SIMILARITY_THRESHOLD})`,
+      `Retrieval: embed ${timings.embedMs.toFixed(1)}ms, dense ${timings.denseMs.toFixed(1)}ms, ` +
+        `bm25 ${timings.bm25Ms.toFixed(1)}ms, fetch ${timings.fetchMs.toFixed(1)}ms, ` +
+        `rerank ${timings.rerankMs.toFixed(1)}ms — ${result.hits.length} jobs` +
+        (result.filterRelaxed ? ' (filter relaxed)' : ''),
     );
 
-    if (rawChunks.length === 0) return null;
-
-    const grouped = this.groupByJob(rawChunks);
-    const topJobs = grouped.slice(0, RESULT_JOBS);
-
-    const t2 = performance.now();
-    const jobIds = topJobs.map((g) => g.jobId);
-    const jobs = await this.jobRepo.findByIds(jobIds);
-    const fetchMs = performance.now() - t2;
-    this.logger.debug(`Job fetch took ${fetchMs.toFixed(1)}ms`);
-    const jobMap = new Map(jobs.map((j) => [j.id, j]));
+    if (result.hits.length === 0) return null;
 
     const requiredFields = detectFields(userQuery);
-    const contexts = topJobs
-      .map((group) => {
-        const job = jobMap.get(group.jobId);
-        if (!job) return null;
-        const location = job.location ? ` | Location: ${job.location}` : '';
-        const jobType = job.jobType ? ` | Type: ${job.jobType}` : '';
-        const salary = salaryHeader(
-          job.minSalary ?? null,
-          job.maxSalary ?? null,
-        );
-        const similarity = group.maxSimilarity.toFixed(2);
-        const header = `Job: ${job.title} at ${job.company}${location}${jobType}${salary} | Similarity: ${similarity}`;
-        const body = group.mergedText.slice(0, MAX_JOB_CONTEXT_CHARS);
-        const appendix = buildFieldAppendix(job, requiredFields, body);
-        return `---\n${header}\n${body}${appendix}`;
-      })
-      .filter((c): c is string => c !== null);
+    const contexts = result.hits.map(({ job, similarity, chunks }) => {
+      const header = `${jobHeader(job)} | Similarity: ${similarity.toFixed(2)}`;
+      const body = chunksText(chunks, MAX_JOB_CONTEXT_CHARS);
+      const appendix = buildFieldAppendix(job, requiredFields, body);
+      return `---\n${header}\n${body}${appendix}`;
+    });
     const contextChunks = contexts.join('\n\n');
 
     const userProfileContext = resumeParsed
@@ -249,28 +215,24 @@ export class RagService {
     const systemMessage = this.buildSystemMessage(
       contextChunks,
       userProfileContext,
+      result.filterRelaxed,
     );
 
-    const sources: JobSource[] = topJobs
-      .map((group) => {
-        const job = jobMap.get(group.jobId);
-        if (!job) return null;
-        return {
-          jobId: job.id,
-          title: job.title,
-          company: job.company,
-          url: job.url,
-          similarity: Math.round(group.maxSimilarity * 100) / 100,
-        };
-      })
-      .filter((s): s is JobSource => s !== null);
+    const sources: JobSource[] = result.hits.map(({ job, similarity }) => ({
+      jobId: job.id,
+      title: job.title,
+      company: job.company,
+      url: job.url,
+      similarity: Math.round(similarity * 100) / 100,
+    }));
 
     return {
       systemMessage,
       sources,
       contextChunks,
       contexts,
-      timings: { embedMs, retrieveMs, fetchMs },
+      timings,
+      filterRelaxed: result.filterRelaxed,
     };
   }
 
@@ -302,19 +264,18 @@ export class RagService {
       queryVector,
       contextJobIds,
     );
-    const retrieveMs = performance.now() - t2;
+    const denseMs = performance.now() - t2;
     this.logger.debug(
       `Context jobs fetch + similarity took ${(performance.now() - t0).toFixed(1)}ms`,
     );
 
     const jobMap = new Map(jobs.map((j) => [j.id, j]));
-    const grouped = this.groupByJob(chunks);
+    const bestSimilarity = new Map(
+      rankJobsFromChunks(chunks).map((r) => [r.jobId, r.score]),
+    );
 
     const ranked = contextJobIds
-      .map((id) => {
-        const g = grouped.find((gr) => gr.jobId === id);
-        return { jobId: id, maxSimilarity: g?.maxSimilarity ?? 0 };
-      })
+      .map((id) => ({ jobId: id, maxSimilarity: bestSimilarity.get(id) ?? 0 }))
       .sort((a, b) => b.maxSimilarity - a.maxSimilarity);
 
     const requiredFields = detectFields(userQuery);
@@ -322,15 +283,9 @@ export class RagService {
       .map(({ jobId, maxSimilarity }) => {
         const job = jobMap.get(jobId);
         if (!job) return null;
-        const location = job.location ? ` | Location: ${job.location}` : '';
-        const jobType = job.jobType ? ` | Type: ${job.jobType}` : '';
-        const salary = salaryHeader(
-          job.minSalary ?? null,
-          job.maxSalary ?? null,
-        );
         const body = job.description?.slice(0, MAX_JOB_CONTEXT_CHARS) ?? '';
         const appendix = buildFieldAppendix(job, requiredFields, body);
-        return `---\nJob: ${job.title} at ${job.company}${location}${jobType}${salary} | Similarity: ${maxSimilarity.toFixed(2)}\n${body}${appendix}`;
+        return `---\n${jobHeader(job)} | Similarity: ${maxSimilarity.toFixed(2)}\n${body}${appendix}`;
       })
       .filter((c): c is string => c !== null);
     const contextChunks = contexts.join('\n\n');
@@ -362,22 +317,16 @@ export class RagService {
       sources,
       contextChunks,
       contexts,
-      timings: { embedMs, retrieveMs, fetchMs },
+      timings: {
+        embedMs,
+        denseMs,
+        bm25Ms: 0,
+        fuseMs: 0,
+        fetchMs,
+        rerankMs: 0,
+      },
+      filterRelaxed: false,
     };
-  }
-
-  private groupByJob(chunks: JobChunkResult[]): Array<{
-    jobId: string;
-    maxSimilarity: number;
-    mergedText: string;
-  }> {
-    return rankJobsFromChunks(chunks).map(({ jobId, score, chunks }) => ({
-      jobId,
-      maxSimilarity: score,
-      mergedText: chunks
-        .map((c) => `[${c.chunkType}]: ${c.chunkText}`)
-        .join('\n\n'),
-    }));
   }
 
   // Prepends the user's profile to the query so retrieval is personalized
@@ -401,11 +350,16 @@ export class RagService {
       : userQuery;
   }
 
-  private buildSystemMessage(context: string, userProfileContext = ''): string {
+  private buildSystemMessage(
+    context: string,
+    userProfileContext = '',
+    filterRelaxed = false,
+  ): string {
+    const relaxedNote = filterRelaxed ? RELAXED_FILTER_NOTE : '';
     return `You are a helpful job search assistant. Answer the user's query based ONLY on the job postings provided below.
 Be concise and specific. If the postings don't contain relevant information, say so clearly. Do not fabricate details. If the conversation includes prior turns, use them to understand follow-up questions and references to previously discussed jobs.
 ${ANSWER_LANGUAGE_RULE}
-
+${relaxedNote}
 ${userProfileContext}Job Postings:
 ${context}`;
   }

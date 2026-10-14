@@ -6,9 +6,15 @@ import { JobRepository } from '../../../src/storage/job.repository.js';
 import { LlmService } from '../../../src/llm/llm.service.js';
 import { ANSWER_LANGUAGE_RULE } from '../../../src/llm/prompt-rules.js';
 import { ResumeService } from '../../../src/resume/resume.service.js';
+import { RetrievalPipeline } from '../../../src/retrieval/retrieval-pipeline.service.js';
 import { NULL_PARSED_RESUME } from '../../../src/resume/interfaces/parsed-resume.interface.js';
 
-const mockEmbedding = { embedQuery: jest.fn(), embed: jest.fn(), modelName: 'test-model', provider: 'openai' };
+const mockEmbedding = {
+  embedQuery: jest.fn(),
+  embed: jest.fn(),
+  modelName: 'test-model',
+  provider: 'openai',
+};
 const mockVector = { findSimilar: jest.fn(), findSimilarByJobIds: jest.fn() };
 const mockJobRepo = { findByIds: jest.fn() };
 const mockLlm = {
@@ -18,6 +24,7 @@ const mockLlm = {
   completeChatStream: jest.fn(),
 };
 const mockResume = { getParsedData: jest.fn() };
+const mockRetrieval = { retrieve: jest.fn() };
 
 async function buildModule(): Promise<RagService> {
   const module: TestingModule = await Test.createTestingModule({
@@ -28,6 +35,7 @@ async function buildModule(): Promise<RagService> {
       { provide: JobRepository, useValue: mockJobRepo },
       { provide: LlmService, useValue: mockLlm },
       { provide: ResumeService, useValue: mockResume },
+      { provide: RetrievalPipeline, useValue: mockRetrieval },
     ],
   }).compile();
   return module.get(RagService);
@@ -56,6 +64,33 @@ const SAMPLE_JOB = {
   skills: [],
 };
 
+const TIMINGS = {
+  embedMs: 1,
+  denseMs: 1,
+  bm25Ms: 1,
+  fuseMs: 0,
+  fetchMs: 1,
+  rerankMs: 1,
+};
+
+// What RetrievalPipeline.retrieve resolves to for the given jobs.
+function retrieved(
+  jobs: Array<typeof SAMPLE_JOB>,
+  options: { filterRelaxed?: boolean } = {},
+) {
+  return {
+    hits: jobs.map((job, i) => ({
+      job,
+      score: 0.9 - i * 0.1,
+      similarity: 0.85 - i * 0.1,
+      chunks: [{ ...SAMPLE_CHUNK, jobId: job.id }],
+    })),
+    filterRelaxed: options.filterRelaxed ?? false,
+    reranked: true,
+    timings: TIMINGS,
+  };
+}
+
 describe('RagService', () => {
   let service: RagService;
 
@@ -67,8 +102,7 @@ describe('RagService', () => {
 
   describe('query', () => {
     it('returns no-results message when buildContext yields null', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([]));
 
       const result = await service.query('find a job');
 
@@ -78,9 +112,7 @@ describe('RagService', () => {
     });
 
     it('calls LLM once and returns answer + sources on success', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([SAMPLE_JOB]));
       mockLlm.completeChat.mockResolvedValueOnce('Here are some jobs.');
 
       const result = await service.query('find a job');
@@ -92,9 +124,7 @@ describe('RagService', () => {
     });
 
     it('passes conversation history and the query as the final message', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([SAMPLE_JOB]));
       mockLlm.completeChat.mockResolvedValueOnce('Job 1 is a great fit.');
 
       const history = [
@@ -109,7 +139,12 @@ describe('RagService', () => {
         history,
       );
 
-      const messages = mockLlm.completeChat.mock.calls[0][0];
+      const messages = (
+        mockLlm.completeChat.mock.calls as unknown[][]
+      )[0][0] as Array<{
+        role: string;
+        content: string;
+      }>;
       expect(messages[0].role).toBe('system');
       expect(messages.slice(1, 3)).toEqual(history);
       expect(messages[messages.length - 1]).toEqual({
@@ -134,8 +169,7 @@ describe('RagService', () => {
           },
         ],
       });
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
-      mockVector.findSimilar.mockResolvedValueOnce([]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([]));
 
       await service.buildContext(
         'roles in fintech',
@@ -144,14 +178,14 @@ describe('RagService', () => {
         'user-1',
       );
 
-      expect(mockEmbedding.embedQuery).toHaveBeenCalledWith(
+      expect(mockRetrieval.retrieve).toHaveBeenCalledWith(
         'Backend Engineer; Python, AWS. roles in fintech',
+        expect.anything(),
       );
     });
 
-    it('embeds the raw query when the user has no resume', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
-      mockVector.findSimilar.mockResolvedValueOnce([]);
+    it('retrieves with the raw query when the user has no resume', async () => {
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([]));
 
       await service.buildContext(
         'roles in fintech',
@@ -160,12 +194,26 @@ describe('RagService', () => {
         'user-1',
       );
 
-      expect(mockEmbedding.embedQuery).toHaveBeenCalledWith('roles in fintech');
+      expect(mockRetrieval.retrieve).toHaveBeenCalledWith(
+        'roles in fintech',
+        expect.anything(),
+      );
     });
 
-    it('returns null when vector repo returns no chunks', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([]);
+    it('retrieves the top 5 jobs under the given filter', async () => {
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([]));
+      const filter = { salaryAtLeast: 150000, isRemote: true };
+
+      await service.buildContext('python jobs over 150k', filter);
+
+      expect(mockRetrieval.retrieve).toHaveBeenCalledWith(
+        'python jobs over 150k',
+        { depth: 5, filter },
+      );
+    });
+
+    it('returns null when retrieval finds no jobs', async () => {
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([]));
 
       const ctx = await service.buildContext('python jobs');
 
@@ -173,9 +221,7 @@ describe('RagService', () => {
     });
 
     it('returns context with systemMessage, sources, and contextChunks', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([SAMPLE_JOB]));
 
       const ctx = await service.buildContext('python jobs');
 
@@ -183,12 +229,14 @@ describe('RagService', () => {
       expect(ctx!.systemMessage).toContain('Engineer at Acme');
       expect(ctx!.sources).toHaveLength(1);
       expect(ctx!.contextChunks).toContain('Engineer at Acme');
+      expect(ctx!.contextChunks).toContain(
+        '[description]: We need a TypeScript engineer.',
+      );
+      expect(ctx!.timings).toEqual(TIMINGS);
     });
 
     it('instructs the model to answer in the language of the question', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([SAMPLE_JOB]));
 
       const ctx = await service.buildContext('trabajos de python');
 
@@ -196,65 +244,61 @@ describe('RagService', () => {
     });
 
     it('includes job header with similarity score in contextChunks', async () => {
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1, 0.2]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([SAMPLE_JOB]));
 
       const ctx = await service.buildContext('any query');
 
       expect(ctx!.contextChunks).toContain('Similarity: 0.85');
     });
 
-    it('skips embedding when contextJobIds are provided', async () => {
-      mockVector.findSimilarByJobIds.mockResolvedValueOnce([SAMPLE_CHUNK]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
-
-      await service.buildContext('query', undefined, ['job-1']);
-
-      expect(mockVector.findSimilar).not.toHaveBeenCalled();
-      expect(mockVector.findSimilarByJobIds).toHaveBeenCalled();
-    });
-  });
-
-  describe('groupByJob (via buildContext)', () => {
-    it('deduplicates multiple chunks for the same job', async () => {
-      const chunk2 = {
-        ...SAMPLE_CHUNK,
-        chunkType: 'requirements',
-        similarity: 0.75,
-      };
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK, chunk2]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
-
-      const ctx = await service.buildContext('any query');
-
-      expect(ctx!.sources).toHaveLength(1);
-      expect(ctx!.sources[0].similarity).toBe(0.85);
-    });
-
-    it('ranks jobs by highest chunk similarity', async () => {
+    it('keeps the order retrieval ranked the jobs in', async () => {
       const job2 = {
         ...SAMPLE_JOB,
         id: 'job-2',
         title: 'Designer',
         company: 'Beta',
       };
-      const chunk2 = {
-        jobId: 'job-2',
-        chunkText: 'Design work.',
-        chunkType: 'description',
-        similarity: 0.95,
-      };
-      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
-      mockVector.findSimilar.mockResolvedValueOnce([SAMPLE_CHUNK, chunk2]);
-      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB, job2]);
+      mockRetrieval.retrieve.mockResolvedValueOnce(
+        retrieved([job2, SAMPLE_JOB]),
+      );
 
       const ctx = await service.buildContext('any query');
 
-      expect(ctx!.sources[0].jobId).toBe('job-2');
-      expect(ctx!.sources[1].jobId).toBe('job-1');
+      expect(ctx!.sources.map((s) => s.jobId)).toEqual(['job-2', 'job-1']);
+    });
+
+    it('tells the model when no job matched every constraint', async () => {
+      mockRetrieval.retrieve.mockResolvedValueOnce(
+        retrieved([SAMPLE_JOB], { filterRelaxed: true }),
+      );
+
+      const ctx = await service.buildContext('python jobs over 900k', {
+        salaryAtLeast: 900000,
+      });
+
+      expect(ctx!.filterRelaxed).toBe(true);
+      expect(ctx!.systemMessage).toContain('closest matches');
+    });
+
+    it('does not add the relaxed-filter note when the filter matched', async () => {
+      mockRetrieval.retrieve.mockResolvedValueOnce(retrieved([SAMPLE_JOB]));
+
+      const ctx = await service.buildContext('python jobs');
+
+      expect(ctx!.filterRelaxed).toBe(false);
+      expect(ctx!.systemMessage).not.toContain('closest matches');
+    });
+
+    it('skips retrieval when contextJobIds are provided', async () => {
+      mockVector.findSimilarByJobIds.mockResolvedValueOnce([SAMPLE_CHUNK]);
+      mockJobRepo.findByIds.mockResolvedValueOnce([SAMPLE_JOB]);
+      mockEmbedding.embedQuery.mockResolvedValueOnce([0.1]);
+
+      const ctx = await service.buildContext('query', undefined, ['job-1']);
+
+      expect(mockRetrieval.retrieve).not.toHaveBeenCalled();
+      expect(mockVector.findSimilarByJobIds).toHaveBeenCalled();
+      expect(ctx!.sources[0].similarity).toBe(0.85);
     });
   });
 });

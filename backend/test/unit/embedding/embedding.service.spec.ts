@@ -66,7 +66,7 @@ describe('EmbeddingService (local provider)', () => {
 
     await service.embed('same text');
 
-    const [key] = cache.set.mock.calls[0] as [string];
+    const key = cache.set.mock.calls[0][0];
     expect(key).toMatch(/^embed:multilingual-e5-base:[0-9a-f]{64}$/);
   });
 

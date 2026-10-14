@@ -36,6 +36,9 @@ services:
       FRONTEND_URL: ${FRONTEND_URL:-https://esteban-jobai.duckdns.org}
       NODE_ENV: production
       BACKEND_PORT: 4000
+      # No reranking server in this deployment yet (the reference
+      # configuration is docker-compose.yml); hybrid BM25 runs in the app.
+      RERANK_ENABLED: 'false'
     depends_on:
       postgres:
         condition: service_healthy

@@ -264,6 +264,21 @@ export class QdrantVectorStore implements VectorStore {
     if (filter.maxSalary !== undefined) {
       must.push({ key: 'maxSalary', range: { lte: filter.maxSalary } });
     }
+    if (filter.salaryAtLeast !== undefined) {
+      // COALESCE(maxSalary, minSalary) >= X
+      const atLeast = { gte: filter.salaryAtLeast };
+      must.push({
+        should: [
+          { key: 'maxSalary', range: atLeast },
+          {
+            must: [
+              { is_empty: { key: 'maxSalary' } },
+              { key: 'minSalary', range: atLeast },
+            ],
+          },
+        ],
+      });
+    }
     if (filter.jobType !== undefined) {
       must.push({ key: 'jobType', match: { value: filter.jobType } });
     }

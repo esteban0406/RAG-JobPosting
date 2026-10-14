@@ -3,8 +3,14 @@ import type { INestApplicationContext } from '@nestjs/common';
 import { copyFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { performance } from 'perf_hooks';
+import { ClassificationCache } from '../../eval/classification-cache.js';
 import { loadDataset, type EvalQuery } from '../../eval/dataset.js';
 import { type ChatMessage, LlmService } from '../../llm/llm.service.js';
+import { toVectorFilter } from '../../query/job-filters.js';
+import {
+  QueryClassifierService,
+  type ClassificationResult,
+} from '../../query/query-classifier.service.js';
 import { RagService } from '../../rag/rag.service.js';
 import {
   VECTOR_STORE,
@@ -98,6 +104,26 @@ async function timedGeneration(
   }
 }
 
+// The classification as production runs it (no cache), timed. Rate-limited
+// calls are waited out and measured again from scratch.
+async function timedClassification(
+  classifier: QueryClassifierService,
+  query: string,
+  logger: Logger,
+): Promise<{ classifyMs: number; result: ClassificationResult }> {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const t0 = performance.now();
+      const result = await classifier.classify(query, { strict: true });
+      return { classifyMs: performance.now() - t0, result };
+    } catch (err) {
+      if (!isRateLimited(err) || attempt >= MAX_RATE_LIMIT_RETRIES) throw err;
+      logger.warn(`Rate limited; retrying in ${RATE_LIMIT_WAIT_MS / 1000}s`);
+      await new Promise((r) => setTimeout(r, RATE_LIMIT_WAIT_MS));
+    }
+  }
+}
+
 function stats(values: number[]) {
   return {
     n: values.length,
@@ -108,8 +134,9 @@ function stats(values: number[]) {
 
 // Per-stage latency of the RAG path served by the configured vector store
 // (VECTOR_BACKEND). Local stages run every retrieval query `repetitions` times
-// after `warmup` discarded runs; generation, which depends on the hosted LLM,
-// runs a fixed subset a few times without the answer cache.
+// after `warmup` discarded runs, with the query's cached classification
+// filter. Classification and generation, which depend on the hosted LLM, run
+// a fixed subset a few times without any cache.
 export async function evalLatency(
   app: INestApplicationContext,
   options: EvalLatencyOptions,
@@ -118,6 +145,8 @@ export async function evalLatency(
   const rag = app.get(RagService);
   const llm = app.get(LlmService);
   const store = app.get<VectorStore>(VECTOR_STORE);
+  const classifier = app.get(QueryClassifierService);
+  const classifications = new ClassificationCache(classifier, llm.modelName);
   const queries = loadDataset(options.dataset).filter(
     (q) => q.category !== 'aggregation',
   );
@@ -126,24 +155,30 @@ export async function evalLatency(
 
   const local: Record<string, number[]> = {
     embedMs: [],
-    retrieveMs: [],
+    denseMs: [],
+    bm25Ms: [],
+    fuseMs: [],
     fetchMs: [],
+    rerankMs: [],
     contextMs: [],
   };
   let emptyContexts = 0;
   for (const q of queries) {
+    const filter = await classifications.filterFor(q.text);
     for (let i = 0; i < options.warmup + options.repetitions; i++) {
       const t0 = performance.now();
-      const ctx = await rag.buildContext(q.text);
+      const ctx = await rag.buildContext(q.text, filter);
       const contextMs = performance.now() - t0;
       if (i < options.warmup) continue;
       if (!ctx) {
         emptyContexts++;
         continue;
       }
-      local.embedMs.push(ctx.timings.embedMs);
-      local.retrieveMs.push(ctx.timings.retrieveMs);
-      local.fetchMs.push(ctx.timings.fetchMs);
+      for (const [stage, ms] of Object.entries(ctx.timings) as Array<
+        [string, number]
+      >) {
+        local[stage].push(ms);
+      }
       local.contextMs.push(contextMs);
       records.push(
         JSON.stringify({
@@ -159,6 +194,7 @@ export async function evalLatency(
   }
 
   const generation: Record<string, number[]> = {
+    classifyMs: [],
     ttftMs: [],
     generationMs: [],
     perceivedTtftMs: [],
@@ -171,8 +207,16 @@ export async function evalLatency(
   );
   for (const q of subset) {
     for (let rep = 0; rep < options.generationRepetitions; rep++) {
+      const { classifyMs, result } = await timedClassification(
+        classifier,
+        q.text,
+        logger,
+      );
       const t0 = performance.now();
-      const ctx = await rag.buildContext(q.text);
+      const ctx = await rag.buildContext(
+        q.text,
+        toVectorFilter(result.filters),
+      );
       const contextMs = performance.now() - t0;
       if (!ctx) break;
       const messages = rag.buildMessages(ctx.systemMessage, [], q.text);
@@ -182,15 +226,17 @@ export async function evalLatency(
         options.temperature,
         logger,
       );
+      generation.classifyMs.push(classifyMs);
       generation.ttftMs.push(ttftMs);
       generation.generationMs.push(generationMs);
-      generation.perceivedTtftMs.push(contextMs + ttftMs);
-      generation.totalMs.push(contextMs + generationMs);
+      generation.perceivedTtftMs.push(classifyMs + contextMs + ttftMs);
+      generation.totalMs.push(classifyMs + contextMs + generationMs);
       records.push(
         JSON.stringify({
           kind: 'generation',
           queryId: q.id,
           rep,
+          classifyMs,
           contextMs,
           ttftMs,
           generationMs,
@@ -221,6 +267,7 @@ export async function evalLatency(
     createdAt: new Date().toISOString(),
     vectorBackend: store.backend,
     model: llm.modelName,
+    classifier: classifications.version,
     queries: queries.length,
     generationSubset: subset.map((q) => q.id),
     ...options,

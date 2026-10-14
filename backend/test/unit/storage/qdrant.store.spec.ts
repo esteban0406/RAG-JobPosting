@@ -163,6 +163,33 @@ describe('QdrantVectorStore', () => {
     ]);
   });
 
+  it('maps salaryAtLeast to max salary, or min salary when max is missing', async () => {
+    const { store, client } = buildStore();
+    client.query.mockResolvedValueOnce({ points: [] });
+
+    await store.search([0.1], { topK: 5, filter: { salaryAtLeast: 150000 } });
+
+    const [, request] = client.query.mock.calls[0] as [
+      string,
+      { filter: unknown },
+    ];
+    expect(request.filter).toEqual({
+      must: [
+        {
+          should: [
+            { key: 'maxSalary', range: { gte: 150000 } },
+            {
+              must: [
+                { is_empty: { key: 'maxSalary' } },
+                { key: 'minSalary', range: { gte: 150000 } },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
   it('uses exact search and the default ef when requested', async () => {
     const { store, client } = buildStore();
 

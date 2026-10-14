@@ -1,12 +1,6 @@
 import type { Job } from '../../../generated/prisma/client.js';
-import { Bm25Index } from './bm25.js';
+import { Bm25Index, jobSearchText } from '../../retrieval/bm25.js';
 import type { RetrievalSystem, RetrievedJob } from './retrieval-system.js';
-
-export function jobSearchText(
-  job: Pick<Job, 'title' | 'skills' | 'description'>,
-): string {
-  return [job.title, job.skills.join(' '), job.description].join('\n');
-}
 
 // Strong lexical baseline: BM25 over title, skills and description.
 export class Bm25System implements RetrievalSystem {

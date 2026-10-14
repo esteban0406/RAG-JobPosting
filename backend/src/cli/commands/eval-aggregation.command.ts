@@ -54,16 +54,12 @@ export async function evalAggregation(
       c.type === q.expectedRoute &&
       q.expectedTemplates.includes(c.intent as TemplateKey);
 
-    // Same dispatch as QueryOrchestratorService: filter_jobs runs the
-    // compound filter, any other template runs as-is, retrieval gets no rows.
+    // Same dispatch as QueryOrchestratorService: a template runs as-is;
+    // retrieval, including filter_jobs (retrieval with filters), gets no rows.
     let systemRows: SqlRow[] = [];
     let error: string | null = null;
     try {
-      if (c.intent === 'filter_jobs') {
-        systemRows = c.filters
-          ? await aggregation.queryFiltered(c.filters)
-          : [];
-      } else if (c.intent && c.type !== 'retrieval') {
+      if (c.intent && c.intent !== 'filter_jobs' && c.type !== 'retrieval') {
         systemRows = await aggregation.queryRaw(c.intent, c.params ?? []);
       }
     } catch (err) {

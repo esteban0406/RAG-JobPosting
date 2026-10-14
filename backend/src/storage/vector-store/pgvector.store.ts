@@ -194,6 +194,11 @@ export class PgVectorStore implements VectorStore {
     if (filter.maxSalary !== undefined) {
       conditions.push(Prisma.sql`j."maxSalary" <= ${filter.maxSalary}`);
     }
+    if (filter.salaryAtLeast !== undefined) {
+      conditions.push(
+        Prisma.sql`COALESCE(j."maxSalary", j."minSalary") >= ${filter.salaryAtLeast}`,
+      );
+    }
     if (filter.jobType !== undefined) {
       conditions.push(Prisma.sql`j."jobType" = ${filter.jobType}`);
     }

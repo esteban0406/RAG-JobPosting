@@ -44,19 +44,69 @@ describe('QueryClassifierService', () => {
       expect(result.intent).toBeUndefined();
     });
 
-    it('routes an aggregation filter_jobs answer through the hybrid path', async () => {
+    it('routes a filter_jobs answer to retrieval with its filters', async () => {
       mockLlm.complete.mockResolvedValueOnce(
         '{"type":"aggregation","intent":"filter_jobs","filters":{"minSalary":150000}}',
       );
       const result = await service.classify('salary above 150k for devops');
-      expect(result.type).toBe('hybrid');
+      expect(result.type).toBe('retrieval');
       expect(result.intent).toBe('filter_jobs');
+      expect(result.filters).toEqual(
+        expect.objectContaining({ minSalary: 150000 }),
+      );
     });
 
     it('classifies retrieval signals without LLM', async () => {
       const result = await service.classify('find python developer jobs');
       expect(result.type).toBe('retrieval');
       expect(mockLlm.complete).not.toHaveBeenCalled();
+    });
+
+    it.each([
+      'find remote python jobs',
+      'find python jobs paying over 150k',
+      'looking for contract frontend work',
+      'find an internship in software engineering',
+    ])('sends retrieval queries with constraints to the LLM: %s', async (q) => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"retrieval","intent":"filter_jobs","filters":{"isRemote":true}}',
+      );
+      const result = await service.classify(q);
+      expect(mockLlm.complete).toHaveBeenCalledTimes(1);
+      expect(result.type).toBe('retrieval');
+      expect(result.filters?.isRemote).toBe(true);
+    });
+
+    it('extracts constraints from Spanish queries through the LLM', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"retrieval","intent":"filter_jobs","filters":{"title":"%backend%","minSalary":150000,"isRemote":true}}',
+      );
+      const result = await service.classify(
+        'trabajos remotos de backend en python que paguen más de 150 mil',
+      );
+      expect(result).toEqual({
+        type: 'retrieval',
+        intent: 'filter_jobs',
+        filters: {
+          title: '%backend%',
+          minSalary: 150000,
+          maxSalary: undefined,
+          location: undefined,
+          jobType: undefined,
+          isRemote: true,
+        },
+      });
+    });
+
+    it('treats filter_jobs as retrieval even when both regex signals match', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"hybrid","intent":"filter_jobs","filters":{"jobType":"contract"}}',
+      );
+      const result = await service.classify(
+        'find contract jobs and their average salary',
+      );
+      expect(result.type).toBe('retrieval');
+      expect(result.filters?.jobType).toBe('contract');
     });
 
     it('classifies hybrid when both signals match, calling LLM for intent', async () => {

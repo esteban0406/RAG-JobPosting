@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { LlmService } from '../../llm/llm.service.js';
 import { ANSWER_LANGUAGE_RULE } from '../../llm/prompt-rules.js';
 import { AggregationRepository } from './aggregation.repository.js';
-import { type JobFilters } from './job-filter-builder.js';
 import { type TemplateKey } from './query-templates.js';
 
 export interface AggregationResult {
@@ -23,10 +22,6 @@ export class AggregationService {
     params: string[] = [],
   ): Promise<Record<string, unknown>[]> {
     return this.repo.execute(intent, params);
-  }
-
-  async queryFiltered(filters: JobFilters): Promise<Record<string, unknown>[]> {
-    return this.repo.executeFiltered(filters);
   }
 
   async execute(

@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { createHash } from 'crypto';
 import { LlmService } from '../llm/llm.service.js';
-import { type JobFilters } from './aggregation/job-filter-builder.js';
+import { type JobFilters } from './job-filters.js';
 import {
   TEMPLATE_KEYS,
   type TemplateKey,
@@ -10,6 +11,8 @@ export type QueryType = 'retrieval' | 'aggregation' | 'hybrid';
 
 export interface ClassificationResult {
   type: QueryType;
+  // filter_jobs is a retrieval with structured constraints (filters), not a
+  // SQL template.
   intent?: TemplateKey | 'filter_jobs';
   params?: string[];
   filters?: JobFilters;
@@ -19,41 +22,16 @@ const AGGREGATION_PATTERN =
   /\b(how many|count|total|average|avg|salary|types? of|what .{0,30}(available|exist)|list all)\b/i;
 const RETRIEVAL_PATTERN =
   /\b(find|looking for|jobs? (with|for|that)|roles? (for|with)|hiring)\b/i;
+// Salary amounts, work arrangement or job type, in English or Spanish. A
+// retrieval query with any of these goes to the LLM so the constraints are
+// extracted as filters instead of being left to semantic similarity.
+const CONSTRAINT_PATTERN =
+  /(\$\s?\d|\b\d+(\.\d+)?\s?(k|mil)\b|\b\d{2,3}[,.]\d{3}\b|\b(salary|salario|sueldo|pay(ing)?|pagu?en?|remote|remot[oa]s?|on-?site|presencial|contract|contrato|full[- ]?time|tiempo completo|part[- ]?time|medio tiempo|freelance|intern(ship)?s?|pr[aá]cticas?|pasant[ií]as?)\b)/i;
 
 const FALLBACK_RESULT: ClassificationResult = { type: 'retrieval' };
 
-@Injectable()
-export class QueryClassifierService {
-  private readonly logger = new Logger(QueryClassifierService.name);
-
-  constructor(private readonly llm: LlmService) {}
-
-  async classify(query: string): Promise<ClassificationResult> {
-    const isAggregation = AGGREGATION_PATTERN.test(query);
-    const isRetrieval = RETRIEVAL_PATTERN.test(query);
-
-    if (isAggregation && isRetrieval) {
-      const llmResult = await this.classifyWithLlm(query);
-      return { ...llmResult, type: 'hybrid' };
-    }
-    if (isRetrieval) return { type: 'retrieval' };
-
-    // The aggregation regex only detects intent; choosing the SQL template
-    // still requires the LLM, same as for queries no rule matches.
-    return this.normalize(await this.classifyWithLlm(query));
-  }
-
-  // An aggregation without a known template cannot be executed: route
-  // filter_jobs through the hybrid path and anything else to retrieval.
-  private normalize(result: ClassificationResult): ClassificationResult {
-    if (result.type !== 'aggregation') return result;
-    if (result.intent === 'filter_jobs') return { ...result, type: 'hybrid' };
-    if (!result.intent) return FALLBACK_RESULT;
-    return result;
-  }
-
-  private async classifyWithLlm(query: string): Promise<ClassificationResult> {
-    const prompt = `Classify this job search query into one of three types and pick the best aggregation template.
+export function buildClassifierPrompt(query: string): string {
+  return `Classify this job search query into one of three types and pick the best aggregation template.
 
 Query types:
 - "retrieval"    — find/show/list specific job postings (use RAG search)
@@ -61,7 +39,7 @@ Query types:
 - "hybrid"       — both: find jobs AND compute a stat (use both)
 
 Available SQL templates and their required params ($1, $2 are positional):
-- filter_jobs                   — compound filter: title + salary + location + jobType (any combination)
+- filter_jobs                   — find jobs with structured constraints: salary, remote work and/or job type (uses "filters", see below)
 - count_total                   — no params
 - count_by_location             — no params
 - count_by_job_type             — no params
@@ -88,9 +66,15 @@ Available SQL templates and their required params ($1, $2 are positional):
 - recent_jobs                   — no params
 
 Rules:
-- Use null for intent when type is "retrieval".
-- Use filter_jobs (type: "hybrid") when the query combines a job title/keyword with salary, location, or job-type constraints. Example: "devops jobs paying 150k+" or "remote Python engineer roles".
-- For filter_jobs, output a "filters" object instead of "params". Include only the relevant keys. Salary values are numbers. title/location/jobType use % wildcards for ILIKE.
+- Use null for intent when type is "retrieval" and the query states no salary, remote or job-type constraint.
+- Use filter_jobs (type: "retrieval") when the query asks for jobs of a role, skill or keyword AND states a salary threshold, remote work, or a job type, in any language. Examples: "devops jobs paying 150k+", "remote Python engineer roles", "contract frontend developer jobs", "trabajos remotos de backend que paguen más de 120 mil".
+- For filter_jobs, output a "filters" object instead of "params", with only the keys the query states:
+  - minSalary: number in USD per year the job must be able to pay ("over 150k", "más de 150 mil" → 150000)
+  - maxSalary: number in USD per year ("under 100k" → 100000)
+  - isRemote: true for remote work, false for on-site
+  - jobType: one of "full_time", "part_time", "contract", "internship", "freelance"
+  - title: the role or keyword with % wildcards, e.g. "%python backend%"
+  - location: a place other than remote, with % wildcards, e.g. "%europe%"
 - For salary-only queries (no title/keyword) use jobs_above_salary or jobs_between_salary, not filter_jobs.
 - For salary threshold queries (">150K", "above 100K") use jobs_above_salary with $1 as the number in dollars (e.g. "150000").
 - Always wrap ILIKE params with % wildcards.
@@ -98,17 +82,84 @@ Rules:
 
 Respond with ONLY valid JSON (no markdown, no explanation).
 For standard intents: {"type":"retrieval|aggregation|hybrid","intent":"<template_key or null>","params":["<param1>"]}
-For filter_jobs: {"type":"hybrid","intent":"filter_jobs","filters":{"title":"%devops%","minSalary":150000}}
+For filter_jobs: {"type":"retrieval","intent":"filter_jobs","filters":{"title":"%devops%","minSalary":150000,"isRemote":true}}
 
 Query: "${query}"`;
+}
+
+// Identifies the classifier's behaviour (prompt and routing rules), so
+// cached classifications are invalidated whenever either changes.
+export const CLASSIFIER_VERSION = createHash('sha256')
+  .update(
+    [
+      buildClassifierPrompt(''),
+      AGGREGATION_PATTERN.source,
+      RETRIEVAL_PATTERN.source,
+      CONSTRAINT_PATTERN.source,
+    ].join('|'),
+  )
+  .digest('hex')
+  .slice(0, 12);
+
+@Injectable()
+export class QueryClassifierService {
+  private readonly logger = new Logger(QueryClassifierService.name);
+
+  constructor(private readonly llm: LlmService) {}
+
+  // strict: rethrow LLM call failures instead of falling back to plain
+  // retrieval, so the evaluation never caches a transient error as a result.
+  async classify(
+    query: string,
+    options: { strict?: boolean } = {},
+  ): Promise<ClassificationResult> {
+    const isAggregation = AGGREGATION_PATTERN.test(query);
+    const isRetrieval = RETRIEVAL_PATTERN.test(query);
+
+    if (isAggregation && isRetrieval) {
+      const llmResult = await this.classifyWithLlm(query, options.strict);
+      if (llmResult.intent === 'filter_jobs') return this.normalize(llmResult);
+      return { ...llmResult, type: 'hybrid' };
+    }
+    if (isRetrieval && !CONSTRAINT_PATTERN.test(query)) {
+      return { type: 'retrieval' };
+    }
+
+    // The aggregation regex only detects intent; choosing the SQL template
+    // still requires the LLM, same as for queries no rule matches.
+    return this.normalize(await this.classifyWithLlm(query, options.strict));
+  }
+
+  // filter_jobs is answered by retrieval with filters, whatever type the LLM
+  // gave it. An aggregation without a known template cannot be executed and
+  // falls back to retrieval.
+  private normalize(result: ClassificationResult): ClassificationResult {
+    if (result.intent === 'filter_jobs') {
+      return {
+        type: 'retrieval',
+        intent: 'filter_jobs',
+        filters: result.filters,
+      };
+    }
+    if (result.type !== 'aggregation') return result;
+    if (!result.intent) return FALLBACK_RESULT;
+    return result;
+  }
+
+  private async classifyWithLlm(
+    query: string,
+    strict = false,
+  ): Promise<ClassificationResult> {
+    const prompt = buildClassifierPrompt(query);
 
     try {
       const raw = await this.llm.complete(prompt, {
         temperature: 0,
-        maxOutputTokens: 100,
+        maxOutputTokens: 150,
       });
       return this.parseClassification(raw);
     } catch (err) {
+      if (strict) throw err;
       this.logger.warn(
         `LLM classifier failed, defaulting to retrieval: ${(err as Error).message}`,
       );
@@ -154,6 +205,10 @@ Query: "${query}"`;
             jobType:
               typeof filtersRaw['jobType'] === 'string'
                 ? filtersRaw['jobType']
+                : undefined,
+            isRemote:
+              typeof filtersRaw['isRemote'] === 'boolean'
+                ? filtersRaw['isRemote']
                 : undefined,
           };
         }

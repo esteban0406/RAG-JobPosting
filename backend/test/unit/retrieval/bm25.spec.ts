@@ -2,7 +2,7 @@ import {
   Bm25Index,
   normalizeTerm,
   tokenize,
-} from '../../../src/eval/systems/bm25.js';
+} from '../../../src/retrieval/bm25.js';
 
 describe('tokenize', () => {
   it('keeps programming-language tokens and drops stopwords', () => {
@@ -67,5 +67,19 @@ describe('Bm25Index', () => {
   it('returns nothing when no term matches and respects k', () => {
     expect(index.search('kubernetes', 10)).toEqual([]);
     expect(index.search('engineer python', 1)).toHaveLength(1);
+  });
+});
+
+describe('Bm25Index.search with a filter', () => {
+  it('drops rejected documents before the cut at k', () => {
+    const index = new Bm25Index([
+      { id: 'a', text: 'python engineer python' },
+      { id: 'b', text: 'python engineer' },
+      { id: 'c', text: 'python developer' },
+    ]);
+
+    const hits = index.search('python', 2, (id) => id !== 'a');
+
+    expect(hits.map((h) => h.id)).toEqual(['b', 'c']);
   });
 });

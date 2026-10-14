@@ -11,7 +11,10 @@ jest.mock('@prisma/adapter-pg', () => ({ PrismaPg: jest.fn() }));
 import { LlmService } from '../../../src/llm/llm.service.js';
 import { RagService } from '../../../src/rag/rag.service.js';
 import { AggregationService } from '../../../src/query/aggregation/aggregation.service.js';
-import { SearchQueryDto } from '../../../src/query/dto/search-query.dto.js';
+import {
+  JobType,
+  SearchQueryDto,
+} from '../../../src/query/dto/search-query.dto.js';
 import { QueryClassifierService } from '../../../src/query/query-classifier.service.js';
 import { QueryOrchestratorService } from '../../../src/query/query-orchestrator.service.js';
 
@@ -106,7 +109,7 @@ describe('QueryOrchestratorService', () => {
       expect(mockAggregation.queryRaw).not.toHaveBeenCalled();
     });
 
-    it('forwards location and type filters to RagService', async () => {
+    it('retrieves without a filter when the query states no constraint', async () => {
       mockClassifier.classify.mockResolvedValueOnce({ type: 'retrieval' });
       mockRag.query.mockResolvedValueOnce(RAG_RESULT);
 
@@ -117,7 +120,54 @@ describe('QueryOrchestratorService', () => {
 
       expect(mockRag.query).toHaveBeenCalledWith(
         dto.query,
-        { location: 'Austin', jobType: undefined },
+        undefined,
+        undefined,
+        undefined,
+        [],
+      );
+    });
+
+    it('turns the extracted constraints into a vector-store filter', async () => {
+      mockClassifier.classify.mockResolvedValueOnce({
+        type: 'retrieval',
+        intent: 'filter_jobs',
+        filters: {
+          title: '%python%',
+          minSalary: 150000,
+          isRemote: true,
+          jobType: 'Full-Time',
+        },
+      });
+      mockRag.query.mockResolvedValueOnce(RAG_RESULT);
+
+      await service.handle(makeDto('remote python jobs over 150k'));
+
+      expect(mockRag.query).toHaveBeenCalledWith(
+        'remote python jobs over 150k',
+        { salaryAtLeast: 150000, isRemote: true, jobType: 'full_time' },
+        undefined,
+        undefined,
+        [],
+      );
+    });
+
+    it('lets request filters override the extracted ones', async () => {
+      mockClassifier.classify.mockResolvedValueOnce({
+        type: 'retrieval',
+        intent: 'filter_jobs',
+        filters: { minSalary: 150000, jobType: 'contract' },
+      });
+      mockRag.query.mockResolvedValueOnce(RAG_RESULT);
+
+      const dto = makeDto();
+      dto.minSalary = 120000;
+      dto.type = JobType.Remote;
+
+      await service.handle(dto);
+
+      expect(mockRag.query).toHaveBeenCalledWith(
+        dto.query,
+        { salaryAtLeast: 120000, jobType: 'contract', isRemote: true },
         undefined,
         undefined,
         [],

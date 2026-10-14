@@ -42,6 +42,15 @@ export function tokenize(text: string): string[] {
     .map(normalizeTerm);
 }
 
+// The text BM25 indexes for a job: title, skills and description.
+export function jobSearchText(job: {
+  title: string;
+  skills: string[];
+  description: string;
+}): string {
+  return [job.title, job.skills.join(' '), job.description].join('\n');
+}
+
 export class Bm25Index {
   private readonly ids: string[] = [];
   private readonly lengths: number[] = [];
@@ -80,7 +89,13 @@ export class Bm25Index {
     return Math.log(1 + (n - df + 0.5) / (df + 0.5));
   }
 
-  search(query: string, k: number): Bm25Hit[] {
+  // `accept` drops documents before the cut at k, so a filtered search still
+  // returns up to k hits.
+  search(
+    query: string,
+    k: number,
+    accept?: (id: string) => boolean,
+  ): Bm25Hit[] {
     const { k1, b } = this.options;
     const scores = new Map<number, number>();
     for (const term of new Set(tokenize(query))) {
@@ -88,6 +103,7 @@ export class Bm25Index {
       if (!posting) continue;
       const idf = this.idf(term);
       for (const [doc, tf] of posting) {
+        if (accept && !accept(this.ids[doc])) continue;
         const norm = 1 - b + b * (this.lengths[doc] / this.avgLength);
         const weight = idf * ((tf * (k1 + 1)) / (tf + k1 * norm));
         scores.set(doc, (scores.get(doc) ?? 0) + weight);

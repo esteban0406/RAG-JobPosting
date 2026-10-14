@@ -11,8 +11,10 @@ import {
 } from 'fs';
 import { dirname, join, resolve } from 'path';
 import { performance } from 'perf_hooks';
+import { ClassificationCache } from '../../eval/classification-cache.js';
 import { loadDataset } from '../../eval/dataset.js';
 import { LlmService } from '../../llm/llm.service.js';
+import { QueryClassifierService } from '../../query/query-classifier.service.js';
 import { RagService } from '../../rag/rag.service.js';
 import {
   VECTOR_STORE,
@@ -39,7 +41,8 @@ interface CachedAnswer {
 }
 
 // Answers every retrieval query through the production RAG path (no user, so
-// no resume personalization) and records the contexts the LLM saw, the answer
+// no resume personalization), with the filters the classifier extracts from
+// each query (cached, shared with eval:retrieve), and records the contexts the LLM saw, the answer
 // and per-stage timings. Answers are cached by model, temperature and exact
 // messages, because hosted models can be retired at any time.
 export async function evalGenerate(
@@ -50,6 +53,10 @@ export async function evalGenerate(
   const rag = app.get(RagService);
   const llm = app.get(LlmService);
   const store = app.get<VectorStore>(VECTOR_STORE);
+  const classifications = new ClassificationCache(
+    app.get(QueryClassifierService),
+    llm.modelName,
+  );
   const queries = loadDataset(options.dataset)
     .filter((q) => q.category !== 'aggregation')
     .slice(0, options.limit);
@@ -75,8 +82,9 @@ export async function evalGenerate(
   const lines: string[] = [];
   let fresh = 0;
   for (const q of queries) {
+    const filter = await classifications.filterFor(q.text);
     const t0 = performance.now();
-    const ctx = await rag.buildContext(q.text);
+    const ctx = await rag.buildContext(q.text, filter);
     const contextMs = performance.now() - t0;
     if (!ctx) {
       lines.push(
@@ -129,6 +137,8 @@ export async function evalGenerate(
         question: q.text,
         lang: q.lang,
         category: q.category,
+        filter: filter ?? null,
+        filterRelaxed: ctx.filterRelaxed,
         contexts: ctx.contexts,
         sources: ctx.sources.map((s) => s.jobId),
         answer: entry.answer,
@@ -154,6 +164,7 @@ export async function evalGenerate(
     gitSha: gitSha(),
     createdAt: new Date().toISOString(),
     model: llm.modelName,
+    classifier: classifications.version,
     vectorBackend: store.backend,
     queries: queries.length,
     newlyGenerated: fresh,

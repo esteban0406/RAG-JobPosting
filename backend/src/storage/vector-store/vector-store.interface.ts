@@ -41,6 +41,9 @@ export interface VectorFilter {
   minSalary?: number;
   // job.maxSalary <= maxSalary
   maxSalary?: number;
+  // The job can pay at least this much: COALESCE(maxSalary, minSalary) >= X.
+  // Used for queries such as "paying over 150k"; the benchmark keeps minSalary.
+  salaryAtLeast?: number;
   jobType?: string;
   isRemote?: boolean;
 }

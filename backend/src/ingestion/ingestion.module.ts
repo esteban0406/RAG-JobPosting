@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from '../auth/auth.module.js';
 import { EmbeddingModule } from '../embedding/embedding.module.js';
 import { LlmModule } from '../llm/llm.module.js';
+import { RetrievalModule } from '../retrieval/retrieval.module.js';
 import { StorageModule } from '../storage/storage.module.js';
 import { ChunkService } from './chunk.service.js';
 import { IngestionController } from './ingestion.controller.js';
@@ -12,7 +13,13 @@ import { JobicyProvider } from './providers/jobicy.provider.js';
 import { RemotiveProvider } from './providers/remotive.provider.js';
 
 @Module({
-  imports: [StorageModule, EmbeddingModule, AuthModule, LlmModule],
+  imports: [
+    StorageModule,
+    EmbeddingModule,
+    AuthModule,
+    LlmModule,
+    RetrievalModule,
+  ],
   controllers: [IngestionController],
   providers: [
     IngestionService,

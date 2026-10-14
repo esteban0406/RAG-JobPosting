@@ -3,9 +3,14 @@ import type { JobSource } from '../rag/dto/rag-response.dto.js';
 import { RagService } from '../rag/rag.service.js';
 import { ChatMessage, LlmService } from '../llm/llm.service.js';
 import { ANSWER_LANGUAGE_RULE } from '../llm/prompt-rules.js';
+import type { VectorFilter } from '../storage/vector-store/vector-store.interface.js';
 import { AggregationService } from './aggregation/aggregation.service.js';
-import { type JobFilters } from './aggregation/job-filter-builder.js';
 import type { TemplateKey } from './aggregation/query-templates.js';
+import {
+  filterFromRequest,
+  mergeFilters,
+  toVectorFilter,
+} from './job-filters.js';
 import {
   QueryClassifierService,
   type ClassificationResult,
@@ -44,28 +49,27 @@ export class QueryOrchestratorService {
       `Classification took ${Date.now() - t0}ms — type=${classification.type}`,
     );
 
+    const filter = retrievalFilter(classification, dto);
     if (classification.type === 'retrieval') {
-      return this.handleRetrieval(dto, userId);
+      return this.handleRetrieval(dto, userId, filter);
     }
     if (classification.type === 'aggregation') {
       return this.handleAggregation(classification, dto.query);
     }
-    if (classification.intent === 'filter_jobs' && classification.filters) {
-      return this.handleFilterJobs(classification.filters, dto, userId);
-    }
     if (!classification.intent) {
-      return this.handleRetrieval(dto, userId);
+      return this.handleRetrieval(dto, userId, filter);
     }
-    return this.handleHybrid(classification, dto, userId);
+    return this.handleHybrid(classification, dto, userId, filter);
   }
 
   private async handleRetrieval(
     dto: SearchQueryDto,
     userId?: string,
+    filter?: VectorFilter,
   ): Promise<SearchResponseDto> {
     const result = await this.rag.query(
       dto.query,
-      { location: dto.location, jobType: dto.type },
+      filter,
       dto.contextJobIds,
       userId,
       dto.history ?? [],
@@ -98,14 +102,10 @@ export class QueryOrchestratorService {
     c: ClassificationResult,
     dto: SearchQueryDto,
     userId?: string,
+    filter?: VectorFilter,
   ): Promise<SearchResponseDto> {
     const [ragCtxSettled, aggSettled] = await Promise.allSettled([
-      this.rag.buildContext(
-        dto.query,
-        { location: dto.location, jobType: dto.type },
-        dto.contextJobIds,
-        userId,
-      ),
+      this.rag.buildContext(dto.query, filter, dto.contextJobIds, userId),
       this.aggregation.queryRaw(c.intent! as TemplateKey, c.params ?? []),
     ]);
 
@@ -215,128 +215,25 @@ export class QueryOrchestratorService {
       return;
     }
 
-    if (classification.type === 'retrieval') {
+    const filter = retrievalFilter(classification, dto);
+    if (classification.type === 'retrieval' || !classification.intent) {
       yield { type: 'start', queryType: 'retrieval' };
-      yield* this.streamRetrieval(dto, userId);
+      yield* this.streamRetrieval(dto, userId, filter);
       return;
     }
 
-    if (classification.intent === 'filter_jobs' && classification.filters) {
-      yield { type: 'start', queryType: 'hybrid' };
-      yield* this.streamFilterJobs(classification.filters, dto, userId);
-      return;
-    }
-
-    if (!classification.intent) {
-      yield { type: 'start', queryType: 'retrieval' };
-      yield* this.streamRetrieval(dto, userId);
-      return;
-    }
     yield { type: 'start', queryType: 'hybrid' };
-    yield* this.streamHybrid(classification, dto, userId);
-  }
-
-  private async handleFilterJobs(
-    filters: JobFilters,
-    dto: SearchQueryDto,
-    userId?: string,
-  ): Promise<SearchResponseDto> {
-    const aggRows = await this.aggregation
-      .queryFiltered(filters)
-      .catch((err: unknown) => {
-        this.logger.warn(`Filter jobs aggregation failed: ${String(err)}`);
-        return [] as Record<string, unknown>[];
-      });
-
-    const aggJobIds = aggRows.map((r) => r['id'] as string).filter(Boolean);
-
-    const ragCtx = await this.rag
-      .buildContext(
-        dto.query,
-        { location: dto.location, jobType: dto.type },
-        aggJobIds.length > 0 ? aggJobIds : undefined,
-        userId,
-      )
-      .catch(() => null);
-
-    if (!ragCtx) {
-      return {
-        type: 'retrieval',
-        answer:
-          'No relevant job postings found for your query. Try different keywords or broaden your search.',
-        retrievedAt: new Date(),
-      };
-    }
-
-    const answer = await this.llm.completeChat(
-      buildHybridMessages(
-        dto.query,
-        ragCtx.contextChunks,
-        aggRows,
-        dto.history ?? [],
-      ),
-    );
-    return {
-      type: 'hybrid',
-      answer,
-      sources: ragCtx.sources,
-      retrievedAt: new Date(),
-    };
-  }
-
-  private async *streamFilterJobs(
-    filters: JobFilters,
-    dto: SearchQueryDto,
-    userId?: string,
-  ): AsyncGenerator<StreamEvent> {
-    const aggRows = await this.aggregation
-      .queryFiltered(filters)
-      .catch((err: unknown) => {
-        this.logger.warn(`Filter jobs aggregation failed: ${String(err)}`);
-        return [] as Record<string, unknown>[];
-      });
-
-    const aggJobIds = aggRows.map((r) => r['id'] as string).filter(Boolean);
-
-    const ragCtx = await this.rag
-      .buildContext(
-        dto.query,
-        { location: dto.location, jobType: dto.type },
-        aggJobIds.length > 0 ? aggJobIds : undefined,
-        userId,
-      )
-      .catch(() => null);
-
-    if (!ragCtx) {
-      yield {
-        type: 'token',
-        content:
-          'No relevant job postings found for your query. Try different keywords or broaden your search.',
-      };
-      yield { type: 'done' };
-      return;
-    }
-
-    for await (const token of this.llm.completeChatStream(
-      buildHybridMessages(
-        dto.query,
-        ragCtx.contextChunks,
-        aggRows,
-        dto.history ?? [],
-      ),
-    )) {
-      yield { type: 'token', content: token };
-    }
-    yield { type: 'done', sources: ragCtx.sources };
+    yield* this.streamHybrid(classification, dto, userId, filter);
   }
 
   private async *streamRetrieval(
     dto: SearchQueryDto,
     userId?: string,
+    filter?: VectorFilter,
   ): AsyncGenerator<StreamEvent> {
     for await (const chunk of this.rag.queryStream(
       dto.query,
-      { location: dto.location, jobType: dto.type },
+      filter,
       dto.contextJobIds,
       userId,
       dto.history ?? [],
@@ -353,14 +250,10 @@ export class QueryOrchestratorService {
     c: ClassificationResult,
     dto: SearchQueryDto,
     userId?: string,
+    filter?: VectorFilter,
   ): AsyncGenerator<StreamEvent> {
     const [ragCtx, aggRows] = await Promise.all([
-      this.rag.buildContext(
-        dto.query,
-        { location: dto.location, jobType: dto.type },
-        dto.contextJobIds,
-        userId,
-      ),
+      this.rag.buildContext(dto.query, filter, dto.contextJobIds, userId),
       this.aggregation.queryRaw(c.intent! as TemplateKey, c.params ?? []),
     ]);
 
@@ -388,6 +281,15 @@ export class QueryOrchestratorService {
     }
     yield { type: 'done', sources: ragCtx.sources };
   }
+}
+
+// Constraints the classifier extracted from the query, overridden by the
+// filters passed explicitly in the request.
+function retrievalFilter(
+  c: ClassificationResult,
+  dto: SearchQueryDto,
+): VectorFilter | undefined {
+  return mergeFilters(toVectorFilter(c.filters), filterFromRequest(dto));
 }
 
 function buildHybridMessages(

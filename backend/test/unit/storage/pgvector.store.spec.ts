@@ -89,6 +89,16 @@ describe('PgVectorStore', () => {
     );
   });
 
+  it('filters by the most a job can pay for salaryAtLeast', async () => {
+    const { store, tx } = buildStore();
+
+    await store.search([0.1], { topK: 10, filter: { salaryAtLeast: 150000 } });
+
+    const query = (tx.$queryRaw.mock.calls as unknown[][])[0][0] as SqlLike;
+    expect(query.sql).toContain('COALESCE(j."maxSalary", j."minSalary") >=');
+    expect(query.values).toEqual(expect.arrayContaining([150000]));
+  });
+
   it('rejects an invalid ef_search', async () => {
     const { store } = buildStore();
 

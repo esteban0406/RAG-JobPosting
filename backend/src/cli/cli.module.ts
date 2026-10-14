@@ -9,6 +9,7 @@ import { AggregationRepository } from '../query/aggregation/aggregation.reposito
 import { AggregationService } from '../query/aggregation/aggregation.service.js';
 import { QueryClassifierService } from '../query/query-classifier.service.js';
 import { RagModule } from '../rag/rag.module.js';
+import { RetrievalModule } from '../retrieval/retrieval.module.js';
 import { StorageModule } from '../storage/storage.module.js';
 
 // Offline tooling context: no HTTP server, scheduler or request logging.
@@ -21,6 +22,7 @@ import { StorageModule } from '../storage/storage.module.js';
     StorageModule,
     EmbeddingModule,
     RagModule,
+    RetrievalModule,
     LlmModule,
   ],
   // The aggregation path without QueryModule, whose controller needs auth.

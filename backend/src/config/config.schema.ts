@@ -97,6 +97,32 @@ class EnvironmentVariables {
   @IsOptional()
   VECTOR_BACKEND: VectorBackend = VectorBackend.Pgvector;
 
+  // Hybrid retrieval: BM25 fused with dense search by reciprocal rank fusion.
+  @IsIn(['true', 'false'])
+  @IsOptional()
+  RETRIEVAL_HYBRID: string = 'true';
+
+  // Cross-encoder reranking of the fused candidates (embedding server /rerank).
+  @IsIn(['true', 'false'])
+  @IsOptional()
+  RERANK_ENABLED: string = 'true';
+
+  // Defaults to LOCAL_EMBEDDING_URL, which serves /rerank as well.
+  @IsString()
+  @IsOptional()
+  RERANKER_URL: string;
+
+  // Fused candidates passed to the reranker.
+  @IsNumber()
+  @Min(1)
+  @IsOptional()
+  RERANK_CANDIDATES: number = 30;
+
+  // Jobs whose rerank score falls below this are dropped; unset keeps all.
+  @IsNumber()
+  @IsOptional()
+  RERANK_MIN_SCORE: number;
+
   @IsString()
   @IsOptional()
   QDRANT_URL: string = 'http://localhost:6333';
