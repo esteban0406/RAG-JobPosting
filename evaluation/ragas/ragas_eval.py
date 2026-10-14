@@ -7,8 +7,8 @@ Usage (inside the jobai-ragas image, host network):
         [--max-tokens 4096]
 
 The judge is any OpenAI-compatible endpoint (API key from JUDGE_API_KEY);
-answer relevancy embeds with the local e5 server, the same model the
-pipeline retrieves with. Scores are cached per judge so a rerun only
+answer relevancy embeds with the local embedding server, the same model the
+pipeline retrieves with (its name is part of the relevancy cache key). Scores are cached per judge so a rerun only
 evaluates new answers. Writes <run dir>/ragas-<judge>.csv.
 """
 
@@ -32,8 +32,15 @@ from ragas.metrics.collections import AnswerRelevancy, Faithfulness
 CACHE_DIR = Path(__file__).resolve().parents[1] / "ragas-cache"
 
 
+def served_embedding_model(embed_url: str) -> str:
+    """The model the local embedding server reports (its /health endpoint)."""
+    health = embed_url.rsplit("/", 1)[0] + "/health"
+    with urllib.request.urlopen(health, timeout=30) as res:
+        return json.load(res)["embeddingModel"]
+
+
 class E5Embeddings(BaseRagasEmbedding):
-    """Local e5-base-v2 server; RAGAS compares questions, so the query prefix applies."""
+    """Local e5-family server; RAGAS compares questions, so the query prefix applies."""
 
     def __init__(self, url: str):
         super().__init__()
@@ -63,8 +70,9 @@ def cache_key(judge: str, metric: str, row: dict) -> str:
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
-async def score(metric_name, metric, row, judge, cache, lock, sem):
-    key = cache_key(judge, metric_name, row)
+async def score(metric_name, metric, row, judge, cache, lock, sem, key_judge=None):
+    # Answer relevancy also depends on the embedding model, so its key names it.
+    key = cache_key(key_judge or judge, metric_name, row)
     if key in cache:
         return cache[key]["value"], cache[key].get("error")
     async with sem:
@@ -113,12 +121,17 @@ async def main_async(args: argparse.Namespace) -> None:
         "faithfulness": Faithfulness(llm=llm),
         "answer_relevancy": AnswerRelevancy(llm=llm, embeddings=E5Embeddings(args.embed_url)),
     }
+    embed_model = served_embedding_model(args.embed_url)
+    key_judges = {"answer_relevancy": f"{judge}|{embed_model}"}
+    print(f"judge={judge} embeddings={embed_model}")
     lock, sem = asyncio.Lock(), asyncio.Semaphore(args.concurrency)
 
     async def evaluate_row(row):
         out = {"queryId": row["queryId"], "category": row.get("category"), "lang": row.get("lang")}
         for name, metric in metrics.items():
-            out[name], out[f"{name}_error"] = await score(name, metric, row, judge, cache, lock, sem)
+            out[name], out[f"{name}_error"] = await score(
+                name, metric, row, judge, cache, lock, sem, key_judges.get(name)
+            )
         return out
 
     results = await asyncio.gather(*(evaluate_row(r) for r in rows))
