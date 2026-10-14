@@ -59,7 +59,9 @@ describe('LlmService', () => {
       mockCreate.mockRejectedValueOnce({ status: 429 });
       mockCreate.mockResolvedValueOnce(
         (async function* () {
-          yield { choices: [{ delta: { content: 'ok' } }] };
+          yield await Promise.resolve({
+            choices: [{ delta: { content: 'ok' } }],
+          });
         })(),
       );
 
