@@ -1,4 +1,7 @@
-import type { RetrievalPipeline } from '../../retrieval/retrieval-pipeline.service.js';
+import type {
+  RerankFusion,
+  RetrievalPipeline,
+} from '../../retrieval/retrieval-pipeline.service.js';
 import type {
   SearchOptions,
   VectorFilter,
@@ -16,6 +19,8 @@ export interface PipelineSystemOptions {
   // Per-query structured filter, as production extracts it; none if omitted.
   filterFor?: FilterProvider;
   search?: Pick<SearchOptions, 'mode' | 'efSearch'>;
+  rerankFusion?: RerankFusion;
+  rerankCandidates?: number;
 }
 
 // The production retrieval pipeline as an evaluated system. Each rung of the
@@ -40,10 +45,16 @@ export class PipelineSystem implements RetrievalSystem {
       rerank: this.options.rerank,
       queryVector,
       search: this.options.search,
+      rerankFusion: this.options.rerankFusion,
+      rerankCandidates: this.options.rerankCandidates,
       strictRerank: true,
       // Ranked lists are evaluated in full; no score cut-off.
       minRerankScore: Number.NEGATIVE_INFINITY,
     });
-    return result.hits.map((hit) => ({ jobId: hit.job.id, score: hit.score }));
+    return result.hits.map((hit) => ({
+      jobId: hit.job.id,
+      score: hit.score,
+      ...(hit.rerankScore !== undefined && { rerankScore: hit.rerankScore }),
+    }));
   }
 }

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "rr-bge",
+    "rerankerUrl": "http://localhost:8000"
+  },
+  {
+    "name": "rr-bge-rrf",
+    "rerankerUrl": "http://localhost:8000",
+    "fusion": "rrf"
+  },
+  {
+    "name": "rr-qwen",
+    "rerankerUrl": "http://localhost:8002"
+  },
+  {
+    "name": "rr-qwen-instr",
+    "rerankerUrl": "http://localhost:8002",
+    "instruction": "Given a job seeker's search need, judge whether the job posting is a role that satisfies the need"
+  },
+  {
+    "name": "rr-qwen-instr-rrf",
+    "rerankerUrl": "http://localhost:8002",
+    "instruction": "Given a job seeker's search need, judge whether the job posting is a role that satisfies the need",
+    "fusion": "rrf"
+  }
+]

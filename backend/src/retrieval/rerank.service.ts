@@ -13,11 +13,14 @@ export interface RerankScores {
 @Injectable()
 export class RerankService {
   private readonly url: string;
+  // Task instruction for instruction-aware rerankers (RERANK_INSTRUCTION).
+  private readonly instruction?: string;
 
   constructor(config: ConfigService) {
     this.url =
       config.get<string>('RERANKER_URL') ??
       config.get<string>('LOCAL_EMBEDDING_URL', 'http://localhost:8000');
+    this.instruction = config.get<string>('RERANK_INSTRUCTION') || undefined;
   }
 
   async score(query: string, documents: string[]): Promise<RerankScores> {
@@ -25,7 +28,11 @@ export class RerankService {
     const response = await fetch(`${this.url}/rerank`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, documents }),
+      body: JSON.stringify({
+        query,
+        documents,
+        ...(this.instruction && { instruction: this.instruction }),
+      }),
       signal: AbortSignal.timeout(RERANK_TIMEOUT_MS),
     });
     if (!response.ok) {

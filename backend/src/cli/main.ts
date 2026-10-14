@@ -31,6 +31,7 @@ Commands:
       Recall@k vs. exact search and latency for pgvector and Qdrant HNSW.
   eval:retrieve --dataset <queries.jsonl> [--systems a,b] [--depth 10] [--ef-search 40] [--label name]
                 [--ablation-collection eval_job_chunks_e5base] [--ablation-embed-url http://localhost:8001]
+                [--variants rerank-variants.json]
       Run the retrieval systems and write TREC runs to evaluation/runs/. Filtered
       systems classify each query once (evaluation/classifications/ cache).
   eval:pool --run <run dir> [--depth 10]
@@ -77,6 +78,7 @@ async function main(): Promise<number> {
         type: 'string',
         default: 'eval_job_chunks_e5base',
       },
+      variants: { type: 'string' },
       'ablation-embed-url': {
         type: 'string',
         default: 'http://localhost:8001',
@@ -158,6 +160,7 @@ async function main(): Promise<number> {
           label: values.label,
           ablationCollection: values['ablation-collection'],
           ablationEmbedUrl: values['ablation-embed-url'],
+          variants: values.variants,
         });
         return 0;
       case 'eval:judge':

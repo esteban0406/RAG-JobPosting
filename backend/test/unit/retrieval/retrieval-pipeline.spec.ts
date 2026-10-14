@@ -184,6 +184,43 @@ describe('RetrievalPipeline', () => {
     expect(result.hits[0].score).toBe(0.9);
   });
 
+  it('fuses the first-stage and rerank orders with rrf fusion', async () => {
+    const { pipeline } = build({
+      dense: ['a', 'b', 'c'].map((id, i) => chunk(id, 0.9 - i / 10)),
+      // The reranker reverses the first-stage order.
+      rerankScores: (docs) =>
+        docs.map((d) =>
+          d.includes('Title c') ? 0.9 : d.includes('Title b') ? 0.5 : 0.1,
+        ),
+    });
+
+    const replace = await pipeline.retrieve('q', { depth: 3, hybrid: false });
+    const rrf = await pipeline.retrieve('q', {
+      depth: 3,
+      hybrid: false,
+      rerankFusion: 'rrf',
+    });
+
+    expect(ids(replace)).toEqual(['c', 'b', 'a']);
+    // a: 1/61 + 1/63 = c: 1/63 + 1/61 > b: 2/62; the tie keeps the
+    // first-stage order.
+    expect(ids(rrf)).toEqual(['a', 'c', 'b']);
+    expect(rrf.hits.map((h) => h.rerankScore)).toEqual([0.1, 0.9, 0.5]);
+  });
+
+  it('takes the number of reranked candidates per call', async () => {
+    const dense = ['a', 'b', 'c', 'd'].map((id, i) => chunk(id, 0.9 - i / 10));
+    const { pipeline, reranker } = build({ dense });
+
+    await pipeline.retrieve('q', {
+      depth: 1,
+      hybrid: false,
+      rerankCandidates: 2,
+    });
+
+    expect(reranker.score.mock.calls[0][1]).toHaveLength(2);
+  });
+
   it('drops reranked jobs below the minimum score', async () => {
     const { pipeline } = build({
       dense: [chunk('a', 0.9), chunk('b', 0.8)],

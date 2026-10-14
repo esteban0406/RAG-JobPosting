@@ -1,0 +1,12 @@
+// Out-of-domain queries (14-oct-2026): roles absent from the corpus and non-job questions.
+// Only for calibrating the reranker's no-results threshold; never pooled or judged.
+{"id": "ood-en-01", "infoNeedId": "ood-01", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "airline pilot jobs", "lang": "en", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-en-02", "infoNeedId": "ood-02", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "veterinarian at an animal clinic", "lang": "en", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-en-03", "infoNeedId": "ood-03", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "pediatric dentist", "lang": "en", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-en-04", "infoNeedId": "ood-04", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "how to bake sourdough bread", "lang": "en", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-en-05", "infoNeedId": "ood-05", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "best hiking trails near denver", "lang": "en", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-es-06", "infoNeedId": "ood-06", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "trabajo de bombero", "lang": "es", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-es-07", "infoNeedId": "ood-07", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "farmaceuta en farmacia de barrio", "lang": "es", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-es-08", "infoNeedId": "ood-08", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "electricista residencial", "lang": "es", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-es-09", "infoNeedId": "ood-09", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "receta de arepas", "lang": "es", "category": "out_of_domain", "expectedRoute": "retrieval"}
+{"id": "ood-es-10", "infoNeedId": "ood-10", "infoNeed": "Out of domain: no posting in the corpus answers it.", "text": "clima en bogotá mañana", "lang": "es", "category": "out_of_domain", "expectedRoute": "retrieval"}

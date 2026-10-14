@@ -45,6 +45,27 @@ services:
       retries: 5
       start_period: 60s
 
+  # Qwen3-Reranker-0.6B for the reranker comparison on the development set:
+  # docker compose --profile rerank-dev up -d reranker-qwen
+  reranker-qwen:
+    build: ./embedding-server
+    container_name: job-posting-reranker-qwen
+    profiles: [rerank-dev]
+    environment:
+      EMBEDDING_MODEL: intfloat/multilingual-e5-base
+      RERANKER_MODEL: Qwen/Qwen3-Reranker-0.6B
+    ports:
+      - "8002:8000"
+    volumes:
+      - huggingface_cache:/root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
   # e5-base-v2 query embeddings for the embedding-model ablation only:
   # docker compose --profile ablation up -d embedding-server-e5
   embedding-server-e5:

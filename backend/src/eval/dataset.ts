@@ -7,7 +7,9 @@ export type QueryCategory =
   | 'semantic_vocab_mismatch'
   | 'constraint'
   | 'noisy'
-  | 'aggregation';
+  | 'aggregation'
+  // No posting answers it; only for calibrating the no-results threshold.
+  | 'out_of_domain';
 
 export const QUERY_CATEGORIES: QueryCategory[] = [
   'exact',
@@ -15,6 +17,7 @@ export const QUERY_CATEGORIES: QueryCategory[] = [
   'constraint',
   'noisy',
   'aggregation',
+  'out_of_domain',
 ];
 
 export interface EvalQuery {

@@ -118,6 +118,17 @@ class EnvironmentVariables {
   @IsOptional()
   RERANK_CANDIDATES: number = 30;
 
+  // Task instruction sent to instruction-aware rerankers (e.g. Qwen3-Reranker).
+  @IsString()
+  @IsOptional()
+  RERANK_INSTRUCTION: string;
+
+  // replace: rerank scores decide the order; rrf: fused with the first-stage
+  // order by reciprocal rank fusion, so the reranker votes instead of decides.
+  @IsIn(['replace', 'rrf'])
+  @IsOptional()
+  RERANK_FUSION: string = 'replace';
+
   // Jobs whose rerank score falls below this are dropped; unset keeps all.
   @IsNumber()
   @IsOptional()

@@ -41,7 +41,8 @@ def load_queries(run_dir: Path) -> pd.DataFrame:
     # Same rule as the CLI's loadDataset: "//" lines are comments.
     rows = [json.loads(line) for line in lines if line.strip() and not line.startswith("//")]
     queries = pd.DataFrame(rows).set_index("id")
-    return queries[queries["category"] != "aggregation"]
+    # Out-of-domain queries only calibrate the reranker threshold; nothing to score.
+    return queries[~queries["category"].isin(["aggregation", "out_of_domain"])]
 
 
 def per_query_scores(run_dir: Path, qrels_path: Path, queries: pd.DataFrame) -> pd.DataFrame:

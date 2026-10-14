@@ -2,7 +2,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Logger } from '@nestjs/common';
 import type { INestApplicationContext } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { copyFileSync, writeFileSync } from 'fs';
+import { appendFileSync, copyFileSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { performance } from 'perf_hooks';
 import { EmbeddingService } from '../../embedding/embedding.service.js';
@@ -19,7 +19,11 @@ import { PipelineSystem } from '../../eval/systems/pipeline.system.js';
 import { LlmService } from '../../llm/llm.service.js';
 import { QueryClassifierService } from '../../query/query-classifier.service.js';
 import type { FilterableJob } from '../../retrieval/job-filter.js';
-import { RetrievalPipeline } from '../../retrieval/retrieval-pipeline.service.js';
+import { RerankService } from '../../retrieval/rerank.service.js';
+import {
+  RetrievalPipeline,
+  type RerankFusion,
+} from '../../retrieval/retrieval-pipeline.service.js';
 import type {
   RetrievalSystem,
   RetrievedJob,
@@ -59,6 +63,31 @@ export interface EvalRetrieveOptions {
   // e5-base-v2 vectors and query server for the qdrant-e5base system.
   ablationCollection: string;
   ablationEmbedUrl: string;
+  // JSON file of reranker variants, each run as an extra system.
+  variants?: string;
+}
+
+// A configuration of the full pipeline (filters, hybrid, reranking) that
+// differs only in its reranker; compared on the development set.
+export interface RerankVariant {
+  name: string;
+  rerankerUrl?: string;
+  instruction?: string;
+  fusion?: RerankFusion;
+  candidates?: number;
+}
+
+export function loadVariants(path: string): RerankVariant[] {
+  const variants = JSON.parse(readFileSync(path, 'utf8')) as RerankVariant[];
+  for (const v of variants) {
+    if (!v.name || (SYSTEM_NAMES as readonly string[]).includes(v.name)) {
+      throw new Error(`Variant name "${v.name}" is missing or taken`);
+    }
+    if (v.fusion && v.fusion !== 'replace' && v.fusion !== 'rrf') {
+      throw new Error(`${v.name}: unknown fusion "${v.fusion as string}"`);
+    }
+  }
+  return variants;
 }
 
 // Runs every retrieval system over the non-aggregation queries and writes one
@@ -94,7 +123,38 @@ export async function evalRetrieve(
       }),
     );
 
+  const variants = options.variants ? loadVariants(options.variants) : [];
+  const variantSystems = Object.fromEntries(
+    variants.map((v) => [
+      v.name,
+      () => {
+        const reranker = new RerankService(
+          withOverrides(config, {
+            ...(v.rerankerUrl && { RERANKER_URL: v.rerankerUrl }),
+            RERANK_INSTRUCTION: v.instruction ?? '',
+          }),
+        );
+        return Promise.resolve<RetrievalSystem>(
+          new PipelineSystem(
+            v.name,
+            qdrantPipeline.withReranker(reranker),
+            embed,
+            {
+              hybrid: true,
+              rerank: true,
+              filterFor,
+              search: ann,
+              rerankFusion: v.fusion,
+              rerankCandidates: v.candidates,
+            },
+          ),
+        );
+      },
+    ]),
+  );
+
   const factories: Record<string, () => Promise<RetrievalSystem>> = {
+    ...variantSystems,
     ilike: () => Promise.resolve(new IlikeSystem(jobs)),
     bm25: async () => new Bm25System(await jobs.findAllUnpaged()),
     'qdrant-e5base': () => {
@@ -146,7 +206,7 @@ export async function evalRetrieve(
   const dir = createRunDir(`retrieve-${options.label}`);
   const latencies: string[] = [];
   const runs = new Map<string, Map<string, RetrievedJob[]>>();
-  for (const name of options.systems) {
+  for (const name of [...options.systems, ...variants.map((v) => v.name)]) {
     const factory = factories[name];
     if (!factory)
       throw new Error(
@@ -167,6 +227,19 @@ export async function evalRetrieve(
     }
     writeTrecRun(join(dir, `${name}.trec`), name, results);
     runs.set(name, results);
+    // Highest rerank probability per query, to calibrate a no-results
+    // threshold (TREC scores are RRF scores under rrf fusion).
+    const top = [...results].flatMap(([queryId, jobs]) => {
+      const scores = jobs.flatMap((j) =>
+        j.rerankScore === undefined ? [] : [j.rerankScore],
+      );
+      return scores.length
+        ? [JSON.stringify({ system: name, queryId, top: Math.max(...scores) })]
+        : [];
+    });
+    if (top.length > 0) {
+      appendFileSync(join(dir, 'rerank-top.jsonl'), top.join('\n') + '\n');
+    }
     const empty = [...results.values()].filter((r) => r.length === 0).length;
     logger.log(`${name}: ${queries.length} queries, ${empty} with no results`);
   }
@@ -223,6 +296,7 @@ export async function evalRetrieve(
     classifier: used.length > 0 ? classifications.version : null,
     filterExtraction,
     constraintCompliance,
+    variants,
     corpus: { jobs: jobCount, chunks },
     queries: queries.length,
     ...options,

@@ -6,8 +6,8 @@ describe('PipelineSystem', () => {
     const pipeline = {
       retrieve: jest.fn().mockResolvedValue({
         hits: [
-          { job: { id: 'a' }, score: 0.9 },
-          { job: { id: 'b' }, score: 0.4 },
+          { job: { id: 'a' }, score: 0.9, rerankScore: 0.9 },
+          { job: { id: 'b' }, score: 0.4, rerankScore: 0.4 },
         ],
       }),
     };
@@ -26,8 +26,8 @@ describe('PipelineSystem', () => {
     const jobs = await system.retrieve('remote python', 10);
 
     expect(jobs).toEqual([
-      { jobId: 'a', score: 0.9 },
-      { jobId: 'b', score: 0.4 },
+      { jobId: 'a', score: 0.9, rerankScore: 0.9 },
+      { jobId: 'b', score: 0.4, rerankScore: 0.4 },
     ]);
     expect(pipeline.retrieve).toHaveBeenCalledWith('remote python', {
       depth: 10,
@@ -36,6 +36,8 @@ describe('PipelineSystem', () => {
       rerank: true,
       queryVector: [0.1],
       search: { mode: 'ann', efSearch: 40 },
+      rerankFusion: undefined,
+      rerankCandidates: undefined,
       strictRerank: true,
       minRerankScore: Number.NEGATIVE_INFINITY,
     });

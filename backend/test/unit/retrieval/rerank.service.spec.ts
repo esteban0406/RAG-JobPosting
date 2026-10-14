@@ -30,6 +30,23 @@ describe('RerankService', () => {
     });
   });
 
+  it('sends RERANK_INSTRUCTION to instruction-aware rerankers', async () => {
+    const fetchSpy = jest
+      .spyOn(global, 'fetch')
+      .mockResolvedValue(new Response(JSON.stringify({ scores: [1] })));
+    const service = new RerankService(
+      config({ RERANK_INSTRUCTION: 'Judge job postings' }),
+    );
+
+    await service.score('q', ['d']);
+
+    expect(JSON.parse(fetchSpy.mock.calls[0][1]?.body as string)).toEqual({
+      query: 'q',
+      documents: ['d'],
+      instruction: 'Judge job postings',
+    });
+  });
+
   it('prefers RERANKER_URL when set', async () => {
     const fetchSpy = jest
       .spyOn(global, 'fetch')

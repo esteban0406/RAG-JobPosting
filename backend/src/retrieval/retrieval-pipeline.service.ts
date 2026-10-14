@@ -33,6 +33,9 @@ export interface RetrievalOptions {
   rerank?: boolean;
   // Drops reranked jobs scoring below this; defaults to RERANK_MIN_SCORE.
   minRerankScore?: number;
+  // Defaults: RERANK_CANDIDATES and RERANK_FUSION.
+  rerankCandidates?: number;
+  rerankFusion?: RerankFusion;
   // Precomputed query vector (the evaluation embeds each query once).
   queryVector?: number[];
   // ANN parameters for the evaluation; production uses the store defaults.
@@ -42,10 +45,14 @@ export interface RetrievalOptions {
   strictRerank?: boolean;
 }
 
+export type RerankFusion = 'replace' | 'rrf';
+
 export interface RetrievalHit {
   job: Job;
   // Final ranking score: rerank probability, RRF score or cosine similarity.
   score: number;
+  // The reranker's relevance probability, when the job was reranked.
+  rerankScore?: number;
   // Cosine similarity of the job's best chunk.
   similarity: number;
   // The job's chunks, most similar to the query first.
@@ -83,6 +90,7 @@ export class RetrievalPipeline {
   private readonly hybridDefault: boolean;
   private readonly rerankDefault: boolean;
   private readonly rerankCandidates: number;
+  private readonly rerankFusion: RerankFusion;
   private readonly minRerankScore?: number;
 
   constructor(
@@ -98,6 +106,10 @@ export class RetrievalPipeline {
     this.rerankDefault =
       config.get<string>('RERANK_ENABLED', 'true') === 'true';
     this.rerankCandidates = Number(config.get('RERANK_CANDIDATES', 30));
+    this.rerankFusion =
+      config.get<string>('RERANK_FUSION', 'replace') === 'rrf'
+        ? 'rrf'
+        : 'replace';
     const minScore = config.get<number | string>('RERANK_MIN_SCORE');
     this.minRerankScore =
       minScore === undefined || minScore === '' ? undefined : Number(minScore);
@@ -115,6 +127,18 @@ export class RetrievalPipeline {
       this.jobs,
       this.bm25,
       this.reranker,
+      this.config,
+    );
+  }
+
+  // The same pipeline with another reranker (model or instruction).
+  withReranker(reranker: RerankService): RetrievalPipeline {
+    return new RetrievalPipeline(
+      this.embedding,
+      this.store,
+      this.jobs,
+      this.bm25,
+      reranker,
       this.config,
     );
   }
@@ -163,7 +187,10 @@ export class RetrievalPipeline {
     timings.fuseMs = performance.now() - t;
 
     const poolSize = rerank
-      ? Math.max(this.rerankCandidates, options.depth)
+      ? Math.max(
+          options.rerankCandidates ?? this.rerankCandidates,
+          options.depth,
+        )
       : options.depth;
     const pool = ranked.slice(0, poolSize);
     if (pool.length === 0) {
@@ -203,13 +230,15 @@ export class RetrievalPipeline {
           query,
           hits.map((h) => rerankDocument(h)),
         );
-        hits = hits
-          .map((h, i) => ({ ...h, score: scores[i] }))
-          .sort((a, b) => b.score - a.score);
+        hits = this.applyRerank(
+          hits,
+          scores,
+          options.rerankFusion ?? this.rerankFusion,
+        );
         reranked = true;
         const minScore = options.minRerankScore ?? this.minRerankScore;
         if (minScore !== undefined) {
-          hits = hits.filter((h) => h.score >= minScore);
+          hits = hits.filter((h) => (h.rerankScore ?? 0) >= minScore);
         }
       } catch (err) {
         if (options.strictRerank) throw err;
@@ -226,6 +255,29 @@ export class RetrievalPipeline {
       reranked,
       timings,
     };
+  }
+
+  // replace: order by rerank probability. rrf: fuse the first-stage order
+  // with the rerank order, so one literal-minded score cannot sink a job
+  // the first stage ranked high.
+  private applyRerank(
+    hits: RetrievalHit[],
+    scores: number[],
+    fusion: RerankFusion,
+  ): RetrievalHit[] {
+    const scored = hits.map((h, i) => ({ ...h, rerankScore: scores[i] }));
+    if (fusion === 'replace') {
+      return scored
+        .map((h) => ({ ...h, score: h.rerankScore }))
+        .sort((a, b) => b.score - a.score);
+    }
+    const byRerank = [...scored].sort((a, b) => b.rerankScore - a.rerankScore);
+    const fused = fuseRrf([
+      scored.map((h) => h.job.id),
+      byRerank.map((h) => h.job.id),
+    ]);
+    const byId = new Map(scored.map((h) => [h.job.id, h]));
+    return fused.map(({ id, score }) => ({ ...byId.get(id)!, score }));
   }
 
   private async candidates(

@@ -38,6 +38,8 @@ class EmbedRequest(BaseModel):
 class RerankRequest(BaseModel):
     query: str
     documents: list[str]
+    # Task instruction for instruction-aware rerankers (e.g. Qwen3-Reranker).
+    instruction: str | None = None
 
 
 @app.get("/health")
@@ -57,6 +59,8 @@ def embed(req: EmbedRequest):
 def rerank(req: RerankRequest):
     if reranker is None:
         raise HTTPException(status_code=404, detail="Reranker disabled")
+    if req.instruction and not reranker.prompts:
+        raise HTTPException(status_code=400, detail=f"{RERANKER_MODEL} does not take instructions")
     if not req.documents:
         return {"scores": [], "model": RERANKER_MODEL}
     # Sigmoid maps the relevance logit to [0, 1], so a threshold can be calibrated.
@@ -64,5 +68,6 @@ def rerank(req: RerankRequest):
         [(req.query, doc) for doc in req.documents],
         batch_size=16,
         activation_fn=torch.nn.Sigmoid(),
+        **({"prompt": req.instruction} if req.instruction else {}),
     )
     return {"scores": [float(s) for s in scores], "model": RERANKER_MODEL}

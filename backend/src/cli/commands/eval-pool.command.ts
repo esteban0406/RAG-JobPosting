@@ -23,6 +23,8 @@ export function evalPool(runDir: string, depth: number): string {
     for (const [queryId, jobIds] of readTrecRun(join(runDir, file))) {
       const query = queries.get(queryId);
       if (!query) throw new Error(`${file}: query "${queryId}" not in dataset`);
+      // Nothing in the corpus answers these, so there is nothing to judge.
+      if (query.category === 'out_of_domain') continue;
       for (const jobId of jobIds.slice(0, depth)) {
         pool.set(`${query.infoNeedId}|${jobId}`, {
           infoNeedId: query.infoNeedId,

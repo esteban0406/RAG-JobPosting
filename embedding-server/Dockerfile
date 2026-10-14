@@ -5,6 +5,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# torch compiles some Triton kernels at run time (Qwen3-Reranker needs them).
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends gcc libc6-dev \
+ && rm -rf /var/lib/apt/lists/*
+
 COPY . .
 
 ENV HF_HOME=/root/.cache/huggingface
