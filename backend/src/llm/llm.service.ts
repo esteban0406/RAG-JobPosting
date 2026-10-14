@@ -197,6 +197,9 @@ export class LlmService {
         );
       }
       if (status === 429) {
+        // Each key has its own per-minute token budget: the caller's retry
+        // goes out on the next one.
+        this.rotateKey();
         throw new HttpException(
           'The AI service is temporarily rate limited. Please try again in a moment.',
           HttpStatus.TOO_MANY_REQUESTS,
@@ -206,6 +209,14 @@ export class LlmService {
         'The AI service is temporarily unavailable.',
       );
     }
+  }
+
+  private rotateKey(): void {
+    if (this.groqClients.length < 2) return;
+    this.llmClientIdx = (this.llmClientIdx + 1) % this.groqClients.length;
+    this.logger.warn(
+      `Groq rate limited — next request uses key ${this.llmClientIdx + 1}`,
+    );
   }
 
   private stripThinking(text: string): string {

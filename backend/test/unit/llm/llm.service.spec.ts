@@ -2,10 +2,19 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 
 const mockCreate = jest.fn();
+// API key of the client behind each create() call.
+const keysUsed: string[] = [];
 
 jest.mock('groq-sdk', () => {
-  return jest.fn().mockImplementation(() => ({
-    chat: { completions: { create: mockCreate } },
+  return jest.fn().mockImplementation(({ apiKey }: { apiKey: string }) => ({
+    chat: {
+      completions: {
+        create: (...args: unknown[]) => {
+          keysUsed.push(apiKey);
+          return mockCreate(...args) as unknown;
+        },
+      },
+    },
   }));
 });
 
@@ -22,10 +31,7 @@ const mockConfig = {
 
 async function buildModule(): Promise<LlmService> {
   const module: TestingModule = await Test.createTestingModule({
-    providers: [
-      LlmService,
-      { provide: ConfigService, useValue: mockConfig },
-    ],
+    providers: [LlmService, { provide: ConfigService, useValue: mockConfig }],
   }).compile();
   return module.get(LlmService);
 }
@@ -35,7 +41,42 @@ describe('LlmService', () => {
 
   beforeEach(async () => {
     jest.clearAllMocks();
+    keysUsed.length = 0;
     service = await buildModule();
+  });
+
+  describe('completeChatStream', () => {
+    it('sends the retry after a rate limit through the next key', async () => {
+      const original = mockConfig.get.getMockImplementation()!;
+      mockConfig.get.mockImplementation((key: string, fallback?: unknown) =>
+        key === 'GROQ_API_KEY'
+          ? 'key-1'
+          : key === 'GROQ_API_KEY2'
+            ? 'key-2'
+            : fallback,
+      );
+      const twoKeys = await buildModule();
+      mockCreate.mockRejectedValueOnce({ status: 429 });
+      mockCreate.mockResolvedValueOnce(
+        (async function* () {
+          yield { choices: [{ delta: { content: 'ok' } }] };
+        })(),
+      );
+
+      const drain = async () => {
+        let out = '';
+        for await (const t of twoKeys.completeChatStream([
+          { role: 'user', content: 'q' },
+        ]))
+          out += t;
+        return out;
+      };
+      await expect(drain()).rejects.toMatchObject({ status: 429 });
+      await expect(drain()).resolves.toBe('ok');
+
+      expect(keysUsed).toEqual(['key-1', 'key-2']);
+      mockConfig.get.mockImplementation(original);
+    });
   });
 
   describe('completeChat', () => {
