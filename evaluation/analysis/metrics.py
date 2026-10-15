@@ -11,6 +11,10 @@ Writes to <run dir>/analysis-<qrels name>/:
     ladder.csv         the same test between consecutive rungs of the ablation ladder
                        (embedding model, ANN, engine, filters, hybrid, reranking),
                        Holm-adjusted as a separate family
+
+nDCG@10 is the primary measure: Holm corrects only its comparisons, one family
+per file. The other measures, including constraint compliance (C@5, C@10, read
+from the run's compliance.jsonl), are secondary and keep p_holm empty.
 """
 
 from __future__ import annotations
@@ -33,6 +37,12 @@ MEASURES = {
     "MRR": RR(rel=2),
     "R@10": R(rel=2) @ 10,
 }
+# Share of the top k that meets the query's expected filter (judge-free), only
+# for queries that state a constraint; empty when the system returned nothing.
+COMPLIANCE = {"C@5": "at5", "C@10": "at10"}
+# Fixed before the final run (2026-10-15): Holm over every measure was too
+# conservative to read the ladder, so the correction applies to nDCG@10 only.
+PRIMARY = "nDCG@10"
 BASELINES = ["ilike", "bm25"]
 PERMUTATIONS = 10_000
 BOOTSTRAP = 10_000
@@ -76,6 +86,34 @@ def per_query_scores(run_dir: Path, qrels_path: Path, queries: pd.DataFrame) -> 
                         "info_need": queries.at[query_id, "infoNeedId"],
                     }
                 )
+    return pd.DataFrame(frames)
+
+
+def compliance_scores(run_dir: Path, queries: pd.DataFrame) -> pd.DataFrame:
+    path = run_dir / "compliance.jsonl"
+    if not path.exists():
+        return pd.DataFrame()
+    frames = []
+    for line in path.read_text().splitlines():
+        if not line.strip():
+            continue
+        row = json.loads(line)
+        query_id = row["queryId"]
+        if query_id not in queries.index:
+            continue
+        for name, key in COMPLIANCE.items():
+            frames.append(
+                {
+                    "system": row["system"],
+                    "query_id": query_id,
+                    "measure": name,
+                    # Nothing returned: no share to compute, so the pair drops out.
+                    "value": np.nan if row[key] is None else row[key],
+                    "category": queries.at[query_id, "category"],
+                    "lang": queries.at[query_id, "lang"],
+                    "info_need": queries.at[query_id, "infoNeedId"],
+                }
+            )
     return pd.DataFrame(frames)
 
 
@@ -123,6 +161,15 @@ def holm(pvalues: list[float]) -> list[float]:
     return adjusted.tolist()
 
 
+def holm_primary(result: pd.DataFrame) -> pd.DataFrame:
+    """Holm over the primary measure's comparisons; secondary rows stay empty."""
+    result["p_holm"] = np.nan
+    if not result.empty:
+        primary = result["measure"] == PRIMARY
+        result.loc[primary, "p_holm"] = holm(result.loc[primary, "p_value"].tolist())
+    return result
+
+
 # (system, reference, subsets): each rung adds one component to its reference.
 # The embedding-model ablation is also tested per language (its hypothesis is
 # about Spanish queries).
@@ -137,9 +184,12 @@ LADDER = [
 ]
 
 
-def compare(table: pd.DataFrame, system: str, reference: str, rng: np.random.Generator) -> dict:
+def compare(table: pd.DataFrame, system: str, reference: str, rng: np.random.Generator) -> dict | None:
     pair = table[[system, reference]].dropna()
     diff = (pair[system] - pair[reference]).to_numpy()
+    if diff.size == 0:
+        # e.g. compliance against ILIKE, which returns nothing for constrained queries
+        return None
     low, high = bootstrap_ci(diff, rng)
     return {
         "n": diff.size,
@@ -156,7 +206,7 @@ def ladder_significance(scores: pd.DataFrame) -> pd.DataFrame:
     rng = np.random.default_rng(SEED)
     systems = set(scores["system"])
     rows = []
-    for measure in MEASURES:
+    for measure in [*MEASURES, *COMPLIANCE]:
         measured = scores[scores["measure"] == measure]
         for system, reference, subsets in LADDER:
             if system not in systems or reference not in systems:
@@ -164,12 +214,11 @@ def ladder_significance(scores: pd.DataFrame) -> pd.DataFrame:
             for subset in subsets:
                 part = measured if subset == "all" else measured[measured["lang"] == subset.split("=")[1]]
                 table = part.pivot(index="query_id", columns="system", values="value")
-                rows.append({"measure": measure, "system": system, "reference": reference, "subset": subset,
-                             **compare(table, system, reference, rng)})
-    result = pd.DataFrame(rows)
-    if not result.empty:
-        result["p_holm"] = holm(result["p_value"].tolist())
-    return result
+                result = compare(table, system, reference, rng)
+                if result is not None:
+                    rows.append({"measure": measure, "system": system, "reference": reference,
+                                 "subset": subset, **result})
+    return holm_primary(pd.DataFrame(rows))
 
 
 def significance(scores: pd.DataFrame) -> pd.DataFrame:
@@ -177,31 +226,15 @@ def significance(scores: pd.DataFrame) -> pd.DataFrame:
     systems = sorted(scores["system"].unique())
     dense = [s for s in systems if s not in BASELINES]
     rows = []
-    for measure in MEASURES:
+    for measure in [*MEASURES, *COMPLIANCE]:
         table = scores[scores["measure"] == measure].pivot(index="query_id", columns="system", values="value")
         for system in dense:
             for baseline in [b for b in BASELINES if b in systems]:
-                pair = table[[system, baseline]].dropna()
-                diff = (pair[system] - pair[baseline]).to_numpy()
-                low, high = bootstrap_ci(diff, rng)
-                rows.append(
-                    {
-                        "measure": measure,
-                        "system": system,
-                        "baseline": baseline,
-                        "n": diff.size,
-                        "mean_system": pair[system].mean(),
-                        "mean_baseline": pair[baseline].mean(),
-                        "mean_diff": diff.mean(),
-                        "ci95_low": low,
-                        "ci95_high": high,
-                        "p_value": randomization_test(diff, rng),
-                    }
-                )
-    result = pd.DataFrame(rows)
-    if not result.empty:
-        result["p_holm"] = holm(result["p_value"].tolist())
-    return result
+                result = compare(table, system, baseline, rng)
+                if result is not None:
+                    renamed = {("mean_baseline" if k == "mean_reference" else k): v for k, v in result.items()}
+                    rows.append({"measure": measure, "system": system, "baseline": baseline, **renamed})
+    return holm_primary(pd.DataFrame(rows))
 
 
 def main() -> None:
@@ -211,7 +244,7 @@ def main() -> None:
     args = parser.parse_args()
 
     queries = load_queries(args.run_dir)
-    scores = per_query_scores(args.run_dir, args.qrels, queries)
+    scores = pd.concat([per_query_scores(args.run_dir, args.qrels, queries), compliance_scores(args.run_dir, queries)])
     out = args.run_dir / f"analysis-{args.qrels.stem}"
     out.mkdir(exist_ok=True)
     scores.to_csv(out / "per_query.csv", index=False)
@@ -220,7 +253,8 @@ def main() -> None:
     significance(scores).to_csv(out / "significance.csv", index=False)
     ladder_significance(scores).to_csv(out / "ladder.csv", index=False)
 
-    overall = summary[summary["group"] == "all"].set_index("system")[list(MEASURES)]
+    columns = [m for m in [*MEASURES, *COMPLIANCE] if m in summary]
+    overall = summary[summary["group"] == "all"].set_index("system")[columns]
     print(overall.round(3).to_string())
     print(f"\nWritten to {out}")
 
