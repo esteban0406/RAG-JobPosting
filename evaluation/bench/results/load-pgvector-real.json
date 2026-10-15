@@ -1,0 +1,9 @@
+{
+  "engine": "pgvector",
+  "dataset": "real",
+  "n": 4013,
+  "load_s": 0.08589673099777428,
+  "index_s": 2.415076144003251,
+  "index_bytes": 16326656,
+  "table_bytes": 33292288
+}

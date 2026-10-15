@@ -1,0 +1,9 @@
+{
+  "engine": "pgvector",
+  "dataset": "synth-100000",
+  "n": 100000,
+  "load_s": 2.3499437270000385,
+  "index_s": 34.94897223800007,
+  "index_bytes": 409608192,
+  "table_bytes": 822738944
+}
