@@ -14,6 +14,7 @@ function build(path: string) {
       intent: 'filter_jobs',
       filters: { minSalary: 150000, isRemote: true },
     }),
+    route: jest.fn((r: unknown) => r),
   };
   const cache = new ClassificationCache(
     classifier as unknown as QueryClassifierService,
@@ -67,6 +68,22 @@ describe('ClassificationCache', () => {
       salaryAtLeast: 150000,
       isRemote: true,
     });
+  });
+
+  it('reapplies the current routing rules to cached results', async () => {
+    const file = path();
+    await build(file).cache.classify('remote python over 150k');
+
+    const { cache, classifier } = build(file);
+    classifier.route.mockImplementation((r) => ({
+      ...(r as object),
+      type: 'aggregation',
+    }));
+
+    await expect(cache.classify('remote python over 150k')).resolves.toEqual(
+      expect.objectContaining({ type: 'aggregation' }),
+    );
+    expect(classifier.classify).not.toHaveBeenCalled();
   });
 
   it('does not cache a failed classification', async () => {

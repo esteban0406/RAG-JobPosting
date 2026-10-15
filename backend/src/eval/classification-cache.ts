@@ -72,7 +72,8 @@ export class ClassificationCache {
       this.byKey.set(key, entry);
     }
     this.used.set(key, entry);
-    return entry.result;
+    // Routing rules may have changed since the entry was cached.
+    return this.classifier.route(entry.result);
   }
 
   // The filter production would apply to this query (no request filters).

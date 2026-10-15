@@ -30,6 +30,32 @@ const CONSTRAINT_PATTERN =
 
 const FALLBACK_RESULT: ClassificationResult = { type: 'retrieval' };
 
+// Templates that answer with statistics, distinct values or the newest
+// postings rather than a list of matching jobs. Retrieval cannot serve them,
+// so they route to aggregation even when the LLM labels the query
+// "retrieval" (found in the 14-oct evaluation: "what are the most recent job
+// postings" came back as retrieval + recent_jobs). Listing templates
+// (list_jobs_*, salary thresholds) keep the LLM's label: 51 of the 85
+// retrieval test queries come back as retrieval + list_jobs_by_title/skill.
+const AGGREGATION_ONLY_TEMPLATES: ReadonlySet<string> = new Set([
+  'count_total',
+  'count_by_location',
+  'count_by_job_type',
+  'count_by_company',
+  'count_remote',
+  'salary_stats_overall',
+  'salary_stats_by_title',
+  'salary_stats_by_location',
+  'salary_stats_by_job_type',
+  'list_distinct_titles',
+  'list_distinct_locations',
+  'list_distinct_skills',
+  'list_distinct_companies',
+  'top_hiring_companies',
+  'skills_demand',
+  'recent_jobs',
+]);
+
 export function buildClassifierPrompt(query: string): string {
   return `Classify this job search query into one of three types and pick the best aggregation template.
 
@@ -87,8 +113,9 @@ For filter_jobs: {"type":"retrieval","intent":"filter_jobs","filters":{"title":"
 Query: "${query}"`;
 }
 
-// Identifies the classifier's behaviour (prompt and routing rules), so
-// cached classifications are invalidated whenever either changes.
+// Identifies what decides the LLM call and its output (prompt and regex
+// rules), so cached classifications are invalidated whenever either changes.
+// route() is deterministic and reapplied to cached results instead.
 export const CLASSIFIER_VERSION = createHash('sha256')
   .update(
     [
@@ -118,7 +145,7 @@ export class QueryClassifierService {
 
     if (isAggregation && isRetrieval) {
       const llmResult = await this.classifyWithLlm(query, options.strict);
-      if (llmResult.intent === 'filter_jobs') return this.normalize(llmResult);
+      if (llmResult.intent === 'filter_jobs') return this.route(llmResult);
       return { ...llmResult, type: 'hybrid' };
     }
     if (isRetrieval && !CONSTRAINT_PATTERN.test(query)) {
@@ -127,19 +154,28 @@ export class QueryClassifierService {
 
     // The aggregation regex only detects intent; choosing the SQL template
     // still requires the LLM, same as for queries no rule matches.
-    return this.normalize(await this.classifyWithLlm(query, options.strict));
+    return this.route(await this.classifyWithLlm(query, options.strict));
   }
 
-  // filter_jobs is answered by retrieval with filters, whatever type the LLM
-  // gave it. An aggregation without a known template cannot be executed and
-  // falls back to retrieval.
-  private normalize(result: ClassificationResult): ClassificationResult {
+  // Deterministic routing rules over the LLM's answer, idempotent so they can
+  // be reapplied to cached classifications. filter_jobs is answered by
+  // retrieval with filters, whatever type the LLM gave it; statistic
+  // templates always aggregate; an aggregation without a known template
+  // cannot be executed and falls back to retrieval.
+  route(result: ClassificationResult): ClassificationResult {
     if (result.intent === 'filter_jobs') {
       return {
         type: 'retrieval',
         intent: 'filter_jobs',
         filters: result.filters,
       };
+    }
+    if (
+      result.type === 'retrieval' &&
+      result.intent &&
+      AGGREGATION_ONLY_TEMPLATES.has(result.intent)
+    ) {
+      return { ...result, type: 'aggregation' };
     }
     if (result.type !== 'aggregation') return result;
     if (!result.intent) return FALLBACK_RESULT;

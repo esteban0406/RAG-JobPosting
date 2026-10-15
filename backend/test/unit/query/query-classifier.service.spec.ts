@@ -56,6 +56,25 @@ describe('QueryClassifierService', () => {
       );
     });
 
+    it('routes statistic templates to aggregation even if the LLM says retrieval', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"retrieval","intent":"recent_jobs","params":[]}',
+      );
+      const result = await service.classify(
+        'what are the most recent job postings',
+      );
+      expect(result.type).toBe('aggregation');
+      expect(result.intent).toBe('recent_jobs');
+    });
+
+    it('keeps listing templates on retrieval when the LLM says retrieval', async () => {
+      mockLlm.complete.mockResolvedValueOnce(
+        '{"type":"retrieval","intent":"list_jobs_by_title","params":["%product manager%"]}',
+      );
+      const result = await service.classify('product manager');
+      expect(result.type).toBe('retrieval');
+    });
+
     it('classifies retrieval signals without LLM', async () => {
       const result = await service.classify('find python developer jobs');
       expect(result.type).toBe('retrieval');

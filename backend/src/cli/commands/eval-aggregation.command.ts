@@ -7,6 +7,7 @@ import {
   normalizeRow,
   type SqlRow,
 } from '../../eval/aggregation-compare.js';
+import { ClassificationCache } from '../../eval/classification-cache.js';
 import { loadDataset } from '../../eval/dataset.js';
 import { LlmService } from '../../llm/llm.service.js';
 import { AggregationService } from '../../query/aggregation/aggregation.service.js';
@@ -35,6 +36,7 @@ export async function evalAggregation(
   const aggregation = app.get(AggregationService);
   const prisma = app.get(PrismaService);
   const llm = app.get(LlmService);
+  const classifications = new ClassificationCache(classifier, llm.modelName);
   const queries = loadDataset(options.dataset).filter(
     (q) => q.category === 'aggregation',
   );
@@ -50,9 +52,10 @@ export async function evalAggregation(
     if (!q.goldSql || !q.expectedTemplates?.length)
       throw new Error(`${q.id}: missing goldSql or expectedTemplates`);
 
-    // Strict: a rate-limited call must not count as a routing error.
+    // Cached and strict (shared with the other commands): a rate-limited call
+    // must not count as a routing error.
     const c = await retryRateLimited(
-      () => classifier.classify(q.text, { strict: true }),
+      () => classifications.classify(q.text),
       logger,
     );
     const routeCorrect =
@@ -113,6 +116,7 @@ export async function evalAggregation(
     gitSha: gitSha(),
     createdAt: new Date().toISOString(),
     model: llm.modelName,
+    classifier: classifications.version,
     ...summary,
     ...options,
   });
