@@ -1,0 +1,85 @@
+{
+  "command": "eval:retrieve",
+  "gitSha": "4b89933-dirty",
+  "createdAt": "2026-10-14T19:27:21.022Z",
+  "embeddingModel": "multilingual-e5-base",
+  "embeddingServer": {
+    "embeddingModel": "intfloat/multilingual-e5-base",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "device": "cuda"
+  },
+  "classifier": "1a83eda83188",
+  "filterExtraction": {
+    "scored": 24,
+    "exact": 22
+  },
+  "constraintCompliance": {
+    "ilike": {
+      "queries": 0,
+      "at5": 0,
+      "at10": 0
+    },
+    "bm25": {
+      "queries": 20,
+      "at5": 0.36,
+      "at10": 0.36500000000000005
+    },
+    "qdrant-e5base": {
+      "queries": 21,
+      "at5": 0.36190476190476195,
+      "at10": 0.3333333333333333
+    },
+    "pg-exact": {
+      "queries": 21,
+      "at5": 0.4,
+      "at10": 0.33809523809523806
+    },
+    "pg-hnsw": {
+      "queries": 21,
+      "at5": 0.4,
+      "at10": 0.33809523809523806
+    },
+    "qdrant-hnsw": {
+      "queries": 21,
+      "at5": 0.4,
+      "at10": 0.35238095238095235
+    },
+    "qdrant-filtered": {
+      "queries": 21,
+      "at5": 0.9333333333333333,
+      "at10": 0.9238095238095237
+    },
+    "qdrant-hybrid": {
+      "queries": 21,
+      "at5": 0.9333333333333333,
+      "at10": 0.9333333333333333
+    },
+    "qdrant-hybrid-rerank": {
+      "queries": 21,
+      "at5": 0.961904761904762,
+      "at10": 0.9428571428571427
+    }
+  },
+  "corpus": {
+    "jobs": 1068,
+    "chunks": 4013
+  },
+  "queries": 85,
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "systems": [
+    "ilike",
+    "bm25",
+    "qdrant-e5base",
+    "pg-exact",
+    "pg-hnsw",
+    "qdrant-hnsw",
+    "qdrant-filtered",
+    "qdrant-hybrid",
+    "qdrant-hybrid-rerank"
+  ],
+  "depth": 10,
+  "efSearch": 40,
+  "label": "test-full",
+  "ablationCollection": "eval_job_chunks_e5base",
+  "ablationEmbedUrl": "http://localhost:8001"
+}

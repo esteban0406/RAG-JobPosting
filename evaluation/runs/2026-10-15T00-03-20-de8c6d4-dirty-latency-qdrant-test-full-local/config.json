@@ -1,0 +1,19 @@
+{
+  "command": "eval:latency",
+  "gitSha": "de8c6d4-dirty",
+  "createdAt": "2026-10-15T00:44:49.911Z",
+  "vectorBackend": "qdrant",
+  "model": "qwen/qwen3.8-27b",
+  "classifier": "1a83eda83188",
+  "queries": 85,
+  "generationSubset": [],
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "label": "test-full-local",
+  "warmup": 5,
+  "repetitions": 30,
+  "generationQueries": 0,
+  "generationRepetitions": 3,
+  "temperature": 0,
+  "delayMs": 2000,
+  "seed": 42
+}

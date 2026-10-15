@@ -1,0 +1,13 @@
+{
+  "command": "eval:aggregation",
+  "gitSha": "de8c6d4-dirty",
+  "createdAt": "2026-10-14T22:52:27.065Z",
+  "model": "qwen/qwen3.8-27b",
+  "queries": 15,
+  "routingAccuracy": 0.7333333333333333,
+  "answerExact": 0.6666666666666666,
+  "meanCoverage": 0.6668776371308016,
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "label": "test-full",
+  "delayMs": 2000
+}
