@@ -5,32 +5,54 @@
 - **Programa:** Maestría en Inteligencia Artificial, Universidad Sergio Arboleda (plantilla NTC1486 en `Tesis/Plantilla`).
 - **Fecha límite:** entrega última semana de noviembre
 
-- **Enfoque:** Design Science Research (DSR). JobAI ya es el artefacto construido (ver `caseStudy.md`). El aporte académico nuevo NO es construir features grandes, sino: (a) fundamentar el problema en literatura, (b) definir metodología y métricas de evaluación, (c) evaluar el artefacto cuantitativamente (precisión de retrieval, fidelidad/groundedness de respuestas, y opcionalmente comparación contra un baseline de búsqueda por palabra clave).
+- **Enfoque:** Design Science Research (DSR). JobAI ya es el artefacto construido (`caseStudy.md` lo describe tal como estaba **antes** de la tesis; la configuración actual está en la sección "Hechos verificados en el código" y en el borrador del Cap4). El aporte académico nuevo NO es construir features grandes, sino: (a) fundamentar el problema en literatura, (b) definir metodología y métricas de evaluación, (c) evaluar el artefacto cuantitativamente (precisión de retrieval, fidelidad/groundedness de respuestas, y opcionalmente comparación contra un baseline de búsqueda por palabra clave).
 - **Cambio de arquitectura decidido:** la plataforma migrará su almacenamiento vectorial de PostgreSQL+pgvector a una base de datos vectorial dedicada (Qdrant). Esto sí es desarrollo nuevo (migración de embeddings, actualización de ingesta y del módulo de retrieval), pero encaja dentro de DSR como una iteración del ciclo diseño-evaluación, y abre la puerta a una comparación empírica pgvector vs. Qdrant (latencia/recall) que enriquece la evaluación sin salirse del alcance.
-- **Pedido actual del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos.
+- **Pedido actual del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Se le envía con la nota del 15-oct (pendiente de enviar por el autor); todavía no hay observaciones suyas.
 
-## ▶ Estado al 15-oct-2026 — leer primero
+## ▶ Estado al 15-oct-2026, 19:30 — leer primero
 
-**Dónde estamos:** iteración 5 terminada en código y evaluada con el **juez local** (paso 6b). Benchmark sintético con vectores multilingües **terminado** (paso 8). Entrega al profesor preparada (abajo). Rama `thesis/qdrant-eval`. La fuente de verdad es este archivo; los planes en `~/.claude/plans/` quedaron superados.
+**Cómo orientarse (para un agente nuevo):** leer esta sección completa, luego "Operación del entorno de evaluación" y "Hechos verificados en el código" (abajo); para cifras, la Iteración 5, pasos 5b, 6b y 8. Este archivo es la fuente de verdad: los planes de `~/.claude/plans/` están superados, y `caseStudy.md` y `README.md` describen el artefacto **antes** de la tesis (solo pgvector, Gemini, 15 fragmentos con umbral 0,5, sin filtros ni *reranking*): no usarlos como descripción de la configuración actual. Rama `thesis/qdrant-eval`; revisar `git status` al empezar por si quedó algo sin commitear.
 
-**Hecho el 15-oct:**
-- Benchmark sintético 100k/500k completo (resultados en `evaluation/bench/results/`, resumen en el paso 8). Postgres y Qdrant restaurados sin límites de CPU/memoria.
-- **Decisión del autor (nota de método del paso 6b):** nDCG@10 es la métrica principal; Holm solo sobre sus comparaciones (dos familias: frente a líneas base, 14; escalera, 9). Las demás métricas son secundarias (IC + p sin ajustar). Implementado en `metrics.py` junto con el cumplimiento de restricciones (C@5, C@10, desde `compliance.jsonl`); corrida de prueba re-analizada: p e IC de las métricas originales idénticos; filtros p Holm 0,005, *reranking* 0,001, multilingüe en español 0,25 (n.s.).
-- **Entrega al profesor (la envía el autor hoy):** `Tesis/Desarollo/nota-profesor-2026-10-15.md` (renombrada desde la del 13-oct, reescrita con la iteración 5 y el cronograma nuevo) + `Tesis/Plantilla/main.pdf` compilado hoy. Alcance decidido: nota + resumen; el Cap5 lleva un aviso visible de que sus tablas son de la corrida del 13-oct. Resumen ES reescrito con las cifras de la iteración 5 y el benchmark (492 palabras, cabe en una página). **Objetivo específico 2 ampliado** (Cap1 y Cap0) para nombrar filtros, híbrida y reordenamiento; la nota se lo advierte al profesor.
-- **Decisión del autor (estructura del Cap4):** las secciones 1-3 describen el pipeline actualizado (configuración de referencia) y una sección final "Iteración de diseño: recuperación" explica qué cambió y por qué, con la selección del *reranker* como evaluación formativa. Borradores (fuera del PDF, pendientes de revisión del autor): `Tesis/Desarollo/borradores/cap4-iteracion5.tex` y `cap3-iteracion5.tex`.
-- 8 referencias nuevas en `referencias.bib` (Cormack 2009, Bruch 2023, Nogueira & Cho 2019, Wang 2024 mE5, Chen 2024 M3, Zhang 2025 Qwen3, Gollapudi 2023, Patel 2024), autores verificados contra arXiv/Crossref. Aún no tienen PDF en `Tesis/Literatura/`.
+**Forma de trabajo acordada con el autor** (Luis Esteban Peña Rodríguez; director: Joaquín Fernando Sánchez Cifuentes):
+- Responder en español. Preguntar en lugar de suponer ("no des nada por hecho"); presentar las decisiones como preguntas con una opción recomendada.
+- Claude redacta los capítulos en LaTeX y el autor revisa. Texto que no ha revisado va a `Tesis/Desarollo/borradores/`, no a `MainMatter/`, cuando hay un PDF por enviar.
+- Toda cita nueva se verifica contra arXiv o DOI (Crossref) antes de entrar a `referencias.bib`.
+- Ninguna decisión de configuración se toma mirando el conjunto de prueba: usar `evaluation/datasets/queries.dev.jsonl` con una regla fijada antes.
+- Commits solo cuando el autor lo pide; el 15-oct aprobó commits **por tema** (benchmark / análisis / tesis), en inglés, con la línea `Co-Authored-By`.
+- Todo local primero; el juez de pago solo en la corrida final.
+
+**Dónde estamos:** iteración 5 (filtros estructurados, híbrida BM25+RRF, *reranking* Qwen3-Reranker-0.6B, multilingual-e5-base, juez v2) terminada en código y evaluada sobre el conjunto de prueba con el **juez local** (paso 6b). Benchmark de almacenes completo con vectores multilingües (paso 8). Entrega al profesor **preparada pero no enviada**.
+
+**Hecho el 15-oct** (commits aab6482, 22774f2, b33e3dd):
+- Benchmark sintético 100k/500k terminado; `evaluation/bench/compare.py` compara contra la corrida e5-base-v2 (prueba de robustez). Postgres y Qdrant restaurados sin límites.
+- **Decisión del autor — métrica principal:** nDCG@10; Holm solo sobre sus comparaciones (familia frente a líneas base: 14; familia escalera: 9). P@5, P@10, MRR, R@10, C@5 y C@10 son secundarias (IC + p sin ajustar). Implementado en `metrics.py`. Re-análisis de la corrida de prueba: filtros p Holm 0,005; *reranking* 0,001; iteración completa 0,001; multilingüe en español 0,25 (n.s.); HNSW frente a exacto 0,22 (n.s.).
+- **Decisión del autor — 1M vectores:** no se corre (pgvector llegó a 7,8 GB de memoria pico con 500k; 1M no cabe en el contenedor de 10 GB ni en la máquina de 15 GB sin cambiar la configuración de un motor). Ya escrito en el borrador del Cap3 §Datos; falta mencionarlo en Cap5.
+- **Decisión del autor — estructura del Cap4:** las secciones 1-3 describen el pipeline **actualizado** (configuración de referencia); una sección final "Iteración de diseño: recuperación" explica qué cambió y por qué, con la selección del *reranker* como evaluación formativa.
+- **Decisión del autor — objetivo específico 2 ampliado** (Cap1 y su versión corta en Cap0): ahora nombra "recuperación con filtros estructurados, búsqueda híbrida y reordenamiento". La nota al profesor se lo advierte.
+- **Entrega al profesor (alcance decidido: nota + resumen):** `Tesis/Desarollo/nota-profesor-2026-10-15.md` (reescrita: iteración 5, resultados preliminares, cronograma nuevo, 4 preguntas) + `Tesis/Plantilla/main.pdf` compilado el 15-oct a las ~09:20 (68 páginas, sin referencias rotas; `main.pdf` está en `.gitignore`). El Cap5 lleva un aviso rojo de que sus tablas son de la corrida del 13-oct. Resumen ES reescrito con la iteración 5 y el benchmark: **492 palabras, página justa** (agregar algo obliga a recortar; contar con el comando de "Herramientas"). Abstract EN pendiente hasta que el autor apruebe el español.
+- Borradores fuera del PDF: `Tesis/Desarollo/borradores/cap4-iteracion5.tex` (Cap4 completo reescrito) y `cap3-iteracion5.tex` (Cap3 completo actualizado). Son archivos completos que reemplazan a `MainMatter/Cap4/M05-Chapter4.tex` y `MainMatter/Cap3/M04-Chapter3.tex`; usan las referencias nuevas y la etiqueta nueva `sec:art-iter-recuperacion` (Cap3 la cita), por eso deben pasarse **juntos**.
+- 8 referencias nuevas en `referencias.bib` (Cormack2009, Bruch2023, Nogueira2019, Wang2024mE5, Chen2024M3, Zhang2025Qwen3, Gollapudi2023, Patel2024), verificadas contra arXiv/Crossref; por ahora solo las citan los borradores. No tienen PDF en `Tesis/Literatura/` (el autor puede descargarlos con la convención `Autor (Año). Título.pdf`).
+
+**Puntos que el autor debe revisar en los borradores** (señalados al redactarlos):
+- Cap4 §Visión general: la frase de que el despliegue público conserva la configuración anterior (en `docker-compose.prod.yml`: embeddings Gemini `gemini-embedding-001`, pgvector, `RERANK_ENABLED: 'false'`). ¿Se deja así o se omite?
+- Cap4 §Iteración de recuperación, "Diagnóstico": se describe la versión anterior de `filter_jobs` (ver "Hechos verificados").
+- Cap4 §Búsqueda híbrida: cita a Bruch et al. 2023 (encontraron que la combinación convexa supera a RRF y que RRF es sensible a *k*; JobAI usa k=60 sin ajustar). Es la base para discutir en Cap5 el resultado negativo de la híbrida.
+- Cap3 §Amenazas: dos amenazas nuevas redactadas con honestidad: la iteración 5 se decidió después de ver la primera corrida de prueba, y el esquema de Holm se fijó después del juez local (antes de la corrida final).
+- Cap3 §Corpus: `\pendiente{Mediana de los salarios informados tras la limpieza}` (la del 10-oct era 175.000; hay que recalcularla con SQL sobre `jobpostings_eval`).
 
 **Próximos pasos, en orden:**
-1. **Autor:** enviar al profesor la nota + `main.pdf`.
-2. **Latencia de la generación** (Groq): correr esta noche después de ~20:30, cuando la ventana móvil de 24 h haya liberado lo gastado el 14-oct por la tarde: `eval:latency … --repetitions 0 --warmup 0` (ver "Operación del entorno de evaluación").
-3. **Autor:** revisar los borradores de Cap3/Cap4 en `borradores/`; al aprobarlos se pasan a `MainMatter/`. Dato pendiente para Cap3: mediana de los salarios tras la limpieza.
-4. **Autor:** anotar `evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full/kappa-sample.csv` (primero las 103 filas de calibración; guía en `kappa-instrucciones.md`). Luego `evaluation/analysis/kappa.py`.
-5. ~~Benchmark de 1M vectores~~ — **decidido el 15-oct: no se corre** (pgvector llegó a 7,8 GB de memoria pico con 500k; 1M no cabe en el contenedor de 10 GB ni en la máquina de 15 GB sin romper la igualdad de condiciones). Ya documentado en el borrador de Cap3 §Datos; mencionarlo en Cap5.
-6. Regenerar las figuras `recall-latency-*.pdf` con el estilo de `evaluation/analysis/figures.py` y redactar Cap5 §"Escalamiento con datos sintéticos".
-7. Corrida final con juez de pago (26-oct a 1-nov): elegir modelo, `JUDGE_API_KEY`, repetir pool/juicio/RAGAS; las cachés de respuestas y clasificaciones evitan volver a llamar a Groq salvo para la latencia de generación.
-8. Cap2 (RRF, fusión híbrida, *reranking*, mE5, ANN con filtros, con las referencias nuevas) y Cap5 (tablas de la iteración 5) — ver la lista "Documento" al final de la Iteración 5.
+1. **Autor:** enviar al profesor la nota + `main.pdf`. Al enviarla, marcar la tarea en la Fase 0. Si el profesor pide cambios en problema u objetivos, hay retrabajo en Cap1 y en las secciones "Relación con JobAI" del Cap2.
+2. **Latencia de la generación (Groq), pendiente:** correr después de ~20:30 del 15-oct, o al día siguiente. La ventana móvil de 24 h libera recién entonces lo gastado el 14-oct entre las 15:15 y las 20:30. Requiere Postgres, Qdrant y `embedding-server` arriba (`curl localhost:8000/health` → `cuda`). Desde `backend/`:
+   `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/jobpostings_eval QDRANT_COLLECTION=eval_job_chunks VECTOR_BACKEND=qdrant node dist/src/cli/main.js eval:latency --dataset ../evaluation/datasets/queries.v2.draft.jsonl --label test-full-generation --repetitions 0 --warmup 0 --delay-ms 15000`
+   Son 30 consultas × 3 generaciones, ~25 min. Un intento rechazado por límite (429) se vuelve a medir, así que no contamina la latencia. Si el error dice "daily quota exhausted on all keys", esperar. Luego actualizar el paso 6b y el Cap5 §Generación (PE3), y decidir si el resumen menciona TTFT y tiempo total (hoy no los menciona).
+3. **Autor:** revisar los borradores (puntos de arriba). Al aprobarlos: copiarlos a `MainMatter/`, recompilar y verificar que no haya referencias rotas.
+4. **Autor:** anotar `evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full/kappa-sample.csv` (401 pares; primero las 103 de calibración; guía en `kappa-instrucciones.md`). Luego `evaluation/analysis/kappa.py`.
+5. Figuras del benchmark: regenerar `recall-latency-*.pdf` con el estilo de `evaluation/analysis/figures.py` (paleta y coma decimal) y redactar Cap5 §"Escalamiento con datos sintéticos", que hoy es un `\pendiente`, con los hallazgos del paso 8, incluido que 1M no se corrió.
+6. Cap2: secciones nuevas con las referencias verificadas (RRF y fusión híbrida, *reranking* con *cross-encoders*, *embeddings* multilingües, ANN con filtros), cada una con su "Relación con JobAI" como el resto del capítulo. Gao et al. 2023 sirve para enmarcar *Naive* frente a *Advanced RAG* (verificado en el PDF: el *reranking* es una optimización posterior a la recuperación del *Advanced RAG*; la recuperación híbrida dispersa+densa aparece en la sección de recuperadores).
+7. Cap5 con las tablas de la iteración 5 (escalera, restricciones con C@5/C@10, ablación del modelo, compuerta, agregación antes/después, latencia), Discusión, y luego Cap9 (Conclusiones). Cap0: cambiar "en producción" por "configuración de referencia"; Cap1 §Alcance: acotar lo conversacional (el historial solo afecta a la generación).
+8. **Corrida final con juez de pago (26-oct a 1-nov):** el autor debe elegir el modelo (preguntarle con anticipación; se pasa con `--judge-model`/`--judge-base-url` y `JUDGE_API_KEY`). Repetir pool → juicio → `metrics.py`, RAGAS y kappa (juez final frente a humano). Las cachés de respuestas y clasificaciones evitan volver a llamar a Groq. Después, actualizar Cap5, el resumen y la `\pendiente{modelo del juez final}` del Cap3.
 
-## Operación del entorno de evaluación (14-oct)
+## Operación del entorno de evaluación (14-15 oct)
 
 - **Servicios** (`docker compose`): `postgres` (bases `jobpostings` y `jobpostings_eval`), `qdrant` (colecciones `eval_job_chunks` multilingüe, `eval_job_chunks_e5base` ablación, `bench_*`), `embedding-server` (`:8000`, multilingual-e5-base + Qwen3-Reranker-0.6B en GPU; requiere `nvidia-container-toolkit`), `embedding-server-e5` (perfil `ablation`, `:8001`, CPU), `reranker-bge` (perfil `rerank-dev`, `:8002`, solo para repetir el experimento de desarrollo).
 - **Variables para los comandos del arnés** (desde `backend/`, tras `pnpm build`): `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/jobpostings_eval QDRANT_COLLECTION=eval_job_chunks`; además `VECTOR_BACKEND=qdrant` para `eval:generate` (y `qdrant`/`pgvector` para `eval:latency`). Ejemplos:
@@ -41,6 +63,28 @@
 - **Groq (gratuito, 2 claves en `backend/.env`):** 8.000 *tokens*/min por clave (una generación reserva ~5.000) y un límite diario de *tokens* (ventana móvil de 24 h, no aparece en las cabeceras). El 14-oct se agotó en ambas claves tras clasificar 85 consultas + 67 generaciones + parte de la latencia. `LlmService` rota de clave ante un 429 y los comandos esperan 60 s y reintentan; si el error dice "daily quota exhausted on all keys", esperar al día siguiente.
 - **Cachés (en git):** `evaluation/judgments/`, `evaluation/generations/`, `evaluation/classifications/`, `evaluation/ragas-cache/`. La versión del clasificador (`CLASSIFIER_VERSION`) solo cambia con el *prompt* o las regex; las reglas de ruteo se reaplican al leer.
 - **Postgres y Qdrant**: `run_bench.sh` los deja limitados a 8 CPU / 10 GB; para quitarlo: `docker compose up -d --force-recreate postgres qdrant` (hecho el 15-oct tras el benchmark). Las colecciones `bench_*` de Qdrant y la base `bench` de Postgres siguen ocupando disco (~2,5 GB en Qdrant); pueden borrarse si hace falta espacio.
+- **Benchmark:** `ollama stop llama3.1:8b; bash evaluation/bench/run_bench.sh <dataset…>` (máquina libre; 100k+500k tardaron ~55 min el 15-oct); `bench report` regenera `results/summary.csv` y las figuras; `python evaluation/bench/compare.py` compara con `results-e5-base-v2/`.
+
+## Hechos verificados en el código (15-oct) — útiles para redactar
+
+Comprobados al escribir los borradores de Cap3/Cap4; citar el archivo si hay dudas.
+- **Configuración de referencia** = `docker-compose.yml` + valores por defecto de `backend/src/config/config.schema.ts`: `RETRIEVAL_HYBRID=true`, `RERANK_ENABLED=true`, `RERANKER_MODEL=Qwen/Qwen3-Reranker-0.6B`, `RERANK_CANDIDATES=20`, `RERANK_FUSION=replace`, `RERANK_MIN_SCORE=0.134`, `LLM_MODEL=qwen/qwen3.8-27b`, `JOB_PARSER_MODEL=openai/gpt-oss-120b`. Ojo: `VECTOR_BACKEND` tiene por defecto `pgvector`; la evaluación fija `qdrant` o compara los dos.
+- **Despliegue público** (`docker-compose.prod.yml`): embeddings Gemini `gemini-embedding-001` (el `EmbeddingService` elige Gemini cuando `NODE_ENV=production`), pgvector, `RERANK_ENABLED: 'false'`. No es lo que se evalúa.
+- **Pipeline actual** (`backend/src/retrieval/retrieval-pipeline.service.ts`): densa con 50 fragmentos agrupados por oferta (puntaje = mejor fragmento) + BM25 en memoria con 50 ofertas (k1 1,2, b 0,75; título + habilidades + descripción; misma implementación que la línea base) bajo el **mismo filtro** → RRF k=60 → 20 candidatas al *cross-encoder* (encabezado + fragmentos, 2.000 caracteres; sigmoide sobre el logit) → 5 ofertas. Si ningún candidato cumple el filtro se repite sin él y el *prompt* lo advierte (`RELAXED_FILTER_NOTE`). Compuerta: si el mejor puntaje es < 0,134 → "sin resultados". Si el *reranker* falla, se usa el orden fusionado. Ya **no** hay umbral de similitud 0,5.
+- **Clasificador** (`query-classifier.service.ts`): tres regex (recuperación, agregación, restricciones EN/ES). Recuperación sin agregación ni restricción → no llama al LLM. 24 plantillas SQL + `filter_jobs`. Reglas de ruteo deterministas (reaplicadas sobre la caché): `filter_jobs` → recuperación con filtro; plantillas de estadística/distintos/recientes → siempre agregación; agregación sin plantilla → recuperación. Título y ubicaciones distintas de "remote" **no** se filtran (`toVectorFilter` en `query/job-filters.ts`); "freelance" acepta contract|freelance; los filtros explícitos del request tienen prioridad.
+- **Versión anterior a la iteración 5** (verificado en `git show 6dd5ecb^`): las consultas con señales de recuperación iban directo a la búsqueda densa y sus restricciones se ignoraban. `filter_jobs` se resolvía con SQL (`job-filter-builder.ts`: `title ILIKE`, `minSalary >=`, `maxSalary <=`, `location ILIKE`, `jobType ILIKE`, sin `isRemote`, `ORDER BY fetchedAt DESC LIMIT 30`) y esos ids se pasaban como contexto al prompt híbrido. La densa usaba 15 fragmentos con umbral 0,5.
+- **Arnés:** `eval/systems/pipeline.system.ts` pone `minRerankScore: -Infinity` (las métricas de recuperación **no** aplican la compuerta; el mejor puntaje queda en `rerank-top.jsonl`). `qdrant-filtered` = densa + filtro (sin híbrida ni *reranking*). Los 9 sistemas aportan al pool.
+- **Historial de conversación:** el cliente envía los últimos 10 mensajes (`frontend/components/ai/AiPanel.tsx`) y el servidor acepta hasta 12 (`search-query.dto.ts`); solo entra al *prompt*, no a la recuperación.
+- **Servidor de modelos** (`embedding-server/main.py`): prefijos `query:`/`passage:`; embeddings en fp32; *reranker* en fp16 en GPU con `max_length` 512; `/health` informa los modelos y el backend rechaza un modelo distinto del configurado.
+- **Equipo de evaluación:** AMD Ryzen 5 3600 (6 núcleos/12 hilos), 16 GB de RAM (15 GiB utilizables), NVIDIA RTX 3060 de 12 GB.
+- **Conjuntos:** prueba = 100 consultas (EN: 15 por categoría × 5, incluidas 15 de agregación; ES: 7 exactas, 7 vocabulario, 6 restricciones, 5 ruidosas), 75 necesidades, 85 consultas con lista de ofertas. Desarrollo = 28 consultas (20 EN, 8 ES), 20 necesidades, + 10 fuera de dominio. Ejemplo de la categoría de vocabulario: en-sv-06 "protect company systems from hackers" (necesidad n-sv-06 "Cybersecurity roles defending company systems against attacks").
+
+## Herramientas y trucos (15-oct)
+
+- **Compilar la tesis:** `cd Tesis/Plantilla && latexmk -pdf -interaction=nonstopmode main.tex`; luego `grep -E "^! |undefined" main.log`. `\pendiente{…}` se imprime en rojo (definido en `main.tex`). Para ver una página: `pdftoppm -f N -l N -r 70 -png main.pdf <salida>`.
+- **Palabras del resumen:** `sed -n '6,8p' FrontMatter/F04-Abstract.tex | sed -E 's/\\pendiente\{[^}]*\}//g; s/\\textit\{([^}]*)\}/\1/g' | wc -w` (desde `Tesis/Plantilla`). Con ~492 palabras ocupa la página completa.
+- **Verificar referencias:** dblp bloquea el acceso automático (Anubis). Usar `curl -s https://api.crossref.org/works/<DOI>` (autores, venue, páginas) o la página `arxiv.org/abs/<id>`. Para leer un PDF de `Tesis/Literatura/`: `pdftotext -layout`.
+- **Análisis:** imágenes Docker `jobai-analysis` (métricas, kappa, benchmark) y `jobai-ragas`; ejecutar siempre desde la raíz con `--user "$(id -u):$(id -g)" -v "$PWD":/work -w /work`.
 
 ## Estado al 10-oct-2026 (replanificación)
 
@@ -69,6 +113,8 @@ El proyecto iba ~3 semanas atrasado (Fase 2 sin empezar). Se replanificó el 10-
 | 9-15 nov | Envío al director, formato NTC1486 | Versión 1 |
 | 16-22 nov | Ajustes del director | Versión revisada |
 | 23-30 nov | Entrega final + sustentación | Entrega |
+
+**Avance al 15-oct:** la iteración 5 (prevista hasta el 21-oct), la corrida con juez local y el benchmark sintético (previstos para el 22-25 oct) ya están hechos. La entrega del 13-oct se corrió al 15-oct. Pendientes de la ventana 22-25 oct: anotación kappa, latencia de generación y pasar Cap3/Cap4 a `MainMatter/`.
 
 ---
 
@@ -243,12 +289,12 @@ Decisiones del autor: híbrida BM25-en-la-app + RRF y *reranking* en la GPU (obl
 
 Mapeo de capítulos de la plantilla a su contenido:
 
-- [~] Introducción (`Cap0`) — borrador 10-oct; revisar al final con los resultados (sin adelantarlos).
-- [x] Capítulo 1 (`Cap1`) — Planteamiento del problema y marco teórico (7-sep; referencias a capítulos ahora con `\ref`).
-- [x] Capítulo 2 (`Cap2`) — Estado del arte (7-sep; corregido 10-oct: índice IVFFlat real, descripción del clasificador).
-- [~] Capítulo 3 (`Cap3`) — Metodología: borrador completo 10-oct; quedan `\pendiente{}` con estadísticas del corpus y el modelo del juez final.
-- [~] Capítulo 4 (`Cap4`) — Diseño y desarrollo: borrador 10-oct (arquitectura corregida contra el código, migración a Qdrant, defectos corregidos); falta la evidencia `EXPLAIN` sobre el corpus completo.
-- [~] Capítulo 5 (`Cap5`) — Resultados y evaluación: tablas y texto de PE1-PE4 con la corrida provisional (13-oct); pendientes la validación del juez (kappa) y la Discusión.
+- [~] Introducción (`Cap0`) — borrador 10-oct; objetivo 2 actualizado el 15-oct; pendiente cambiar "en producción" por "configuración de referencia"; revisar al final con los resultados (sin adelantarlos).
+- [x] Capítulo 1 (`Cap1`) — Planteamiento del problema y marco teórico (7-sep; referencias a capítulos ahora con `\ref`; objetivo 2 ampliado el 15-oct). Pendiente: §Alcance, acotar lo conversacional; esperar las observaciones del director.
+- [~] Capítulo 2 (`Cap2`) — Estado del arte (7-sep; corregido 10-oct: índice IVFFlat real, descripción del clasificador). Falta la literatura de la iteración 5 (RRF/híbrida, *reranking*, mE5, ANN con filtros); las referencias ya están verificadas en el `.bib`.
+- [~] Capítulo 3 (`Cap3`) — Metodología: versión del 10-oct en `MainMatter/` (describe la configuración de la iteración 4). **Versión actualizada a la iteración 5** en `Tesis/Desarollo/borradores/cap3-iteracion5.tex` (15-oct, pendiente de revisión del autor); quedan `\pendiente{}`: mediana de salarios tras la limpieza y modelo del juez final.
+- [~] Capítulo 4 (`Cap4`) — Diseño y desarrollo: versión del 10-oct en `MainMatter/` (pipeline anterior a la iteración 5; la tabla `EXPLAIN` sobre el corpus completo ya está). **Versión reescrita** en `Tesis/Desarollo/borradores/cap4-iteracion5.tex` (15-oct, estructura decidida por el autor: pipeline actualizado + sección final de la iteración de recuperación); pendiente de revisión.
+- [~] Capítulo 5 (`Cap5`) — Resultados y evaluación: tablas y texto de PE1-PE4 con la corrida provisional del 13-oct, **anterior a la iteración 5**; lleva un aviso rojo de que está desactualizado (15-oct). Pendientes: tablas de la iteración 5 (paso 6b), escalamiento sintético (paso 8), validación del juez (kappa) y la Discusión.
 - [ ] Conclusiones y recomendaciones (`Cap9`) — respuesta a cada objetivo específico + trabajo futuro.
 
 ---
