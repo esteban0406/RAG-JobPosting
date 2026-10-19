@@ -1,0 +1,62 @@
+% BORRADOR (comentarios del director, 19-oct-2026): reemplaza MainMatter/Cap0/M01-Introduction.tex. Borrar esta línea al pasarlo.
+% De acuerdo con la NTC 1486, la introducción presenta la importancia, el origen, los objetivos, el alcance, las limitaciones y la metodología del trabajo, sin anticipar resultados ni conclusiones (2 a 4 páginas).
+
+Buscar empleo remoto exige recorrer varias plataformas, y muchas de ellas buscan comparando las palabras de la consulta con las de la oferta. Ese mecanismo funciona cuando quien busca y quien publica describen el cargo con los mismos términos, y falla cuando no lo hacen. \enquote{Backend Developer} y \enquote{Software Engineer}, \enquote{JS} y \enquote{JavaScript}, \enquote{trabajo con datos} y \enquote{Analytics Engineer} pueden referirse a lo mismo sin compartir una sola palabra. La recuperación de información llama a este problema \emph{desajuste de vocabulario}. Las grandes plataformas de reclutamiento lo abordan con representaciones semánticas aprendidas de sus propios datos de interacción \citep{HaThuc2017,Shen2024}, un recurso que no está al alcance de un agregador pequeño.
+
+La generación aumentada por recuperación (\textit{Retrieval-Augmented Generation}, RAG) \citep{Lewis2020} ofrece una alternativa construida con componentes disponibles. Recupera los fragmentos semánticamente más cercanos a la consulta y le pide a un modelo de lenguaje que redacte una respuesta a partir de ellos. Sobre ese esquema básico se han propuesto varias mejoras: filtros sobre los atributos de la oferta, búsqueda híbrida con representaciones léxicas \citep{Cormack2009}, reordenamiento de los candidatos con un modelo más costoso \citep{Nogueira2019} y modelos de \textit{embeddings} multilingües \citep{Wang2024mE5}. Cada una promete mejorar la recuperación y cada una añade latencia y complejidad. Para la búsqueda de empleo no se sabe cuánto aporta cada una frente a una línea base léxica fuerte. Tampoco es fácil saberlo usando el sistema: un pipeline RAG responde con fluidez aunque su recuperación o sus datos fallen, porque el modelo de lenguaje redacta una respuesta plausible con lo que recibe \citep{Barnett2024}.
+
+De ahí surge la pregunta que orienta este trabajo: \emph{¿en qué medida un pipeline de Retrieval-Augmented Generation mejora la recuperación de ofertas de empleo frente a la búsqueda por palabras clave, qué componentes del pipeline explican esa mejora y con qué costo en latencia?} Para responderla se usa como caso de estudio JobAI, una plataforma de búsqueda de empleo remoto que agrega ofertas de tres fuentes públicas y responde consultas en lenguaje natural mediante un pipeline RAG. JobAI es un artefacto preexistente, desarrollado por el autor sin un protocolo de evaluación formal.
+
+\section*{Objetivos}
+
+El objetivo general es evaluar en qué medida un pipeline RAG aplicado a la búsqueda de empleo remoto mejora la calidad de la recuperación frente a la búsqueda por palabras clave, e identificar el aporte y el costo de cada uno de sus componentes, usando JobAI como caso de estudio. Para alcanzarlo se plantean cuatro objetivos específicos:
+\begin{enumerate}
+    \item Caracterizar, a partir de la literatura, las limitaciones de la búsqueda léxica en portales de empleo y los componentes de RAG propuestos para superarlas.
+    \item Diseñar un protocolo de evaluación reproducible.
+    \item Aplicar el protocolo para mejorar el pipeline de JobAI en dos iteraciones de diseño y evaluación.
+    \item Cuantificar el aporte de cada componente frente a BM25 y a la búsqueda de la plataforma, junto con su costo en latencia y el efecto del motor de almacenamiento vectorial.
+\end{enumerate}
+El Capítulo~\ref{cap:problema} desarrolla el planteamiento completo.
+
+\section*{Metodología}
+
+El trabajo se enmarca en Design Science Research \citep{Hevner2004,Peffers2007}, que concibe la investigación como el diseño y la evaluación rigurosa de un artefacto que resuelve un problema relevante. Como el artefacto ya existía, se adopta el punto de entrada centrado en el diseño y el desarrollo.
+
+El centro del trabajo es un protocolo de evaluación con cuatro elementos:
+\begin{itemize}
+    \item Un corpus real de ofertas, congelado para que los experimentos sean reproducibles, y un conjunto de consultas de prueba en cinco categorías, en inglés y en español.
+    \item Dos líneas base léxicas: la búsqueda por palabra clave que ofrece la plataforma y BM25, la línea base fuerte de la literatura.
+    \item Una escalera de componentes, que agrega uno a uno los filtros, la búsqueda híbrida y el reordenamiento para medir el aporte de cada uno.
+    \item Juicios de relevancia asignados por un modelo de lenguaje, validados contra una muestra de juicios humanos, y un conjunto de consultas de desarrollo separado del de prueba para tomar las decisiones de configuración.
+\end{itemize}
+Además se mide la fidelidad de las respuestas, la latencia de cada etapa y el comportamiento de dos motores de almacenamiento vectorial, pgvector y Qdrant, con datos reales y sintéticos.
+
+El protocolo se aplica en dos iteraciones. La primera, de \emph{corrección}, hace que el artefacto haga lo que su documentación describe: corrige las fallas que la preparación de la evaluación reveló y pone el almacenamiento vectorial detrás de una interfaz común. La segunda, de \emph{mejora}, incorpora los componentes de recuperación cuyo aporte se mide.
+
+El código del artefacto y del arnés de evaluación, los conjuntos de consultas, los juicios de relevancia y los resultados de cada corrida están disponibles en el repositorio \url{https://github.com/esteban0406/RAG-JobPosting}. El Anexo~\ref{anx:repositorio} indica dónde se encuentra cada componente.
+
+\section*{Alcance}
+
+El estudio se limita a JobAI y a su dominio: ofertas de empleo remoto en inglés, mayoritariamente del sector tecnológico. Evalúa la calidad técnica de la configuración de referencia del pipeline, no la experiencia de usuarios reales, y trata cada consulta de forma aislada, sin evaluar el diálogo de varios turnos ni la personalización por currículo.
+
+\section*{Aportes}
+
+El trabajo ofrece tres aportes:
+\begin{enumerate}
+    \item Una evaluación por componentes de un pipeline RAG para la búsqueda de empleo frente a BM25, que separa el efecto de la recuperación densa, los filtros, la búsqueda híbrida, el reordenamiento y el modelo de \textit{embeddings}, junto con su costo en latencia.
+    \item Una caracterización de las \emph{fallas silenciosas} que el protocolo reveló en un sistema RAG en funcionamiento: defectos de recuperación, de datos y de enrutamiento que no producen errores visibles porque el modelo de lenguaje sigue respondiendo con fluidez.
+    \item Evidencia sobre cuándo importa la elección del motor de almacenamiento vectorial, a la escala de un corpus real y a escalas mayores, con y sin filtros.
+\end{enumerate}
+
+\section*{Estructura del documento}
+
+Además de esta introducción, el documento tiene seis capítulos:
+\begin{itemize}
+    \item El Capítulo~\ref{cap:problema} presenta los preliminares de la investigación: el problema, la pregunta, los objetivos, la justificación, el alcance y el marco conceptual.
+    \item El Capítulo~\ref{cap:estado-arte} revisa la literatura organizada en torno a los componentes del pipeline.
+    \item El Capítulo~\ref{cap:metodologia} sintetiza el protocolo de evaluación.
+    \item El Capítulo~\ref{cap:artefacto} sintetiza la arquitectura de JobAI y las dos iteraciones de diseño.
+    \item El Capítulo~\ref{cap:resultados} presenta los resultados de la evaluación, incluidas las fallas que reveló, y los discute.
+    \item El Capítulo~\ref{cap:conclusiones} responde a cada objetivo específico y propone trabajo futuro.
+\end{itemize}
+Los anexos reúnen los detalles del protocolo y del artefacto que el cuerpo del documento resume, y un mapa del repositorio.

@@ -1,0 +1,235 @@
+% BORRADOR (comentarios del director, 19-oct-2026): reemplaza BackMatter/B01-Anexos.tex. Borrar esta línea al pasarlo.
+% Requiere en main.tex: \appendix antes de \input{BackMatter/B01-Anexos} y \appendixname = "Anexo".
+
+\chapter{Detalles del protocolo de evaluación}
+\label{anx:protocolo}
+
+Este anexo reúne los detalles del protocolo que el Capítulo~\ref{cap:metodologia} resume.
+
+\section{Iteraciones anteriores a este trabajo}
+
+La Tabla~\ref{tab:met-iteraciones} resume los resultados registrados en el historial de JobAI para las tres iteraciones de abril de 2026 (Sección~\ref{sec:met-ciclos-previos}). Se realizaron sobre unas 3.200 ofertas, mayoritariamente del agregador Adzuna, que dejó de usarse después.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Iteraciones previas de diseño-evaluación registradas en el historial de JobAI (15 consultas, $k=5$)}
+    \label{tab:met-iteraciones}
+    \begin{tabular}{|p{6.2cm}|p{2.6cm}|c|c|c|}
+        \hline
+        \textbf{Configuración} & \textbf{Juez} & \textbf{P@5} & \textbf{MRR} & \textbf{nDCG} \\
+        \hline
+        Fragmentación por ventana deslizante & Llama 3.1 8B & 66,7\,\% & 0,656 & 0,702 \\
+        \hline
+        Fragmentación estructurada (4 tipos) & Llama 3.1 8B & 92,0\,\% & 0,967 & 0,967 \\
+        \hline
+        Estructurada + ruta de agregación & Llama 3.1 8B & 90,7\,\% & 1,000 & 0,995 \\
+        \hline
+        Estructurada + ruta de agregación & Gemini 3.1 Flash-Lite & 98,7\,\% & 1,000 & 0,994 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Corpus}
+\label{anx:corpus}
+
+El análisis estructurado con el modelo local Llama 3.1 8B falló por completo en 25 ofertas (2,3\,\%), a las que se aplicó la fragmentación por ventana deslizante, y fue parcial, sin resumen, en otras 231. Los fragmentos tienen una longitud media de 467 caracteres. El corpus tiene tres sesgos conocidos, que se tienen en cuenta al interpretar los resultados:
+\begin{itemize}
+    \item Los conectores de Remotive y Jobicy descartan las ofertas sin salario explícito, lo que explica su baja participación.
+    \item La API de Findwork interrumpió la descarga al alcanzar su límite de solicitudes, y aun así aporta el 84\,\% del corpus, de modo que este está dominado por una sola fuente.
+    \item El normalizador de salarios del artefacto no convierte monedas ni algunos montos por hora. Los 12 salarios fuera del intervalo plausible se registraron como no informados, de modo que no satisfacen por error una condición de salario, a costa de reducir la cobertura. Tras la limpieza, la mediana de los salarios informados, tomada en el punto medio del rango, es de 150.000 dólares anuales.
+\end{itemize}
+
+\section{Conjuntos de consultas}
+\label{anx:consultas}
+
+Las consultas de desajuste de vocabulario pueden compartir algunos términos con las ofertas, pero no el título del cargo. Las 25 consultas en español se redactaron a partir de la distribución real de títulos y habilidades del corpus; miden la recuperación entre idiomas y el efecto del modelo de \textit{embeddings} multilingüe frente a e5-base-v2, entrenado en inglés.
+
+Dos decisiones fijan la interpretación de las restricciones: una oferta sin salario informado no cumple un salario mínimo, y una consulta por trabajo \textit{freelance} acepta ofertas de contrato o \textit{freelance}, porque las fuentes etiquetan así el trabajo independiente. Las consultas sin restricciones que podrían leerse como si las tuvieran incluyen un conjunto vacío de filtros esperados. La cobertura del corpus se verificó con SQL para cada necesidad, contando las ofertas que cumplen todas sus condiciones; ocho necesidades tienen solo una o dos y se conservaron (Sección~\ref{sec:met-validez}).
+
+\section{Configuración de BM25}
+\label{anx:bm25}
+
+BM25 \citep{Robertson2009} usa $k_1 = 1{,}2$ y $b = 0{,}75$, con la variante de IDF de Lucene, que mantiene positivos los puntajes de los términos muy frecuentes. Indexa el título, las habilidades y la descripción de cada oferta como un solo campo. El texto se pasa a minúsculas y se le quitan las tildes; se conservan como términos tokens del tipo \texttt{c++}, \texttt{c\#} y \texttt{.net}; se eliminan 34 palabras vacías del inglés, y los plurales se reducen con una regla ligera de tipo \textit{S-stemmer} en lugar del algoritmo de Porter, para no confundir términos técnicos. Es la misma implementación que usa el pipeline en la búsqueda híbrida.
+
+\section{Elección del juez final}
+\label{anx:juez-final}
+
+La elección del juez final siguió tres criterios. Primero, el juez debía pertenecer a una familia de modelos distinta de las del juez local y la ingesta (Llama) y del generador y el modelo de reordenamiento (Qwen). Segundo, debía responder con la etiqueta sin un razonamiento extenso previo y con temperatura 0, como prevé el procedimiento; se descartaron por eso los modelos cuyo razonamiento no puede desactivarse. Tercero, se prefirió el modelo con el que se validó el procedimiento en la literatura: GPT-4o \citep{Upadhyay2024}. La elección se confirma con la parte de calibración de la muestra humana antes de la corrida final: esos pares se juzgan con GPT-4o, con GPT-6 Sol sin razonamiento y con Claude Sonnet 5.5, y GPT-4o solo se reemplaza si otro modelo supera su kappa binario en más de 0,05. La regla se fijó antes de anotar la muestra.
+
+\section{Exactitud de las consultas de agregación}
+\label{anx:agregacion}
+
+Las consultas de agregación no producen una lista de ofertas. Se miden la exactitud del enrutamiento, es decir, si el clasificador elige la ruta y la plantilla SQL esperadas, y la exactitud de la respuesta frente al resultado de una consulta SQL de referencia escrita a mano. La respuesta se compara a nivel de las filas que devuelve la plantilla elegida, y no del texto que redacta el modelo, para que la comparación sea determinista. Una fila de la referencia se considera cubierta si alguna fila del sistema contiene todos sus valores, con independencia de los nombres de las columnas. La respuesta es exacta cuando todas las filas de la referencia quedan cubiertas; se reporta además la proporción de filas cubiertas. Cuando ninguna plantilla del catálogo devuelve directamente el dato pedido, la plantilla esperada es la más cercana, de modo que el enrutamiento puede ser correcto aunque la respuesta no lo sea.
+
+\section{Métricas de RAGAS}
+\label{anx:ragas}
+
+Para las consultas de recuperación se generan respuestas mediante la ruta real del pipeline y se calculan dos métricas de RAGAS \citep{Es2024} con la implementación de referencia de sus autores:
+\begin{itemize}
+    \item \textbf{Fidelidad} (\textit{faithfulness}). Un LLM descompone la respuesta en afirmaciones atómicas y verifica cada una contra el contexto recuperado:
+    \[
+    F = \frac{|V|}{|S|},
+    \]
+    donde $S$ es el conjunto de afirmaciones de la respuesta y $V \subseteq S$ el de las afirmaciones sostenidas por el contexto.
+    \item \textbf{Relevancia de la respuesta} (\textit{answer relevancy}). Un LLM genera $n$ preguntas a partir de la respuesta, y la métrica es la similitud coseno media entre sus \textit{embeddings} y el de la pregunta original:
+    \[
+    AR = \frac{1}{n}\sum_{i=1}^{n} \cos(\mathbf{e}_q, \mathbf{e}_{q_i}).
+    \]
+\end{itemize}
+El juez debe recibir completo el contexto recuperado. Por eso su ventana de contexto se fija en 16.384 \textit{tokens} y su salida admite hasta 4.096: con valores menores, la verificación de las respuestas largas queda truncada y la métrica no puede calcularse. Se reporta la proporción de respuestas en las que alguna métrica no pudo calcularse, y la proporción de respuestas a consultas en español redactadas en otro idioma.
+
+\section{Datos sintéticos y protocolo del benchmark}
+\label{anx:sinteticos}
+
+Cada vector sintético se obtiene interpolando dos vectores reales del corpus y agregando ruido gaussiano escalado por la desviación estándar de cada dimensión, para luego normalizarlo. La magnitud del ruido se calibra de modo que la distribución de similitudes al vecino más cercano se parezca a la del corpus real; la diferencia se cuantifica con el estadístico de Kolmogórov-Smirnov. Cada vector sintético hereda los atributos estructurados de la oferta de la que proviene. No se evaluó un conjunto de un millón de vectores porque el doble de la memoria pico que alcanzó PostgreSQL con 500.000 no cabe en el límite de memoria común a ambos motores sin alterar la configuración de uno de ellos.
+
+Se emplean unas 1.000 consultas: las del conjunto de prueba más títulos de ofertas del corpus. La verdad de referencia son los 100 vecinos más cercanos exactos, calculados por fuerza bruta, también bajo cada filtro. En pgvector se comparan los barridos iterativos del índice (\texttt{hnsw.\allowbreak iterative\_scan}), disponibles desde la versión 0.8, frente a su ausencia. Para cada configuración se registran siete medidas:
+\begin{itemize}
+    \item \textit{recall}@10;
+    \item latencia p50, p95 y p99;
+    \item consultas por segundo con 1 y con 8 clientes concurrentes;
+    \item completitud, es decir, si se devolvieron $k$ resultados;
+    \item tiempo de construcción del índice;
+    \item tamaño en disco;
+    \item memoria pico.
+\end{itemize}
+
+\chapter{Detalles del artefacto}
+\label{anx:artefacto}
+
+Este anexo reúne los detalles de implementación que el Capítulo~\ref{cap:artefacto} resume.
+
+\section{Módulos del servidor}
+
+El servidor se organiza en módulos con responsabilidades separadas (Tabla~\ref{tab:art-modulos}). La consulta conversacional se expone mediante un \textit{endpoint} que transmite la respuesta de forma incremental como una secuencia de objetos JSON delimitados por saltos de línea (NDJSON). Los eventos son de cuatro tipos: inicio, \textit{token}, fin con las fuentes citadas y error.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Módulos del servidor de JobAI}
+    \label{tab:art-modulos}
+    \begin{tabular}{|p{3.2cm}|p{11cm}|}
+        \hline
+        \textbf{Módulo} & \textbf{Responsabilidad} \\
+        \hline
+        Ingesta & Obtención periódica de ofertas, deduplicación, análisis estructurado, normalización de salarios y fragmentación \\
+        \hline
+        \textit{Embeddings} & Generación de vectores de consultas y fragmentos, con caché por modelo \\
+        \hline
+        Consulta & Clasificación de la consulta, extracción de restricciones y orquestación de las rutas de recuperación, agregación e híbrida \\
+        \hline
+        Recuperación & Búsqueda densa y léxica bajo el mismo filtro, fusión de rankings y reordenamiento \\
+        \hline
+        RAG & Construcción del contexto y del prompt \\
+        \hline
+        LLM & Acceso a los modelos generativos, con reintentos y rotación de claves \\
+        \hline
+        Almacenamiento & Repositorios relacionales y almacenes vectoriales (pgvector y Qdrant) \\
+        \hline
+        Currículo & Carga, extracción de texto y análisis estructurado del currículo del usuario \\
+        \hline
+        Autenticación y usuario & Tokens JWT con rotación, perfil y ofertas guardadas \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Ingesta}
+
+Cada ciclo de ingesta sigue cuatro pasos:
+\begin{enumerate}
+    \item \textbf{Deduplicación.} Cada oferta se identifica mediante el resumen SHA-256 de su título, empresa, descripción y ubicación. Las ofertas ya almacenadas y con \textit{embeddings} se omiten.
+    \item \textbf{Análisis estructurado.} Las ofertas nuevas pasan por un modelo de lenguaje configurable que extrae en formato JSON su resumen, salario, responsabilidades, requisitos, beneficios, habilidades, tipo de contrato y modalidad. El prompt instruye explícitamente al modelo a devolver \texttt{null} cuando un campo no aparece en el texto, en lugar de inferirlo. Los salarios se normalizan a dólares anuales; los valores fuera del intervalo de 10.000 a 1.000.000 dólares, o con un mínimo mayor que el máximo, se registran como no informados, sin intentar adivinar la moneda o el periodo.
+    \item \textbf{Fragmentación.} Si el análisis estructurado produce al menos un campo, la oferta se divide en cuatro fragmentos tipados: identidad (título, empresa, ubicación, modalidad y resumen), requisitos, responsabilidades y habilidades, y beneficios y salario. Si el análisis falla, se aplica una ventana deslizante de 800 caracteres con solapamiento de 200, que respeta los límites de párrafo, viñeta y oración, con un máximo de cuatro ventanas por oferta.
+    \item \textbf{\textit{Embeddings} y almacenamiento.} Cada fragmento se convierte en un vector de 768 dimensiones con el prefijo \texttt{passage:} que el modelo espera para los documentos, y se almacena junto con su texto, su tipo y el modelo que lo produjo. El servidor rechaza vectores de un modelo distinto al configurado, de modo que una consulta nunca se compara con fragmentos codificados por otro modelo.
+\end{enumerate}
+Al terminar cada ciclo se reconstruye el índice léxico que usa la búsqueda híbrida.
+
+\section{Clasificación y enrutamiento}
+\label{anx:clasificacion}
+
+Los patrones \textit{regex} detectan tres tipos de señales: de recuperación (\textit{find}, \textit{looking for}, \textit{jobs with}); de agregación (\textit{how many}, \textit{average}, \textit{salary}, \textit{list all}), y de restricción, en inglés y en español: montos de salario, modalidad (\textit{remote}, \textit{remoto}, \textit{presencial}) y tipo de contrato (\textit{contract}, \textit{tiempo completo}, \textit{freelance}, \textit{prácticas}). Las plantillas SQL del catálogo cubren, entre otros, conteos, estadísticas salariales y listados por habilidad, y las consultas de agregación se ejecutan con una conexión de solo lectura.
+
+Sobre la respuesta del clasificador se aplican tres reglas de enrutamiento deterministas:
+\begin{itemize}
+    \item una consulta con restricciones extraídas se atiende por la ruta de recuperación, con las restricciones como filtro;
+    \item las plantillas que responden con estadísticas, valores distintos u ofertas recientes se atienden siempre por la ruta de agregación, aunque el clasificador haya etiquetado la consulta como recuperación;
+    \item una consulta de agregación sin una plantilla válida recurre a la ruta de recuperación.
+\end{itemize}
+Como las fuentes suelen etiquetar el trabajo independiente como contrato, una consulta por trabajo \textit{freelance} acepta ambos tipos. Los filtros que el usuario fija explícitamente en el panel de búsqueda tienen prioridad sobre los extraídos del texto.
+
+\section{Recuperación, contexto y generación}
+
+El filtro se aplica dentro de cada motor, durante la búsqueda y no sobre sus resultados: Qdrant lo evalúa sobre la carga útil de los puntos, pgvector lo incorpora a la consulta SQL, con barridos iterativos cuando usa el índice, y BM25 descarta las ofertas que no lo cumplen antes de cortar en 50. Una oferta sin salario informado nunca cumple una condición de salario. El índice BM25 se mantiene en memoria sobre el título, las habilidades y la descripción de cada oferta. El perfil que se antepone a la consulta cuando el usuario cargó un currículo contiene sus tres cargos más recientes y sus diez habilidades principales. El modelo de reordenamiento recibe el encabezado de la oferta (título, empresa, ubicación, tipo de contrato y salario) y sus fragmentos, hasta 2.000 caracteres.
+
+El encabezado de cada bloque de contexto incluye el título, la empresa, la ubicación, el tipo de contrato, el salario y la similitud, y el bloque se limita a 2.400 caracteres. La etapa de detección de campos identifica si la consulta pregunta por salario, beneficios, requisitos, habilidades o responsabilidades. En la ruta híbrida, si una de las dos rutas falla, se responde con la otra.
+
+\section{Diseño de la migración}
+\label{anx:migracion}
+
+La inspección de la Iteración~1 mostró además que el índice IVFFlat creado sobre la tabla vacía no perdía \textit{recall} (1,000 frente a la búsqueda exacta en 100 consultas), probablemente porque todos los vectores quedaron en una sola lista; en la práctica se comportaba como un recorrido completo. La preferencia del planificador por el barrido secuencial con HNSW se debe a que el modelo de costos de pgvector sobrestima el costo de arranque del índice en tablas de pocos miles de filas.
+
+El diseño debía cumplir dos requisitos: que la plataforma pudiera servirse desde Qdrant \citep{QdrantDocs} o desde pgvector, y que ambos motores pudieran compararse en igualdad de condiciones. Las decisiones principales fueron cinco.
+
+\begin{description}
+    \item[Abstracción del almacén vectorial.] Se definió una interfaz única con estas operaciones: escritura de los fragmentos de una oferta; búsqueda con número de resultados, umbral, filtros estructurados, modo y parámetro $ef_{search}$; búsqueda restringida a un conjunto de ofertas, y verificación de existencia y borrado. Una variable de configuración selecciona el motor que sirve a la aplicación.
+    \item[Corrección de la consulta en pgvector.] La búsqueda se reescribió para ordenar por el operador de distancia, y el umbral se aplica después de obtener los $k$ vecinos, lo cual es equivalente porque la similitud decrece monótonamente con la distancia. El índice IVFFlat se reemplazó por un índice HNSW \citep{Malkov2020} con $m = 16$ y $ef_{construction} = 128$. La búsqueda admite tres modos: \emph{automático}, en el que decide el planificador; \emph{aproximado}, que fuerza el uso del índice, y \emph{exacto}, que fuerza la fuerza bruta y es la referencia para medir el \textit{recall}. Para búsquedas con filtros se activan los barridos iterativos del índice, mediante el parámetro \texttt{hnsw.\allowbreak iterative\_scan}. Sin ellos, un filtro selectivo puede devolver menos de $k$ resultados.
+    \item[Colección en Qdrant.] La colección usa distancia coseno y los mismos parámetros HNSW que pgvector. Cada punto almacena como carga útil (\textit{payload}) el texto y el tipo del fragmento y los atributos de la oferta usados en los filtros: salario, tipo de contrato, modalidad y fuente, con índices de \textit{payload} sobre los campos filtrables. Los identificadores de fragmento de PostgreSQL no son UUID, por lo que el identificador de cada punto se deriva de forma determinista mediante un UUID versión 5. Se redujo además el umbral a partir del cual Qdrant construye el índice HNSW de un segmento: con el valor por defecto, un corpus de unos pocos miles de vectores se resolvería por fuerza bruta y la comparación no mediría el índice.
+    \item[PostgreSQL como fuente de verdad.] El texto de los fragmentos y su relación con las ofertas permanecen en PostgreSQL, con borrado en cascada e integridad referencial. Al escribir, el almacén de Qdrant primero confirma la transacción en PostgreSQL y luego reemplaza los puntos de la oferta. La verificación de si una oferta ya tiene \textit{embeddings} se hace contra Qdrant, de modo que una escritura fallida en Qdrant se repara en el siguiente ciclo de ingesta.
+    \item[Carga y verificación.] Un comando de línea copia en lotes todos los vectores existentes de PostgreSQL a Qdrant. La operación es idempotente, porque los identificadores son deterministas. Al terminar, el comando espera a que Qdrant indexe la colección y verifica que coincidan tres conteos: filas en PostgreSQL, puntos en Qdrant y vectores indexados.
+\end{description}
+
+\section{Observación sobre el modelo bge-reranker-v2-m3}
+
+Una observación cualitativa motivó incluir la fusión con RRF entre las variantes de la selección del modelo de reordenamiento: bge-reranker-v2-m3 es muy literal. Asignó una probabilidad de 0,97 al par \textit{\enquote{security engineer}} y \textit{\enquote{Security Engineer, Cloud}}, pero de 0,002 al par formado por la descripción funcional \textit{\enquote{Cybersecurity roles defending company systems against attacks}} y una oferta de \textit{\enquote{Security Engineer}}. Se temía que perjudicara las consultas de desajuste de vocabulario; en el conjunto de desarrollo no ocurrió, y la variante elegida no usa la fusión.
+
+\chapter{Mapa del repositorio}
+\label{anx:repositorio}
+
+El software de este trabajo está publicado en \url{https://github.com/esteban0406/RAG-JobPosting}. La versión que corresponde a este documento se identifica con la etiqueta \pendiente{etiqueta de la versión entregada}. La Tabla~\ref{tab:anx-repositorio} indica dónde se encuentra cada componente.
+
+\begin{table}[!htb]
+    \centering
+    \caption{Ubicación de los componentes en el repositorio}
+    \label{tab:anx-repositorio}
+    \small
+    \begin{tabular}{|p{5cm}|p{7.6cm}|c|}
+        \hline
+        \textbf{Componente} & \textbf{Ubicación} & \textbf{Cap.} \\
+        \hline
+        Configuración de referencia & \texttt{docker-compose.yml}, \texttt{backend/src/config/} & \ref{cap:artefacto} \\
+        \hline
+        Ingesta & \texttt{backend/src/ingestion/} & \ref{cap:artefacto} \\
+        \hline
+        Clasificación de consultas y plantillas SQL & \texttt{backend/src/query/} & \ref{cap:artefacto} \\
+        \hline
+        Recuperación (densa, BM25, RRF, reordenamiento) & \texttt{backend/src/retrieval/} & \ref{cap:artefacto} \\
+        \hline
+        Contexto y generación & \texttt{backend/src/rag/}, \texttt{backend/src/llm/} & \ref{cap:artefacto} \\
+        \hline
+        Almacenes vectoriales (pgvector y Qdrant) & \texttt{backend/src/storage/vector-store/} & \ref{cap:artefacto} \\
+        \hline
+        Servidor de \textit{embeddings} y reordenamiento & \texttt{embedding-server/} & \ref{cap:artefacto} \\
+        \hline
+        Cliente web & \texttt{frontend/} & \ref{cap:artefacto} \\
+        \hline
+        Arnés de evaluación: comandos, sistemas comparados y juez & \texttt{backend/src/cli/}, \texttt{backend/src/eval/} & \ref{cap:metodologia} \\
+        \hline
+        Conjuntos de consultas (prueba y desarrollo) & \texttt{evaluation/datasets/} & \ref{cap:metodologia} \\
+        \hline
+        Manifiestos del corpus congelado & \texttt{evaluation/snapshots/} & \ref{cap:metodologia} \\
+        \hline
+        Corridas (\textit{commit}, configuración y resultados por consulta) & \texttt{evaluation/runs/} & \ref{cap:resultados} \\
+        \hline
+        Cachés de juicios, respuestas y clasificaciones & \texttt{evaluation/judgments/}, \texttt{generations/}, \texttt{classifications/}, \texttt{ragas-cache/} & \ref{cap:resultados} \\
+        \hline
+        Métricas, estadística, kappa y figuras & \texttt{evaluation/analysis/} & \ref{cap:resultados} \\
+        \hline
+        Fidelidad de la generación (RAGAS) & \texttt{evaluation/ragas/} & \ref{cap:resultados} \\
+        \hline
+        \textit{Benchmark} de almacenes vectoriales & \texttt{evaluation/bench/} & \ref{cap:resultados} \\
+        \hline
+        Planes de ejecución (\texttt{EXPLAIN ANALYZE}) & \texttt{evaluation/evidence/} & \ref{cap:artefacto} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Una corrida de recuperación se reproduce con los comandos del arnés, desde \texttt{backend/} y con el corpus restaurado: \texttt{eval:retrieve} ejecuta los sistemas sobre un conjunto de consultas, \texttt{eval:pool} construye el agrupamiento, \texttt{eval:judge} obtiene los juicios de relevancia y \texttt{evaluation/analysis/metrics.py} calcula las métricas y las pruebas estadísticas. El corpus no está en el repositorio (Sección~\ref{sec:met-reproducibilidad}); sus manifiestos, con el resumen SHA-256 de cada copia, sí.

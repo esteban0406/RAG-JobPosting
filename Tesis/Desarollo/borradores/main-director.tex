@@ -1,0 +1,132 @@
+% BORRADOR (comentarios del director, 19-oct-2026): reemplaza Plantilla/main.tex. Borrar esta l\'inea al pasarlo.
+%        1         2         3         4         5         6         7         8         9         0         1         2
+%23456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+\documentclass[12pt]{MIA-USA}
+
+\usepackage{layout}
+\usepackage{subcaption}
+\usepackage{paralist}
+\usepackage{breakcites}
+\usepackage{natbib}
+% Comillas tipogr\'aficas con \enquote{}: el car\'acter " es un atajo activo de babel en espa\~nol.
+\usepackage[autostyle]{csquotes}
+
+\usepackage[pagebackref=true,breaklinks=true]{hyperref}
+\hypersetup{
+	pdftitle={Evaluaci\'on por componentes de un pipeline de Retrieval-Augmented Generation para la b\'usqueda de empleo remoto: el caso JobAI},
+	pdfauthor={Luis Esteban Pe\~na Rodr\'iguez}, 
+	pdfsubject={}, 
+	pdfcreator={DarMart with Latex}, 
+	colorlinks=true,
+	linkcolor=GrisUno,
+	citecolor=AzulInstitucional,
+	filecolor=AzulClaro,
+	urlcolor=AzulInstitucional,
+	linktoc=all
+}
+
+\graphicspath{{Images/}}
+
+% babel (espa\~nol) vuelve activos < y >; esta librer\'ia evita el conflicto con las flechas de TikZ.
+\usetikzlibrary{babel}
+% Numeraci\'on progresiva cap\'itulo.secci\'on (NTC 1486), para que las referencias
+% cruzadas entre cap\'itulos no sean ambiguas.
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+% NTC 1486 usa "Tabla"; babel en espa\~nol usa "Cuadro" por defecto.
+\addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+% NTC 1486 usa "Anexo"; babel en espa\~nol usa "Ap\'endice" por defecto.
+\addto\captionsspanish{\renewcommand{\appendixname}{Anexo}}
+
+% Marca visible para datos que se completar\'an con los resultados de la evaluaci\'on.
+\newcommand{\pendiente}[1]{\textcolor{red}{[Pendiente: #1]}}
+
+
+\title{Evaluaci\'on por componentes de un pipeline de \textit{Retrieval-Augmented Generation} para la b\'usqueda de empleo remoto: el caso JobAI}
+\author{Luis Esteban Pe\~na Rodr\'iguez}
+\documenttype{Trabajo de grado}
+
+\advisor{Joaqu\'in Fernando S\'anchez Cifuentes}
+
+% Si hay un coasesor 
+% \coadvisor{Nombres y apellidos Co-Asesor}
+
+
+% Aqui comienza el documento
+% - -- --- ----- ------- ------- ----- --- -- -
+\begin{document}
+    % \layout{}
+	
+	\maketitle
+	% P\'aginas opcionales de plantilla: se completan en la versi\'on final.
+	% \input{FrontMatter/F01-Approval}
+	% \input{FrontMatter/F02-Dedication}
+	% \input{FrontMatter/F03-Acknowledgements}
+	% Resumen
+ 	\input{FrontMatter/F04-Abstract}
+	
+    
+    % Crea la tabla de contenidos a partir de la estructura del documento
+    \tableofcontents
+    % Crea la lista de figuras (Opcional)
+    \listoffigures
+    % Crea la lista de tablas (Opcional)
+    \listoftables
+    % Lista de s\'imbolos y glosario: se completan en la versi\'on final.
+    % \input{FrontMatter/F05-Symbols}
+ 	% \input{FrontMatter/F06-Glossary}
+    
+    
+    % A partir de este punto se crea la estructura del documento con un archivo por capitulo conservando la siguiente jerarquía
+    % chapter (Capitulo)
+    %   - section (sección)
+    %       - subsection (subsección)
+    %           - subsubsection (subsubsección)
+    
+    % Introduction
+    \chapter{Introducci\'on}
+    \input{MainMatter/Cap0/M01-Introduction}
+    
+    % Capitulo 1
+    \chapter{Preliminares de la investigaci\'on}
+    \label{cap:problema}
+    \input{MainMatter/Cap1/M02-Chapter1}
+    
+    % Capitulo 2
+    \chapter{Estado del arte}
+    \label{cap:estado-arte}
+    \input{MainMatter/Cap2/M03-Chapter2}
+    
+    % Capitulo 3
+    \chapter{Metodolog\'ia}
+    \label{cap:metodologia}
+    \input{MainMatter/Cap3/M04-Chapter3}
+    
+    % Capitulo 4
+    \chapter{Dise\~no y desarrollo del artefacto}
+    \label{cap:artefacto}
+    \input{MainMatter/Cap4/M05-Chapter4}
+    
+    % Capitulo 5
+    \chapter{Resultados y evaluaci\'on}
+    \label{cap:resultados}
+    \input{MainMatter/Cap5/M06-Chapter5}
+    
+    % Capitulo 10
+    \chapter{Conclusiones y recomendaciones}
+    \label{cap:conclusiones}
+    \input{MainMatter/Cap9/M10-Conclusiones}
+    
+    
+    % Anexos: cada \chapter de B01-Anexos es un anexo (A, B, C...)
+    \appendix
+    \input{BackMatter/B01-Anexos}
+    
+    % Indices (Opcional)
+    % \chapter*{\'Indices}
+    % \input{BackMatter/B10-Index}
+    
+	% Incluye las referencias
+    \bibliographystyle{apalike}
+ 	\bibliography{Bibliography/referencias}
+
+\end{document}

@@ -1,0 +1,234 @@
+% BORRADOR (comentarios del director, 19-oct-2026): reemplaza MainMatter/Cap3/M04-Chapter3.tex. Borrar esta línea al pasarlo.
+Este capítulo sintetiza el protocolo con el que se evalúa el pipeline RAG de JobAI. Los detalles de procedimiento que no se necesitan para leer los resultados están en el Anexo~\ref{anx:protocolo}.
+
+\section{Enfoque metodológico: Design Science Research}
+\label{sec:met-dsr}
+
+Este trabajo sigue el paradigma de Design Science Research (DSR) en la formulación de \citet{Hevner2004}, operacionalizada mediante el proceso de seis actividades de \citet{Peffers2007}. El artefacto es una instanciación de software, JobAI, que ya existía antes de iniciar esta investigación. Por ello se adopta el punto de entrada \emph{centrado en el diseño y desarrollo}, que \citet{Peffers2007} prevén para la investigación que parte de un artefacto existente. La Tabla~\ref{tab:met-peffers} muestra la correspondencia entre las actividades del proceso y este documento.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Correspondencia entre las actividades de DSR \citep{Peffers2007} y este trabajo}
+    \label{tab:met-peffers}
+    \small
+    \begin{tabular}{|p{4.2cm}|p{10cm}|}
+        \hline
+        \textbf{Actividad} & \textbf{Correspondencia en este trabajo} \\
+        \hline
+        Identificación del problema y motivación & Limitaciones de la búsqueda léxica en la búsqueda de empleo y falta de evidencia sobre el aporte y el costo de cada componente de un pipeline RAG (Capítulo~\ref{cap:problema}). \\
+        \hline
+        Definición de los objetivos de la solución & Pregunta y objetivos (Capítulo~\ref{cap:problema}), traducidos en preguntas de evaluación medibles (Sección~\ref{sec:met-preguntas}). \\
+        \hline
+        Diseño y desarrollo & Arquitectura del pipeline y sus dos iteraciones: corrección y mejora (Capítulo~\ref{cap:artefacto}). \\
+        \hline
+        Demostración & Ejecución del pipeline sobre un corpus real congelado y un conjunto de consultas de prueba (Sección~\ref{sec:met-corpus}). \\
+        \hline
+        Evaluación & Fallas reveladas durante las iteraciones, aporte de cada componente frente a la búsqueda léxica, fidelidad, latencia y comparación de pgvector y Qdrant (Capítulo~\ref{cap:resultados}). \\
+        \hline
+        Comunicación & El presente documento y el repositorio del software (Sección~\ref{sec:met-reproducibilidad}). \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Partir de un artefacto que ya existía tiene dos consecuencias. El artefacto llega con defectos que nadie ha medido, de modo que la evaluación debe verificar primero que hace lo que su documentación describe. Además, sus decisiones de diseño anteriores no se dan por justificadas, sino que se ponen a prueba. Por eso el trabajo combina dos tipos de evaluación en el sentido de \citet{Venable2016}: una evaluación \emph{formativa}, durante las iteraciones, cuyos hallazgos orientan el diseño, y una evaluación \emph{sumativa}, sobre la configuración final, que responde la pregunta de investigación. El Capítulo~\ref{cap:resultados} reporta ambas.
+
+\subsection{Antecedentes del artefacto}
+\label{sec:met-ciclos-previos}
+
+El historial de versiones de JobAI documenta tres iteraciones de diseño-evaluación anteriores a este trabajo, realizadas en abril de 2026 sobre un corpus distinto al actual, de unas 3.200 ofertas, y evaluadas con 15 consultas y un modelo de lenguaje como juez (Tabla~\ref{tab:met-iteraciones}, en el Anexo~\ref{anx:protocolo}). Justificaron decisiones de diseño como la fragmentación estructurada, pero su valor como evidencia es limitado: el conjunto de consultas es pequeño y se diseñó a la vista del corpus, no hay un sistema de referencia, el juez nunca se validó contra juicios humanos y el corpus ya no es el que la plataforma sirve. La misma configuración obtuvo una precisión de 90,7\,\% o de 98,7\,\% según el modelo que actuó como juez. El protocolo de este capítulo responde a esas cuatro limitaciones.
+
+Este trabajo comprende dos iteraciones del ciclo. La Iteración~1, de \emph{corrección}, corrigió las fallas que reveló la preparación de la evaluación y puso el almacenamiento vectorial detrás de una interfaz común. Una primera corrida completa de la evaluación mostró brechas entre lo que se medía y lo que el artefacto hacía, y motivó la Iteración~2, de \emph{mejora}, centrada en la recuperación. Los resultados sumativos corresponden al artefacto después de la Iteración~2; la Iteración~1 se aproxima con el sistema denso que usa el modelo de \textit{embeddings} anterior (Sección~\ref{sec:met-sistemas}).
+
+\section{Preguntas de evaluación}
+\label{sec:met-preguntas}
+
+El cuarto objetivo específico se operacionaliza en cuatro preguntas de evaluación (PE). PE1 mide el aporte de cada componente a la calidad de la recuperación; PE2 y PE3, la fidelidad y el costo que lo acompañan, y PE4, el efecto del motor de almacenamiento vectorial. El tercer objetivo se responde con las fallas que la evaluación reveló durante las iteraciones y con el aporte de los componentes que incorporó la Iteración~2, que mide PE1.
+
+\begin{description}
+    \item[PE1 (calidad de recuperación).] ¿La recuperación de JobAI obtiene mayor precisión y mejor ordenamiento de resultados que la búsqueda léxica, en qué tipos de consulta se concentra la diferencia y cuánto aporta cada componente del pipeline?
+    \item[PE2 (fidelidad de la generación).] ¿En qué medida las respuestas que genera el pipeline se sostienen en las ofertas recuperadas y responden a la pregunta formulada?
+    \item[PE3 (latencia).] ¿Cuánto tarda cada etapa del pipeline y cuál es la latencia percibida por el usuario?
+    \item[PE4 (almacenamiento vectorial).] ¿Cómo se comparan pgvector y Qdrant en la relación entre \textit{recall} y latencia, con y sin filtros estructurados y a distintas escalas de datos?
+\end{description}
+
+\section{Sistema bajo evaluación}
+\label{sec:met-sistema}
+
+Se evalúa la configuración de referencia de JobAI (Tabla~\ref{tab:art-config}), identificada por el \textit{commit} que acompaña a cada corrida. Durante la evaluación la temperatura de generación es 0, y las respuestas y las clasificaciones se guardan en caché, de modo que todos los sistemas usan las mismas clasificaciones. Las consultas se envían sin usuario autenticado, para que la personalización por currículo no se confunda con la recuperación, y las métricas de recuperación se calculan sin la compuerta de sin resultados, cuyo efecto se reporta aparte.
+
+\section{Corpus y conjuntos de consultas}
+\label{sec:met-corpus}
+
+El corpus se obtuvo el 10 de octubre de 2026 con una ejecución completa de la ingesta de JobAI sobre sus tres fuentes públicas, Remotive, Jobicy y Findwork, con la ingesta periódica desactivada, y se congeló en una copia de seguridad (\textit{snapshot}) identificada por su resumen SHA-256. Tras la Iteración~2 se volvió a codificar con el nuevo modelo y se le aplicó la regla de salarios plausibles, con los mismos identificadores y textos. Contiene 1.068 ofertas (895 de Findwork, 162 de Jobicy y 11 de Remotive), de las cuales 682 están marcadas como remotas y 493 informan un salario plausible, divididas en 4.013 fragmentos. Su principal sesgo es que una sola fuente aporta el 84\,\% de las ofertas; el Anexo~\ref{anx:corpus} detalla este y otros dos.
+
+\subsection{Conjuntos de consultas}
+\label{sec:met-consultas}
+
+El conjunto de prueba contiene 75 consultas en inglés, el idioma de las ofertas, en cinco categorías de 15 consultas (Tabla~\ref{tab:met-categorias}). Cada consulta se asocia a una \emph{necesidad de información}, una descripción breve de lo que el usuario busca. Se suman 25 consultas en español, traducciones paralelas de consultas en inglés: como la relevancia de una oferta depende de la necesidad y no del idioma, reutilizan los juicios de su contraparte. En total, 85 consultas producen una lista de ofertas (60 en inglés y 25 en español) y 15 son de agregación. Las 24 consultas que expresan restricciones, o que podrían leerse así, incluyen los filtros que deberían extraerse de ellas, con los que se miden la extracción y el cumplimiento de las restricciones sin intervención del juez.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Categorías del conjunto de prueba (15 consultas en inglés cada una)}
+    \label{tab:met-categorias}
+    \small
+    \begin{tabular}{|p{3.4cm}|p{10.8cm}|}
+        \hline
+        \textbf{Categoría} & \textbf{Descripción} \\
+        \hline
+        Exactas & Sus términos aparecen literalmente en las ofertas relevantes, por ejemplo \textit{\enquote{senior react developer}}. Es el caso favorable a la búsqueda léxica. \\
+        \hline
+        Desajuste de vocabulario & Describen la función del cargo en lugar de nombrarlo, por ejemplo \textit{\enquote{protect company systems from hackers}} para un cargo de ciberseguridad. Es el caso que motiva este trabajo (Sección~\ref{sec:problema}). \\
+        \hline
+        Con restricciones & Combinan un perfil con condiciones de salario, modalidad o tipo de contrato. \\
+        \hline
+        Ruidosas & Tienen errores ortográficos, abreviaturas o una formulación vaga. \\
+        \hline
+        De agregación & Preguntas estadísticas sobre el catálogo, por ejemplo cuántas ofertas remotas de Python existen. Se evalúan aparte. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Las consultas se redactaron antes de la primera corrida de la evaluación. Después de ella solo se reemplazaron dos necesidades que no tenían ninguna oferta relevante en el corpus, según una verificación con SQL independiente de los resultados de los sistemas (Anexo~\ref{anx:consultas}).
+
+Las decisiones de configuración de la Iteración~2 (modelo de reordenamiento, número de candidatas y umbral de la compuerta) no se tomaron con las consultas de prueba, para no ajustar el artefacto a ellas. Se usó un conjunto de desarrollo con 20 necesidades de información, formuladas en 28 consultas (20 en inglés y 8 en español) sin solapamiento con las de prueba, más 10 consultas fuera de dominio que solo sirven para calibrar el umbral. Sus resultados no se reportan como resultados del artefacto.
+
+\section{Sistemas comparados}
+\label{sec:met-sistemas}
+
+Los nueve sistemas de la Tabla~\ref{tab:met-sistemas} producen una lista ordenada de 10 ofertas por consulta sobre el mismo corpus. Los sistemas densos recuperan los 50 fragmentos más similares a la consulta y los agregan por oferta con la máxima similitud entre sus fragmentos, la misma regla del pipeline; así la unidad evaluada es la oferta, que es lo que el usuario ve. La comparación entre peldaños consecutivos de la escalera mide el aporte de cada componente, y la del último peldaño con la recuperación densa, el de la iteración completa.
+
+\begin{table}[!htb]
+    \centering
+    \caption{Sistemas comparados}
+    \label{tab:met-sistemas}
+    \small
+    \begin{tabular}{|p{4.3cm}|p{9.9cm}|}
+        \hline
+        \textbf{Sistema} & \textbf{Qué representa o aísla} \\
+        \hline
+        \multicolumn{2}{|l|}{\textit{Líneas base léxicas}} \\
+        \hline
+        ILIKE & La búsqueda de la plataforma: subcadena, sin distinguir mayúsculas, sobre el título y la empresa \\
+        \hline
+        BM25 & La línea base léxica fuerte \citep{Robertson2009}; la misma implementación de la búsqueda híbrida (Anexo~\ref{anx:bm25}) \\
+        \hline
+        \multicolumn{2}{|l|}{\textit{Recuperación densa: sin filtros, sin BM25 y sin reordenamiento}} \\
+        \hline
+        Denso, pgvector exacto & La referencia para medir el efecto de la búsqueda aproximada \\
+        \hline
+        Denso, pgvector HNSW & La búsqueda aproximada en pgvector \\
+        \hline
+        Denso, Qdrant HNSW & El motor, con parámetros de índice idénticos; primer peldaño de la escalera \\
+        \hline
+        Denso, e5-base-v2 & El modelo de \textit{embeddings} anterior; aproxima la Iteración~1, que usaba 15 fragmentos en lugar de 50 \\
+        \hline
+        \multicolumn{2}{|l|}{\textit{Escalera de componentes: cada peldaño agrega un componente al anterior}} \\
+        \hline
+        + filtros & Las restricciones que el clasificador extrae de la consulta, aplicadas como filtro \\
+        \hline
+        + híbrida & BM25 bajo el mismo filtro, fusionado con RRF \\
+        \hline
+        + reordenamiento & El reordenamiento de las 20 primeras candidatas: la configuración completa \\
+        \hline
+    \end{tabular}
+\end{table}
+
+BM25 es la comparación exigente: en la evaluación de \citet{Thakur2021} sobre 18 colecciones resultó una referencia robusta que varios modelos densos no superaron. Como su procesamiento es propio del inglés, su desempeño en las consultas en español debe leerse como el de una búsqueda léxica sin traducción de la consulta.
+
+\section{Juicios de relevancia}
+\label{sec:met-juicios}
+
+Los juicios se construyen mediante agrupamiento (\textit{pooling}) de profundidad 10, el procedimiento estándar de las colecciones de prueba \citep{Sanderson2010}: para cada consulta se juzga la unión de las 10 primeras ofertas de los nueve sistemas. Como todos los sistemas aportan al agrupamiento, sus 10 primeras posiciones están juzgadas por completo. Las ofertas que ningún sistema recupera en esas posiciones se consideran no relevantes, una aproximación que afecta sobre todo al \textit{recall}.
+
+Cada par necesidad-oferta recibe de un modelo de lenguaje una etiqueta en la escala de cuatro niveles de las evaluaciones TREC: 0, no relevante; 1, relacionada; 2, altamente relevante, y 3, perfectamente relevante. El prompt sigue el diseño de UMBRELA \citep{Upadhyay2024}, una reproducción abierta del procedimiento con el que \citet{Thomas2024} mostraron que un LLM puede predecir las preferencias de evaluadores humanos con una precisión comparable a la de estos. El juez recibe la necesidad y una ficha estructurada de la oferta. El prompt se adaptó al dominio con una regla de \emph{condiciones duras}: si la necesidad fija un salario, la modalidad remota, un tipo de contrato o una ubicación, una oferta que lo contradice o no lo informa recibe como máximo la etiqueta 1. Sin esta regla, la métrica no distinguía a un sistema que respeta las restricciones de uno que las ignora.
+
+El uso de un LLM como juez tiene riesgos documentados, entre ellos sesgos sistemáticos, sensibilidad al prompt y circularidad cuando el juez y el sistema evaluado comparten modelo \citep{Faggioli2023,Zheng2023}. Para mitigarlos, el juez es un modelo distinto del generador; el modelo local (Llama 3.1 8B) solo se usa durante el desarrollo, y los resultados definitivos se obtienen con GPT-4o a temperatura 0, el modelo con el que UMBRELA reprodujo el procedimiento (Anexo~\ref{anx:juez-final}), y se validan contra juicios humanos.
+
+\paragraph{Validación humana del juez.} De los pares juzgados se extrae una muestra aleatoria del 20\,\%, estratificada por categoría de consulta y por etiqueta del juez, con semilla fija. El autor la etiqueta a ciegas, con la misma escala y la misma regla de condiciones duras. Una cuarta parte de la muestra (5\,\% del total) sirve para calibrar el prompt y confirmar la elección del juez final; las tres cuartas partes restantes (15\,\%) se reservan para medir el acuerdo final, sin volver a modificar el prompt. El acuerdo se mide con el kappa de \citet{Cohen1960}, sobre la relevancia binaria (etiqueta $\geq 2$) y ponderado cuadráticamente sobre la escala completa, con un intervalo de confianza bootstrap. Siguiendo a \citet{Landis1977}, se considera aceptable un acuerdo al menos sustancial ($\kappa > 0{,}60$). La respuesta a un acuerdo insuficiente se fijó antes de anotar la muestra: si el juez final obtiene $\kappa \leq 0{,}60$ sobre la relevancia binaria, todos los pares se juzgan de nuevo con un segundo modelo, Claude Sonnet 5.5 (Anthropic), y solo se afirman las conclusiones que se mantienen con ambos jueces.
+
+\section{Métricas}
+\label{sec:met-metricas}
+
+La Tabla~\ref{tab:met-metricas} resume las métricas de cada pregunta de evaluación. En las métricas binarias, una oferta es relevante si tiene etiqueta $\geq 2$.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Métricas por pregunta de evaluación}
+    \label{tab:met-metricas}
+    \small
+    \begin{tabular}{|p{1.9cm}|p{5.3cm}|p{6.9cm}|}
+        \hline
+        \textbf{Pregunta} & \textbf{Métricas} & \textbf{Procedimiento} \\
+        \hline
+        PE1 & P@5, P@10, nDCG@10 \citep{Jarvelin2002}, MRR y \textit{recall}@10 (R@10) & Sobre las listas de 10 ofertas, con \texttt{ir\_measures} \citep{MacAvaney2022}; desagregadas por categoría y por idioma \\
+        \hline
+        PE1, restricciones & Cumplimiento en las posiciones 5 y 10 (C@5, C@10) y exactitud de la extracción & Sin juez: proporción de ofertas devueltas que cumplen los filtros esperados, y de consultas cuyos filtros se extraen exactamente \\
+        \hline
+        PE1, agregación & Exactitud del enrutamiento y de la respuesta & Frente a una consulta SQL de referencia escrita a mano (Anexo~\ref{anx:agregacion}) \\
+        \hline
+        PE2 & Fidelidad y relevancia de la respuesta \citep{Es2024} & Implementación de referencia de RAGAS sobre las respuestas de la ruta real del pipeline (Anexo~\ref{anx:ragas}) \\
+        \hline
+        PE3 & Latencia por etapa, mediana (p50) y percentil 95 (p95) & Etapas locales: 30 repeticiones por consulta y por motor, tras 5 de calentamiento. Generación: 3 repeticiones sobre 30 consultas \\
+        \hline
+        PE4 & \textit{Recall}@10, latencia, consultas por segundo, completitud y recursos & Ver Sección~\ref{sec:met-benchmark} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La latencia se mide en cada etapa del pipeline, desde la clasificación hasta el tiempo hasta el primer \textit{token} generado (TTFT) y el tiempo total. La de la generación, que depende de un servicio externo, se reporta aparte, y durante su medición se desactivan los reintentos automáticos del cliente, para que la espera por límite de uso no se cuente como latencia (falla D6, Sección~\ref{sec:res-fallas}).
+
+\section{Benchmark de almacenes vectoriales}
+\label{sec:met-benchmark}
+
+La comparación entre pgvector y Qdrant adapta la metodología de ANN-Benchmarks \citep{Aumuller2020}: para cada valor de $ef_{search} \in \{16, 32, 64, 128, 256, 512\}$ se mide el \textit{recall}@10 frente a la búsqueda exacta y la latencia, y el resultado se presenta como curvas de compromiso en lugar de un único punto de operación. Como el corpus real tiene solo unos miles de fragmentos, se generan además conjuntos sintéticos de 100.000 y 500.000 vectores derivados de los vectores reales, que heredan los atributos de su oferta de origen para que los filtros conserven su correlación con el contenido (Anexo~\ref{anx:sinteticos}). No se evaluó un millón de vectores: con 500.000, la memoria pico de PostgreSQL ya alcanzó 7,8~GB.
+
+Cada configuración se mide sin filtro y con filtros estructurados de selectividad 1\,\%, 10\,\% y 50\,\%, para reproducir la búsqueda mixta vector-relacional que estudian \citet{Sanca2024}; en pgvector, además, con y sin los barridos iterativos del índice. Ambos motores usan el mismo índice HNSW ($m=16$, $ef_{construction}=128$), se ejecutan uno a la vez con los mismos límites de CPU y memoria, y cada medición se repite tres veces (se reporta la mediana). El \textit{benchmark} se ejecutó con los vectores de ambos modelos de \textit{embeddings}; los del modelo anterior sirven como prueba de robustez.
+
+\section{Análisis estadístico}
+\label{sec:met-estadistica}
+
+La unidad de análisis es la necesidad de información: las consultas en español son traducciones de consultas en inglés y comparten sus juicios, de modo que tratarlas como independientes contaría dos veces la misma necesidad. En el análisis global y por categoría, la puntuación de cada una de las 60 necesidades que producen una lista de ofertas es la media de sus formulaciones; los análisis por idioma usan las consultas de ese idioma. Siguiendo a \citet{Smucker2007}, que desaconseja la prueba de signos y la de Wilcoxon en recuperación de información, cada diferencia se contrasta con la prueba de aleatorización pareada (10.000 permutaciones) y se acompaña de un intervalo de confianza bootstrap del 95\,\%. nDCG@10 es la métrica principal, porque usa las etiquetas graduadas y penaliza el orden: sus valores $p$ se ajustan con el procedimiento de \citet{Holm1979} dentro de dos familias, la de cada sistema frente a cada línea base y la de los peldaños de la escalera. Las demás métricas son secundarias y se reportan con su intervalo y su valor $p$ sin ajustar. El nivel de significancia es $\alpha = 0{,}05$.
+
+\section{Amenazas a la validez}
+\label{sec:met-validez}
+
+La Tabla~\ref{tab:met-validez} resume las amenazas principales y su mitigación.
+
+\begin{table}[!htb]
+    \centering
+    \caption{Amenazas a la validez y su mitigación}
+    \label{tab:met-validez}
+    \footnotesize
+    \begin{tabular}{|p{2cm}|p{6.3cm}|p{5.9cm}|}
+        \hline
+        \textbf{Tipo} & \textbf{Amenaza} & \textbf{Mitigación} \\
+        \hline
+        Interna & Sesgos del juez automático. & Validación humana, kappa y plan B con un segundo juez. \\
+        \hline
+        Interna & El juez local (Llama 3.1 8B) es el modelo que analizó el corpus y redactó el resumen que indexa la búsqueda densa. & Juez final de otra familia (GPT-4o), distinta también de la del generador y el reordenamiento (Qwen). \\
+        \hline
+        Interna & El agrupamiento favorece a los sistemas que lo originan. & Los nueve sistemas aportan al agrupamiento. \\
+        \hline
+        Interna & El autor redacta las consultas. & Se construyen desde la distribución real del corpus, por categorías fijadas antes. \\
+        \hline
+        Interna & La Iteración~2 se decidió tras ver una corrida de prueba. & Se configuró solo con el conjunto de desarrollo y una regla previa; la corrida final usa otro juez. \\
+        \hline
+        Interna & La corrección por comparaciones múltiples y la unidad de análisis se fijaron tras la corrida con el juez local. & Se fijaron antes de la corrida final; los resultados se reportan también sin ajustar. \\
+        \hline
+        Externa & Un dominio, un idioma de las ofertas, dos modelos de la misma familia y un corpus real pequeño. & No se generaliza; el \textit{benchmark} sintético complementa las conclusiones sobre escala. \\
+        \hline
+        Medición & La latencia incluye el protocolo y la biblioteca cliente de cada motor; la del reordenamiento depende de la GPU. & Se interpreta junto con la escala de los datos y el equipo de evaluación. \\
+        \hline
+        Constructo & La relevancia juzgada no equivale a la utilidad real. Ocho necesidades tienen solo una o dos ofertas que cumplen todo. & La evaluación con usuarios queda fuera del alcance (Sección~\ref{sec:alcance}); se considera su varianza alta. \\
+        \hline
+        Confiabilidad & Los LLM no son deterministas y se retiran sin aviso (\texttt{qwen3-32b}, \texttt{qwen3.6-27b}). & Cada respuesta y veredicto se guarda con el modelo exacto y la fecha. \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Reproducibilidad y repositorio}
+\label{sec:met-reproducibilidad}
+
+Cada corrida se ejecuta con la interfaz de línea de comandos del artefacto y registra el \textit{commit}, los modelos y parámetros, el resumen SHA-256 del corpus y los resultados por consulta. Las versiones del software y de los modelos están fijadas (pgvector 0.8.2, Qdrant 1.19.1), y los veredictos, respuestas y clasificaciones se guardan en caché, de modo que el análisis se repite sin nuevas llamadas a modelos de lenguaje.
+
+El código del artefacto y del arnés de evaluación, los conjuntos de consultas, los juicios de relevancia y los resultados de cada corrida están publicados en \url{https://github.com/esteban0406/RAG-JobPosting}; el Anexo~\ref{anx:repositorio} indica dónde se encuentra cada componente. El corpus no se publica, por los términos de uso de las fuentes, pero su reconstrucción está documentada.
