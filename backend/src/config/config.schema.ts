@@ -55,6 +55,11 @@ class EnvironmentVariables {
   @IsOptional()
   LLM_MODEL: string = 'qwen/qwen3.8-27b';
 
+  // Retries of the Groq SDK on 429/5xx; 0 in latency measurements.
+  @IsNumber()
+  @IsOptional()
+  LLM_MAX_RETRIES: number = 2;
+
   @IsString()
   @IsOptional()
   RESUME_PARSER_MODEL: string = 'qwen/qwen3.8-27b';

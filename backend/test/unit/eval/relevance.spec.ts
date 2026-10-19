@@ -13,6 +13,10 @@ import {
   umbrelaPrompt,
 } from '../../../src/eval/relevance/umbrela.js';
 import { readTrecRun, writeTrecRun } from '../../../src/eval/trec.js';
+import {
+  AnthropicJudge,
+  OpenAiCompatibleJudge,
+} from '../../../src/eval/relevance/judge-provider.js';
 
 const tmp = () => mkdtempSync(join(tmpdir(), 'eval-'));
 
@@ -222,5 +226,72 @@ describe('sameFilter', () => {
   it('treats a missing filter as an empty one', () => {
     expect(sameFilter({}, undefined)).toBe(true);
     expect(sameFilter({ isRemote: true }, undefined)).toBe(false);
+  });
+});
+
+describe('judge providers', () => {
+  it('keeps the original request and id with the default settings', () => {
+    const judge = new OpenAiCompatibleJudge({
+      provider: 'openai-compatible',
+      model: 'gpt-4o',
+      baseUrl: 'https://api.openai.com/v1',
+    });
+    expect(judge.id).toBe('api.openai.com:gpt-4o');
+    expect(judge.requestBody('p')).toEqual({
+      model: 'gpt-4o',
+      messages: [{ role: 'user', content: 'p' }],
+      temperature: 0,
+      max_tokens: 64,
+    });
+  });
+
+  it('sends reasoning_effort with max_completion_tokens and tags the id', () => {
+    const judge = new OpenAiCompatibleJudge({
+      provider: 'openai-compatible',
+      model: 'gpt-6-sol',
+      baseUrl: 'https://api.openai.com/v1',
+      reasoningEffort: 'none',
+    });
+    expect(judge.id).toBe('api.openai.com:gpt-6-sol@reasoning=none');
+    const body = judge.requestBody('p');
+    expect(body).toMatchObject({
+      reasoning_effort: 'none',
+      max_completion_tokens: 64,
+      temperature: 0,
+    });
+    expect(body).not.toHaveProperty('max_tokens');
+  });
+
+  it('omits the temperature and turns thinking off for Claude Sonnet 5.5', () => {
+    const judge = new AnthropicJudge({
+      provider: 'anthropic',
+      model: 'claude-sonnet-5-5',
+      temperature: null,
+      thinking: 'between_tools',
+    });
+    expect(judge.id).toBe(
+      'anthropic:claude-sonnet-5-5@temperature=default,thinking=between_tools',
+    );
+    const body = judge.requestBody('p');
+    expect(body).toEqual({
+      model: 'claude-sonnet-5-5',
+      max_tokens: 64,
+      thinking: { type: 'between_tools' },
+      messages: [{ role: 'user', content: 'p' }],
+    });
+  });
+
+  it('keeps the original Anthropic request with the default settings', () => {
+    const judge = new AnthropicJudge({
+      provider: 'anthropic',
+      model: 'claude-haiku-4-5',
+    });
+    expect(judge.id).toBe('anthropic:claude-haiku-4-5');
+    expect(judge.requestBody('p')).toEqual({
+      model: 'claude-haiku-4-5',
+      max_tokens: 64,
+      temperature: 0,
+      messages: [{ role: 'user', content: 'p' }],
+    });
   });
 });

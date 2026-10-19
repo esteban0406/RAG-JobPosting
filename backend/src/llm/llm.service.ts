@@ -34,7 +34,11 @@ export class LlmService {
       config.get<string>('GROQ_API_KEY2'),
     ].filter(Boolean) as string[];
     if (keys.length === 0) throw new Error('GROQ_API_KEY is required');
-    this.groqClients = keys.map((apiKey) => new Groq({ apiKey }));
+    // The SDK retries 429s on its own (2 times by default), waiting for
+    // retry-after. eval:latency sets LLM_MAX_RETRIES=0 so that wait is never
+    // timed as latency: the error surfaces and the attempt is measured again.
+    const maxRetries = config.get<number>('LLM_MAX_RETRIES', 2);
+    this.groqClients = keys.map((apiKey) => new Groq({ apiKey, maxRetries }));
     this.model = config.get<string>('LLM_MODEL', 'qwen/qwen3.8-27b');
   }
 

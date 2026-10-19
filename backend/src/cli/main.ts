@@ -38,7 +38,11 @@ Commands:
       Pool the systems' top results per information need.
   eval:judge --run <run dir> [--judge-provider openai-compatible|anthropic]
              [--judge-model llama3.1:8b] [--judge-base-url URL] [--concurrency 2]
+             [--judge-temperature 0|none] [--judge-reasoning-effort none] [--judge-thinking between_tools]
       Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.
+      Final judge: --judge-base-url https://api.openai.com/v1 --judge-model gpt-4o.
+      Plan B: --judge-provider anthropic --judge-model claude-sonnet-5-5
+              --judge-temperature none --judge-thinking between_tools.
   eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n]
       Answer the retrieval queries through the RAG path; cache answers, record timings.
   eval:kappa-export --run <run dir> --judgments <judge.jsonl> [--rate 0.2] [--calibration-share 0.25] [--seed 42]
@@ -49,6 +53,16 @@ Commands:
   eval:aggregation --dataset <queries.jsonl> [--label name] [--delay-ms 2000]
       Routing accuracy and result rows vs. the reference SQL for aggregation queries.`;
 
+// "none" omits the temperature (models that reject sampling parameters).
+function judgeTemperature(value: string): number | null {
+  if (value === 'none') return null;
+  const temperature = Number(value);
+  if (Number.isNaN(temperature))
+    throw new Error(
+      `--judge-temperature must be a number or "none", got "${value}"`,
+    );
+  return temperature;
+}
 function required(value: string | undefined, flag: string): string {
   if (!value) throw new Error(`Missing required option ${flag}`);
   return value;
@@ -88,6 +102,9 @@ async function main(): Promise<number> {
       'judge-provider': { type: 'string', default: 'openai-compatible' },
       'judge-model': { type: 'string', default: 'llama3.1:8b' },
       'judge-base-url': { type: 'string' },
+      'judge-temperature': { type: 'string', default: '0' },
+      'judge-reasoning-effort': { type: 'string' },
+      'judge-thinking': { type: 'string' },
       concurrency: { type: 'string', default: '2' },
       temperature: { type: 'string', default: '0' },
       'delay-ms': { type: 'string', default: '2000' },
@@ -111,6 +128,10 @@ async function main(): Promise<number> {
     evalPool(required(values.run, '--run'), Number(values.depth));
     return 0;
   }
+
+  // Latency is timed per attempt: the Groq SDK must not retry rate-limited
+  // requests on its own, or its wait would be counted as time to first token.
+  if (command === 'eval:latency') process.env.LLM_MAX_RETRIES = '0';
 
   const app = await NestFactory.createApplicationContext(CliModule, {
     logger: ['log', 'warn', 'error'],
@@ -174,6 +195,9 @@ async function main(): Promise<number> {
             model: values['judge-model'],
             baseUrl: values['judge-base-url'],
             apiKey: process.env.JUDGE_API_KEY,
+            temperature: judgeTemperature(values['judge-temperature']),
+            reasoningEffort: values['judge-reasoning-effort'],
+            thinking: values['judge-thinking'],
           },
           concurrency: Number(values.concurrency),
         });
