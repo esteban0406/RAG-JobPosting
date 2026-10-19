@@ -213,6 +213,12 @@ class EnvironmentVariables {
   @IsNumber()
   @IsOptional()
   R2_PRESIGNED_URL_EXPIRY: number = 3600;
+
+  // Read by src/instrument.ts before ConfigModule loads; unset disables
+  // error reporting to Sentry.
+  @IsString()
+  @IsOptional()
+  SENTRY_DSN: string;
 }
 
 export function validate(config: Record<string, unknown>) {

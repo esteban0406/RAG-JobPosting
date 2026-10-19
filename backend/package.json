@@ -48,6 +48,8 @@
     "@prisma/adapter-pg": "^7.7.0",
     "@prisma/client": "^7.7.0",
     "@qdrant/js-client-rest": "1.19.0",
+    "@sentry/nestjs": "^11.7.0",
+    "@sentry/profiling-node": "^11.7.0",
     "bcrypt": "^6.0.0",
     "cache-manager": "^7.2.8",
     "chart.js": "^4.5.1",

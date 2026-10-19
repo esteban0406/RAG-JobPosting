@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
 import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from './auth/auth.module.js';
 import { validate } from './config/config.schema.js';
@@ -19,6 +21,7 @@ import { UserModule } from './user/user.module.js';
 
 @Module({
   imports: [
+    SentryModule.forRoot(),
     ConfigModule.forRoot({ validate, isGlobal: true }),
     LoggerModule.forRootAsync({
       inject: [ConfigService],
@@ -49,5 +52,7 @@ import { UserModule } from './user/user.module.js';
     HealthModule,
     EvalModule,
   ],
+  // Reports unhandled exceptions; HttpExceptions (4xx) are left out.
+  providers: [{ provide: APP_FILTER, useClass: SentryGlobalFilter }],
 })
 export class AppModule {}
