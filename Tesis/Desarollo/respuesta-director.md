@@ -1,6 +1,6 @@
 # Respuesta del director a la entrega del 15-oct-2026
 
-Versión que revisó el director: `Tesis/Desarollo/borradores/Pena-Rodriguez_trabajo-de-grado_borrador_2026-10-15.pdf` (85 páginas, sha256 `beb0cccd38141339…`), generada desde `Tesis/Plantilla/` tal como estaba el 15-oct a las 21:35. Texto del correo: `Tesis/Desarollo/nota-profesor-reencuadre.md`. El director cita la numeración del PDF; la correspondencia con los archivos está en `steps.md` ("▶ Estado").
+Versión que revisó el director: `Tesis/Desarollo/borradores/Luis-Peña-trabajo-de-grado_borrador1.pdf` (85 páginas, sha256 `beb0cccd38141339…`), generada desde `Tesis/Plantilla/` tal como estaba el 15-oct a las 21:35. Texto del correo: `Tesis/Desarollo/nota-profesor-reencuadre.md`. El director cita la numeración del PDF; la correspondencia con los archivos está en `steps.md` ("▶ Estado").
 
 **Fecha de la respuesta:** _(completar)_
 **Canal:** _(correo, reunión…)_
