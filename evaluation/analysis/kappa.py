@@ -2,14 +2,17 @@
 
 Usage:
     python evaluation/analysis/kappa.py <run dir> --labels <labeled kappa-sample.csv> \
-        --judgments <judge.jsonl> [<judge.jsonl> ...]
+        --judgments <judge.jsonl> [<judge.jsonl> ...] [--prompt-version umbrela-jobs-v2]
 
 The labeled CSV is kappa-sample.csv (from eval:kappa-export) with the
 human_grade_0_3 column filled in. For each judge, reports per split
 (calibration, validation): n, exact agreement, Cohen's kappa on binary
 relevance (grade >= 2), quadratic-weighted kappa on the 0-3 scale (both with
 bootstrap 95% CIs) and the confusion matrix. The thesis reports the
-validation split; calibration rows were used to tune the prompt.
+validation split; calibration rows tune the prompt and confirm the choice of
+the final judge. Only verdicts of --prompt-version count: a judgment cache holds
+every prompt version it has seen, and mixing them would compare the human
+labels with a prompt the sample was not drawn for.
 """
 
 from __future__ import annotations
@@ -24,7 +27,8 @@ import numpy as np
 LEVELS = 4
 BOOTSTRAP = 2000
 SEED = 42
-PROMPT_VERSION = "umbrela-jobs-v1"
+# Must match PROMPT_VERSION in backend/src/eval/relevance/umbrela.ts.
+DEFAULT_PROMPT_VERSION = "umbrela-jobs-v2"
 
 
 def cohen_kappa(a: np.ndarray, b: np.ndarray, levels: int, weights: str | None = None) -> float:
@@ -72,6 +76,7 @@ def main() -> None:
     parser.add_argument("run_dir", type=Path)
     parser.add_argument("--labels", type=Path, required=True)
     parser.add_argument("--judgments", type=Path, nargs="+", required=True)
+    parser.add_argument("--prompt-version", default=DEFAULT_PROMPT_VERSION)
     args = parser.parse_args()
 
     key = {
@@ -93,9 +98,9 @@ def main() -> None:
             if not line.strip():
                 continue
             j = json.loads(line)
-            if j["promptVersion"] == PROMPT_VERSION and j["grade"] >= 0:
+            if j["promptVersion"] == args.prompt_version and j["grade"] >= 0:
                 grades[(j["infoNeedId"], j["jobId"])] = j["grade"]
-        report = {"judge": path.stem, "prompt_version": PROMPT_VERSION}
+        report = {"judge": path.stem, "prompt_version": args.prompt_version}
         for split in ("calibration", "validation"):
             pairs = [
                 (human[sid], grades[(k["infoNeedId"], k["jobId"])])

@@ -6,6 +6,8 @@ Usage:
 Writes to <run dir>/analysis-<qrels name>/:
     per_query.csv      one row per (system, query, measure)
     summary.csv        mean per system and measure, overall / by category / by language
+                       (overall and by category over information needs; "all-queries"
+                       keeps the plain mean over queries for reference)
     significance.csv   dense systems vs. lexical baselines: mean difference,
                        bootstrap 95% CI, paired randomization p-value, Holm-adjusted p
     ladder.csv         the same test between consecutive rungs of the ablation ladder
@@ -15,6 +17,11 @@ Writes to <run dir>/analysis-<qrels name>/:
 nDCG@10 is the primary measure: Holm corrects only its comparisons, one family
 per file. The other measures, including constraint compliance (C@5, C@10, read
 from the run's compliance.jsonl), are secondary and keep p_holm empty.
+
+The unit of analysis is the information need: the Spanish queries are
+translations of English ones and reuse their judgments, so a need with both
+formulations scores the mean of the two. Tests by language use the queries of
+that language, where each need appears once.
 """
 
 from __future__ import annotations
@@ -117,9 +124,26 @@ def compliance_scores(run_dir: Path, queries: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(frames)
 
 
+def by_need(scores: pd.DataFrame) -> pd.DataFrame:
+    """One score per (system, information need, measure): the mean of the need's
+    formulations (NaN ones skipped). Fixed before the final run (2026-10-15)."""
+    return scores.groupby(["system", "info_need", "measure", "category"], as_index=False)["value"].mean()
+
+
+def units(scores: pd.DataFrame, subset: str) -> pd.DataFrame:
+    """The paired units of a test: information needs overall, queries within a language."""
+    if subset == "all":
+        needs = by_need(scores)
+        return needs.assign(unit=needs["info_need"])
+    part = scores[scores["lang"] == subset.split("=")[1]]
+    return part.assign(unit=part["query_id"])
+
+
 def summarize(scores: pd.DataFrame) -> pd.DataFrame:
-    parts = [scores.assign(group="all")]
-    parts += [scores.assign(group="category=" + scores["category"])]
+    needs = by_need(scores)
+    parts = [needs.assign(group="all")]
+    parts += [needs.assign(group="category=" + needs["category"])]
+    parts += [scores.assign(group="all-queries")]
     parts += [scores.assign(group="lang=" + scores["lang"])]
     # English queries of the needs that also have a Spanish query, so the two
     # languages are compared on the same information needs.
@@ -212,8 +236,7 @@ def ladder_significance(scores: pd.DataFrame) -> pd.DataFrame:
             if system not in systems or reference not in systems:
                 continue
             for subset in subsets:
-                part = measured if subset == "all" else measured[measured["lang"] == subset.split("=")[1]]
-                table = part.pivot(index="query_id", columns="system", values="value")
+                table = units(measured, subset).pivot(index="unit", columns="system", values="value")
                 result = compare(table, system, reference, rng)
                 if result is not None:
                     rows.append({"measure": measure, "system": system, "reference": reference,
@@ -227,7 +250,8 @@ def significance(scores: pd.DataFrame) -> pd.DataFrame:
     dense = [s for s in systems if s not in BASELINES]
     rows = []
     for measure in [*MEASURES, *COMPLIANCE]:
-        table = scores[scores["measure"] == measure].pivot(index="query_id", columns="system", values="value")
+        measured = scores[scores["measure"] == measure]
+        table = units(measured, "all").pivot(index="unit", columns="system", values="value")
         for system in dense:
             for baseline in [b for b in BASELINES if b in systems]:
                 result = compare(table, system, baseline, rng)
