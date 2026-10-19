@@ -1,0 +1,1 @@
+{"engine": "pgvector", "dataset": "synth-500000", "filter": "1pct", "iterative": "relaxed_order", "ef": 64, "repeat": 0, "max_scan_tuples": 500000, "scan_mem_multiplier": 8.0, "recall": 0.8762, "p50_ms": 9.322265999799129, "p95_ms": 17.922034698494823, "p99_ms": 22.35490916747949, "qps_1": 99.36028026264783, "qps_8": 470.83699853198874, "completeness": 1.0, "plan": "hnsw"}

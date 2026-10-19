@@ -288,7 +288,9 @@ def cmd_load(args: argparse.Namespace) -> None:
 
 
 class PgSearcher:
-    def __init__(self, db_url: str, dataset: str, ef: int, threshold: int | None, iterative: str):
+    def __init__(self, db_url: str, dataset: str, ef: int, threshold: int | None, iterative: str,
+                 max_scan_tuples: int | None = None, scan_mem_multiplier: float | None = None,
+                 exact_filtered: bool = False):
         import psycopg
         from pgvector.psycopg import register_vector
 
@@ -296,6 +298,15 @@ class PgSearcher:
         register_vector(self.conn)
         self.conn.execute(f"SET hnsw.ef_search = {ef}")
         self.conn.execute(f"SET hnsw.iterative_scan = {iterative}")
+        # Limits of the iterative scan (pgvector defaults: 20000 tuples, 1x work_mem).
+        if max_scan_tuples is not None:
+            self.conn.execute(f"SET hnsw.max_scan_tuples = {max_scan_tuples}")
+        if scan_mem_multiplier is not None:
+            self.conn.execute(f"SET hnsw.scan_mem_multiplier = {scan_mem_multiplier}")
+        if exact_filtered:
+            # No index scans: the planner can only use a bitmap scan on the filter
+            # column (or a sequential scan) plus a sort, i.e. exact search.
+            self.conn.execute("SET enable_indexscan = off")
         where = f"WHERE bucket < {threshold}" if threshold is not None else ""
         if threshold is None:
             # Without a filter, measure the HNSW index even where the planner
@@ -309,6 +320,8 @@ class PgSearcher:
             return "hnsw"
         if "bucket_idx" in text:
             return "btree+sort"
+        if "Bitmap" in text:
+            return "bitmap+sort"
         return "seqscan"
 
     def search(self, q: np.ndarray) -> list[int]:
@@ -341,7 +354,8 @@ class QdrantSearcher:
 
 def make_searcher(args, ef, threshold, iterative):
     if args.engine == "pgvector":
-        return PgSearcher(args.db_url, args.dataset, ef, threshold, iterative)
+        return PgSearcher(args.db_url, args.dataset, ef, threshold, iterative,
+                          args.max_scan_tuples, args.scan_mem_multiplier, args.exact_filtered)
     return QdrantSearcher(args.qdrant_url, args.dataset, ef, threshold)
 
 
@@ -377,6 +391,7 @@ def cmd_run(args: argparse.Namespace) -> None:
                     row = {
                         "engine": args.engine, "dataset": args.dataset, "filter": fname,
                         "iterative": iterative, "ef": ef, "repeat": rep,
+                        "max_scan_tuples": args.max_scan_tuples, "scan_mem_multiplier": args.scan_mem_multiplier,
                         "recall": hits / sum(len(g) for g in gt),
                         "p50_ms": float(np.percentile(lat, 50)), "p95_ms": float(np.percentile(lat, 95)),
                         "p99_ms": float(np.percentile(lat, 99)),
@@ -386,7 +401,7 @@ def cmd_run(args: argparse.Namespace) -> None:
                     rows.append(row)
                     print(json.dumps(row))
     RESULTS.mkdir(parents=True, exist_ok=True)
-    out = RESULTS / f"run-{args.engine}-{args.dataset}.jsonl"
+    out = args.out or RESULTS / f"run-{args.engine}-{args.dataset}.jsonl"
     out.write_text("\n".join(json.dumps(r) for r in rows) + "\n")
 
 
@@ -455,6 +470,10 @@ def main() -> None:
     p.add_argument("--iterative", default="off,relaxed_order")
     p.add_argument("--clients", type=int, default=8)
     p.add_argument("--repeats", type=int, default=3)
+    p.add_argument("--max-scan-tuples", type=int, help="pgvector hnsw.max_scan_tuples (default: server's)")
+    p.add_argument("--scan-mem-multiplier", type=float, help="pgvector hnsw.scan_mem_multiplier")
+    p.add_argument("--exact-filtered", action="store_true", help="pgvector: forbid index scans (exact search)")
+    p.add_argument("--out", type=Path, help="results file (default: results/run-<engine>-<dataset>.jsonl)")
     p.set_defaults(func=cmd_run)
     p = sub.add_parser("report")
     p.set_defaults(func=cmd_report)
