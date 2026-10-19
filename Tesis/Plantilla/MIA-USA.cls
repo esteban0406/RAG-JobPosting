@@ -47,13 +47,16 @@
   \RequirePackage[table]{xcolor}
   \RequirePackage[spanish]{babel}
   \RequirePackage[utf8]{inputenc}
+  % T1 + Latin Modern: comillas latinas y partici\'on de palabras con tilde (OT1 no las tiene).
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage{lmodern}
   \usepackage{longtable}
   \usepackage{multirow}
   \usepackage{multicol}
   \usepackage{tcolorbox}
   \usepackage{hhline}
   \usepackage{pdfpages}
-  \usepackage[nottoc,numbib]{tocbibind}
+  \usepackage[nottoc]{tocbibind}
   \usepackage{array,colortbl,tabularx}
   \usepackage{makeidx}
   \usepackage{threeparttable}
@@ -260,7 +263,7 @@
         
         {\scshape\large Universidad Sergio Arboleda \par}
         {\scshape\large Escuela de Ciencias Exactas e Ingenier\'ia \par}
-        {\scshape\large Maestr\'ia Inteligencia Artificial \par}
+        {\scshape\large Ingenier\'ia en Ciencias de la Computaci\'on e Inteligencia Artificial \par}
         {\scshape\large Bogot\'a D.C. \par}
         {\scshape\large \the\year \par}
         
@@ -290,7 +293,7 @@
         \vfill
         {\scshape\large Universidad Sergio Arboleda \par}
         {\scshape\large Escuela de Ciencias Exactas e Ingenier\'ia \par}
-        {\scshape\large Maestr\'ia en Inteligencia Artificial \par}
+        {\scshape\large Ingenier\'ia en Ciencias de la Computaci\'on e Inteligencia Artificial \par}
         {\scshape\large Bogot\'a D.C. \par}
         {\scshape\large \the\year \par}
 	\end{titlepage}

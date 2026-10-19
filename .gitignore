@@ -24,6 +24,7 @@ evaluation/snapshots/*.dump
 evaluation/**/.venv/
 evaluation/**/__pycache__/
 Tesis/Plantilla/main.pdf
+Tesis/Desarollo/borradores/*.pdf
 evaluation/snapshots/*.log
 evaluation/bench/data/
 evaluation/bench/data-e5-base-v2/

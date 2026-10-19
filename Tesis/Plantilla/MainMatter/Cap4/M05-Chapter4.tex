@@ -1,4 +1,4 @@
-Este capítulo documenta el artefacto evaluado. Las primeras secciones describen la arquitectura de JobAI, el proceso de ingesta y el pipeline de consulta tal como están implementados. Las dos secciones finales corresponden a la iteración de diseño realizada en este trabajo: el diagnóstico y la migración del almacenamiento vectorial, y los defectos detectados y corregidos durante la revisión del código previa a la evaluación.
+Este capítulo documenta el artefacto evaluado. Las primeras secciones describen la arquitectura de JobAI, el proceso de ingesta y el pipeline de consulta en su configuración de referencia, que es la que se evalúa en el Capítulo~\ref{cap:resultados}. Las secciones siguientes corresponden a las dos iteraciones de diseño de este trabajo. La primera, de \emph{corrección}, hizo que el artefacto implementara lo que su documentación describe y puso el almacenamiento vectorial detrás de una interfaz común. La segunda, de \emph{mejora}, incorporó a la recuperación filtros estructurados, búsqueda híbrida, reordenamiento y un modelo de \textit{embeddings} multilingüe. La última sección reúne las fallas que la evaluación reveló en ambas iteraciones y las clasifica según su efecto.
 
 \section{Visión general de la arquitectura}
 \label{sec:art-arquitectura}
@@ -9,7 +9,9 @@ JobAI es una plataforma de agregación de ofertas de empleo remoto cuyo componen
     \item un servidor en NestJS, que orquesta la ingesta, la recuperación y la generación;
     \item una capa de datos compuesta por PostgreSQL, como almacén relacional, y un almacén vectorial que, tras la iteración descrita en la Sección~\ref{sec:art-vectorial}, puede ser pgvector o Qdrant.
 \end{itemize}
-Los modelos de lenguaje y de \textit{embeddings} se consumen como servicios: localmente en desarrollo y mediante proveedores externos en producción.
+Los modelos se consumen como servicios. Un servidor propio, ejecutado localmente sobre una GPU, sirve el modelo de \textit{embeddings} y el modelo de reordenamiento; los modelos de lenguaje se consumen a través de un proveedor externo, Groq.
+
+Este capítulo describe la \emph{configuración de referencia} del artefacto, definida en el repositorio junto con el código. El despliegue público de la plataforma conserva todavía la configuración anterior a la Iteración~2, con un proveedor externo de \textit{embeddings} y sin reordenamiento, y se actualizará a la configuración de referencia.
 
 \begin{figure}[htbp!]
     \centering
@@ -22,12 +24,14 @@ Los modelos de lenguaje y de \textit{embeddings} se consumen como servicios: loc
     ]
         \node[box, text width=2.2cm] (fe) at (0,0) {Cliente web\\(Next.js)};
         \node[box, text width=2.2cm] (be) at (5.4,0) {Servidor\\(NestJS)};
-        \node[box] (models) at (10.2,1.4) {Modelos de lenguaje y de \textit{embeddings}};
-        \node[box] (sources) at (10.2,-1.4) {Fuentes de ofertas\\(Remotive, Jobicy, Findwork)};
+        \node[box] (models) at (10.2,2.1) {Modelos de lenguaje\\(Groq)};
+        \node[box] (local) at (10.2,0) {\textit{Embeddings} y reordenamiento (servidor local, GPU)};
+        \node[box] (sources) at (10.2,-2.1) {Fuentes de ofertas\\(Remotive, Jobicy, Findwork)};
         \node[store] (pg) at (3.8,-3.2) {PostgreSQL\\(+ pgvector)};
         \node[store] (qd) at (7.0,-3.2) {Qdrant};
         \draw[arr] (fe) -- node[above, font=\scriptsize] {REST / NDJSON} (be);
         \draw[arr] (be) -- (models);
+        \draw[arr] (be) -- (local);
         \draw[arr] (sources) -- (be);
         \draw[arr] (be) -- (pg);
         \draw[arr, dashed] (be) -- (qd);
@@ -44,13 +48,15 @@ El servidor se organiza en módulos con responsabilidades separadas (Tabla~\ref{
         \hline
         \textbf{Módulo} & \textbf{Responsabilidad} \\
         \hline
-        Ingesta & Obtención periódica de ofertas, deduplicación, análisis estructurado y fragmentación \\
+        Ingesta & Obtención periódica de ofertas, deduplicación, análisis estructurado, normalización de salarios y fragmentación \\
         \hline
-        \textit{Embeddings} & Generación de vectores de consultas y fragmentos, con caché y control de cuotas \\
+        \textit{Embeddings} & Generación de vectores de consultas y fragmentos, con caché por modelo \\
         \hline
-        Consulta & Clasificación de la consulta y orquestación de las rutas de recuperación, agregación e híbrida \\
+        Consulta & Clasificación de la consulta, extracción de restricciones y orquestación de las rutas de recuperación, agregación e híbrida \\
         \hline
-        RAG & Recuperación de fragmentos, construcción del contexto y del prompt \\
+        Recuperación & Búsqueda densa y léxica bajo el mismo filtro, fusión de rankings y reordenamiento \\
+        \hline
+        RAG & Construcción del contexto y del prompt \\
         \hline
         LLM & Acceso a los modelos generativos, con reintentos y rotación de claves \\
         \hline
@@ -69,7 +75,7 @@ El servidor se organiza en módulos con responsabilidades separadas (Tabla~\ref{
 Un proceso programado consulta las tres fuentes públicas cada seis horas. Puede desactivarse mediante configuración, como se hizo para congelar el corpus de evaluación. Cada ciclo sigue cuatro pasos:
 \begin{enumerate}
     \item \textbf{Deduplicación.} Cada oferta se identifica mediante el resumen SHA-256 de su título, empresa, descripción y ubicación. Las ofertas ya almacenadas y con \textit{embeddings} se omiten.
-    \item \textbf{Análisis estructurado.} Las ofertas nuevas pasan por un modelo de lenguaje que extrae en formato JSON los siguientes campos: resumen, salario, responsabilidades, requisitos, beneficios, habilidades, tipo de contrato y modalidad. Ese modelo es Llama 3.1 8B local en desarrollo y \texttt{gpt-oss-120b} vía Groq en producción. El prompt instruye explícitamente al modelo a devolver \texttt{null} cuando un campo no aparece en el texto, en lugar de inferirlo.
+    \item \textbf{Análisis estructurado.} Las ofertas nuevas pasan por un modelo de lenguaje que extrae en formato JSON los siguientes campos: resumen, salario, responsabilidades, requisitos, beneficios, habilidades, tipo de contrato y modalidad. El modelo es configurable. La configuración de referencia usa \texttt{gpt-oss-120b} vía Groq, pero el corpus de evaluación se procesó con Llama 3.1 8B ejecutado localmente, de modo que la evaluación corresponde a fichas generadas por ese modelo (Sección~\ref{sec:met-corpus}). El prompt instruye explícitamente al modelo a devolver \texttt{null} cuando un campo no aparece en el texto, en lugar de inferirlo. Los salarios se normalizan a dólares anuales; los valores fuera del intervalo de 10.000 a 1.000.000 dólares, o con un mínimo mayor que el máximo, se registran como no informados, sin intentar adivinar la moneda o el periodo.
     \item \textbf{Fragmentación.} Si el análisis estructurado produce al menos un campo, la oferta se divide en fragmentos \emph{tipados}:
     \begin{itemize}
         \item un fragmento de identidad (título, empresa, ubicación, modalidad y resumen);
@@ -78,8 +84,9 @@ Un proceso programado consulta las tres fuentes públicas cada seis horas. Puede
         \item uno de beneficios y salario.
     \end{itemize}
     Si el análisis falla, se aplica una ventana deslizante de 800 caracteres con solapamiento de 200, que respeta los límites de párrafo, viñeta y oración, con un máximo de cuatro ventanas por oferta.
-    \item \textbf{\textit{Embeddings} y almacenamiento.} Cada fragmento se convierte en un vector de 768 dimensiones y se almacena junto con su texto, su tipo y el modelo que lo produjo.
+    \item \textbf{\textit{Embeddings} y almacenamiento.} Cada fragmento se convierte en un vector de 768 dimensiones con el modelo multilingual-e5-base \citep{Wang2024mE5}, con el prefijo \texttt{passage:} que el modelo espera para los documentos, y se almacena junto con su texto, su tipo y el modelo que lo produjo. El servidor rechaza vectores de un modelo distinto al configurado, de modo que una consulta nunca se compara con fragmentos codificados por otro modelo.
 \end{enumerate}
+Al terminar cada ciclo se reconstruye el índice léxico que usa la búsqueda híbrida (Sección~\ref{sec:art-recuperacion}).
 
 La fragmentación tipada responde a un hallazgo de una iteración previa (Sección~\ref{sec:met-ciclos-previos}). Un fragmento que mezcla requisitos, beneficios y descripción compite peor en la recuperación que un fragmento que contiene solo la información por la que se pregunta.
 
@@ -94,60 +101,89 @@ La Figura~\ref{fig:art-pipeline} resume el recorrido de una consulta.
     \label{fig:art-pipeline}
     \begin{tikzpicture}[
         stage/.style={draw, rounded corners, align=center, text width=4.2cm, minimum height=0.9cm, font=\small},
+        half/.style={stage, text width=3.2cm},
         decision/.style={draw, diamond, aspect=2.2, align=center, inner sep=1pt, font=\small},
         arr/.style={->, >=stealth}
     ]
         \node[stage] (q) at (0,0) {Consulta del usuario};
-        \node[decision] (cls) at (0,-1.5) {Clasificación};
-        \node[stage] (rag) at (-3.2,-3.0) {Ruta de recuperación};
-        \node[stage] (agg) at (3.2,-3.0) {Ruta de agregación\\(plantilla SQL)};
-        \node[stage] (emb) at (-3.2,-4.4) {Perfil + consulta $\rightarrow$ \textit{embedding}};
-        \node[stage] (vs) at (-3.2,-5.8) {15 fragmentos más similares};
-        \node[stage] (grp) at (-3.2,-7.3) {Agrupar por oferta (5 mejores) + campos estructurados};
-        \node[stage] (sum) at (3.2,-4.4) {Resumen de la agregación};
-        \node[stage] (llm) at (0,-9.0) {Prompt + generación (LLM)};
-        \node[stage] (out) at (0,-10.4) {Respuesta incremental con fuentes};
+        \node[decision] (cls) at (0,-1.6) {Clasificación};
+        \node[stage] (rag) at (-3.6,-3.2) {Ruta de recuperación\\(con restricciones como filtro)};
+        \node[stage] (agg) at (3.6,-3.2) {Ruta de agregación\\(plantilla SQL)};
+        \node[half] (dense) at (-5.5,-4.8) {Búsqueda densa: 50 fragmentos $\rightarrow$ ofertas};
+        \node[half] (bm25) at (-1.7,-4.8) {BM25:\\50 ofertas};
+        \node[stage] (rrf) at (-3.6,-6.4) {Fusión RRF\\(20 candidatas)};
+        \node[stage] (rr) at (-3.6,-7.8) {Reordenamiento\\(5 ofertas)};
+        \node[stage] (ctx) at (-3.6,-9.2) {Contexto por oferta + campos estructurados};
+        \node[stage] (sum) at (3.6,-4.8) {Resumen de la agregación};
+        \node[stage] (llm) at (0,-10.8) {Prompt + generación (LLM)};
+        \node[stage] (out) at (0,-12.2) {Respuesta incremental con fuentes};
         \draw[arr] (q) -- (cls);
         \draw[arr] (cls) -| node[above, pos=0.25, font=\scriptsize] {recuperación} (rag);
         \draw[arr] (cls) -| node[above, pos=0.25, font=\scriptsize] {agregación} (agg);
-        \draw[arr] (rag) -- (emb);
-        \draw[arr] (emb) -- (vs);
-        \draw[arr] (vs) -- (grp);
+        \draw[arr] (rag) -- (dense);
+        \draw[arr] (rag) -- (bm25);
+        \draw[arr] (dense) -- (rrf);
+        \draw[arr] (bm25) -- (rrf);
+        \draw[arr] (rrf) -- (rr);
+        \draw[arr] (rr) -- (ctx);
         \draw[arr] (agg) -- (sum);
-        \draw[arr] (grp) |- (llm);
+        \draw[arr] (ctx) |- (llm);
         \draw[arr] (sum) |- (llm);
         \draw[arr] (llm) -- (out);
     \end{tikzpicture}
 \end{figure}
 
 \subsection{Clasificación de la consulta}
+\label{sec:art-clasificacion}
 
-Un conjunto de patrones \textit{regex} detecta señales léxicas de dos tipos de intención:
+Un conjunto de patrones \textit{regex} detecta señales léxicas de tres tipos:
 \begin{itemize}
     \item de recuperación (\textit{find}, \textit{looking for}, \textit{jobs with});
-    \item de agregación (\textit{how many}, \textit{average}, \textit{salary}, \textit{list all}).
+    \item de agregación (\textit{how many}, \textit{average}, \textit{salary}, \textit{list all});
+    \item de restricción, en inglés y en español: montos de salario, modalidad (\textit{remote}, \textit{remoto}, \textit{presencial}) y tipo de contrato (\textit{contract}, \textit{tiempo completo}, \textit{freelance}, \textit{prácticas}).
 \end{itemize}
-Las consultas con señales de recuperación y sin señales de agregación van directamente a la ruta semántica, sin invocar ningún modelo de lenguaje. En los demás casos, un clasificador basado en LLM, con temperatura 0, decide entre recuperación, agregación o una ruta híbrida y, en los dos últimos casos, selecciona una plantilla de un catálogo cerrado:
+Las consultas con señales de recuperación y sin señales de agregación ni de restricción van directamente a la ruta de recuperación, sin invocar ningún modelo de lenguaje. En los demás casos, un clasificador basado en LLM, con temperatura 0, decide entre recuperación, agregación o una ruta híbrida. Según el caso, el clasificador selecciona además una de 24 plantillas SQL parametrizadas, como conteos, estadísticas salariales o listados por habilidad, o extrae las restricciones de la consulta: salario mínimo o máximo en dólares anuales, modalidad remota y tipo de contrato. El modelo nunca genera SQL libre, y las consultas de agregación se ejecutan con una conexión de solo lectura.
+
+Sobre la respuesta del clasificador se aplican tres reglas de enrutamiento deterministas:
 \begin{itemize}
-    \item 24 consultas SQL parametrizadas, como conteos, estadísticas salariales o listados por habilidad;
-    \item un filtro compuesto por título, salario, ubicación y tipo de contrato.
+    \item una consulta con restricciones extraídas se atiende por la ruta de recuperación, con las restricciones como filtro;
+    \item las plantillas que responden con estadísticas, valores distintos u ofertas recientes se atienden siempre por la ruta de agregación, aunque el clasificador haya etiquetado la consulta como recuperación;
+    \item una consulta de agregación sin una plantilla válida recurre a la ruta de recuperación.
 \end{itemize}
-El modelo nunca genera SQL libre, y las consultas de agregación se ejecutan con una conexión de solo lectura. Si el clasificador no logra asociar la consulta a una plantilla válida, el sistema recurre a la ruta de recuperación.
 
-\subsection{Recuperación y construcción del contexto}
+El título del cargo y las ubicaciones distintas de \textit{remoto} no se convierten en filtros: exigir su coincidencia literal reproduciría la limitación léxica que el pipeline busca superar, así que se dejan a la recuperación semántica. Como las fuentes suelen etiquetar el trabajo independiente como contrato, una consulta por trabajo \textit{freelance} acepta ambos tipos. Los filtros que el usuario fija explícitamente en el panel de búsqueda tienen prioridad sobre los extraídos del texto.
 
-En la ruta de recuperación, la consulta se convierte en un vector y se buscan los 15 fragmentos más similares por coseno, con un umbral mínimo de similitud de 0,5. Si el usuario cargó un currículo, se antepone a la consulta un perfil breve con sus tres cargos más recientes y sus diez habilidades principales. Los fragmentos recuperados se agrupan por oferta, se ordenan por su máxima similitud y se conservan las cinco mejores ofertas. Para cada una se arma un bloque de contexto con un encabezado (título, empresa, ubicación, modalidad, salario y similitud) y el texto de sus fragmentos, limitado a 2.400 caracteres.
+\subsection{Recuperación}
+\label{sec:art-recuperacion}
+
+La recuperación combina dos búsquedas de primera etapa, una fusión de rankings y un reordenamiento:
+\begin{enumerate}
+    \item \textbf{Búsqueda densa.} La consulta se convierte en un vector con el prefijo \texttt{query:}. Si el usuario cargó un currículo, se antepone a la consulta un perfil breve con sus tres cargos más recientes y sus diez habilidades principales. Se buscan los 50 fragmentos más similares por coseno que cumplen el filtro; se agrupan por oferta y cada oferta toma la similitud de su mejor fragmento.
+    \item \textbf{Búsqueda léxica.} En paralelo, BM25 \citep{Robertson2009}, con $k_1 = 1{,}2$ y $b = 0{,}75$, busca las 50 ofertas que mejor coinciden con el texto de la consulta entre las que cumplen el mismo filtro. El índice se mantiene en memoria sobre el título, las habilidades y la descripción de cada oferta, y es la misma implementación que sirve de línea base en la evaluación.
+    \item \textbf{Fusión.} Las dos listas se combinan mediante fusión por rangos recíprocos (RRF) \citep{Cormack2009}: cada oferta suma $1/(k + r)$ por cada lista en la que aparece en la posición $r$, con $k = 60$. Como la fusión usa solo las posiciones, no es necesario calibrar entre sí la similitud coseno y el puntaje de BM25.
+    \item \textbf{Reordenamiento.} Las 20 primeras ofertas de la lista fusionada pasan por un modelo de reordenamiento de tipo \textit{cross-encoder}, Qwen3-Reranker-0.6B \citep{Zhang2025Qwen3}, que lee juntas la consulta y la oferta \citep{Nogueira2019} y estima la probabilidad de que la oferta sea relevante. El modelo recibe el encabezado de la oferta (título, empresa, ubicación, tipo de contrato y salario) y sus fragmentos, hasta 2.000 caracteres. Se conservan las cinco ofertas con mayor probabilidad.
+\end{enumerate}
+
+El filtro se aplica dentro de cada motor, durante la búsqueda y no sobre sus resultados: Qdrant lo evalúa sobre la carga útil de los puntos, pgvector lo incorpora a la consulta SQL, con barridos iterativos cuando usa el índice, y BM25 descarta las ofertas que no lo cumplen antes de cortar en 50. Una oferta sin salario informado nunca cumple una condición de salario. Si ninguna oferta cumple el filtro, la búsqueda se repite sin él y el prompt indica al modelo que debe advertir al usuario que ninguna oferta satisface todas sus condiciones.
+
+Dos mecanismos completan la etapa. El primero es una compuerta de \emph{sin resultados}: si incluso la mejor oferta reordenada tiene una probabilidad menor que 0,134, el sistema responde que no encontró ofertas relevantes en lugar de presentar resultados que no lo son. El umbral se calibró sobre un conjunto de consultas de desarrollo (Sección~\ref{sec:art-iter-recuperacion}). El segundo es la degradación ante fallos: si el servidor de reordenamiento no responde, se conserva el orden de la fusión.
+
+\subsection{Construcción del contexto}
+
+Para cada una de las cinco ofertas se arma un bloque de contexto con un encabezado (título, empresa, ubicación, tipo de contrato, salario y similitud) y el texto de sus fragmentos, limitado a 2.400 caracteres.
 
 Antes de cerrar el contexto, una etapa de \emph{detección de campos} identifica si la consulta pregunta por salario, beneficios, requisitos, habilidades o responsabilidades. Si el campo solicitado no aparece en los fragmentos recuperados, se añade desde los datos estructurados de la oferta. Esta etapa reduce el riesgo de que el modelo complete con información plausible pero inexistente un dato que sí está en la base de datos y simplemente no fue recuperado.
 
 \subsection{Generación}
 
-El prompt de sistema instruye al modelo a responder \emph{únicamente} a partir de las ofertas proporcionadas, a indicar explícitamente cuando estas no contienen la información solicitada y a no inventar detalles. El historial reciente de la conversación, hasta 12 mensajes, se incluye para resolver preguntas de seguimiento. La generación usa el modelo \texttt{qwen/qwen3.8-27b} servido por Groq, con temperatura 0,2 en producción y respuesta incremental. En la ruta híbrida, los resultados de la recuperación y de la agregación se ejecutan en paralelo y se combinan en un único prompt; si una de las dos rutas falla, se responde con la otra.
+El prompt de sistema instruye al modelo a responder \emph{únicamente} a partir de las ofertas proporcionadas, a indicar explícitamente cuando estas no contienen la información solicitada, a no inventar detalles y a responder en el idioma de la pregunta aunque las ofertas estén en otro. El historial reciente de la conversación, hasta 12 mensajes, se incluye para resolver preguntas de seguimiento; la conversación solo afecta a la generación y no a la recuperación, que usa la consulta actual. La generación usa el modelo \texttt{qwen/qwen3.8-27b} servido por Groq, con temperatura 0,2 en la configuración de referencia y respuesta incremental. En la ruta híbrida, los resultados de la recuperación y de la agregación se ejecutan en paralelo y se combinan en un único prompt; si una de las dos rutas falla, se responde con la otra.
 
-\section{Iteración de diseño: almacenamiento vectorial}
+\section{Iteración 1: corrección}
 \label{sec:art-vectorial}
 
-\subsection{Diagnóstico del estado inicial}
+La primera iteración partió de una revisión del artefacto frente a su documentación, hecha al preparar la evaluación. Su objetivo era que lo medido correspondiera a lo que el artefacto dice hacer. Corrigió las fallas que la Sección~\ref{sec:art-fallas} clasifica, la mayoría en la ingesta, la agregación y la búsqueda vectorial, y rediseñó el almacenamiento vectorial para que pgvector y Qdrant pudieran compararse en igualdad de condiciones. Esta sección describe ese rediseño.
+
+\subsection{Diagnóstico del almacenamiento vectorial}
 
 En su versión inicial, JobAI almacenaba los vectores en una columna \texttt{vector(768)} de PostgreSQL, mediante la extensión pgvector \citep{Pgvector}. El esquema incluía un índice IVFFlat creado en la migración inicial, es decir, sobre una tabla todavía vacía y con los parámetros por defecto. La consulta de similitud, sin embargo, ordenaba los resultados por la expresión derivada $1 - d(\mathbf{q}, \mathbf{v})$ y filtraba por umbral sobre esa misma expresión. El planificador de PostgreSQL solo puede servir una búsqueda de vecinos cercanos desde el índice cuando la consulta ordena directamente por el operador de distancia (\texttt{ORDER BY embedding <=> q LIMIT k}).
 
@@ -179,11 +215,13 @@ La inspección confirma tres hechos.
     \item Con el índice HNSW y la consulta ya corregida, el planificador de PostgreSQL sigue prefiriendo el barrido secuencial a esta escala, aunque el recorrido del índice es 12 veces más rápido. El modelo de costos de pgvector sobrestima el costo de arranque del índice en tablas de pocos miles de filas. Por eso la búsqueda admite un modo que fuerza el índice, y la evaluación mide ambos comportamientos.
 \end{itemize}
 
-La misma inspección reveló que el umbral de similitud de 0,5 no filtra nada con este modelo. En 20 consultas de prueba, la similitud coseno mínima entre la consulta y \emph{cualquier} fragmento del corpus fue 0,66, y la mediana 0,75. Las similitudes de e5-base-v2 se concentran en valores altos, así que todos los fragmentos superan el umbral.
+La misma inspección reveló que el umbral de similitud de 0,5 no filtra nada con el modelo de entonces, e5-base-v2. En 20 consultas de prueba, la similitud coseno mínima entre la consulta y \emph{cualquier} fragmento del corpus fue 0,66, y la mediana 0,75. Las similitudes de e5-base-v2 se concentran en valores altos, así que todos los fragmentos superan el umbral. La segunda iteración reemplazó este umbral por la compuerta de sin resultados descrita en la Sección~\ref{sec:art-recuperacion}.
+
+Este diagnóstico cambia la motivación de la migración. La lentitud observada en pgvector no se debía al motor, sino a una consulta que no usaba el índice. Por eso la migración no se planteó como una mejora supuesta de antemano, sino como una alternativa que se pone a prueba: la hipótesis H3 (Sección~\ref{sec:hipotesis}) sostiene que, a la escala del corpus real, el motor no limita la calidad ni la latencia, y que las diferencias aparecen solo a mayor escala y con filtros selectivos.
 
 \subsection{Diseño de la migración}
 
-La migración se diseñó para cumplir dos requisitos: que la plataforma pueda servirse desde Qdrant \citep{QdrantDocs}, y que ambos motores puedan compararse en igualdad de condiciones. Las decisiones principales fueron cinco.
+El diseño debía cumplir dos requisitos: que la plataforma pudiera servirse desde Qdrant \citep{QdrantDocs} o desde pgvector, y que ambos motores pudieran compararse en igualdad de condiciones. Las decisiones principales fueron cinco.
 
 \begin{description}
     \item[Abstracción del almacén vectorial.] Se definió una interfaz única con estas operaciones:
@@ -206,23 +244,212 @@ La migración se diseñó para cumplir dos requisitos: que la plataforma pueda s
     \item[Carga y verificación.] Un comando de línea copia en lotes todos los vectores existentes de PostgreSQL a Qdrant. La operación es idempotente, porque los identificadores son deterministas. Al terminar, el comando espera a que Qdrant indexe la colección y verifica que coincidan tres conteos: filas en PostgreSQL, puntos en Qdrant y vectores indexados.
 \end{description}
 
-Sobre el corpus de evaluación, la búsqueda exacta en ambos motores coincidió en el 99,85\,\% de los 10 primeros resultados de 200 consultas. Las diferencias corresponden a empates entre fragmentos de texto idéntico, que cada motor ordena de forma distinta. Esto confirma que los dos almacenes contienen los mismos datos y usan la misma métrica. La comparación de desempeño entre ambos motores se reporta en el Capítulo~\ref{cap:resultados}.
+Sobre el corpus de evaluación, con los vectores de e5-base-v2, la búsqueda exacta en ambos motores coincidió en el 99,85\,\% de los 10 primeros resultados de 200 consultas (99,75\,\% tras recodificar el corpus con el modelo multilingüe). Las diferencias corresponden a empates entre fragmentos de texto idéntico, que cada motor ordena de forma distinta. Esto confirma que los dos almacenes contienen los mismos datos y usan la misma métrica. La comparación de desempeño entre ambos motores se reporta en el Capítulo~\ref{cap:resultados}.
 
-\section{Defectos detectados en la revisión previa a la evaluación}
-\label{sec:art-defectos}
+\section{Iteración 2: mejora}
+\label{sec:art-iter-recuperacion}
 
-Antes de evaluar el artefacto se revisó su código frente a su documentación. La revisión encontró cinco defectos, que se corrigieron dentro de esta iteración porque habrían invalidado parte de la evaluación:
+\subsection{Diagnóstico}
 
+Una primera corrida completa de la evaluación, con la configuración que resultó de la Iteración~1, y una revisión del pipeline frente a la literatura mostraron cuatro brechas entre lo que el trabajo mide y lo que el artefacto hacía. Las dos primeras motivan los componentes cuyo aporte se mide en el Capítulo~\ref{cap:resultados}; la tercera es una falla que la Sección~\ref{sec:art-fallas} clasifica (A6), y la cuarta motiva el cambio de modelo de \textit{embeddings}.
+\begin{itemize}
+    \item \textbf{Las restricciones de la consulta no llegaban a la búsqueda vectorial.} Una consulta con señales de recuperación, como \textit{\enquote{find remote Python jobs paying over 150k}}, iba directamente a la búsqueda semántica y sus condiciones se ignoraban. Cuando el clasificador sí extraía las condiciones, la plataforma las resolvía con un filtro SQL que exigía la coincidencia de subcadena del título (\texttt{ILIKE}), es decir, la misma búsqueda léxica que el trabajo pretende superar, y pasaba al modelo hasta 30 ofertas ordenadas por fecha y no por relevancia. Además, el filtro no contemplaba la modalidad remota. En consecuencia, el benchmark de búsqueda filtrada (PE4) medía una capacidad que la aplicación no usaba.
+    \item \textbf{El pipeline correspondía al esquema más básico de RAG.} En la clasificación de \citet{Gao2023}, el pipeline era un RAG \emph{ingenuo}: indexación, una única búsqueda densa y generación. Carecía de las optimizaciones posteriores a la recuperación que caracterizan al RAG \emph{avanzado}, como el reordenamiento, y de la recuperación híbrida que combina representaciones dispersas y densas.
+    \item \textbf{Las consultas en español recibían respuestas en inglés.} En la primera corrida, 21 de las 25 consultas en español se respondieron en inglés: sin una instrucción explícita, el modelo respondía en el idioma del contexto, que es el de las ofertas.
+    \item \textbf{El modelo de \textit{embeddings} era solo para inglés.} e5-base-v2 \citep{Wang2022E5} se entrenó con texto en inglés, de modo que las consultas en español dependían de la coincidencia accidental de términos.
+\end{itemize}
+
+\subsection{Cambios}
+
+La Tabla~\ref{tab:art-cambios} resume los cambios de la iteración. El diseño de cada uno se describió en la Sección~\ref{sec:art-consulta}; aquí se resume su motivación.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Cambios de la iteración de recuperación}
+    \label{tab:art-cambios}
+    \small
+    \begin{tabular}{|p{3cm}|p{5.4cm}|p{5.4cm}|}
+        \hline
+        \textbf{Aspecto} & \textbf{Antes} & \textbf{Después} \\
+        \hline
+        Restricciones de la consulta & Ignoradas si la consulta tenía señales de recuperación; si no, filtro SQL por subcadena del título, con 30 ofertas ordenadas por fecha & Extraídas por el clasificador (inglés y español) y aplicadas como filtro dentro de la búsqueda densa y de BM25 \\
+        \hline
+        Primera etapa & Búsqueda densa de 15 fragmentos con umbral de similitud 0,5 & Búsqueda densa de 50 fragmentos y BM25 de 50 ofertas, fusionadas con RRF \\
+        \hline
+        Orden final & Similitud del mejor fragmento & Reordenamiento con Qwen3-Reranker-0.6B sobre 20 candidatas \\
+        \hline
+        Consultas sin ofertas relevantes & Siempre se devolvían cinco ofertas & Compuerta sobre el mejor puntaje del reordenamiento (0,134) \\
+        \hline
+        Modelo de \textit{embeddings} & e5-base-v2 (inglés) & multilingual-e5-base \\
+        \hline
+        Idioma de la respuesta & El del contexto & El de la pregunta \\
+        \hline
+        Salarios fuera de rango & Se almacenaban tal como llegaban & Se registran como no informados \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\begin{description}
+    \item[Filtros en la recuperación.] Aplicar el filtro durante la búsqueda, y no sobre los $k$ vecinos ya recuperados, evita que un filtro selectivo deje la lista incompleta, el problema que motiva los métodos de búsqueda aproximada con filtros \citep{Gollapudi2023, Patel2024}. Que la búsqueda densa y la léxica usen el mismo filtro garantiza que la fusión no reintroduzca ofertas que no cumplen las condiciones.
+    \item[Búsqueda híbrida.] BM25 aporta la coincidencia exacta de términos poco frecuentes, como nombres de tecnologías, que un modelo denso puede diluir. Se eligió RRF \citep{Cormack2009} porque no requiere calibrar puntajes de naturaleza distinta ni datos de entrenamiento, con el valor habitual $k = 60$ y sin ajustarlo. \citet{Bruch2023} encontraron, sin embargo, que RRF es sensible a ese parámetro y que una combinación convexa de los puntajes la supera, con pocos ejemplos para ajustar su único peso.
+    \item[Reordenamiento.] Un \textit{cross-encoder} lee la consulta y la oferta en una misma pasada, por lo que puede juzgar la relación entre ambas con más detalle que la comparación de dos vectores calculados por separado \citep{Nogueira2019}. Su costo crece con el número de candidatas, por eso solo se aplica a las 20 primeras de la lista fusionada.
+    \item[Modelo de \textit{embeddings} multilingüe.] multilingual-e5-base \citep{Wang2024mE5} conserva la dimensión de 768 de e5-base-v2, de modo que el cambio no alteró el esquema. Los 4.013 fragmentos del corpus de evaluación se volvieron a codificar en el lugar, con los mismos identificadores y textos. Los vectores de e5-base-v2 se conservaron en una colección aparte para medir el efecto del cambio de modelo (Capítulo~\ref{cap:resultados}).
+    \item[Idioma de la respuesta y salarios.] Los tres prompts de generación incluyen ahora la instrucción de responder en el idioma de la pregunta. La regla de salarios plausibles se aplicó también al corpus congelado: afectó a 12 ofertas, entre ellas un salario de 86.528.000 dólares para un puesto de despacho y montos en coronas suecas.
+\end{description}
+
+\subsection{Selección del modelo de reordenamiento}
+
+La elección del modelo de reordenamiento, del número de candidatas y del umbral de la compuerta son decisiones de configuración. Tomarlas mirando las consultas de prueba sesgaría la evaluación a favor del artefacto, así que se tomaron con un conjunto de desarrollo separado y con una regla de decisión fijada antes de ver los resultados. En términos de DSR, es una evaluación formativa: sus resultados orientan el diseño y no se reportan como resultados del artefacto.
+
+El conjunto de desarrollo contiene 20 necesidades de información, cinco por categoría, formuladas en 28 consultas en inglés y en español, sin solapamiento con las de prueba, más 10 consultas fuera de dominio que solo se usan para el umbral. Los juicios de relevancia siguieron el mismo procedimiento que la evaluación (Sección~\ref{sec:met-juicios}). Se compararon dos modelos de reordenamiento, bge-reranker-v2-m3, basado en BGE-M3 \citep{Chen2024M3}, y Qwen3-Reranker-0.6B \citep{Zhang2025Qwen3}, en cinco variantes: con y sin instrucción de tarea, y con el orden final dado solo por el reordenamiento o fusionado por RRF con el orden de la primera etapa. La regla tenía tres etapas:
 \begin{enumerate}
-    \item \textbf{La personalización por currículo reemplazaba la consulta.} La documentación del artefacto indicaba que el perfil se antepone a la consulta del usuario. La implementación, en cambio, construía la búsqueda \emph{solo} con el perfil, de modo que un usuario con currículo recibía las mismas ofertas fuera cual fuera su pregunta. Se corrigió para anteponer el perfil.
-    \item \textbf{La ruta de agregación fallaba con las consultas que solo contenían señales de agregación.} Los patrones \textit{regex} clasificaban la consulta como agregación sin seleccionar ninguna plantilla SQL, y la ejecución fallaba al no encontrar la plantilla. Las pruebas de integración no lo detectaban porque simulaban el repositorio SQL. Se corrigió delegando la selección de la plantilla al clasificador LLM, con recuperación como alternativa; las pruebas ahora verifican la plantilla seleccionada.
-    \item \textbf{Las consultas de similitud no usaban el índice vectorial.} Se describe en la Sección~\ref{sec:art-vectorial}.
-    \item \textbf{Las plantillas de agregación sobre ofertas remotas ignoraban el atributo de modalidad.} Las plantillas que cuentan y listan ofertas remotas buscaban la palabra \textit{remote} en el texto de la ubicación. No usaban el atributo booleano de modalidad que la ingesta obtiene de la fuente o del análisis estructurado. Sobre el corpus de evaluación, la plantilla original reconocía como remotas 39 ofertas, frente a más de 570 marcadas como tales. Se corrigió para usar el atributo, conservando el texto de la ubicación como respaldo.
-    \item \textbf{Otros defectos menores con efecto en la evaluación.}
-    \begin{itemize}
-        \item El listado de ofertas usado para exportar el catálogo estaba limitado a 20 registros.
-        \item La ingesta programada no podía desactivarse, lo que habría alterado el corpus congelado.
-    \end{itemize}
+    \item Con 30 candidatas, se elige la variante de mayor nDCG@10. Si otra queda a 0,02 o menos, se prefiere la más simple.
+    \item Con la variante elegida, se usan 20 candidatas en lugar de 30 si el nDCG@10 baja 0,01 o menos.
+    \item El umbral es el mayor valor que deja por debajo, como máximo, a una de las 28 consultas de desarrollo, evaluado sobre el mejor puntaje de cada consulta. Se adopta solo si deja por debajo al menos a 8 de las 10 consultas fuera de dominio.
 \end{enumerate}
 
-En términos de DSR, estos hallazgos son resultados de una evaluación \emph{formativa} del artefacto, realizada durante el ciclo de diseño y no después de él. Ilustran por qué la evaluación de un sistema existente debe comenzar por verificar que el artefacto implementa lo que su documentación describe.
+\begin{table}[htbp!]
+    \centering
+    \caption{Selección del modelo de reordenamiento en el conjunto de desarrollo (28 consultas, 30 candidatas)}
+    \label{tab:art-rerank-dev}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Variante} & \textbf{nDCG@10} & \textbf{P@5} \\
+        \hline
+        Sin reordenamiento (densa + BM25 + RRF) & 0{,}742 & 0{,}757 \\
+        \hline
+        bge-reranker-v2-m3 & 0{,}804 & 0{,}814 \\
+        \hline
+        bge-reranker-v2-m3, fusionado con RRF & 0{,}798 & 0{,}800 \\
+        \hline
+        Qwen3-Reranker-0.6B & 0{,}820 & 0{,}864 \\
+        \hline
+        Qwen3-Reranker-0.6B con instrucción & 0{,}839 & 0{,}879 \\
+        \hline
+        Qwen3-Reranker-0.6B con instrucción, fusionado con RRF & 0{,}812 & 0{,}879 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La Tabla~\ref{tab:art-rerank-dev} muestra la primera etapa. Todas las variantes mejoraron entre 0,06 y 0,10 el nDCG@10 de la recuperación sin reordenamiento. Qwen3-Reranker-0.6B sin instrucción quedó a 0,019 de la mejor variante, por lo que la regla lo eligió por ser más simple. En la segunda etapa, pasar de 30 a 20 candidatas cambió el nDCG@10 de 0,832 a 0,830 y redujo la mediana de la latencia de recuperación de 1.184 a 788~ms, así que se adoptaron 20. En la tercera, el mejor puntaje más bajo entre las consultas de desarrollo fue 0,132 y el siguiente 0,134; las diez consultas fuera de dominio quedaron por debajo de 0,09. El umbral de 0,134 cumplió la condición y se adoptó.
+
+Una observación cualitativa motivó incluir la fusión con RRF entre las variantes: bge-reranker-v2-m3 es muy literal. Asignó una probabilidad de 0,97 al par \textit{\enquote{security engineer}} y \textit{\enquote{Security Engineer, Cloud}}, pero de 0,002 al par formado por la descripción funcional \textit{\enquote{Cybersecurity roles defending company systems against attacks}} y una oferta de \textit{\enquote{Security Engineer}}. Se temía que perjudicara las consultas de desajuste de vocabulario; en el conjunto de desarrollo no ocurrió, y la variante elegida no usa la fusión.
+
+\section{Fallas detectadas por la evaluación formativa}
+\label{sec:art-fallas}
+
+En un sistema RAG muchos defectos son \emph{silenciosos}: el sistema sigue respondiendo con fluidez y de forma plausible, porque el modelo de lenguaje redacta una respuesta con lo que recibe, aunque lo recibido esté incompleto, mal filtrado o mal enrutado. Usando la aplicación, esos defectos no se notan. \citet{Barnett2024} concluyen que la validación de un sistema RAG solo es posible durante su operación. En JobAI, la preparación y la ejecución del protocolo de evaluación revelaron 17 fallas antes de esa etapa, 12 del artefacto y 5 del propio arnés de evaluación, además de dos comportamientos silenciosos del motor de almacenamiento que el diseño debe tener en cuenta. En términos de DSR son resultados de una evaluación \emph{formativa} \citep{Venable2016}: se obtuvieron durante el ciclo de diseño y orientaron sus correcciones.
+
+Las fallas se clasifican en cuatro tipos según su efecto:
+\begin{description}
+    \item[A. Silenciosas que cambian los resultados.] El sistema devuelve ofertas, cifras o respuestas incorrectas sin ningún error visible.
+    \item[B. Silenciosas que cambian el costo.] Los resultados son correctos, pero se obtienen con un costo mayor del necesario.
+    \item[C. Visibles.] Rompen una funcionalidad o producen una respuesta evidentemente incorrecta.
+    \item[D. Del arnés de evaluación.] No afectan al artefacto, sino a la medición, y habrían invalidado parte de la evaluación.
+\end{description}
+Los dos comportamientos del motor (M1 y M2) no se cuentan como fallas, porque no son defectos del artefacto; se describen aparte en la Sección~\ref{sec:art-motor}.
+La Tabla~\ref{tab:art-fallas} las resume. Después se describe cada una con la misma secuencia: observación, causa, efecto, corrección y lección para otros sistemas RAG.
+
+{\small
+\begin{longtable}{|p{0.6cm}|p{4.4cm}|p{2.8cm}|p{3.6cm}|p{2.6cm}|}
+    \caption{Fallas detectadas por la evaluación formativa. Las filas M son comportamientos del motor, no fallas del artefacto}
+    \label{tab:art-fallas} \\
+    \hline
+    \textbf{Id} & \textbf{Falla} & \textbf{Detección} & \textbf{Efecto medido} & \textbf{Estado} \\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Id} & \textbf{Falla} & \textbf{Detección} & \textbf{Efecto medido} & \textbf{Estado} \\
+    \hline
+    \endhead
+    A1 & La personalización por currículo reemplazaba la consulta & Revisión frente a la documentación & Mismas ofertas para cualquier pregunta & Corregida (It.~1) \\
+    \hline
+    A2 & Las plantillas de \enquote{remoto} buscaban la palabra en la ubicación & Revisión de la agregación & 44 ofertas reconocidas frente a 682 & Corregida (It.~1) \\
+    \hline
+    A3 & El umbral de similitud de 0,5 no filtraba & Inspección de similitudes & Mínima 0,66 y mediana 0,75 en 20 consultas & Reemplazado por compuerta (It.~2) \\
+    \hline
+    A4 & Las restricciones de la consulta no llegaban a la búsqueda & Primera corrida & C@5 de 0,41 sin filtros frente a 0,95 con filtros & Corregida (It.~2) \\
+    \hline
+    A5 & El normalizador no convierte monedas ni montos por hora & Respuestas de agregación & Salario promedio del corpus de 544.127 USD & Mitigada (It.~2) \\
+    \hline
+    A6 & Respuestas en inglés a consultas en español & Primera corrida (PE2) & 21 de 25 respuestas & Corregida (It.~2): 4 de 24 \\
+    \hline
+    A7 & La plantilla de ofertas recientes se atendía por la ruta semántica & Corrida de prueba & Exactitud de la agregación 0,667 & Corregida: 0,733 \\
+    \hline
+    A8 & La palabra \textit{hiring} activa el patrón de recuperación & Corrida de prueba & 2 de 15 consultas de agregación mal enrutadas & Abierta \\
+    \hline
+    B1 & La consulta ordenaba por $1-d$ y no usaba el índice & \texttt{EXPLAIN ANALYZE} & 25,7~ms frente a 2,8~ms & Corregida (It.~1) \\
+    \hline
+    B2 & Índice IVFFlat creado sobre la tabla vacía & \texttt{EXPLAIN ANALYZE} & Equivalía a un recorrido completo & Reemplazado por HNSW (It.~1) \\
+    \hline
+    C1 & La ruta de agregación fallaba sin plantilla & Revisión del código & Error de ejecución & Corregida (It.~1) \\
+    \hline
+    C2 & Faltan plantillas: contar con una condición y contar empresas distintas & Corrida de prueba & Respuesta incorrecta con enrutamiento correcto & Abierta \\
+    \hline
+    D1 & El juez sin condiciones duras aceptaba ofertas que no cumplían la restricción & Revisión de juicios & La métrica no distinguía si un sistema respeta las restricciones & Corregida: juez v2 \\
+    \hline
+    D2 & Ventana de 4.096 \textit{tokens} del juez de RAGAS & Revisión de salidas del juez & Fidelidad truncada en 21 de 85 respuestas & Corregida: 16.384 \\
+    \hline
+    D3 & El juez local asigna fidelidad 0 a cifras presentes en el contexto & Revisión de casos extremos & PE2 no confiable con el juez local & Pendiente: juez final \\
+    \hline
+    D4 & Exportación limitada a 20 registros e ingesta no desactivable & Preparación del corpus & Habrían alterado el corpus congelado & Corregidas (It.~1) \\
+    \hline
+    D5 & El cálculo del kappa usaba la versión anterior del prompt del juez & Revisión del arnés & Habría comparado 269 de los 401 pares con veredictos del prompt anterior & Corregida \\
+    \hline
+    M1 & Un filtro selectivo en pgvector sin barrido iterativo devuelve listas incompletas & Benchmark (PE4) & Corpus real, filtro del 50\,\%: listas completas en el 22\,\% de las consultas & Evitado en el diseño (It.~1) \\
+    \hline
+    M2 & Con HNSW y pocas filas, el planificador prefiere el barrido secuencial & \texttt{EXPLAIN ANALYZE} & 24,8~ms frente a 2,0~ms con el índice forzado & Documentada; modo que fuerza el índice \\
+    \hline
+\end{longtable}
+}
+
+\subsection{Fallas silenciosas que cambian los resultados}
+
+\begin{description}
+    \item[A1. Personalización por currículo.] La documentación indicaba que el perfil del usuario se antepone a su consulta; la implementación construía la búsqueda solo con el perfil. Un usuario con currículo recibía las mismas ofertas fuera cual fuera su pregunta, y el modelo redactaba para cada pregunta una respuesta coherente con esas ofertas. Se corrigió para anteponer el perfil. \emph{Lección:} una ruta de personalización debe probarse variando la consulta y verificando que el resultado cambie.
+    \item[A2. Ofertas remotas en la agregación.] Las plantillas que cuentan y listan ofertas remotas buscaban la palabra \textit{remote} en el texto de la ubicación y no usaban el atributo de modalidad que la ingesta obtiene de la fuente o del análisis estructurado. En el corpus de evaluación reconocían 44 ofertas remotas, frente a 682 marcadas con el atributo. El modelo informaba la cifra sin advertir nada. Se corrigió para usar el atributo, con el texto de la ubicación como respaldo. \emph{Lección:} cada plantilla de agregación debe contrastarse con una consulta de referencia escrita a mano, porque el modelo presenta cualquier cifra con la misma seguridad.
+    \item[A3. Umbral de similitud.] El pipeline descartaba los fragmentos con similitud menor que 0,5. Con e5-base-v2, la similitud mínima entre la consulta y cualquier fragmento fue 0,66 en 20 consultas, y la mediana 0,75, de modo que el umbral nunca descartaba nada y toda consulta, incluso fuera de dominio, recibía cinco ofertas. La Iteración~2 lo reemplazó por una compuerta calibrada sobre el puntaje del reordenamiento (Sección~\ref{sec:art-iter-recuperacion}). \emph{Lección:} los umbrales de similitud dependen de la distribución de cada modelo y deben calibrarse con consultas dentro y fuera de dominio.
+    \item[A4. Restricciones ignoradas.] Las consultas con señales de recuperación iban directamente a la búsqueda semántica y sus condiciones de salario, modalidad o tipo de contrato se ignoraban (Sección~\ref{sec:art-iter-recuperacion}). Las respuestas mencionaban ofertas que no cumplían lo pedido, sin advertirlo. Sin filtros, solo el 41\,\% de las cinco primeras ofertas de las consultas con restricciones las cumplía; con los filtros de la Iteración~2, el 95\,\%. \emph{Lección:} la calidad de la recuperación debe medirse también con criterios deterministas, como el cumplimiento de las restricciones, que no dependen del juez.
+    \item[A5. Normalización de salarios.] El normalizador no convierte monedas ni algunos montos por hora o mensuales. Entre otros casos, una oferta de despacho registraba 86.528.000 dólares anuales, y el salario promedio del corpus que respondía la ruta de agregación era de 544.127 dólares. La Iteración~2 registró como no informados los salarios fuera del intervalo de 10.000 a 1.000.000 dólares anuales o con un mínimo mayor que el máximo; la regla afectó a 12 ofertas y el promedio pasó a 158.786 dólares. Es una mitigación: el salario de esas ofertas se pierde en lugar de convertirse. \emph{Lección:} las respuestas de agregación heredan los errores de normalización de los datos, y deben revisarse los valores extremos antes de evaluar.
+    \item[A6. Idioma de la respuesta.] En la primera corrida, 21 de las 25 consultas en español se respondieron en inglés: sin una instrucción explícita, el modelo respondía en el idioma del contexto. La Iteración~2 agregó a los tres prompts la instrucción de responder en el idioma de la pregunta; 4 de 24 respuestas siguieron en inglés. \emph{Lección:} el idioma de la respuesta es una propiedad que debe especificarse y medirse, no suponerse.
+    \item[A7. Ofertas recientes.] Ante \textit{\enquote{what are the most recent job postings}}, el clasificador devolvía la etiqueta de recuperación junto con la plantilla de ofertas recientes, y la consulta se atendía por la ruta semántica con una respuesta plausible pero no ordenada por fecha. Se corrigió con una regla de enrutamiento: las plantillas de estadísticas, valores distintos y ofertas recientes se atienden siempre por la agregación (Sección~\ref{sec:art-clasificacion}). El Capítulo~\ref{cap:resultados} reporta la exactitud antes y después. \emph{Lección:} la salida del clasificador debe validarse con reglas deterministas cuando la etiqueta y la plantilla se contradicen.
+    \item[A8. La palabra \textit{hiring}.] El patrón de recuperación incluye la palabra \textit{hiring}, de modo que \textit{\enquote{list all companies hiring engineers}} y \textit{\enquote{how many different companies are hiring}} se enrutan como consultas mixtas. La falla se detectó en el conjunto de prueba y no se corrigió: corregirla habría ajustado el artefacto a esas consultas. Queda como trabajo futuro. \emph{Lección:} los patrones léxicos de enrutamiento deben probarse con consultas que usan las mismas palabras con otra intención.
+\end{description}
+
+\subsection{Fallas silenciosas que cambian el costo}
+
+\begin{description}
+    \item[B1. Consulta que no usaba el índice.] La búsqueda ordenaba por la expresión $1 - d(\mathbf{q}, \mathbf{v})$ en lugar de por la distancia, y el planificador de PostgreSQL no puede servir ese orden desde el índice. Los resultados eran correctos, porque el barrido completo es exacto, pero la búsqueda tardaba 25,7~ms en lugar de 2,8~ms (Tabla~\ref{tab:art-explain}). Se corrigió en la Iteración~1. \emph{Lección:} el plan de ejecución de cada consulta vectorial debe inspeccionarse; un índice que existe no garantiza que se use.
+    \item[B2. Índice creado sobre la tabla vacía.] El índice IVFFlat se creó en la migración inicial, antes de cargar datos, de modo que todos los vectores quedaron en una sola lista y el índice equivalía a un recorrido completo. Se reemplazó por HNSW, que no requiere entrenamiento. \emph{Lección:} los índices que se entrenan sobre los datos deben construirse después de cargarlos.
+\end{description}
+
+\subsection{Fallas visibles}
+
+\begin{description}
+    \item[C1. Agregación sin plantilla.] Cuando los patrones clasificaban una consulta como agregación sin seleccionar ninguna plantilla, la ejecución fallaba con un error. Las pruebas de integración no lo detectaban porque simulaban el repositorio SQL. Se corrigió delegando la selección de la plantilla al clasificador basado en LLM, con la recuperación como alternativa, y las pruebas verifican ahora la plantilla seleccionada. \emph{Lección:} las pruebas que simulan el acceso a datos pueden ocultar fallas de integración.
+    \item[C2. Plantillas faltantes.] El catálogo no tiene una plantilla que cuente las ofertas que cumplen una condición de salario, ni una que cuente empresas distintas. Ante \textit{\enquote{how many jobs pay more than 200k}}, el sistema elige correctamente la plantilla más cercana, que lista ofertas, y la respuesta no contiene el conteo pedido. Se detectó en el conjunto de prueba y queda abierta, por la misma razón que A8. \emph{Lección:} un catálogo cerrado de plantillas debe evaluarse por cobertura de las preguntas, no solo por exactitud del enrutamiento.
+\end{description}
+
+\subsection{Fallas del arnés de evaluación}
+
+\begin{description}
+    \item[D1. Juez sin condiciones duras.] La primera versión del prompt del juez calificaba como relevante una oferta del cargo correcto aunque no cumpliera el salario, la modalidad o el tipo de contrato pedidos. Con ese juez, la métrica no distinguía a un sistema que respeta las restricciones de uno que las ignora. La segunda versión trata esas condiciones como duras (Sección~\ref{sec:met-juicios}). Este cambio, junto con el del agrupamiento, explica que el nDCG@10 de la recuperación densa con e5-base-v2 pasara de 0,73 en la primera corrida a 0,68 en la definitiva sin que cambiara el sistema (Capítulo~\ref{cap:resultados}). \emph{Lección:} el prompt del juez debe expresar las condiciones que la métrica pretende medir.
+    \item[D2. Ventana de contexto del juez de RAGAS.] Con la ventana por defecto de 4.096 \textit{tokens}, el contexto recuperado y las instrucciones no cabían, y la verificación de la fidelidad quedó truncada en 21 de las 85 respuestas. Todas se puntuaron de nuevo con una ventana de 16.384. \emph{Lección:} el arnés debe verificar que el juez recibe completo lo que juzga.
+    \item[D3. Errores del juez local.] El juez local asignó fidelidad 0 a respuestas cuyas cifras y títulos aparecen literalmente en el contexto. Por eso la fidelidad medida con ese juez no se considera fiable, y se repetirá con el juez final y una verificación humana. \emph{Lección:} los puntajes extremos de un juez automático deben revisarse a mano antes de interpretarse.
+    \item[D4. Exportación e ingesta.] El listado usado para exportar el catálogo estaba limitado a 20 registros, y la ingesta programada no podía desactivarse. Lo primero habría truncado el corpus exportado y lo segundo lo habría modificado durante la evaluación. Ambos se corrigieron antes de congelar el corpus. \emph{Lección:} la reproducibilidad exige poder congelar los datos y verificar su integridad.
+    \item[D5. Versión del prompt en el cálculo del kappa.] El script que calcula el acuerdo entre el juez y los juicios humanos seleccionaba los veredictos de la primera versión del prompt, fijada en su código, mientras que la muestra se extrajo de los juicios de la segunda. Como la caché conserva los veredictos de ambas versiones, el cálculo no habría fallado: habría emparejado solo 269 de los 401 pares, con los veredictos del prompt anterior. Se detectó al preparar la elección del juez final, antes de calcular ningún kappa, y se corrigió haciendo explícita la versión del prompt. \emph{Lección:} cada artefacto del arnés que filtra resultados debe verificar que la cantidad de elementos emparejados es la esperada.
+\end{description}
+
+\subsection{Comportamientos del motor}
+\label{sec:art-motor}
+
+La evaluación reveló además dos comportamientos de pgvector que no son defectos del artefacto, pero que tienen la misma naturaleza silenciosa: el motor devuelve resultados sin ningún aviso, aunque estén incompletos o se obtengan por un camino más lento. El diseño debe tenerlos en cuenta.
+
+\begin{description}
+    \item[M1. Filtros sin barrido iterativo en pgvector.] Con el índice HNSW, pgvector aplica el filtro sobre los candidatos que recorre el índice; si el filtro es selectivo, puede devolver menos de $k$ resultados sin ningún aviso. En el corpus real, con un filtro del 50\,\% y $ef_{search}=16$, solo el 22\,\% de las consultas obtuvo la lista completa y el \textit{recall} fue de 0,74; con barridos iterativos, todas la obtuvieron y el \textit{recall} subió a 0,93. El artefacto nunca lo sufrió, porque antes de la Iteración~2 los filtros no llegaban a la búsqueda vectorial, y el diseño de la Iteración~1 ya activaba esos barridos en toda búsqueda filtrada. \emph{Lección:} una búsqueda filtrada debe verificar que devuelve el número de resultados pedido.
+    \item[M2. Preferencia del planificador.] Aun con la consulta corregida y un índice HNSW, el planificador de PostgreSQL elige el barrido secuencial a la escala del corpus real: 24,8~ms frente a 2,0~ms con el índice forzado. No es un error del artefacto sino un comportamiento del motor; la búsqueda admite un modo que fuerza el índice y la evaluación mide ambos. \emph{Lección:} la latencia de un motor vectorial depende de las decisiones de su planificador, que deben medirse a la escala real de uso.
+\end{description}
+
+\subsection{Síntesis}
+
+De las 12 fallas del artefacto, 10 son silenciosas: ocho cambian los resultados y dos el costo. Ninguna producía un error visible ni una respuesta evidentemente incorrecta, porque el modelo de lenguaje convertía en texto fluido lo que recibía. Se detectaron porque el protocolo mide salidas intermedias y no solo la respuesta final: el plan de ejecución de la consulta, el número de resultados de una búsqueda filtrada, el cumplimiento de las restricciones, la plantilla elegida, el idioma de la respuesta y los veredictos del juez. El Capítulo~\ref{cap:resultados} retoma esta observación en la discusión.

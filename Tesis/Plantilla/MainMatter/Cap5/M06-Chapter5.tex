@@ -1,197 +1,219 @@
-\pendiente{Capítulo desactualizado. Las tablas y cifras de este capítulo corresponden a la primera corrida (13 de octubre), anterior a la iteración que incorporó filtros estructurados, búsqueda híbrida, reordenamiento y \textit{embeddings} multilingües; el resumen ya refleja la corrida posterior. Todas se obtuvieron con el juez local (Llama 3.1 8B) y sin la validación humana del juez, y se reemplazarán con la corrida final.}
 
-\section{Corpus y conjunto de consultas}
+\pendiente{Cifras provisionales. Todos los juicios de relevancia de este capítulo los asignó el juez local (Llama 3.1 8B), todavía sin la validación humana. Las tablas se reemplazarán con la corrida final; las conclusiones relativas se revisarán con ella.}
+
+Este capítulo responde las cuatro preguntas de evaluación (Sección~\ref{sec:met-preguntas}) con la configuración que resultó de la Iteración~2. La configuración de la Iteración~1 se aproxima con el sistema denso que usa e5-base-v2 (Sección~\ref{sec:met-sistemas}). Salvo que se indique lo contrario, las medias y las pruebas estadísticas usan como unidad la necesidad de información (Sección~\ref{sec:met-estadistica}).
+
+\section{Corpus, consultas y juicios}
 \label{sec:res-corpus}
 
-Todas las corridas de este capítulo parten del corpus congelado descrito en la Sección~\ref{sec:met-corpus}: 1.068 ofertas divididas en 4.013 fragmentos. El conjunto de consultas contiene 75 consultas en inglés, 15 por categoría, y 25 en español: 7 exactas, 7 de desajuste de vocabulario, 6 con restricciones y 5 ruidosas. Las 15 consultas de agregación, todas en inglés, se evalúan aparte (Sección~\ref{sec:res-agregacion}). Las 85 consultas restantes, 60 en inglés y 25 en español, corresponden a 60 necesidades de información y son las que se usan para medir la recuperación, la generación y la latencia.
+Todas las corridas parten del corpus congelado de la Sección~\ref{sec:met-corpus}: 1.068 ofertas divididas en 4.013 fragmentos. De las 100 consultas de prueba, 85 producen una lista de ofertas (60 en inglés y 25 en español) y corresponden a 60 necesidades de información; las 15 de agregación se evalúan aparte (Sección~\ref{sec:res-agregacion}).
+
+El agrupamiento de profundidad 10 de los nueve sistemas produjo 1.977 pares de necesidad y oferta. El juez interpretó 1.975; los dos restantes cuentan como no relevantes. Asignó la etiqueta 3 al 30,2\,\% de los pares, la 2 al 26,1\,\%, la 1 al 17,0\,\% y la 0 al 26,6\,\%. Cada necesidad tiene en promedio 18,6 ofertas relevantes (etiqueta $\geq 2$), con un mínimo de 3 y un máximo de 36. Estas cifras son mayores que las de la verificación de cobertura de la Sección~\ref{sec:met-consultas}, que con SQL contó solo las ofertas que cumplen todas las condiciones de la necesidad; el juez considera relevantes también las que satisfacen su parte principal aunque falte un requisito secundario (etiqueta 2). Como suelen ser más que las 10 posiciones evaluadas, el Recall@10 de un sistema rara vez llega a 1.
 
 \section{Validación del juez de relevancia}
-\pendiente{Tabla: kappa binario y ponderado (con IC 95\,\%) del juez local y del juez final frente a los juicios humanos; matriz de confusión.}
+\label{sec:res-juez}
+
+\pendiente{Kappa binario y ponderado, con IC del 95\,\%, del juez local y del juez final frente a los juicios humanos (401 pares; 103 de calibración y 298 de validación), y matriz de confusión. Si $\kappa \leq 0{,}60$, resultados con el segundo juez (Sección~\ref{sec:met-juicios}).}
 
 \section{Calidad de recuperación (PE1)}
 \label{sec:res-pe1}
 
-\subsection{Juicios de relevancia}
+\subsection{Frente a las líneas base}
 
-El agrupamiento de profundidad 10 de los cinco sistemas produjo 1.403 pares de necesidad y oferta para las 60 necesidades de información. El juez local asignó la etiqueta 3 a 521 pares (37,1\,\%), la 2 a 317 (22,6\,\%), la 1 a 103 (7,3\,\%) y la 0 a 450 (32,1\,\%). En 12 pares (0,9\,\%) su respuesta no pudo interpretarse; esos pares se excluyen de los juicios y cuentan como no relevantes. En promedio, cada necesidad tiene 14 ofertas relevantes (etiqueta $\geq 2$) en el agrupamiento, más de las 10 posiciones evaluadas, por lo que el Recall@10 de un sistema no puede llegar a 1.
-
-\subsection{Resultados globales}
-
-La Tabla~\ref{tab:res-pe1-global} resume las métricas de los cinco sistemas sobre las 85 consultas de recuperación.
+La Tabla~\ref{tab:res-pe1-global} resume las métricas de los nueve sistemas.
 
 \begin{table}[htbp!]
     \centering
-    \caption{Calidad de recuperación por sistema (85 consultas; juez local)}
+    \caption{Calidad de recuperación por sistema (media sobre 60 necesidades; juez local)}
     \label{tab:res-pe1-global}
     \begin{tabular}{|l|c|c|c|c|c|}
         \hline
         \textbf{Sistema} & \textbf{P@5} & \textbf{P@10} & \textbf{nDCG@10} & \textbf{MRR} & \textbf{R@10} \\
         \hline
-        ILIKE & 0{,}056 & 0{,}051 & 0{,}056 & 0{,}082 & 0{,}026 \\
+        ILIKE & 0{,}062 & 0{,}054 & 0{,}057 & 0{,}100 & 0{,}026 \\
         \hline
-        BM25 & 0{,}581 & 0{,}555 & 0{,}560 & 0{,}752 & 0{,}401 \\
+        BM25 & 0{,}595 & 0{,}558 & 0{,}562 & 0{,}729 & 0{,}330 \\
         \hline
-        Denso, pgvector exacto & 0{,}765 & 0{,}711 & 0{,}728 & 0{,}899 & 0{,}493 \\
+        Denso, e5-base-v2 (Iteración~1) & 0{,}695 & 0{,}662 & 0{,}679 & 0{,}861 & 0{,}377 \\
         \hline
-        Denso, pgvector HNSW & 0{,}762 & 0{,}716 & 0{,}732 & 0{,}897 & 0{,}498 \\
+        Denso, pgvector exacto & 0{,}712 & 0{,}658 & 0{,}671 & 0{,}829 & 0{,}369 \\
         \hline
-        Denso, Qdrant HNSW & 0{,}769 & 0{,}715 & 0{,}732 & 0{,}902 & 0{,}498 \\
+        Denso, pgvector HNSW & 0{,}717 & 0{,}661 & 0{,}675 & 0{,}828 & 0{,}371 \\
+        \hline
+        Denso, Qdrant HNSW & 0{,}712 & 0{,}664 & 0{,}676 & 0{,}822 & 0{,}375 \\
+        \hline
+        + filtros & 0{,}777 & 0{,}726 & 0{,}726 & 0{,}890 & 0{,}413 \\
+        \hline
+        + híbrida & 0{,}763 & 0{,}738 & 0{,}724 & 0{,}855 & 0{,}424 \\
+        \hline
+        + reordenamiento (completa) & 0{,}838 & 0{,}794 & 0{,}802 & 0{,}962 & 0{,}456 \\
         \hline
     \end{tabular}
 \end{table}
 
-La búsqueda ILIKE no devuelve ningún resultado en 78 de las 85 consultas, porque exige que la consulta completa aparezca como subcadena del título o de la empresa. BM25 devuelve resultados en 84. Los tres sistemas densos devuelven resultados en todas.
+La búsqueda por subcadena de la plataforma (ILIKE) no devuelve ningún resultado en 78 de las 85 consultas, porque exige que la consulta completa aparezca en el título o en la empresa. Su nDCG@10 de 0,057 ilustra el punto de partida de la plataforma, pero no es una comparación exigente. BM25 devuelve resultados en 84 consultas, y es la comparación principal.
 
-Los tres sistemas densos obtienen valores prácticamente iguales: la mayor diferencia entre ellos, en cualquier métrica, es de 0,007. La búsqueda aproximada con HNSW, en pgvector o en Qdrant, no pierde calidad frente a la búsqueda exacta a esta escala.
+Frente a BM25, la recuperación densa con el modelo multilingüe mejora el nDCG@10 en $+0{,}114$ [$+0{,}059$; $+0{,}170$], y la configuración completa en $+0{,}240$ [$+0{,}174$; $+0{,}307$]. Las 14 comparaciones de nDCG@10 de los sistemas densos frente a las dos líneas base son significativas ($p_{Holm} = 0{,}0014$, el mínimo que permiten 10.000 permutaciones con 14 comparaciones).
 
-La Tabla~\ref{tab:res-pe1-signif} muestra la diferencia entre la recuperación densa servida por Qdrant y cada línea base. Las diferencias de los otros dos sistemas densos son del mismo orden; en nDCG@10 frente a BM25 van de 0,169 (pgvector exacto) a 0,173 (pgvector HNSW). Las 30 comparaciones (tres sistemas densos frente a dos líneas base en cinco métricas) son significativas con la prueba de aleatorización pareada y la corrección de Holm ($p_{Holm} \leq 0{,}003$, el mínimo que permiten 10.000 permutaciones con 30 comparaciones).
+Con el modelo multilingüe, la búsqueda aproximada no pierde calidad: HNSW en pgvector frente a la búsqueda exacta, $+0{,}004$ [$-0{,}000$; $+0{,}009$], y Qdrant frente a pgvector, ambos con HNSW, $+0{,}001$ [$-0{,}005$; $+0{,}007$]; ninguna diferencia es significativa.
+
+\subsection{Aporte de cada componente}
+
+La Tabla~\ref{tab:res-escalera} muestra la escalera de componentes: cada fila agrega un componente a la anterior.
 
 \begin{table}[htbp!]
     \centering
-    \caption{Diferencia de medias de Qdrant HNSW frente a cada línea base, con IC bootstrap del 95\,\% (85 consultas)}
-    \label{tab:res-pe1-signif}
-    \begin{tabular}{|l|c|c|}
+    \caption{Escalera de componentes: nDCG@10 y diferencia con el peldaño anterior, con IC bootstrap del 95\,\% (60 necesidades)}
+    \label{tab:res-escalera}
+    \begin{tabular}{|l|c|c|c|}
         \hline
-        \textbf{Métrica} & \textbf{frente a BM25} & \textbf{frente a ILIKE} \\
+        \textbf{Sistema} & \textbf{nDCG@10} & \textbf{Diferencia} & \textbf{$p_{Holm}$} \\
         \hline
-        P@5 & $+0{,}188$ $[0{,}120;\ 0{,}259]$ & $+0{,}713$ $[0{,}645;\ 0{,}776]$ \\
+        Denso, Qdrant HNSW & 0{,}676 & -- & -- \\
         \hline
-        P@10 & $+0{,}160$ $[0{,}102;\ 0{,}220]$ & $+0{,}665$ $[0{,}604;\ 0{,}725]$ \\
+        + filtros & 0{,}726 & $+0{,}050$ [$+0{,}018$; $+0{,}087$] & 0{,}031 \\
         \hline
-        nDCG@10 & $+0{,}172$ $[0{,}115;\ 0{,}228]$ & $+0{,}676$ $[0{,}618;\ 0{,}731]$ \\
+        + híbrida & 0{,}724 & $-0{,}002$ [$-0{,}034$; $+0{,}033$] & 1{,}000 \\
         \hline
-        MRR & $+0{,}150$ $[0{,}080;\ 0{,}221]$ & $+0{,}819$ $[0{,}746;\ 0{,}888]$ \\
+        + reordenamiento & 0{,}802 & $+0{,}077$ [$+0{,}042$; $+0{,}114$] & 0{,}002 \\
         \hline
-        R@10 & $+0{,}097$ $[0{,}048;\ 0{,}147]$ & $+0{,}472$ $[0{,}431;\ 0{,}513]$ \\
+        Iteración completa frente al denso & -- & $+0{,}125$ [$+0{,}081$; $+0{,}173$] & 0{,}001 \\
         \hline
     \end{tabular}
 \end{table}
 
-\subsection{Resultados por categoría de consulta}
+Los filtros estructurados y el reordenamiento aportan mejoras significativas; la búsqueda híbrida no. Las métricas secundarias van en la misma dirección: en P@5, los filtros aportan $+0{,}065$ y el reordenamiento $+0{,}075$ ($p = 0{,}016$ y $0{,}014$ sin ajustar), y la búsqueda híbrida $-0{,}013$.
 
-La Figura~\ref{fig:res-ndcg-categoria} y la Tabla~\ref{tab:res-pe1-categoria} desagregan el nDCG@10 por categoría. Cada categoría incluye sus consultas en inglés y en español.
+El nDCG@10 de la recuperación densa con e5-base-v2 fue de 0,73 en la primera corrida (13 de octubre) y es de 0,68 en esta. Ambas cifras corresponden al mismo sistema: el mismo modelo, los mismos vectores y los mismos 50 fragmentos agrupados por oferta. La diferencia viene de la medición. En las 53 consultas cuya lista de 10 ofertas es idéntica en las dos corridas, el nDCG@10 baja de 0,806 a 0,724. Dos cambios lo explican. El juez ahora trata como condiciones duras el salario, la modalidad y el tipo de contrato (falla D1 de la Sección~\ref{sec:art-fallas}): de los 1.321 pares juzgados con ambas versiones del prompt, 99 dejaron de ser relevantes y 42 pasaron a serlo. Además, con nueve sistemas en el agrupamiento cada necesidad tiene más ofertas relevantes juzgadas (18,6 frente a 14,0 en promedio), lo que eleva el ordenamiento ideal con que se normaliza el nDCG. Las demás listas difieren porque entre las corridas se reemplazaron dos necesidades sin cobertura en el corpus y se reconstruyó el índice HNSW.
+
+\subsection{Por categoría de consulta}
+
+La Figura~\ref{fig:res-ndcg-categoria} y la Tabla~\ref{tab:res-pe1-categoria} desagregan el nDCG@10 por categoría. Cada categoría tiene 15 necesidades, de modo que estas cifras son descriptivas y no forman parte de las familias de pruebas.
 
 \begin{figure}[htbp!]
     \centering
     \includegraphics[width=0.85\textwidth]{resultados/ndcg-by-category.pdf}
-    \caption{nDCG@10 por categoría de consulta. Los tres sistemas densos difieren en menos de 0,01, por lo que se muestra solo Qdrant HNSW; los valores de todos los sistemas están en la Tabla~\ref{tab:res-pe1-categoria}.}
+    \caption{nDCG@10 por categoría de consulta (media sobre 15 necesidades por categoría; juez local)}
     \label{fig:res-ndcg-categoria}
 \end{figure}
 
 \begin{table}[htbp!]
     \centering
-    \caption{nDCG@10 por categoría de consulta}
+    \caption{nDCG@10 por categoría de consulta (15 necesidades por categoría; juez local)}
     \label{tab:res-pe1-categoria}
-    \begin{tabular}{|l|c|c|c|c|c|}
+    \small
+    \begin{tabular}{|l|c|c|c|c|c|c|}
         \hline
-        \textbf{Categoría} & \textbf{ILIKE} & \textbf{BM25} & \shortstack{\textbf{pgvector}\\\textbf{exacto}} & \shortstack{\textbf{pgvector}\\\textbf{HNSW}} & \shortstack{\textbf{Qdrant}\\\textbf{HNSW}} \\
+        \textbf{Categoría} & \textbf{BM25} & \textbf{e5-base-v2} & \textbf{Denso} & \textbf{+ filtros} & \textbf{+ híbrida} & \textbf{Completa} \\
         \hline
-        Exactas & 0{,}215 & 0{,}732 & 0{,}891 & 0{,}898 & 0{,}901 \\
+        Exactas & 0{,}753 & 0{,}834 & 0{,}835 & 0{,}835 & 0{,}842 & 0{,}876 \\
         \hline
-        Desajuste de vocabulario & 0{,}000 & 0{,}462 & 0{,}677 & 0{,}675 & 0{,}674 \\
+        Desajuste de vocabulario & 0{,}471 & 0{,}678 & 0{,}651 & 0{,}651 & 0{,}617 & 0{,}764 \\
         \hline
-        Con restricciones & 0{,}000 & 0{,}469 & 0{,}643 & 0{,}650 & 0{,}647 \\
+        Con restricciones & 0{,}447 & 0{,}521 & 0{,}583 & 0{,}777 & 0{,}746 & 0{,}832 \\
         \hline
-        Ruidosas & 0{,}000 & 0{,}572 & 0{,}695 & 0{,}699 & 0{,}698 \\
+        Ruidosas & 0{,}578 & 0{,}682 & 0{,}638 & 0{,}643 & 0{,}693 & 0{,}735 \\
         \hline
     \end{tabular}
 \end{table}
 
-ILIKE solo encuentra resultados en consultas exactas. Frente a BM25, la recuperación densa (Qdrant HNSW) gana en las cuatro categorías. La mayor diferencia está en las consultas con desajuste de vocabulario ($+0{,}212$, un 46\,\% más), seguida de las consultas con restricciones ($+0{,}178$), las exactas ($+0{,}168$) y las ruidosas ($+0{,}126$).
+La ventaja de la recuperación densa sobre BM25 es mayor en las consultas de desajuste de vocabulario ($+0{,}180$) y con restricciones ($+0{,}136$) que en las exactas ($+0{,}082$) y las ruidosas ($+0{,}060$), el patrón que anticipa la hipótesis H1. Cada componente actúa donde se espera. Los filtros cambian casi solo las consultas con restricciones ($+0{,}194$; en las demás categorías, como mucho $+0{,}005$). El reordenamiento mejora todas las categorías, sobre todo las de desajuste de vocabulario ($+0{,}147$). La búsqueda híbrida mejora las ruidosas ($+0{,}050$), en las que BM25 recupera términos exactos que la consulta escribe mal o abrevia, pero empeora las de desajuste de vocabulario ($-0{,}034$) y las de restricciones ($-0{,}031$), en las que BM25 aporta candidatas que comparten palabras con la consulta pero no su función.
 
-\subsection{Consultas en español}
+\subsection{Consultas con restricciones}
 
-Para comparar los idiomas sobre las mismas necesidades, la Tabla~\ref{tab:res-pe1-idioma} contrasta las 25 consultas en español con las 25 consultas en inglés de las mismas necesidades de información.
+La Tabla~\ref{tab:res-restricciones} muestra el cumplimiento de restricciones (Sección~\ref{sec:met-metricas}), que no depende del juez, sobre las 15 necesidades con restricciones.
 
 \begin{table}[htbp!]
     \centering
-    \caption{nDCG@10 y P@5 en las 25 necesidades con consulta en ambos idiomas}
-    \label{tab:res-pe1-idioma}
-    \begin{tabular}{|l|c|c|c|c|}
+    \caption{Cumplimiento de restricciones en las 5 y 10 primeras posiciones (15 necesidades)}
+    \label{tab:res-restricciones}
+    \begin{tabular}{|l|c|c|}
         \hline
-        \multirow{2}{*}{\textbf{Sistema}} & \multicolumn{2}{c|}{\textbf{nDCG@10}} & \multicolumn{2}{c|}{\textbf{P@5}} \\
-        \cline{2-5}
-         & \textbf{Inglés} & \textbf{Español} & \textbf{Inglés} & \textbf{Español} \\
+        \textbf{Sistema} & \textbf{C@5} & \textbf{C@10} \\
         \hline
-        ILIKE & 0{,}078 & 0{,}000 & 0{,}080 & 0{,}000 \\
+        BM25 & 0{,}433 & 0{,}403 \\
         \hline
-        BM25 & 0{,}621 & 0{,}341 & 0{,}656 & 0{,}344 \\
+        Denso, e5-base-v2 (Iteración~1) & 0{,}360 & 0{,}327 \\
         \hline
-        Denso, pgvector exacto & 0{,}811 & 0{,}637 & 0{,}872 & 0{,}696 \\
+        Denso, Qdrant HNSW & 0{,}407 & 0{,}373 \\
         \hline
-        Denso, pgvector HNSW & 0{,}811 & 0{,}656 & 0{,}864 & 0{,}704 \\
+        + filtros & 0{,}953 & 0{,}947 \\
         \hline
-        Denso, Qdrant HNSW & 0{,}812 & 0{,}644 & 0{,}872 & 0{,}704 \\
+        + híbrida & 0{,}953 & 0{,}953 \\
+        \hline
+        + reordenamiento (completa) & 0{,}973 & 0{,}960 \\
         \hline
     \end{tabular}
 \end{table}
 
-Todos los sistemas rinden menos en español, como se anticipó en la Sección~\ref{sec:met-consultas}. En la recuperación densa con Qdrant, el nDCG@10 baja de 0,812 a 0,644 (un 21\,\% menos). En BM25 baja de 0,621 a 0,341 (un 45\,\% menos), porque las ofertas están en inglés y las coincidencias léxicas con una consulta en español son escasas. ILIKE no recupera ninguna oferta relevante en español.
+Sin filtros, menos de la mitad de las ofertas devueltas cumple las condiciones de la consulta, con cualquier sistema. Con los filtros, el cumplimiento en las cinco primeras posiciones sube de 0,407 a 0,953 ($+0{,}547$ [$+0{,}353$; $+0{,}727$], $p < 0{,}001$ sin ajustar). No llega a 1 porque el clasificador no extrajo el filtro en 2 de las 24 consultas que lo requerían: las dos consultas por prácticas profesionales, en inglés y en español, en las que no reconoció el tipo de contrato. En las otras 22 la extracción fue exacta.
+
+\subsection{Consultas en español y modelo de \textit{embeddings}}
+
+La Tabla~\ref{tab:res-pe1-idioma} compara las 25 consultas en español con sus 25 contrapartes en inglés, que expresan las mismas necesidades.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{nDCG@10 de las consultas en español y de sus contrapartes en inglés (25 consultas cada una; juez local)}
+    \label{tab:res-pe1-idioma}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Sistema} & \textbf{Español} & \textbf{Inglés (mismas necesidades)} \\
+        \hline
+        BM25 & 0{,}350 & 0{,}593 \\
+        \hline
+        Denso, e5-base-v2 & 0{,}615 & 0{,}729 \\
+        \hline
+        Denso, multilingual-e5-base & 0{,}680 & 0{,}697 \\
+        \hline
+        + filtros & 0{,}741 & 0{,}751 \\
+        \hline
+        + híbrida & 0{,}693 & 0{,}758 \\
+        \hline
+        + reordenamiento (completa) & 0{,}795 & 0{,}851 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+BM25 pierde 0,24 de nDCG@10 al pasar del inglés al español, porque las ofertas están en inglés y la consulta no se traduce. El modelo multilingüe casi elimina esa brecha en la recuperación densa (0,680 frente a 0,697). Frente a e5-base-v2, mejora las consultas en español en $+0{,}065$ [$+0{,}007$; $+0{,}128$] ($p = 0{,}046$ sin ajustar; $p_{Holm} = 0{,}28$), empeora levemente las de inglés ($-0{,}023$ [$-0{,}057$; $+0{,}009$] en las 60 consultas en inglés; $-0{,}032$ en las 25 contrapartes de la tabla) y deja igual el total. La búsqueda híbrida es la que más daña al español ($-0{,}048$), coherente con la debilidad de BM25 en ese idioma. La configuración completa alcanza 0,795 en español, frente a 0,350 de BM25. La columna en inglés permite además una comparación más exigente: como las consultas en español son traducciones de las inglesas, BM25 sobre su contraparte en inglés equivale a BM25 con una traducción perfecta de la consulta. Aun frente a esa referencia (0,593), la configuración completa en español la supera en 0,20.
+
+\subsection{Compuerta de sin resultados}
+
+Las métricas anteriores no aplican la compuerta de sin resultados (Sección~\ref{sec:met-sistema}). Con el umbral de 0,134 calibrado en el conjunto de desarrollo, la compuerta se habría activado en 2 de las 85 consultas: \textit{\enquote{protect company systems from hackers}} y una consulta en español que describe a quien construye las pantallas de una web, ambas de desajuste de vocabulario y ambas con ofertas relevantes en el corpus. Su mejor puntaje de reordenamiento fue 0,082. Son el costo real del umbral: dos falsos negativos en consultas que describen la función en lugar de nombrar el cargo.
 
 \subsection{Consultas de agregación}
 \label{sec:res-agregacion}
 
-La Tabla~\ref{tab:res-agregacion} muestra, para cada una de las 15 consultas de agregación, la ruta y la plantilla que eligió el clasificador y la proporción de filas de la consulta de referencia que cubre el resultado (Sección~\ref{sec:met-metricas}).
+La Tabla~\ref{tab:res-agregacion} muestra la exactitud de la ruta de agregación antes y después de corregir la falla A7 (Sección~\ref{sec:art-fallas}), detectada en esta misma corrida.
 
 \begin{table}[htbp!]
     \centering
-    \caption{Enrutamiento y exactitud de la respuesta en las consultas de agregación}
+    \caption{Exactitud de la ruta de agregación (15 consultas)}
     \label{tab:res-agregacion}
-    \small
-    \begin{tabular}{|l|p{4.6cm}|l|l|c|c|}
+    \begin{tabular}{|l|c|c|}
         \hline
-        \textbf{Id} & \textbf{Consulta} & \textbf{Ruta} & \textbf{Plantilla} & \textbf{Acierto} & \textbf{Filas} \\
+        \textbf{Medida} & \textbf{Antes} & \textbf{Después} \\
         \hline
-        ag-01 & how many jobs are in the database & agregación & {\footnotesize \texttt{count\_total}} & sí & 1/1 \\
+        Ruta y plantilla esperadas & 11 (0{,}733) & 12 (0{,}800) \\
         \hline
-        ag-02 & how many remote jobs are there & agregación & {\footnotesize \texttt{count\_remote}} & sí & 1/1 \\
+        Respuesta exacta frente a la referencia & 10 (0{,}667) & 11 (0{,}733) \\
         \hline
-        ag-03 & what is the average salary across all jobs & agregación & {\footnotesize \texttt{salary\_stats\_overall}} & sí & 1/1 \\
-        \hline
-        ag-04 & how many full time versus contract jobs are listed & agregación & {\footnotesize \texttt{count\_by\_job\_type}} & sí & 5/6 \\
-        \hline
-        ag-05 & which companies have the most open positions & agregación & {\footnotesize \texttt{top\_hiring\_companies}} & sí & 10/10 \\
-        \hline
-        ag-06 & what are the most in-demand skills & agregación & {\footnotesize \texttt{skills\_demand}} & sí & 10/10 \\
-        \hline
-        ag-07 & how many jobs require python & recuperación & --- & no & 0/1 \\
-        \hline
-        ag-08 & which locations have the most job openings & agregación & {\footnotesize \texttt{count\_by\_location}} & sí & 10/10 \\
-        \hline
-        ag-09 & what is the salary range for data scientist roles & agregación & {\footnotesize \texttt{salary\_stats\_by\_title}} & sí & 1/1 \\
-        \hline
-        ag-10 & how many jobs pay more than 200k & agregación & {\footnotesize \texttt{jobs\_above\_salary}} & sí & 0/1 \\
-        \hline
-        ag-11 & what is the average salary by job type & agregación & {\footnotesize \texttt{salary\_stats\_by\_job\_type}} & sí & 5/6 \\
-        \hline
-        ag-12 & list all companies hiring engineers & híbrida & {\footnotesize \texttt{list\_jobs\_by\_title}} & no & 18/316 \\
-        \hline
-        ag-13 & count the contract positions & agregación & {\footnotesize \texttt{count\_by\_job\_type}} & sí & 1/1 \\
-        \hline
-        ag-14 & how many different companies are hiring & híbrida & {\footnotesize \texttt{count\_by\_company}} & no & 0/1 \\
-        \hline
-        ag-15 & what are the most recent job postings & agregación & {\footnotesize \texttt{recent\_jobs}} & sí & 10/10 \\
+        Proporción media de filas cubiertas & 0{,}667 & 0{,}734 \\
         \hline
     \end{tabular}
 \end{table}
 
-La columna Acierto indica si el clasificador eligió la ruta y la plantilla esperadas. Lo hace en 12 de las 15 consultas (80\,\%), y la plantilla correcta en 14 (93\,\%). Los tres errores de enrutamiento tienen dos causas. En ag-07 el clasificador no encontró una plantilla y la consulta cayó en la ruta de recuperación. En ag-12 y ag-14 la plantilla es la esperada, pero la palabra \textit{hiring} activa el patrón de recuperación y la consulta se trata como híbrida.
-
-La respuesta es exacta en 9 de las 15 consultas (60\,\%), con una cobertura media de filas de 0,715. Los seis fallos se explican así:
+Quedan cuatro respuestas no exactas, todas fallas abiertas (Sección~\ref{sec:art-fallas}):
 \begin{itemize}
-    \item En ag-04 y ag-11 falta solo una fila: la de las ofertas sin tipo de contrato, que la plantilla excluye y la consulta de referencia incluye.
-    \item En ag-10 y ag-14 el catálogo no tiene una plantilla que devuelva el dato pedido: \texttt{jobs\_above\_salary} lista hasta 20 ofertas en lugar de contarlas, y no existe una plantilla que cuente empresas distintas.
-    \item En ag-12 la plantilla devuelve 20 ofertas, que cubren 18 de las 316 empresas de la referencia.
-    \item En ag-07 la ruta de recuperación no ejecuta ninguna consulta SQL.
+    \item dos consultas con la palabra \textit{hiring} se enrutan como mixtas (falla A8);
+    \item \textit{\enquote{how many jobs pay more than 200k}} elige la plantilla correcta, que lista las ofertas, pero el catálogo no tiene una que las cuente (falla C2);
+    \item \textit{\enquote{how many jobs require python}} recibe la plantilla de conteo por tipo de contrato en lugar de la de demanda de habilidades, un error del clasificador.
 \end{itemize}
-Las respuestas sobre salario promedio (ag-03 y ag-11) heredan además el problema de normalización descrito en la Sección~\ref{sec:met-corpus}. Unas pocas ofertas tienen montos no convertidos, y por eso el promedio del corpus resulta de 544.127 dólares anuales y el de las ofertas de tiempo completo, de 713.624.
 
 \section{Fidelidad de la generación (PE2)}
 \label{sec:res-pe2}
 
-Las 85 consultas de recuperación se respondieron mediante la ruta real del pipeline, servida desde Qdrant, con el modelo generador a temperatura 0. Ninguna respuesta quedó vacía. Las métricas de RAGAS se calcularon con el juez local (Llama 3.1 8B).
-
-En una primera pasada, el juez se ejecutó con su ventana de contexto por defecto, de 4.096 \textit{tokens}. Esa ventana no alcanza para el contexto recuperado (hasta cinco ofertas de 2.400 caracteres) más las instrucciones y la salida, de modo que la verificación de la fidelidad quedó truncada en 21 de las 85 respuestas (24,7\,\%), 12 de ellas de consultas exactas. Por eso todas las respuestas se puntuaron de nuevo con el mismo modelo y una ventana de 16.384 \textit{tokens}. Con esa configuración la fidelidad se obtuvo en las 85 respuestas, y la relevancia en 81: en las otras 4 la salida del juez no tuvo el formato esperado. La Tabla~\ref{tab:res-pe2} muestra los resultados.
+Las 85 consultas de recuperación se respondieron con la ruta real del pipeline, servida desde Qdrant, con el generador a temperatura 0. Las dos consultas en las que actuó la compuerta recibieron la respuesta de sin resultados y no se puntúan. Las métricas de RAGAS se calcularon con el juez local y una ventana de 16.384 \textit{tokens} (falla D2). La Tabla~\ref{tab:res-pe2} muestra los resultados.
 
 \begin{table}[htbp!]
     \centering
@@ -201,183 +223,169 @@ En una primera pasada, el juez se ejecutó con su ventana de contexto por defect
         \hline
         \textbf{Grupo} & \textbf{Fidelidad} & \textbf{$n$} & \textbf{Relevancia} & \textbf{$n$} \\
         \hline
-        Todas & 0{,}663 & 85 & 0{,}599 & 81 \\
+        Todas & 0{,}679 & 83 & 0{,}751 & 67 \\
         \hline
-        Exactas & 0{,}690 & 22 & 0{,}700 & 20 \\
+        Exactas & 0{,}584 & 22 & 0{,}684 & 14 \\
         \hline
-        Desajuste de vocabulario & 0{,}569 & 22 & 0{,}701 & 21 \\
+        Desajuste de vocabulario & 0{,}758 & 20 & 0{,}731 & 17 \\
         \hline
-        Con restricciones & 0{,}739 & 21 & 0{,}508 & 21 \\
+        Con restricciones & 0{,}730 & 21 & 0{,}914 & 19 \\
         \hline
-        Ruidosas & 0{,}657 & 20 & 0{,}482 & 19 \\
+        Ruidosas & 0{,}650 & 20 & 0{,}643 & 17 \\
         \hline
-        Inglés & 0{,}714 & 60 & 0{,}653 & 57 \\
+        Inglés & 0{,}724 & 59 & 0{,}776 & 47 \\
         \hline
-        Español & 0{,}540 & 25 & 0{,}472 & 24 \\
+        Español & 0{,}568 & 24 & 0{,}690 & 20 \\
         \hline
     \end{tabular}
 \end{table}
 
-Las dos métricas tienen distribuciones muy dispersas. La mediana de la fidelidad es 0,75: 9 respuestas obtienen 1 y 19 quedan por debajo de 0,5. La mediana de la relevancia es 0,828, pero 25 respuestas reciben 0, el valor que RAGAS asigna cuando juzga que la respuesta es evasiva.
+La relevancia no pudo calcularse en 16 respuestas (19\,\%), porque la salida del juez no tuvo el formato esperado. Las dos métricas son muy dispersas: la mediana de la fidelidad es 0,77, pero 19 respuestas quedan por debajo de 0,5 y 5 obtienen 0. Como en la primera corrida, una parte de esos valores bajos son errores del juez y no del pipeline (falla D3): asigna fidelidad 0 a respuestas cuyas cifras y títulos aparecen literalmente en el contexto. Con este juez, la Tabla~\ref{tab:res-pe2} no es una medida fiable de la fidelidad del pipeline.
 
-Una revisión de los casos extremos muestra que una parte de esos valores bajos son errores del juez y no del pipeline:
-\begin{itemize}
-    \item Cuatro respuestas tienen fidelidad 0. Tres de ellas citan datos concretos de las ofertas, y en las tres las 10 cifras de salario y los 11 títulos de cargo citados aparecen literalmente en el contexto recuperado.
-    \item Entre las respuestas con relevancia 0 hay respuestas directas, que enumeran ofertas que cumplen la consulta, por ejemplo las de las consultas exactas sobre DevOps con Kubernetes y Terraform, desarrollo \textit{full stack} con React y Node.js, y \textit{customer success manager}.
-\end{itemize}
-Por lo tanto, con este juez los valores de la Tabla~\ref{tab:res-pe2} no pueden tomarse como una medida fiable de la fidelidad del pipeline, y quedan pendientes de la corrida con el juez final.
+La instrucción de responder en el idioma de la pregunta redujo las respuestas en inglés a consultas en español de 21 de 25 en la primera corrida a 4 de 24 (falla A6).
 
-Por último, en 21 de las 25 consultas en español la respuesta se redactó en inglés, el idioma de las ofertas. La relevancia de la respuesta compara la pregunta con preguntas generadas a partir de la respuesta, mediante el modelo de \textit{embeddings} entrenado en inglés, lo que puede contribuir a la menor relevancia medida en español.
+\pendiente{Fidelidad y relevancia con el juez final, y verificación humana de una muestra de unas 30 respuestas.}
 
-\section{Latencia del pipeline (PE3)}
+\section{Latencia (PE3)}
 \label{sec:res-pe3}
 
-\subsection{Etapas propias del artefacto}
-
-La Tabla~\ref{tab:res-pe3-local} muestra la latencia de las etapas que ejecuta el propio artefacto, medida en las 85 consultas de recuperación con 30 repeticiones cada una (2.550 mediciones por etapa y por almacén). La búsqueda usa la configuración de producción, en la que PostgreSQL elige el plan de ejecución (Sección~\ref{sec:art-vectorial}).
+La Tabla~\ref{tab:res-pe3-local} compara la latencia de las etapas propias del artefacto en las dos iteraciones, con cada motor. Cada consulta se repitió 30 veces tras 5 de calentamiento. En la Iteración~2 se excluyen las dos consultas en las que actuó la compuerta, que no construyen contexto.
 
 \begin{table}[htbp!]
     \centering
-    \caption{Latencia de las etapas locales del pipeline, en milisegundos}
+    \caption{Latencia por etapa, mediana y percentil 95 en milisegundos}
     \label{tab:res-pe3-local}
+    \small
     \begin{tabular}{|l|c|c|c|c|}
         \hline
-        \multirow{2}{*}{\textbf{Etapa}} & \multicolumn{2}{c|}{\textbf{pgvector}} & \multicolumn{2}{c|}{\textbf{Qdrant}} \\
+        \multirow{2}{*}{\textbf{Etapa}} & \multicolumn{2}{c|}{\textbf{Iteración~1}} & \multicolumn{2}{c|}{\textbf{Iteración~2}} \\
         \cline{2-5}
-         & \textbf{p50} & \textbf{p95} & \textbf{p50} & \textbf{p95} \\
+         & \textbf{Qdrant} & \textbf{pgvector} & \textbf{Qdrant} & \textbf{pgvector} \\
         \hline
-        \textit{Embedding} de la consulta & 53{,}8 & 65{,}8 & 53{,}7 & 66{,}0 \\
+        \textit{Embedding} de la consulta & 53,7 / 66,0 & 53,8 / 65,8 & 13,5 / 15,9 & 13,3 / 15,6 \\
         \hline
-        Búsqueda vectorial & 25{,}3 & 28{,}0 & 3{,}7 & 5{,}2 \\
+        Búsqueda densa & 3,7 / 5,2 & 25,3 / 28,0 & 4,7 / 5,9 & 25,8 / 27,4 \\
         \hline
-        Lectura de las ofertas & 1{,}1 & 1{,}5 & 1{,}2 & 1{,}8 \\
+        BM25 & -- & -- & 0,2 / 0,6 & 0,2 / 0,6 \\
         \hline
-        Contexto completo & 80{,}5 & 93{,}1 & 59{,}0 & 71{,}5 \\
+        Fusión & -- & -- & 0,0 / 0,1 & 0,0 / 0,1 \\
         \hline
-    \end{tabular}
-\end{table}
-
-El \textit{embedding} de la consulta es la etapa local más lenta y no depende del almacén. La búsqueda vectorial es la única etapa que cambia: servida desde pgvector tarda 25,3~ms en la mediana, porque el planificador recorre la tabla completa, y servida desde Qdrant tarda 3,7~ms. Con Qdrant, el contexto completo se construye en 59,0~ms en lugar de 80,5~ms, un 27\,\% menos.
-
-\subsection{Generación}
-
-La generación depende del servicio externo (Groq) y se midió con 3 repeticiones sobre un subconjunto fijo de 30 consultas, servido desde Qdrant (90 mediciones). Las llamadas rechazadas por el límite de tasa del servicio se repitieron desde cero y no forman parte de la medición. La Tabla~\ref{tab:res-pe3-gen} muestra los resultados.
-
-\begin{table}[htbp!]
-    \centering
-    \caption{Latencia del servicio de generación, en milisegundos (90 mediciones)}
-    \label{tab:res-pe3-gen}
-    \begin{tabular}{|l|c|c|}
+        Lectura de las ofertas & 1,2 / 1,8 & 1,1 / 1,5 & 5,3 / 7,6 & 3,2 / 4,1 \\
         \hline
-        \textbf{Medida} & \textbf{p50} & \textbf{p95} \\
+        Reordenamiento & -- & -- & 811,4 / 917,9 & 792,2 / 916,2 \\
         \hline
-        Tiempo hasta el primer \textit{token} (TTFT) & 475 & 926 \\
+        Contexto completo & 59,0 / 71,5 & 80,5 / 93,1 & 835,4 / 949,7 & 833,8 / 949,6 \\
         \hline
-        Tiempo total de generación & 1.149 & 1.702 \\
+        Consultas $\times$ repeticiones & \multicolumn{2}{c|}{$85 \times 30$} & \multicolumn{2}{c|}{$83 \times 30$} \\
         \hline
     \end{tabular}
 \end{table}
 
-La generación domina la latencia del pipeline: su mediana es unas 20 veces la del contexto completo. Al sumar la mediana del contexto servido desde Qdrant (59,0~ms) a la del servicio externo, el primer \textit{token} llega al usuario en unos 0,53~s y la respuesta completa en unos 1,21~s. Se usan las medianas de la Tabla~\ref{tab:res-pe3-local} porque, durante la medición de la generación, se calculaban en paralelo las métricas de RAGAS en la misma máquina, lo que elevó la mediana del contexto registrado junto a cada respuesta a 74~ms.
+Tres observaciones resumen la tabla:
+\begin{itemize}
+    \item El \textit{embedding} de la consulta pasó de 54 a 13,5~ms porque en la Iteración~2 el modelo se ejecuta en la GPU; no es un efecto del cambio de modelo.
+    \item La búsqueda densa tarda unos 5~ms en Qdrant y unos 26~ms en pgvector, porque el planificador de PostgreSQL elige el barrido secuencial a esta escala (comportamiento M2 de la Sección~\ref{sec:art-motor}). La diferencia, de unos 21~ms, se mantiene entre iteraciones.
+    \item El reordenamiento domina la Iteración~2: 811 de los 835~ms del contexto en Qdrant (97\,\%). Con él, la diferencia entre motores desaparece en la latencia total.
+\end{itemize}
 
-\section{pgvector frente a Qdrant (PE4)}
+El reordenamiento es, por tanto, el componente que más aporta a la calidad y el que más cuesta: $+0{,}077$ de nDCG@10 a cambio de unos 0,8~s por consulta en la GPU del equipo de evaluación (Sección~\ref{sec:met-sistema}). En la Iteración~1, la generación con el proveedor externo tardaba en la mediana 0,56~s hasta el primer \textit{token} percibido y 1,23~s en total. El reordenamiento agrega a esa espera unos 0,8~s, un costo del mismo orden que la propia generación.
+
+\pendiente{Latencia de la generación en la Iteración~2 (30 consultas $\times$ 3): tiempo hasta el primer \textit{token}, percibido y total.}
+
+\section{Almacenamiento vectorial (PE4)}
 \label{sec:res-pe4}
 
-\subsection{Medición desde la aplicación}
+\subsection{A la escala del corpus real}
 
-La Tabla~\ref{tab:res-ann-real} resume una primera comparación sobre el corpus de evaluación (4.013 fragmentos), medida con el cliente de la propia aplicación. Se usaron 200 consultas formadas por títulos de ofertas del corpus y 3 repeticiones; la referencia es la búsqueda exacta en pgvector. La latencia se mide desde el cliente y corresponde a la búsqueda de 10 vecinos, sin el \textit{embedding} de la consulta.
+A la escala del corpus real, el motor no cambia la calidad: los dos devuelven listas equivalentes (Sección~\ref{sec:res-pe1}), y la búsqueda exacta en ambos coincide en el 99,75\,\% de los 10 primeros resultados de 200 consultas con los vectores multilingües (99,85\,\% con los de e5-base-v2; Sección~\ref{sec:art-vectorial}). La Tabla~\ref{tab:res-ann-real} muestra la búsqueda aislada, medida desde la aplicación.
 
 \begin{table}[htbp!]
     \centering
-    \caption{Recall@10 y latencia de búsqueda sobre el corpus real, medidas desde la aplicación}
+    \caption{\textit{Recall}@10 y latencia de la búsqueda vectorial sobre el corpus real (200 consultas, vectores multilingües)}
     \label{tab:res-ann-real}
-    \begin{tabular}{|l|c|c|c|}
+    \begin{tabular}{|l|c|c|c|c|}
         \hline
-        \textbf{Configuración} & \textbf{Recall@10} & \textbf{p50 (ms)} & \textbf{p95 (ms)} \\
+        \multirow{2}{*}{\textbf{Modo}} & \multicolumn{2}{c|}{\textbf{pgvector}} & \multicolumn{2}{c|}{\textbf{Qdrant}} \\
+        \cline{2-5}
+         & \textbf{\textit{Recall}} & \textbf{p50 (ms)} & \textbf{\textit{Recall}} & \textbf{p50 (ms)} \\
         \hline
-        pgvector, exacta & 1{,}000 & 24{,}3 & 27{,}2 \\
+        Exacto & 1{,}000 & 24,4 & 0{,}998 & 3,7 \\
         \hline
-        Qdrant, exacta & 0{,}999 & 3{,}9 & 4{,}8 \\
+        Automático (decide el planificador) & 1{,}000 & 23,8 & -- & -- \\
         \hline
-        pgvector, plan automático & 1{,}000 & 23{,}6 & 25{,}3 \\
+        HNSW, $ef_{search} = 16$ & 0{,}918 & 1,9 & 0{,}850 & 2,7 \\
         \hline
-        pgvector, HNSW $ef=16$ & 0{,}976 & 2{,}0 & 2{,}7 \\
+        HNSW, $ef_{search} = 64$ & 0{,}990 & 2,3 & 0{,}977 & 2,9 \\
         \hline
-        Qdrant, HNSW $ef=16$ & 0{,}925 & 3{,}0 & 3{,}7 \\
-        \hline
-        pgvector, HNSW $ef=64$ & 0{,}995 & 2{,}2 & 2{,}8 \\
-        \hline
-        Qdrant, HNSW $ef=64$ & 0{,}988 & 3{,}1 & 3{,}6 \\
-        \hline
-        pgvector, HNSW $ef=256$ & 0{,}999 & 3{,}2 & 3{,}8 \\
-        \hline
-        Qdrant, HNSW $ef=256$ & 0{,}998 & 3{,}5 & 4{,}1 \\
+        HNSW, $ef_{search} = 256$ & 0{,}998 & 3,1 & 0{,}998 & 3,3 \\
         \hline
     \end{tabular}
 \end{table}
 
-A esta escala se observan tres hechos:
-\begin{itemize}
-    \item Con el plan automático, pgvector recorre la tabla completa (Sección~\ref{sec:art-vectorial}), por lo que la aplicación servida desde pgvector tarda unas ocho veces más que servida desde Qdrant.
-    \item Forzando el índice, pgvector es ligeramente más rápido que Qdrant y alcanza un \textit{recall} mayor con el mismo $ef_{search}$. A este tamaño, la latencia de Qdrant está dominada por la sobrecarga del cliente y del protocolo.
-    \item Las diferencias de \textit{recall} entre los dos motores en modo exacto se deben a empates entre fragmentos idénticos.
-\end{itemize}
-
-\subsection{Benchmark sobre el corpus real}
-
-El benchmark de la Sección~\ref{sec:met-benchmark} se ejecutó sobre los 4.013 vectores del corpus real, con 1.000 consultas y cada motor solo en la máquina. A diferencia de la medición anterior, en la búsqueda sin filtro se fuerza el índice HNSW de pgvector, y con filtro se deja decidir al planificador. La Tabla~\ref{tab:res-bench-real} resume configuraciones representativas; la completitud es la proporción de consultas que devolvieron los 10 resultados pedidos.
-
-\begin{table}[htbp!]
-    \centering
-    \caption{Benchmark sobre el corpus real (mediana de 3 corridas; latencia p50 en milisegundos)}
-    \label{tab:res-bench-real}
-    \small
-    \begin{tabular}{|l|l|c|c|c|c|l|}
-        \hline
-        \textbf{Filtro} & \textbf{Motor} & \textbf{$ef$} & \textbf{Recall@10} & \textbf{Complet.} & \textbf{p50} & \textbf{Plan} \\
-        \hline
-        Ninguno & pgvector & 16 & 0{,}958 & 1{,}000 & 0{,}41 & HNSW \\
-        \hline
-        Ninguno & pgvector & 64 & 0{,}994 & 1{,}000 & 0{,}74 & HNSW \\
-        \hline
-        Ninguno & Qdrant & 16 & 0{,}917 & 1{,}000 & 1{,}37 & HNSW \\
-        \hline
-        Ninguno & Qdrant & 64 & 0{,}990 & 1{,}000 & 1{,}53 & HNSW \\
-        \hline
-        50\,\% & pgvector, sin barrido iterativo & 16 & 0{,}782 & 0{,}257 & 0{,}40 & HNSW \\
-        \hline
-        50\,\% & pgvector, \texttt{relaxed\_order} & 16 & 0{,}960 & 1{,}000 & 0{,}53 & HNSW \\
-        \hline
-        50\,\% & pgvector & 64 & 0{,}989 & 1{,}000 & 0{,}76 & HNSW \\
-        \hline
-        50\,\% & Qdrant & 16 & 1{,}000 & 1{,}000 & 2{,}09 & HNSW \\
-        \hline
-        10\,\% & pgvector & todos & 1{,}000 & 1{,}000 & 0{,}40--0{,}43 & B-tree + orden \\
-        \hline
-        10\,\% & Qdrant & todos & 1{,}000 & 1{,}000 & 1{,}24--1{,}38 & HNSW \\
-        \hline
-        1\,\% & pgvector & todos & 1{,}000 & 1{,}000 & 0{,}18--0{,}20 & B-tree + orden \\
-        \hline
-        1\,\% & Qdrant & todos & 1{,}000 & 1{,}000 & 1{,}18--1{,}41 & HNSW \\
-        \hline
-    \end{tabular}
-\end{table}
-
-A esta escala se observan cuatro hechos:
-\begin{itemize}
-    \item Sin filtro, con el mismo $ef_{search}$, pgvector alcanza un \textit{recall} igual o mayor que Qdrant y, hasta $ef = 128$, una latencia menor: 0,74~ms frente a 1,53~ms con $ef = 64$. Con $ef = 256$ las latencias se igualan y con $ef = 512$ Qdrant es más rápido (2,34~ms frente a 2,99~ms). Con 8 clientes concurrentes, pgvector atiende entre 1.700 y 6.700 consultas por segundo según $ef$, y Qdrant entre 850 y 950.
-    \item Con el filtro del 50\,\% y $ef = 16$, pgvector sin barrido iterativo devuelve los 10 resultados solo en el 25,7\,\% de las consultas y su \textit{recall} cae a 0,782: el índice entrega los vecinos más cercanos y el filtro se aplica después, descartando la mitad. El barrido iterativo (\texttt{relaxed\_order}) corrige el problema (completitud 1,000 y \textit{recall} 0,960). Desde $ef = 128$, el planificador abandona el índice y recorre la tabla. Qdrant, que aplica el filtro durante el recorrido del grafo, mantiene un \textit{recall} de 1,000 en todos los casos.
-    \item Con filtros del 10\,\% y del 1\,\%, el planificador de pgvector no usa el índice vectorial: selecciona las filas con el índice B-tree del atributo filtrado y las ordena por distancia, una búsqueda exacta sobre unos 400 vectores o menos. Por eso el \textit{recall} es 1,000 con cualquier $ef$.
-    \item La latencia de Qdrant no baja de 1,1~ms en ninguna configuración, lo que es coherente con una sobrecarga fija del cliente y del protocolo que, a esta escala, domina sobre el costo de la búsqueda (Sección~\ref{sec:met-validez}).
-\end{itemize}
-
-La construcción del índice tomó 4,1~s en pgvector y 1,0~s en Qdrant, después de una carga de 1,3~s. A esta escala, los tamaños en disco y la memoria pico reflejan sobre todo la configuración de cada motor y no el índice, por lo que se reportan junto con los conjuntos sintéticos.
+Con el índice forzado, pgvector es más rápido que Qdrant a esta escala y tiene más \textit{recall} con el mismo $ef_{search}$. En modo automático, en cambio, su planificador recorre la tabla completa y tarda unos 24~ms, frente a unos 3~ms de Qdrant. Con los vectores multilingües, HNSW pierde más \textit{recall} a $ef_{search}$ bajo que con e5-base-v2 (con $ef_{search} = 16$, 0,918 y 0,850 frente a 0,976 y 0,925), pero desde $ef_{search} = 64$ ambos motores superan 0,97. En el \textit{benchmark}, con $ef_{search} = 64$ y 8 clientes concurrentes, pgvector atiende entre 6.700 y 8.400 consultas por segundo sobre el corpus real, y Qdrant alrededor de 1.000. Con filtros del 1 y el 10\,\%, el planificador de pgvector resuelve la consulta con el índice del atributo y una búsqueda exacta sobre las filas que lo cumplen (\textit{recall} 1,0 en menos de 0,5~ms). Con un filtro del 50\,\% y $ef_{search} = 16$, sin barrido iterativo, solo el 22\,\% de las consultas obtiene la lista completa (comportamiento M1 de la Sección~\ref{sec:art-motor}).
 
 \subsection{Escalamiento con datos sintéticos}
 
-Los conjuntos sintéticos de 100.000 y 500.000 vectores y su verdad de referencia ya están generados. La calibración eligió una desviación del ruido de $\sigma = 0{,}5$, con la que la distribución de similitudes al vecino más cercano difiere de la del corpus real en un estadístico de Kolmogórov-Smirnov de 0,23 (mediana de 0,932 frente a 0,919).
+Los conjuntos sintéticos de 100.000 y 500.000 vectores se generaron con la calibración de la Sección~\ref{sec:met-benchmark}. La búsqueda en rejilla eligió una desviación del ruido de 0,5, con un estadístico de Kolmogórov-Smirnov de 0,23 frente a la distribución de similitudes al vecino más cercano del corpus real. Es el mejor ajuste que permite el generador, no un ajuste perfecto: los vecinos sintéticos se distribuyen de forma algo distinta a los reales. Por eso los resultados se interpretan como una comparación entre motores sobre los mismos datos, y no como una predicción del \textit{recall} absoluto que tendría un corpus real de ese tamaño. La Figura~\ref{fig:res-recall-latencia} muestra tres escenarios y la Tabla~\ref{tab:res-bench-sint} resume los puntos con $ef_{search} = 64$.
 
-\pendiente{Benchmark de 100.000 y 500.000 vectores (corrida programada): curvas \textit{recall}@10 frente a latencia por escala y por selectividad del filtro, y tabla de tiempo de construcción, tamaño del índice, memoria pico y QPS.}
+\begin{figure}[htbp!]
+    \centering
+    \includegraphics[width=\textwidth]{resultados/recall-latency.pdf}
+    \caption{\textit{Recall}@10 frente a la latencia mediana para $ef_{search} \in \{16, \ldots, 512\}$ (mediana de tres corridas). En el corpus real y sin filtro, pgvector usa el índice forzado.}
+    \label{fig:res-recall-latencia}
+\end{figure}
+
+\begin{table}[htbp!]
+    \centering
+    \caption{\textit{Benchmark} sintético con $ef_{search} = 64$: \textit{recall}@10, latencia mediana (ms) y completitud (mediana de tres corridas)}
+    \label{tab:res-bench-sint}
+    \small
+    \begin{tabular}{|l|l|c|c|c|}
+        \hline
+        \textbf{Datos y filtro} & \textbf{Motor} & \textbf{\textit{Recall}} & \textbf{p50} & \textbf{Completitud} \\
+        \hline
+        \multirow{2}{*}{100.000, sin filtro} & pgvector & 0{,}948 & 0,88 & 1{,}00 \\
+         & Qdrant & 0{,}980 & 2,27 & 1{,}00 \\
+        \hline
+        \multirow{3}{*}{100.000, filtro del 10\,\%} & pgvector & 0{,}603 & 1,00 & 0{,}09 \\
+         & pgvector, barrido iterativo & 0{,}914 & 1,81 & 1{,}00 \\
+         & Qdrant & 0{,}975 & 1,83 & 1{,}00 \\
+        \hline
+        \multirow{2}{*}{500.000, sin filtro} & pgvector & 0{,}816 & 1,01 & 1{,}00 \\
+         & Qdrant & 0{,}950 & 2,33 & 1{,}00 \\
+        \hline
+        \multirow{3}{*}{500.000, filtro del 10\,\%} & pgvector & 0{,}531 & 1,00 & 0{,}10 \\
+         & pgvector, barrido iterativo & 0{,}840 & 1,37 & 1{,}00 \\
+         & Qdrant & 0{,}974 & 2,31 & 1{,}00 \\
+        \hline
+        \multirow{4}{*}{500.000, filtro del 1\,\%} & pgvector & 0{,}059 & 0,99 & 0{,}00 \\
+         & pgvector, barrido iterativo & 0{,}876 & 9,77 & 1{,}00 \\
+         & pgvector, búsqueda exacta forzada & 1{,}000 & 9,03 & 1{,}00 \\
+         & Qdrant & 0{,}982 & 1,73 & 1{,}00 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Sin filtro, con el mismo $ef_{search}$, Qdrant obtiene más \textit{recall} a medida que crece la escala (con 500.000 vectores y $ef_{search} = 64$, 0,950 frente a 0,816). A \textit{recall} igualado no hay un ganador claro: con un \textit{recall} de 0,95, pgvector es más rápido ($ef_{search} = 256$, 1,88~ms, frente a Qdrant con $ef_{search} = 64$, 2,33~ms), y con 0,98 lo es Qdrant ($ef_{search} = 128$, 3,30~ms, frente a pgvector con $ef_{search} = 512$, 4,21~ms).
+
+Con filtros, la diferencia es clara. Sin barrido iterativo, pgvector devuelve listas incompletas: con 500.000 vectores, ninguna consulta obtiene la lista completa con un filtro del 1\,\%, y solo el 10\,\% con un filtro del 10\,\%. El barrido iterativo completa las listas, pero con el filtro del 1\,\% el \textit{recall} se estanca entre 0,87 y 0,90 en todo el rango de $ef_{search}$ y la latencia sube a unos 10~ms. Qdrant mantiene listas completas y un \textit{recall} de al menos 0,97 desde $ef_{search} = 64$ con todos los filtros y escalas, por ejemplo 0,982 en 1,73~ms con el filtro del 1\,\% y 500.000 vectores. Con 100.000 vectores y el filtro del 1\,\%, el planificador de pgvector vuelve a elegir la búsqueda exacta sobre las filas filtradas, con \textit{recall} 1,0 en aproximadamente 1~ms.
+
+El estancamiento de pgvector con el filtro del 1\,\% y 500.000 vectores no se debe a los límites del barrido iterativo. Una medición adicional, en las mismas condiciones, aumentó el número máximo de tuplas recorridas (\texttt{hnsw.max\_scan\_tuples}) de 20.000, el valor por defecto, a 100.000 y a 500.000, y la memoria del barrido hasta ocho veces: el \textit{recall} siguió en 0,876. El modo de orden estricto lo empeoró (0,674 con $ef_{search} = 64$). Una explicación compatible es que el barrido se detiene en cuanto reúne las $k$ filas que cumplen el filtro, que son las primeras que encuentra al recorrer el grafo y no necesariamente las más cercanas. En cambio, al impedir el uso del índice HNSW, el planificador resolvió la consulta con el índice del atributo y una búsqueda exacta sobre las 5.000 filas filtradas: \textit{recall} 1,0 en 9,03~ms, la misma latencia que el barrido iterativo. A esta escala y selectividad, el planificador de pgvector elige el índice HNSW cuando la búsqueda exacta sería igual de rápida y exacta; aun así, Qdrant es unas cinco veces más rápido.
+
+En recursos, con 500.000 vectores, pgvector cargó los datos en 16~s y construyó el índice en 133~s; Qdrant tardó 77 y 360~s. pgvector ocupó 4,1~GB de tabla y 2,0~GB de índice, y Qdrant 1,86~GB en total. La memoria pico fue de 7,8~GB en PostgreSQL, con 4~GB de \textit{shared buffers}, y de 4,1~GB en Qdrant. Por esa memoria no se evaluó un conjunto de un millón de vectores (Sección~\ref{sec:met-benchmark}).
+
+Con 8 clientes concurrentes, pgvector atiende más consultas por segundo que Qdrant en casi todos los puntos, por ejemplo unas 2.400 frente a unas 900 con 500.000 vectores sin filtro. Ambas cifras se miden desde clientes en Python, con el protocolo de PostgreSQL y con gRPC respectivamente, sobre una sola máquina, de modo que reflejan también el costo de cada cliente (Sección~\ref{sec:met-validez}).
+
+El \textit{benchmark} se repitió con los vectores de e5-base-v2. Los \textit{recall} fueron entre 0,01 y 0,09 mayores en los mismos puntos, y todas las conclusiones anteriores se mantuvieron.
 
 \section{Discusión}
-\pendiente{Respuesta a cada pregunta de evaluación, relación con la literatura revisada en el Capítulo~\ref{cap:estado-arte} y limitaciones observadas.}
+\label{sec:res-discusion}
+
+\pendiente{Se redacta con la corrida final. Estructura prevista:}
+\begin{itemize}
+    \item \pendiente{Respuesta a cada pregunta de evaluación y a cada hipótesis: H1 (densa frente a BM25 y mayor ventaja en desajuste de vocabulario), H2 (filtros y reordenamiento sí; búsqueda híbrida no), H3 (el motor no limita a la escala real; Qdrant aventaja a pgvector con filtros selectivos a gran escala).}
+    \item \pendiente{El resultado nulo de la búsqueda híbrida frente a la literatura: BM25 es más débil que la densa en este corpus, sobre todo en español, y RRF con $k = 60$ sin ajustar le da el mismo peso; \citet{Bruch2023} anticipan la sensibilidad de RRF y la ventaja de una combinación convexa.}
+    \item \pendiente{El costo del reordenamiento frente a su aporte, y alternativas: menos candidatas, un modelo más pequeño o ejecutarlo solo cuando la primera etapa es incierta.}
+    \item \pendiente{Las fallas silenciosas: la fluidez del LLM enmascara defectos de recuperación, de datos y de enrutamiento; evaluar un sistema RAG exige verificar componente por componente y no solo la respuesta final (Sección~\ref{sec:art-fallas}; \citealp{Barnett2024}).}
+    \item \pendiente{Limitaciones: juez, tamaño del corpus, un solo dominio e idioma de las ofertas, consultas redactadas por el autor.}
+\end{itemize}
