@@ -9,7 +9,47 @@
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
-## ▶ Estado al 19-oct-2026 — LEER PRIMERO
+## ▶ Estado al 1-nov-2026 — LEER PRIMERO
+
+**Entre el 19-oct y el 1-nov no hubo avances** (el autor lo confirmó: nada fuera del repositorio). La ventana de la corrida final (26-oct a 1-nov) pasó sin la corrida: falta la anotación de calibración, que decide el juez. Siguen pendientes la revisión de los borradores del director (pasos 1-2 de "Estado al 19-oct") y todo lo demás de esa sección.
+
+**Cronograma nuevo (adoptado por el autor el 1-nov; reemplaza las filas 26-oct en adelante del "Cronograma resumen"):**
+
+| Fechas | Qué | Quién |
+|---|---|---|
+| 1-3 nov | Anotar los 103 pares de calibración; revisar los borradores `*-director.tex` y pasarlos a `MainMatter/` | Autor (Claude pasa los borradores al aprobarlos) |
+| 4-5 nov | Comprobación de calibración (<1 USD) → corrida final con el juez elegido (~8 USD con GPT-4o) → `metrics.py`, `figures.py`, RAGAS | Claude, con aprobación del gasto |
+| 6-12 nov | Resultados finales (quitar los avisos de provisional), Discusión por PE, Conclusiones, resumen y abstract. En paralelo, el autor anota los 298 pares de validación → `kappa.py` (y plan B si κ ≤ 0,60) | Claude redacta, autor revisa y anota |
+| 13-15 nov | Envío al director (antes: *fast-forward* de `main`, etiqueta, `\pendiente` del Anexo C) | Autor |
+| 16-22 nov | Ajustes del director | |
+| 23-30 nov | Entrega final y sustentación | |
+
+**Claves de API (1-nov):** el autor solo tiene la de **Anthropic**. Hace falta una de **OpenAI antes del 4-nov** (GPT-4o es el juez principal; GPT-6 Sol entra en la comprobación). La parte de Sonnet 5.5 de la comprobación puede correr apenas estén los 103 pares (con aprobación del gasto).
+
+**Hecho el 1-nov:**
+- Servicios arriba (`docker compose up -d postgres qdrant embedding-server`; `/health` → `cuda`; `eval_job_chunks` 4.013 puntos; `jobpostings_eval` 1.068 ofertas en la tabla `Job`).
+- **Latencia de la generación, Iteración 2: corrida válida** `evaluation/runs/2026-11-01T17-44-24-a951cf6-latency-qdrant-test-full-generation` (12:44-13:43, `--delay-ms 35000`, las mismas 30 consultas × 3 que la Iteración 1; el `-dirty` del nombre se debe a la bitácora y a los archivos nuevos, `backend/` no tenía cambios). 2 de 90 generaciones con TTFT > 2,5 s (Iteración 1: 1 de 90). Hubo dos 429 (12:44 y 13:21): el arnés los recibió, esperó 60 s y repitió la medición, así que la corrección de D6 funciona. Medianas: clasificación 0,57 s · contexto 0,80 s · TTFT 0,50 s · generación 1,45 s · TTFT percibido 1,96 s · total 2,85 s (p95: 1,50 · — · 1,06 · 2,15 · 3,07 · 4,33).
+  - **Ojo, la definición cambió entre versiones del arnés.** En la Iteración 1 (`2026-10-14T01-06-11-717ba41-dirty-latency-qdrant-generation`, arnés de `185e185`) `perceivedTtftMs` = contexto + TTFT y `totalMs` = contexto + generación; el arnés actual les suma la clasificación (`classifyMs`, que antes no se medía). **0,56 s frente a 1,96 s no es comparable.** Con la definición de la Iteración 1, la Iteración 2 da contexto + TTFT **1,31 s** (Iteración 1: 0,56) y contexto + generación **2,26 s** (1,23). El TTFT del generador no cambia (0,48 → 0,50); la diferencia es el reordenamiento (contexto 0,06 → 0,80 s).
+  - La clasificación ya existía en la Iteración 1 con la misma regla de atajo (`RETRIEVAL_PATTERN` sin restricción → sin LLM): en la muestra, 29 de las 30 consultas llaman al LLM en ambas iteraciones (solo `en-sv-05` lo evita). Pero el *prompt* del clasificador cambió, así que su costo en la Iteración 1 no se conoce.
+  - **Decisiones del autor (1-nov):** (a) PE3 compara **por componente** con la misma definición; la clasificación se reporta solo para la Iteración 2; (b) el cambio de definición se registra como **falla D7 del arnés** (coherente con D5: detectada antes de reportar una cifra errónea). Conteos: **19 fallas = 12 del artefacto + 7 del arnés**; el resumen y el abstract no cambian (solo cuentan las del artefacto). No se cambió el código del arnés: la corrección es del análisis.
+  - **Escrito en borradores (1-nov):** `cap5-director.tex` §PE3: tabla nueva `tab:res-pe3-generacion` (Tabla 6.9, p. 54 de la vista previa) y párrafo; §6.7: fila D7, descripción D7, "19 fallas … 12 del artefacto y 7 del propio arnés" y "Las siete fallas del arnés"; \pendiente de la Discusión de PE3 con las cifras. `cap3-director.tex` §Latencia: definición "La latencia percibida hasta el primer token es la suma, en cada solicitud, de la clasificación, la construcción del contexto y el TTFT". Vista previa recompilada: **85 págs.**, sin errores ni referencias rotas; Resultados 47-66.
+  - **Cifras de la tabla** (mediana / p95 en s, percentil con la interpolación de `run-context.ts`; las sumas se calculan por generación): clasificación — / 0,57-1,50 · contexto 0,07-0,16 / 0,80-0,93 · TTFT 0,48-0,93 / 0,50-1,06 · generación 1,15-1,70 / 1,45-2,15 · contexto+TTFT 0,56-1,10 / 1,31-2,00 · contexto+generación 1,23-1,84 / 2,26-3,14 · clasificación+contexto+TTFT — / 1,96-3,07 · clasificación+contexto+generación — / 2,85-4,33 (Iteración 1 / Iteración 2). Longitud de respuesta, mediana: 1.354 → 1.666 caracteres. Mismo modelo (`qwen/qwen3.8-27b`), temperatura 0, semilla 42 y mismos pares (consulta, repetición) en ambas corridas.
+- **Pool de calibración:** `evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full/calibration/` con `pool.jsonl` (los 103 pares `split=calibration` de `kappa-key.jsonl`, 51 necesidades; se verificó que todos están en el pool de la corrida) y una copia de `queries.jsonl`. Los qrels que escriba `eval:judge` ahí no se usan; lo que importa es la caché del juez en `evaluation/judgments/`, que lee `kappa.py`. Validado con el juez local (todo en caché): "103 pairs (0 newly judged, 0 unparseable)"; el qrels de esa prueba se borró.
+- **Anotador en terminal** `evaluation/analysis/annotate.py` (solo Python estándar, sin Docker). Desde la raíz: `python3 evaluation/analysis/annotate.py evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full/kappa-sample.csv` (por defecto `--split calibration`; luego `--split validation`). Muestra un par a la vez, acepta `0-3 [nota]`, `s` saltar, `a` volver a la anterior, `q` salir; guarda tras cada respuesta (escritura atómica, mismo formato que `eval:kappa-export`: se verificó que leer y reescribir deja el archivo idéntico byte a byte) y retoma donde quedó. No muestra la etiqueta del juez. Decodifica las entidades HTML (`&#x27;`) solo en pantalla; el CSV no cambia. Probado sobre una copia; **`kappa-sample.csv` no se tocó** y no se debe abrir mientras el autor anota.
+
+**Comprobación de calibración** (cuando el autor avise que terminó los 103; desde `backend/`, `C=../evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full/calibration`, `DATABASE_URL=postgresql://postgres:postgres@localhost:5432/jobpostings_eval`, clave en `JUDGE_API_KEY`):
+- Sonnet 5.5: `node dist/src/cli/main.js eval:judge --run $C --judge-provider anthropic --judge-model claude-sonnet-5-5 --judge-temperature none --judge-thinking between_tools`
+- GPT-4o: `… eval:judge --run $C --judge-base-url https://api.openai.com/v1 --judge-model gpt-4o` (antes, anotar con un `curl` el *snapshot* de `gpt-4o`).
+- GPT-6 Sol: `… eval:judge --run $C --judge-base-url https://api.openai.com/v1 --judge-model gpt-6-sol --judge-reasoning-effort none`
+- Luego, desde la raíz: `docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/work -w /work jobai-analysis python evaluation/analysis/kappa.py <run> --labels <run>/kappa-sample.csv --judgments evaluation/judgments/<juez1>.jsonl evaluation/judgments/<juez2>.jsonl …` y aplicar la regla fijada (GPT-4o solo se reemplaza si otro supera su κ binario de calibración en más de 0,05). `kappa.py` admite la anotación parcial y reporta cada *split* por separado.
+
+**Próximos pasos, en orden:**
+1. Autor: anotar los 103 pares de calibración con `annotate.py` y avisar. Revisar los borradores del director (puntos del paso 1 de "Estado al 19-oct").
+2. Autor: conseguir la clave de OpenAI antes del 4-nov.
+3. ~~Claude: escribir PE3 con el resultado de la latencia~~ **Hecho el 1-nov** (ver arriba). Autor: revisarlo junto con el resto de los borradores (Tabla 6.9, D7 y la frase nueva de Metodología §Latencia).
+4. Comprobación de calibración → corrida final → Fase C, según el cronograma de arriba.
+
+## Estado al 19-oct-2026 (historial: superado por "▶ Estado al 1-nov")
 
 **Respuesta del director (19-oct), registrada literal en `respuesta-director.md`:** cambiar el título del Cap. 2 ("preliminares de la investigación"); la pregunta y los objetivos están bien; **quitar las hipótesis**; **sintetizar Metodología (Cap. 4) y Artefacto (Cap. 5)**, con el peso en Resultados y Conclusiones; poner el **enlace del repositorio**. No respondió P2 (juez LLM) ni P4 (fechas): "hay que ir finalizando".
 
