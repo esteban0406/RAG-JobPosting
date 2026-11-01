@@ -175,7 +175,7 @@ La Tabla~\ref{tab:met-metricas} resume las métricas de cada pregunta de evaluac
     \end{tabular}
 \end{table}
 
-La latencia se mide en cada etapa del pipeline, desde la clasificación hasta el tiempo hasta el primer \textit{token} generado (TTFT) y el tiempo total. La de la generación, que depende de un servicio externo, se reporta aparte, y durante su medición se desactivan los reintentos automáticos del cliente, para que la espera por límite de uso no se cuente como latencia (falla D6, Sección~\ref{sec:res-fallas}).
+La latencia se mide en cada etapa del pipeline, desde la clasificación hasta el tiempo hasta el primer \textit{token} generado (TTFT) y el tiempo total. La latencia percibida hasta el primer \textit{token} es la suma, en cada solicitud, de la clasificación, la construcción del contexto y el TTFT. La de la generación, que depende de un servicio externo, se reporta aparte, y durante su medición se desactivan los reintentos automáticos del cliente, para que la espera por límite de uso no se cuente como latencia (falla D6, Sección~\ref{sec:res-fallas}).
 
 \section{Benchmark de almacenes vectoriales}
 \label{sec:met-benchmark}
