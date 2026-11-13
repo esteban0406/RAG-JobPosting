@@ -39,10 +39,11 @@ Commands:
   eval:judge --run <run dir> [--judge-provider openai-compatible|anthropic]
              [--judge-model llama3.1:8b] [--judge-base-url URL] [--concurrency 2]
              [--judge-temperature 0|none] [--judge-reasoning-effort none] [--judge-thinking between_tools]
+             [--judge-max-tokens 64]
       Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.
       Final judge: --judge-base-url https://api.openai.com/v1 --judge-model gpt-4o.
       Plan B: --judge-provider anthropic --judge-model claude-sonnet-5-5
-              --judge-temperature none --judge-thinking between_tools.
+              --judge-temperature none --judge-thinking between_tools --judge-max-tokens 1024.
   eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n]
       Answer the retrieval queries through the RAG path; cache answers, record timings.
   eval:kappa-export --run <run dir> --judgments <judge.jsonl> [--rate 0.2] [--calibration-share 0.25] [--seed 42]
@@ -105,6 +106,7 @@ async function main(): Promise<number> {
       'judge-temperature': { type: 'string', default: '0' },
       'judge-reasoning-effort': { type: 'string' },
       'judge-thinking': { type: 'string' },
+      'judge-max-tokens': { type: 'string' },
       concurrency: { type: 'string', default: '2' },
       temperature: { type: 'string', default: '0' },
       'delay-ms': { type: 'string', default: '2000' },
@@ -198,6 +200,9 @@ async function main(): Promise<number> {
             temperature: judgeTemperature(values['judge-temperature']),
             reasoningEffort: values['judge-reasoning-effort'],
             thinking: values['judge-thinking'],
+            maxTokens: values['judge-max-tokens']
+              ? Number(values['judge-max-tokens'])
+              : undefined,
           },
           concurrency: Number(values.concurrency),
         });

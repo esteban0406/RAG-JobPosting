@@ -281,6 +281,28 @@ describe('judge providers', () => {
     });
   });
 
+  it('raises max_tokens and tags the id only when it differs from 64', () => {
+    const judge = new AnthropicJudge({
+      provider: 'anthropic',
+      model: 'claude-sonnet-5-5',
+      temperature: null,
+      thinking: 'between_tools',
+      maxTokens: 1024,
+    });
+    expect(judge.id).toBe(
+      'anthropic:claude-sonnet-5-5@temperature=default,thinking=between_tools,max_tokens=1024',
+    );
+    expect(judge.requestBody('p')).toMatchObject({ max_tokens: 1024 });
+    expect(
+      new OpenAiCompatibleJudge({
+        provider: 'openai-compatible',
+        model: 'gpt-4o',
+        baseUrl: 'https://api.openai.com/v1',
+        maxTokens: 64,
+      }).id,
+    ).toBe('api.openai.com:gpt-4o');
+  });
+
   it('keeps the original Anthropic request with the default settings', () => {
     const judge = new AnthropicJudge({
       provider: 'anthropic',

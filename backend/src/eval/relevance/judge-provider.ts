@@ -18,6 +18,9 @@ export interface JudgeConfig {
   // Anthropic only: thinking.type, e.g. "between_tools" (thinking off on
   // Claude Sonnet 5.5) or "disabled" (Claude Haiku 5.5).
   thinking?: string;
+  // 64 by default, enough for "##final score: N". Claude Sonnet 5.5 sometimes
+  // reasons before the score despite the prompt and is cut off at 64.
+  maxTokens?: number;
 }
 
 const MAX_TOKENS = 64;
@@ -29,6 +32,9 @@ function settingsSuffix(config: JudgeConfig): string {
     config.temperature === null ? 'temperature=default' : undefined,
     config.reasoningEffort ? `reasoning=${config.reasoningEffort}` : undefined,
     config.thinking ? `thinking=${config.thinking}` : undefined,
+    config.maxTokens && config.maxTokens !== MAX_TOKENS
+      ? `max_tokens=${config.maxTokens}`
+      : undefined,
   ].filter(Boolean);
   return parts.length ? `@${parts.join(',')}` : '';
 }
@@ -45,6 +51,7 @@ export class OpenAiCompatibleJudge implements JudgeProvider {
 
   requestBody(prompt: string): Record<string, unknown> {
     const temperature = this.config.temperature ?? 0;
+    const maxTokens = this.config.maxTokens ?? MAX_TOKENS;
     return {
       model: this.config.model,
       messages: [{ role: 'user', content: prompt }],
@@ -52,9 +59,9 @@ export class OpenAiCompatibleJudge implements JudgeProvider {
       ...(this.config.reasoningEffort
         ? {
             reasoning_effort: this.config.reasoningEffort,
-            max_completion_tokens: MAX_TOKENS,
+            max_completion_tokens: maxTokens,
           }
-        : { max_tokens: MAX_TOKENS }),
+        : { max_tokens: maxTokens }),
     };
   }
 
@@ -92,7 +99,7 @@ export class AnthropicJudge implements JudgeProvider {
     const temperature = this.config.temperature ?? 0;
     return {
       model: this.config.model,
-      max_tokens: MAX_TOKENS,
+      max_tokens: this.config.maxTokens ?? MAX_TOKENS,
       ...(this.config.temperature !== null && { temperature }),
       ...(this.config.thinking && { thinking: { type: this.config.thinking } }),
       messages: [{ role: 'user', content: prompt }],
