@@ -1,0 +1,44 @@
+{
+  "judge": "localhost_11434_llama3.1_8b",
+  "prompt_version": "umbrela-jobs-v2",
+  "calibration": {
+    "n": 103,
+    "exact_agreement": 0.49514563106796117,
+    "kappa_binary": 0.3678479509008118,
+    "kappa_binary_ci95": [
+      0.1862490365250254,
+      0.530997875457167
+    ],
+    "kappa_quadratic": 0.44210526315789456,
+    "kappa_quadratic_ci95": [
+      0.27883299776707315,
+      0.5966269668915687
+    ],
+    "confusion_rows_human_cols_judge": [
+      [
+        9,
+        5,
+        2,
+        0
+      ],
+      [
+        3,
+        6,
+        5,
+        2
+      ],
+      [
+        8,
+        2,
+        10,
+        3
+      ],
+      [
+        7,
+        5,
+        10,
+        26
+      ]
+    ]
+  }
+}

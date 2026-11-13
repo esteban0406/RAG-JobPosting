@@ -1,0 +1,44 @@
+{
+  "judge": "api.openai.com_gpt-4o",
+  "prompt_version": "umbrela-jobs-v2",
+  "calibration": {
+    "n": 103,
+    "exact_agreement": 0.23300970873786409,
+    "kappa_binary": 0.18502738892270243,
+    "kappa_binary_ci95": [
+      0.10233342704526271,
+      0.2869321623234547
+    ],
+    "kappa_quadratic": 0.341880341880342,
+    "kappa_quadratic_ci95": [
+      0.23909765551878714,
+      0.44684589700867167
+    ],
+    "confusion_rows_human_cols_judge": [
+      [
+        14,
+        2,
+        0,
+        0
+      ],
+      [
+        13,
+        3,
+        0,
+        0
+      ],
+      [
+        10,
+        13,
+        0,
+        0
+      ],
+      [
+        7,
+        22,
+        12,
+        7
+      ]
+    ]
+  }
+}
