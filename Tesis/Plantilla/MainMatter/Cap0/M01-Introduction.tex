@@ -15,7 +15,7 @@ El objetivo general es evaluar en qué medida un pipeline RAG aplicado a la bús
     \item Aplicar el protocolo para mejorar el pipeline de JobAI en dos iteraciones de diseño y evaluación.
     \item Cuantificar el aporte de cada componente frente a BM25 y a la búsqueda de la plataforma, junto con su costo en latencia y el efecto del motor de almacenamiento vectorial.
 \end{enumerate}
-El Capítulo~\ref{cap:problema} desarrolla el planteamiento completo y formula tres hipótesis.
+El Capítulo~\ref{cap:problema} desarrolla el planteamiento completo.
 
 \section*{Metodología}
 
@@ -31,6 +31,8 @@ El centro del trabajo es un protocolo de evaluación con cuatro elementos:
 Además se mide la fidelidad de las respuestas, la latencia de cada etapa y el comportamiento de dos motores de almacenamiento vectorial, pgvector y Qdrant, con datos reales y sintéticos.
 
 El protocolo se aplica en dos iteraciones. La primera, de \emph{corrección}, hace que el artefacto haga lo que su documentación describe: corrige las fallas que la preparación de la evaluación reveló y pone el almacenamiento vectorial detrás de una interfaz común. La segunda, de \emph{mejora}, incorpora los componentes de recuperación cuyo aporte se mide.
+
+El código del artefacto y del arnés de evaluación, los conjuntos de consultas, los juicios de relevancia y los resultados de cada corrida están disponibles en el repositorio \url{https://github.com/esteban0406/RAG-JobPosting}. El Anexo~\ref{anx:repositorio} indica dónde se encuentra cada componente.
 
 \section*{Alcance}
 
@@ -49,10 +51,11 @@ El trabajo ofrece tres aportes:
 
 Además de esta introducción, el documento tiene seis capítulos:
 \begin{itemize}
-    \item El Capítulo~\ref{cap:problema} plantea el problema, la pregunta, las hipótesis, los objetivos y el marco conceptual.
+    \item El Capítulo~\ref{cap:problema} presenta los preliminares de la investigación: el problema, la pregunta, los objetivos, la justificación, el alcance y el marco conceptual.
     \item El Capítulo~\ref{cap:estado-arte} revisa la literatura organizada en torno a los componentes del pipeline.
-    \item El Capítulo~\ref{cap:metodologia} detalla el protocolo de evaluación.
-    \item El Capítulo~\ref{cap:artefacto} describe la arquitectura de JobAI, las dos iteraciones de diseño y las fallas que la evaluación reveló.
-    \item El Capítulo~\ref{cap:resultados} presenta y discute los resultados.
+    \item El Capítulo~\ref{cap:metodologia} sintetiza el protocolo de evaluación.
+    \item El Capítulo~\ref{cap:artefacto} sintetiza la arquitectura de JobAI y las dos iteraciones de diseño.
+    \item El Capítulo~\ref{cap:resultados} presenta los resultados de la evaluación, incluidas las fallas que reveló, y los discute.
     \item El Capítulo~\ref{cap:conclusiones} responde a cada objetivo específico y propone trabajo futuro.
 \end{itemize}
+Los anexos reúnen los detalles del protocolo y del artefacto que el cuerpo del documento resume, y un mapa del repositorio.

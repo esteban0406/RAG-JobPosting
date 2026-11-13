@@ -33,6 +33,8 @@
 \renewcommand{\thesection}{\thechapter.\arabic{section}}
 % NTC 1486 usa "Tabla"; babel en espa\~nol usa "Cuadro" por defecto.
 \addto\captionsspanish{\renewcommand{\tablename}{Tabla}}
+% NTC 1486 usa "Anexo"; babel en espa\~nol usa "Ap\'endice" por defecto.
+\addto\captionsspanish{\renewcommand{\appendixname}{Anexo}}
 
 % Marca visible para datos que se completar\'an con los resultados de la evaluaci\'on.
 \newcommand{\pendiente}[1]{\textcolor{red}{[Pendiente: #1]}}
@@ -84,7 +86,7 @@
     \input{MainMatter/Cap0/M01-Introduction}
     
     % Capitulo 1
-    \chapter{Planteamiento del problema y marco te\'orico}
+    \chapter{Preliminares de la investigaci\'on}
     \label{cap:problema}
     \input{MainMatter/Cap1/M02-Chapter1}
     
@@ -114,9 +116,9 @@
     \input{MainMatter/Cap9/M10-Conclusiones}
     
     
-    % Anexos (Opcional)
-    % \chapter*{Anexos}
-    % \input{BackMatter/B01-Anexos}
+    % Anexos: cada \chapter de B01-Anexos es un anexo (A, B, C...)
+    \appendix
+    \input{BackMatter/B01-Anexos}
     
     % Indices (Opcional)
     % \chapter*{\'Indices}

@@ -22,17 +22,6 @@ Este trabajo estudia ambos vacíos con un caso concreto: JobAI, una plataforma d
 
 La forma de evaluar un artefacto que ya existía es una decisión metodológica, no una pregunta de investigación. Se trata en el Capítulo~\ref{cap:metodologia}.
 
-\section{Hipótesis}
-\label{sec:hipotesis}
-
-La pregunta se descompone en tres hipótesis, que la evaluación contrasta en el Capítulo~\ref{cap:resultados}:
-
-\begin{description}
-    \item[H1.] La recuperación densa supera a BM25 en nDCG@10, y la diferencia es mayor en las consultas con desajuste de vocabulario.
-    \item[H2.] Los filtros estructurados, la búsqueda híbrida y el reordenamiento aportan mejoras adicionales y medibles sobre la recuperación densa.
-    \item[H3.] A la escala del corpus real, el motor de almacenamiento vectorial (pgvector o Qdrant) no limita la calidad ni la latencia percibida. Las diferencias aparecen solo a mayor escala y con filtros selectivos.
-\end{description}
-
 \section{Objetivos}
 
 \subsection{Objetivo general}
@@ -99,7 +88,7 @@ Evaluar un sistema RAG exige medir por separado la recuperación y la generació
 
 \subsection{Bases de datos vectoriales y búsqueda por similitud}
 
-Un \textit{embedding} es una representación vectorial de un texto en un espacio donde la cercanía entre vectores, típicamente medida con la similitud coseno, refleja la cercanía semántica entre los textos. Recuperar los fragmentos más relevantes equivale a buscar los vecinos más cercanos del vector de la consulta. Como la búsqueda exacta es costosa a gran escala, se usan algoritmos de búsqueda \emph{aproximada} de vecinos (ANN). El más influyente es HNSW \citep{Malkov2020}, un grafo jerárquico de navegación con búsquedas en tiempo aproximadamente logarítmico. Estos algoritmos se ofrecen como extensión de un motor relacional, como pgvector sobre PostgreSQL, o dentro de un motor dedicado a vectores, como Qdrant o Milvus. Cuál conviene depende de la escala y del uso de filtros; el Capítulo~\ref{cap:estado-arte} revisa la evidencia y este trabajo lo contrasta empíricamente (hipótesis H3).
+Un \textit{embedding} es una representación vectorial de un texto en un espacio donde la cercanía entre vectores, típicamente medida con la similitud coseno, refleja la cercanía semántica entre los textos. Recuperar los fragmentos más relevantes equivale a buscar los vecinos más cercanos del vector de la consulta. Como la búsqueda exacta es costosa a gran escala, se usan algoritmos de búsqueda \emph{aproximada} de vecinos (ANN). El más influyente es HNSW \citep{Malkov2020}, un grafo jerárquico de navegación con búsquedas en tiempo aproximadamente logarítmico. Estos algoritmos se ofrecen como extensión de un motor relacional, como pgvector sobre PostgreSQL, o dentro de un motor dedicado a vectores, como Qdrant o Milvus. Cuál conviene depende de la escala y del uso de filtros; el Capítulo~\ref{cap:estado-arte} revisa la evidencia y el Capítulo~\ref{cap:resultados} la contrasta con datos reales y sintéticos.
 
 \subsection{Design Science Research}
 \label{sec:marco-teorico-dsr}
