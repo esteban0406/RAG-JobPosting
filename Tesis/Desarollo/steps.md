@@ -9,7 +9,29 @@
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
-## ▶ Estado al 12-nov-2026 — LEER PRIMERO
+## ▶ Estado al 14-nov-2026 — LEER PRIMERO
+
+**Hecho por el autor (13-14 nov):** revisión ciega de los 103 pares de calibración (la anotó en una copia, `calibration-review-graded.csv`; se renombró a `calibration-review.csv` para `merge`). Hoja verificada: mismas filas y textos que la generada, 103 notas, sin notas de texto.
+
+**Hecho el 14-nov:**
+- `calibration_review.py merge` → `kappa-sample.csv` (validación intacta: 0 de 298) y `calibration-review-report.json`. Disputados (63): 42 notas cambian, **34 cruzan la línea de 2** (33 hacia abajo, 1 hacia arriba: #395 1→2). Relleno (40, de acuerdo con los cuatro jueces): 9 cambian, **0 cruzan** (consistencia del anotador). Distribución nueva 0/1/2/3 = 23/41/14/25 (≥ 2: 39; antes 71). Las notas viejas siguen en `d80c753`.
+- **κ con las etiquetas revisadas** (n=103, binario [IC 95 %] / ponderado; `kappa-<juez>.json` sobrescritos, los anteriores en git): **Sonnet 5.5 (1024) 0,828 [0,707; 0,935] / 0,884** · **GPT-6 Sol 0,806 [0,668; 0,916] / 0,886** · juez local 0,604 [0,456; 0,733] / 0,688 · GPT-4o 0,541 [0,372; 0,691] / 0,664.
+- **Regla aplicada:** GPT-4o se reemplaza (los dos candidatos lo superan en > 0,25). La regla no dice por cuál; Sonnet y GPT-6 Sol difieren en 0,022 (< 0,05).
+- **Para Metodología/Resultados (declarar):** la revisión no es independiente de los jueces (antes se mostraron 10 ejemplos con la dirección del juez, y las notas se movieron hacia ellos), así que el κ de calibración solo sirve para elegir el juez; **el κ que se reporta como validación del juez es el de los 298 pares de validación**, anotados después y sin ver ningún juez. El relleno sin cruces se reporta como consistencia.
+- Precios (consultados el 14-nov): GPT-6 Sol 2 / 10 USD por millón de *tokens* de entrada/salida (0,20 en caché); Sonnet 5.5 2 / 10 USD. Estimación por caracteres/4: ~1.100 *tokens* de entrada por par → 1.874 pares pendientes ≈ **4,3 USD con GPT-6 Sol** (crédito OpenAI 4,97 USD); un rejuicio completo con Sonnet (plan B) ≈ 5,6 USD con razonamiento en ~25 % (crédito Anthropic 4,34 USD: **no alcanza** sin recarga o sin la Batch API, −50 %).
+
+**Decisiones del autor (14-nov):**
+- **Juez final: GPT-6 Sol** (`--judge-model gpt-6-sol --judge-reasoning-effort none`, temperatura 0, 64 *tokens*). Motivos: empate práctico con Sonnet; cumple el criterio 2 del Anexo (temperatura 0, sin razonamiento previo; Sonnet no admite temperatura fija, razona en ~25 % y cambió 6 de 83 notas entre corridas); Sonnet queda como plan B de otra familia, como ya dice el Cap3; el costo cabe en el crédito. Hay que actualizar Cap3 (§Juicios, §Validación humana, tabla de amenazas "Juez final de otra familia (GPT-4o)") y Anexo `anx:juez-final` vía borradores.
+- **Antes de lanzar la corrida final:** el autor revisa en el panel de OpenAI el costo real de las 103 llamadas de calibración con GPT-6 Sol (13-nov, ~04:30 UTC) y el límite de solicitudes por minuto.
+
+**Próximos pasos, en orden:**
+1. Autor: costo real por par y límite por minuto en el panel de OpenAI → Claude recalcula el costo de los 1.874 pares y pide aprobación del gasto.
+2. Corrida final del juez con GPT-6 Sol (`eval:judge --run <run 14-oct> --judge-model gpt-6-sol --judge-reasoning-effort none`, clave en `JUDGE_API_KEY`) → `metrics.py`, `figures.py`; RAGAS con el juez local (gratis).
+3. Autor: anotar los 298 de validación (en paralelo; `annotate.py … kappa-sample.csv --split validation`). κ de validación con GPT-6 Sol; si ≤ 0,60, plan B con Sonnet (requiere recarga o Batch API).
+4. Borradores: Cap3 y Anexo con el juez nuevo y la revisión de calibración; Resultados finales, Discusión, Conclusiones, resumen y abstract.
+5. Envío al director (~17-nov) y pasos previos (*fast-forward* de `main`, etiqueta, Anexo C), cada uno con confirmación.
+
+## Estado al 12-nov-2026 (historial: superado por "▶ Estado al 14-nov")
 
 **Hecho por el autor (2 a 12-nov):** anotó los **103 pares de calibración** (commit `d80c753`; notas 0/1/2/3 = 16/16/23/48). Validación: 0 de 298. Revisó los borradores `*-director.tex` y **los aprobó tal cual**.
 
