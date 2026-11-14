@@ -4,12 +4,15 @@ eval:generate run.
 Usage (inside the jobai-ragas image, host network):
     python evaluation/ragas/ragas_eval.py <generate run dir> \
         [--judge-base-url http://localhost:11434/v1] [--judge-model llama3.1:8b]
-        [--max-tokens 4096]
+        [--max-tokens 4096] [--reasoning-effort none] [--temperature 0]
 
 The judge is any OpenAI-compatible endpoint (API key from JUDGE_API_KEY);
 answer relevancy embeds with the local embedding server, the same model the
 pipeline retrieves with (its name is part of the relevancy cache key). Scores are cached per judge so a rerun only
 evaluates new answers. Writes <run dir>/ragas-<judge>.csv.
+
+Quota, authentication and connection errors stop the run without being
+cached, so a rerun retries those answers; other failures are cached as NaN.
 """
 
 from __future__ import annotations
@@ -24,6 +27,7 @@ import os
 import urllib.request
 from pathlib import Path
 
+import openai
 from openai import AsyncOpenAI
 from ragas.embeddings import BaseRagasEmbedding
 from ragas.llms import llm_factory
@@ -65,6 +69,26 @@ class E5Embeddings(BaseRagasEmbedding):
         return await asyncio.to_thread(self._embed, texts)
 
 
+# Failures that say nothing about the answer: never cache them, stop the run.
+TRANSIENT = (
+    openai.RateLimitError,
+    openai.AuthenticationError,
+    openai.PermissionDeniedError,
+    openai.APIConnectionError,
+    openai.InternalServerError,
+)
+
+
+def transient(exc: BaseException | None) -> bool:
+    seen = set()
+    while exc is not None and id(exc) not in seen:
+        if isinstance(exc, TRANSIENT):
+            return True
+        seen.add(id(exc))
+        exc = exc.__cause__ or exc.__context__
+    return False
+
+
 def cache_key(judge: str, metric: str, row: dict) -> str:
     payload = json.dumps([judge, metric, row["question"], row["answer"], row["contexts"]])
     return hashlib.sha256(payload.encode()).hexdigest()
@@ -85,6 +109,8 @@ async def score(metric_name, metric, row, judge, cache, lock, sem, key_judge=Non
                 result = await metric.ascore(user_input=row["question"], response=row["answer"])
             value, error = float(result.value), None
         except Exception as exc:  # recorded and reported as a NaN rate
+            if transient(exc):
+                raise
             value, error = math.nan, f"{type(exc).__name__}: {exc}"[:300]
     entry = {"key": key, "judge": judge, "metric": metric_name, "value": value, "error": error}
     async with lock:
@@ -102,6 +128,10 @@ async def main_async(args: argparse.Namespace) -> None:
     rows = [json.loads(line) for line in (args.run_dir / "answers.jsonl").read_text().splitlines() if line.strip()]
     rows = [r for r in rows if r.get("answer")][: args.limit]
     judge = f"{args.judge_base_url}|{args.judge_model}"
+    if args.reasoning_effort:
+        judge += f"@reasoning={args.reasoning_effort}"
+    if args.temperature is not None:
+        judge += f"@temperature={args.temperature:g}"
 
     CACHE_DIR.mkdir(exist_ok=True)
     cache_path = CACHE_DIR / f"{safe(judge)}.jsonl"
@@ -116,7 +146,13 @@ async def main_async(args: argparse.Namespace) -> None:
     # RAGAS defaults to max_tokens=1024, which truncates the faithfulness
     # verdicts for long answers. The judge's context window must also fit the
     # retrieved contexts (with Ollama, set num_ctx in the model, e.g. 16384).
-    llm = llm_factory(args.judge_model, provider="openai", client=client, max_tokens=args.max_tokens)
+    extra = {"reasoning_effort": args.reasoning_effort} if args.reasoning_effort else {}
+    llm = llm_factory(args.judge_model, provider="openai", client=client, max_tokens=args.max_tokens, **extra)
+    if args.temperature is not None:
+        # RAGAS forces temperature 1.0 on GPT-5+ models, but with
+        # reasoning_effort none they accept 0, as the relevance judge uses.
+        mapper = llm._map_provider_params
+        llm._map_provider_params = lambda: {**mapper(), "temperature": args.temperature}
     metrics = {
         "faithfulness": Faithfulness(llm=llm),
         "answer_relevancy": AnswerRelevancy(llm=llm, embeddings=E5Embeddings(args.embed_url)),
@@ -135,7 +171,7 @@ async def main_async(args: argparse.Namespace) -> None:
         return out
 
     results = await asyncio.gather(*(evaluate_row(r) for r in rows))
-    out_path = args.run_dir / f"ragas-{safe(args.judge_model)}.csv"
+    out_path = args.run_dir / f"ragas-{safe(judge.split('|', 1)[1])}.csv"
     with open(out_path, "w", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=list(results[0].keys()))
         writer.writeheader()
@@ -158,6 +194,8 @@ def main() -> None:
     parser.add_argument("--concurrency", type=int, default=2)
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--limit", type=int)
+    parser.add_argument("--reasoning-effort", help="e.g. none, for OpenAI reasoning models")
+    parser.add_argument("--temperature", type=float, help="override the temperature RAGAS sends")
     asyncio.run(main_async(parser.parse_args()))
 
 
