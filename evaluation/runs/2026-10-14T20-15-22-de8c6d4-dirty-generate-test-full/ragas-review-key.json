@@ -1,0 +1,26 @@
+{
+  "seed": 42,
+  "per_category": 5,
+  "queryIds": [
+    "en-no-01",
+    "es-ex-07",
+    "en-co-09",
+    "es-no-04",
+    "en-no-03",
+    "en-sv-08",
+    "en-co-04",
+    "en-no-14",
+    "en-ex-08",
+    "es-sv-04",
+    "en-co-01",
+    "es-co-06",
+    "en-co-08",
+    "es-ex-03",
+    "en-sv-03",
+    "en-ex-04",
+    "en-no-02",
+    "en-sv-01",
+    "en-ex-05",
+    "en-sv-09"
+  ]
+}
