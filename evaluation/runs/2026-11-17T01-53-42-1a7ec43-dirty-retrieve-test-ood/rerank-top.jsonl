@@ -1,0 +1,15 @@
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-01","top":0.0010004043579101562}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-02","top":0.006412506103515625}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-03","top":0.0156707763671875}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-04","top":0.0011205673217773438}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-05","top":0.1259765625}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-06","top":0.001979827880859375}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-07","top":0.00003707408905029297}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-08","top":0.0002199411392211914}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-es-09","top":0.00307464599609375}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-en-10","top":0.06463623046875}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-en-11","top":0.00005608797073364258}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-en-12","top":0.00345611572265625}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-en-13","top":0.03875732421875}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-en-14","top":0.0263519287109375}
+{"system":"qdrant-hybrid-rerank","queryId":"ood-test-en-15","top":0.0013303756713867188}

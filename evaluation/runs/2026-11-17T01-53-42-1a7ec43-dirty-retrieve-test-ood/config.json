@@ -1,0 +1,31 @@
+{
+  "command": "eval:retrieve",
+  "gitSha": "1a7ec43-dirty",
+  "createdAt": "2026-11-17T01:54:37.104Z",
+  "embeddingModel": "multilingual-e5-base",
+  "embeddingServer": {
+    "embeddingModel": "intfloat/multilingual-e5-base",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "device": "cuda"
+  },
+  "classifier": "1a83eda83188",
+  "filterExtraction": {
+    "scored": 0,
+    "exact": 0
+  },
+  "constraintCompliance": {},
+  "corpus": {
+    "jobs": 1068,
+    "chunks": 4013
+  },
+  "queries": 15,
+  "dataset": "../evaluation/datasets/queries.test-ood.jsonl",
+  "systems": [
+    "qdrant-hybrid-rerank"
+  ],
+  "depth": 10,
+  "efSearch": 40,
+  "label": "test-ood",
+  "ablationCollection": "eval_job_chunks_e5base",
+  "ablationEmbedUrl": "http://localhost:8001"
+}
