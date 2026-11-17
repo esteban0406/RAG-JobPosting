@@ -1,0 +1,272 @@
+[
+[
+"R0920",
+"10.48550/arxiv.2109.09605",
+"2109.09605",
+" arxiv 2109.09605: JobBERT: Understanding Job Titles through Skills"
+],
+[
+"R0916",
+"10.1016/j.eswa.2025.127043",
+"2503.02056",
+"crossref: CareerBERT: Matching resumes to ESCO jobs in a shared embedd | Expert Systems with Applications"
+],
+[
+"R0404",
+"10.48550/arXiv.2604.02539",
+"2604.02539",
+" arxiv 2604.02539: Synapse: Evolving Job-Person Fit with Explainable Two-phase "
+],
+[
+"R0815",
+"",
+"2610.05787",
+" arxiv 2610.05787: Constraint-Aware Conversational Job Recommendation in Code-M"
+],
+[
+"R1201",
+"10.48550/arXiv.2511.08343",
+"2511.08343",
+" arxiv 2511.08343: JobSphere: An AI-Powered Multilingual Career Copilot for Gov"
+],
+[
+"R0380",
+"10.48550/arXiv.2603.14558",
+"2603.14558",
+" arxiv 2603.14558: JobMatchAI-An Intelligent Job Matching Platform Using Knowle"
+],
+[
+"R1132",
+"10.1109/infinitys69204.2026.11666312",
+"",
+"crossref: An Intelligent Recruitment System using Retrieval-Augmented  | 2026 IEEE International Conference on In"
+],
+[
+"R0402",
+"",
+"",
+""
+],
+[
+"R1106",
+"10.1007/978-3-032-04354-2_24",
+"",
+"crossref: Overview of the TalentCLEF 2025: Skill and Job Title Intelli | Lecture Notes in Computer Science"
+],
+[
+"R1104",
+"10.1007/978-3-032-04354-2_24",
+"",
+"crossref: Overview of the TalentCLEF 2025: Skill and Job Title Intelli | Lecture Notes in Computer Science"
+],
+[
+"R0417",
+"",
+"",
+""
+],
+[
+"R0413",
+"",
+"",
+""
+],
+[
+"R0378",
+"10.1145/3799682.3840152",
+"2602.07309",
+"crossref: Semantic Search At LinkedIn | Proceedings of the 35th ACM Internationa"
+],
+[
+"R1076",
+"10.48550/arXiv.2510.22101",
+"2510.22101",
+" arxiv 2510.22101: Scaling Up Efficient Small Language Models Serving and Deplo"
+],
+[
+"R0383",
+"10.1016/j.procs.2025.08.278",
+"",
+"crossref: A recruitment support system based on Large Language Models  | Procedia Computer Science"
+],
+[
+"R0407",
+"",
+"",
+""
+],
+[
+"R0427",
+"",
+"2609.04286",
+" arxiv 2609.04286: From Matching Models to Recruiting Agents: A Systematized Na"
+],
+[
+"R1144",
+"10.14569/ijacsa.2026.0171008",
+"",
+"crossref: AI and Generative AI for Recruitment and Talent Management:  | International Journal of Advanced Comput"
+],
+[
+"R0656",
+"10.48550/arxiv.1904.08375",
+"1904.08375",
+" arxiv 1904.08375: Document Expansion by Query Prediction"
+],
+[
+"R0697",
+"10.18653/v1/2023.acl-long.99",
+"2212.10496",
+"crossref: Precise Zero-Shot Dense Retrieval without Relevance Labels | Proceedings of the 61st Annual Meeting o"
+],
+[
+"R0655",
+"10.18653/v1/2023.emnlp-main.585",
+"2303.07678",
+"crossref: Query2doc: Query Expansion with Large Language Models | Proceedings of the 2023 Conference on Em"
+],
+[
+"R0658",
+"10.18653/v1/2024.findings-eacl.134",
+"2309.08541",
+"crossref: When do Generative Query and Document Expansions Fail? A Com | Findings of the Association for Computat"
+],
+[
+"R1349",
+"10.18653/v1/2023.emnlp-main.923",
+"2304.09542",
+"crossref: Is ChatGPT Good at Search? Investigating Large Language Mode | Proceedings of the 2023 Conference on Em"
+],
+[
+"R0994",
+"10.48550/arxiv.2403.10407",
+"2403.10407",
+" arxiv 2403.10407: A Thorough Comparison of Cross-Encoders and LLMs for Reranki"
+],
+[
+"R0293",
+"10.1145/3799682.3840070",
+"",
+"crossref: The Plug-and-Play Illusion: Cross-Encoder Brittleness to Ret | Proceedings of the 35th ACM Internationa"
+],
+[
+"R0449",
+"10.18653/v1/2024.naacl-long.20",
+"2311.09476",
+"crossref: ARES: An Automated Evaluation Framework for Retrieval-Augmen | Proceedings of the 2024 Conference of th"
+],
+[
+"R0458",
+"10.52202/079017-0692",
+"",
+"crossref: RAGChecker: A Fine-grained Framework for Diagnosing Retrieva | Advances in Neural Information Processin"
+],
+[
+"R0451",
+"10.1145/3626772.3657957",
+"",
+"crossref: Evaluating Retrieval Quality in Retrieval-Augmented Generati | Proceedings of the 47th International AC"
+],
+[
+"R0864",
+"10.1609/aaai.v38i16.29728",
+"2309.01431",
+"crossref: Benchmarking Large Language Models in Retrieval-Augmented Ge | Proceedings of the AAAI Conference on Ar"
+],
+[
+"R0830",
+"10.18653/v1/2025.acl-long.415",
+"2412.12300",
+"crossref: Unanswerability Evaluation for Retrieval Augmented Generatio | Proceedings of the 63rd Annual Meeting o"
+],
+[
+"R0868",
+"10.48550/arxiv.2606.28337",
+"2606.28337",
+" arxiv 2606.28337: A Systems-Level Analysis of Sensitivity, Robustness, and Sta"
+],
+[
+"R0839",
+"10.48550/arxiv.2604.01733",
+"2604.01733",
+" arxiv 2604.01733: From BM25 to Corrective RAG: Benchmarking Retrieval Strategi"
+],
+[
+"R0831",
+"10.18653/v1/2024.findings-emnlp.449",
+"2407.01102",
+"crossref: BERGEN: A Benchmarking Library for Retrieval-Augmented Gener | Findings of the Association for Computat"
+],
+[
+"R0544",
+"10.1007/978-3-030-22948-1_2",
+"",
+"crossref: The Evolution of Cranfield | The Information Retrieval Series"
+],
+[
+"R0560",
+"10.1145/3397271.3401317",
+"2004.13486",
+"crossref: On the Reliability of Test Collections for Evaluating System | Proceedings of the 43rd International AC"
+],
+[
+"R0569",
+"10.1145/3477495.3531728",
+"",
+"crossref: Too Many Relevants | Proceedings of the 45th International AC"
+],
+[
+"R0870",
+"10.48550/arxiv.2406.06519",
+"2406.06519",
+" arxiv 2406.06519: UMBRELA: UMbrela is the (Open-Source Reproduction of the) Bi"
+],
+[
+"R0495",
+"10.1145/3731120.3744605",
+"",
+"crossref: A Large-Scale Study of Relevance Assessments with Large Lang | Proceedings of the 2025 International AC"
+],
+[
+"R0110",
+"10.1145/3726302.3730218",
+"",
+"crossref: Large Language Model Relevance Assessors Agree With One Anot | Proceedings of the 48th International AC"
+],
+[
+"R0098",
+"10.1145/3746252.3760934",
+"",
+"crossref: Open-Source LLM-based Relevance Assessment vs. Highly Reliab | Proceedings of the 34th ACM Internationa"
+],
+[
+"R0493",
+"10.1145/3726302.3730221",
+"",
+"crossref: Limitations of Automatic Relevance Assessments with Large La | Proceedings of the 48th International AC"
+],
+[
+"R0478",
+"10.48550/arxiv.2405.04727",
+"2405.04727",
+" arxiv 2405.04727: LLMs Can Patch Up Missing Relevance Judgments in Evaluation"
+],
+[
+"R0094",
+"10.1145/3805712.3809905",
+"2602.17170",
+"crossref: When LLM Judges Inflate Scores: Exploring Overrating in Rele | Proceedings of the 49th International AC"
+],
+[
+"R0366",
+"10.1145/3406522.3446038",
+"2101.09086",
+"crossref: Impact of Response Latency on User Behaviour in Mobile Web S | Proceedings of the 2021 Conference on Hu"
+],
+[
+"R0465",
+"10.1109/mipr62202.2024.00031",
+"",
+"crossref: Blended RAG: Improving RAG (Retriever-Augmented Generation)  | 2024 IEEE 7th International Conference o"
+]
+]

@@ -1,0 +1,1362 @@
+{
+ "Karpukhin2020": {
+  "type": "proceedings-article",
+  "title": "Dense Passage Retrieval for Open-Domain Question Answering",
+  "authors": [
+   [
+    "Karpukhin",
+    "Vladimir"
+   ],
+   [
+    "Oguz",
+    "Barlas"
+   ],
+   [
+    "Min",
+    "Sewon"
+   ],
+   [
+    "Lewis",
+    "Patrick"
+   ],
+   [
+    "Wu",
+    "Ledell"
+   ],
+   [
+    "Edunov",
+    "Sergey"
+   ],
+   [
+    "Chen",
+    "Danqi"
+   ],
+   [
+    "Yih",
+    "Wen-tau"
+   ]
+  ],
+  "container": "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing (EMNLP)",
+  "volume": "",
+  "issue": "",
+  "page": "6769-6781",
+  "year": 2020,
+  "doi": "10.18653/v1/2020.emnlp-main.550",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Reimers2019": {
+  "type": "proceedings-article",
+  "title": "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks",
+  "authors": [
+   [
+    "Reimers",
+    "Nils"
+   ],
+   [
+    "Gurevych",
+    "Iryna"
+   ]
+  ],
+  "container": "Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)",
+  "volume": "",
+  "issue": "",
+  "page": "3980-3990",
+  "year": 2019,
+  "doi": "10.18653/v1/D19-1410",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Muennighoff2023": {
+  "type": "proceedings-article",
+  "title": "MTEB: Massive Text Embedding Benchmark",
+  "authors": [
+   [
+    "Muennighoff",
+    "Niklas"
+   ],
+   [
+    "Tazi",
+    "Nouamane"
+   ],
+   [
+    "Magne",
+    "Loic"
+   ],
+   [
+    "Reimers",
+    "Nils"
+   ]
+  ],
+  "container": "Proceedings of the 17th Conference of the European Chapter of the Association for Computational Linguistics",
+  "volume": "",
+  "issue": "",
+  "page": "2014-2037",
+  "year": 2023,
+  "doi": "10.18653/v1/2023.eacl-main.148",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Zhang2023MIRACL": {
+  "type": "journal-article",
+  "title": "<b>MIRACL</b>\n                    : A Multilingual Retrieval Dataset Covering 18 Diverse Languages",
+  "authors": [
+   [
+    "Zhang",
+    "Xinyu"
+   ],
+   [
+    "Thakur",
+    "Nandan"
+   ],
+   [
+    "Ogundepo",
+    "Odunayo"
+   ],
+   [
+    "Kamalloo",
+    "Ehsan"
+   ],
+   [
+    "Alfonso-Hermelo",
+    "David"
+   ],
+   [
+    "Li",
+    "Xiaoguang"
+   ],
+   [
+    "Liu",
+    "Qun"
+   ],
+   [
+    "Rezagholizadeh",
+    "Mehdi"
+   ],
+   [
+    "Lin",
+    "Jimmy"
+   ]
+  ],
+  "container": "Transactions of the Association for Computational Linguistics",
+  "volume": "11",
+  "issue": "",
+  "page": "1114-1131",
+  "year": 2023,
+  "doi": "10.1162/tacl_a_00595",
+  "publisher": "MIT Press"
+ },
+ "LavrenkoCroft2001": {
+  "type": "proceedings-article",
+  "title": "Relevance based language models",
+  "authors": [
+   [
+    "Lavrenko",
+    "Victor"
+   ],
+   [
+    "Croft",
+    "W. Bruce"
+   ]
+  ],
+  "container": "Proceedings of the 24th annual international ACM SIGIR conference on Research and development in information retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "120-127",
+  "year": 2001,
+  "doi": "10.1145/383952.383972",
+  "publisher": "ACM"
+ },
+ "leVrang2014": {
+  "type": "journal-article",
+  "title": "ESCO: Boosting Job Matching in Europe with Semantic Interoperability",
+  "authors": [
+   [
+    "le Vrang",
+    "Martin"
+   ],
+   [
+    "Papantoniou",
+    "Agis"
+   ],
+   [
+    "Pauwels",
+    "Erika"
+   ],
+   [
+    "Fannes",
+    "Pieter"
+   ],
+   [
+    "Vandensteen",
+    "Dominique"
+   ],
+   [
+    "De Smedt",
+    "Johan"
+   ]
+  ],
+  "container": "Computer",
+  "volume": "47",
+  "issue": "10",
+  "page": "57-64",
+  "year": 2014,
+  "doi": "10.1109/MC.2014.283",
+  "publisher": "Institute of Electrical and Electronics Engineers (IEEE)"
+ },
+ "BuckleyVoorhees2004": {
+  "type": "proceedings-article",
+  "title": "Retrieval evaluation with incomplete information",
+  "authors": [
+   [
+    "Buckley",
+    "Chris"
+   ],
+   [
+    "Voorhees",
+    "Ellen M."
+   ]
+  ],
+  "container": "Proceedings of the 27th annual international ACM SIGIR conference on Research and development in information retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "25-32",
+  "year": 2004,
+  "doi": "10.1145/1008992.1009000",
+  "publisher": "ACM"
+ },
+ "Webber2008": {
+  "type": "proceedings-article",
+  "title": "Statistical power in retrieval experimentation",
+  "authors": [
+   [
+    "Webber",
+    "William"
+   ],
+   [
+    "Moffat",
+    "Alistair"
+   ],
+   [
+    "Zobel",
+    "Justin"
+   ]
+  ],
+  "container": "Proceedings of the 17th ACM conference on Information and knowledge management",
+  "volume": "",
+  "issue": "",
+  "page": "571-580",
+  "year": 2008,
+  "doi": "10.1145/1458082.1458158",
+  "publisher": "ACM"
+ },
+ "Gao2023HyDE": {
+  "type": "proceedings-article",
+  "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+  "authors": [
+   [
+    "Gao",
+    "Luyu"
+   ],
+   [
+    "Ma",
+    "Xueguang"
+   ],
+   [
+    "Lin",
+    "Jimmy"
+   ],
+   [
+    "Callan",
+    "Jamie"
+   ]
+  ],
+  "container": "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+  "volume": "",
+  "issue": "",
+  "page": "1762-1777",
+  "year": 2023,
+  "doi": "10.18653/v1/2023.acl-long.99",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Wang2023Query2doc": {
+  "type": "proceedings-article",
+  "title": "Query2doc: Query Expansion with Large Language Models",
+  "authors": [
+   [
+    "Wang",
+    "Liang"
+   ],
+   [
+    "Yang",
+    "Nan"
+   ],
+   [
+    "Wei",
+    "Furu"
+   ]
+  ],
+  "container": "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+  "volume": "",
+  "issue": "",
+  "page": "9414-9423",
+  "year": 2023,
+  "doi": "10.18653/v1/2023.emnlp-main.585",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Weller2024": {
+  "type": "proceedings-article",
+  "title": "When do Generative Query and Document Expansions Fail? A Comprehensive Study Across Methods, Retrievers, and Datasets",
+  "authors": [
+   [
+    "Weller",
+    "Orion"
+   ],
+   [
+    "Lo",
+    "Kyle"
+   ],
+   [
+    "Wadden",
+    "David"
+   ],
+   [
+    "Lawrie",
+    "Dawn"
+   ],
+   [
+    "Van Durme",
+    "Benjamin"
+   ],
+   [
+    "Cohan",
+    "Arman"
+   ],
+   [
+    "Soldaini",
+    "Luca"
+   ]
+  ],
+  "container": "Findings of the Association for Computational Linguistics: EACL 2024",
+  "volume": "",
+  "issue": "",
+  "page": "1987-2003",
+  "year": 2024,
+  "doi": "10.18653/v1/2024.findings-eacl.134",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Sun2023RankGPT": {
+  "type": "proceedings-article",
+  "title": "Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agents",
+  "authors": [
+   [
+    "Sun",
+    "Weiwei"
+   ],
+   [
+    "Yan",
+    "Lingyong"
+   ],
+   [
+    "Ma",
+    "Xinyu"
+   ],
+   [
+    "Wang",
+    "Shuaiqiang"
+   ],
+   [
+    "Ren",
+    "Pengjie"
+   ],
+   [
+    "Chen",
+    "Zhumin"
+   ],
+   [
+    "Yin",
+    "Dawei"
+   ],
+   [
+    "Ren",
+    "Zhaochun"
+   ]
+  ],
+  "container": "Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing",
+  "volume": "",
+  "issue": "",
+  "page": "14918-14937",
+  "year": 2023,
+  "doi": "10.18653/v1/2023.emnlp-main.923",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "PlugPlay2026": {
+  "type": "proceedings-article",
+  "title": "The Plug-and-Play Illusion: Cross-Encoder Brittleness to Retrieval Noise under Fixed Recall",
+  "authors": [
+   [
+    "Lin",
+    "Xiankun"
+   ],
+   [
+    "Liu",
+    "Lixin"
+   ],
+   [
+    "Lin",
+    "Xinyi"
+   ],
+   [
+    "Nie",
+    "Zichao"
+   ],
+   [
+    "Hao",
+    "Zhezheng"
+   ]
+  ],
+  "container": "Proceedings of the 35th ACM International Conference on Information and Knowledge Management",
+  "volume": "",
+  "issue": "",
+  "page": "7515-7520",
+  "year": 2026,
+  "doi": "10.1145/3799682.3840070",
+  "publisher": "ACM"
+ },
+ "SaadFalcon2024": {
+  "type": "proceedings-article",
+  "title": "ARES: An Automated Evaluation Framework for Retrieval-Augmented Generation Systems",
+  "authors": [
+   [
+    "Saad-Falcon",
+    "Jon"
+   ],
+   [
+    "Khattab",
+    "Omar"
+   ],
+   [
+    "Potts",
+    "Christopher"
+   ],
+   [
+    "Zaharia",
+    "Matei"
+   ]
+  ],
+  "container": "Proceedings of the 2024 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)",
+  "volume": "",
+  "issue": "",
+  "page": "338-354",
+  "year": 2024,
+  "doi": "10.18653/v1/2024.naacl-long.20",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Ru2024RAGChecker": {
+  "type": "proceedings-article",
+  "title": "RAGChecker: A Fine-grained Framework for Diagnosing Retrieval-Augmented Generation",
+  "authors": [
+   [
+    "Ru",
+    "Dongyu"
+   ],
+   [
+    "Qiu",
+    "Lin"
+   ],
+   [
+    "Hu",
+    "Xiangkun"
+   ],
+   [
+    "Zhang",
+    "Tianhang"
+   ],
+   [
+    "Shi",
+    "Peng"
+   ],
+   [
+    "Chang",
+    "Shuaichen"
+   ],
+   [
+    "Jiayang",
+    "Cheng"
+   ],
+   [
+    "Wang",
+    "Cunxiang"
+   ],
+   [
+    "Sun",
+    "Shichao"
+   ],
+   [
+    "Li",
+    "Huanyu"
+   ],
+   [
+    "Zhang",
+    "Zizhao"
+   ],
+   [
+    "Wang",
+    "Binjie"
+   ],
+   [
+    "Jiang",
+    "Jiarong"
+   ],
+   [
+    "He",
+    "Tong"
+   ],
+   [
+    "Wang",
+    "Zhiguo"
+   ],
+   [
+    "Liu",
+    "Pengfei"
+   ],
+   [
+    "Zhang",
+    "Yue"
+   ],
+   [
+    "Zhang",
+    "Zheng"
+   ]
+  ],
+  "container": "Advances in Neural Information Processing Systems 37",
+  "volume": "",
+  "issue": "",
+  "page": "21999-22027",
+  "year": 2024,
+  "doi": "10.52202/079017-0692",
+  "publisher": "Neural Information Processing Systems Foundation, Inc. (NeurIPS)"
+ },
+ "Salemi2024eRAG": {
+  "type": "proceedings-article",
+  "title": "Evaluating Retrieval Quality in Retrieval-Augmented Generation",
+  "authors": [
+   [
+    "Salemi",
+    "Alireza"
+   ],
+   [
+    "Zamani",
+    "Hamed"
+   ]
+  ],
+  "container": "Proceedings of the 47th International ACM SIGIR Conference on Research and Development in Information Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "2395-2400",
+  "year": 2024,
+  "doi": "10.1145/3626772.3657957",
+  "publisher": "ACM"
+ },
+ "Chen2024RGB": {
+  "type": "journal-article",
+  "title": "Benchmarking Large Language Models in Retrieval-Augmented Generation",
+  "authors": [
+   [
+    "Chen",
+    "Jiawei"
+   ],
+   [
+    "Lin",
+    "Hongyu"
+   ],
+   [
+    "Han",
+    "Xianpei"
+   ],
+   [
+    "Sun",
+    "Le"
+   ]
+  ],
+  "container": "Proceedings of the AAAI Conference on Artificial Intelligence",
+  "volume": "38",
+  "issue": "16",
+  "page": "17754-17762",
+  "year": 2024,
+  "doi": "10.1609/aaai.v38i16.29728",
+  "publisher": "Association for the Advancement of Artificial Intelligence (AAAI)"
+ },
+ "UAEval2025": {
+  "type": "proceedings-article",
+  "title": "Unanswerability Evaluation for Retrieval Augmented Generation",
+  "authors": [
+   [
+    "Peng",
+    "Xiangyu"
+   ],
+   [
+    "Choubey",
+    "Prafulla Kumar"
+   ],
+   [
+    "Xiong",
+    "Caiming"
+   ],
+   [
+    "Wu",
+    "Chien-Sheng"
+   ]
+  ],
+  "container": "Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+  "volume": "",
+  "issue": "",
+  "page": "8452-8472",
+  "year": 2025,
+  "doi": "10.18653/v1/2025.acl-long.415",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Rau2024BERGEN": {
+  "type": "proceedings-article",
+  "title": "BERGEN: A Benchmarking Library for Retrieval-Augmented Generation",
+  "authors": [
+   [
+    "Rau",
+    "David"
+   ],
+   [
+    "Déjean",
+    "Hervé"
+   ],
+   [
+    "Chirkova",
+    "Nadezhda"
+   ],
+   [
+    "Formal",
+    "Thibault"
+   ],
+   [
+    "Wang",
+    "Shuai"
+   ],
+   [
+    "Clinchant",
+    "Stéphane"
+   ],
+   [
+    "Nikoulina",
+    "Vassilina"
+   ]
+  ],
+  "container": "Findings of the Association for Computational Linguistics: EMNLP 2024",
+  "volume": "",
+  "issue": "",
+  "page": "7640-7663",
+  "year": 2024,
+  "doi": "10.18653/v1/2024.findings-emnlp.449",
+  "publisher": "Association for Computational Linguistics"
+ },
+ "Voorhees2022TooMany": {
+  "type": "proceedings-article",
+  "title": "Too Many Relevants",
+  "authors": [
+   [
+    "Voorhees",
+    "Ellen M."
+   ],
+   [
+    "Craswell",
+    "Nick"
+   ],
+   [
+    "Lin",
+    "Jimmy"
+   ]
+  ],
+  "container": "Proceedings of the 45th International ACM SIGIR Conference on Research and Development in Information Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "2970-2980",
+  "year": 2022,
+  "doi": "10.1145/3477495.3531728",
+  "publisher": "ACM"
+ },
+ "Yilmaz2020": {
+  "type": "proceedings-article",
+  "title": "On the Reliability of Test Collections for Evaluating Systems of Different Types",
+  "authors": [
+   [
+    "Yilmaz",
+    "Emine"
+   ],
+   [
+    "Craswell",
+    "Nick"
+   ],
+   [
+    "Mitra",
+    "Bhaskar"
+   ],
+   [
+    "Campos",
+    "Daniel"
+   ]
+  ],
+  "container": "Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "2101-2104",
+  "year": 2020,
+  "doi": "10.1145/3397271.3401317",
+  "publisher": "ACM"
+ },
+ "UMBRELA2025": {
+  "type": "proceedings-article",
+  "title": "A Large-Scale Study of Relevance Assessments with Large Language Models Using UMBRELA",
+  "authors": [
+   [
+    "Upadhyay",
+    "Shivani"
+   ],
+   [
+    "Pradeep",
+    "Ronak"
+   ],
+   [
+    "Thakur",
+    "Nandan"
+   ],
+   [
+    "Campos",
+    "Daniel"
+   ],
+   [
+    "Craswell",
+    "Nick"
+   ],
+   [
+    "Soboroff",
+    "Ian"
+   ],
+   [
+    "Lin",
+    "Jimmy"
+   ]
+  ],
+  "container": "Proceedings of the 2025 International ACM SIGIR Conference on Innovative Concepts and Theories in Information Retrieval (ICTIR)",
+  "volume": "",
+  "issue": "",
+  "page": "358-368",
+  "year": 2025,
+  "doi": "10.1145/3731120.3744605",
+  "publisher": "ACM"
+ },
+ "LLMAgree2025": {
+  "type": "proceedings-article",
+  "title": "Large Language Model Relevance Assessors Agree With One Another More Than With Human Assessors",
+  "authors": [
+   [
+    "Fröbe",
+    "Maik"
+   ],
+   [
+    "Parry",
+    "Andrew"
+   ],
+   [
+    "Schlatt",
+    "Ferdinand"
+   ],
+   [
+    "MacAvaney",
+    "Sean"
+   ],
+   [
+    "Stein",
+    "Benno"
+   ],
+   [
+    "Potthast",
+    "Martin"
+   ],
+   [
+    "Hagen",
+    "Matthias"
+   ]
+  ],
+  "container": "Proceedings of the 48th International ACM SIGIR Conference on Research and Development in Information Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "2858-2863",
+  "year": 2025,
+  "doi": "10.1145/3726302.3730218",
+  "publisher": "ACM"
+ },
+ "OpenSource2025": {
+  "type": "proceedings-article",
+  "title": "Open-Source LLM-based Relevance Assessment vs. Highly Reliable Manual Relevance Assessment: A Case Study",
+  "authors": [
+   [
+    "Sakai",
+    "Tetsuya"
+   ],
+   [
+    "Myoe Rain",
+    "Khant"
+   ],
+   [
+    "Takehi",
+    "Rikiya"
+   ],
+   [
+    "Tao",
+    "Sijie"
+   ],
+   [
+    "Song",
+    "Young-In"
+   ]
+  ],
+  "container": "Proceedings of the 34th ACM International Conference on Information and Knowledge Management",
+  "volume": "",
+  "issue": "",
+  "page": "5186-5190",
+  "year": 2025,
+  "doi": "10.1145/3746252.3760934",
+  "publisher": "ACM"
+ },
+ "Limitations2025": {
+  "type": "proceedings-article",
+  "title": "Limitations of Automatic Relevance Assessments with Large Language Models for Fair and Reliable Retrieval Evaluation",
+  "authors": [
+   [
+    "Otero",
+    "David"
+   ],
+   [
+    "Parapar",
+    "Javier"
+   ],
+   [
+    "Barreiro",
+    "Álvaro"
+   ]
+  ],
+  "container": "Proceedings of the 48th International ACM SIGIR Conference on Research and Development in Information Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "2545-2549",
+  "year": 2025,
+  "doi": "10.1145/3726302.3730221",
+  "publisher": "ACM"
+ },
+ "Overrating2026": {
+  "type": "proceedings-article",
+  "title": "When LLM Judges Inflate Scores: Exploring Overrating in Relevance Assessment",
+  "authors": [
+   [
+    "Yu",
+    "Chuting"
+   ],
+   [
+    "Li",
+    "Hang"
+   ],
+   [
+    "Zuccon",
+    "Guido"
+   ],
+   [
+    "Mackenzie",
+    "Joel"
+   ],
+   [
+    "Leelanupab",
+    "Teerapong"
+   ]
+  ],
+  "container": "Proceedings of the 49th International ACM SIGIR Conference on Research and Development in Information Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "4322-4327",
+  "year": 2026,
+  "doi": "10.1145/3805712.3809905",
+  "publisher": "ACM"
+ },
+ "Arapakis2021": {
+  "type": "proceedings-article",
+  "title": "Impact of Response Latency on User Behaviour in Mobile Web Search",
+  "authors": [
+   [
+    "Arapakis",
+    "Ioannis"
+   ],
+   [
+    "Park",
+    "Souneil"
+   ],
+   [
+    "Pielot",
+    "Martin"
+   ]
+  ],
+  "container": "Proceedings of the 2021 Conference on Human Information Interaction and Retrieval",
+  "volume": "",
+  "issue": "",
+  "page": "279-283",
+  "year": 2021,
+  "doi": "10.1145/3406522.3446038",
+  "publisher": "ACM"
+ },
+ "CareerBERT2025": {
+  "type": "journal-article",
+  "title": "CareerBERT: Matching resumes to ESCO jobs in a shared embedding space for generic job recommendations",
+  "authors": [
+   [
+    "Rosenberger",
+    "Julian"
+   ],
+   [
+    "Wolfrum",
+    "Lukas"
+   ],
+   [
+    "Weinzierl",
+    "Sven"
+   ],
+   [
+    "Kraus",
+    "Mathias"
+   ],
+   [
+    "Zschech",
+    "Patrick"
+   ]
+  ],
+  "container": "Expert Systems with Applications",
+  "volume": "275",
+  "issue": "",
+  "page": "127043",
+  "year": 2025,
+  "doi": "10.1016/j.eswa.2025.127043",
+  "publisher": "Elsevier BV"
+ },
+ "RecruitRAG2026": {
+  "type": "proceedings-article",
+  "title": "An Intelligent Recruitment System using Retrieval-Augmented Generation and Cross-Encoder Reranking for Automated Resume Screening",
+  "authors": [
+   [
+    "Julianto",
+    "Eric"
+   ],
+   [
+    "Alhusari",
+    "Dian"
+   ],
+   [
+    "Ardiyansa",
+    "Safrizal Ardana"
+   ],
+   [
+    "Qusyairy",
+    "Muhammad Fazly"
+   ],
+   [
+    "Purnama",
+    "Giri"
+   ],
+   [
+    "Maulana",
+    "Imron Rizki"
+   ],
+   [
+    "Muhammad",
+    "Ali"
+   ],
+   [
+    "Ardiansyah",
+    "Miri"
+   ],
+   [
+    "Gaib",
+    "Amalan Fadil"
+   ],
+   [
+    "Fajar",
+    "Fauzan Ihza"
+   ],
+   [
+    "Nurhikam",
+    ""
+   ]
+  ],
+  "container": "2026 IEEE International Conference on Instrumentation, Networks, Future Sustainability, Information Theory, Transportation, and Systems (INFINITYS)",
+  "volume": "",
+  "issue": "",
+  "page": "24-29",
+  "year": 2026,
+  "doi": "10.1109/infinitys69204.2026.11666312",
+  "publisher": "IEEE"
+ },
+ "RecruitSupport2025": {
+  "type": "journal-article",
+  "title": "A recruitment support system based on Large Language Models and Retrieval-Augmented Generation",
+  "authors": [
+   [
+    "Tran",
+    "An Cong"
+   ],
+   [
+    "Tran",
+    "Nghi Cong"
+   ]
+  ],
+  "container": "Procedia Computer Science",
+  "volume": "269",
+  "issue": "",
+  "page": "259-268",
+  "year": 2025,
+  "doi": "10.1016/j.procs.2025.08.278",
+  "publisher": "Elsevier BV"
+ },
+ "LinkedInSemantic2026": {
+  "type": "proceedings-article",
+  "title": "Semantic Search At LinkedIn",
+  "authors": [
+   [
+    "Borisyuk",
+    "Fedor"
+   ],
+   [
+    "Vasudevan",
+    "Sriram"
+   ],
+   [
+    "Wu",
+    "Muchen"
+   ],
+   [
+    "Li",
+    "Guoyao"
+   ],
+   [
+    "Le",
+    "Benjamin"
+   ],
+   [
+    "Zhang",
+    "Shaobo"
+   ],
+   [
+    "Shen",
+    "Qianqi Kay"
+   ],
+   [
+    "Juan",
+    "Yuchin"
+   ],
+   [
+    "Behdin",
+    "Kayhan"
+   ],
+   [
+    "Dong",
+    "Liming"
+   ],
+   [
+    "Yang",
+    "Kaixu"
+   ],
+   [
+    "Jing",
+    "Shusen"
+   ],
+   [
+    "Pothamsetty",
+    "Ravi"
+   ],
+   [
+    "Arora",
+    "Rajat"
+   ],
+   [
+    "Sheng",
+    "Sophie Yanying"
+   ],
+   [
+    "Abdrashitov",
+    "Vitaly"
+   ],
+   [
+    "Zhao",
+    "Yang"
+   ],
+   [
+    "Su",
+    "Lin"
+   ],
+   [
+    "Wang",
+    "Xiaoqing"
+   ],
+   [
+    "Zheng",
+    "Chujie"
+   ],
+   [
+    "Metkar",
+    "Sarang"
+   ],
+   [
+    "Gupta",
+    "Rupesh"
+   ],
+   [
+    "Lapchuk",
+    "Igor"
+   ],
+   [
+    "Racca",
+    "David N."
+   ],
+   [
+    "Mohan",
+    "Madhumitha"
+   ],
+   [
+    "Li",
+    "Yanbo"
+   ],
+   [
+    "Li",
+    "Haojun"
+   ],
+   [
+    "Gandhi",
+    "Saloni"
+   ],
+   [
+    "Lu",
+    "Xueying"
+   ],
+   [
+    "Bhole",
+    "Chetan"
+   ],
+   [
+    "Hooshmand",
+    "Ali"
+   ],
+   [
+    "Yang",
+    "Xin"
+   ],
+   [
+    "Muthuregunathan",
+    "Raghavan"
+   ],
+   [
+    "Zhang",
+    "Jiajun"
+   ],
+   [
+    "Teoh",
+    "Mathew"
+   ],
+   [
+    "Coler",
+    "Adam"
+   ],
+   [
+    "Gupta",
+    "Abhinav"
+   ],
+   [
+    "Ma",
+    "Xiaojing"
+   ],
+   [
+    "Ramachandran",
+    "Sundara Raman"
+   ],
+   [
+    "Ramezani",
+    "Morteza"
+   ],
+   [
+    "Wang",
+    "Yubo"
+   ],
+   [
+    "Zhang",
+    "Lijuan"
+   ],
+   [
+    "Li",
+    "Richard"
+   ],
+   [
+    "Sheng",
+    "Jian"
+   ],
+   [
+    "Nguyen",
+    "Chanh"
+   ],
+   [
+    "Chen",
+    "Yen-Chi"
+   ],
+   [
+    "Zhu",
+    "Chuanrui"
+   ],
+   [
+    "Zhang",
+    "Claire"
+   ],
+   [
+    "Xu",
+    "Jiahao"
+   ],
+   [
+    "Kulkarni",
+    "Deepti"
+   ],
+   [
+    "Lan",
+    "Qing"
+   ],
+   [
+    "Subramaniam",
+    "Arvind"
+   ],
+   [
+    "Fatahibaarzi",
+    "Ata"
+   ],
+   [
+    "Shimizu",
+    "Steven"
+   ],
+   [
+    "Chen",
+    "Yanning"
+   ],
+   [
+    "Wang",
+    "Zhipeng"
+   ],
+   [
+    "He",
+    "Ran"
+   ],
+   [
+    "Zhou",
+    "Zhengze"
+   ],
+   [
+    "Song",
+    "Qingquan"
+   ],
+   [
+    "Dai",
+    "Yun"
+   ],
+   [
+    "Johnson",
+    "Caleb"
+   ],
+   [
+    "Liu",
+    "Ping"
+   ],
+   [
+    "Gharghabi",
+    "Shaghayegh"
+   ],
+   [
+    "Mohanasundaram",
+    "Gokulraj"
+   ],
+   [
+    "Bottaro",
+    "Juan"
+   ],
+   [
+    "Sachindran",
+    "Santhosh"
+   ],
+   [
+    "Guo",
+    "Qi"
+   ],
+   [
+    "Ren",
+    "Yunxiang"
+   ],
+   [
+    "Jiang",
+    "Chengming"
+   ],
+   [
+    "Mo",
+    "Di"
+   ],
+   [
+    "Simon",
+    "Luke"
+   ],
+   [
+    "Shen",
+    "Jianqiang"
+   ],
+   [
+    "Wu",
+    "Jingwei"
+   ],
+   [
+    "Zhang",
+    "Wenjing"
+   ]
+  ],
+  "container": "Proceedings of the 35th ACM International Conference on Information and Knowledge Management",
+  "volume": "",
+  "issue": "",
+  "page": "8178-8186",
+  "year": 2026,
+  "doi": "10.1145/3799682.3840152",
+  "publisher": "ACM"
+ },
+ "RecruitReview2026": {
+  "type": "journal-article",
+  "title": "AI and Generative AI for Recruitment and Talent Management: A PRISMA-Based Systematic Literature Review",
+  "authors": [
+   [
+    "SAOUABE",
+    "Abdelkrim"
+   ],
+   [
+    "BANOUI",
+    "Doha"
+   ],
+   [
+    "TIZRA",
+    "Khalid"
+   ],
+   [
+    "MAZAR",
+    "Merouane"
+   ],
+   [
+    "MOURTAJI",
+    "Imad"
+   ]
+  ],
+  "container": "International Journal of Advanced Computer Science and Applications",
+  "volume": "17",
+  "issue": "10",
+  "page": "",
+  "year": 2026,
+  "doi": "10.14569/ijacsa.2026.0171008",
+  "publisher": "The Science and Information Organization"
+ }
+}

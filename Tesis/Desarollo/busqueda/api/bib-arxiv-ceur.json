@@ -1,0 +1,179 @@
+{
+ "arxiv": {
+  "2604.01733": {
+   "title": "From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents",
+   "authors": [
+    "Meftun Akarsu",
+    "Recep Kaan Karaman",
+    "Christopher Mierbach"
+   ],
+   "year": "2026"
+  },
+  "2609.04286": {
+   "title": "From Matching Models to Recruiting Agents: A Systematized Narrative Review of AI Recruitment Systems, Evaluation, and Governance",
+   "authors": [
+    "Ziyi Zhao",
+    "Guanzheng Wei"
+   ],
+   "year": "2026"
+  },
+  "2606.28337": {
+   "title": "A Systems-Level Analysis of Sensitivity, Robustness, and Stability in Retrieval-Augmented Generation",
+   "authors": [
+    "Bharath Simha Reddy Muthyam"
+   ],
+   "year": "2026"
+  },
+  "2109.09605": {
+   "title": "JobBERT: Understanding Job Titles through Skills",
+   "authors": [
+    "Jens-Joris Decorte",
+    "Jeroen Van Hautte",
+    "Thomas Demeester",
+    "Chris Develder"
+   ],
+   "year": "2021"
+  },
+  "2510.22101": {
+   "title": "Scaling Up Efficient Small Language Models Serving and Deployment for Semantic Job Search",
+   "authors": [
+    "Kayhan Behdin",
+    "Qingquan Song",
+    "Sriram Vasudevan",
+    "Jian Sheng",
+    "Xiaojing Ma",
+    "Z Zhou",
+    "Chuanrui Zhu",
+    "Guoyao Li",
+    "Chanh Nguyen",
+    "Sayan Ghosh",
+    "Hejian Sang",
+    "Ata Fatahi Baarzi",
+    "Sundara Raman Ramachandran",
+    "Xiaoqing Wang",
+    "Qing Lan",
+    "Vinay Y S",
+    "Qi Guo",
+    "Caleb Johnson",
+    "Zhipeng Wang",
+    "Fedor Borisyuk"
+   ],
+   "year": "2025"
+  },
+  "2403.10407": {
+   "title": "A Thorough Comparison of Cross-Encoders and LLMs for Reranking SPLADE",
+   "authors": [
+    "Hervé Déjean",
+    "Stéphane Clinchant",
+    "Thibault Formal"
+   ],
+   "year": "2024"
+  },
+  "1904.08375": {
+   "title": "Document Expansion by Query Prediction",
+   "authors": [
+    "Rodrigo Nogueira",
+    "Wei Yang",
+    "Jimmy Lin",
+    "Kyunghyun Cho"
+   ],
+   "year": "2019"
+  },
+  "2405.04727": {
+   "title": "LLMs Can Patch Up Missing Relevance Judgments in Evaluation",
+   "authors": [
+    "Shivani Upadhyay",
+    "Ehsan Kamalloo",
+    "Jimmy Lin"
+   ],
+   "year": "2024"
+  },
+  "2603.14558": {
+   "title": "JobMatchAI-An Intelligent Job Matching Platform Using Knowledge Graphs, Semantic Search and Explainable AI",
+   "authors": [
+    "Mayank Vyas",
+    "Abhijit Chakraborty",
+    "Vivek Gupta"
+   ],
+   "year": "2026"
+  },
+  "2604.02539": {
+   "title": "Synapse: Evolving Job-Person Fit with Explainable Two-phase Retrieval and LLM-guided Genetic Resume Optimization",
+   "authors": [
+    "Ansel Kaplan Erol",
+    "Seohee Yoon",
+    "Keenan Hom",
+    "Xisheng Zhang"
+   ],
+   "year": "2026"
+  },
+  "2610.05787": {
+   "title": "Constraint-Aware Conversational Job Recommendation in Code-Mixed Low-Resource Settings",
+   "authors": [
+    "Md Arman Hossain",
+    "Mubashir Jawad",
+    "Fariha Khandaker Moon",
+    "Sonia Binte Siraj",
+    "Masfiqur Rahaman",
+    "Raihan ul Islam",
+    "Ahmed Wasif Reza",
+    "Nafis Sadeq"
+   ],
+   "year": "2026"
+  }
+ },
+ "ceur": {
+  "474": {
+   "title": "Overview of TalentCLEF 2026: Task A — Contextualized Job–Person Matching",
+   "authors": [
+    "Hermenegildo Fabregat",
+    "Laura García-Sardiña",
+    "Paula Estrella",
+    "Luis Gasco",
+    "Casimiro Pio Carrino",
+    "Daniel Deniz",
+    "Alvaro Rodrigo",
+    "Rabih Zbib"
+   ],
+   "pages": "6243-6261"
+  },
+  "479": {
+   "title": "Retrieve, Rerank, Survive: LLM-Listwise Pipelines for Job–Person and Job–Skill Matching at TalentCLEF 2026",
+   "authors": [
+    "Leo Hemamou",
+    "Robin Dupont"
+   ],
+   "pages": "6317-6328"
+  },
+  "484": {
+   "title": "Hybrid Dense-Sparse Retrieval and Re-Ranking for Multilingual Resume Retrieval from Job Descriptions",
+   "authors": [
+    "Alonso Palomino"
+   ],
+   "pages": "6368-6373"
+  },
+  "485": {
+   "title": "CYUT at TalentCLEF 2026: Zero-Shot Multi-View Retrieval for Job-Person Matching",
+   "authors": [
+    "Johan Poerwanto",
+    "Shih-Hung Wu"
+   ],
+   "pages": "6374-6386"
+  },
+  "489": {
+   "title": "A Union Fusion of PyTerrier, Doc2Query, BM25 and Multilingual Embeddings for Job-Person Matching",
+   "authors": [
+    "Edwin Thuma",
+    "George Anderson"
+   ],
+   "pages": "6427-6435"
+  },
+  "490": {
+   "title": "QTPride @TalentCLEF 2026: Towards Multi-View Job-Person Matching with LLM Parsing and Knowledge Graph-Enhanced Retrieval",
+   "authors": [
+    "Huu-Huy-Hoang Tran"
+   ],
+   "pages": "6436-6443"
+  }
+ }
+}
