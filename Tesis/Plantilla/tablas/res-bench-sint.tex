@@ -1,0 +1,30 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{\textit{Benchmark} sintético con $ef_{search} = 64$: \textit{recall}@10, latencia mediana (ms) y completitud (mediana de tres corridas)}
+    \label{tab:res-bench-sint}
+    \small
+    \begin{tabular}{|l|l|c|c|c|}
+        \hline
+        \textbf{Datos y filtro} & \textbf{Motor} & \textbf{\textit{Recall}} & \textbf{p50} & \textbf{Completitud} \\
+        \hline
+        \multirow{2}{*}{100.000, sin filtro} & pgvector & 0{,}948 & 0{,}88 & 1{,}00 \\
+                 & Qdrant & 0{,}980 & 2{,}27 & 1{,}00 \\
+        \hline
+        \multirow{3}{*}{100.000, filtro del 10\,\%} & pgvector & 0{,}603 & 1{,}00 & 0{,}09 \\
+                 & pgvector, barrido iterativo & 0{,}914 & 1{,}81 & 1{,}00 \\
+                 & Qdrant & 0{,}975 & 1{,}83 & 1{,}00 \\
+        \hline
+        \multirow{2}{*}{500.000, sin filtro} & pgvector & 0{,}816 & 1{,}01 & 1{,}00 \\
+                 & Qdrant & 0{,}950 & 2{,}33 & 1{,}00 \\
+        \hline
+        \multirow{3}{*}{500.000, filtro del 10\,\%} & pgvector & 0{,}531 & 1{,}00 & 0{,}10 \\
+                 & pgvector, barrido iterativo & 0{,}840 & 1{,}37 & 1{,}00 \\
+                 & Qdrant & 0{,}974 & 2{,}31 & 1{,}00 \\
+        \hline
+        \multirow{4}{*}{500.000, filtro del 1\,\%} & pgvector & 0{,}059 & 0{,}99 & 0{,}00 \\
+                 & pgvector, barrido iterativo & 0{,}876 & 9{,}77 & 1{,}00 \\
+                 & pgvector, búsqueda exacta forzada & 1{,}000 & 9{,}03 & 1{,}00 \\
+                 & Qdrant & 0{,}982 & 1{,}73 & 1{,}00 \\
+        \hline
+    \end{tabular}
+\end{table}

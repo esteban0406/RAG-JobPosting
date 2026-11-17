@@ -1,0 +1,32 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{nDCG@10 de las consultas en español y de sus contrapartes en inglés (25 consultas cada una)}
+    \label{tab:res-pe1-idioma}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Sistema} & \textbf{Español} & \textbf{Inglés (mismas necesidades)} \\
+        \hline
+        BM25 & 0{,}334 & 0{,}615 \\
+        \hline
+        Denso, e5-base-v2 & 0{,}567 & 0{,}726 \\
+        \hline
+        Denso, multilingual-e5-base & 0{,}659 & 0{,}690 \\
+        \hline
+        + filtros & 0{,}701 & 0{,}723 \\
+        \hline
+        + híbrida & 0{,}610 & 0{,}759 \\
+        \hline
+        + reordenamiento (completa) & 0{,}763 & 0{,}839 \\
+        \hline
+        \multicolumn{3}{|l|}{\textit{Sistemas complementarios}} \\
+        \hline
+        BM25 + filtros & 0{,}369 & 0{,}658 \\
+        \hline
+        BM25 + filtros + reordenamiento & 0{,}465 & 0{,}763 \\
+        \hline
+        Completa sin búsqueda híbrida & 0{,}802 & 0{,}847 \\
+        \hline
+        Completa sin filtros & 0{,}724 & 0{,}829 \\
+        \hline
+    \end{tabular}
+\end{table}

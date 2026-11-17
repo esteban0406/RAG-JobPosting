@@ -1,0 +1,38 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{Calidad de recuperación por sistema (media sobre 60 necesidades)}
+    \label{tab:res-pe1-global}
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Sistema} & \textbf{P@5} & \textbf{P@10} & \textbf{nDCG@10} & \textbf{MRR} & \textbf{R@10} \\
+        \hline
+        ILIKE & 0{,}062 & 0{,}054 & 0{,}064 & 0{,}100 & 0{,}035 \\
+        \hline
+        BM25 & 0{,}348 & 0{,}311 & 0{,}558 & 0{,}515 & 0{,}320 \\
+        \hline
+        Denso, e5-base-v2 (Iteración~1) & 0{,}473 & 0{,}421 & 0{,}676 & 0{,}632 & 0{,}420 \\
+        \hline
+        Denso, pgvector exacto & 0{,}482 & 0{,}408 & 0{,}674 & 0{,}632 & 0{,}405 \\
+        \hline
+        Denso, pgvector HNSW & 0{,}483 & 0{,}413 & 0{,}679 & 0{,}634 & 0{,}409 \\
+        \hline
+        Denso, Qdrant HNSW & 0{,}483 & 0{,}411 & 0{,}678 & 0{,}640 & 0{,}408 \\
+        \hline
+        + filtros & 0{,}567 & 0{,}465 & 0{,}723 & 0{,}738 & 0{,}482 \\
+        \hline
+        + híbrida & 0{,}543 & 0{,}478 & 0{,}719 & 0{,}717 & 0{,}492 \\
+        \hline
+        + reordenamiento (completa) & 0{,}667 & 0{,}556 & 0{,}816 & 0{,}853 & 0{,}594 \\
+        \hline
+        \multicolumn{6}{|l|}{\textit{Sistemas complementarios}} \\
+        \hline
+        BM25 + filtros & 0{,}402 & 0{,}350 & 0{,}595 & 0{,}597 & 0{,}375 \\
+        \hline
+        BM25 + filtros + reordenamiento & 0{,}540 & 0{,}433 & 0{,}695 & 0{,}729 & 0{,}441 \\
+        \hline
+        Completa sin búsqueda híbrida & 0{,}685 & 0{,}562 & 0{,}824 & 0{,}841 & 0{,}594 \\
+        \hline
+        Completa sin filtros & 0{,}625 & 0{,}515 & 0{,}792 & 0{,}832 & 0{,}541 \\
+        \hline
+    \end{tabular}
+\end{table}

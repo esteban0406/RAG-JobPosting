@@ -1,0 +1,22 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{\textit{Recall}@10 y latencia de la búsqueda vectorial sobre el corpus real (200 consultas, vectores multilingües)}
+    \label{tab:res-ann-real}
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Modo}} & \multicolumn{2}{c|}{\textbf{pgvector}} & \multicolumn{2}{c|}{\textbf{Qdrant}} \\
+        \cline{2-5}
+         & \textbf{\textit{Recall}} & \textbf{p50 (ms)} & \textbf{\textit{Recall}} & \textbf{p50 (ms)} \\
+        \hline
+        Exacto & 1{,}000 & 24{,}4 & 0{,}998 & 3{,}7 \\
+        \hline
+        Automático (decide el planificador) & 1{,}000 & 23{,}8 & -- & -- \\
+        \hline
+        HNSW, $ef_{search} = 16$ & 0{,}918 & 1{,}9 & 0{,}850 & 2{,}7 \\
+        \hline
+        HNSW, $ef_{search} = 64$ & 0{,}990 & 2{,}3 & 0{,}977 & 2{,}9 \\
+        \hline
+        HNSW, $ef_{search} = 256$ & 0{,}998 & 3{,}1 & 0{,}998 & 3{,}3 \\
+        \hline
+    \end{tabular}
+\end{table}

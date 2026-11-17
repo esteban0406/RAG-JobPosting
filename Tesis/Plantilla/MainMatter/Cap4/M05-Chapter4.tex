@@ -1,11 +1,11 @@
-Este capítulo sintetiza el artefacto evaluado: la arquitectura de JobAI, su pipeline de consulta en la configuración de referencia, que es la que se evalúa, y las dos iteraciones de diseño de este trabajo. Los detalles de implementación están en el Anexo~\ref{anx:artefacto}, y las fallas que la evaluación reveló durante las iteraciones, en la Sección~\ref{sec:res-fallas}.
+Este capítulo sintetiza el artefacto evaluado, el pipeline de JobAI: su arquitectura, el recorrido de una consulta en la configuración de referencia, que es la que se evalúa, y las dos iteraciones de diseño de este trabajo. Los detalles de implementación están en el Anexo~\ref{anx:artefacto}, y los hallazgos de la evaluación formativa que orientaron las iteraciones, en la Sección~\ref{sec:res-fallas}.
 
 \section{Arquitectura}
 \label{sec:art-arquitectura}
 
 JobAI es una plataforma de agregación de ofertas de empleo remoto cuyo componente central es un copiloto conversacional basado en RAG. Se organiza en tres capas (Figura~\ref{fig:art-arquitectura}): un cliente web en Next.js, que atiende la autenticación, la navegación del catálogo y el panel conversacional; un servidor en NestJS, que orquesta la ingesta, la recuperación y la generación, y una capa de datos con PostgreSQL como almacén relacional y un almacén vectorial que, desde la Iteración~1, puede ser pgvector o Qdrant. Un servidor propio, ejecutado localmente sobre una GPU, sirve el modelo de \textit{embeddings} y el de reordenamiento; los modelos de lenguaje se consumen a través de un proveedor externo, Groq. Los módulos del servidor se describen en el Anexo~\ref{anx:artefacto}.
 
-El capítulo describe la \emph{configuración de referencia} del artefacto, definida en el repositorio junto con el código. El despliegue público de la plataforma conserva todavía la configuración anterior a la Iteración~2, con un proveedor externo de \textit{embeddings} y sin reordenamiento.
+El capítulo describe la \emph{configuración de referencia} del artefacto, definida en el repositorio junto con el código. La Tabla~\ref{tab:art-config} la compara con las otras dos que distingue la Sección~\ref{sec:met-sistema}: la \emph{desplegada} en el servidor público, que usa el mismo código con otro modelo de \textit{embeddings} y sin reordenamiento, y la \emph{evaluada}, que es la de referencia sobre el corpus congelado, con los modelos y las fechas de cada corrida. Las tres comparten la primera etapa híbrida y los filtros de la Iteración~2.
 
 \begin{figure}[htbp!]
     \centering
@@ -35,7 +35,7 @@ El capítulo describe la \emph{configuración de referencia} del artefacto, defi
 \section{Pipeline de consulta}
 \label{sec:art-consulta}
 
-La Figura~\ref{fig:art-pipeline} resume el recorrido de una consulta y la Tabla~\ref{tab:art-config}, los parámetros de la configuración de referencia.
+La Figura~\ref{fig:art-pipeline} resume el recorrido de una consulta y la Tabla~\ref{tab:art-config}, los modelos y parámetros de las tres configuraciones.
 
 \begin{figure}[htbp!]
     \centering
@@ -77,37 +77,49 @@ La Figura~\ref{fig:art-pipeline} resume el recorrido de una consulta y la Tabla~
 
 \begin{table}[htbp!]
     \centering
-    \caption{Configuración de referencia del artefacto}
+    \caption{Configuraciones desplegada, de referencia y evaluada del artefacto}
     \label{tab:art-config}
-    \small
-    \begin{tabular}{|p{4.4cm}|p{9.8cm}|}
+    \footnotesize
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{3.3cm}|>{\raggedright\arraybackslash}p{3.6cm}|>{\raggedright\arraybackslash}p{3.8cm}|}
         \hline
-        \textbf{Componente} & \textbf{Configuración} \\
+        \textbf{Componente} & \textbf{Desplegada} & \textbf{De referencia} & \textbf{Evaluada} \\
         \hline
-        Modelo de \textit{embeddings} & multilingual-e5-base \citep{Wang2024mE5}, 768 dimensiones, ejecutado localmente; prefijos \texttt{query:} y \texttt{passage:}. e5-base-v2 \citep{Wang2022E5} se conserva para medir el efecto del cambio de modelo \\
+        Modelo de \textit{embeddings} & \texttt{gemini-\allowbreak embedding-\allowbreak 001}, proveedor externo, 768 dimensiones & multilingual-e5-base \citep{Wang2024mE5}, 768 dimensiones, servidor local; prefijos \texttt{query:} y \texttt{passage:} & Igual que la de referencia, en la GPU del equipo de evaluación; e5-base-v2 \citep{Wang2022E5} se conserva para medir el cambio de modelo \\
         \hline
-        Fragmentación & Estructurada (identidad, requisitos, responsabilidades, beneficios y salario); ventana deslizante de 800 caracteres con solapamiento de 200 cuando el análisis estructurado falla \\
+        Almacén vectorial & pgvector & pgvector (valor por defecto) & Qdrant; pgvector para comparar (PE1 y PE4) \\
         \hline
-        Restricciones & Extraídas por el clasificador (salario, modalidad remota, tipo de contrato) y aplicadas como filtro en la recuperación \\
+        Índice vectorial & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{HNSW con $m=16$ y $ef_{construction}=128$ en pgvector y en Qdrant; $ef_{search}=40$} \\
         \hline
-        Primera etapa & 50 fragmentos más similares por coseno, agrupados por oferta, y 50 ofertas por BM25, fusionadas con RRF ($k = 60$) \\
+        Restricciones & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{Extraídas por el clasificador (salario, modalidad remota, tipo de contrato) y aplicadas como filtro dentro de la búsqueda densa y de BM25} \\
         \hline
-        Reordenamiento & Qwen3-Reranker-0.6B \citep{Zhang2025Qwen3} sobre las 20 primeras candidatas; se conservan 5 ofertas \\
+        Primera etapa & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{50 fragmentos más similares por coseno, agrupados por oferta, y 50 ofertas por BM25, fusionadas con RRF ($k = 60$)} \\
         \hline
-        Índice vectorial & HNSW con $m=16$ y $ef_{construction}=128$ en pgvector y en Qdrant; $ef_{search}=40$ \\
+        Reordenamiento & Desactivado; se conservan las 5 primeras de la fusión & Qwen3-Reranker-0.6B \citep{Zhang2025Qwen3} sobre las 20 primeras candidatas; se conservan 5 ofertas & Igual que la de referencia \\
         \hline
-        Modelo generador & \texttt{qwen/qwen3.8-27b} servido por Groq, temperatura 0,2 (0 durante la evaluación) \\
+        Compuerta de sin resultados & No aplica: depende del reordenamiento & Umbral de 0,134 sobre el mejor puntaje & Igual; las métricas de recuperación se calculan sin ella \\
         \hline
-        Clasificación de consultas & Patrones \textit{regex} más un clasificador basado en LLM restringido a un catálogo cerrado de plantillas SQL \\
+        Análisis estructurado (ingesta) & \texttt{gpt-oss-120b} (Groq) & \texttt{gpt-oss-120b} (Groq) & Corpus analizado con Llama 3.1 8B, local (Sección~\ref{sec:met-corpus}) \\
         \hline
-        Equipo de evaluación & AMD Ryzen 5 3600 (6 núcleos, 12 hilos), 16 GB de RAM y GPU NVIDIA GeForce RTX 3060 de 12 GB, que ejecuta el modelo de \textit{embeddings} y el de reordenamiento \\
+        Fragmentación & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{Estructurada, en cuatro tipos: identidad; requisitos; responsabilidades y habilidades; beneficios y salario. Ventana deslizante de 800 caracteres con solapamiento de 200 cuando el análisis estructurado falla} \\
+        \hline
+        Clasificación y generación & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{Patrones \textit{regex} y \texttt{qwen/qwen3.8-27b} (Groq) restringido a un catálogo cerrado de plantillas SQL; el mismo modelo genera la respuesta, con temperatura 0,2 (0 durante la evaluación)} \\
+        \hline
+        \multicolumn{4}{|l|}{\textit{Solo en la evaluación}} \\
+        \hline
+        Jueces & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{GPT-6 Sol sin razonamiento y con temperatura 0, para la relevancia y para RAGAS; Llama 3.1 8B, local, solo durante el desarrollo del protocolo} \\
+        \hline
+        Fechas de las corridas (2026) & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{Recuperación: 14 de octubre y 16--17 de noviembre (sistemas complementarios); generación: 14 de octubre; latencia: 14 y 15 de octubre y 1 de noviembre; juicios de relevancia: 13--14 y 16 de noviembre; RAGAS: 14 y 16 de noviembre} \\
+        \hline
+        Equipo & \multicolumn{3}{>{\raggedright\arraybackslash}p{11.5cm}|}{AMD Ryzen 5 3600 (6 núcleos, 12 hilos), 16 GB de RAM y GPU NVIDIA GeForce RTX 3060 de 12 GB, que ejecuta el modelo de \textit{embeddings} y el de reordenamiento} \\
         \hline
     \end{tabular}
 \end{table}
 
+\paragraph{Parámetros.} Solo tres decisiones de la configuración de referencia se tomaron con datos: el modelo de reordenamiento, el número de candidatas que recibe y el umbral de la compuerta, elegidos con el conjunto de desarrollo y una regla fijada antes de medir (Sección~\ref{sec:art-rerank}). Los demás parámetros no se ajustaron y su valor tiene otro origen: los 50 fragmentos de la búsqueda densa y las 50 ofertas de BM25 se fijaron al diseñar la Iteración~2; $k = 60$ es el valor habitual de RRF \citep{Cormack2009}; las cinco ofertas del contexto vienen del diseño anterior a este trabajo; $ef_{search} = 40$ es el valor por defecto de pgvector, que se usa también en Qdrant, y cada oferta se recorta a 2.000 caracteres antes del reordenamiento para no exceder el límite de 512 \textit{tokens} del modelo. Ninguno de ellos se evaluó, y otros valores podrían dar resultados distintos.
+
 \paragraph{Ingesta.}
 \label{sec:art-ingesta}
-Un proceso programado consulta las tres fuentes públicas cada seis horas y puede desactivarse, como se hizo para congelar el corpus de evaluación. Deduplica las ofertas, extrae de cada una con un modelo de lenguaje sus campos estructurados (resumen, salario, responsabilidades, requisitos, beneficios, habilidades, tipo de contrato y modalidad), normaliza los salarios a dólares anuales y la divide en fragmentos \emph{tipados}: identidad, requisitos, responsabilidades y habilidades, y beneficios y salario. La fragmentación tipada responde a un hallazgo de una iteración previa (Sección~\ref{sec:met-ciclos-previos}): un fragmento que contiene solo la información por la que se pregunta compite mejor en la recuperación que uno que la mezcla con otra. La configuración de referencia usa \texttt{gpt-oss-120b} para el análisis estructurado, pero el corpus de evaluación se procesó con Llama 3.1 8B ejecutado localmente (Sección~\ref{sec:met-corpus}).
+Un proceso programado consulta las tres fuentes públicas cada seis horas y puede desactivarse, como se hizo para congelar el corpus de evaluación. Deduplica las ofertas, extrae de cada una con un modelo de lenguaje sus campos estructurados (resumen, salario, responsabilidades, requisitos, beneficios, habilidades, tipo de contrato y modalidad), normaliza los salarios a dólares anuales y la divide en fragmentos \emph{tipados}: identidad, requisitos, responsabilidades y habilidades, y beneficios y salario. La fragmentación tipada es anterior a este trabajo y queda fuera de su alcance (Sección~\ref{sec:alcance}): evaluarla exigiría volver a fragmentar y codificar el corpus y rehacer los juicios de relevancia, y se deja como trabajo futuro. La configuración de referencia usa \texttt{gpt-oss-120b} para el análisis estructurado, pero el corpus de evaluación se procesó con Llama 3.1 8B ejecutado localmente (Sección~\ref{sec:met-corpus}).
 
 \paragraph{Clasificación de la consulta.}
 \label{sec:art-clasificacion}
@@ -123,7 +135,7 @@ Para cada una de las cinco ofertas se arma un bloque de contexto con su encabeza
 \section{Iteración 1: corrección}
 \label{sec:art-vectorial}
 
-La primera iteración partió de una revisión del artefacto frente a su documentación, hecha al preparar la evaluación, para que lo medido correspondiera a lo que el artefacto dice hacer. Corrigió las fallas que clasifica la Sección~\ref{sec:res-fallas}, la mayoría en la ingesta, la agregación y la búsqueda vectorial, y rediseñó el almacenamiento vectorial para que pgvector y Qdrant pudieran compararse en igualdad de condiciones.
+La primera iteración partió de una revisión del artefacto frente a su documentación, hecha al preparar la evaluación, para que lo medido correspondiera a lo que el artefacto dice hacer. Corrigió fallas que reúne la Sección~\ref{sec:res-fallas} entre los hallazgos de la evaluación formativa, la mayoría en la ingesta, la agregación y la búsqueda vectorial, y rediseñó el almacenamiento vectorial para que pgvector y Qdrant pudieran compararse en igualdad de condiciones.
 
 \paragraph{Diagnóstico.} En su versión inicial, JobAI almacenaba los vectores en una columna de PostgreSQL mediante la extensión pgvector \citep{Pgvector}, con un índice IVFFlat creado en la migración inicial, sobre una tabla todavía vacía. La consulta de similitud ordenaba los resultados por la expresión derivada $1 - d(\mathbf{q}, \mathbf{v})$, y el planificador de PostgreSQL solo puede servir una búsqueda de vecinos cercanos desde el índice cuando la consulta ordena directamente por el operador de distancia. La inspección con \texttt{EXPLAIN ANALYZE} sobre el corpus de evaluación (Tabla~\ref{tab:art-explain}) confirmó que la consulta original nunca usaba el índice. También mostró que, con el índice HNSW y la consulta corregida, el planificador sigue prefiriendo el barrido secuencial a esta escala, aunque el recorrido del índice es 12 veces más rápido; por eso la búsqueda admite un modo que fuerza el índice.
 
@@ -191,6 +203,7 @@ La Tabla~\ref{tab:art-cambios} resume los cambios de la iteración. Los filtros 
 \end{table}
 
 \subsection{Selección del modelo de reordenamiento}
+\label{sec:art-rerank}
 
 \begin{table}[!htb]
     \centering
@@ -224,4 +237,4 @@ El modelo de reordenamiento, el número de candidatas y el umbral de la compuert
 \end{enumerate}
 
 
-Todas las variantes mejoraron entre 0,06 y 0,10 el nDCG@10 de la recuperación sin reordenamiento (Tabla~\ref{tab:art-rerank-dev}). Qwen3-Reranker-0.6B sin instrucción quedó a 0,019 de la mejor variante, y la regla lo eligió por ser más simple. Pasar de 30 a 20 candidatas cambió el nDCG@10 de 0,832 a 0,830 y redujo la mediana de la latencia de recuperación de 1.184 a 788~ms, así que se adoptaron 20. El mejor puntaje más bajo entre las consultas de desarrollo fue 0,132 y el siguiente 0,134; las diez consultas fuera de dominio quedaron por debajo de 0,09, de modo que el umbral de 0,134 cumplió la condición y se adoptó.
+Todas las variantes mejoraron entre 0,06 y 0,10 el nDCG@10 de la recuperación sin reordenamiento (Tabla~\ref{tab:art-rerank-dev}). Qwen3-Reranker-0.6B sin instrucción quedó a 0,019 de la mejor variante, y la regla lo eligió por ser más simple. Pasar de 30 a 20 candidatas cambió el nDCG@10 de 0,832 a 0,830 y redujo la mediana de la latencia de recuperación de 1.184 a 788~ms, así que se adoptaron 20. El 0,832 de la variante con 30 candidatas no coincide con el 0,820 de la Tabla~\ref{tab:art-rerank-dev} porque cada etapa de la regla se juzgó con su propio agrupamiento (Sección~\ref{sec:met-juicios}). Las listas de la variante son idénticas en las dos etapas y sus 540 pares comunes tienen las mismas etiquetas, pero la etapa~1 agrupó las listas de seis variantes, con 15,0 ofertas relevantes por consulta, y la etapa~2 las de tres, con 13,7. Con menos ofertas relevantes, el ordenamiento ideal con que se normaliza el nDCG es menor, y la misma lista obtiene un valor más alto. Las dos cantidades de candidatas se compararon dentro de la etapa~2, con el mismo agrupamiento, de modo que la decisión no depende de esa diferencia. El mejor puntaje más bajo entre las consultas de desarrollo fue 0,132 y el siguiente 0,134; las diez consultas fuera de dominio quedaron por debajo de 0,09, de modo que el umbral de 0,134 cumplió la condición y se adoptó.

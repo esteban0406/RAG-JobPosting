@@ -17,7 +17,7 @@ cp "$B/F05-Symbols-final.tex" "$S/FrontMatter/F05-Symbols.tex"
 sed -i 's#^\( *\)% *\\input{FrontMatter/F05-Symbols}#\1\\input{FrontMatter/F05-Symbols}#' "$S/main.tex"
 # Declaración de uso de IA (esqueleto con [PENDIENTE] que completa el autor), después de las siglas.
 cp "$B/F06-DeclaracionIA-final.tex" "$S/FrontMatter/F06-DeclaracionIA.tex"
-sed -i 's#^\( *\)\\input{FrontMatter/F05-Symbols}#&\n\1\\input{FrontMatter/F06-DeclaracionIA}#' "$S/main.tex"
+grep -q 'FrontMatter/F06-DeclaracionIA' "$S/main.tex" || sed -i 's#^\( *\)\\input{FrontMatter/F05-Symbols}#&\n\1\\input{FrontMatter/F06-DeclaracionIA}#' "$S/main.tex"
 cp "$B/M01-Introduction-final.tex" "$S/MainMatter/Cap0/M01-Introduction.tex"
 cp "$B/M02-Chapter1-final.tex" "$S/MainMatter/Cap1/M02-Chapter1.tex"
 cp "$B/M03-Chapter2-final.tex" "$S/MainMatter/Cap2/M03-Chapter2.tex"
