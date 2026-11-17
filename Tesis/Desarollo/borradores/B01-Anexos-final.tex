@@ -76,7 +76,21 @@ Para las consultas de recuperación se generan respuestas mediante la ruta real 
 \end{itemize}
 El juez de RAGAS es el juez final de los juicios de relevancia, GPT-6 Sol, con la misma configuración: sin razonamiento y a temperatura 0. El juez debe recibir completo el contexto recuperado. Por eso su ventana de contexto se fija en 16.384 \textit{tokens} y su salida admite hasta 4.096: con valores menores, la verificación de las respuestas largas queda truncada y la métrica no puede calcularse. Se reporta la proporción de respuestas en las que alguna métrica no pudo calcularse, y la proporción de respuestas a consultas en español redactadas en otro idioma.
 
-La fidelidad se verifica a mano en una muestra de 20 respuestas, cinco por categoría, elegidas al azar con semilla fija. Cada respuesta se divide de forma determinista en unidades (una por línea o viñeta y, dentro de ella, una por oración), y el autor marca cada unidad como sostenida por el contexto, no sostenida (lo contradice o no aparece en él) o no verificable (introducciones y cierres), sin ver el puntaje del juez. La fidelidad humana de una respuesta es la proporción de unidades sostenidas entre las verificables, y se compara con la del juez. Las unidades no coinciden exactamente con las afirmaciones atómicas en que el juez descompone la respuesta, de modo que la comparación es aproximada.
+La fidelidad se verifica a mano en una muestra de 20 respuestas, cinco por categoría, elegidas al azar con semilla fija. Cada respuesta se divide de forma determinista en unidades (una por línea o viñeta y, dentro de ella, una por oración), 427 en total. Cada unidad se marca como sostenida por el contexto, no sostenida (lo contradice o no aparece en él) o no verificable. La fidelidad humana de una respuesta es la proporción de unidades sostenidas entre las verificables, y se compara con la del juez. Las unidades no coinciden exactamente con las afirmaciones atómicas en que el juez descompone la respuesta, de modo que la comparación es aproximada.
+
+Para que la verificación no dependiera del autor, la hicieron dos anotadores externos, bilingües y sin formación en desarrollo de software ni en inteligencia artificial, cada uno con la mitad de las respuestas. Las dos mitades comparten una respuesta completa y parte de otra (20 unidades), con las que se mide el acuerdo entre ellos. Trabajaron en una página que muestra, para cada respuesta, las ofertas recuperadas junto a sus unidades, sin ningún puntaje de juez, y con una guía escrita con un ejemplo y reglas para los casos dudosos:
+\begin{itemize}
+    \item la tarea es comparar textos, no juzgar si la respuesta es buena ni si las ofertas sirven a quien buscó;
+    \item una unidad es sostenida solo si todo lo que afirma aparece en las ofertas, aunque sea con otras palabras o en otro idioma, y en la oferta de la que habla, no en otra;
+    \item lo que la respuesta omite no cuenta, solo lo que afirma;
+    \item no se usa conocimiento propio;
+    \item \enquote{no especificado} es sostenido solo si la oferta no da el dato;
+    \item un nombre de cargo o de empresa es sostenido si hay una oferta con ese cargo o de esa empresa;
+    \item las conclusiones del asistente son sostenidas si los datos las permiten;
+    \item las introducciones, los cierres y los títulos vacíos no son verificables.
+\end{itemize}
+
+La verificación necesitó dos rondas. En la primera, la guía no tenía la tercera regla, y los dos anotadores se apartaron del criterio en direcciones opuestas: uno marcó como no sostenidas unidades que omitían requisitos de la oferta, y el otro marcó como no sostenidas casi la mitad de sus unidades, incluidas cifras y títulos copiados literalmente de las ofertas, porque juzgó si la unidad servía para la búsqueda. Se agregó la tercera regla a la guía, con la aclaración de que no importa si la oferta encaja con la consulta, y se envió la misma a ambos. El segundo anotador repitió su mitad completa en una página vacía, sin ver sus marcas anteriores; el primero revisó las unidades que había marcado como no sostenidas, porque su desviación solo podía producir esa marca. Solo se reporta la segunda ronda; la primera se conserva en el repositorio.
 
 \section{Datos sintéticos y protocolo del benchmark}
 \label{anx:sinteticos}
