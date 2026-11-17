@@ -54,6 +54,25 @@ BM25 \citep{Robertson2009} usa $k_1 = 1{,}2$ y $b = 0{,}75$, con la variante de 
 
 La elección del juez final siguió tres criterios. Primero, el juez debía pertenecer a una familia de modelos distinta de las del juez local y la ingesta (Llama) y del generador y el modelo de reordenamiento (Qwen). Segundo, debía responder con la etiqueta sin un razonamiento extenso previo y con temperatura 0, como prevé el procedimiento; se descartaron por eso los modelos cuyo razonamiento no puede desactivarse. Tercero, se prefirió el modelo con el que se validó el procedimiento en la literatura: GPT-4o \citep{Upadhyay2024}. La elección se confirma con la parte de calibración de la muestra humana antes de la corrida final: esos pares se juzgan con GPT-4o, con GPT-6 Sol sin razonamiento y con Claude Sonnet 5.5, y GPT-4o solo se reemplaza si otro modelo supera su kappa binario en más de 0,05. La regla se fijó antes de anotar la muestra. Al aplicarla, GPT-6 Sol y Claude Sonnet 5.5 superaron a GPT-4o en más de 0,26 y quedaron a 0,022 entre sí; el empate se resolvió con el segundo criterio a favor de GPT-6 Sol, porque Claude Sonnet 5.5 no admite una temperatura fija. Claude Sonnet 5.5 quedó como segundo juez del plan B (Sección~\ref{sec:res-juez}).
 
+\section{Fórmulas de las métricas}
+\label{anx:formulas}
+
+Para una necesidad $q$, sea $L_q^{(k)} = (d_1, \ldots, d_k)$ la lista de las $k$ primeras ofertas que devuelve un sistema, $\mathit{rel}(d) \in \{0, 1, 2, 3\}$ la etiqueta del juez (0 para las ofertas sin juzgar) y $R_q = \{d : \mathit{rel}(d) \geq 2\}$ el conjunto de ofertas relevantes de la necesidad. Las métricas se calculan por consulta y se promedian primero entre las formulaciones de cada necesidad y después entre necesidades (Sección~\ref{sec:met-estadistica}).
+
+\[ \mathrm{P@}k = \frac{|\{d \in L_q^{(k)} : \mathit{rel}(d) \geq 2\}|}{k} \qquad \mathrm{R@}10 = \frac{|\{d \in L_q^{(10)} : \mathit{rel}(d) \geq 2\}|}{|R_q|} \]
+
+El \textit{recall} no está definido si $R_q$ es vacío. El rango recíproco es $1/i$ si la primera oferta relevante está en la posición $i$, y 0 si no hay ninguna entre las devueltas; MRR es su media. El nDCG usa la etiqueta como ganancia y un descuento logarítmico \citep{Jarvelin2002}:
+\[ \mathrm{DCG@}k = \sum_{i=1}^{k} \frac{\mathit{rel}(d_i)}{\log_2(i+1)} \qquad \mathrm{nDCG@}k = \frac{\mathrm{DCG@}k}{\mathrm{IDCG@}k} \]
+donde $\mathrm{IDCG@}k$ es el DCG del ordenamiento ideal de todas las ofertas juzgadas de la necesidad. Con esta ganancia, una oferta con etiqueta 1 aporta un tercio de lo que aporta una con etiqueta 3.
+
+El cumplimiento de restricciones usa los filtros esperados $F_q$ de la consulta y los atributos de cada oferta, sin el juez. Si el sistema devuelve $n$ ofertas y $k' = \min(k, n)$:
+\[ \mathrm{C@}k = \frac{|\{d \in L_q^{(k')} : d \text{ cumple } F_q\}|}{k'} \]
+y no se define si el sistema no devuelve ninguna oferta.
+
+El acuerdo entre el juez y las etiquetas humanas se mide con el kappa de \citet{Cohen1960}, $\kappa = (p_o - p_e)/(1 - p_e)$, donde $p_o$ es la proporción de acuerdo observada y $p_e$ la esperada por azar a partir de las distribuciones marginales. La versión ponderada sobre la escala completa usa pesos cuadráticos $w_{ij} = (i - j)^2$:
+\[ \kappa_w = 1 - \frac{\sum_{i,j} w_{ij}\, o_{ij}}{\sum_{i,j} w_{ij}\, e_{ij}} \]
+con $o_{ij}$ y $e_{ij}$ las proporciones observadas y esperadas de pares con etiqueta humana $i$ y etiqueta del juez $j$.
+
 \section{Exactitud de las consultas de agregación}
 \label{anx:agregacion}
 

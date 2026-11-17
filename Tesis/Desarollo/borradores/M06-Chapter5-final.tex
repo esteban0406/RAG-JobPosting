@@ -1,65 +1,33 @@
 
-Este capítulo presenta los resultados de las dos evaluaciones del trabajo. Las Secciones~\ref{sec:res-pe1} a~\ref{sec:res-pe4} corresponden a la evaluación sumativa: responden las cuatro preguntas de evaluación (Sección~\ref{sec:met-preguntas}) con la configuración que resultó de la Iteración~2. La configuración de la Iteración~1 se aproxima con el sistema denso que usa e5-base-v2 (Sección~\ref{sec:met-sistemas}). La Sección~\ref{sec:res-fallas} corresponde a la evaluación formativa: reúne las fallas que el protocolo reveló durante las dos iteraciones. Salvo que se indique lo contrario, las medias y las pruebas estadísticas usan como unidad la necesidad de información (Sección~\ref{sec:met-estadistica}).
+Este capítulo presenta los resultados de las dos evaluaciones del trabajo. Las Secciones~\ref{sec:res-pe1} a~\ref{sec:res-pe4} corresponden a la evaluación sumativa: responden las cuatro preguntas de evaluación (Sección~\ref{sec:met-preguntas}) con la configuración que resultó de la Iteración~2. La configuración de la Iteración~1 se aproxima con el sistema denso que usa e5-base-v2 (Sección~\ref{sec:met-sistemas}). La Sección~\ref{sec:res-fallas} corresponde a la evaluación formativa: reúne las fallas encontradas durante las dos iteraciones y el origen de cada detección. Salvo que se indique lo contrario, las medias y las pruebas estadísticas usan como unidad la necesidad de información (Sección~\ref{sec:met-estadistica}). Los análisis que se agregaron después de la revisión del primer borrador se rotulan como \emph{análisis posterior a la revisión}: forman una familia de pruebas aparte y no cambiaron la configuración del artefacto.
 
 \section{Corpus, consultas y juicios}
 \label{sec:res-corpus}
 
 Todas las corridas parten del corpus congelado de la Sección~\ref{sec:met-corpus}: 1.068 ofertas divididas en 4.013 fragmentos. De las 100 consultas de prueba, 85 producen una lista de ofertas (60 en inglés y 25 en español) y corresponden a 60 necesidades de información; las 15 de agregación se evalúan aparte (Sección~\ref{sec:res-agregacion}).
 
-El agrupamiento de profundidad 10 de los nueve sistemas produjo 1.977 pares de necesidad y oferta, que el juez final (GPT-6 Sol, Sección~\ref{sec:res-juez}) etiquetó sin ninguna respuesta ininterpretable. Asignó la etiqueta 3 al 20,6\,\% de los pares, la 2 al 8,8\,\%, la 1 al 56,3\,\% y la 0 al 14,3\,\%. El predominio de la etiqueta 1 tiene dos causas. El agrupamiento reúne a propósito las primeras posiciones de sistemas débiles, como ILIKE, BM25 y la recuperación densa sin filtros, y la regla de condiciones duras limita a 1 toda oferta del área correcta que no informa o contradice el salario, la modalidad o el tipo de contrato que la necesidad exige.
+El agrupamiento de profundidad 10 de los nueve sistemas de la corrida final produjo 1.977 pares de necesidad y oferta. Los cuatro sistemas del análisis posterior a la revisión (Sección~\ref{sec:res-pe1}) aportaron 272 pares nuevos, para un total de 2.249, que el juez final (GPT-6 Sol, Sección~\ref{sec:res-juez}) etiquetó sin ninguna respuesta ininterpretable. Asignó la etiqueta 3 al 19,5\,\% de los pares, la 2 al 8,3\,\%, la 1 al 57,1\,\% y la 0 al 15,0\,\%. El predominio de la etiqueta 1 tiene dos causas. El agrupamiento reúne a propósito las primeras posiciones de sistemas débiles, como ILIKE, BM25 y la recuperación densa sin filtros, y la regla de condiciones duras limita a 1 toda oferta del área correcta que no informa o contradice el salario, la modalidad o el tipo de contrato que la necesidad exige.
 
-Cada necesidad tiene en promedio 9,7 ofertas relevantes (etiqueta $\geq 2$), con un mínimo de 1 y un máximo de 24; 35 de las 60 necesidades tienen menos de 10, y 15 tienen menos de 5. Esto fija un techo a las métricas de corte: un sistema perfecto obtendría un P@5 medio de 0,89 y un P@10 medio de 0,72. El nDCG@10 no tiene ese techo, porque se normaliza con el ordenamiento ideal de cada necesidad.
+Los pares nuevos incluyen 46 ofertas relevantes que el agrupamiento original no había reunido, en 34 necesidades. Como el nDCG@10 se normaliza con el ordenamiento ideal de cada necesidad, las cifras de los nueve sistemas originales bajan entre 0,012 y 0,018 con respecto a las del agrupamiento original, y ninguna conclusión de las pruebas fijadas antes de la corrida cambia. Este capítulo reporta todas las cifras con el agrupamiento ampliado.
+
+Cada necesidad tiene en promedio 10,4 ofertas relevantes (etiqueta $\geq 2$), con un mínimo de 1 y un máximo de 25; 32 de las 60 necesidades tienen menos de 10, y 12 tienen menos de 5. Esto fija un techo a las métricas de corte: un sistema perfecto obtendría un P@5 medio de 0,91 y un P@10 medio de 0,75. El nDCG@10 no tiene ese techo, porque se normaliza con el ordenamiento ideal de cada necesidad.
 
 \section{Validación del juez de relevancia}
 \label{sec:res-juez}
 
 \paragraph{Calibración y elección del juez.} El autor etiquetó a ciegas los 103 pares de calibración, y se juzgaron con los tres candidatos a juez final y con el juez local. El acuerdo con esas etiquetas fue bajo para los cuatro jueces ($\kappa$ binario entre 0,19 y 0,37), y en todos los casos con el mismo sesgo: los jueces asignaban etiquetas menores que el autor. La revisión de los desacuerdos mostró etiquetas humanas que contradecían reglas explícitas de la guía, sobre todo la de condiciones duras (por ejemplo, la etiqueta 3 a una oferta sin salario para una necesidad que lo exige). Se mostraron al autor diez de esos ejemplos, con su etiqueta y la dirección del desacuerdo, y antes de aplicar la regla de elección volvió a etiquetar a ciegas los 103 pares en un orden aleatorio nuevo, sin ver sus etiquetas anteriores ni las de los jueces. De los 63 pares en que al menos un juez discrepaba de la primera etiqueta, 34 cambiaron de lado del umbral de relevancia; de los 40 en que todos coincidían, ninguno. La Tabla~\ref{tab:res-kappa-cal} muestra el acuerdo con las etiquetas revisadas.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Acuerdo de los jueces con las etiquetas humanas revisadas en los 103 pares de calibración, con IC bootstrap del 95\,\%}
-    \label{tab:res-kappa-cal}
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-        \textbf{Juez} & \textbf{Acuerdo exacto} & \textbf{$\kappa$ binario} & \textbf{$\kappa$ ponderado} \\
-        \hline
-        Claude Sonnet 5.5 & 0{,}79 & 0{,}828 [0{,}707; 0{,}935] & 0{,}884 \\
-        \hline
-        GPT-6 Sol, sin razonamiento & 0{,}84 & 0{,}806 [0{,}668; 0{,}916] & 0{,}886 \\
-        \hline
-        Llama 3.1 8B (juez local) & 0{,}51 & 0{,}604 [0{,}456; 0{,}733] & 0{,}688 \\
-        \hline
-        GPT-4o & 0{,}50 & 0{,}541 [0{,}372; 0{,}691] & 0{,}664 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-kappa-cal}
 
 La regla fijada antes de anotar (Anexo~\ref{anx:juez-final}) reemplaza a GPT-4o si otro candidato supera su $\kappa$ binario en más de 0,05; los dos lo superan en más de 0,26. Entre ellos la diferencia es de 0,022, menor que el umbral que la misma regla considera significativo, y la elección se resolvió con el segundo criterio del Anexo: GPT-6 Sol responde sin razonamiento previo y a temperatura 0, mientras que Claude Sonnet 5.5 no admite una temperatura fija y razonó antes de la etiqueta en cerca de la cuarta parte de los pares, aunque el prompt lo prohíbe (con el límite de 64 \textit{tokens} de UMBRELA, 20 de sus 103 respuestas quedaron truncadas antes de la etiqueta, y se juzgó de nuevo con un límite de 1.024). Claude Sonnet 5.5 queda como segundo juez del plan B, de otra familia. Con las etiquetas revisadas, GPT-6 Sol sigue siendo más estricto que el autor en la relevancia: de los 16 desacuerdos en la etiqueta exacta, 9 cruzan el umbral y en todos ellos el autor considera relevante una oferta que el juez no; los 7 restantes no cambian la relevancia binaria (6 ofertas que el autor etiquetó 0 y el juez 1, y una que el autor etiquetó 3 y el juez 2). Un juez que subestima la relevancia reduce las cifras absolutas, pero afecta menos las comparaciones entre sistemas, que se juzgan con el mismo criterio.
 
-Como la revisión se hizo después de conocer que había desacuerdos con los jueces, el acuerdo de calibración solo se usa para elegir el juez. La medida de la validez del juez es el acuerdo en los 298 pares de validación, que el autor etiquetó después de la elección y sin acceso a las etiquetas de ningún juez.
+Como la revisión se hizo después de conocer que había desacuerdos con los jueces, el acuerdo de calibración solo se usa para elegir el juez. La medida de la validez del juez es el acuerdo en los 298 pares de validación, que el autor etiquetó después de la elección y sin acceso a las etiquetas de ningún juez. Todas las etiquetas humanas son de una sola persona; la Sección~\ref{sec:res-limitaciones} discute esa limitación.
 
 \paragraph{Validación.} En los 298 pares de validación, GPT-6 Sol obtuvo un $\kappa$ binario de 0,786 [0,706; 0,858] y un $\kappa$ ponderado de 0,849 [0,811; 0,880], un acuerdo sustancial por encima del umbral de 0,60 fijado antes de anotar, de modo que no se aplicó el plan B. La Tabla~\ref{tab:res-kappa-val} muestra la matriz de confusión.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Matriz de confusión de GPT-6 Sol frente a las etiquetas humanas en los 298 pares de validación}
-    \label{tab:res-kappa-val}
-    \begin{tabular}{|l|c|c|c|c|c|}
-        \hline
-        \textbf{Humano $\backslash$ juez} & \textbf{0} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{Total} \\
-        \hline
-        0 & 43 & 58 & 0 & 0 & 101 \\
-        \hline
-        1 & 0 & 86 & 8 & 0 & 94 \\
-        \hline
-        2 & 0 & 19 & 18 & 7 & 44 \\
-        \hline
-        3 & 0 & 1 & 3 & 55 & 59 \\
-        \hline
-        Total & 43 & 164 & 29 & 62 & 298 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-kappa-val}
 
 El autor y el juez discrepan sobre la relevancia binaria en 28 pares: en 20 el juez es más estricto y en 8 más laxo, de modo que el juez considera relevantes 91 ofertas y el autor 103. El acuerdo exacto (0,68) es menor que el binario sobre todo por 58 pares que el autor etiquetó como sin relación (0) y el juez como relacionados (1). Esa diferencia no cambia P@k, R@10 ni MRR, que usan la relevancia binaria, y pesa poco en el nDCG@10, en el que la etiqueta 1 aporta un tercio de la ganancia de la etiqueta 3. El juez local, en cambio, obtuvo en la misma muestra un $\kappa$ binario de 0,508 [0,429; 0,590], con el sesgo contrario: consideró relevantes 70 pares que el autor no, y solo 6 a la inversa. Las cifras provisionales que se obtuvieron con él durante el desarrollo sobrestimaban, por tanto, la relevancia de las ofertas recuperadas.
 
@@ -68,71 +36,34 @@ El autor y el juez discrepan sobre la relevancia binaria en 28 pares: en 20 el j
 
 \subsection{Frente a las líneas base}
 
-La Tabla~\ref{tab:res-pe1-global} resume las métricas de los nueve sistemas.
+La Tabla~\ref{tab:res-pe1-global} resume las métricas de los nueve sistemas de la corrida final y, aparte, de los cuatro del análisis posterior a la revisión: BM25 con los mismos filtros estructurados que el pipeline, con y sin el reordenamiento, y la configuración completa sin la búsqueda híbrida o sin los filtros.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Calidad de recuperación por sistema (media sobre 60 necesidades)}
-    \label{tab:res-pe1-global}
-    \begin{tabular}{|l|c|c|c|c|c|}
-        \hline
-        \textbf{Sistema} & \textbf{P@5} & \textbf{P@10} & \textbf{nDCG@10} & \textbf{MRR} & \textbf{R@10} \\
-        \hline
-        ILIKE & 0{,}062 & 0{,}054 & 0{,}065 & 0{,}100 & 0{,}038 \\
-        \hline
-        BM25 & 0{,}348 & 0{,}311 & 0{,}570 & 0{,}515 & 0{,}349 \\
-        \hline
-        Denso, e5-base-v2 (Iteración~1) & 0{,}473 & 0{,}421 & 0{,}689 & 0{,}632 & 0{,}447 \\
-        \hline
-        Denso, pgvector exacto & 0{,}482 & 0{,}407 & 0{,}688 & 0{,}632 & 0{,}434 \\
-        \hline
-        Denso, pgvector HNSW & 0{,}483 & 0{,}413 & 0{,}694 & 0{,}634 & 0{,}438 \\
-        \hline
-        Denso, Qdrant HNSW & 0{,}483 & 0{,}411 & 0{,}692 & 0{,}640 & 0{,}437 \\
-        \hline
-        + filtros & 0{,}567 & 0{,}465 & 0{,}738 & 0{,}738 & 0{,}518 \\
-        \hline
-        + híbrida & 0{,}543 & 0{,}478 & 0{,}735 & 0{,}717 & 0{,}529 \\
-        \hline
-        + reordenamiento (completa) & 0{,}667 & 0{,}556 & 0{,}834 & 0{,}853 & 0{,}647 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe1-global}
 
-La búsqueda por subcadena de la plataforma (ILIKE) no devuelve ningún resultado en 78 de las 85 consultas, porque exige que la consulta completa aparezca en el título o en la empresa. Su nDCG@10 de 0,065 ilustra el punto de partida de la plataforma, pero no es una comparación exigente. BM25 devuelve resultados en 84 consultas, y es la comparación principal.
+La búsqueda por subcadena de la plataforma (ILIKE) no devuelve ningún resultado en 78 de las 85 consultas, porque exige que la consulta completa aparezca en el título o en la empresa. Su nDCG@10 de 0,064 ilustra el punto de partida de la plataforma, pero no es una comparación exigente. BM25 devuelve resultados en 84 consultas, y es la comparación principal.
 
-Frente a BM25, la recuperación densa con el modelo multilingüe mejora el nDCG@10 en $+0{,}122$ [$+0{,}068$; $+0{,}181$], y la configuración completa en $+0{,}263$ [$+0{,}207$; $+0{,}321$]. Con la configuración completa, la primera oferta es relevante en 65 de las 85 consultas, 77 tienen al menos una oferta perfectamente relevante (etiqueta 3) entre las cinco primeras y solo 6 no tienen ninguna oferta relevante en esas posiciones; su P@5 de 0,667 equivale al 75\,\% del techo de 0,89 (Sección~\ref{sec:res-corpus}). Las 14 comparaciones de nDCG@10 de los sistemas densos frente a las dos líneas base son significativas ($p_{Holm} = 0{,}0014$, el mínimo que permiten 10.000 permutaciones con 14 comparaciones).
+Frente a BM25, la recuperación densa con el modelo multilingüe mejora el nDCG@10 en $+0{,}120$ [$+0{,}067$; $+0{,}178$], y la configuración completa en $+0{,}258$ [$+0{,}202$; $+0{,}315$]. Con la configuración completa, la primera oferta es relevante en 65 de las 85 consultas, 77 tienen al menos una oferta perfectamente relevante (etiqueta 3) entre las cinco primeras y solo 6 no tienen ninguna oferta relevante en esas posiciones; su P@5 de 0,667 equivale al 74\,\% del techo de 0,91 (Sección~\ref{sec:res-corpus}). Las 14 comparaciones de nDCG@10 de los sistemas densos frente a las dos líneas base son significativas ($p_{Holm} = 0{,}0014$, el mínimo que permiten 10.000 permutaciones con 14 comparaciones).
 
-Con el modelo multilingüe, la búsqueda aproximada no pierde calidad. HNSW en pgvector frente a la búsqueda exacta obtiene $+0{,}005$ [$+0{,}002$; $+0{,}009$] ($p_{Holm} = 0{,}040$): el índice aproximado altera las diez primeras posiciones en 22 de las 85 consultas (en 20 de ellas cambia una o dos ofertas en el borde de la lista), y en 15 de esas 22 el cambio favorece al índice aproximado. La diferencia es significativa, pero de una magnitud sin efecto práctico, y no indica que la búsqueda aproximada sea mejor que la exacta, sino que la similitud de los \textit{embeddings} no ordena las ofertas exactamente como la relevancia. Qdrant frente a pgvector, ambos con HNSW, obtiene $-0{,}001$ [$-0{,}006$; $+0{,}004$], sin diferencia significativa.
+La comparación con BM25 no es pareja en un aspecto: BM25 no recibe los filtros estructurados que el pipeline extrae de la consulta. Para medir cuánto de la ventaja se debe a esa diferencia, el análisis posterior a la revisión evaluó BM25 con los mismos filtros, con y sin el reordenamiento (Tabla~\ref{tab:res-posthoc}). Con los filtros, BM25 sube a 0,595 y cumple las restricciones tanto como el pipeline (C@5 de 0,960). La configuración completa lo supera en $+0{,}221$ [$+0{,}166$; $+0{,}275$]: los filtros explican una parte pequeña de la ventaja sobre BM25, y la mayor parte viene de la recuperación densa y del reordenamiento. Al mismo nivel de filtros, la recuperación densa supera a BM25 en $+0{,}127$ [$+0{,}071$; $+0{,}186$], y con el mismo reordenador aplicado a las dos primeras etapas, la configuración completa supera a BM25 con filtros y reordenamiento en $+0{,}121$ [$+0{,}082$; $+0{,}165$]: el reordenador no compensa una primera etapa léxica. Las tres diferencias son significativas en su familia de cinco comparaciones ($p_{Holm} < 0{,}001$).
+
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-posthoc}
+
+Con el modelo multilingüe, la búsqueda aproximada no pierde calidad. HNSW en pgvector frente a la búsqueda exacta obtiene $+0{,}005$ [$+0{,}002$; $+0{,}009$] ($p_{Holm} = 0{,}029$): el índice aproximado altera las diez primeras posiciones en 22 de las 85 consultas (en 20 de ellas cambia una o dos ofertas en el borde de la lista), y en 15 de esas 22 el cambio favorece al índice aproximado. La diferencia es significativa, pero de una magnitud sin efecto práctico, y no indica que la búsqueda aproximada sea mejor que la exacta, sino que la similitud de los \textit{embeddings} no ordena las ofertas exactamente como la relevancia. Qdrant frente a pgvector, ambos con HNSW, obtiene $-0{,}001$ [$-0{,}006$; $+0{,}004$], sin diferencia significativa.
 
 \subsection{Aporte de cada componente}
 
 La Tabla~\ref{tab:res-escalera} muestra la escalera de componentes: cada fila agrega un componente a la anterior.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Escalera de componentes: nDCG@10 y diferencia con el peldaño anterior, con IC bootstrap del 95\,\% (60 necesidades)}
-    \label{tab:res-escalera}
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-        \textbf{Sistema} & \textbf{nDCG@10} & \textbf{Diferencia} & \textbf{$p_{Holm}$} \\
-        \hline
-        Denso, Qdrant HNSW & 0{,}692 & -- & -- \\
-        \hline
-        + filtros & 0{,}738 & $+0{,}046$ [$+0{,}017$; $+0{,}078$] & 0{,}020 \\
-        \hline
-        + híbrida & 0{,}735 & $-0{,}003$ [$-0{,}035$; $+0{,}028$] & 1{,}000 \\
-        \hline
-        + reordenamiento & 0{,}834 & $+0{,}099$ [$+0{,}071$; $+0{,}128$] & 0{,}001 \\
-        \hline
-        Iteración completa frente al denso & -- & $+0{,}141$ [$+0{,}103$; $+0{,}182$] & 0{,}001 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-escalera}
 
 Los filtros estructurados y el reordenamiento aportan mejoras significativas; la búsqueda híbrida no. Las métricas secundarias van en la misma dirección: en P@5, los filtros aportan $+0{,}083$ y el reordenamiento $+0{,}123$ ($p = 0{,}001$ y $p < 0{,}001$ sin ajustar), y la búsqueda híbrida $-0{,}023$.
 
-Con el juez local, el nDCG@10 de la recuperación densa con e5-base-v2 fue de 0,73 en la primera corrida (13 de octubre) y de 0,68 en la corrida de este capítulo (0,689 con el juez final). Ambas cifras corresponden al mismo sistema: el mismo modelo, los mismos vectores y los mismos 50 fragmentos agrupados por oferta. La diferencia viene de la medición. En las 53 consultas cuya lista de 10 ofertas es idéntica en las dos corridas, el nDCG@10 baja de 0,806 a 0,724. Dos cambios lo explican. El juez ahora trata como condiciones duras el salario, la modalidad y el tipo de contrato (falla D1 de la Sección~\ref{sec:res-fallas}): de los 1.321 pares juzgados con ambas versiones del prompt, 99 dejaron de ser relevantes y 42 pasaron a serlo. Además, con nueve sistemas en el agrupamiento cada necesidad tiene más ofertas relevantes juzgadas (18,6 frente a 14,0 en promedio, con el juez local), lo que eleva el ordenamiento ideal con que se normaliza el nDCG. Las demás listas difieren porque entre las corridas se reemplazaron dos necesidades sin cobertura en el corpus y se reconstruyó el índice HNSW.
+La escalera agrega los componentes en un orden fijo, de modo que el aporte de cada uno se mide sobre los anteriores. El análisis posterior a la revisión quitó en cambio un componente a la vez de la configuración completa (Tabla~\ref{tab:res-posthoc}). Sin la búsqueda híbrida, el nDCG@10 es de 0,824, 0,008 más que con ella, sin diferencia significativa: la búsqueda híbrida tampoco aporta dentro de la configuración completa. Sin los filtros, el nDCG@10 baja a 0,792 ($+0{,}024$ a favor de la configuración completa, $p_{Holm} = 0{,}11$), pero el cumplimiento de restricciones cae de 0,973 a 0,653: el reordenador recupera buena parte de la relevancia temática, pero no las condiciones de la consulta.
+
+Con el juez local, sobre el agrupamiento original, la escalera tiene la misma dirección: $+0{,}050$ de los filtros, $-0{,}002$ de la búsqueda híbrida y $+0{,}077$ del reordenamiento. Ese juez no alcanzó el acuerdo mínimo con las etiquetas humanas ($\kappa$ binario de 0,508 frente al umbral de 0,60; Sección~\ref{sec:res-juez}), de modo que la coincidencia no es evidencia de que las conclusiones resistan un cambio de juez. Con ese mismo juez, el nDCG@10 de la recuperación densa con e5-base-v2 pasó de 0,73 en la primera corrida (13 de octubre) a 0,68 en la definitiva sin que cambiara el sistema: el juez pasó a tratar como duras las condiciones de salario, modalidad y tipo de contrato (falla D1 de la Sección~\ref{sec:res-fallas}), y el agrupamiento de nueve sistemas reunió más ofertas relevantes por necesidad, lo que eleva el ordenamiento ideal con que se normaliza el nDCG.
 
 \subsection{Por categoría de consulta}
 
@@ -145,111 +76,44 @@ La Figura~\ref{fig:res-ndcg-categoria} y la Tabla~\ref{tab:res-pe1-categoria} de
     \label{fig:res-ndcg-categoria}
 \end{figure}
 
-\begin{table}[htbp!]
-    \centering
-    \caption{nDCG@10 por categoría de consulta (15 necesidades por categoría)}
-    \label{tab:res-pe1-categoria}
-    \small
-    \begin{tabular}{|l|c|c|c|c|c|c|}
-        \hline
-        \textbf{Categoría} & \textbf{BM25} & \textbf{e5-base-v2} & \textbf{Denso} & \textbf{+ filtros} & \textbf{+ híbrida} & \textbf{Completa} \\
-        \hline
-        Exactas & 0{,}729 & 0{,}851 & 0{,}849 & 0{,}849 & 0{,}845 & 0{,}907 \\
-        \hline
-        Desajuste de vocabulario & 0{,}467 & 0{,}667 & 0{,}622 & 0{,}622 & 0{,}619 & 0{,}747 \\
-        \hline
-        Con restricciones & 0{,}468 & 0{,}535 & 0{,}604 & 0{,}785 & 0{,}737 & 0{,}845 \\
-        \hline
-        Ruidosas & 0{,}618 & 0{,}704 & 0{,}695 & 0{,}696 & 0{,}738 & 0{,}835 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe1-categoria}
 
-La ventaja de la recuperación densa sobre BM25 es mayor en las consultas de desajuste de vocabulario ($+0{,}155$) y con restricciones ($+0{,}136$) que en las exactas ($+0{,}120$) y las ruidosas ($+0{,}077$). Es el patrón esperado si la ventaja de la recuperación densa proviene sobre todo de resolver el desajuste de vocabulario que motiva este trabajo (Sección~\ref{sec:problema}), aunque la categoría sigue siendo la más difícil: es la única en que la configuración completa queda por debajo de 0,8. Cada componente actúa donde se espera. Los filtros cambian solo las consultas con restricciones ($+0{,}181$; en las demás categorías, como mucho $+0{,}001$). El reordenamiento mejora todas las categorías, sobre todo las de desajuste de vocabulario ($+0{,}128$) y con restricciones ($+0{,}108$). La búsqueda híbrida mejora las ruidosas ($+0{,}042$), en las que BM25 recupera términos exactos que la consulta escribe mal o abrevia, pero empeora las de restricciones ($-0{,}048$), en las que BM25 aporta candidatas que comparten palabras con la consulta pero no sus condiciones, y deja casi igual las exactas y las de desajuste de vocabulario.
+La ventaja de la recuperación densa sobre BM25 es mayor en las consultas de desajuste de vocabulario ($+0{,}153$) y con restricciones ($+0{,}129$) que en las exactas ($+0{,}120$) y las ruidosas ($+0{,}079$). Es el patrón esperado si la ventaja de la recuperación densa proviene sobre todo de resolver el desajuste de vocabulario que motiva este trabajo (Sección~\ref{sec:problema}), aunque la categoría sigue siendo la más difícil: es la única en que la configuración completa queda por debajo de 0,8. Cada componente actúa donde se espera. Los filtros cambian solo las consultas con restricciones ($+0{,}178$; en las demás categorías, como mucho $+0{,}001$). El reordenamiento mejora todas las categorías, sobre todo las de desajuste de vocabulario ($+0{,}126$) y con restricciones ($+0{,}105$). La búsqueda híbrida mejora las ruidosas ($+0{,}040$), en las que BM25 recupera términos exactos que la consulta escribe mal o abrevia, pero empeora las de restricciones ($-0{,}047$), en las que BM25 aporta candidatas que comparten palabras con la consulta pero no sus condiciones, y deja casi igual las exactas y las de desajuste de vocabulario. Dentro de la configuración completa el patrón se repite: quitarla mejora las consultas de desajuste de vocabulario (0,774 frente a 0,734) y empeora apenas las ruidosas (0,808 frente a 0,819).
 
 \subsection{Consultas con restricciones}
 
 La Tabla~\ref{tab:res-restricciones} muestra el cumplimiento de restricciones (Sección~\ref{sec:met-metricas}), que no depende del juez, sobre las 15 necesidades con restricciones.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Cumplimiento de restricciones en las 5 y 10 primeras posiciones (15 necesidades)}
-    \label{tab:res-restricciones}
-    \begin{tabular}{|l|c|c|}
-        \hline
-        \textbf{Sistema} & \textbf{C@5} & \textbf{C@10} \\
-        \hline
-        BM25 & 0{,}433 & 0{,}403 \\
-        \hline
-        Denso, e5-base-v2 (Iteración~1) & 0{,}360 & 0{,}327 \\
-        \hline
-        Denso, Qdrant HNSW & 0{,}407 & 0{,}373 \\
-        \hline
-        + filtros & 0{,}953 & 0{,}947 \\
-        \hline
-        + híbrida & 0{,}953 & 0{,}953 \\
-        \hline
-        + reordenamiento (completa) & 0{,}973 & 0{,}960 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-restricciones}
 
-Sin filtros, menos de la mitad de las ofertas devueltas cumple las condiciones de la consulta, con cualquier sistema. Con los filtros, el cumplimiento en las cinco primeras posiciones sube de 0,407 a 0,953 ($+0{,}547$ [$+0{,}353$; $+0{,}727$], $p < 0{,}001$ sin ajustar). No llega a 1 porque el clasificador no extrajo el filtro en 2 de las 24 consultas que lo requerían: las dos consultas por prácticas profesionales, en inglés y en español, en las que no reconoció el tipo de contrato. En las otras 22 la extracción fue exacta.
+Sin filtros, menos de la mitad de las ofertas devueltas cumple las condiciones de la consulta, con cualquier sistema. Con los filtros (peldaño + filtros), el cumplimiento en las cinco primeras posiciones sube de 0,407 a 0,953 ($+0{,}547$ [$+0{,}353$; $+0{,}727$], $p < 0{,}001$ sin ajustar), y con la configuración completa llega a 0,973. No llega a 1 porque el clasificador no extrajo el filtro en 2 de las 24 consultas que lo requerían: las dos consultas por prácticas profesionales, en inglés y en español, en las que no reconoció el tipo de contrato. En las otras 22 la extracción fue exacta. Los sistemas del análisis posterior confirman que el efecto es de los filtros y no del modelo: BM25 con filtros cumple en 0,960, y la configuración completa sin filtros vuelve a 0,653.
+
+La ganancia de los filtros en nDCG@10 depende en parte de la regla de condiciones duras del juez, que limita a la etiqueta 1 las ofertas que no cumplen las condiciones de la necesidad (Sección~\ref{sec:met-validez}). El cumplimiento de restricciones no depende del juez y muestra el mismo efecto.
 
 \subsection{Consultas en español y modelo de \textit{embeddings}}
 
 La Tabla~\ref{tab:res-pe1-idioma} compara las 25 consultas en español con sus 25 contrapartes en inglés, que expresan las mismas necesidades.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{nDCG@10 de las consultas en español y de sus contrapartes en inglés (25 consultas cada una)}
-    \label{tab:res-pe1-idioma}
-    \begin{tabular}{|l|c|c|}
-        \hline
-        \textbf{Sistema} & \textbf{Español} & \textbf{Inglés (mismas necesidades)} \\
-        \hline
-        BM25 & 0{,}340 & 0{,}626 \\
-        \hline
-        Denso, e5-base-v2 & 0{,}576 & 0{,}739 \\
-        \hline
-        Denso, multilingual-e5-base & 0{,}671 & 0{,}702 \\
-        \hline
-        + filtros & 0{,}714 & 0{,}736 \\
-        \hline
-        + híbrida & 0{,}622 & 0{,}774 \\
-        \hline
-        + reordenamiento (completa) & 0{,}778 & 0{,}854 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe1-idioma}
 
-BM25 pierde 0,29 de nDCG@10 al pasar del inglés al español, porque las ofertas están en inglés y la consulta no se traduce. El modelo multilingüe casi elimina esa brecha en la recuperación densa (0,671 frente a 0,702). Frente a e5-base-v2, mejora las consultas en español en $+0{,}095$ [$+0{,}015$; $+0{,}174$] ($p = 0{,}030$ sin ajustar; $p_{Holm} = 0{,}15$), empeora levemente las de inglés ($-0{,}024$ [$-0{,}061$; $+0{,}012$] en las 60 consultas en inglés; $-0{,}037$ en las 25 contrapartes de la tabla) y deja igual el total. La búsqueda híbrida es la que más daña al español ($-0{,}092$), coherente con la debilidad de BM25 en ese idioma, mientras que en las contrapartes en inglés aporta $+0{,}038$. La configuración completa alcanza 0,778 en español, frente a 0,340 de BM25. La columna en inglés permite además una comparación más exigente: como las consultas en español son traducciones de las inglesas, BM25 sobre su contraparte en inglés equivale a BM25 con una traducción perfecta de la consulta. Aun frente a esa referencia (0,626), la configuración completa en español la supera en 0,15.
+BM25 pierde 0,28 de nDCG@10 al pasar del inglés al español, porque las ofertas están en inglés y la consulta no se traduce, y los filtros apenas lo ayudan (0,369). El modelo multilingüe casi elimina esa brecha en la recuperación densa (0,659 frente a 0,690). Frente a e5-base-v2, mejora las consultas en español en $+0{,}092$ [$+0{,}013$; $+0{,}170$] ($p = 0{,}033$ sin ajustar; $p_{Holm} = 0{,}17$), empeora levemente las de inglés ($-0{,}024$ [$-0{,}059$; $+0{,}011$] en las 60 consultas en inglés; $-0{,}036$ en las 25 contrapartes de la tabla) y deja igual el total. La búsqueda híbrida es la que más daña al español ($-0{,}091$), coherente con la debilidad de BM25 en ese idioma, mientras que en las contrapartes en inglés aporta $+0{,}036$; dentro de la configuración completa, quitarla sube el español de 0,763 a 0,802. La configuración completa alcanza 0,763 en español, frente a 0,334 de BM25. La columna en inglés permite además una comparación más exigente: como las consultas en español son traducciones de las inglesas, BM25 sobre su contraparte en inglés equivale a BM25 con una traducción perfecta de la consulta. Aun frente a esa referencia (0,615), la configuración completa en español la supera en 0,15.
 
 \subsection{Compuerta de sin resultados}
 
 Las métricas anteriores no aplican la compuerta de sin resultados (Sección~\ref{sec:met-sistema}). Con el umbral de 0,134 calibrado en el conjunto de desarrollo, la compuerta se habría activado en 2 de las 85 consultas: \textit{\enquote{protect company systems from hackers}} y una consulta en español que describe a quien construye las pantallas de una web, ambas de desajuste de vocabulario y ambas con ofertas relevantes en el corpus. Su mejor puntaje de reordenamiento fue 0,082. Son el costo real del umbral: dos falsos negativos en consultas que describen la función en lugar de nombrar el cargo.
+
+Para medir también el otro lado, en el análisis posterior a la revisión una persona distinta del autor, sin formación técnica, escribió 15 consultas fuera de dominio a partir de una instrucción breve: nueve de empleos presenciales y seis que no son búsquedas de empleo, nueve en español y seis en inglés. Se congelaron antes de correr el pipeline, y se comprobó en el corpus, sin mirar puntajes, que ninguna oferta las responde. Con el umbral ya fijado, la compuerta se activó en las 15. Sumadas a las 85 consultas de prueba, la compuerta tiene una precisión de 15/17 (0,882) y un \textit{recall} de 15/15. Tres reservas acotan esas cifras. Quince consultas son pocas para estimar la tasa real. El mejor puntaje fuera de dominio, 0,126, es el de la consulta por auxiliares de enfermería, para la que el corpus tiene una oferta remota de \textit{nurse practitioner}, y queda a 0,008 del umbral, mientras que los dos falsos negativos están en 0,082: en el borde no hay una separación limpia. Y el clasificador envía 2 de las 15 a la ruta de agregación, donde en producción responde la consulta SQL y no la compuerta.
 
 \subsection{Consultas de agregación}
 \label{sec:res-agregacion}
 
 La Tabla~\ref{tab:res-agregacion} muestra la exactitud de la ruta de agregación antes y después de corregir la falla A7 (Sección~\ref{sec:res-fallas}), detectada en esta misma corrida.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Exactitud de la ruta de agregación (15 consultas)}
-    \label{tab:res-agregacion}
-    \begin{tabular}{|l|c|c|}
-        \hline
-        \textbf{Medida} & \textbf{Antes} & \textbf{Después} \\
-        \hline
-        Ruta y plantilla esperadas & 11 (0{,}733) & 12 (0{,}800) \\
-        \hline
-        Respuesta exacta frente a la referencia & 10 (0{,}667) & 11 (0{,}733) \\
-        \hline
-        Proporción media de filas cubiertas & 0{,}667 & 0{,}734 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-agregacion}
 
 Quedan cuatro respuestas no exactas, todas fallas abiertas (Sección~\ref{sec:res-fallas}):
 \begin{itemize}
@@ -263,36 +127,19 @@ Quedan cuatro respuestas no exactas, todas fallas abiertas (Sección~\ref{sec:re
 
 Las 85 consultas de recuperación se respondieron con la ruta real del pipeline, servida desde Qdrant, con el generador a temperatura 0. Las dos consultas en las que actuó la compuerta recibieron la respuesta de sin resultados y no se puntúan. Las métricas de RAGAS se calcularon con el juez final, GPT-6 Sol, con la misma configuración que en los juicios de relevancia: sin razonamiento y a temperatura 0 (la biblioteca fijaba la temperatura en 1 para esta familia de modelos; falla D8). La Tabla~\ref{tab:res-pe2} muestra los resultados y, como referencia, la fidelidad que asignó el juez local.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Fidelidad y relevancia de la respuesta (RAGAS), por categoría e idioma}
-    \label{tab:res-pe2}
-    \begin{tabular}{|l|c|c|c|c|}
-        \hline
-        \textbf{Grupo} & \textbf{$n$} & \textbf{Fidelidad} & \textbf{Relevancia} & \textbf{Fidelidad, juez local} \\
-        \hline
-        Todas & 83 & 0{,}901 & 0{,}885 & 0{,}679 \\
-        \hline
-        Exactas & 22 & 0{,}923 & 0{,}887 & 0{,}584 \\
-        \hline
-        Desajuste de vocabulario & 20 & 0{,}939 & 0{,}879 & 0{,}758 \\
-        \hline
-        Con restricciones & 21 & 0{,}895 & 0{,}925 & 0{,}730 \\
-        \hline
-        Ruidosas & 20 & 0{,}847 & 0{,}849 & 0{,}650 \\
-        \hline
-        Inglés & 59 & 0{,}914 & 0{,}881 & 0{,}724 \\
-        \hline
-        Español & 24 & 0{,}871 & 0{,}897 & 0{,}568 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe2}
 
 El juez final puntuó las 83 respuestas en ambas métricas. La fidelidad tiene mediana 0,92 y mínimo 0,50: ninguna respuesta queda por debajo de la mitad de afirmaciones sostenidas por el contexto. La relevancia de la respuesta tiene mediana 0,89 y mínimo 0,82. Las diferencias entre categorías son pequeñas; las consultas ruidosas tienen la fidelidad más baja (0,847), y las respuestas en español, una fidelidad algo menor que las de inglés (0,871 frente a 0,914).
 
 El juez local daba una imagen muy distinta: fidelidad media de 0,679, con 19 respuestas por debajo de 0,5 y 5 con 0, y relevancia sin calcular en 16 respuestas porque su salida no tenía el formato esperado. Las dos evaluaciones casi no están correlacionadas: el coeficiente de Pearson entre ambos jueces es de 0,04 en la fidelidad (83 respuestas) y de 0,18 en la relevancia (67). Las cinco respuestas a las que el juez local asignó fidelidad 0 obtienen entre 0,81 y 1,00 con el juez final. Esto confirma la falla D3: con el juez local, la métrica no medía la fidelidad del pipeline, sino los errores del juez.
 
 La instrucción de responder en el idioma de la pregunta redujo las respuestas en inglés a consultas en español de 21 de 25 en la primera corrida a 4 de 24 (falla A6).
+
+\paragraph{Iteración~1 frente a Iteración~2.} En el análisis posterior a la revisión se puntuaron con el mismo juez las 85 respuestas de la primera corrida de generación, anterior a los filtros y a la instrucción de idioma. En las 80 consultas que no cambiaron de texto y que ambas corridas puntúan, la fidelidad no cambia (0,909 frente a 0,901) y la relevancia de la respuesta sube levemente (de 0,871 a 0,884), sobre todo en español (de 0,852 a 0,895; Tabla~\ref{tab:res-pe2-iteraciones}). La fidelidad, por tanto, no registra las dos correcciones de la Iteración~2 que afectan la respuesta; la Sección~\ref{sec:res-contrafactual} analiza por qué.
+
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe2-iteraciones}
 
 \paragraph{Verificación humana.} Dos anotadores externos, sin formación técnica, verificaron a mano la fidelidad de una muestra aleatoria de 20 respuestas, cinco por categoría, con el método del Anexo~\ref{anx:ragas}. Consideraron sostenidas 359 de las 365 unidades verificables. La fidelidad humana media es de 0,980, frente a 0,937 del juez final en las mismas respuestas, con una diferencia absoluta media de 0,061 por respuesta. El juez fue más estricto que los anotadores en 11 respuestas, más laxo en 5 (por 0,09 como máximo) y coincidió en 4. La correlación por respuesta no es informativa (Pearson de $-0{,}13$): 14 de las 20 respuestas tienen fidelidad humana 1,0, y casi no queda variación que correlacionar.
 
@@ -305,35 +152,8 @@ En las 20 unidades que marcaron los dos anotadores, coinciden en 14. Las seis di
 
 La Tabla~\ref{tab:res-pe3-local} compara la latencia de las etapas propias del artefacto en las dos iteraciones, con cada motor. Cada consulta se repitió 30 veces tras 5 de calentamiento. En la Iteración~2 se excluyen las dos consultas en las que actuó la compuerta, que no construyen contexto.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Latencia por etapa, mediana y percentil 95 en milisegundos}
-    \label{tab:res-pe3-local}
-    \small
-    \begin{tabular}{|l|c|c|c|c|}
-        \hline
-        \multirow{2}{*}{\textbf{Etapa}} & \multicolumn{2}{c|}{\textbf{Iteración~1}} & \multicolumn{2}{c|}{\textbf{Iteración~2}} \\
-        \cline{2-5}
-         & \textbf{Qdrant} & \textbf{pgvector} & \textbf{Qdrant} & \textbf{pgvector} \\
-        \hline
-        \textit{Embedding} de la consulta & 53,7 / 66,0 & 53,8 / 65,8 & 13,5 / 15,9 & 13,3 / 15,6 \\
-        \hline
-        Búsqueda densa & 3,7 / 5,2 & 25,3 / 28,0 & 4,7 / 5,9 & 25,8 / 27,4 \\
-        \hline
-        BM25 & -- & -- & 0,2 / 0,6 & 0,2 / 0,6 \\
-        \hline
-        Fusión & -- & -- & 0,0 / 0,1 & 0,0 / 0,1 \\
-        \hline
-        Lectura de las ofertas & 1,2 / 1,8 & 1,1 / 1,5 & 5,3 / 7,6 & 3,2 / 4,1 \\
-        \hline
-        Reordenamiento & -- & -- & 811,4 / 917,9 & 792,2 / 916,2 \\
-        \hline
-        Contexto completo & 59,0 / 71,5 & 80,5 / 93,1 & 835,4 / 949,7 & 833,8 / 949,6 \\
-        \hline
-        Consultas $\times$ repeticiones & \multicolumn{2}{c|}{$85 \times 30$} & \multicolumn{2}{c|}{$83 \times 30$} \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe3-local}
 
 Tres observaciones resumen la tabla:
 \begin{itemize}
@@ -342,69 +162,26 @@ Tres observaciones resumen la tabla:
     \item El reordenamiento domina la Iteración~2: 811 de los 835~ms del contexto en Qdrant (97\,\%). Con él, la diferencia entre motores desaparece en la latencia total.
 \end{itemize}
 
-El reordenamiento es, por tanto, el componente que más aporta a la calidad y el que más cuesta: $+0{,}099$ de nDCG@10 a cambio de unos 0,8~s por consulta en la GPU del equipo de evaluación (Tabla~\ref{tab:art-config}).
+El reordenamiento es, por tanto, el componente que más aporta a la calidad y el que más cuesta: $+0{,}097$ de nDCG@10 a cambio de unos 0,8~s por consulta en la GPU del equipo de evaluación (Tabla~\ref{tab:art-config}).
 
 La Tabla~\ref{tab:res-pe3-generacion} agrega las etapas que dependen del proveedor externo: la clasificación de la consulta y la generación de la respuesta. Se midieron en las mismas 30 consultas, tres veces cada una, con el mismo modelo, temperatura 0 y una pausa de 35~s entre solicitudes. El arnés de la Iteración~1 no medía la clasificación, aunque la etapa ya existía; por eso las dos iteraciones se comparan sin ella, y la clasificación se reporta solo para la Iteración~2 (falla D7, Sección~\ref{sec:res-fallas}). Las filas que suman etapas se calculan para cada generación, no como suma de medianas.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{Latencia de la clasificación y la generación, mediana y percentil 95 en segundos (30 consultas $\times$ 3, Qdrant)}
-    \label{tab:res-pe3-generacion}
-    \small
-    \begin{tabular}{|l|c|c|}
-        \hline
-        \textbf{Medida} & \textbf{Iteración~1} & \textbf{Iteración~2} \\
-        \hline
-        Clasificación & no medida & 0,57 / 1,50 \\
-        \hline
-        Contexto & 0,07 / 0,16 & 0,80 / 0,93 \\
-        \hline
-        Primer \textit{token} del generador (TTFT) & 0,48 / 0,93 & 0,50 / 1,06 \\
-        \hline
-        Generación completa & 1,15 / 1,70 & 1,45 / 2,15 \\
-        \hline
-        Contexto + TTFT & 0,56 / 1,10 & 1,31 / 2,00 \\
-        \hline
-        Contexto + generación completa & 1,23 / 1,84 & 2,26 / 3,14 \\
-        \hline
-        Clasificación + contexto + TTFT & -- & 1,96 / 3,07 \\
-        \hline
-        Clasificación + contexto + generación & -- & 2,85 / 4,33 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-pe3-generacion}
 
-El generador no cambió: su TTFT es de 0,48 y 0,50~s en la mediana. La generación completa tarda 0,3~s más porque las respuestas de la Iteración~2 son más largas (mediana de 1.666 caracteres frente a 1.354). Lo que cambia es el contexto: sin contar la clasificación, el tiempo hasta el primer \textit{token} pasa de 0,56 a 1,31~s, y la diferencia es el reordenamiento. Con la clasificación, que en 29 de las 30 consultas llama al modelo de lenguaje, el usuario espera en la Iteración~2 1,96~s en la mediana hasta ver el primer \textit{token} (3,07~s en el percentil 95) y 2,85~s hasta la respuesta completa. Antes del primer \textit{token}, el reordenamiento es la etapa más larga (unos 0,8~s), seguida de la clasificación (0,57~s) y del propio generador (0,50~s).
+El modelo generador es el mismo en las dos iteraciones (\texttt{qwen/qwen3.8-27b}, a temperatura 0), aunque cambiaron su \textit{prompt} (la instrucción de idioma) y el contexto que recibe, y las mediciones son de días distintos (14 de octubre y 1 de noviembre) con un proveedor externo. Su TTFT es de 0,48 y 0,50~s en la mediana. La generación completa tarda 0,3~s más porque las respuestas de la Iteración~2 son más largas (mediana de 1.666 caracteres frente a 1.354). Lo que cambia es el contexto: sin contar la clasificación, el tiempo hasta el primer \textit{token} pasa de 0,56 a 1,31~s, y la diferencia es el reordenamiento. Con la clasificación, que en 29 de las 30 consultas llama al modelo de lenguaje, el usuario espera en la Iteración~2 1,96~s en la mediana hasta ver el primer \textit{token} (3,07~s en el percentil 95) y 2,85~s hasta la respuesta completa. Antes del primer \textit{token}, el reordenamiento es la etapa más larga (unos 0,8~s), seguida de la clasificación (0,57~s) y del propio generador (0,50~s). Frente a la Iteración~1, con la misma definición de latencia, los componentes de la Iteración~2 agregan 0,75~s hasta el primer \textit{token} (de 0,56 a 1,31~s). Es más que los 500~ms por debajo de los cuales un retraso añadido no se distingue, y menos que los 1.000~ms a partir de los cuales se nota con mucha probabilidad \citep{Arapakis2014,Bai2017}: el criterio (c) de la Sección~\ref{sec:met-dsr} se cumple, pero algunos usuarios notarían el cambio. La clasificación (0,57~s) ya existía en la Iteración~1 y no se medía (falla D7), de modo que no forma parte de ese retraso añadido. Los umbrales, además, provienen de la búsqueda web, donde la página de resultados aparece de una vez.
 
 \section{Almacenamiento vectorial (PE4)}
 \label{sec:res-pe4}
+
+PE4 es un resultado secundario: el motor de almacenamiento no se evalúa como componente de calidad, sino como la parte que fija el costo de la etapa de búsqueda (Sección~\ref{sec:met-preguntas}).
 
 \subsection{A la escala del corpus real}
 
 A la escala del corpus real, el motor no cambia la calidad: los dos devuelven listas equivalentes (Sección~\ref{sec:res-pe1}), y la búsqueda exacta en ambos coincide en el 99,75\,\% de los 10 primeros resultados de 200 consultas con los vectores multilingües (99,85\,\% con los de e5-base-v2; Sección~\ref{sec:art-vectorial}). La Tabla~\ref{tab:res-ann-real} muestra la búsqueda aislada, medida desde la aplicación.
 
-\begin{table}[htbp!]
-    \centering
-    \caption{\textit{Recall}@10 y latencia de la búsqueda vectorial sobre el corpus real (200 consultas, vectores multilingües)}
-    \label{tab:res-ann-real}
-    \begin{tabular}{|l|c|c|c|c|}
-        \hline
-        \multirow{2}{*}{\textbf{Modo}} & \multicolumn{2}{c|}{\textbf{pgvector}} & \multicolumn{2}{c|}{\textbf{Qdrant}} \\
-        \cline{2-5}
-         & \textbf{\textit{Recall}} & \textbf{p50 (ms)} & \textbf{\textit{Recall}} & \textbf{p50 (ms)} \\
-        \hline
-        Exacto & 1{,}000 & 24,4 & 0{,}998 & 3,7 \\
-        \hline
-        Automático (decide el planificador) & 1{,}000 & 23,8 & -- & -- \\
-        \hline
-        HNSW, $ef_{search} = 16$ & 0{,}918 & 1,9 & 0{,}850 & 2,7 \\
-        \hline
-        HNSW, $ef_{search} = 64$ & 0{,}990 & 2,3 & 0{,}977 & 2,9 \\
-        \hline
-        HNSW, $ef_{search} = 256$ & 0{,}998 & 3,1 & 0{,}998 & 3,3 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-ann-real}
 
 Con el índice forzado, pgvector es más rápido que Qdrant a esta escala y tiene más \textit{recall} con el mismo $ef_{search}$. En modo automático, en cambio, su planificador recorre la tabla completa y tarda unos 24~ms, frente a unos 3~ms de Qdrant. Con los vectores multilingües, HNSW pierde más \textit{recall} a $ef_{search}$ bajo que con e5-base-v2 (con $ef_{search} = 16$, 0,918 y 0,850 frente a 0,976 y 0,925), pero desde $ef_{search} = 64$ ambos motores superan 0,97. En el \textit{benchmark}, con $ef_{search} = 64$ y 8 clientes concurrentes, pgvector atiende entre 6.700 y 8.400 consultas por segundo sobre el corpus real, y Qdrant alrededor de 1.000. Con filtros del 1 y el 10\,\%, el planificador de pgvector resuelve la consulta con el índice del atributo y una búsqueda exacta sobre las filas que lo cumplen (\textit{recall} 1,0 en menos de 0,5~ms). Con un filtro del 50\,\% y $ef_{search} = 16$, sin barrido iterativo, solo el 22\,\% de las consultas obtiene la lista completa (comportamiento M1 de la Sección~\ref{sec:res-motor}).
 
@@ -419,36 +196,8 @@ Los conjuntos sintéticos de 100.000 y 500.000 vectores se generaron con la cali
     \label{fig:res-recall-latencia}
 \end{figure}
 
-\begin{table}[htbp!]
-    \centering
-    \caption{\textit{Benchmark} sintético con $ef_{search} = 64$: \textit{recall}@10, latencia mediana (ms) y completitud (mediana de tres corridas)}
-    \label{tab:res-bench-sint}
-    \small
-    \begin{tabular}{|l|l|c|c|c|}
-        \hline
-        \textbf{Datos y filtro} & \textbf{Motor} & \textbf{\textit{Recall}} & \textbf{p50} & \textbf{Completitud} \\
-        \hline
-        \multirow{2}{*}{100.000, sin filtro} & pgvector & 0{,}948 & 0,88 & 1{,}00 \\
-         & Qdrant & 0{,}980 & 2,27 & 1{,}00 \\
-        \hline
-        \multirow{3}{*}{100.000, filtro del 10\,\%} & pgvector & 0{,}603 & 1,00 & 0{,}09 \\
-         & pgvector, barrido iterativo & 0{,}914 & 1,81 & 1{,}00 \\
-         & Qdrant & 0{,}975 & 1,83 & 1{,}00 \\
-        \hline
-        \multirow{2}{*}{500.000, sin filtro} & pgvector & 0{,}816 & 1,01 & 1{,}00 \\
-         & Qdrant & 0{,}950 & 2,33 & 1{,}00 \\
-        \hline
-        \multirow{3}{*}{500.000, filtro del 10\,\%} & pgvector & 0{,}531 & 1,00 & 0{,}10 \\
-         & pgvector, barrido iterativo & 0{,}840 & 1,37 & 1{,}00 \\
-         & Qdrant & 0{,}974 & 2,31 & 1{,}00 \\
-        \hline
-        \multirow{4}{*}{500.000, filtro del 1\,\%} & pgvector & 0{,}059 & 0,99 & 0{,}00 \\
-         & pgvector, barrido iterativo & 0{,}876 & 9,77 & 1{,}00 \\
-         & pgvector, búsqueda exacta forzada & 1{,}000 & 9,03 & 1{,}00 \\
-         & Qdrant & 0{,}982 & 1,73 & 1{,}00 \\
-        \hline
-    \end{tabular}
-\end{table}
+% Generada por evaluation/analysis/tables.py; no editar a mano.
+\input{tablas/res-bench-sint}
 
 Sin filtro, con el mismo $ef_{search}$, Qdrant obtiene más \textit{recall} a medida que crece la escala (con 500.000 vectores y $ef_{search} = 64$, 0,950 frente a 0,816). A \textit{recall} igualado no hay un ganador claro: con un \textit{recall} de 0,95, pgvector es más rápido ($ef_{search} = 256$, 1,88~ms, frente a Qdrant con $ef_{search} = 64$, 2,33~ms), y con 0,98 lo es Qdrant ($ef_{search} = 128$, 3,30~ms, frente a pgvector con $ef_{search} = 512$, 4,21~ms).
 
@@ -462,10 +211,10 @@ Con 8 clientes concurrentes, pgvector atiende más consultas por segundo que Qdr
 
 El \textit{benchmark} se repitió con los vectores de e5-base-v2. Los \textit{recall} fueron entre 0,01 y 0,09 mayores en los mismos puntos, y todas las conclusiones anteriores se mantuvieron.
 
-\section{Fallas reveladas por la evaluación}
+\section{Hallazgos de la evaluación formativa}
 \label{sec:res-fallas}
 
-En un sistema RAG muchos defectos son \emph{silenciosos}: el sistema sigue respondiendo con fluidez y de forma plausible, porque el modelo de lenguaje redacta una respuesta con lo que recibe, aunque lo recibido esté incompleto, mal filtrado o mal enrutado. Usando la aplicación, esos defectos no se notan. \citet{Barnett2024} concluyen que la validación de un sistema RAG solo es posible durante su operación. En JobAI, la preparación y la ejecución del protocolo de evaluación revelaron 20 fallas antes de esa etapa, 12 del artefacto y 8 del propio arnés de evaluación, además de dos comportamientos silenciosos del motor de almacenamiento que el diseño debe tener en cuenta. En términos de DSR son resultados de la evaluación \emph{formativa} \citep{Venable2016}: se obtuvieron durante el ciclo de diseño y orientaron las correcciones de las dos iteraciones (Capítulo~\ref{cap:artefacto}).
+En un sistema RAG muchos defectos son \emph{silenciosos}: el sistema sigue respondiendo con fluidez y de forma plausible, porque el modelo de lenguaje redacta una respuesta con lo que recibe, aunque lo recibido esté incompleto, mal filtrado o mal enrutado. Usando la aplicación, esos defectos no se notan. Durante la preparación y la ejecución de las dos iteraciones se encontraron 20 fallas, 12 del artefacto y 8 del propio arnés de evaluación, además de dos comportamientos silenciosos del motor de almacenamiento que el diseño debe tener en cuenta. En términos de DSR son resultados de la evaluación \emph{formativa} \citep{Venable2016}: se obtuvieron durante el ciclo de diseño y orientaron las correcciones de las dos iteraciones (Capítulo~\ref{cap:artefacto}). No todas salieron de las métricas del protocolo. La Tabla~\ref{tab:res-fallas} distingue tres orígenes de la detección: una métrica de una corrida del protocolo, una inspección durante la preparación (planes de ejecución, salidas del juez, datos) y la revisión del código o de la documentación. Además, relaciona cada falla del artefacto con los siete puntos de falla que \citet{Barnett2024} identificaron en tres sistemas RAG, o la marca como defecto genérico cuando no corresponde a ninguno.
 
 Las fallas se clasifican en cuatro tipos según su efecto:
 \begin{description}
@@ -474,63 +223,63 @@ Las fallas se clasifican en cuatro tipos según su efecto:
     \item[C. Visibles.] Rompen una funcionalidad o producen una respuesta evidentemente incorrecta.
     \item[D. Del arnés de evaluación.] No afectan al artefacto, sino a la medición, y habrían invalidado parte de la evaluación.
 \end{description}
-Los dos comportamientos del motor (M1 y M2) no se cuentan como fallas, porque no son defectos del artefacto; se describen aparte en la Sección~\ref{sec:res-motor}. La Tabla~\ref{tab:res-fallas} las resume. Después se describe cada una con la misma secuencia: observación, causa, efecto, corrección y lección para otros sistemas RAG.
+Los dos comportamientos del motor (M1 y M2) no se cuentan como fallas, porque no son defectos del artefacto; se describen aparte en la Sección~\ref{sec:res-motor}. Después de la tabla se describe cada una con la misma secuencia: observación, causa, efecto, corrección y lección para otros sistemas RAG.
 
 {\small
-\begin{longtable}{|p{0.6cm}|p{4.4cm}|p{2.8cm}|p{3.6cm}|p{2.6cm}|}
-    \caption{Fallas reveladas por la evaluación. Las filas M son comportamientos del motor, no fallas del artefacto}
+\begin{longtable}{|p{0.5cm}|>{\raggedright\arraybackslash}p{4.0cm}|c|c|c|p{0.75cm}|>{\raggedright\arraybackslash}p{3.4cm}|>{\raggedright\arraybackslash}p{2.5cm}|}
+    \caption{Fallas encontradas durante la evaluación formativa. Origen de la detección: P, métrica de una corrida del protocolo; I, inspección durante la preparación; C, revisión del código o de la documentación. FP: punto de falla de \citet{Barnett2024}; Gen.: defecto genérico. Las filas M son comportamientos del motor, no fallas del artefacto}
     \label{tab:res-fallas} \\
     \hline
-    \textbf{Id} & \textbf{Falla} & \textbf{Detección} & \textbf{Efecto medido} & \textbf{Estado} \\
+    \textbf{Id} & \textbf{Falla} & \textbf{P} & \textbf{I} & \textbf{C} & \textbf{FP} & \textbf{Efecto medido} & \textbf{Estado} \\
     \hline
     \endfirsthead
     \hline
-    \textbf{Id} & \textbf{Falla} & \textbf{Detección} & \textbf{Efecto medido} & \textbf{Estado} \\
+    \textbf{Id} & \textbf{Falla} & \textbf{P} & \textbf{I} & \textbf{C} & \textbf{FP} & \textbf{Efecto medido} & \textbf{Estado} \\
     \hline
     \endhead
-    A1 & La personalización por currículo reemplazaba la consulta & Revisión frente a la documentación & Mismas ofertas para cualquier pregunta & Corregida (It.~1) \\
+    A1 & La personalización por currículo reemplazaba la consulta &  &  & $\bullet$ & FP2 & Mismas ofertas para cualquier pregunta & Corregida (It.~1) \\
     \hline
-    A2 & Las plantillas de \enquote{remoto} buscaban la palabra en la ubicación & Revisión de la agregación & 44 ofertas reconocidas frente a 682 & Corregida (It.~1) \\
+    A2 & Las plantillas de \enquote{remoto} buscaban la palabra en la ubicación &  &  & $\bullet$ & Gen. & 44 ofertas reconocidas frente a 682 & Corregida (It.~1) \\
     \hline
-    A3 & El umbral de similitud de 0,5 no filtraba & Inspección de similitudes & Mínima 0,66 y mediana 0,75 en 20 consultas & Reemplazado por compuerta (It.~2) \\
+    A3 & El umbral de similitud de 0,5 no filtraba &  & $\bullet$ &  & FP1 & Mínima 0,66 y mediana 0,75 en 20 consultas & Reemplazado por compuerta (It.~2) \\
     \hline
-    A4 & Las restricciones de la consulta no llegaban a la búsqueda & Primera corrida & C@5 de 0,41 sin filtros frente a 0,95 con filtros & Corregida (It.~2) \\
+    A4 & Las restricciones de la consulta no llegaban a la búsqueda & $\bullet$ &  &  & FP2 & C@5 de 0,41 sin filtros frente a 0,95 con filtros & Corregida (It.~2) \\
     \hline
-    A5 & El normalizador no convierte monedas ni montos por hora & Respuestas de agregación & Salario promedio del corpus de 544.127 USD & Mitigada (It.~2) \\
+    A5 & El normalizador no convierte monedas ni montos por hora &  & $\bullet$ &  & Gen. & Salario promedio del corpus de 544.127 USD & Mitigada (It.~2) \\
     \hline
-    A6 & Respuestas en inglés a consultas en español & Primera corrida (PE2) & 21 de 25 respuestas & Corregida (It.~2): 4 de 24 \\
+    A6 & Respuestas en inglés a consultas en español & $\bullet$ &  &  & FP5 & 21 de 25 respuestas & Corregida (It.~2): 4 de 24 \\
     \hline
-    A7 & La plantilla de ofertas recientes se atendía por la ruta semántica & Corrida de prueba & Exactitud de la agregación 0,667 & Corregida: 0,733 \\
+    A7 & La plantilla de ofertas recientes se atendía por la ruta semántica & $\bullet$ &  &  & Gen. & Exactitud de la agregación 0,667 & Corregida: 0,733 \\
     \hline
-    A8 & La palabra \textit{hiring} activa el patrón de recuperación & Corrida de prueba & 2 de 15 consultas de agregación mal enrutadas & Abierta \\
+    A8 & La palabra \textit{hiring} activa el patrón de recuperación & $\bullet$ &  &  & Gen. & 2 de 15 consultas de agregación mal enrutadas & Abierta \\
     \hline
-    B1 & La consulta ordenaba por $1-d$ y no usaba el índice & \texttt{EXPLAIN ANALYZE} & 25,7~ms frente a 2,8~ms & Corregida (It.~1) \\
+    B1 & La consulta ordenaba por $1-d$ y no usaba el índice &  & $\bullet$ &  & Gen. & 25,7~ms frente a 2,8~ms & Corregida (It.~1) \\
     \hline
-    B2 & Índice IVFFlat creado sobre la tabla vacía & \texttt{EXPLAIN ANALYZE} & Equivalía a un recorrido completo & Reemplazado por HNSW (It.~1) \\
+    B2 & Índice IVFFlat creado sobre la tabla vacía &  & $\bullet$ &  & Gen. & Equivalía a un recorrido completo & Reemplazado por HNSW (It.~1) \\
     \hline
-    C1 & La ruta de agregación fallaba sin plantilla & Revisión del código & Error de ejecución & Corregida (It.~1) \\
+    C1 & La ruta de agregación fallaba sin plantilla &  &  & $\bullet$ & Gen. & Error de ejecución & Corregida (It.~1) \\
     \hline
-    C2 & Faltan plantillas: contar con una condición y contar empresas distintas & Corrida de prueba & Respuesta incorrecta con enrutamiento correcto & Abierta \\
+    C2 & Faltan plantillas: contar con una condición y contar empresas distintas & $\bullet$ &  &  & Gen. & Respuesta incorrecta con enrutamiento correcto & Abierta \\
     \hline
-    D1 & El juez sin condiciones duras aceptaba ofertas que no cumplían la restricción & Revisión de juicios & La métrica no distinguía si un sistema respeta las restricciones & Corregida: juez v2 \\
+    D1 & El juez sin condiciones duras aceptaba ofertas que no cumplían la restricción &  & $\bullet$ &  & -- & La métrica no distinguía si un sistema respeta las restricciones & Corregida: juez v2 \\
     \hline
-    D2 & Ventana de 4.096 \textit{tokens} del juez de RAGAS & Revisión de salidas del juez & Fidelidad truncada en 21 de 85 respuestas & Corregida: 16.384 \\
+    D2 & Ventana de 4.096 \textit{tokens} del juez de RAGAS &  & $\bullet$ &  & -- & Fidelidad truncada en 21 de 85 respuestas & Corregida: 16.384 \\
     \hline
-    D3 & El juez local asigna fidelidad 0 a cifras presentes en el contexto & Revisión de casos extremos & Fidelidad 0,679 frente a 0,901 con el juez final; correlación de 0,04 & Corregida: juez final \\
+    D3 & El juez local asigna fidelidad 0 a cifras presentes en el contexto &  & $\bullet$ &  & -- & Fidelidad 0,679 frente a 0,901 con el juez final; correlación de 0,04 & Corregida: juez final \\
     \hline
-    D4 & Exportación limitada a 20 registros e ingesta no desactivable & Preparación del corpus & Habrían alterado el corpus congelado & Corregidas (It.~1) \\
+    D4 & Exportación limitada a 20 registros e ingesta no desactivable &  & $\bullet$ &  & -- & Habrían alterado el corpus congelado & Corregidas (It.~1) \\
     \hline
-    D5 & El cálculo del kappa usaba la versión anterior del prompt del juez & Revisión del arnés & Habría comparado 269 de los 401 pares con veredictos del prompt anterior & Corregida \\
+    D5 & El cálculo del kappa usaba la versión anterior del prompt del juez &  &  & $\bullet$ & -- & Habría comparado 269 de los 401 pares con veredictos del prompt anterior & Corregida \\
     \hline
-    D6 & Los reintentos automáticos del cliente del generador contaban como latencia & Revisión de la latencia (PE3) & 59 de 90 generaciones con TTFT mayor que 2,5~s; mediana de 7,1~s & Corregida: reintentos desactivados \\
+    D6 & Los reintentos automáticos del cliente del generador contaban como latencia &  & $\bullet$ &  & -- & 59 de 90 generaciones con TTFT mayor que 2,5~s; mediana de 7,1~s & Corregida: reintentos desactivados \\
     \hline
-    D7 & La latencia percibida cambió de definición entre versiones del arnés sin cambiar de nombre & Revisión de la latencia (PE3) & 0,56~s frente a 1,96~s hasta el primer \textit{token}, con una etapa más en la segunda cifra & Corregida en el análisis: comparación por componente \\
+    D7 & La latencia percibida cambió de definición entre versiones del arnés sin cambiar de nombre &  & $\bullet$ &  & -- & 0,56~s frente a 1,96~s hasta el primer \textit{token}, con una etapa más en la segunda cifra & Corregida en el análisis: comparación por componente \\
     \hline
-    D8 & La biblioteca de RAGAS fija la temperatura en 1 para los modelos GPT-5 y posteriores & Lectura del código de la biblioteca & El juez de RAGAS habría corrido con otra configuración que el de relevancia & Corregida antes de la corrida \\
+    D8 & La biblioteca de RAGAS fija la temperatura en 1 para los modelos GPT-5 y posteriores &  &  & $\bullet$ & -- & El juez de RAGAS habría corrido con otra configuración que el de relevancia & Corregida antes de la corrida \\
     \hline
-    M1 & Un filtro selectivo en pgvector sin barrido iterativo devuelve listas incompletas & Benchmark (PE4) & Corpus real, filtro del 50\,\%: listas completas en el 22\,\% de las consultas & Evitado en el diseño (It.~1) \\
+    M1 & Un filtro selectivo en pgvector sin barrido iterativo devuelve listas incompletas & $\bullet$ &  &  & -- & Corpus real, filtro del 50\,\%: listas completas en el 22\,\% de las consultas & Evitado en el diseño (It.~1) \\
     \hline
-    M2 & Con HNSW y pocas filas, el planificador prefiere el barrido secuencial & \texttt{EXPLAIN ANALYZE} & 24,8~ms frente a 2,0~ms con el índice forzado & Documentada; modo que fuerza el índice \\
+    M2 & Con HNSW y pocas filas, el planificador prefiere el barrido secuencial &  & $\bullet$ &  & -- & 24,8~ms frente a 2,0~ms con el índice forzado & Documentada; modo que fuerza el índice \\
     \hline
 \end{longtable}
 }
@@ -541,7 +290,7 @@ Los dos comportamientos del motor (M1 y M2) no se cuentan como fallas, porque no
     \item[A1. Personalización por currículo.] La documentación indicaba que el perfil del usuario se antepone a su consulta; la implementación construía la búsqueda solo con el perfil. Un usuario con currículo recibía las mismas ofertas fuera cual fuera su pregunta, y el modelo redactaba para cada pregunta una respuesta coherente con esas ofertas. Se corrigió para anteponer el perfil. \emph{Lección:} una ruta de personalización debe probarse variando la consulta y verificando que el resultado cambie.
     \item[A2. Ofertas remotas en la agregación.] Las plantillas que cuentan y listan ofertas remotas buscaban la palabra \textit{remote} en el texto de la ubicación y no usaban el atributo de modalidad que la ingesta obtiene de la fuente o del análisis estructurado. En el corpus de evaluación reconocían 44 ofertas remotas, frente a 682 marcadas con el atributo. El modelo informaba la cifra sin advertir nada. Se corrigió para usar el atributo, con el texto de la ubicación como respaldo. \emph{Lección:} cada plantilla de agregación debe contrastarse con una consulta de referencia escrita a mano, porque el modelo presenta cualquier cifra con la misma seguridad.
     \item[A3. Umbral de similitud.] El pipeline descartaba los fragmentos con similitud menor que 0,5. Con e5-base-v2, la similitud mínima entre la consulta y cualquier fragmento fue 0,66 en 20 consultas, y la mediana 0,75, de modo que el umbral nunca descartaba nada y toda consulta, incluso fuera de dominio, recibía cinco ofertas. La Iteración~2 lo reemplazó por una compuerta calibrada sobre el puntaje del reordenamiento (Sección~\ref{sec:art-iter-recuperacion}). \emph{Lección:} los umbrales de similitud dependen de la distribución de cada modelo y deben calibrarse con consultas dentro y fuera de dominio.
-    \item[A4. Restricciones ignoradas.] Las consultas con señales de recuperación iban directamente a la búsqueda semántica y sus condiciones de salario, modalidad o tipo de contrato se ignoraban (Sección~\ref{sec:art-iter-recuperacion}). Las respuestas mencionaban ofertas que no cumplían lo pedido, sin advertirlo. Sin filtros, solo el 41\,\% de las cinco primeras ofertas de las consultas con restricciones las cumplía; con los filtros de la Iteración~2, el 95\,\% (Tabla~\ref{tab:res-restricciones}). \emph{Lección:} la calidad de la recuperación debe medirse también con criterios deterministas, como el cumplimiento de las restricciones, que no dependen del juez.
+    \item[A4. Restricciones ignoradas.] Las consultas con señales de recuperación iban directamente a la búsqueda semántica y sus condiciones de salario, modalidad o tipo de contrato se ignoraban (Sección~\ref{sec:art-iter-recuperacion}). Las respuestas mencionaban ofertas que no cumplían lo pedido, sin advertirlo. Sin filtros, solo el 41\,\% de las cinco primeras ofertas de las consultas con restricciones las cumplía; con los filtros de la Iteración~2, el 95\,\% en el peldaño + filtros y el 97\,\% con la configuración completa (Tabla~\ref{tab:res-restricciones}). \emph{Lección:} la calidad de la recuperación debe medirse también con criterios deterministas, como el cumplimiento de las restricciones, que no dependen del juez.
     \item[A5. Normalización de salarios.] El normalizador no convierte monedas ni algunos montos por hora o mensuales. Entre otros casos, una oferta de despacho registraba 86.528.000 dólares anuales, y el salario promedio del corpus que respondía la ruta de agregación era de 544.127 dólares. La Iteración~2 registró como no informados los salarios fuera del intervalo de 10.000 a 1.000.000 dólares anuales o con un mínimo mayor que el máximo; la regla afectó a 12 ofertas y el promedio pasó a 158.786 dólares. Es una mitigación: el salario de esas ofertas se pierde en lugar de convertirse. \emph{Lección:} las respuestas de agregación heredan los errores de normalización de los datos, y deben revisarse los valores extremos antes de evaluar.
     \item[A6. Idioma de la respuesta.] En la primera corrida, 21 de las 25 consultas en español se respondieron en inglés: sin una instrucción explícita, el modelo respondía en el idioma del contexto. La Iteración~2 agregó a los tres prompts la instrucción de responder en el idioma de la pregunta; 4 de 24 respuestas siguieron en inglés. \emph{Lección:} el idioma de la respuesta es una propiedad que debe especificarse y medirse, no suponerse.
     \item[A7. Ofertas recientes.] Ante \textit{\enquote{what are the most recent job postings}}, el clasificador devolvía la etiqueta de recuperación junto con la plantilla de ofertas recientes, y la consulta se atendía por la ruta semántica con una respuesta plausible pero no ordenada por fecha. Se corrigió con una regla de enrutamiento: las plantillas de estadísticas, valores distintos y ofertas recientes se atienden siempre por la agregación (Anexo~\ref{anx:clasificacion}). La Sección~\ref{sec:res-agregacion} reporta la exactitud antes y después. \emph{Lección:} la salida del clasificador debe validarse con reglas deterministas cuando la etiqueta y la plantilla se contradicen.
@@ -585,32 +334,43 @@ La evaluación reveló además dos comportamientos de pgvector que no son defect
     \item[M2. Preferencia del planificador.] Aun con la consulta corregida y un índice HNSW, el planificador de PostgreSQL elige el barrido secuencial a la escala del corpus real: 24,8~ms frente a 2,0~ms con el índice forzado. No es un error del artefacto sino un comportamiento del motor; la búsqueda admite un modo que fuerza el índice y la evaluación mide ambos. \emph{Lección:} la latencia de un motor vectorial depende de las decisiones de su planificador, que deben medirse a la escala real de uso.
 \end{description}
 
+\subsection{¿Lo habría detectado una evaluación de la respuesta final?}
+\label{sec:res-contrafactual}
+
+Las respuestas de la Iteración~1 se generaron antes de corregir A4 y A6, de modo que permiten probar si una evaluación que solo mira la respuesta final, como RAGAS, habría señalado esas dos fallas (Sección~\ref{sec:res-pe2}).
+
+En las 18 respuestas de la Iteración~1 a consultas con restricciones que no cambiaron de texto, solo el 35,6\,\% de las cinco ofertas que recibió el generador cumplía las condiciones de la consulta, y aun así la fidelidad media fue de 0,924; en las 12 respuestas con menos de la mitad de ofertas que cumplían, de 0,902. Una respuesta construida con cinco ofertas que no cumplían ninguna condición obtuvo fidelidad 1,00. En la Iteración~2, con un cumplimiento de 0,962, la fidelidad es de 0,890. La fidelidad mide si la respuesta se apoya en el contexto, no si el contexto responde a la necesidad, y no detecta A4.
+
+En la Iteración~1, 21 de las 25 consultas en español se respondieron en inglés (idioma detectado por las palabras vacías de cada respuesta). La relevancia de la respuesta de esas 21 fue de 0,845, frente a 0,910 de las 4 respondidas en español y 0,879 de las consultas en inglés. La métrica castiga algo el cambio de idioma, pero no lo bastante para señalarlo: 0,845 no se distingue de una respuesta aceptable.
+
+Las demás fallas no se pueden probar así. A1 depende de la personalización por currículo, que el arnés no ejercita porque sus consultas no tienen usuario; A2 y A5 están en la ruta de agregación, que RAGAS no evalúa, y B1 y B2 no cambian la respuesta. En las dos fallas que sí se pudieron probar, una evaluación de la respuesta final no las habría señalado, y lo que las reveló fue una medida de una etapa intermedia: el cumplimiento de las restricciones y el idioma de la respuesta.
+
 \subsection{Síntesis}
 
-De las 12 fallas del artefacto, 10 son silenciosas: ocho cambian los resultados y dos el costo. Ninguna producía un error visible ni una respuesta evidentemente incorrecta, porque el modelo de lenguaje convertía en texto fluido lo que recibía. Se detectaron porque el protocolo mide salidas intermedias y no solo la respuesta final: el plan de ejecución de la consulta, el número de resultados de una búsqueda filtrada, el cumplimiento de las restricciones, la plantilla elegida, el idioma de la respuesta y los veredictos del juez. Las ocho fallas del arnés muestran que el instrumento de medición también falla en silencio y debe verificarse con el mismo cuidado que el artefacto. La Sección~\ref{sec:res-discusion} retoma estas observaciones.
+De las 12 fallas del artefacto, 10 son silenciosas: ocho cambian los resultados y dos el costo. Ninguna producía un error visible ni una respuesta evidentemente incorrecta, porque el modelo de lenguaje convertía en texto fluido lo que recibía. Cinco aparecieron en métricas de corridas del protocolo (A4, A6, A7, A8 y C2), cuatro en inspecciones durante la preparación (A3, A5, B1 y B2) y tres en la revisión del código o de la documentación (A1, A2 y C1). Cuatro corresponden a puntos de falla de \citet{Barnett2024}: A3 a la falta de contenido (FP1), A1 y A4 a documentos relevantes que no llegan a las primeras posiciones (FP2) y A6 al formato de la respuesta (FP5). Las otras ocho son defectos genéricos de software, de datos o de la ruta de agregación, que ese estudio no cubre porque sus casos son sistemas RAG sobre documentos. Lo que las detecciones tienen en común es que miraron salidas intermedias (el plan de ejecución, el número de resultados de una búsqueda filtrada, el cumplimiento de las restricciones, la plantilla elegida, el idioma de la respuesta) y no la calidad de la respuesta final. Las ocho fallas del arnés muestran que el instrumento de medición también falla en silencio y debe verificarse con el mismo cuidado que el artefacto. La Sección~\ref{sec:res-discusion} retoma estas observaciones.
 
 \section{Discusión}
 \label{sec:res-discusion}
 
-La pregunta de investigación es qué componentes de un pipeline RAG mejoran la búsqueda de empleo remoto frente a BM25, en cuánto y a qué costo. En JobAI, tres de los cuatro componentes evaluados la mejoran: la recuperación densa, los filtros estructurados y el reordenamiento. La búsqueda híbrida no. Juntos elevan el nDCG@10 de 0,570 a 0,834, y su costo se concentra en el reordenamiento, que agrega unos 0,8~s por consulta. Las subsecciones siguientes discuten cada pregunta de evaluación, las fallas reveladas y los límites de estas conclusiones.
+La pregunta de investigación es qué componentes de un pipeline RAG mejoran la búsqueda de empleo remoto frente a BM25, en cuánto y a qué costo. En JobAI, tres de los cuatro componentes evaluados la mejoran: la recuperación densa, los filtros estructurados y el reordenamiento. La búsqueda híbrida no. Juntos elevan el nDCG@10 de 0,558 a 0,816. Frente a BM25 con los mismos filtros, la ventaja sigue siendo de $+0{,}221$: los filtros explican poco de la diferencia con la búsqueda léxica, que viene sobre todo de la recuperación densa y del reordenamiento. El costo se concentra en el reordenamiento, que agrega unos 0,8~s por consulta. Las subsecciones siguientes discuten cada pregunta de evaluación, las fallas reveladas y los límites de estas conclusiones.
 
 \subsection{Calidad de recuperación (PE1)}
 
-\paragraph{Recuperación densa.} La recuperación densa supera a BM25 en las cuatro categorías de consulta, incluidas las exactas, que son el caso favorable a la búsqueda léxica. El resultado contrasta con BEIR, donde BM25 resultó una línea base difícil de superar para los modelos densos evaluados fuera de su dominio de entrenamiento \citep{Thakur2021}, pero es coherente con la familia E5, que se entrenó para superar a BM25 en ese mismo \textit{benchmark} sin datos etiquetados \citep{Wang2022E5}. La ventaja es mayor en las consultas de desajuste de vocabulario ($+0{,}155$) que en las ruidosas ($+0{,}077$), el patrón esperado si proviene de reconocer la función descrita aunque no se nombre el cargo. Aun así, el desajuste de vocabulario sigue siendo la categoría más difícil: es la única en que la configuración completa queda por debajo de 0,8. El problema que motiva el trabajo se reduce, pero no desaparece.
+\paragraph{Recuperación densa.} La recuperación densa supera a BM25 en las cuatro categorías de consulta, incluidas las exactas, que son el caso favorable a la búsqueda léxica. El resultado contrasta con BEIR, donde BM25 resultó una línea base difícil de superar para los modelos densos evaluados fuera de su dominio de entrenamiento \citep{Thakur2021}, pero es coherente con la familia E5, que se entrenó para superar a BM25 en ese mismo \textit{benchmark} sin datos etiquetados \citep{Wang2022E5}. La ventaja no depende de que BM25 carezca de filtros: con los mismos filtros, la recuperación densa lo supera en $+0{,}127$. Es mayor en las consultas de desajuste de vocabulario ($+0{,}153$) que en las ruidosas ($+0{,}079$), el patrón esperado si proviene de reconocer la función descrita aunque no se nombre el cargo. Aun así, el desajuste de vocabulario sigue siendo la categoría más difícil: es la única en que la configuración completa queda por debajo de 0,8. El problema que motiva el trabajo se reduce, pero no desaparece.
 
-El idioma amplía la ventaja. Las ofertas están en inglés, y BM25 pierde 0,29 de nDCG@10 con las consultas en español. El modelo multilingüe casi elimina esa brecha, y la configuración completa en español supera incluso a BM25 sobre la consulta en inglés, que equivale a una traducción perfecta. Para un portal que recibe consultas en otro idioma que el de sus ofertas, la recuperación densa multilingüe es la diferencia principal frente a la búsqueda léxica. El cambio de modelo, en cambio, no es concluyente: mejora el español en $+0{,}095$, pero la diferencia no resiste la corrección de Holm, y empeora levemente el inglés.
+El idioma amplía la ventaja. Las ofertas están en inglés, y BM25 pierde 0,28 de nDCG@10 con las consultas en español. El modelo multilingüe casi elimina esa brecha, y la configuración completa en español supera incluso a BM25 sobre la consulta en inglés, que equivale a una traducción perfecta. Para un portal que recibe consultas en otro idioma que el de sus ofertas, la recuperación densa multilingüe es la diferencia principal frente a la búsqueda léxica. El cambio de modelo, en cambio, no es concluyente: mejora el español en $+0{,}092$, pero la diferencia no resiste la corrección de Holm, y empeora levemente el inglés.
 
-\paragraph{Filtros.} El aporte de los filtros al nDCG@10 global es moderado ($+0{,}046$) porque solo actúa sobre las 15 necesidades con restricciones, en las que es de $+0{,}181$. El cumplimiento de restricciones, que no depende del juez, muestra mejor su efecto: sin filtros, menos de la mitad de las ofertas devueltas cumple las condiciones con cualquier sistema, y con ellos el 95\,\%. La similitud entre vectores no basta para distinguir una oferta que cumple un salario mínimo o un tipo de contrato de otra del mismo cargo que no lo cumple, porque el resto del texto es parecido. Esas condiciones son atributos de la oferta, y se resuelven mejor como atributos que como texto. El costo del componente está en la extracción: el clasificador falló en 2 de las 24 consultas que lo requerían, ambas por el tipo de contrato \enquote{prácticas}.
+\paragraph{Filtros.} El aporte de los filtros al nDCG@10 global es moderado ($+0{,}045$) porque solo actúa sobre las 15 necesidades con restricciones, en las que es de $+0{,}178$. El cumplimiento de restricciones, que no depende del juez, muestra mejor su efecto: sin filtros, menos de la mitad de las ofertas devueltas cumple las condiciones con cualquier sistema, y con ellos el 95\,\%. La similitud entre vectores no basta para distinguir una oferta que cumple un salario mínimo o un tipo de contrato de otra del mismo cargo que no lo cumple, porque el resto del texto es parecido. Esas condiciones son atributos de la oferta, y se resuelven mejor como atributos que como texto. Quitar los filtros de la configuración completa casi no cambia el nDCG@10 ($+0{,}024$, sin diferencia significativa), pero el cumplimiento cae de 0,973 a 0,653: el reordenador no los reemplaza. Parte de la ganancia en nDCG@10 se debe a la regla de condiciones duras del juez; el cumplimiento, que no depende del juez, confirma el efecto. El costo del componente está en la extracción: el clasificador falló en 2 de las 24 consultas que lo requerían, ambas por el tipo de contrato \enquote{prácticas}.
 
-\paragraph{Reordenamiento.} El reordenamiento es el componente que más aporta ($+0{,}099$) y lo hace en todas las categorías, sobre todo en las de desajuste de vocabulario y con restricciones. Es el resultado que anticipa la literatura sobre \textit{cross-encoders}: leer juntas la consulta y la oferta permite relaciones que la similitud entre vectores calculados por separado no captura \citep{Nogueira2019}. El modelo se eligió con el conjunto de desarrollo y una regla previa, de modo que la mejora en el conjunto de prueba no es producto del ajuste a esas consultas.
+\paragraph{Reordenamiento.} El reordenamiento es el componente que más aporta ($+0{,}097$) y lo hace en todas las categorías, sobre todo en las de desajuste de vocabulario y con restricciones. Es el resultado que anticipa la literatura sobre \textit{cross-encoders}: leer juntas la consulta y la oferta permite relaciones que la similitud entre vectores calculados por separado no captura \citep{Nogueira2019}. El modelo se eligió con el conjunto de desarrollo y una regla previa, de modo que la mejora en el conjunto de prueba no es producto del ajuste a esas consultas. El reordenador tampoco compensa una primera etapa léxica: aplicado sobre BM25 con filtros, queda 0,121 por debajo de la configuración completa.
 
-\paragraph{Búsqueda híbrida.} La búsqueda híbrida no mejora la configuración ($-0{,}003$, sin diferencia significativa), contra la expectativa con que se incorporó. El efecto nulo es la suma de efectos opuestos: mejora las consultas ruidosas ($+0{,}042$) y las contrapartes en inglés ($+0{,}038$), y empeora las de restricciones ($-0{,}048$) y, sobre todo, las de español ($-0{,}092$). Dos características de este caso lo explican. BM25 es claramente más débil que la recuperación densa (0,570 frente a 0,692), y mucho más en español (0,340), pero RRF con $k = 60$ da el mismo peso a las dos listas. Una explicación compatible con el patrón por categoría e idioma es que las candidatas que solo BM25 recupera desplazan a candidatas densas mejores de las 20 que llegan al reordenamiento. \citet{Bruch2023} anticipan esta debilidad: RRF es sensible a $k$, y una combinación convexa de puntajes, con un peso calibrado, la supera. El valor de $k$ se tomó sin ajustar, y ponderar la fusión o traducir la consulta antes de BM25 son las alternativas naturales, que deben decidirse con el conjunto de desarrollo y no con estos resultados. El resultado no implica que la información léxica sea inútil en la búsqueda de empleo, sino que una fusión sin ponderar no la aprovecha cuando una de las dos listas es mucho más débil.
+\paragraph{Búsqueda híbrida.} La búsqueda híbrida no mejora la configuración ($-0{,}004$ en la escalera, sin diferencia significativa), y quitarla de la configuración completa tampoco la empeora: sin ella, el nDCG@10 es 0,008 mayor. El efecto nulo es la suma de efectos opuestos: mejora las consultas ruidosas ($+0{,}040$) y las contrapartes en inglés ($+0{,}036$), y empeora las de restricciones ($-0{,}047$) y, sobre todo, las de español ($-0{,}091$). Dos características de este caso lo explican. BM25 es claramente más débil que la recuperación densa (0,558 frente a 0,678), y mucho más en español (0,334), pero RRF con $k = 60$ da el mismo peso a las dos listas. Una explicación compatible con el patrón por categoría e idioma es que las candidatas que solo BM25 recupera desplazan a candidatas densas mejores de las 20 que llegan al reordenamiento. \citet{Bruch2023} anticipan esta debilidad: RRF es sensible a $k$, y una combinación convexa de puntajes, con un peso calibrado, la supera. El valor de $k$ se tomó sin ajustar. Con estos resultados, la recomendación para JobAI es retirar la búsqueda híbrida o aplicarla solo a las consultas ruidosas, donde aporta; ponderar la fusión o traducir la consulta antes de BM25 son alternativas. Cualquiera de ellas debe decidirse con el conjunto de desarrollo y no con estos resultados, y queda como trabajo futuro: el artefacto evaluado no se cambió. El resultado no implica que la información léxica sea inútil en la búsqueda de empleo, sino que una fusión sin ponderar no la aprovecha cuando una de las dos listas es mucho más débil.
 
-\paragraph{Robustez frente al juez.} Las conclusiones sobre los componentes no dependen del juez. Con el juez local, de otra familia y con un sesgo de signo contrario (más laxo que el autor, Sección~\ref{sec:res-juez}), la escalera tuvo el mismo patrón: $+0{,}050$ de los filtros, $-0{,}002$ de la búsqueda híbrida y $+0{,}077$ del reordenamiento. Los dos jueces difieren en las cifras absolutas, no en qué componentes aportan.
+\paragraph{El juez de desarrollo.} Con el juez local la escalera tuvo la misma dirección (Sección~\ref{sec:res-pe1}), pero ese juez no alcanzó el acuerdo mínimo con las etiquetas humanas, de modo que la coincidencia no prueba que las conclusiones sean independientes del juez. Esa propiedad queda sin medir: no se juzgó todo el agrupamiento con un segundo juez válido (Sección~\ref{sec:res-limitaciones}).
 
 \subsection{Fidelidad de la generación (PE2)}
 
-Con el juez final, nueve de cada diez afirmaciones de las respuestas están sostenidas por las ofertas recuperadas, y ninguna respuesta queda por debajo de la mitad. Es un resultado esperable en un generador que responde a partir de cinco ofertas y con la instrucción de basarse solo en ellas, aunque no uniforme: las respuestas a consultas ruidosas y en español son algo menos fieles (0,847 y 0,871). Con 20 a 24 respuestas por grupo, esas diferencias son descriptivas.
+Con el juez final, nueve de cada diez afirmaciones de las respuestas están sostenidas por las ofertas recuperadas, y ninguna respuesta queda por debajo de la mitad. Es un resultado esperable en un generador que responde a partir de cinco ofertas y con la instrucción de basarse solo en ellas, aunque no uniforme: las respuestas a consultas ruidosas y en español son algo menos fieles (0,847 y 0,871). Con 20 a 24 respuestas por grupo, esas diferencias son descriptivas. Entre iteraciones la fidelidad no cambió (0,909 frente a 0,901), aunque la Iteración~2 corrigió las restricciones ignoradas y el idioma de la respuesta: la métrica no es sensible a esas fallas (Sección~\ref{sec:res-contrafactual}).
 
 El hallazgo más importante de PE2 es metodológico. Con el juez local, la misma métrica sobre las mismas respuestas daba 0,679, con cinco respuestas en 0, y casi no estaba correlacionada con la del juez final. Una métrica de RAGAS es tan válida como el modelo que la calcula \citep{Es2024}; el nombre de la métrica no garantiza qué mide. La verificación humana respalda al juez final y no al local: en la muestra, los anotadores consideraron sostenidas el 98\,\% de las unidades verificables, y el juez final quedó por debajo de ellos en la mayoría de las respuestas. Su fidelidad de 0,901 es, por tanto, una estimación conservadora.
 
@@ -620,7 +380,7 @@ Las pocas desviaciones que los anotadores encontraron tienen un patrón: la mayo
 
 El reordenamiento es a la vez el componente que más aporta y el que más cuesta: 811 de los 835~ms del contexto. Con él, y con la clasificación de la consulta por el modelo de lenguaje, el usuario espera 1,96~s en la mediana hasta el primer \textit{token} (3,07~s en el percentil 95). Antes de ese \textit{token}, el reordenamiento ocupa unos 0,8~s, la clasificación 0,57~s y el generador 0,50~s. La búsqueda vectorial, que motivó la comparación de motores, pesa unos 5~ms.
 
-Si esa espera es aceptable lo dirían los usuarios, que no se evaluaron. Lo que muestra la medición es que el costo está concentrado en dos etapas que admiten alternativas. El reordenamiento podría aplicarse a menos candidatas o solo cuando la primera etapa es incierta, y la clasificación, que llama al modelo de lenguaje en 29 de las 30 consultas medidas, podría resolverse con reglas o con un modelo más pequeño en los casos simples. Ninguna se evaluó; son trabajo futuro. La latencia del reordenamiento depende además de la GPU del equipo de evaluación, de modo que la cifra absoluta no se traslada a otro entorno, aunque sí su peso relativo frente a la búsqueda vectorial.
+Si esa espera es aceptable lo dirían los usuarios, que no se evaluaron. El retraso que agrega la Iteración~2, 0,75~s sin contar la clasificación, queda entre los umbrales de 500 y 1.000~ms de la búsqueda web \citep{Bai2017}: algunos usuarios lo notarían. Lo que muestra la medición es que el costo está concentrado en dos etapas que admiten alternativas. El reordenamiento podría aplicarse a menos candidatas o solo cuando la primera etapa es incierta, y la clasificación, que llama al modelo de lenguaje en 29 de las 30 consultas medidas, podría resolverse con reglas o con un modelo más pequeño en los casos simples. Ninguna se evaluó; son trabajo futuro. La latencia del reordenamiento depende además de la GPU del equipo de evaluación, de modo que la cifra absoluta no se traslada a otro entorno, aunque sí su peso relativo frente a la búsqueda vectorial.
 
 \subsection{Almacenamiento vectorial (PE4)}
 
@@ -630,17 +390,24 @@ La elección del motor importa a escalas mayores y con filtros selectivos. Con 5
 
 \subsection{Fallas silenciosas}
 
-Diez de las doce fallas del artefacto eran silenciosas. Ninguna producía un error ni una respuesta visiblemente incorrecta, porque el modelo de lenguaje redactaba con fluidez a partir de lo que recibía: las mismas ofertas para cualquier pregunta (A1), 44 ofertas remotas en lugar de 682 (A2) o un salario promedio de 544.127 dólares (A5). \citet{Barnett2024} concluyen que la validación de un sistema RAG solo es posible durante su operación; en este caso, un protocolo que mide salidas intermedias reveló esas fallas antes, sin usuarios. Lo que las hizo visibles no fue la calidad de la respuesta final, sino medidas deterministas de cada etapa: el plan de ejecución, el número de resultados, el cumplimiento de las restricciones, la plantilla elegida y el idioma de la respuesta. Evaluar un sistema RAG solo por sus respuestas habría dejado ocultas la mayoría de estas fallas.
+Diez de las doce fallas del artefacto eran silenciosas. Ninguna producía un error ni una respuesta visiblemente incorrecta, porque el modelo de lenguaje redactaba con fluidez a partir de lo que recibía: las mismas ofertas para cualquier pregunta (A1), 44 ofertas remotas en lugar de 682 (A2) o un salario promedio de 544.127 dólares (A5). \citet{Barnett2024} observan, a partir de tres casos, que muchas fallas de un sistema RAG solo se manifiestan durante su operación. En JobAI ninguna requirió usuarios: cinco aparecieron en métricas de una evaluación offline por etapas y siete en inspecciones y revisiones durante la preparación. Este trabajo no muestra que el protocolo detecte fallas que otro método no detectaría, porque la mayoría se encontró por otras vías y el contrafactual solo pudo probarse en dos. Muestra algo más acotado: en esas dos, una métrica de la respuesta final no habría bastado, y en todas las detecciones lo decisivo fueron medidas deterministas de etapas intermedias, como el plan de ejecución, el número de resultados, el cumplimiento de las restricciones, la plantilla elegida y el idioma de la respuesta.
 
 Las ocho fallas del arnés llevan la misma conclusión al instrumento de medición. Tres habrían cambiado una conclusión reportada: un juez sin condiciones duras no distinguía a un sistema que respeta las restricciones (D1), el juez local habría subestimado la fidelidad en más de 0,2 (D3) y el cálculo del kappa habría usado veredictos de otro prompt (D5). Ninguna produjo un error. El arnés de evaluación es también software, y sus resultados intermedios necesitan las mismas verificaciones que los del artefacto.
 
 \subsection{Limitaciones}
+\label{sec:res-limitaciones}
 
 Las conclusiones anteriores tienen límites que conviene explicitar:
 \begin{itemize}
-    \item \textbf{El juez.} La relevancia la asigna un modelo de lenguaje. Su acuerdo con el autor es sustancial ($\kappa = 0{,}786$), pero es algo más estricto (91 ofertas relevantes frente a 103 en la muestra de validación), de modo que las cifras absolutas pueden estar subestimadas. Las comparaciones entre sistemas son menos sensibles a ese sesgo, y se mantuvieron con un juez de otra familia y de sesgo contrario. Las etiquetas humanas son de una sola persona, el autor.
-    \item \textbf{El corpus.} Son 1.068 ofertas, el 84\,\% de una sola fuente, en un solo dominio y en inglés. Las conclusiones sobre el español se refieren a consultas en español sobre ofertas en inglés, no a un corpus en español.
-    \item \textbf{Las consultas.} Las redactó el autor, a partir de la distribución del corpus y en categorías fijadas antes. Son 60 necesidades; las cifras por categoría (15 necesidades) son descriptivas, y algunas necesidades tienen muy pocas ofertas relevantes.
+    \item \textbf{El juez.} La relevancia la asigna un modelo de lenguaje. Su acuerdo con el autor es sustancial ($\kappa = 0{,}786$), pero es algo más estricto (91 ofertas relevantes frente a 103 en la muestra de validación), de modo que las cifras absolutas pueden estar subestimadas. Las comparaciones entre sistemas son menos sensibles a ese sesgo, pero no se repitieron con un segundo juez válido sobre todo el agrupamiento.
+    \item \textbf{Un solo anotador humano.} Las etiquetas que validan al juez son de una sola persona, el autor, y no hay una medida del acuerdo entre personas. Según \citet{Voorhees2000}, la variación entre evaluadores afecta sobre todo las cifras absolutas y poco el orden de los sistemas, pero esa evidencia proviene de evaluadores humanos, no de un juez LLM validado por una sola persona, cuyos límites discuten \citet{Soboroff2025} y \citet{ClarkeDietz2024}. Las 298 etiquetas de validación se asignaron después de elegir el juez y sin ver ninguna etiqueta de juez; el acuerdo de calibración solo sirvió para elegirlo.
+    \item \textbf{El corpus.} Son 1.068 ofertas, el 84\,\% de una sola fuente, en un solo dominio y en inglés. Con otra distribución de fuentes las cifras podrían cambiar. Las conclusiones sobre el español se refieren a consultas en español sobre ofertas en inglés, no a un corpus en español.
+    \item \textbf{Las consultas.} Las redactó el autor, a partir de la distribución del corpus y en categorías fijadas antes, y las consultas en español son traducciones suyas, no consultas reales. Son 60 necesidades; las cifras por categoría (15 necesidades) son descriptivas, y algunas necesidades tienen muy pocas ofertas relevantes.
+    \item \textbf{La influencia del conjunto de prueba.} La Iteración~2 se decidió después de ver la corrida de prueba de la Iteración~1. Como contrapeso, las reglas de decisión se fijaron con el conjunto de desarrollo, el juez final es distinto del de desarrollo y dos fallas detectadas en la prueba (A8 y C2) se dejaron sin corregir.
+    \item \textbf{Los análisis posteriores a la revisión} (BM25 con filtros, quitar un componente, RAGAS de la Iteración~1 y la compuerta fuera de dominio) se agregaron después de conocer los resultados. Forman una familia de pruebas aparte y no cambiaron el artefacto.
+    \item \textbf{La Iteración~1.} Su recuperación se aproxima con 50 fragmentos agrupados por oferta y no con los 15 que usaba; su generación sí se midió con la corrida real (Sección~\ref{sec:res-pe2}).
+    \item \textbf{La compuerta} se evaluó con 15 consultas fuera de dominio, y su umbral queda cerca de algunas consultas en el borde (Sección~\ref{sec:res-pe1}).
+    \item \textbf{El arnés.} Se encontraron ocho fallas del arnés, y nada garantiza que no quede otra. Lo mitigan las verificaciones de conteo en cada etapa, la reproducción exacta de las listas de los nueve sistemas en la corrida posterior a la revisión y las tablas de este capítulo, generadas por un script desde los datos de las corridas.
     \item \textbf{La utilidad.} La relevancia juzgada no equivale a la utilidad para una persona que busca empleo; no hubo evaluación con usuarios.
     \item \textbf{La latencia} se midió en un solo equipo, con una GPU de consumo, y con un proveedor externo para los modelos de lenguaje cuya latencia no se controla.
 \end{itemize}
