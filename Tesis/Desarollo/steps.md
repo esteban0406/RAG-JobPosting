@@ -9,9 +9,29 @@
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
-## ▶ Estado al 16-nov-2026 — LEER PRIMERO
+## ▶ Estado al 16-nov-2026 (noche) — LEER PRIMERO
 
-### ▶▶ Próxima sesión: ajustes de la revisión de `vista-previa-final.pdf`
+**Revisión académica del primer borrador: recibida y decidida.** El autor trajo el informe de una revisión académica de `borradores/vista-previa-final.pdf` (97 págs.). Tiene 1 hallazgo crítico (H1), 5 altos (H2–H6), 16 medios (M1–M16) y 8 bajos (B1–B8). Está guardada literal en **`Tesis/Desarollo/revision-borrador1.md`**.
+
+**Decisiones: `Tesis/Desarollo/decisiones-revision-borrador1.md`** (fuente de verdad de esta ronda). Se tomaron una por una con el autor y cubren los 30 hallazgos, los experimentos nuevos E1–E5, lo que no se hace, el mapa de las 17 preguntas del jurado y el calendario. Lo esencial:
+- **Alcance:** indispensables, más experimentos baratos con cachés, más todos los cambios de texto. Envío al director ~21-22 nov. Presupuesto de hasta ~3 USD.
+- **H1:** las fallas pasan a ser hallazgos de la evaluación formativa, sin pregunta nueva. La columna de detección se divide en tres y cada falla se mapea a Barnett. Contrafactual E2: RAGAS con GPT-6 Sol sobre las 85 respuestas de la Iteración 1 (`runs/2026-10-14T00-59-39-717ba41-dirty-generate-full`).
+- **H2:** el artefacto es JobAI y el protocolo es el instrumento. Se agregan objetivos de la solución explicitados ahora (declarado así), la tabla de Hevner y Gregor y Hevner (2013).
+- **H3 + M1 (E1):** BM25 + filtros, BM25 + filtros + reordenamiento, completa sin híbrida y completa sin filtros. Las comparaciones nuevas van en una **familia de Holm aparte, post hoc**; las familias de 14 y 9 no cambian.
+- **H4:** el OE4 se reescribe para decir lo que se mide. Se le avisa al director.
+- **H5: no habrá segundo anotador** (decisión del autor). Se declara como limitación, con literatura.
+- **H6:** búsqueda bibliográfica real (E4, `busqueda-bibliografica.md`), tabla de trabajos relacionados y líneas nuevas verificadas.
+- **M4:** unas 15 consultas fuera de dominio escritas por otra persona (E3).
+- **M7:** las tablas de Resultados se generan con un script (E5, `evaluation/analysis/tables.py`).
+- **M9:** cierra la decisión abierta: la escalera del juez local queda como observación con advertencia y ya no se habla de robustez.
+- No se corren: la Iteración 1 real con 15 fragmentos (M5), el rejuicio temático (M8), Sonnet sobre todo el agrupamiento (M9), la fragmentación (M10) ni la corrida confirmatoria (M16). Todo eso se declara.
+- **Verificado contra los datos:** H1 es correcto. M7 lo es solo en parte: 0,820 frente a 0,832 es real y falta la causa (pool o qrels de cada etapa de la selección del reordenador); 0,95 frente a 0,97 son dos peldaños distintos y no un error.
+
+**Próxima sesión:** el autor revisa el documento de decisiones. Con su visto bueno, se sigue la §10 del documento: 17-nov E1, E2 y E5 (antes, el autor revisa el crédito de OpenAI y aprueba el costo), pedir las consultas de M4 y empezar E4; 18-nov E3 y los esquemas por capítulo; 18-20 nov edición en `borradores/`; 21-nov vista previa y `check-numbers.py`; 22-nov envío. La revisión general de los `*-final.tex` que estaba pendiente queda dentro de esta ronda: el autor los revisa ya corregidos.
+
+## Estado al 16-nov-2026, tarde (historial: superado por «▶ Estado al 16-nov (noche)»)
+
+### ▶▶ Próxima sesión: ajustes de la revisión de `vista-previa-final.pdf` (hecho: ver «▶ Estado al 16-nov (noche)»; la revisión se guardó como `revision-borrador1.md`)
 
 **Contexto.** El autor pasó `borradores/vista-previa-final.pdf` (97 págs., compilada el 16-nov; sha256 `2f4528d7cc6cc229…`) a un agente de revisión, que pidió varios ajustes. El autor los trae en la próxima sesión. Todo lo de abajo está en git (ver "Commits del 16-nov").
 
@@ -22,7 +42,7 @@
 4. Aplicar en los `*-final.tex` → `bash Tesis/Desarollo/build-preview-final.sh` (errores, páginas, resumen/abstract en pp. 3-4 y "Contenido" en p. 5) → `python3 Tesis/Desarollo/check-numbers.py` (toda cifra de la Discusión, las Conclusiones y el resumen debe tener fuente en Resultados, Metodología, Anexos o este archivo; las tres listas deben salir vacías). Toda cita nueva se verifica en arXiv o Crossref.
 
 **Decisiones abiertas del autor (anteriores a la revisión):**
-- Párrafo "Robustez frente al juez" (Discusión, PE1): usa la escalera del juez local (+0,050 / −0,002 / +0,077), que Resultados no reporta. ¿Queda, se pasa a Resultados o se quita?
+- ~~Párrafo "Robustez frente al juez" (Discusión, PE1): usa la escalera del juez local (+0,050 / −0,002 / +0,077), que Resultados no reporta. ¿Queda, se pasa a Resultados o se quita?~~ **Cerrada el 16-nov (noche), decisión M9:** pasa a Resultados como observación con la advertencia de κ = 0,508 y deja de llamarse robustez.
 - Revisión general de los `*-final.tex` (Cap3, Cap5 completo: validación del juez, PE2, Discusión; Conclusiones; resumen; Anexo), que el autor todavía no aprobó.
 
 **Después de la revisión, en orden (cada paso con confirmación del autor):**
