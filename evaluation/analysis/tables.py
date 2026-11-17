@@ -89,7 +89,7 @@ POST_HOC_SYSTEMS = [
     ("qdrant-filtered-rerank", "Completa sin búsqueda híbrida"),
     ("qdrant-hybrid-rerank-nofilter", "Completa sin filtros"),
 ]
-POST_HOC_LABEL = "\\textit{Análisis posterior a la revisión}"
+POST_HOC_LABEL = "\\textit{Sistemas complementarios}"
 CATEGORIES = [
     ("exact", "Exactas"),
     ("semantic_vocab_mismatch", "Desajuste de vocabulario"),
@@ -306,7 +306,7 @@ def post_hoc() -> str:
                           diff_ci(row), "$< 0{,}001$" if row["p_holm"] < 0.001 else num(row["p_holm"], 3),
                           f"{num(c['mean_system'], 3)} / {num(c['mean_reference'], 3)}"))
     return table("tab:res-posthoc",
-                 f"Comparaciones posteriores a la revisión: nDCG@10 con IC bootstrap del 95\\,\\% y Holm sobre "
+                 f"Comparaciones complementarias: nDCG@10 con IC bootstrap del 95\\,\\% y Holm sobre "
                  f"{len(ndcg)} comparaciones ({int(ndcg['n'].iloc[0])} necesidades); C@5 del sistema y de la referencia",
                  "|l|c|c|c|", rows, small=True)
 
