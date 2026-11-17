@@ -12,7 +12,17 @@ cp -r "$T/Plantilla/." "$S/"
 # Sin borrar los auxiliares, latexmk corre bibtex sobre un .aux vacío y falla.
 rm -f "$S"/main.{aux,bbl,blg,brf,fdb_latexmk,fls,lof,log,lot,out,toc,pdf}
 cp "$B/F04-Abstract-final.tex" "$S/FrontMatter/F04-Abstract.tex"
+# Lista de siglas (B4): la plantilla la trae comentada en main.tex.
+cp "$B/F05-Symbols-final.tex" "$S/FrontMatter/F05-Symbols.tex"
+sed -i 's#^\( *\)% *\\input{FrontMatter/F05-Symbols}#\1\\input{FrontMatter/F05-Symbols}#' "$S/main.tex"
+# Declaración de uso de IA (esqueleto con [PENDIENTE] que completa el autor), después de las siglas.
+cp "$B/F06-DeclaracionIA-final.tex" "$S/FrontMatter/F06-DeclaracionIA.tex"
+sed -i 's#^\( *\)\\input{FrontMatter/F05-Symbols}#&\n\1\\input{FrontMatter/F06-DeclaracionIA}#' "$S/main.tex"
+cp "$B/M01-Introduction-final.tex" "$S/MainMatter/Cap0/M01-Introduction.tex"
+cp "$B/M02-Chapter1-final.tex" "$S/MainMatter/Cap1/M02-Chapter1.tex"
+cp "$B/M03-Chapter2-final.tex" "$S/MainMatter/Cap2/M03-Chapter2.tex"
 cp "$B/M04-Chapter3-final.tex" "$S/MainMatter/Cap3/M04-Chapter3.tex"
+cp "$B/M05-Chapter4-final.tex" "$S/MainMatter/Cap4/M05-Chapter4.tex"
 cp "$B/M06-Chapter5-final.tex" "$S/MainMatter/Cap5/M06-Chapter5.tex"
 cp "$B/M10-Conclusiones-final.tex" "$S/MainMatter/Cap9/M10-Conclusiones.tex"
 cp "$B/B01-Anexos-final.tex" "$S/BackMatter/B01-Anexos.tex"
