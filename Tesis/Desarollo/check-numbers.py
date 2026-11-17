@@ -1,6 +1,6 @@
 """Verifica que cada cifra de la Discusión, las Conclusiones y el resumen tenga una fuente.
 
-Fuentes: Resultados (Cap5 hasta antes de la Discusión), Metodología (Cap3), Anexos y steps.md.
+Fuentes: Resultados (Cap5 hasta antes de la Discusión, con sus tablas de borradores/tablas/), Metodología (Cap3), Anexos y steps.md.
 Uso (desde la raíz del repositorio): python3 Tesis/Desarollo/check-numbers.py
 Imprime las cifras sin fuente por texto revisado; una lista vacía significa que todas la tienen.
 Los años, números de sección y similares pueden aparecer como falsos positivos: revisarlos a mano.
@@ -24,6 +24,8 @@ sources = norm(
     + (B / "M04-Chapter3-final.tex").read_text(encoding="utf-8")
     + (B / "B01-Anexos-final.tex").read_text(encoding="utf-8")
     + (D / "steps.md").read_text(encoding="utf-8")
+    # Tablas de Resultados generadas por evaluation/analysis/tables.py.
+    + "".join(f.read_text(encoding="utf-8") for f in sorted((B / "tablas").glob("*.tex")))
 )
 checked = {
     "Discusión (Cap5)": cap5[cut:],

@@ -17,6 +17,9 @@ cp "$B/M06-Chapter5-final.tex" "$S/MainMatter/Cap5/M06-Chapter5.tex"
 cp "$B/M10-Conclusiones-final.tex" "$S/MainMatter/Cap9/M10-Conclusiones.tex"
 cp "$B/B01-Anexos-final.tex" "$S/BackMatter/B01-Anexos.tex"
 cp "$B"/figuras-gpt6sol/*.pdf "$S/Images/resultados/"
+# Tablas de Resultados generadas por evaluation/analysis/tables.py (\input{tablas/...}).
+mkdir -p "$S/tablas"
+cp "$B"/tablas/*.tex "$S/tablas/"
 cd "$S"
 latexmk -pdf -interaction=nonstopmode main.tex > latexmk.out 2>&1 || { tail -20 latexmk.out; exit 1; }
 # main.log tiene bytes no UTF-8: grep -a.

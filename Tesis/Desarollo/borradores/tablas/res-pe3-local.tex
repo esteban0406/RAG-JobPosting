@@ -1,0 +1,29 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{Latencia por etapa, mediana y percentil 95 en milisegundos}
+    \label{tab:res-pe3-local}
+    \small
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Etapa}} & \multicolumn{2}{c|}{\textbf{Iteración~1}} & \multicolumn{2}{c|}{\textbf{Iteración~2}} \\
+        \cline{2-5}
+         & \textbf{Qdrant} & \textbf{pgvector} & \textbf{Qdrant} & \textbf{pgvector} \\
+        \hline
+        \textit{Embedding} de la consulta & 53{,}7 / 66{,}0 & 53{,}8 / 65{,}8 & 13{,}5 / 15{,}9 & 13{,}3 / 15{,}6 \\
+        \hline
+        Búsqueda densa & 3{,}7 / 5{,}2 & 25{,}3 / 28{,}0 & 4{,}7 / 5{,}9 & 25{,}8 / 27{,}4 \\
+        \hline
+        BM25 & -- & -- & 0{,}2 / 0{,}6 & 0{,}2 / 0{,}6 \\
+        \hline
+        Fusión & -- & -- & 0{,}0 / 0{,}1 & 0{,}0 / 0{,}1 \\
+        \hline
+        Lectura de las ofertas & 1{,}2 / 1{,}8 & 1{,}1 / 1{,}5 & 5{,}3 / 7{,}6 & 3{,}2 / 4{,}1 \\
+        \hline
+        Reordenamiento & -- & -- & 811{,}4 / 917{,}9 & 792{,}2 / 916{,}2 \\
+        \hline
+        Contexto completo & 59{,}0 / 71{,}5 & 80{,}5 / 93{,}1 & 835{,}4 / 949{,}7 & 833{,}8 / 949{,}6 \\
+        \hline
+        Consultas $\times$ repeticiones & \multicolumn{2}{c|}{$85 \times 30$} & \multicolumn{2}{c|}{$83 \times 30$} \\
+        \hline
+    \end{tabular}
+\end{table}

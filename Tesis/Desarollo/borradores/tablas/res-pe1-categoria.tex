@@ -1,0 +1,33 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{nDCG@10 por categoría de consulta (15 necesidades por categoría)}
+    \label{tab:res-pe1-categoria}
+    \small
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \textbf{Sistema} & \textbf{Exactas} & \textbf{Vocabulario} & \textbf{Restricciones} & \textbf{Ruidosas} \\
+        \hline
+        BM25 & 0{,}719 & 0{,}459 & 0{,}450 & 0{,}603 \\
+        \hline
+        Denso, e5-base-v2 (Iteración~1) & 0{,}842 & 0{,}658 & 0{,}514 & 0{,}689 \\
+        \hline
+        Denso, Qdrant HNSW & 0{,}839 & 0{,}612 & 0{,}579 & 0{,}681 \\
+        \hline
+        + filtros & 0{,}839 & 0{,}612 & 0{,}757 & 0{,}682 \\
+        \hline
+        + híbrida & 0{,}835 & 0{,}609 & 0{,}710 & 0{,}722 \\
+        \hline
+        + reordenamiento (completa) & 0{,}896 & 0{,}734 & 0{,}815 & 0{,}819 \\
+        \hline
+        \multicolumn{5}{|l|}{\textit{Análisis posterior a la revisión}} \\
+        \hline
+        BM25 + filtros & 0{,}719 & 0{,}459 & 0{,}600 & 0{,}603 \\
+        \hline
+        BM25 + filtros + reordenamiento & 0{,}843 & 0{,}545 & 0{,}698 & 0{,}694 \\
+        \hline
+        Completa sin búsqueda híbrida & 0{,}891 & 0{,}774 & 0{,}824 & 0{,}808 \\
+        \hline
+        Completa sin filtros & 0{,}896 & 0{,}734 & 0{,}713 & 0{,}824 \\
+        \hline
+    \end{tabular}
+\end{table}

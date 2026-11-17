@@ -1,0 +1,27 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{Latencia de la clasificación y la generación, mediana y percentil 95 en segundos (30 consultas $\times$ 3, Qdrant)}
+    \label{tab:res-pe3-generacion}
+    \small
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Medida} & \textbf{Iteración~1} & \textbf{Iteración~2} \\
+        \hline
+        Clasificación & no medida & 0{,}57 / 1{,}50 \\
+        \hline
+        Contexto & 0{,}07 / 0{,}16 & 0{,}80 / 0{,}93 \\
+        \hline
+        Primer \textit{token} del generador (TTFT) & 0{,}48 / 0{,}93 & 0{,}50 / 1{,}06 \\
+        \hline
+        Generación completa & 1{,}15 / 1{,}70 & 1{,}45 / 2{,}15 \\
+        \hline
+        Contexto + TTFT & 0{,}56 / 1{,}10 & 1{,}31 / 2{,}00 \\
+        \hline
+        Contexto + generación completa & 1{,}23 / 1{,}84 & 2{,}26 / 3{,}14 \\
+        \hline
+        Clasificación + contexto + TTFT & -- & 1{,}96 / 3{,}07 \\
+        \hline
+        Clasificación + contexto + generación & -- & 2{,}85 / 4{,}33 \\
+        \hline
+    \end{tabular}
+\end{table}

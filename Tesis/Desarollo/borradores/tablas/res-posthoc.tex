@@ -1,0 +1,21 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{Comparaciones posteriores a la revisión: nDCG@10 con IC bootstrap del 95\,\% y Holm sobre 5 comparaciones (60 necesidades); C@5 del sistema y de la referencia}
+    \label{tab:res-posthoc}
+    \small
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Comparación} & \textbf{Diferencia en nDCG@10} & \textbf{$p_{Holm}$} & \textbf{C@5} \\
+        \hline
+        Completa frente a BM25 + filtros & $+0{,}221$ [$+0{,}166$; $+0{,}275$] & $< 0{,}001$ & 0{,}973 / 0{,}960 \\
+        \hline
+        Completa frente a BM25 + filtros + reordenamiento & $+0{,}121$ [$+0{,}082$; $+0{,}165$] & $< 0{,}001$ & 0{,}973 / 0{,}960 \\
+        \hline
+        Denso + filtros frente a BM25 + filtros & $+0{,}127$ [$+0{,}071$; $+0{,}186$] & $< 0{,}001$ & 0{,}953 / 0{,}960 \\
+        \hline
+        Completa frente a completa sin búsqueda híbrida & $-0{,}008$ [$-0{,}023$; $+0{,}006$] & 0{,}279 & 0{,}973 / 0{,}960 \\
+        \hline
+        Completa frente a completa sin filtros & $+0{,}024$ [$+0{,}001$; $+0{,}050$] & 0{,}110 & 0{,}973 / 0{,}653 \\
+        \hline
+    \end{tabular}
+\end{table}

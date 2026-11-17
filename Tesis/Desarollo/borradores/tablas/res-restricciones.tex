@@ -1,0 +1,32 @@
+\begin{table}[htbp!]
+    \centering
+    \caption{Cumplimiento de restricciones en las 5 y 10 primeras posiciones (15 necesidades)}
+    \label{tab:res-restricciones}
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Sistema} & \textbf{C@5} & \textbf{C@10} \\
+        \hline
+        BM25 & 0{,}433 & 0{,}403 \\
+        \hline
+        Denso, e5-base-v2 (Iteración~1) & 0{,}360 & 0{,}327 \\
+        \hline
+        Denso, Qdrant HNSW & 0{,}407 & 0{,}373 \\
+        \hline
+        + filtros & 0{,}953 & 0{,}947 \\
+        \hline
+        + híbrida & 0{,}953 & 0{,}953 \\
+        \hline
+        + reordenamiento (completa) & 0{,}973 & 0{,}960 \\
+        \hline
+        \multicolumn{3}{|l|}{\textit{Análisis posterior a la revisión}} \\
+        \hline
+        BM25 + filtros & 0{,}960 & 0{,}953 \\
+        \hline
+        BM25 + filtros + reordenamiento & 0{,}960 & 0{,}960 \\
+        \hline
+        Completa sin búsqueda híbrida & 0{,}960 & 0{,}950 \\
+        \hline
+        Completa sin filtros & 0{,}653 & 0{,}527 \\
+        \hline
+    \end{tabular}
+\end{table}

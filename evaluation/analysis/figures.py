@@ -19,7 +19,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
+from matplotlib.ticker import FuncFormatter, LogLocator
 import numpy as np
 import pandas as pd
 
@@ -102,7 +102,11 @@ def recall_latency(bench_summary: Path, out_dir: Path) -> Path:
         ax.set_title(title, color=INK, fontsize=8.5)
         ax.set_xlabel("Latencia p50 (ms)", color=MUTED, fontsize=8)
         ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: comma(v, 1 if v < 1 else 0)))
-        ax.xaxis.set_minor_formatter(FuncFormatter(lambda v, _: ""))
+        # Labelled intermediate ticks (2 and 5 of each decade) so values can be read off
+        # the log axis (review B6).
+        ax.xaxis.set_minor_locator(LogLocator(base=10, subs=(2.0, 5.0)))
+        ax.xaxis.set_minor_formatter(FuncFormatter(lambda v, _: comma(v, 1 if v < 1 else 0)))
+        ax.tick_params(axis="x", which="minor", labelsize=6.5, colors=MUTED)
         ax.tick_params(colors=MUTED, labelsize=7.5)
         ax.grid(color=GRID, linewidth=0.8, zorder=0)
         for side in ("top", "right"):
