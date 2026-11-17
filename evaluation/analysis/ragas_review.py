@@ -2,8 +2,13 @@
 
 Usage (standard library only):
     python3 evaluation/analysis/ragas_review.py make <generate run dir> [--per-category 5] [--seed 42]
-    python3 evaluation/analysis/ragas_review.py compare <generate run dir> --labels <labels.csv> \
+    python3 evaluation/analysis/ragas_review.py make <generate run dir> --only <queryId> ... --name <name>
+    python3 evaluation/analysis/ragas_review.py compare <generate run dir> --labels <labels.csv> [--labels <other.csv>] \
         --judge <ragas-<judge>.csv> [--judge <ragas-<other judge>.csv> ...]
+
+A partial page (--only/--name) shows a subset of the same sample with its own browser storage, for a
+second reviewer or a redo. With several --labels, each answer is taken from the first CSV that labels it
+completely, and the agreement between reviewers is computed on the units both labeled.
 
 make samples answered queries (stratified by category, fixed seed), splits each
 answer deterministically into units (one per line or bullet, and one per
@@ -81,18 +86,33 @@ def make(args: argparse.Namespace) -> None:
     ]
     digest = hashlib.sha1(json.dumps([i["units"] for i in items], ensure_ascii=False).encode()).hexdigest()[:8]
     store = f"ragas-review-{args.seed}-{args.per_category}-{digest}"
+    page, download, migrate = PAGE, "ragas-review-labels.csv", None
+    if args.only:
+        # A partial page (a subset of the same sample, e.g. for a second reviewer or a redo): it has its own
+        # browser storage, so it starts empty even where the full page was used, and leaves the key untouched.
+        unknown = set(args.only) - {i["queryId"] for i in items}
+        if unknown:
+            raise SystemExit(f"Not in the sample: {sorted(unknown)}")
+        items = [i for i in items if i["queryId"] in args.only]
+        page = f"ragas-review-{args.name}.html"
+        store += f"-{args.name}"
+        download = f"ragas-review-{args.name}-labels.csv"
+    else:
+        migrate = migration(args.run_dir / PAGE, items, store)
     html = TEMPLATE.replace("__DATA__", json.dumps(items, ensure_ascii=False).replace("</", "<\\/"))
-    html = html.replace("__STORE__", store)
-    html = html.replace("__MIGRATE__", json.dumps(migration(args.run_dir / PAGE, items, store)))
-    (args.run_dir / PAGE).write_text(html, encoding="utf-8")
-    (args.run_dir / KEY).write_text(
-        json.dumps(
-            {"seed": args.seed, "per_category": args.per_category, "queryIds": [i["queryId"] for i in items]},
-            indent=2,
+    html = html.replace("__STORE__", store).replace("__DOWNLOAD__", download)
+    html = html.replace("__N_ANSWERS__", str(len(items)))
+    html = html.replace("__MIGRATE__", json.dumps(migrate))
+    (args.run_dir / page).write_text(html, encoding="utf-8")
+    if not args.only:
+        (args.run_dir / KEY).write_text(
+            json.dumps(
+                {"seed": args.seed, "per_category": args.per_category, "queryIds": [i["queryId"] for i in items]},
+                indent=2,
+            )
         )
-    )
     n_units = sum(len(i["units"]) for i in items)
-    print(f"{len(items)} answers, {n_units} units → {args.run_dir / PAGE}")
+    print(f"{len(items)} answers, {n_units} units → {args.run_dir / page}")
 
 
 def migration(old_page: Path, items: list[dict], store: str) -> dict | None:
@@ -129,24 +149,82 @@ def pearson(x: list[float], y: list[float]) -> float:
         return math.nan
 
 
+LABELS = ("S", "N", "-")
+
+
+def read_labels(path: Path) -> dict[str, list[dict]]:
+    """Rows of one reviewer's CSV, grouped by answer and ordered by unit."""
+    out: dict[str, list[dict]] = {}
+    with path.open(newline="", encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            out.setdefault(row["queryId"], []).append(row)
+    for rows in out.values():
+        rows.sort(key=lambda r: int(r["unit_index"]))
+    return out
+
+
+def cohen_kappa(pairs: list[tuple[str, str]]) -> float:
+    n = len(pairs)
+    cats = sorted({c for p in pairs for c in p})
+    po = sum(a == b for a, b in pairs) / n
+    pe = sum((sum(a == c for a, _ in pairs) / n) * (sum(b == c for _, b in pairs) / n) for c in cats)
+    return math.nan if pe == 1 else (po - pe) / (1 - pe)
+
+
+def agreement(files: dict[str, dict[str, list[dict]]]) -> list[dict]:
+    """Agreement between every two reviewers on the units both labeled."""
+    out = []
+    names = list(files)
+    for x in range(len(names)):
+        for y in range(x + 1, len(names)):
+            a, b = files[names[x]], files[names[y]]
+            pairs = [
+                (ra["label"], rb["label"])
+                for q in a.keys() & b.keys()
+                for ra, rb in zip(a[q], b[q])
+                if ra["label"] in LABELS and rb["label"] in LABELS
+            ]
+            if not pairs:
+                continue
+            sn = [p for p in pairs if "-" not in p]
+            out.append({
+                "reviewers": [names[x], names[y]],
+                "units": len(pairs),
+                "exact_agreement": sum(p == q for p, q in pairs) / len(pairs),
+                "kappa_three_way": cohen_kappa(pairs),
+                "units_S_or_N_in_both": len(sn),
+                "agreement_S_N": sum(p == q for p, q in sn) / len(sn) if sn else math.nan,
+                "kappa_S_N": cohen_kappa(sn) if sn else math.nan,
+                "confusion": {f"{p}/{q}": sum(1 for pair in pairs if pair == (p, q)) for p in LABELS for q in LABELS},
+            })
+    return out
+
+
 def compare(args: argparse.Namespace) -> None:
     key = json.loads((args.run_dir / KEY).read_text())
-    counts: dict[str, dict[str, int]] = {q: {"S": 0, "N": 0, "-": 0} for q in key["queryIds"]}
+    files = {path.stem: read_labels(path) for path in args.labels}
+    counts: dict[str, dict[str, int]] = {}
+    source: dict[str, str] = {}
     unsupported: list[dict] = []
-    unlabeled: list[str] = []
-    with args.labels.open(newline="", encoding="utf-8") as fh:
-        for row in csv.DictReader(fh):
-            if row["label"] in ("S", "N", "-"):
-                counts[row["queryId"]][row["label"]] += 1
-            else:
-                unlabeled.append(f"{row['queryId']}#{row['unit_index']}")
-            if row["label"] == "N":
-                unsupported.append({"queryId": row["queryId"], "unit": row["unit"]})
-    missing = [q for q, c in counts.items() if sum(c.values()) == 0]
-    if missing or unlabeled:
-        raise SystemExit(f"Unlabeled: {len(missing)} answers {missing}, {len(unlabeled)} units {unlabeled[:10]}")
+    missing: list[str] = []
+    for q in key["queryIds"]:
+        # Each answer comes from the first reviewer who labeled all of its units.
+        name = next((n for n, f in files.items() if f.get(q) and all(r["label"] in LABELS for r in f[q])), None)
+        if name is None:
+            missing.append(q)
+            continue
+        source[q] = name
+        rows = files[name][q]
+        counts[q] = {k: sum(r["label"] == k for r in rows) for k in LABELS}
+        unsupported += [{"queryId": q, "reviewer": name, "unit": r["unit"]} for r in rows if r["label"] == "N"]
+    if missing:
+        raise SystemExit(f"No CSV labels these {len(missing)} answers completely: {missing}")
     human = {q: c["S"] / (c["S"] + c["N"]) for q, c in counts.items() if c["S"] + c["N"]}
     report = {
+        "labels": [str(p) for p in args.labels],
+        "source": source,
+        "answers_per_reviewer": {n: sum(1 for s in source.values() if s == n) for n in files},
+        "agreement": agreement(files),
         "n_answers": len(human),
         "units": {k: sum(c[k] for c in counts.values()) for k in ("S", "N", "-")},
         "answers_with_unsupported": sum(1 for c in counts.values() if c["N"]),
@@ -169,8 +247,12 @@ def compare(args: argparse.Namespace) -> None:
         }
     out = args.run_dir / "ragas-review-report.json"
     out.write_text(json.dumps(report, indent=2, ensure_ascii=False))
-    print(f"{report['n_answers']} answers; units S/N/-: {report['units']}; "
+    print(f"{report['n_answers']} answers {report['answers_per_reviewer']}; units S/N/-: {report['units']}; "
           f"{report['answers_with_unsupported']} answers with an unsupported unit; human mean {report['human_mean']:.3f}")
+    for r in report["agreement"]:
+        print(f"{' vs '.join(r['reviewers'])}: {r['units']} shared units, exact {r['exact_agreement']:.2f}, "
+              f"kappa {r['kappa_three_way']:.3f}; S/N only: {r['units_S_or_N_in_both']} units, "
+              f"agreement {r['agreement_S_N']:.2f}, kappa {r['kappa_S_N']:.3f}")
     for name, r in report["judges"].items():
         print(f"{name}: judge {r['judge_mean']:.3f} vs human {r['human_mean']:.3f}, "
               f"mean |diff| {r['mean_abs_diff']:.3f}, pearson {r['pearson']:.3f} (n={r['n']})")
@@ -184,11 +266,16 @@ def main() -> None:
     p_make.add_argument("run_dir", type=Path)
     p_make.add_argument("--per-category", type=int, default=5)
     p_make.add_argument("--seed", type=int, default=42)
+    p_make.add_argument("--only", nargs="+", help="queryIds for a partial page (requires --name)")
+    p_make.add_argument("--name", help="partial page name: ragas-review-<name>.html")
     p_cmp = sub.add_parser("compare")
     p_cmp.add_argument("run_dir", type=Path)
-    p_cmp.add_argument("--labels", type=Path, required=True)
+    p_cmp.add_argument("--labels", type=Path, action="append", required=True,
+                       help="one CSV per reviewer; each answer is taken from the first CSV that labels it completely")
     p_cmp.add_argument("--judge", type=Path, action="append", required=True)
     args = parser.parse_args()
+    if args.cmd == "make" and bool(args.only) != bool(args.name):
+        parser.error("--only and --name go together")
     make(args) if args.cmd == "make" else compare(args)
 
 
@@ -321,6 +408,10 @@ TEMPLATE = r"""<!doctype html>
 
 <h3 id="g-reglas">4. Casos dudosos</h3>
 <ol>
+<li><b>Solo importa si el dato está a la izquierda.</b> No marques N porque la oferta no encaje con la consulta, porque
+  el dato no te parezca útil para quien buscó, ni porque la respuesta deje fuera algo que la oferta sí dice: lo que la
+  respuesta <b>no</b> menciona no cuenta. Se juzga solo lo que la fila afirma. Si una oferta pide "Python, Docker y
+  AWS" y la fila dice "Python y AWS", es <b>S</b>.</li>
 <li><b>Toda la fila tiene que estar respaldada.</b> Si la fila dice varias cosas (por ejemplo, cinco habilidades) y
   una sola no aparece o es distinta, márcala <b>N</b>. Si quieres, anota en la nota de abajo qué parte faltaba.</li>
 <li><b>Busca en todas las ofertas de la izquierda</b> y en todas sus partes (encabezado, requisitos, responsabilidades,
@@ -413,7 +504,7 @@ TEMPLATE = r"""<!doctype html>
 
 <h3 id="g-pagina">6. Cómo usar la página y entregar</h3>
 <ul>
-<li>Son 20 respuestas. Cambia de respuesta con <b>Siguiente →</b> y <b>← Anterior</b> (o las flechas del teclado).
+<li>Son __N_ANSWERS__ respuestas. Cambia de respuesta con <b>Siguiente →</b> y <b>← Anterior</b> (o las flechas del teclado).
   Arriba a la derecha ves cuántas filas llevas y qué respuestas faltan.</li>
 <li>Marca con los botones <b>S</b>, <b>N</b>, <b>–</b>, o con el teclado: <b>s</b>, <b>n</b> y <b>x</b> (para –)
   marcan la fila resaltada en azul y pasan a la siguiente; <b>j</b>/<b>k</b> bajan y suben sin marcar.
@@ -426,7 +517,7 @@ TEMPLATE = r"""<!doctype html>
   el mismo archivo con el mismo navegador. No uses una ventana de incógnito ni borres el historial mientras tanto.
   Para tener una copia de seguridad, usa <b>Descargar CSV</b>; con <b>Cargar CSV</b> se recupera.</li>
 <li><b>Para entregar:</b> cuando arriba diga "completo", pulsa <b>Descargar CSV</b> y envía el archivo
-  <code>ragas-review-labels.csv</code> que se descarga. No hace falta enviar nada más.</li>
+  <code>__DOWNLOAD__</code> que se descarga. No hace falta enviar nada más.</li>
 <li>Puedes volver a abrir esta guía cuando quieras con el botón <b>Guía</b>.</li>
 </ul>
 <p><button id="guide-start">Entendido, empezar</button></p>
@@ -511,7 +602,7 @@ function render() {
       b.onclick = ev => { ev.stopPropagation(); setLabel(k, cls === "X" ? "-" : cls); };
       btns.appendChild(b);
     });
-    const t = document.createElement("div"); t.textContent = u;
+    const t = document.createElement("div"); t.textContent = (k + 1) + ". " + u;
     row.appendChild(btns); row.appendChild(t);
     row.onclick = () => { cur = k; render(); highlight(u); };
     box.appendChild(row);
@@ -561,7 +652,7 @@ document.getElementById("export").onclick = () => {
     lines.push([q(d.queryId), k, q(u), q(state.labels[key(i, k)] || ""), q(k === 0 ? (state.notes[d.queryId] || "") : "")].join(","))));
   const blob = new Blob([lines.join("\n") + "\n"], { type: "text/csv;charset=utf-8" });
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
-  a.download = "ragas-review-labels.csv"; a.click();
+  a.download = "__DOWNLOAD__"; a.click();
 };
 function parseCsv(text) {
   const rows = []; let row = [], f = "", q = false;
