@@ -299,6 +299,68 @@ describe('RetrievalPipeline', () => {
     expect(reranker.score).not.toHaveBeenCalled();
   });
 
+  it('uses BM25 under the filter as the only first stage when lexicalOnly', async () => {
+    const { pipeline, store, bm25 } = build({
+      dense: [chunk('z', 0.99)],
+      lexical: ['c', 'a', 'b'],
+    });
+    const filter = { isRemote: true };
+
+    const result = await pipeline.retrieve('q', {
+      depth: 2,
+      filter,
+      lexicalOnly: true,
+      // Ignored: there is no dense list to fuse with.
+      hybrid: true,
+      rerank: false,
+    });
+
+    expect(ids(result)).toEqual(['c', 'a']);
+    expect(result.hits.map((h) => h.score)).toEqual([10, 9]);
+    expect(store.search).not.toHaveBeenCalled();
+    expect(bm25.search).toHaveBeenCalledWith('q', 50, filter);
+  });
+
+  it('reranks the lexical candidates with their chunks when lexicalOnly', async () => {
+    const { pipeline, store, reranker } = build({
+      lexical: ['a', 'b', 'c'],
+      rerankScores: (docs) =>
+        docs.map((d) => (d.includes('Title b') ? 0.9 : 0.2)),
+    });
+
+    const result = await pipeline.retrieve('q', {
+      depth: 2,
+      lexicalOnly: true,
+      rerankCandidates: 3,
+    });
+
+    expect(reranker.score.mock.calls[0][1]).toHaveLength(3);
+    expect(reranker.score.mock.calls[0][1][0]).toContain('a identity text');
+    expect(store.findSimilarByJobIds).toHaveBeenCalledWith(
+      [0.1, 0.2],
+      ['a', 'b', 'c'],
+    );
+    expect(ids(result)).toEqual(['b', 'a']);
+  });
+
+  it('relaxes the filter of a lexical-only search that matches nothing', async () => {
+    const { pipeline, bm25 } = build();
+    bm25.search
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([{ id: 'a', score: 3 }]);
+
+    const result = await pipeline.retrieve('q', {
+      depth: 5,
+      filter: { salaryAtLeast: 900000 },
+      lexicalOnly: true,
+      rerank: false,
+    });
+
+    expect(result.filterRelaxed).toBe(true);
+    expect(ids(result)).toEqual(['a']);
+    expect(bm25.search).toHaveBeenLastCalledWith('q', 50, undefined);
+  });
+
   it('returns no hits without fetching when nothing is retrieved', async () => {
     const { pipeline, jobs } = build();
 

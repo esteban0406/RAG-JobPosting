@@ -21,6 +21,8 @@ export interface PipelineSystemOptions {
   search?: Pick<SearchOptions, 'mode' | 'efSearch'>;
   rerankFusion?: RerankFusion;
   rerankCandidates?: number;
+  // BM25 instead of dense search as the first stage (lexical baselines).
+  lexicalOnly?: boolean;
 }
 
 // The production retrieval pipeline as an evaluated system. Each rung of the
@@ -47,6 +49,7 @@ export class PipelineSystem implements RetrievalSystem {
       search: this.options.search,
       rerankFusion: this.options.rerankFusion,
       rerankCandidates: this.options.rerankCandidates,
+      lexicalOnly: this.options.lexicalOnly,
       strictRerank: true,
       // Ranked lists are evaluated in full; no score cut-off.
       minRerankScore: Number.NEGATIVE_INFINITY,

@@ -38,8 +38,32 @@ describe('PipelineSystem', () => {
       search: { mode: 'ann', efSearch: 40 },
       rerankFusion: undefined,
       rerankCandidates: undefined,
+      lexicalOnly: undefined,
       strictRerank: true,
       minRerankScore: Number.NEGATIVE_INFINITY,
     });
+  });
+
+  it('passes lexicalOnly and runs without a filter when none is given', async () => {
+    const pipeline = {
+      retrieve: jest.fn().mockResolvedValue({ hits: [] }),
+    };
+    const system = new PipelineSystem(
+      'bm25-filtered-rerank',
+      pipeline as unknown as RetrievalPipeline,
+      () => Promise.resolve([0.1]),
+      { hybrid: false, rerank: true, lexicalOnly: true },
+    );
+
+    await system.retrieve('remote python', 10);
+
+    expect(pipeline.retrieve).toHaveBeenCalledWith(
+      'remote python',
+      expect.objectContaining({
+        filter: undefined,
+        lexicalOnly: true,
+        rerank: true,
+      }),
+    );
   });
 });

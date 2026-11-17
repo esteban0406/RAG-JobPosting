@@ -45,6 +45,11 @@ export interface RetrievalOptions {
   // Fail instead of keeping the fused order when the reranker is down, so an
   // evaluation run never mixes reranked and unreranked queries.
   strictRerank?: boolean;
+  // Evaluation only: BM25 (under the same filter) is the only first stage, so
+  // a lexical baseline can get the filters and the reranker of the pipeline.
+  // `hybrid` is ignored; the query vector still orders each job's chunks for
+  // the reranker, as in the full pipeline.
+  lexicalOnly?: boolean;
 }
 
 export type RerankFusion = 'replace' | 'rrf';
@@ -80,7 +85,7 @@ export interface RetrievalResult {
 
 interface CandidateLists {
   dense: Array<{ id: string; score: number }>;
-  lexical: string[];
+  lexical: Array<{ id: string; score: number }>;
 }
 
 // Retrieval shared by the RAG pipeline and the evaluation harness:
@@ -157,7 +162,8 @@ export class RetrievalPipeline {
       fetchMs: 0,
       rerankMs: 0,
     };
-    const hybrid = options.hybrid ?? this.hybridDefault;
+    const lexicalOnly = options.lexicalOnly ?? false;
+    const hybrid = !lexicalOnly && (options.hybrid ?? this.hybridDefault);
     const rerank = options.rerank ?? this.rerankDefault;
 
     let t = performance.now();
@@ -165,7 +171,14 @@ export class RetrievalPipeline {
       options.queryVector ?? (await this.embedding.embedQuery(query));
     if (!options.queryVector) timings.embedMs = performance.now() - t;
 
-    let lists = await this.candidates(query, vector, options, hybrid, timings);
+    let lists = await this.candidates(
+      query,
+      vector,
+      options,
+      hybrid,
+      lexicalOnly,
+      timings,
+    );
     let filterRelaxed = false;
     if (
       options.filter &&
@@ -177,15 +190,21 @@ export class RetrievalPipeline {
         vector,
         { ...options, filter: undefined },
         hybrid,
+        lexicalOnly,
         timings,
       );
       filterRelaxed = true;
     }
 
     t = performance.now();
-    const ranked = hybrid
-      ? fuseRrf([lists.dense.map((j) => j.id), lists.lexical])
-      : lists.dense;
+    const ranked = lexicalOnly
+      ? lists.lexical
+      : hybrid
+        ? fuseRrf([
+            lists.dense.map((j) => j.id),
+            lists.lexical.map((j) => j.id),
+          ])
+        : lists.dense;
     timings.fuseMs = performance.now() - t;
 
     const poolSize = rerank
@@ -288,25 +307,28 @@ export class RetrievalPipeline {
     vector: number[],
     options: RetrievalOptions,
     hybrid: boolean,
+    lexicalOnly: boolean,
     timings: RetrievalTimings,
   ): Promise<CandidateLists> {
     let t = performance.now();
-    const chunks = await this.store.search(vector, {
-      topK: DENSE_CHUNK_DEPTH,
-      filter: options.filter,
-      ...options.search,
-    });
-    const dense = rankJobsFromChunks(chunks).map((r) => ({
-      id: r.jobId,
-      score: r.score,
-    }));
-    timings.denseMs += performance.now() - t;
+    let dense: CandidateLists['dense'] = [];
+    if (!lexicalOnly) {
+      const chunks = await this.store.search(vector, {
+        topK: DENSE_CHUNK_DEPTH,
+        filter: options.filter,
+        ...options.search,
+      });
+      dense = rankJobsFromChunks(chunks).map((r) => ({
+        id: r.jobId,
+        score: r.score,
+      }));
+      timings.denseMs += performance.now() - t;
+    }
 
-    let lexical: string[] = [];
-    if (hybrid) {
+    let lexical: CandidateLists['lexical'] = [];
+    if (hybrid || lexicalOnly) {
       t = performance.now();
-      const hits = await this.bm25.search(query, LEXICAL_DEPTH, options.filter);
-      lexical = hits.map((h) => h.id);
+      lexical = await this.bm25.search(query, LEXICAL_DEPTH, options.filter);
       timings.bm25Ms += performance.now() - t;
     }
     return { dense, lexical };

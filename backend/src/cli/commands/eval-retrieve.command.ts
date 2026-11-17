@@ -52,6 +52,13 @@ export const SYSTEM_NAMES = [
   'qdrant-filtered',
   'qdrant-hybrid',
   'qdrant-hybrid-rerank',
+  // Added after the first draft's review (post hoc, E1): BM25 with the
+  // pipeline's filters, with and without its reranker, and the full
+  // configuration without one component (hybrid search, filters).
+  'bm25-filtered',
+  'bm25-filtered-rerank',
+  'qdrant-filtered-rerank',
+  'qdrant-hybrid-rerank-nofilter',
 ] as const;
 
 export interface EvalRetrieveOptions {
@@ -115,12 +122,18 @@ export async function evalRetrieve(
   );
   const filterFor = (query: string) => classifications.filterFor(query);
   const ann = { mode: 'ann' as const, efSearch: options.efSearch };
-  const pipelineSystem = (name: string, hybrid: boolean, rerank: boolean) =>
+  const pipelineSystem = (
+    name: string,
+    hybrid: boolean,
+    rerank: boolean,
+    extra: { filtered?: boolean; lexicalOnly?: boolean } = {},
+  ) =>
     Promise.resolve(
       new PipelineSystem(name, qdrantPipeline, embed, {
         hybrid,
         rerank,
-        filterFor,
+        ...(extra.filtered !== false && { filterFor }),
+        lexicalOnly: extra.lexicalOnly,
         search: ann,
       }),
     );
@@ -201,6 +214,18 @@ export async function evalRetrieve(
     'qdrant-hybrid': () => pipelineSystem('qdrant-hybrid', true, false),
     'qdrant-hybrid-rerank': () =>
       pipelineSystem('qdrant-hybrid-rerank', true, true),
+    'bm25-filtered': () =>
+      pipelineSystem('bm25-filtered', false, false, { lexicalOnly: true }),
+    'bm25-filtered-rerank': () =>
+      pipelineSystem('bm25-filtered-rerank', false, true, {
+        lexicalOnly: true,
+      }),
+    'qdrant-filtered-rerank': () =>
+      pipelineSystem('qdrant-filtered-rerank', false, true),
+    'qdrant-hybrid-rerank-nofilter': () =>
+      pipelineSystem('qdrant-hybrid-rerank-nofilter', true, true, {
+        filtered: false,
+      }),
   };
 
   // Embed up front so the measured latency is retrieval only.

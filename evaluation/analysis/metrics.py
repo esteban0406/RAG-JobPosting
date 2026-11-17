@@ -13,6 +13,14 @@ Writes to <run dir>/analysis-<qrels name>/:
     ladder.csv         the same test between consecutive rungs of the ablation ladder
                        (embedding model, ANN, engine, filters, hybrid, reranking),
                        Holm-adjusted as a separate family
+    posthoc.csv        comparisons added after the first draft's review (E1: BM25
+                       with the pipeline's filters, one-component ablations of the
+                       full configuration), Holm-adjusted as a third family; only
+                       when the run has those systems
+
+The two families fixed before the final run (14 comparisons against the
+baselines, 9 in the ladder) only use the systems of that run, so systems added
+later never change their size or their Holm adjustment.
 
 nDCG@10 is the primary measure: Holm corrects only its comparisons, one family
 per file. The other measures, including constraint compliance (C@5, C@10, read
@@ -51,6 +59,9 @@ COMPLIANCE = {"C@5": "at5", "C@10": "at10"}
 # conservative to read the ladder, so the correction applies to nDCG@10 only.
 PRIMARY = "nDCG@10"
 BASELINES = ["ilike", "bm25"]
+# Systems of the final run (2026-10-14); the pre-registered families use only these.
+PREREGISTERED = ["ilike", "bm25", "qdrant-e5base", "pg-exact", "pg-hnsw", "qdrant-hnsw",
+                 "qdrant-filtered", "qdrant-hybrid", "qdrant-hybrid-rerank"]
 PERMUTATIONS = 10_000
 BOOTSTRAP = 10_000
 SEED = 42
@@ -244,9 +255,34 @@ def ladder_significance(scores: pd.DataFrame) -> pd.DataFrame:
     return holm_primary(pd.DataFrame(rows))
 
 
+# (system, reference): post hoc family, added after the first draft's review (E1).
+POST_HOC = [
+    ("qdrant-hybrid-rerank", "bm25-filtered"),         # full configuration vs. BM25 with the same filters
+    ("qdrant-hybrid-rerank", "bm25-filtered-rerank"),  # ... vs. BM25 with the same filters and reranker
+    ("qdrant-filtered", "bm25-filtered"),              # dense vs. BM25, both filtered
+    ("qdrant-hybrid-rerank", "qdrant-filtered-rerank"),         # hybrid search inside the full configuration
+    ("qdrant-hybrid-rerank", "qdrant-hybrid-rerank-nofilter"),  # filters inside the full configuration
+]
+
+
+def post_hoc_significance(scores: pd.DataFrame) -> pd.DataFrame:
+    rng = np.random.default_rng(SEED)
+    systems = set(scores["system"])
+    rows = []
+    for measure in [*MEASURES, *COMPLIANCE]:
+        table = units(scores[scores["measure"] == measure], "all").pivot(index="unit", columns="system", values="value")
+        for system, reference in POST_HOC:
+            if system not in systems or reference not in systems:
+                continue
+            result = compare(table, system, reference, rng)
+            if result is not None:
+                rows.append({"measure": measure, "system": system, "reference": reference, **result})
+    return holm_primary(pd.DataFrame(rows))
+
+
 def significance(scores: pd.DataFrame) -> pd.DataFrame:
     rng = np.random.default_rng(SEED)
-    systems = sorted(scores["system"].unique())
+    systems = sorted(s for s in scores["system"].unique() if s in PREREGISTERED)
     dense = [s for s in systems if s not in BASELINES]
     rows = []
     for measure in [*MEASURES, *COMPLIANCE]:
@@ -276,6 +312,9 @@ def main() -> None:
     summary.to_csv(out / "summary.csv", index=False)
     significance(scores).to_csv(out / "significance.csv", index=False)
     ladder_significance(scores).to_csv(out / "ladder.csv", index=False)
+    post_hoc = post_hoc_significance(scores)
+    if not post_hoc.empty:
+        post_hoc.to_csv(out / "posthoc.csv", index=False)
 
     columns = [m for m in [*MEASURES, *COMPLIANCE] if m in summary]
     overall = summary[summary["group"] == "all"].set_index("system")[columns]
