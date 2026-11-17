@@ -196,8 +196,12 @@ Si E1 o E2 se atrasan, la edición de los capítulos que no dependen de sus cifr
 ## 11. Qué avisarle al director en la nota de envío
 
 - El OE4 se ajustó para decir lo que se mide (H4). Es el único cambio a los objetivos que él aprobó; la pregunta y el título no cambiaron.
-- Se agregaron análisis posteriores a la corrida final, en una familia de Holm aparte: BM25 con los mismos filtros, ablación quitando un componente, RAGAS de la Iteración 1 y la compuerta con consultas fuera de dominio. Ninguno cambió la configuración del artefacto.
+- El borrador pasó por una revisión interna antes del envío (no la del director). En el texto, los análisis agregados después de esa revisión se llaman **análisis complementarios** (BM25 con los mismos filtros, ablación quitando un componente, RAGAS de la Iteración 1 y la compuerta con consultas fuera de dominio): se hicieron con los resultados de la corrida final ya conocidos, en una familia de Holm aparte, y ninguno cambió la configuración del artefacto.
 - Las fallas se presentan ahora como hallazgos de la evaluación formativa, con el origen de cada detección explícito (H1).
 - Se aclaró que el artefacto de DSR es JobAI y que el protocolo es el instrumento (H2).
 - El estado del arte tiene ahora un método de búsqueda declarado y una tabla de trabajos relacionados (H6).
 - Limitaciones nuevas o reforzadas: un solo anotador humano para la validación del juez, consultas redactadas por el autor, fragmentación fuera del alcance, distribución de fuentes del corpus.
+- Se agregó una declaración de uso de herramientas de IA (cribado bibliográfico, jueces de la evaluación y componentes del artefacto); se completará cuando haya una política de la universidad.
+- Riesgo declarado en la Discusión: el aporte del reordenamiento es la cifra más expuesta al sesgo de los jueces LLM a favor de los reordenadores basados en LLM (Fröbe et al., 2025).
+- La conclusión sobre las fallas se acotó a lo que prueba el contrafactual: las métricas de RAGAS (fidelidad y relevancia) no detectaron las fallas A4 y A6.
+- Lista de siglas nueva; bibliografía verificada entrada por entrada (Crossref, arXiv o actas oficiales).
