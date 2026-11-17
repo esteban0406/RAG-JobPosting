@@ -1,0 +1,2252 @@
+{
+ "total": 890,
+ "token": null,
+ "data": [
+  {
+   "paperId": "5c32c653735b43a0a8923ca65ac191bd4bf15311",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2212-10496",
+    "ACL": "2023.acl-long.99",
+    "ArXiv": "2212.10496",
+    "DOI": "10.18653/v1/2023.acl-long.99",
+    "CorpusId": 254877046
+   },
+   "title": "Precise Zero-Shot Dense Retrieval without Relevance Labels",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2022,
+   "citationCount": 1089,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2023.acl-long.99.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2212.10496, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "49715441",
+     "name": "Luyu Gao"
+    },
+    {
+     "authorId": "2461713",
+     "name": "Xueguang Ma"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    },
+    {
+     "authorId": "144987107",
+     "name": "Jamie Callan"
+    }
+   ],
+   "abstract": "While dense retrieval has been shown to be effective and efficient across tasks and languages, it remains difficult to create effective fully zero-shot dense retrieval systems when no relevance labels are available. In this paper, we recognize the difficulty of zero-shot learning and encoding relevance. Instead, we propose to pivot through Hypothetical Document Embeddings (HyDE). Given a query, HyDE first zero-shot prompts an instruction-following language model (e.g., InstructGPT) to generate a hypothetical document. The document captures relevance patterns but is “fake” and may contain hallucinations. Then, an unsupervised contrastively learned encoder (e.g., Contriever) encodes the document into an embedding vector. This vector identifies a neighborhood in the corpus embedding space, from which similar real documents are retrieved based on vector similarity. This second step grounds the generated document to the actual corpus, with the encoder’s dense bottleneck filtering out the hallucinations. Our experiments show that HyDE significantly outperforms the state-of-the-art unsupervised dense retriever Contriever and shows strong performance comparable to fine-tuned retrievers across various tasks (e.g. web search, QA, fact verification) and in non-English languages (e.g., sw, ko, ja, bn)."
+  },
+  {
+   "paperId": "fd48dc6b433cfcd220b6e769c6179d8ef6fcf862",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2410-10813",
+    "ArXiv": "2410.10813",
+    "DOI": "10.48550/arXiv.2410.10813",
+    "CorpusId": 273345961
+   },
+   "title": "LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory",
+   "venue": "International Conference on Learning Representations",
+   "year": 2024,
+   "citationCount": 948,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2410.10813, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2107535909",
+     "name": "Di Wu"
+    },
+    {
+     "authorId": "2261392960",
+     "name": "Hong-Wei Wang"
+    },
+    {
+     "authorId": "2309885350",
+     "name": "Wen-Hao Yu"
+    },
+    {
+     "authorId": "2284259968",
+     "name": "Yu-Wei Zhang"
+    },
+    {
+     "authorId": "2257127887",
+     "name": "Kai-Wei Chang"
+    },
+    {
+     "authorId": "2303999735",
+     "name": "Dong Yu"
+    }
+   ],
+   "abstract": "Recent large language model (LLM)-driven chat assistant systems have integrated memory components to track user-assistant chat histories, enabling more accurate and personalized responses. However, their long-term memory capabilities in sustained interactions remain underexplored. We introduce LongMemEval, a comprehensive benchmark designed to evaluate five core long-term memory abilities of chat assistants: information extraction, multi-session reasoning, temporal reasoning, knowledge updates, and abstention. With 500 meticulously curated questions embedded within freely scalable user-assistant chat histories, LongMemEval presents a significant challenge to existing long-term memory systems, with commercial chat assistants and long-context LLMs showing a 30% accuracy drop on memorizing information across sustained interactions. We then present a unified framework that breaks down the long-term memory design into three stages: indexing, retrieval, and reading. Built upon key experimental insights, we propose several memory design optimizations including session decomposition for value granularity, fact-augmented key expansion for indexing, and time-aware query expansion for refining the search scope. Extensive experiments show that these optimizations greatly improve both memory recall and downstream question answering on LongMemEval. Overall, our study provides valuable resources and guidance for advancing the long-term memory capabilities of LLM-based chat assistants, paving the way toward more personalized and reliable conversational AI. Our benchmark and code are publicly available at https://github.com/xiaowu0162/LongMemEval."
+  },
+  {
+   "paperId": "b092b6b843e9421bf42bf96f57ed4658a3e0bdf7",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-1904-08375",
+    "MAG": "2937036051",
+    "ArXiv": "1904.08375",
+    "DOI": "10.48550/arXiv.1904.08375",
+    "CorpusId": 119314259
+   },
+   "title": "Document Expansion by Query Prediction",
+   "venue": "arXiv.org",
+   "year": 2019,
+   "citationCount": 594,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/1904.08375",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1904.08375, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "143744603",
+     "name": "Rodrigo Nogueira"
+    },
+    {
+     "authorId": "144205297",
+     "name": "Wei Yang"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    },
+    {
+     "authorId": "1979489",
+     "name": "Kyunghyun Cho"
+    }
+   ],
+   "abstract": "One technique to improve the retrieval effectiveness of a search engine is to expand documents with terms that are related or representative of the documents' content.From the perspective of a question answering system, this might comprise questions the document can potentially answer. Following this observation, we propose a simple method that predicts which queries will be issued for a given document and then expands it with those predictions with a vanilla sequence-to-sequence model, trained using datasets consisting of pairs of query and relevant documents. By combining our method with a highly-effective re-ranking component, we achieve the state of the art in two retrieval tasks. In a latency-critical regime, retrieval results alone (without re-ranking) approach the effectiveness of more computationally expensive neural re-rankers but are much faster."
+  },
+  {
+   "paperId": "a531e9a328ad1488567fa68c15d5bf30bfb90c78",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2310-08319",
+    "ArXiv": "2310.08319",
+    "DOI": "10.1145/3626772.3657951",
+    "CorpusId": 263908865
+   },
+   "title": "Fine-Tuning LLaMA for Multi-Stage Text Retrieval",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 514,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2310.08319",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2310.08319, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2461713",
+     "name": "Xueguang Ma"
+    },
+    {
+     "authorId": "145769448",
+     "name": "Liang Wang"
+    },
+    {
+     "authorId": "2242947624",
+     "name": "Nan Yang"
+    },
+    {
+     "authorId": "2257346447",
+     "name": "Fu-Ru Wei"
+    },
+    {
+     "authorId": "2257085301",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "While large language models (LLMs) have shown impressive NLP capabilities, existing IR applications mainly focus on prompting LLMs to generate query expansions or generating permutations for listwise reranking. In this study, we leverage LLMs directly to serve as components in the widely used multi-stage text ranking pipeline. Specifically, we fine-tune the open-source LLaMA-2 model as a dense retriever (repLLaMA) and a pointwise reranker (rankLLaMA). This is performed for both passage and document retrieval tasks using the MS MARCO training data. Our study shows that finetuned LLM retrieval models outperform smaller models. They are more effective and exhibit greater generalizability, requiring only a straightforward training strategy. Moreover, our pipeline allows for the fine-tuning of LLMs at each stage of a multi-stage retrieval pipeline. This demonstrates the strong potential for optimizing LLMs to enhance a variety of retrieval tasks. Furthermore, as LLMs are naturally pre-trained with longer contexts, they can directly represent longer documents. This eliminates the need for heuristic segmenting and pooling strategies to rank long documents. On the MS MARCO and BEIR datasets, our repLLaMA-rankLLaMA pipeline demonstrates a high level of effectiveness."
+  },
+  {
+   "paperId": "54fa64b74ec020699fad989f85e74e50c7a34445",
+   "externalIds": {
+    "CorpusId": 208612557
+   },
+   "title": "From doc2query to docTTTTTquery",
+   "venue": "",
+   "year": 2019,
+   "citationCount": 484,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://cs.uwaterloo.ca/~jimmylin/publications/Nogueira_Lin_2019_docTTTTTquery.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "1759787",
+     "name": "D. Cheriton"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "ccc772d88c231275f24c4fac9b28bbe0942e1107",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2303-07678",
+    "ArXiv": "2303.07678",
+    "DOI": "10.48550/arXiv.2303.07678",
+    "CorpusId": 257505063
+   },
+   "title": "Query2doc: Query Expansion with Large Language Models",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2023,
+   "citationCount": 345,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2303.07678",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2303.07678, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "145769448",
+     "name": "Liang Wang"
+    },
+    {
+     "authorId": "144610884",
+     "name": "Nan Yang"
+    },
+    {
+     "authorId": "49807919",
+     "name": "Furu Wei"
+    }
+   ],
+   "abstract": "This paper introduces a simple yet effective query expansion approach, denoted as query2doc, to improve both sparse and dense retrieval systems. The proposed method first generates pseudo-documents by few-shot prompting large language models (LLMs), and then expands the query with generated pseudo-documents. LLMs are trained on web-scale text corpora and are adept at knowledge memorization. The pseudo-documents from LLMs often contain highly relevant information that can aid in query disambiguation and guide the retrievers. Experimental results demonstrate that query2doc boosts the performance of BM25 by 3% to 15% on ad-hoc IR datasets, such as MS-MARCO and TREC DL, without any model fine-tuning. Furthermore, our method also benefits state-of-the-art dense retrievers in terms of both in-domain and out-of-domain results."
+  },
+  {
+   "paperId": "6242b40d14746a418f30c4737d62d7649d08746f",
+   "externalIds": {
+    "ArXiv": "2109.10086",
+    "DBLP": "journals/corr/abs-2109-10086",
+    "DOI": "10.48550/arXiv.2109.10086",
+    "CorpusId": 237581550
+   },
+   "title": "SPLADE v2: Sparse Lexical and Expansion Model for Information Retrieval",
+   "venue": "arXiv.org",
+   "year": 2021,
+   "citationCount": 295,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2109.10086",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2109.10086, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1630412772",
+     "name": "Thibault Formal"
+    },
+    {
+     "authorId": "3373720",
+     "name": "Carlos Lassance"
+    },
+    {
+     "authorId": "1703777",
+     "name": "Benjamin Piwowarski"
+    },
+    {
+     "authorId": "2207074",
+     "name": "Stéphane Clinchant"
+    }
+   ],
+   "abstract": "In neural Information Retrieval (IR), ongoing research is directed towards improving the first retriever in ranking pipelines. Learning dense embeddings to conduct retrieval using efficient approximate nearest neighbors methods has proven to work well. Meanwhile, there has been a growing interest in learning \\emph{sparse} representations for documents and queries, that could inherit from the desirable properties of bag-of-words models such as the exact matching of terms and the efficiency of inverted indexes. Introduced recently, the SPLADE model provides highly sparse representations and competitive results with respect to state-of-the-art dense and sparse approaches. In this paper, we build on SPLADE and propose several significant improvements in terms of effectiveness and/or efficiency. More specifically, we modify the pooling mechanism, benchmark a model solely based on document expansion, and introduce models trained with distillation. We also report results on the BEIR benchmark. Overall, SPLADE is considerably improved with more than $9$\\% gains on NDCG@10 on TREC DL 2019, leading to state-of-the-art results on the BEIR benchmark."
+  },
+  {
+   "paperId": "e08eed9608382beea1febca49119c665fbabd031",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2101-05667",
+    "ArXiv": "2101.05667",
+    "DOI": "10.48550/arXiv.2101.05667",
+    "CorpusId": 231603106
+   },
+   "title": "The Expando-Mono-Duo Design Pattern for Text Ranking with Pretrained Sequence-to-Sequence Models",
+   "venue": "arXiv.org",
+   "year": 2021,
+   "citationCount": 228,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2101.05667",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2101.05667, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "143744603",
+     "name": "Rodrigo Nogueira"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "We propose a design pattern for tackling text ranking problems, dubbed\"Expando-Mono-Duo\", that has been empirically validated for a number of ad hoc retrieval tasks in different domains. At the core, our design relies on pretrained sequence-to-sequence models within a standard multi-stage ranking architecture.\"Expando\"refers to the use of document expansion techniques to enrich keyword representations of texts prior to inverted indexing.\"Mono\"and\"Duo\"refer to components in a reranking pipeline based on a pointwise model and a pairwise model that rerank initial candidates retrieved using keyword search. We present experimental results from the MS MARCO passage and document ranking tasks, the TREC 2020 Deep Learning Track, and the TREC-COVID challenge that validate our design. In all these tasks, we achieve effectiveness that is at or near the state of the art, in some cases using a zero-shot approach that does not exploit any training data from the target task. To support replicability, implementations of our design pattern are open-sourced in the Pyserini IR toolkit and PyGaggle neural reranking library."
+  },
+  {
+   "paperId": "8fbb8885854ba611ca90a7fc8b8efaaff3efc66e",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2003-13624",
+    "ArXiv": "2003.13624",
+    "MAG": "3013372641",
+    "DOI": "10.48550/arXiv.2003.13624",
+    "CorpusId": 214713838
+   },
+   "title": "TREC CAsT 2019: The Conversational Assistance Track Overview",
+   "venue": "arXiv.org",
+   "year": 2020,
+   "citationCount": 222,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2003.13624",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2003.13624, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "145269114",
+     "name": "Jeffrey Dalton"
+    },
+    {
+     "authorId": "144628574",
+     "name": "Chenyan Xiong"
+    },
+    {
+     "authorId": "144987107",
+     "name": "Jamie Callan"
+    }
+   ],
+   "abstract": "The Conversational Assistance Track (CAsT) is a new track for TREC 2019 to facilitate Conversational Information Seeking (CIS) research and to create a large-scale reusable test collection for conversational search systems. The document corpus is 38,426,252 passages from the TREC Complex Answer Retrieval (CAR) and Microsoft MAchine Reading COmprehension (MARCO) datasets. Eighty information seeking dialogues (30 train, 50 test) are an average of 9 to 10 questions long. Relevance assessments are provided for 30 training topics and 20 test topics. This year 21 groups submitted a total of 65 runs using varying methods for conversational query understanding and ranking. Methods include traditional retrieval based methods, feature based learning-to-rank, neural models, and knowledge enhanced methods. A common theme through the runs is the use of BERT-based neural reranking methods. Leading methods also employed document expansion, conversational query expansion, and generative language models for conversational query rewriting (GPT-2). The results show a gap between automatic systems and those using the manually resolved utterances, with a 35% relative improvement of manual rewrites over the best automatic system."
+  },
+  {
+   "paperId": "727b058bf0c3c3b5d18f1937783e8c7bbddcd03d",
+   "externalIds": {
+    "ArXiv": "2403.00784",
+    "DBLP": "journals/csur/WangHTWHLB24",
+    "DOI": "10.1145/3648471",
+    "CorpusId": 267707681
+   },
+   "title": "Utilizing BERT for Information Retrieval: Survey, Applications, Resources, and Challenges",
+   "venue": "ACM Computing Surveys",
+   "year": 2024,
+   "citationCount": 150,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2403.00784",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2403.00784, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2284407468",
+     "name": "Jiajia Wang"
+    },
+    {
+     "authorId": "2249204838",
+     "name": "J. Huang"
+    },
+    {
+     "authorId": "2868864",
+     "name": "Xin-Hui Tu"
+    },
+    {
+     "authorId": "2110265731",
+     "name": "Junmei Wang"
+    },
+    {
+     "authorId": "2146872105",
+     "name": "Angela J. Huang"
+    },
+    {
+     "authorId": "46437970",
+     "name": "Md Tahmid Rahman Laskar"
+    },
+    {
+     "authorId": "40315993",
+     "name": "Amran Bhuiyan"
+    }
+   ],
+   "abstract": "Recent years have witnessed a substantial increase in the use of deep learning to solve various natural language processing (NLP) problems. Early deep learning models were constrained by their sequential or unidirectional nature, such that they struggled to capture the contextual relationships across text inputs. The introduction of bidirectional encoder representations from transformers (BERT) leads to a robust encoder for the transformer model that can understand the broader context and deliver state-of-the-art performance across various NLP tasks. This has inspired researchers and practitioners to apply BERT to practical problems, such as information retrieval (IR). A survey that focuses on a comprehensive analysis of prevalent approaches that apply pretrained transformer encoders like BERT to IR can thus be useful for academia and the industry. In light of this, we revisit a variety of BERT-based methods in this survey, cover a wide range of techniques of IR, and group them into six high-level categories: (i) handling long documents, (ii) integrating semantic information, (iii) balancing effectiveness and efficiency, (iv) predicting the weights of terms, (v) query expansion, and (vi) document expansion. We also provide links to resources, including datasets and toolkits, for BERT-based IR systems. Additionally, we highlight the advantages of employing encoder-based BERT models in contrast to recent large language models like ChatGPT, which are decoder-based and demand extensive computational resources. Finally, we summarize the comprehensive outcomes of the survey and suggest directions for future research in the area."
+  },
+  {
+   "paperId": "0c57dcf959ead9530f9ec3ebe0dd58de42a3e8af",
+   "externalIds": {
+    "MAG": "3099384026",
+    "DBLP": "conf/sigir/MacAvaneyN0TGF20b",
+    "ArXiv": "2004.14245",
+    "DOI": "10.1145/3397271.3401262",
+    "CorpusId": 216641912
+   },
+   "title": "Expansion via Prediction of Importance with Contextualization",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2020,
+   "citationCount": 139,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2004.14245",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2004.14245, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "22214396",
+     "name": "Sean MacAvaney"
+    },
+    {
+     "authorId": "2763561",
+     "name": "Franco Maria Nardini"
+    },
+    {
+     "authorId": "46188036",
+     "name": "R. Perego"
+    },
+    {
+     "authorId": "2783910",
+     "name": "Nicola Tonellotto"
+    },
+    {
+     "authorId": "1685063",
+     "name": "Nazli Goharian"
+    },
+    {
+     "authorId": "1741208",
+     "name": "O. Frieder"
+    }
+   ],
+   "abstract": "The identification of relevance with little textual context is a primary challenge in passage retrieval. We address this problem with a representation-based ranking approach that: (1) explicitly models the importance of each term using a contextualized language model; (2) performs passage expansion by propagating the importance to similar terms; and (3) grounds the representations in the lexicon, making them interpretable. Passage representations can be pre-computed at index time to reduce query-time latency. We call our approach EPIC (Expansion via Prediction of Importance with Contextualization). We show that EPIC significantly outperforms prior importance-modeling and document expansion approaches. We also observe that the performance is additive with the current leading first-stage retrieval methods, further narrowing the gap between inexpensive and cost-prohibitive passage ranking approaches. Specifically, EPIC achieves a MRR@10 of 0.304 on the MS-MARCO passage ranking dataset with 78ms average query latency on commodity hardware. We also find that the latency is further reduced to 68ms by pruning document representations, with virtually no difference in effectiveness."
+  },
+  {
+   "paperId": "f5d46cc426188339ce4f8ebf61e25d80558e0519",
+   "externalIds": {
+    "ACL": "2020.findings-emnlp.424",
+    "MAG": "3085805507",
+    "ArXiv": "2009.07258",
+    "DBLP": "conf/emnlp/ZhengHHH0Y20",
+    "DOI": "10.48550/arXiv.2009.07258",
+    "CorpusId": 221703727
+   },
+   "title": "BERT-QE: Contextualized Query Expansion for Document Re-ranking",
+   "venue": "Findings",
+   "year": 2020,
+   "citationCount": 127,
+   "openAccessPdf": {
+    "url": "https://www.aclweb.org/anthology/2020.findings-emnlp.424.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2009.07258, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2115548452",
+     "name": "Zhi Zheng"
+    },
+    {
+     "authorId": "47214884",
+     "name": "Kai Hui"
+    },
+    {
+     "authorId": "2046814249",
+     "name": "Ben He"
+    },
+    {
+     "authorId": "3194601",
+     "name": "Xianpei Han"
+    },
+    {
+     "authorId": "2110832778",
+     "name": "Le Sun"
+    },
+    {
+     "authorId": "144115896",
+     "name": "Andrew Yates"
+    }
+   ],
+   "abstract": "Query expansion aims to mitigate the mismatch between the language used in a query and in a document. However, query expansion methods can suffer from introducing non-relevant information when expanding the query. To bridge this gap, inspired by recent advances in applying contextualized models like BERT to the document retrieval task, this paper proposes a novel query expansion model that leverages the strength of the BERT model to select relevant document chunks for expansion. In evaluation on the standard TREC Robust04 and GOV2 test collections, the proposed BERT-QE model significantly outperforms BERT-Large models."
+  },
+  {
+   "paperId": "040641a032adb10e618dea738f7378aad3621c08",
+   "externalIds": {
+    "MAG": "2993055513",
+    "DBLP": "journals/isci/EspositoDMPF20",
+    "DOI": "10.1016/j.ins.2019.12.002",
+    "CorpusId": 210040312
+   },
+   "title": "Hybrid query expansion using lexical resources and word embeddings for sentence retrieval in question answering",
+   "venue": "Information Sciences",
+   "year": 2020,
+   "citationCount": 120,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.ins.2019.12.002?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.ins.2019.12.002, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "145934446",
+     "name": "M. Esposito"
+    },
+    {
+     "authorId": "35234224",
+     "name": "Emanuele Damiano"
+    },
+    {
+     "authorId": "34806690",
+     "name": "Aniello Minutolo"
+    },
+    {
+     "authorId": "119392103",
+     "name": "G. de Pietro"
+    },
+    {
+     "authorId": "1747316",
+     "name": "H. Fujita"
+    }
+   ],
+   "abstract": "Abstract Question Answering (QA) systems based on Information Retrieval return precise answers to natural language questions, extracting relevant sentences from document collections. However, questions and sentences cannot be aligned terminologically, generating errors in the sentence retrieval. In order to augment the effectiveness in retrieving relevant sentences from documents, this paper proposes a hybrid Query Expansion (QE) approach, based on lexical resources and word embeddings, for QA systems. In detail, synonyms and hypernyms of relevant terms occurring in the question are first extracted from MultiWordNet and, then, contextualized to the document collection used in the QA system. Finally, the resulting set is ranked and filtered on the basis of wording and sense of the question, by employing a semantic similarity metric built on the top of a Word2Vec model. This latter is locally trained on an extended corpus pertaining the same topic of the documents used in the QA system. This QE approach is implemented into an existing QA system and experimentally evaluated, with respect to different possible configurations and selected baselines, for the Italian language and in the Cultural Heritage domain, assessing its effectiveness in retrieving sentences containing proper answers to questions belonging to four different categories."
+  },
+  {
+   "paperId": "fcff605c0969a818463455a99f5a03e7cb5bca70",
+   "externalIds": {
+    "MAG": "3013631210",
+    "DBLP": "conf/trec/VoskaridesLPR19",
+    "CorpusId": 211480183
+   },
+   "title": "ILPS at TREC 2019 Conversational Assistant Track",
+   "venue": "Text Retrieval Conference",
+   "year": 2019,
+   "citationCount": 110,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://trec.nist.gov/pubs/trec28/papers/UvA.ILPS.C.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "3279886",
+     "name": "Nikos Voskarides"
+    },
+    {
+     "authorId": "46599041",
+     "name": "Dan Li"
+    },
+    {
+     "authorId": "1824769",
+     "name": "Andreas Panteli"
+    },
+    {
+     "authorId": "1749477",
+     "name": "P. Ren"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "72e0a5707c07a25ce4d7bbd35a5542cfc7a445e7",
+   "externalIds": {
+    "MAG": "2912711185",
+    "ArXiv": "1901.10197",
+    "DBLP": "journals/corr/abs-1901-10197",
+    "DOI": "10.1016/j.ins.2019.04.019",
+    "CorpusId": 59336260
+   },
+   "title": "A New Approach for Query Expansion using Wikipedia and WordNet",
+   "venue": "Information Sciences",
+   "year": 2019,
+   "citationCount": 90,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/1901.10197",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1901.10197, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "9408461",
+     "name": "Dr. Hiteshwar Kumar Azad"
+    },
+    {
+     "authorId": "47214235",
+     "name": "A. Deepak"
+    }
+   ],
+   "abstract": "Abstract Query expansion (QE) is a well-known technique used to enhance the effectiveness of information retrieval. QE reformulates the initial query by adding similar terms that help in retrieving more relevant results. Several approaches have been proposed in literature producing quite favorable results, but they are not evenly favorable for all types of queries (individual and phrase queries). One of the main reasons for this is the use of the same kind of data sources and weighting scheme while expanding both the individual and the phrase query terms. As a result, the holistic relationship among the query terms is not well captured or scored. To address this issue, we have presented a new approach for QE using Wikipedia and WordNet as data sources. Specifically, Wikipedia gives rich expansion terms for phrase terms, while WordNet does the same for individual terms. We have also proposed novel weighting schemes for expansion terms: in-link score (for terms extracted from Wikipedia) and a tf-idf based scheme (for terms extracted from WordNet). In the proposed Wikipedia-WordNet-based QE technique (WWQE), we weigh the expansion terms twice: first, they are scored by the weighting scheme individually, and then, the weighting scheme scores the selected expansion terms concerning the entire query using correlation score. The proposed approach gains improvements of 24% on the MAP score and 48% on the GMAP score over unexpanded queries on the FIRE dataset. Experimental results achieve a significant improvement over individual expansion and other related state-of-the-art approaches. We also analyzed the effect on retrieval effectiveness of the proposed technique by varying the number of expansion terms."
+  },
+  {
+   "paperId": "07205fbe57ab05c561faaa5d16d5e59e48b85bfc",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2410-04739",
+    "ArXiv": "2410.04739",
+    "DOI": "10.52202/079017-2382",
+    "CorpusId": 273185974
+   },
+   "title": "TableRAG: Million-Token Table Understanding with Language Models",
+   "venue": "Neural Information Processing Systems",
+   "year": 2024,
+   "citationCount": 90,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2410.04739",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2410.04739, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2111637671",
+     "name": "Si-An Chen"
+    },
+    {
+     "authorId": "71436125",
+     "name": "Lesly Miculicich"
+    },
+    {
+     "authorId": "117595858",
+     "name": "Julian Martin Eisenschlos"
+    },
+    {
+     "authorId": "2135785111",
+     "name": "Zifeng Wang"
+    },
+    {
+     "authorId": "2265487043",
+     "name": "Zi-Long Wang"
+    },
+    {
+     "authorId": "2258603407",
+     "name": "Yan-Fei Chen"
+    },
+    {
+     "authorId": "2114175058",
+     "name": "Yasuhisa Fujii"
+    },
+    {
+     "authorId": "2324837794",
+     "name": "Hsuan-Tien Lin"
+    },
+    {
+     "authorId": "2278969944",
+     "name": "Chen-Yu Lee"
+    },
+    {
+     "authorId": "2305619900",
+     "name": "Tomas Pfister"
+    }
+   ],
+   "abstract": "Recent advancements in language models (LMs) have notably enhanced their ability to reason with tabular data, primarily through program-aided mechanisms that manipulate and analyze tables. However, these methods often require the entire table as input, leading to scalability challenges due to the positional bias or context length constraints. In response to these challenges, we introduce TableRAG, a Retrieval-Augmented Generation (RAG) framework specifically designed for LM-based table understanding. TableRAG leverages query expansion combined with schema and cell retrieval to pinpoint crucial information before providing it to the LMs. This enables more efficient data encoding and precise retrieval, significantly reducing prompt lengths and mitigating information loss. We have developed two new million-token benchmarks from the Arcade and BIRD-SQL datasets to thoroughly evaluate TableRAG's effectiveness at scale. Our results demonstrate that TableRAG's retrieval design achieves the highest retrieval quality, leading to the new state-of-the-art performance on large-scale table understanding."
+  },
+  {
+   "paperId": "6f25037c6a6b5b9bd857ccede998c84c388a6f0e",
+   "externalIds": {
+    "ArXiv": "2303.13416",
+    "DBLP": "journals/corr/abs-2303-13416",
+    "DOI": "10.1007/978-3-031-28241-6_7",
+    "CorpusId": 257585074
+   },
+   "title": "A Unified Framework for Learned Sparse Retrieval",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2023,
+   "citationCount": 79,
+   "openAccessPdf": {
+    "url": "https://handle.uba.uva.nl/personal/pure/en/publications/a-unified-framework-for-learned-sparse-retrieval(2994eba3-5780-461f-be8c-bfc7fb127d5f).html",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2303.13416, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2281707946",
+     "name": "Thong Nguyen"
+    },
+    {
+     "authorId": "22214396",
+     "name": "Sean MacAvaney"
+    },
+    {
+     "authorId": "2136074457",
+     "name": "Andrew Yates"
+    }
+   ],
+   "abstract": "Learned sparse retrieval (LSR) is a family of first-stage retrieval methods that are trained to generate sparse lexical representations of queries and documents for use with an inverted index. Many LSR methods have been recently introduced, with Splade models achieving state-of-the-art performance on MSMarco. Despite similarities in their model architectures, many LSR methods show substantial differences in effectiveness and efficiency. Differences in the experimental setups and configurations used make it difficult to compare the methods and derive insights. In this work, we analyze existing LSR methods and identify key components to establish an LSR framework that unifies all LSR methods under the same perspective. We then reproduce all prominent methods using a common codebase and re-train them in the same environment, which allows us to quantify how components of the framework affect effectiveness and efficiency. We find that (1) including document term weighting is most important for a method's effectiveness, (2) including query weighting has a small positive impact, and (3) document expansion and query expansion have a cancellation effect. As a result, we show how removing query expansion from a state-of-the-art model can reduce latency significantly while maintaining effectiveness on MSMarco and TripClick benchmarks. Our code is publicly available at https://github.com/thongnt99/learned-sparse-retrieval"
+  },
+  {
+   "paperId": "81b6398fb61cced922b584cbda7bccf6a5ded5d9",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2404-07221",
+    "ArXiv": "2404.07221",
+    "DOI": "10.48550/arXiv.2404.07221",
+    "CorpusId": 269042793
+   },
+   "title": "Improving Retrieval for RAG based Question Answering Models on Financial Documents",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 78,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2404.07221, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2282528163",
+     "name": "Spurthi Setty"
+    },
+    {
+     "authorId": "144245703",
+     "name": "Harsh Thakkar"
+    },
+    {
+     "authorId": "2455796238",
+     "name": "Alyssa Lee"
+    },
+    {
+     "authorId": "2279830841",
+     "name": "Eden Chung"
+    },
+    {
+     "authorId": "2279830757",
+     "name": "Natan Vidra"
+    }
+   ],
+   "abstract": "The effectiveness of Large Language Models (LLMs) in generating accurate responses relies heavily on the quality of input provided, particularly when employing Retrieval Augmented Generation (RAG) techniques. RAG enhances LLMs by sourcing the most relevant text chunk(s) to base queries upon. Despite the significant advancements in LLMs' response quality in recent years, users may still encounter inaccuracies or irrelevant answers; these issues often stem from suboptimal text chunk retrieval by RAG rather than the inherent capabilities of LLMs. To augment the efficacy of LLMs, it is crucial to refine the RAG process. This paper explores the existing constraints of RAG pipelines and introduces methodologies for enhancing text retrieval. It delves into strategies such as sophisticated chunking techniques, query expansion, the incorporation of metadata annotations, the application of re-ranking algorithms, and the fine-tuning of embedding algorithms. Implementing these approaches can substantially improve the retrieval quality, thereby elevating the overall performance and reliability of LLMs in processing and responding to queries."
+  },
+  {
+   "paperId": "c14fdd98ec9e0fba8ba841ece9b2af12f72cc1f6",
+   "externalIds": {
+    "DBLP": "journals/ijinfomandi/JainSJ21",
+    "MAG": "3134468011",
+    "DOI": "10.1016/J.JJIMEI.2021.100009",
+    "CorpusId": 233581553
+   },
+   "title": "A fuzzy ontology framework in information retrieval using semantic query expansion",
+   "venue": "Int. J. Inf. Manag. Data Insights",
+   "year": 2021,
+   "citationCount": 77,
+   "openAccessPdf": {
+    "url": "https://www.sciencedirect.com/science/article/pii/S2667096821000021/pdf",
+    "status": "GOLD",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/J.JJIMEI.2021.100009?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/J.JJIMEI.2021.100009, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "46815131",
+     "name": "Shivani Jain"
+    },
+    {
+     "authorId": "2622519",
+     "name": "K. R. Seeja"
+    },
+    {
+     "authorId": "34432300",
+     "name": "Rajni Jindal"
+    }
+   ],
+   "abstract": "Abstract World Wide Web (WWW) constitutes fuzzy information and requires soft computing techniques to deal context of the query. It works on the principle of keyword matching yielding low precision and recall. Semantic web, an extension WWW improves the information retrieval process. Query expansion is utmost importance in information retrieval to retrieve relevant results. To overcome the weaknesses of current web system and to utilize the strengths query expansion a novel framework based on fuzzy ontology is proposed for information retrieval. In the proposed framework, domain specific knowledge is utilized for ontology construction. In framework pre-defined domain ontologies and Global ontology, ConceptNet is used to construct a fuzzy ontology. Based on constructed fuzzy ontology most semantically related words for a query are identified and query is expanded. A fuzzy membership function is defined for different semantic relationships present among the Global ontology ConceptNet. Based on the proposed framework queries are expanded (Semantic query expansion) and evaluated on four popular search engines namely Google, Yahoo, Bing and Exalead. The performance metrics used are Precision, Mean Average Precision (MAP), Mean Reciprocal Rank (MRR), R-precision and Number of documents retrieved. The Web search engines are precision oriented. Based on the proposed framework all the metrics are improved approx. by 10%. Precision before the query expansion lies between 0.75-0.81 whereas after the query expansion lies between 0.85-0.89 on various search engines. The number of documents retrieved is almost improved 1/1000 after the query expansion."
+  },
+  {
+   "paperId": "2f35b0b9b9683177a77b06ef81997d3a0e0444f4",
+   "externalIds": {
+    "MAG": "2918316070",
+    "ArXiv": "1903.09469",
+    "DBLP": "journals/corr/abs-1903-09469",
+    "DOI": "10.3390/rs11050493",
+    "CorpusId": 85452394
+   },
+   "title": "Aggregated Deep Local Features for Remote Sensing Image Retrieval",
+   "venue": "Remote Sensing",
+   "year": 2019,
+   "citationCount": 77,
+   "openAccessPdf": {
+    "url": "https://www.mdpi.com/2072-4292/11/5/493/pdf?version=1551348855",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1903.09469, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "84612591",
+     "name": "Raffaele Imbriaco"
+    },
+    {
+     "authorId": "51248991",
+     "name": "Clint Sebastian"
+    },
+    {
+     "authorId": "143742944",
+     "name": "E. Bondarev"
+    },
+    {
+     "authorId": "8582219",
+     "name": "P. D. de With"
+    }
+   ],
+   "abstract": "Remote Sensing Image Retrieval remains a challenging topic due to the special nature of Remote Sensing imagery. Such images contain various different semantic objects, which clearly complicates the retrieval task. In this paper, we present an image retrieval pipeline that uses attentive, local convolutional features and aggregates them using the Vector of Locally Aggregated Descriptors (VLAD) to produce a global descriptor. We study various system parameters such as the multiplicative and additive attention mechanisms and descriptor dimensionality. We propose a query expansion method that requires no external inputs. Experiments demonstrate that even without training, the local convolutional features and global representation outperform other systems. After system tuning, we can achieve state-of-the-art or competitive results. Furthermore, we observe that our query expansion method increases overall system performance by about 3%, using only the top-three retrieved images. Finally, we show how dimensionality reduction produces compact descriptors with increased retrieval performance and fast retrieval computation times, e.g., 50% faster than the current systems."
+  },
+  {
+   "paperId": "95d2820c9fae8f0f858ec982bfe5fb7eb27f38ce",
+   "externalIds": {
+    "DBLP": "conf/trec/YanLWBWXS19",
+    "MAG": "3013936901",
+    "CorpusId": 211481850
+   },
+   "title": "IDST at TREC 2019 Deep Learning Track: Deep Cascade Ranking with Generation-based Document Expansion and Pre-trained Language Modeling",
+   "venue": "Text Retrieval Conference",
+   "year": 2019,
+   "citationCount": 76,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://trec.nist.gov/pubs/trec28/papers/IDST.DL.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2047087220",
+     "name": "Ming Yan"
+    },
+    {
+     "authorId": "143971529",
+     "name": "Chenliang Li"
+    },
+    {
+     "authorId": "29701485",
+     "name": "Chen Wu"
+    },
+    {
+     "authorId": "8068060",
+     "name": "Jiang-Nan Xia"
+    },
+    {
+     "authorId": "38700603",
+     "name": "Wei Wang"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "650ae86d4d78e697c812bb94fe2562b84cfe9a00",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2003-02546",
+    "MAG": "3009860537",
+    "ArXiv": "2003.02546",
+    "DOI": "10.48550/arXiv.2003.02546",
+    "CorpusId": 212415228
+   },
+   "title": "Embedding Expansion: Augmentation in Embedding Space for Deep Metric Learning",
+   "venue": "Computer Vision and Pattern Recognition",
+   "year": 2020,
+   "citationCount": 66,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2003.02546",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2003.02546, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "9726578",
+     "name": "ByungSoo Ko"
+    },
+    {
+     "authorId": "2707832",
+     "name": "Geonmo Gu"
+    }
+   ],
+   "abstract": "Learning the distance metric between pairs of samples has been studied for image retrieval and clustering. With the remarkable success of pair-based metric learning losses, recent works have proposed the use of generated synthetic points on metric learning losses for augmentation and generalization. However, these methods require additional generative networks along with the main network, which can lead to a larger model size, slower training speed, and harder optimization. Meanwhile, post-processing techniques, such as query expansion and database augmentation, have proposed the combination of feature points to obtain additional semantic information. In this paper, inspired by query expansion and database augmentation, we propose an augmentation method in an embedding space for pair-based metric learning losses, called embedding expansion. The proposed method generates synthetic points containing augmented information by a combination of feature points and performs hard negative pair mining to learn with the most informative feature representations. Because of its simplicity and flexibility, it can be used for existing metric learning losses without affecting model size, training speed, or optimization difficulty. Finally, the combination of embedding expansion and representative metric learning losses outperforms the state-of-the-art losses and previous sample generation methods in both image retrieval and clustering tasks. The implementation is publicly available."
+  },
+  {
+   "paperId": "2c32a5fcb393df9cc7a978cf35dbe880b0f45622",
+   "externalIds": {
+    "ArXiv": "2304.13157",
+    "DBLP": "conf/sigir/MackieC023",
+    "DOI": "10.1145/3539618.3591992",
+    "CorpusId": 258332122
+   },
+   "title": "Generative Relevance Feedback with Large Language Models",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 66,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3539618.3591992",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2304.13157, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "145052856",
+     "name": "Iain Mackie"
+    },
+    {
+     "authorId": "2113355478",
+     "name": "Shubham Chatterjee"
+    },
+    {
+     "authorId": "49694325",
+     "name": "Jeffrey Stephen Dalton"
+    }
+   ],
+   "abstract": "Current query expansion models use pseudo-relevance feedback to improve first-pass retrieval effectiveness; however, this fails when the initial results are not relevant. Instead of building a language model from retrieved results, we propose Generative Relevance Feedback (GRF) that builds probabilistic feedback models from long-form text generated from Large Language Models. We study the effective methods for generating text by varying the zero-shot generation subtasks: queries, entities, facts, news articles, documents, and essays. We evaluate GRF on document retrieval benchmarks covering a diverse set of queries and document collections, and the results show that GRF methods significantly outperform previous PRF methods. Specifically, we improve MAP between 5-19% and NDCG@10 17-24% compared to RM3 expansion, and achieve state-of-the-art recall across all datasets."
+  },
+  {
+   "paperId": "d033dcc3767c3f5d2f5e11548de6cdb5d4d89239",
+   "externalIds": {
+    "DBLP": "conf/coling/LiSEB25",
+    "ArXiv": "2501.07391",
+    "DOI": "10.48550/arXiv.2501.07391",
+    "CorpusId": 275471724
+   },
+   "title": "Enhancing Retrieval-Augmented Generation: A Study of Best Practices",
+   "venue": "International Conference on Computational Linguistics",
+   "year": 2025,
+   "citationCount": 65,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2501.07391, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2339955326",
+     "name": "Si-Ran Li"
+    },
+    {
+     "authorId": "2339779344",
+     "name": "Linus Stenzel"
+    },
+    {
+     "authorId": "2266396084",
+     "name": "Carsten Eickhoff"
+    },
+    {
+     "authorId": "3091795",
+     "name": "Seyed Ali Bahrainian"
+    }
+   ],
+   "abstract": "Retrieval-Augmented Generation (RAG) systems have recently shown remarkable advancements by integrating retrieval mechanisms into language models, enhancing their ability to produce more accurate and contextually relevant responses. However, the influence of various components and configurations within RAG systems remains underexplored. A comprehensive understanding of these elements is essential for tailoring RAG systems to complex retrieval tasks and ensuring optimal performance across diverse applications. In this paper, we develop several advanced RAG system designs that incorporate query expansion, various novel retrieval strategies, and a novel Contrastive In-Context Learning RAG. Our study systematically investigates key factors, including language model size, prompt design, document chunk size, knowledge base size, retrieval stride, query expansion techniques, Contrastive In-Context Learning knowledge bases, multilingual knowledge bases, and Focus Mode retrieving relevant context at sentence-level. Through extensive experimentation, we provide a detailed analysis of how these factors influence response quality. Our findings offer actionable insights for developing RAG systems, striking a balance between contextual richness and retrieval-generation efficiency, thereby paving the way for more adaptable and high-performing RAG frameworks in diverse real-world scenarios. Our code and implementation details are publicly available."
+  },
+  {
+   "paperId": "f4e304c919ec467a86eb54ae1f1b3838afec57ee",
+   "externalIds": {
+    "MAG": "2975214639",
+    "DBLP": "journals/ipm/BounhasSS20",
+    "DOI": "10.1016/j.ipm.2019.102124",
+    "CorpusId": 204099572
+   },
+   "title": "Building a morpho-semantic knowledge graph for Arabic information retrieval",
+   "venue": "Information Processing & Management",
+   "year": 2020,
+   "citationCount": 57,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.ipm.2019.102124?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.ipm.2019.102124, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1690092",
+     "name": "Ibrahim Bounhas"
+    },
+    {
+     "authorId": "2072181787",
+     "name": "Nadia Soudani"
+    },
+    {
+     "authorId": "1706591",
+     "name": "Y. Slimani"
+    }
+   ],
+   "abstract": "Abstract In this paper, we propose to build a morpho-semantic knowledge graph from Arabic vocalized corpora. Our work focuses on classical Arabic as it has not been deeply investigated in related works. We use a tool suite which allows analyzing and disambiguating Arabic texts, taking into account short diacritics to reduce ambiguities. At the morphological level, we combine Ghwanmeh stemmer and MADAMIRA which are adapted to extract a multi-level lexicon from Arabic vocalized corpora. At the semantic level, we infer semantic dependencies between tokens by exploiting contextual knowledge extracted by a concordancer. Both morphological and semantic links are represented through compressed graphs, which are accessed through lazy methods. These graphs are mined using a measure inspired from BM25 to compute one-to-many similarity. Indeed, we propose to evaluate the morpho-semantic Knowledge Graph in the context of Arabic Information Retrieval (IR). Several scenarios of document indexing and query expansion are assessed. That is, we vary indexing units for Arabic IR based on different levels of morphological knowledge, a challenging issue which is not yet resolved in previous research. We also experiment several combinations of morpho-semantic query expansion. This permits to validate our resource and to study its impact on IR based on state-of-the art evaluation metrics."
+  },
+  {
+   "paperId": "dcba37400ad86aaf0d47e5cdfa2fcfa98f089401",
+   "externalIds": {
+    "ArXiv": "2309.08541",
+    "ACL": "2024.findings-eacl.134",
+    "DBLP": "conf/eacl/WellerLWLDCS24",
+    "DOI": "10.48550/arXiv.2309.08541",
+    "CorpusId": 262012661
+   },
+   "title": "When do Generative Query and Document Expansions Fail? A Comprehensive Study Across Methods, Retrievers, and Datasets",
+   "venue": "Findings",
+   "year": 2023,
+   "citationCount": 56,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2309.08541",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2309.08541, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "47433471",
+     "name": "Orion Weller"
+    },
+    {
+     "authorId": "46258841",
+     "name": "Kyle Lo"
+    },
+    {
+     "authorId": "30051202",
+     "name": "David Wadden"
+    },
+    {
+     "authorId": "2539674",
+     "name": "Dawn J Lawrie"
+    },
+    {
+     "authorId": "7536576",
+     "name": "Benjamin Van Durme"
+    },
+    {
+     "authorId": "2527954",
+     "name": "Arman Cohan"
+    },
+    {
+     "authorId": "3328733",
+     "name": "Luca Soldaini"
+    }
+   ],
+   "abstract": "Using large language models (LMs) for query or document expansion can improve generalization in information retrieval. However, it is unknown whether these techniques are universally beneficial or only effective in specific settings, such as for particular retrieval models, dataset domains, or query types. To answer this, we conduct the first comprehensive analysis of LM-based expansion. We find that there exists a strong negative correlation between retriever performance and gains from expansion: expansion improves scores for weaker models, but generally harms stronger models. We show this trend holds across a set of eleven expansion techniques, twelve datasets with diverse distribution shifts, and twenty-four retrieval models. Through qualitative error analysis, we hypothesize that although expansions provide extra information (potentially improving recall), they add additional noise that makes it difficult to discern between the top relevant documents (thus introducing false positives). Our results suggest the following recipe: use expansions for weaker models or when the target dataset significantly differs from training corpus in format; otherwise, avoid expansions to keep the relevance signal clear."
+  },
+  {
+   "paperId": "0c1720ac16983ec1c7be6bde99252b50bedceb7e",
+   "externalIds": {
+    "DBLP": "conf/mir/ZhuHRK24",
+    "ArXiv": "2404.18746",
+    "DOI": "10.1145/3652583.3658032",
+    "CorpusId": 269448972
+   },
+   "title": "Enhancing Interactive Image Retrieval With Query Rewriting Using Large Language Models and Vision Language Models",
+   "venue": "International Conference on Multimedia Retrieval",
+   "year": 2024,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3652583.3658032",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2404.18746, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2283972851",
+     "name": "Hong-Yi Zhu"
+    },
+    {
+     "authorId": "2298943481",
+     "name": "Jia-Hong Huang"
+    },
+    {
+     "authorId": "2815960",
+     "name": "Stevan Rudinac"
+    },
+    {
+     "authorId": "1713134",
+     "name": "E. Kanoulas"
+    }
+   ],
+   "abstract": "Image search stands as a pivotal task in multimedia and computer vision, finding applications across diverse domains, ranging from internet search to medical diagnostics. Conventional image search systems operate by accepting textual or visual queries, retrieving the top-relevant candidate results from the database. However, prevalent methods often rely on single-turn procedures, introducing potential inaccuracies and limited recall. These methods also face the challenges, such as vocabulary mismatch and the semantic gap, constraining their overall effectiveness. To address these issues, we propose an interactive image retrieval system capable of refining queries based on user relevance feedback in a multi-turn setting. This system incorporates a vision language model (VLM) based image captioner to enhance the quality of text-based queries, resulting in more informative queries with each iteration. Moreover, we introduce a large language model (LLM) based denoiser to refine text-based query expansions, mitigating inaccuracies in image descriptions generated by captioning models. To evaluate our system, we curate a new dataset by adapting the MSR-VTT video retrieval dataset to the image retrieval task, offering multiple relevant ground truth images for each query. Through comprehensive experiments, we validate the effectiveness of our proposed system against baseline methods, achieving state-of-the-art performance with a notable 10% improvement in terms of recall. Our contributions encompass the development of an innovative interactive image retrieval system, the integration of an LLM-based denoiser, the curation of a meticulously designed evaluation dataset, and thorough experimental validation."
+  },
+  {
+   "paperId": "f1a950af6e547c3c12a4defbd7120d28f540c6c1",
+   "externalIds": {
+    "ACL": "2024.naacl-long.138",
+    "DBLP": "journals/corr/abs-2310-19056",
+    "ArXiv": "2310.19056",
+    "DOI": "10.48550/arXiv.2310.19056",
+    "CorpusId": 264806544
+   },
+   "title": "MILL: Mutual Verification with Large Language Models for Zero-Shot Query Expansion",
+   "venue": "North American Chapter of the Association for Computational Linguistics",
+   "year": 2023,
+   "citationCount": 53,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2310.19056, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2264224432",
+     "name": "Peng-Yue Jia"
+    },
+    {
+     "authorId": "2249554788",
+     "name": "Yiding Liu"
+    },
+    {
+     "authorId": "2238104000",
+     "name": "Xiang-Yu Zhao"
+    },
+    {
+     "authorId": "2263797116",
+     "name": "Xiao-Peng Li"
+    },
+    {
+     "authorId": "1560248442",
+     "name": "Chang-Ying Hao"
+    },
+    {
+     "authorId": "2237948548",
+     "name": "Shuai-Qiang Wang"
+    },
+    {
+     "authorId": "2243455567",
+     "name": "Da-Wei Yin"
+    }
+   ],
+   "abstract": "Query expansion, pivotal in search engines, enhances the representation of user information needs with additional terms. While existing methods expand queries using retrieved or generated contextual documents, each approach has notable limitations. Retrieval-based methods often fail to accurately capture search intent, particularly with brief or ambiguous queries. Generation-based methods, utilizing large language models (LLMs), generally lack corpus-specific knowledge and entail high fine-tuning costs. To address these gaps, we propose a novel zero-shot query expansion framework utilizing LLMs for mutual verification. Specifically, we first design a query-query-document generation method, leveraging LLMs’ zero-shot reasoning ability to produce diverse sub-queries and corresponding documents. Then, a mutual verification process synergizes generated and retrieved documents for optimal expansion. Our proposed method is fully zero-shot, and extensive experiments on three public benchmark datasets are conducted to demonstrate its effectiveness over existing methods. Our code is available online at https://github.com/Applied-Machine-Learning-Lab/MILL to ease reproduction."
+  },
+  {
+   "paperId": "84062a7dbe689656954e421867e3710c0868b37c",
+   "externalIds": {
+    "MAG": "2914188192",
+    "DBLP": "conf/www/ScellsZK19",
+    "DOI": "10.1145/3308558.3313544",
+    "CorpusId": 86763744
+   },
+   "title": "Automatic Boolean Query Refinement for Systematic Review Literature Search",
+   "venue": "The Web Conference",
+   "year": 2019,
+   "citationCount": 51,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3308558.3313544",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3308558.3313544?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3308558.3313544, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "8842143",
+     "name": "Harrisen Scells"
+    },
+    {
+     "authorId": "1692855",
+     "name": "G. Zuccon"
+    },
+    {
+     "authorId": "1783566",
+     "name": "B. Koopman"
+    }
+   ],
+   "abstract": "In the medical domain, systematic reviews are a highly trustworthy evidence source used to inform clinical diagnosis and treatment, and governmental policy making. Systematic reviews must be complete in that all relevant literature for the research question of the review must be synthesised in order to produce a recommendation. To identify the literature to screen for inclusion in systematic reviews, information specialists construct complex Boolean queries that capture the information needs defined by the research questions of the systemic review. However, in the quest for total recall, these Boolean queries return many non relevant results. In this paper, we propose automatic methods for Boolean query refinement in the context of systematic review literature retrieval with the aim of alleviating this high-recall, low-precision problem. To do this, we build upon current literature and define additional semantic transformations for Boolean queries in the form of query expansion and reduction. Empirical evaluation is done on a set of real systematic review queries to show how our method performs in a realistic setting. We found that query refinement strategies produced queries that were more effective than the original in terms of six information retrieval evaluation measures. In particular, queries were refined to increase precision, while maintaining, or even increasing, recall - this, in turn, translates into both time and cost savings when creating laborious and expensive systematic reviews."
+  },
+  {
+   "paperId": "d376872de9d2420ce1f4a2d4a5a472334d26bdd2",
+   "externalIds": {
+    "DBLP": "journals/jhir/SivarajkumarMORHLHVW24",
+    "DOI": "10.1007/s41666-024-00159-4",
+    "CorpusId": 267206418,
+    "PubMed": "38681755"
+   },
+   "title": "Clinical Information Retrieval: A Literature Review",
+   "venue": "Journal of Healthcare Informatics Research",
+   "year": 2024,
+   "citationCount": 50,
+   "openAccessPdf": {
+    "url": "https://www.researchsquare.com/article/rs-2748158/latest.pdf",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s41666-024-00159-4?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s41666-024-00159-4, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2158366736",
+     "name": "Sonish Sivarajkumar"
+    },
+    {
+     "authorId": "2164014219",
+     "name": "Haneef Ahamed Mohammad"
+    },
+    {
+     "authorId": "1720911173",
+     "name": "D. Oniani"
+    },
+    {
+     "authorId": "2280921872",
+     "name": "Kirk Roberts"
+    },
+    {
+     "authorId": "1688124",
+     "name": "W. Hersh"
+    },
+    {
+     "authorId": "2280981809",
+     "name": "Hongfang Liu"
+    },
+    {
+     "authorId": "2281450231",
+     "name": "Da-Qing He"
+    },
+    {
+     "authorId": "1765482",
+     "name": "S. Visweswaran"
+    },
+    {
+     "authorId": "2274069026",
+     "name": "Yan-Shan Wang"
+    }
+   ],
+   "abstract": "Clinical information retrieval (IR) plays a vital role in modern healthcare by facilitating efficient access and analysis of medical literature for clinicians and researchers. This scoping review aims to offer a comprehensive overview of the current state of clinical IR research and identify gaps and potential opportunities for future studies in this field. The main objective was to assess and analyze the existing literature on clinical IR, focusing on the methods, techniques, and tools employed for effective retrieval and analysis of medical information. Adhering to the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines, we conducted an extensive search across databases such as Ovid Embase, Ovid Medline, Scopus, ACM Digital Library, IEEE Xplore, and Web of Science, covering publications from January 1, 2010, to January 4, 2023. The rigorous screening process led to the inclusion of 184 papers in our review. Our findings provide a detailed analysis of the clinical IR research landscape, covering aspects like publication trends, data sources, methodologies, evaluation metrics, and applications. The review identifies key research gaps in clinical IR methods such as indexing, ranking, and query expansion, offering insights and opportunities for future studies in clinical IR, thus serving as a guiding framework for upcoming research efforts in this rapidly evolving field. The study also underscores an imperative for innovative research on advanced clinical IR systems capable of fast semantic vector search and adoption of neural IR techniques for effective retrieval of information from unstructured electronic health records (EHRs)."
+  },
+  {
+   "paperId": "d843bc13306cd816f4628c0bb385230a2265a469",
+   "externalIds": {
+    "PubMedCentral": "7148061",
+    "MAG": "3015381124",
+    "DBLP": "conf/ecir/PadakiDC20",
+    "DOI": "10.1007/978-3-030-45442-5_37",
+    "CorpusId": 215746655
+   },
+   "title": "Rethinking Query Expansion for BERT Reranking",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2020,
+   "citationCount": 49,
+   "openAccessPdf": {
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7148061/pdf/",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC7148061, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "121166016",
+     "name": "Ramith Padaki"
+    },
+    {
+     "authorId": "2475437",
+     "name": "Zhuyun Dai"
+    },
+    {
+     "authorId": "144987107",
+     "name": "Jamie Callan"
+    }
+   ],
+   "abstract": "Recent studies have shown promising results of using BERT for Information Retrieval with its advantages in understanding the text content of documents and queries. Compared to short, keywords queries, higher accuracy of BERT were observed on long, natural language queries, demonstrating BERT’s ability in extracting rich information from complex queries. These results show the potential of using query expansion to generate better queries for BERT-based rankers. In this work, we explore BERT’s sensitivity to the addition of structure and concepts. We find that traditional word-based query expansion is not entirely applicable, and provide insight into methods that produce better experimental results."
+  },
+  {
+   "paperId": "8f9741f5347865ec37a4c0bdbe1d3bdf9a239284",
+   "externalIds": {
+    "MAG": "2945915803",
+    "DBLP": "journals/ipm/NasirVI19",
+    "DOI": "10.1016/J.IPM.2019.04.007",
+    "CorpusId": 182176359
+   },
+   "title": "A knowledge-based semantic framework for query expansion",
+   "venue": "Information Processing & Management",
+   "year": 2019,
+   "citationCount": 49,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/J.IPM.2019.04.007?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/J.IPM.2019.04.007, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "35560924",
+     "name": "Jamal Abdul Nasir"
+    },
+    {
+     "authorId": "1744066",
+     "name": "Iraklis Varlamis"
+    },
+    {
+     "authorId": "148064639",
+     "name": "Samreen Ishfaq"
+    }
+   ],
+   "abstract": "Abstract Searching for relevant material that satisfies the information need of a user, within a large document collection is a critical activity for web search engines. Query Expansion techniques are widely used by search engines for the disambiguation of user’s information need and for improving the information retrieval (IR) performance. Knowledge-based, corpus-based and relevance feedback, are the main QE techniques, that employ different approaches for expanding the user query with synonyms of the search terms (word synonymy) in order to bring more relevant documents and for filtering documents that contain search terms but with a different meaning (also known as word polysemy problem) than the user intended. This work, surveys existing query expansion techniques, highlights their strengths and limitations and introduces a new method that combines the power of knowledge-based or corpus-based techniques with that of relevance feedback. Experimental evaluation on three information retrieval benchmark datasets shows that the application of knowledge or corpus-based query expansion techniques on the results of the relevance feedback step improves the information retrieval performance, with knowledge-based techniques providing significantly better results than their simple relevance feedback alternatives in all sets."
+  },
+  {
+   "paperId": "37d8e074b627822674f879ce219091348250079e",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2508-07995",
+    "ArXiv": "2508.07995",
+    "DOI": "10.48550/arXiv.2508.07995",
+    "CorpusId": 280567061
+   },
+   "title": "DIVER: A Multi-Stage Approach for Reasoning-intensive Information Retrieval",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 49,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2508.07995, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2374413400",
+     "name": "Duolin Sun"
+    },
+    {
+     "authorId": "2054275074",
+     "name": "Mei Long"
+    },
+    {
+     "authorId": "2215590272",
+     "name": "Dan Yang"
+    },
+    {
+     "authorId": "2375396277",
+     "name": "Jun-Jie Wang"
+    },
+    {
+     "authorId": "2466674520",
+     "name": "Ye-Cheng Luo"
+    },
+    {
+     "authorId": "2290138094",
+     "name": "Yue Shen"
+    },
+    {
+     "authorId": "2356554128",
+     "name": "Jian Wang"
+    },
+    {
+     "authorId": "2376859423",
+     "name": "Hua-Lei Zhou"
+    },
+    {
+     "authorId": "2375969520",
+     "name": "Chun-Xiao Guo"
+    },
+    {
+     "authorId": "2304955019",
+     "name": "Peng Wei"
+    },
+    {
+     "authorId": "2339555519",
+     "name": "Jia-Hai Wang"
+    },
+    {
+     "authorId": "2269769748",
+     "name": "Jin-Jie Gu"
+    }
+   ],
+   "abstract": "Retrieval-augmented generation has achieved strong performance on knowledge-intensive tasks where query-document relevance can be identified through direct lexical or semantic matches. However, many real-world queries involve abstract reasoning, analogical thinking, or multi-step inference, which existing retrievers often struggle to capture. To address this challenge, we present DIVER, a retrieval pipeline designed for reasoning-intensive information retrieval. It consists of four components. The document preprocessing stage enhances readability and preserves content by cleaning noisy texts and segmenting long documents. The query expansion stage leverages large language models to iteratively refine user queries with explicit reasoning and evidence from retrieved documents. The retrieval stage employs a model fine-tuned on synthetic data spanning medical and mathematical domains, along with hard negatives, enabling effective handling of reasoning-intensive queries. Finally, the reranking stage combines pointwise and listwise strategies to produce both fine-grained and globally consistent rankings. On the BRIGHT benchmark, DIVER achieves state-of-the-art nDCG@10 scores of 46.8 overall and 31.9 on original queries, consistently outperforming competitive reasoning-aware models. These results demonstrate the effectiveness of reasoning-aware retrieval strategies in complex real-world tasks."
+  },
+  {
+   "paperId": "6b913e84066186f57e0210728872159cc47f52ef",
+   "externalIds": {
+    "ArXiv": "2308.00415",
+    "DBLP": "journals/corr/abs-2308-00415",
+    "DOI": "10.48550/arXiv.2308.00415",
+    "CorpusId": 260351198
+   },
+   "title": "Generative Query Reformulation for Effective Adhoc Search",
+   "venue": "arXiv.org",
+   "year": 2023,
+   "citationCount": 47,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2308.00415",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2308.00415, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2144550968",
+     "name": "Xiao Wang"
+    },
+    {
+     "authorId": "22214396",
+     "name": "Sean MacAvaney"
+    },
+    {
+     "authorId": "145434248",
+     "name": "C. Macdonald"
+    },
+    {
+     "authorId": "1698205",
+     "name": "I. Ounis"
+    }
+   ],
+   "abstract": "Performing automatic reformulations of a user's query is a popular paradigm used in information retrieval (IR) for improving effectiveness -- as exemplified by the pseudo-relevance feedback approaches, which expand the query in order to alleviate the vocabulary mismatch problem. Recent advancements in generative language models have demonstrated their ability in generating responses that are relevant to a given prompt. In light of this success, we seek to study the capacity of such models to perform query reformulation and how they compare with long-standing query reformulation methods that use pseudo-relevance feedback. In particular, we investigate two representative query reformulation frameworks, GenQR and GenPRF. GenQR directly reformulates the user's input query, while GenPRF provides additional context for the query by making use of pseudo-relevance feedback information. For each reformulation method, we leverage different techniques, including fine-tuning and direct prompting, to harness the knowledge of language models. The reformulated queries produced by the generative models are demonstrated to markedly benefit the effectiveness of a state-of-the-art retrieval pipeline on four TREC test collections (varying from TREC 2004 Robust to the TREC 2019 Deep Learning). Furthermore, our results indicate that our studied generative models can outperform various statistical query expansion approaches while remaining comparable to other existing complex neural query reformulation models, with the added benefit of being simpler to implement."
+  },
+  {
+   "paperId": "7b2e78d4e7986914ae633fa6b30e73bad8a2b2c1",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2301-03266",
+    "ArXiv": "2301.03266",
+    "DOI": "10.48550/arXiv.2301.03266",
+    "CorpusId": 255545874
+   },
+   "title": "Doc2Query-: When Less is More",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2023,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2301.03266",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2301.03266, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2559750073",
+     "name": "Mitko Gospodinov"
+    },
+    {
+     "authorId": "22214396",
+     "name": "Sean MacAvaney"
+    },
+    {
+     "authorId": "145434248",
+     "name": "C. Macdonald"
+    }
+   ],
+   "abstract": "Doc2Query -- the process of expanding the content of a document before indexing using a sequence-to-sequence model -- has emerged as a prominent technique for improving the first-stage retrieval effectiveness of search engines. However, sequence-to-sequence models are known to be prone to\"hallucinating\"content that is not present in the source text. We argue that Doc2Query is indeed prone to hallucination, which ultimately harms retrieval effectiveness and inflates the index size. In this work, we explore techniques for filtering out these harmful queries prior to indexing. We find that using a relevance model to remove poor-quality queries can improve the retrieval effectiveness of Doc2Query by up to 16%, while simultaneously reducing mean query execution time by 23% and cutting the index size by 33%. We release the code, data, and a live demonstration to facilitate reproduction and further exploration at https://github.com/terrierteam/pyterrier_doc2query."
+  },
+  {
+   "paperId": "3d230e91ea112f43c40be29eb0b5207b8f32f8a6",
+   "externalIds": {
+    "PubMedCentral": "9364863",
+    "DBLP": "journals/tjs/KumarS23",
+    "DOI": "10.1007/s11227-022-04708-9",
+    "CorpusId": 251493460,
+    "PubMed": "35967462"
+   },
+   "title": "Hybrid optimization and ontology-based semantic model for efficient text-based information retrieval",
+   "venue": "Journal of Supercomputing",
+   "year": 2022,
+   "citationCount": 44,
+   "openAccessPdf": {
+    "url": "https://link.springer.com/content/pdf/10.1007/s11227-022-04708-9.pdf",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC9364863, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2157593285",
+     "name": "Ram Kumar"
+    },
+    {
+     "authorId": "2206611815",
+     "name": "S. Sharma"
+    }
+   ],
+   "abstract": "Query expansion is an important approach utilized to improve the efficiency of data retrieval tasks. Numerous works are carried out by the researchers to generate fair constructive results; however, they do not provide acceptable results for all kinds of queries particularly phrase and individual queries. The utilization of identical data sources and weighting strategies for expanding such terms are the major cause of this issue which leads the model unable to capture the comprehensive relationship between the query terms. In order to tackle this issue, we developed a novel approach for query expansion technique to analyze the different data sources namely WordNet, Wikipedia, and Text REtrieval Conference. This paper presents an Improved Aquila Optimization-based COOT(IAOCOOT) algorithm for query expansion which retrieves the semantic aspects that match the query term. The semantic heterogeneity associated with document retrieval mainly impacts the relevance matching between the query and the document. The main cause of this issue is that the similarity among the words is not evaluated correctly. To overcome this problem, we are using a Modified Needleman Wunsch algorithm algorithm to deal with the problems of uncertainty, imprecision in the information retrieval process, and semantic ambiguity of indexed terms in both the local and global perspectives. The k most similar word is determined and returned from a candidate set through the top-k words selection technique and it is widely utilized in different tasks. The proposed IAOCOOT model is evaluated using different standard Information Retrieval performance metrics to compute the validity of the proposed work by comparing it with other state-of-art techniques."
+  },
+  {
+   "paperId": "318a3f40e6384729e371d046a4738cea72d7075d",
+   "externalIds": {
+    "MAG": "2999480335",
+    "DBLP": "conf/sp/SchusterSMS20",
+    "ArXiv": "2001.04935",
+    "DOI": "10.1109/SP40000.2020.00115",
+    "CorpusId": 210180638
+   },
+   "title": "Humpty Dumpty: Controlling Word Meanings via Corpus Poisoning",
+   "venue": "IEEE Symposium on Security and Privacy",
+   "year": 2020,
+   "citationCount": 44,
+   "openAccessPdf": {
+    "url": "https://ieeexplore.ieee.org/ielx7/9144328/9152199/09152608.pdf",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2001.04935, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "39347554",
+     "name": "R. Schuster"
+    },
+    {
+     "authorId": "32303439",
+     "name": "Tal Schuster"
+    },
+    {
+     "authorId": "1485489323",
+     "name": "Yoav Meri"
+    },
+    {
+     "authorId": "1723945",
+     "name": "V. Shmatikov"
+    }
+   ],
+   "abstract": "Word embeddings, i.e., low-dimensional vector representations such as GloVe and SGNS, encode word \"meaning\" in the sense that distances between words’ vectors correspond to their semantic proximity. This enables transfer learning of semantics for a variety of natural language processing tasks.Word embeddings are typically trained on large public corpora such as Wikipedia or Twitter. We demonstrate that an attacker who can modify the corpus on which the embedding is trained can control the \"meaning\" of new and existing words by changing their locations in the embedding space. We develop an explicit expression over corpus features that serves as a proxy for distance between words and establish a causative relationship between its values and embedding distances. We then show how to use this relationship for two adversarial objectives: (1) make a word a top-ranked neighbor of another word, and (2) move a word from one semantic cluster to another.An attack on the embedding can affect diverse downstream tasks, demonstrating for the first time the power of data poisoning in transfer learning scenarios. We use this attack to manipulate query expansion in information retrieval systems such as resume search, make certain names more or less visible to named entity recognition models, and cause new words to be translated to a particular target word regardless of the language. Finally, we show how the attacker can generate linguistically likely corpus modifications, thus fooling defenses that attempt to filter implausible sentences from the corpus using a language model."
+  },
+  {
+   "paperId": "056e4171d92f99a3776342da58c0a194405f17f7",
+   "externalIds": {
+    "DBLP": "conf/cikm/WangCTKHLH0LWWH25",
+    "ArXiv": "2504.14493",
+    "DOI": "10.1145/3746252.3761587",
+    "CorpusId": 277955764
+   },
+   "title": "FinSage: A Multi-aspect RAG System for Financial Filings Question Answering",
+   "venue": "International Conference on Information and Knowledge Management",
+   "year": 2025,
+   "citationCount": 44,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3746252.3761587",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.14493, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2358002377",
+     "name": "Xin-Yu Wang"
+    },
+    {
+     "authorId": "2356547903",
+     "name": "Ji-Jun Chi"
+    },
+    {
+     "authorId": "2356551584",
+     "name": "Zheng-Han Tai"
+    },
+    {
+     "authorId": "2329101870",
+     "name": "Tung Sum Thomas Kwok"
+    },
+    {
+     "authorId": "2356574495",
+     "name": "Hai-Lin He"
+    },
+    {
+     "authorId": "2327036689",
+     "name": "Zhuhong Li"
+    },
+    {
+     "authorId": "2356553413",
+     "name": "Yu-Chen Hua"
+    },
+    {
+     "authorId": "2195354990",
+     "name": "Muzhi Li"
+    },
+    {
+     "authorId": "2356815993",
+     "name": "Peng Lu"
+    },
+    {
+     "authorId": "2356790166",
+     "name": "Suyuchen Wang"
+    },
+    {
+     "authorId": "2356633678",
+     "name": "Yi-Hong Wu"
+    },
+    {
+     "authorId": "2394369280",
+     "name": "Huang Jerry"
+    },
+    {
+     "authorId": "2358587074",
+     "name": "Jing-Rui Tian"
+    },
+    {
+     "authorId": "2007643794",
+     "name": "Fengran Mo"
+    },
+    {
+     "authorId": "2353084503",
+     "name": "Yu-Fei Cui"
+    },
+    {
+     "authorId": "2320772460",
+     "name": "Ling Zhou"
+    }
+   ],
+   "abstract": "Leveraging large language models in real-world settings often entails a need to utilize domain-specific data and tools in order to follow the complex regulations that need to be followed for acceptable use. Within financial sectors, modern enterprises increasingly rely on Retrieval-Augmented Generation (RAG) systems to address complex information retrieval in financial document workflows. However, existing solutions struggle to account for the inherent heterogeneity of data (e.g., text, tables, diagrams) and evolving complexity in financial filings, leading to compromised accuracy in critical information extraction. We propose the FinSage framework as a solution, utilizing a multi-aspect RAG framework tailored for data retrieval and summarization in multi-modal financial documents. øurmodel introduces three innovative components: (1) a multi-modal pre-processing pipeline that unifies diverse data formats and generates chunk-level metadata summaries, (2) a multi-path sparse-dense retrieval system augmented with query expansion (HyDE) and metadata-aware semantic search, and (3) a domain-specialized re-ranking module fine-tuned via Direct Preference Optimization to prioritize ground-truth-related content. Extensive experiments demonstrate that FinSage achieves an impressive recall of 92.51% on 75 expert-curated questions derived from surpasses the best baseline method on the FinanceBench question answering datasets by 24.06% in accuracy. Moreover, FinSage has been successfully deployed as financial question-answering system in online meetings, where it has already served more than 1,200 people. The implementation is publicly available at https://github.com/simplew4y/finsage."
+  },
+  {
+   "paperId": "337c8e9a3bfcd409b46291edfcfb54f2473a835b",
+   "externalIds": {
+    "ArXiv": "2410.13765",
+    "DBLP": "journals/corr/abs-2410-13765",
+    "DOI": "10.48550/arXiv.2410.13765",
+    "CorpusId": 273404056
+   },
+   "title": "Knowledge-Aware Query Expansion with Large Language Models for Textual and Relational Retrieval",
+   "venue": "North American Chapter of the Association for Computational Linguistics",
+   "year": 2024,
+   "citationCount": 43,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2410.13765, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2282516443",
+     "name": "Yu Xia"
+    },
+    {
+     "authorId": "2298465529",
+     "name": "Jun-Da Wu"
+    },
+    {
+     "authorId": "2299908109",
+     "name": "Sungchul Kim"
+    },
+    {
+     "authorId": "2323007520",
+     "name": "Tong Yu"
+    },
+    {
+     "authorId": "2066337266",
+     "name": "Ryan A. Rossi"
+    },
+    {
+     "authorId": "2309677756",
+     "name": "Hao-Liang Wang"
+    },
+    {
+     "authorId": "2284680226",
+     "name": "Julian J. McAuley"
+    }
+   ],
+   "abstract": "Large language models (LLMs) have been used to generate query expansions augmenting original queries for improving information search. Recent studies also explore providing LLMs with initial retrieval results to generate query expansions more grounded to document corpus. However, these methods mostly focus on enhancing textual similarities between search queries and target documents, overlooking document relations. For queries like\"Find me a highly rated camera for wildlife photography compatible with my Nikon F-Mount lenses\", existing methods may generate expansions that are semantically similar but structurally unrelated to user intents. To handle such semi-structured queries with both textual and relational requirements, in this paper we propose a knowledge-aware query expansion framework, augmenting LLMs with structured document relations from knowledge graph (KG). To further address the limitation of entity-based scoring in existing KG-based methods, we leverage document texts as rich KG node representations and use document-based relation filtering for our Knowledge-Aware Retrieval (KAR). Extensive experiments on three datasets of diverse domains show the advantages of our method compared against state-of-the-art baselines on textual and relational semi-structured retrieval."
+  },
+  {
+   "paperId": "1c68eefcceb042fb79712aed347370d6ce7190c1",
+   "externalIds": {
+    "DBLP": "conf/sigir/MalliaMST22",
+    "ArXiv": "2204.11314",
+    "DOI": "10.1145/3477495.3531774",
+    "CorpusId": 248376951
+   },
+   "title": "Faster Learned Sparse Retrieval with Guided Traversal",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2022,
+   "citationCount": 43,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2204.11314",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2204.11314, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "39662889",
+     "name": "Antonio Mallia"
+    },
+    {
+     "authorId": "47470313",
+     "name": "J. Mackenzie"
+    },
+    {
+     "authorId": "1691664",
+     "name": "Torsten Suel"
+    },
+    {
+     "authorId": "2783910",
+     "name": "N. Tonellotto"
+    }
+   ],
+   "abstract": "Neural information retrieval architectures based on transformers such as BERT are able to significantly improve system effectiveness over traditional sparse models such as BM25. Though highly effective, these neural approaches are very expensive to run, making them difficult to deploy under strict latency constraints. To address this limitation, recent studies have proposed new families of learned sparse models that try to match the effectiveness of learned dense models, while leveraging the traditional inverted index data structure for efficiency. Current learned sparse models learn the weights of terms in documents and, sometimes, queries; however, they exploit different vocabulary structures, document expansion techniques, and query expansion strategies, which can make them slower than traditional sparse models such as BM25. In this work, we propose a novel indexing and query processing technique that exploits a traditional sparse model's \"guidance\" to efficiently traverse the index, allowing the more effective learned model to execute fewer scoring operations. Our experiments show that our guided processing heuristic is able to boost the efficiency of the underlying learned sparse model by a factor of four without any measurable loss of effectiveness."
+  },
+  {
+   "paperId": "a88e8fa5729900e3006a9c88a61515d7d705c75f",
+   "externalIds": {
+    "MAG": "3045384077",
+    "DBLP": "conf/sigir/Yang20",
+    "DOI": "10.1145/3397271.3401458",
+    "CorpusId": 220730157
+   },
+   "title": "Biomedical Information Retrieval incorporating Knowledge Graph for Explainable Precision Medicine",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2020,
+   "citationCount": 42,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3397271.3401458?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3397271.3401458, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "52171824",
+     "name": "Zuoxi Yang"
+    }
+   ],
+   "abstract": "As for many complex diseases, there is no \"one size fits all\" solutions for patients with a particular diagnosis in practice, which should be treated depends on patient's genetic, environmental, lifestyle choices and so on. Precision medicine can provide personalized treatment for a particular patient that has been drawn more and more attention. There are a large number of treatment options, which is overwhelming for clinicians to make best treatment for a particular patient. One of the effective ways to alleviate this problem is biomedical information retrieval system, which can automatically find out relevant information and proper treatment from mass of alternative treatments and cases. However, in the biomedical literature and clinical trials, there is a larger number of synonymous, polysemous and context terms, causing the semantic gap between query and document in traditional biomedical information retrieval systems. Recently, deep learning-based biomedical information retrieval systems have been adopted to address this problem, which has the potential improvements in the performance of BMIR. With these approaches, the semantic information of query and document would be encoded as low-dimensional feature vectors. Although most existing deep learning-based biomedical information retrieval systems can perform strong accuracy, they are usually treated as a black-box model that lack the explainability. It would be difficult for clinicians to understand their ranked results, which make them doubt the effectiveness of these systems. Reasonable explanations are profitable for clinicians to make better decisions via appropriate treatment logic inference, thus further enhancing the transparency, fairness and trust of biomedical information retrieval systems. Furthermore, knowledge graph has drawn more and more attention which contains abundant real-world facts and entities. It is an effective way to provide accuracy and explainability for deep learning model and reduce the knowledge gap between experts and publics. However, it is usually simply employed as a query expansion strategy simply into biomedical information retrieval systems. It remains an open question how to extend explainable biomedical information retrieval systems to knowledge graph. Given the above, to alleviate the tradeoff between accuracy and explainability of the precision medicine, we propose to research on Biomedical Information Retrieval incorporating Knowledge Graph for Explainable Precision Medicine. In this work, we propose a neural-based biomedical information retrieval model to address the semantic gap problem and fully investigate the utility of KG for the explainable biomedical information retrieval systems. which can soft-matches the query and document with semantic information instead of ranking the model by exact matches. On the one hand, our model encodes semantic feature information of documents by using convolutional neural networks, which perform strong ability to model text information in recent years. And the relevance between query and document would be measured via soft-matches rather than exact matches. On the other hand, the explainability is endowed to biomedical information retrieval model by extending the utility of knowledge graph. A graph-based strategy would be designed to achieve this goal by building knowledge-aware paths with the help of attention scores. Specifically, graph attention networks (GAT) would be adopted to model the query's representation by summarizing high-order connectivity from graph structure. With the help of GAT-level attention, the weight scores are automatically assigned to build knowledge-aware propagation connectivity which can be regarded as evidence for the further explainable biomedical information retrieval systems. Finally, the proposed system would be evaluated by the datasets from TREC Precision Medicine."
+  },
+  {
+   "paperId": "a58fe54e13c625b353f86ffca4db4a70b190260a",
+   "externalIds": {
+    "MAG": "3049204076",
+    "DBLP": "journals/tse/ZhangHXZLX22",
+    "DOI": "10.1109/tse.2020.3016006",
+    "CorpusId": 225493238
+   },
+   "title": "Chatbot4QR: Interactive Query Refinement for Technical Question Retrieval",
+   "venue": "IEEE Transactions on Software Engineering",
+   "year": 2020,
+   "citationCount": 42,
+   "openAccessPdf": {
+    "url": "https://ink.library.smu.edu.sg/sis_research/5926",
+    "status": "GREEN",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/tse.2020.3016006?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/tse.2020.3016006, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "143677042",
+     "name": "Neng Zhang"
+    },
+    {
+     "authorId": "2111287178",
+     "name": "Qiao Huang"
+    },
+    {
+     "authorId": "144558659",
+     "name": "Xin Xia"
+    },
+    {
+     "authorId": "145930277",
+     "name": "Ying Zou"
+    },
+    {
+     "authorId": "143960553",
+     "name": "D. Lo"
+    },
+    {
+     "authorId": "3138980",
+     "name": "Zhen-Chang Xing"
+    }
+   ],
+   "abstract": "Technical Q&A sites (e.g., Stack Overflow (SO)) are important resources for developers to search for knowledge about technical problems. Search engines provided in Q&A sites and information retrieval approaches (e.g., word embedding-based) have limited capabilities to retrieve relevant questions when queries are imprecisely specified, such as missing important technical details (e.g., the user’s preferred programming languages). Although many automatic query expansion approaches have been proposed to improve the quality of queries by expanding queries with relevant terms, the information missed in a query is not identified. Moreover, without user involvement, the existing query expansion approaches may introduce unexpected terms and lead to undesired results. In this paper, we propose an interactive query refinement approach for question retrieval, named <italic>Chatbot4QR</italic>, which can assist users in recognizing and clarifying technical details missed in queries and thus retrieve more relevant questions for users. Chatbot4QR automatically detects missing technical details in a query and generates several clarification questions (CQs) to interact with the user to capture their overlooked technical details. To ensure the accuracy of CQs, we design a heuristic-based approach for CQ generation after building two kinds of technical knowledge bases: a manually categorized result of 1,841 technical tags in SO and the multiple version-frequency information of the tags. We develop a Chatbot4QR prototype that uses 1.88 million SO questions as the repository for question retrieval. To evaluate Chatbot4QR, we conduct six user studies with 25 participants on 50 experimental queries. The results are as follows. (1) On average 60.8 percent of the CQs generated for a query are useful for helping the participants recognize missing technical details. (2) Chatbot4QR can rapidly respond to the participants after receiving a query within approximately 1.3 seconds. (3) The refined queries contribute to retrieving more relevant SO questions than nine baseline approaches. For more than 70 percent of the participants who have preferred techniques on the query tasks, Chatbot4QR significantly outperforms the state-of-the-art word embedding-based retrieval approach with an improvement of at least 54.6 percent in terms of two measurements: Pre<inline-formula><tex-math notation=\"LaTeX\">$@$</tex-math><alternatives><mml:math><mml:mo>@</mml:mo></mml:math><inline-graphic xlink:href=\"xia-ieq1-3016006.gif\"/></alternatives></inline-formula>k and NDCG<inline-formula><tex-math notation=\"LaTeX\">$@$</tex-math><alternatives><mml:math><mml:mo>@</mml:mo></mml:math><inline-graphic xlink:href=\"xia-ieq2-3016006.gif\"/></alternatives></inline-formula>k. (4) For 48-88 percent of the assigned query tasks, the participants obtain more desired results after interacting with Chatbot4QR than directly searching from Web search engines (e.g., the SO search engine and Google) using the original queries."
+  },
+  {
+   "paperId": "18428451b951846c6a46a46b7b5229e9b0c641e0",
+   "externalIds": {
+    "ArXiv": "2311.10605",
+    "DBLP": "journals/corr/abs-2311-10605",
+    "DOI": "10.1109/CVPR52733.2024.01660",
+    "CorpusId": 265281559
+   },
+   "title": "CA-Jaccard: Camera-aware Jaccard Distance for Person Re-identification",
+   "venue": "Computer Vision and Pattern Recognition",
+   "year": 2023,
+   "citationCount": 41,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2311.10605",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2311.10605, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2479479924",
+     "name": "Yi-Yu Chen"
+    },
+    {
+     "authorId": "2260298176",
+     "name": "Zhe-Yi Fan"
+    },
+    {
+     "authorId": "2267386179",
+     "name": "Zhaoru Chen"
+    },
+    {
+     "authorId": "2260289216",
+     "name": "Yi-Xuan Zhu"
+    }
+   ],
+   "abstract": "Person re-identification (re-ID) is a challenging task that aims to learn discriminative features for person retrieval. In person re-ID, Jaccard distance is a widely used distance metric, especially in re-ranking and clustering sce-narios. However, we discover that camera variation has a significant negative impact on the reliability of Jaccard distance. In particular, Jaccard distance calculates the distance based on the overlap of relevant neighbors. Due to camera variation, intra-camera samples dominate the rele-vant neighbors, which reduces the reliability of the neigh-bors by introducing intra-camera negative samples and ex-cluding inter-camera positive samples. To overcome this problem, we propose a novel camera-aware Jaccard (CA-Jaccard) distance that leverages camera information to en-hance the reliability of Jaccard distance. Specifically, we design camera-aware k-reciprocal nearest neighbors (CK-RNNs) to find k-reciprocal nearest neighbors on the intra-camera and inter-camera ranking lists, which improves the reliability of relevant neighbors and guarantees the con-tribution of inter-camera samples in the overlap. More-over, we propose a camera-aware local query expansion (CLQE) to mine reliable samples in relevant neighbors by exploiting camera variation as a strong constraint and as-sign these samples higher weights in overlap, further im-proving the reliability. Our CA-Jaccard distance is simple yet effective and can serve as a general distance metric for person re-ID methods with high reliability and low computational cost. Extensive experiments demonstrate the ef-fectiveness of our method. Code is available at https://github.com/chen960/CA-Jaccard/."
+  },
+  {
+   "paperId": "90846faec1fc8096fdf6d3c2a8d9106997a1ca3d",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2402-17535",
+    "ArXiv": "2402.17535",
+    "DOI": "10.48550/arXiv.2402.17535",
+    "CorpusId": 267308609
+   },
+   "title": "Multimodal Learned Sparse Retrieval with Probabilistic Expansion Control",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2024,
+   "citationCount": 38,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2402.17535, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2281707946",
+     "name": "Thong Nguyen"
+    },
+    {
+     "authorId": "2037817645",
+     "name": "Mariya Hendriksen"
+    },
+    {
+     "authorId": "2239354691",
+     "name": "Andrew Yates"
+    },
+    {
+     "authorId": "121213569",
+     "name": "M. de Rijke"
+    }
+   ],
+   "abstract": "Learned sparse retrieval (LSR) is a family of neural methods that encode queries and documents into sparse lexical vectors that can be indexed and retrieved efficiently with an inverted index. We explore the application of LSR to the multi-modal domain, with a focus on text-image retrieval. While LSR has seen success in text retrieval, its application in multimodal retrieval remains underexplored. Current approaches like LexLIP and STAIR require complex multi-step training on massive datasets. Our proposed approach efficiently transforms dense vectors from a frozen dense model into sparse lexical vectors. We address issues of high dimension co-activation and semantic deviation through a new training algorithm, using Bernoulli random variables to control query expansion. Experiments with two dense models (BLIP, ALBEF) and two datasets (MSCOCO, Flickr30k) show that our proposed algorithm effectively reduces co-activation and semantic deviation. Our best-performing sparsified model outperforms state-of-the-art text-image LSR models with a shorter training time and lower GPU memory requirements. Our approach offers an effective solution for training LSR retrieval models in multimodal settings. Our code and model checkpoints are available at github.com/thongnt99/lsr-multimodal"
+  },
+  {
+   "paperId": "576bf2c6b3ec95b6a0488ee4c64d5e6e90d8cf83",
+   "externalIds": {
+    "MAG": "3034717099",
+    "DBLP": "journals/scientometrics/Greiner-PetterY20",
+    "DOI": "10.1007/s11192-020-03502-9",
+    "CorpusId": 219543139
+   },
+   "title": "Math-word embedding in math search and semantic extraction",
+   "venue": "Scientometrics",
+   "year": 2020,
+   "citationCount": 38,
+   "openAccessPdf": {
+    "url": "https://link.springer.com/content/pdf/10.1007/s11192-020-03502-9.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s11192-020-03502-9?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s11192-020-03502-9, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1404061550",
+     "name": "André Greiner-Petter"
+    },
+    {
+     "authorId": "145555732",
+     "name": "Abdou Youssef"
+    },
+    {
+     "authorId": "8837621",
+     "name": "Terry Ruas"
+    },
+    {
+     "authorId": "145190803",
+     "name": "B. Miller"
+    },
+    {
+     "authorId": "3021925",
+     "name": "Moritz Schubotz"
+    },
+    {
+     "authorId": "1705519",
+     "name": "Akiko Aizawa"
+    },
+    {
+     "authorId": "145151838",
+     "name": "Bela Gipp"
+    }
+   ],
+   "abstract": "Word embedding, which represents individual words with semantically fixed-length vectors, has made it possible to successfully apply deep learning to natural language processing tasks such as semantic role-modeling, question answering, and machine translation. As math text consists of natural text, as well as math expressions that similarly exhibit linear correlation and contextual characteristics, word embedding techniques can also be applied to math documents. However, while mathematics is a precise and accurate science, it is usually expressed through imprecise and less accurate descriptions, contributing to the relative dearth of machine learning applications for information retrieval in this domain. Generally, mathematical documents communicate their knowledge with an ambiguous, context-dependent, and non-formal language. Given recent advances in word embedding, it is worthwhile to explore their use and effectiveness in math information retrieval tasks, such as math language processing and semantic knowledge extraction. In this paper, we explore math embedding by testing it on several different scenarios, namely, (1) math-term similarity, (2) analogy, (3) numerical concept-modeling based on the centroid of the keywords that characterize a concept, (4) math search using query expansions, and (5) semantic extraction, i.e., extracting descriptive phrases for math expressions. Due to the lack of benchmarks, our investigations were performed using the arXiv collection of STEM documents and carefully selected illustrations on the Digital Library of Mathematical Functions (DLMF: NIST digital library of mathematical functions. Release 1.0.20 of 2018-09-1, 2018). Our results show that math embedding holds much promise for similarity, analogy, and search tasks. However, we also observed the need for more robust math embedding approaches. Moreover, we explore and discuss fundamental issues that we believe thwart the progress in mathematical information retrieval in the direction of machine learning."
+  },
+  {
+   "paperId": "51094c373cb4a52acc463d7b8a61e9b0076c057b",
+   "externalIds": {
+    "DBLP": "conf/acl/ChuangF0YG23",
+    "ArXiv": "2305.17080",
+    "DOI": "10.48550/arXiv.2305.17080",
+    "CorpusId": 258947132
+   },
+   "title": "Expand, Rerank, and Retrieve: Query Reranking for Open-Domain Question Answering",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2023,
+   "citationCount": 38,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2305.17080",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2305.17080, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2475831",
+     "name": "Yung-Sung Chuang"
+    },
+    {
+     "authorId": "2117161925",
+     "name": "Wei Fang"
+    },
+    {
+     "authorId": "2530311",
+     "name": "Shang-Wen Li"
+    },
+    {
+     "authorId": "2072801764",
+     "name": "Wen-Tau Yih"
+    },
+    {
+     "authorId": "145898106",
+     "name": "James R. Glass"
+    }
+   ],
+   "abstract": "We propose EAR, a query Expansion And Reranking approach for improving passage retrieval, with the application to open-domain question answering. EAR first applies a query expansion model to generate a diverse set of queries, and then uses a query reranker to select the ones that could lead to better retrieval results. Motivated by the observation that the best query expansion often is not picked by greedy decoding, EAR trains its reranker to predict the rank orders of the gold passages when issuing the expanded queries to a given retriever. By connecting better the query expansion model and retriever, EAR significantly enhances a traditional sparse retrieval method, BM25. Empirically, EAR improves top-5/20 accuracy by 3-8 and 5-10 points in in-domain and out-of-domain settings, respectively, when compared to a vanilla query expansion model, GAR, and a dense retrieval model, DPR."
+  },
+  {
+   "paperId": "ea2b9c7a0fdb086c90551826fb4172fc86e5be0f",
+   "externalIds": {
+    "DBLP": "conf/acl/ChenCHW024",
+    "DOI": "10.18653/v1/2024.findings-acl.708",
+    "CorpusId": 271884400
+   },
+   "title": "Analyze, Generate and Refine: Query Expansion with LLMs for Zero-Shot Open-Domain QA",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2024,
+   "citationCount": 36,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2024.findings-acl.708.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.18653/v1/2024.findings-acl.708?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.18653/v1/2024.findings-acl.708, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2316236555",
+     "name": "Xin-Ran Chen"
+    },
+    {
+     "authorId": "49794910",
+     "name": "Xuanang Chen"
+    },
+    {
+     "authorId": "2046814249",
+     "name": "Ben He"
+    },
+    {
+     "authorId": "2316238078",
+     "name": "Tengfei Wen"
+    },
+    {
+     "authorId": "2257356296",
+     "name": "Le Sun"
+    }
+   ],
+   "abstract": "Query expansion (QE) is a critical component in the open-domain question answering (OpenQA) pipeline, enhancing the retrieval performance by broadening the scope of queries with additional relevant texts. However, existing methods like G AR and E AR rely heavily on supervised training and often struggle to maintain effectiveness across domains and datasets. Meanwhile, although large language models (LLMs) have demonstrated QE capability for information retrieval (IR) tasks, their application in OpenQA is hindered by the inadequate analysis of query’s informational needs and the lack of quality control for generated QEs, failing to meet the unique requirements of OpenQA. To bridge this gap, we pro-pose a novel LLM-based QE approach named A GR for the OpenQA task, leveraging a three-step prompting strategy. A GR begins with an analysis of the query, followed by the generation of answer-oriented expansions, and culminates with a refinement process for better query formulation. Extensive experiments on four OpenQA datasets reveal that A GR not only ri-vals in-domain supervised methods in retrieval accuracy, but also outperforms state-of-the-art baselines in out-of-domain zero-shot scenarios. Moreover, it exhibits enhanced performance in end-to-end QA evaluations, underscoring the superiority of A GR for OpenQA. 1"
+  },
+  {
+   "paperId": "e624c45683e313718b46c51539927a4e47b13153",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2402-18031",
+    "ACL": "2024.eacl-short.34",
+    "ArXiv": "2402.18031",
+    "DOI": "10.48550/arXiv.2402.18031",
+    "CorpusId": 268041808
+   },
+   "title": "Corpus-Steered Query Expansion with Large Language Models",
+   "venue": "Conference of the European Chapter of the Association for Computational Linguistics",
+   "year": 2024,
+   "citationCount": 36,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2402.18031, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2166060981",
+     "name": "Yi-Bin Lei"
+    },
+    {
+     "authorId": "2288044458",
+     "name": "Yu Cao"
+    },
+    {
+     "authorId": "2289635484",
+     "name": "Tian-Yi Zhou"
+    },
+    {
+     "authorId": "2279548827",
+     "name": "Tao Shen"
+    },
+    {
+     "authorId": "2287929110",
+     "name": "Andrew Yates"
+    }
+   ],
+   "abstract": "Recent studies demonstrate that query expansions generated by large language models (LLMs) can considerably enhance information retrieval systems by generating hypothetical documents that answer the queries as expansions. However, challenges arise from misalignments between the expansions and the retrieval corpus, resulting in issues like hallucinations and outdated information due to the limited intrinsic knowledge of LLMs. Inspired by Pseudo Relevance Feedback (PRF), we introduce Corpus-Steered Query Expansion (CSQE) to promote the incorporation of knowledge embedded within the corpus. CSQE utilizes the relevance assessing capability of LLMs to systematically identify pivotal sentences in the initially-retrieved documents. These corpus-originated texts are subsequently used to expand the query together with LLM-knowledge empowered expansions, improving the relevance prediction between the query and the target documents. Extensive experiments reveal that CSQE exhibits strong performance without necessitating any training, especially with queries for which LLMs lack knowledge."
+  },
+  {
+   "paperId": "37eaf240516ba43bd16a3c6e5532e0291b2e8325",
+   "externalIds": {
+    "MAG": "3198734960",
+    "DBLP": "journals/tois/CulpepperFFK22",
+    "DOI": "10.1145/3470563",
+    "CorpusId": 239660926
+   },
+   "title": "Topic Difficulty: Collection and Query Formulation Effects",
+   "venue": "ACM Trans. Inf. Syst.",
+   "year": 2021,
+   "citationCount": 36,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3470563?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3470563, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "144159418",
+     "name": "J. Culpepper"
+    },
+    {
+     "authorId": "80808662",
+     "name": "Guglielmo Faggioli"
+    },
+    {
+     "authorId": "2046170685",
+     "name": "N. Ferro"
+    },
+    {
+     "authorId": "1779654",
+     "name": "O. Kurland"
+    }
+   ],
+   "abstract": "Several recent studies have explored the interaction effects between topics, systems, corpora, and components when measuring retrieval effectiveness. However, all of these previous studies assume that a topic or information need is represented by a single query. In reality, users routinely reformulate queries to satisfy an information need. In recent years, there has been renewed interest in the notion of “query variations” which are essentially multiple user formulations for an information need. Like many retrieval models, some queries are highly effective while others are not. This is often an artifact of the collection being searched which might be more or less sensitive to word choice. Users rarely have perfect knowledge about the underlying collection, and so finding queries that work is often a trial-and-error process. In this work, we explore the fundamental problem of system interaction effects between collections, ranking models, and queries. To answer this important question, we formalize the analysis using ANalysis Of VAriance (ANOVA) models to measure multiple components effects across collections and topics by nesting multiple query variations within each topic. Our findings show that query formulations have a comparable effect size of the topic factor itself, which is known to be the factor with the greatest effect size in prior ANOVA studies. Both topic and formulation have a substantially larger effect size than any other factor, including the ranking algorithms and, surprisingly, even query expansion. This finding reinforces the importance of further research in understanding the role of query rewriting in IR related tasks."
+  },
+  {
+   "paperId": "6b810cc2c6c151882e3be65777567740efe6cf05",
+   "externalIds": {
+    "DBLP": "conf/emnlp/ZhangWYN24",
+    "ArXiv": "2401.06311",
+    "DOI": "10.18653/v1/2024.findings-emnlp.103",
+    "CorpusId": 266977456
+   },
+   "title": "Exploring the Best Practices of Query Expansion with Large Language Models",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2024,
+   "citationCount": 35,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2024.findings-emnlp.103.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2401.06311, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2279401048",
+     "name": "Le Zhang"
+    },
+    {
+     "authorId": "2261148799",
+     "name": "Yihong Wu"
+    },
+    {
+     "authorId": "2309219030",
+     "name": "Qian Yang"
+    },
+    {
+     "authorId": "2261086903",
+     "name": "Jian-Yun Nie"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) are foundational in language technologies, particularly in information retrieval (IR). Previous studies have utilized LLMs for query expansion, achieving notable improvements in IR. In this paper, we thoroughly explore the best practice of leveraging LLMs for query expansion. To this end, we introduce a training-free, straightforward yet effective framework called Multi-Text Generation Integration (\\textsc{MuGI}). It leverages LLMs to generate multiple pseudo-references, integrating them with queries to enhance both sparse and dense retrievers. Our empirical findings reveal that: (1) Increasing the number of samples from LLMs benefits IR systems; (2) A balance between the query and pseudo-documents, and an effective integration strategy, is critical for high performance; (3) Contextual information from LLMs is essential, even boost a 23M model to outperform a 7B baseline model; (4) Pseudo relevance feedback can further calibrate queries for improved performance; and (5) Query expansion is widely applicable and versatile, consistently enhancing models ranging from 23M to 7B parameters. Our code and all generated references are made available at \\url{https://github.com/lezhang7/Retrieval_MuGI}"
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(\"query expansion\" | \"document expansion\" | doc2query | HyDE | RM3) + (retrieval)"
+}

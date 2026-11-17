@@ -1,0 +1,1 @@
+(abs:"query expansion" OR abs:"document expansion" OR abs:doc2query OR abs:HyDE OR abs:RM3) AND (abs:retrieval) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:[201901010000 TO 202612312359]

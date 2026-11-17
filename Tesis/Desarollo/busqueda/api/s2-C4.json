@@ -1,0 +1,473 @@
+{
+ "total": 10,
+ "token": null,
+ "data": [
+  {
+   "paperId": "a78fbbe5d4ddeed2fb935295cbf80f3905ee98aa",
+   "externalIds": {
+    "ArXiv": "2504.19076",
+    "DBLP": "conf/ictir/DietzZBCC0HSC25",
+    "DOI": "10.1145/3731120.3744588",
+    "CorpusId": 280282275
+   },
+   "title": "Principles and Guidelines for the Use of LLM Judges",
+   "venue": "International Conference on the Theory of Information Retrieval",
+   "year": 2025,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2504.19076",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.19076, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2291573651",
+     "name": "Laura Dietz"
+    },
+    {
+     "authorId": "151163604",
+     "name": "Oleg Zendel"
+    },
+    {
+     "authorId": "144753756",
+     "name": "P. Bailey"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    },
+    {
+     "authorId": "48115818",
+     "name": "Ellese Cotterill"
+    },
+    {
+     "authorId": "2357974505",
+     "name": "Jeff Dalton"
+    },
+    {
+     "authorId": "1951737",
+     "name": "F. Hasibi"
+    },
+    {
+     "authorId": "144721996",
+     "name": "M. Sanderson"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    }
+   ],
+   "abstract": "Relevance judgments for information retrieval (IR) evaluation, once the domain of human assessors, are now often produced by Large Language Models (LLMs). While some studies report alignment between LLM and human judgments, claims that LLMs can replace human judges raise concerns about reliability, validity, and long-term impact. As IR systems increasingly rely on LLM-generated signals, evaluation risks becoming self-reinforcing, leading to potentially misleading conclusions. This paper examines scenarios where LLM evaluators may falsely indicate success, particularly when LLM-based judgments influence both system development and evaluation. We highlight key risks, including bias reinforcement, reproducibility challenges, and inconsistencies in assessment methodologies. To address these concerns, we propose tests to quantify adverse effects, guardrails, and a collaborative framework for constructing reusable test collections that integrate LLM judgments responsibly. By providing perspectives from academia and industry, this work aims to establish best practices for the principled use of LLMs in IR evaluation."
+  },
+  {
+   "paperId": "7b65f42190359ca69874d0ac5401ac836c8773af",
+   "externalIds": {
+    "DBLP": "conf/cikm/RahmaniRYC025",
+    "ArXiv": "2506.10301",
+    "DOI": "10.1145/3746252.3760908",
+    "CorpusId": 279318266
+   },
+   "title": "Towards Understanding Bias in Synthetic Data for Evaluation",
+   "venue": "International Conference on Information and Knowledge Management",
+   "year": 2025,
+   "citationCount": 22,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3746252.3760908",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.10301, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2301154394",
+     "name": "Hossein A. Rahmani"
+    },
+    {
+     "authorId": "2308273854",
+     "name": "Varsha Ramineni"
+    },
+    {
+     "authorId": "2261495702",
+     "name": "Emine Yilmaz"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "116506812",
+     "name": "Bhaskar Mitra"
+    }
+   ],
+   "abstract": "Test collections are crucial for evaluating Information Retrieval (IR) systems. Creating a diverse set of user queries for these collections can be challenging, and obtaining relevance judgments, which indicate how well retrieved documents match a query, is often costly and resource-intensive. Recently, generating synthetic datasets using Large Language Models (LLMs) has gained attention in various applications. While previous work has used LLMs to generate synthetic queries or documents to improve ranking models, using LLMs to create synthetic test collections is still relatively unexplored. Previous work showed that synthetic test collections have the potential to be used for system evaluation, however, more analysis is needed to validate this claim. In this paper, we thoroughly investigate the reliability of synthetic test collections constructed using LLMs, where LLMs are used to generate synthetic queries, labels, or both. In particular, we examine the potential biases that might occur when such test collections are used for evaluation. We first empirically show the presence of such bias in evaluation results and analyse the effects it might have on system evaluation. We further validate the presence of such bias using a linear mixed-effects model. Our analysis shows that while the effect of bias present in evaluation results obtained using synthetic test collections could be significant, for e.g. computing absolute system performance, its effect may not be as significant in comparing relative system performance. Codes and data are available at: https://github.com/rahmanidashti/BiasSyntheticData"
+  },
+  {
+   "paperId": "c7e24929d79b5590c333f2851d34cb2203bb7ea0",
+   "externalIds": {
+    "ArXiv": "2502.20937",
+    "DBLP": "conf/sigir/ParryFSSFZMY25",
+    "DOI": "10.1145/3726302.3730308",
+    "CorpusId": 276725179
+   },
+   "title": "Variations in Relevance Judgments and the Shelf Life of Test Collections",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 13,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730308",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2502.20937, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2290916922",
+     "name": "Andrew Parry"
+    },
+    {
+     "authorId": "1490763899",
+     "name": "Maik Fröbe"
+    },
+    {
+     "authorId": "8842143",
+     "name": "Harrisen Scells"
+    },
+    {
+     "authorId": "2187454636",
+     "name": "Ferdinand Schlatt"
+    },
+    {
+     "authorId": "80808662",
+     "name": "Guglielmo Faggioli"
+    },
+    {
+     "authorId": "1965932383",
+     "name": "S. Zerhoudi"
+    },
+    {
+     "authorId": "2290916915",
+     "name": "Sean MacAvaney"
+    },
+    {
+     "authorId": "153564640",
+     "name": "Eugene Yang"
+    }
+   ],
+   "abstract": "The fundamental property of Cranfield-style evaluations, that system rankings are stable even when assessors disagree on individual relevance decisions, was validated on traditional test collections. However, the paradigm shift towards neural retrieval models affected the characteristics of modern test collections, e.g., documents are short, judged with four grades of relevance, and information needs have no descriptions or narratives. Under these changes, it is unclear whether assessor disagreement remains negligible for system comparisons. We investigate this aspect under the additional condition that the few modern test collections are heavily re-used. Given more possible query interpretations due to less formalized information needs, an ''expiration date'' for test collections might be needed if top-effectiveness requires overfitting to a single interpretation of relevance. We run a reproducibility study and re-annotate the relevance judgments of the 2019~TREC Deep Learning track. We can reproduce prior work in the neural retrieval setting, showing that assessor disagreement does not affect system rankings. However, we observe that some models substantially degrade with our new relevance judgments, and some have already reached the effectiveness of humans as rankers, providing evidence that test collections can expire."
+  },
+  {
+   "paperId": "776338d041db312e9fa1c1bd9792ecf0546596fc",
+   "externalIds": {
+    "DBLP": "journals/ipm/RoiteroBSM20",
+    "MAG": "2990592470",
+    "DOI": "10.1016/j.ipm.2019.102149",
+    "CorpusId": 214373014
+   },
+   "title": "Effectiveness evaluation without human relevance judgments: A systematic analysis of existing methods and of their combinations",
+   "venue": "Information Processing & Management",
+   "year": 2020,
+   "citationCount": 12,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.ipm.2019.102149?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.ipm.2019.102149, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "3445334",
+     "name": "Kevin Roitero"
+    },
+    {
+     "authorId": "37833525",
+     "name": "A. Brunello"
+    },
+    {
+     "authorId": "2275344",
+     "name": "G. Serra"
+    },
+    {
+     "authorId": "1726978",
+     "name": "Stefano Mizzaro"
+    }
+   ],
+   "abstract": "Abstract In test collection based evaluation of retrieval effectiveness, it has been suggested to completely avoid using human relevance judgments. Although several methods have been proposed, their accuracy is still limited. In this paper we present two overall contributions. First, we provide a systematic comparison of all the most widely adopted previous approaches on a large set of 14 TREC collections. We aim at analyzing the methods in a homogeneous and complete way, in terms of the accuracy measures used as well as in terms of the datasets selected, showing that considerably different results may be achieved considering different methods, datasets, and measures. Second, we study the combination of such methods, which, to the best of our knowledge, has not been investigated so far. Our experimental results show that simple combination strategies based on data fusion techniques are usually not effective and even harmful. However, some more sophisticated solutions, based on machine learning, are indeed effective and often outperform all individual methods. Moreover, they are more stable, as they show a smaller variation across datasets. Our results have the practical implication that, when trying to automatically evaluate retrieval effectiveness, researchers should not use a single method, but a (machine-learning based) combination of them."
+  },
+  {
+   "paperId": "c220db91505f9ce9f5812a7c1efc609debd11422",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2501-02408",
+    "ArXiv": "2501.02408",
+    "DOI": "10.1145/3841465",
+    "CorpusId": 275337045
+   },
+   "title": "GenTREC: The First Test Collection Generated by Large Language Models for Evaluating Information Retrieval Systems",
+   "venue": "ACM Transactions on Information Systems",
+   "year": 2025,
+   "citationCount": 6,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3841465",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2501.02408, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2235689778",
+     "name": "Mehmet Deniz Türkmen"
+    },
+    {
+     "authorId": "38330039",
+     "name": "Mucahid Kutlu"
+    },
+    {
+     "authorId": "150931067",
+     "name": "Bahadir Altun"
+    },
+    {
+     "authorId": "2261402731",
+     "name": "Gökalp Cosgun"
+    }
+   ],
+   "abstract": "Building test collections for Information Retrieval evaluation has traditionally been a resource-intensive and time-consuming task due to reliance on manual relevance judgments. While various cost-effective strategies have been explored, the development of such collections remains a significant challenge. This article introduces GenTREC, the first test collection built entirely from documents generated by a Large Language Model (LLM), eliminating the need for manual relevance judgments. Assuming LLM-generated documents are inherently relevant to their prompts, we used TREC search topics to generate documents, considering a document relevant only to its generating prompt. To introduce realistic retrieval challenges, we also generated non-relevant documents, ensuring that IR systems are tested against a diverse and robust set of materials. The resulting GenTREC collection comprises 96,196 documents and 300 topics. We conducted extensive experiments to evaluate GenTREC in terms of document quality, relevance judgment accuracy, and evaluation reliability. Our results show that IR system rankings using GenTREC align with traditional TREC test collections for P@100, MAP, RPrec, and nDCG metrics. Our findings demonstrate that GenTREC offers a promising, low-cost alternative for IR evaluation, significantly reducing the burden of building and maintaining future IR evaluation resources."
+  },
+  {
+   "paperId": "f2326f9d1ab279b026f514485babf8d8cc38c9d3",
+   "externalIds": {
+    "DBLP": "journals/jdiq/BreuerFS24",
+    "ArXiv": "2310.07142",
+    "DOI": "10.1145/3623640",
+    "CorpusId": 262148478
+   },
+   "title": "Validating Synthetic Usage Data in Living Lab Environments",
+   "venue": "ACM Journal of Data and Information Quality",
+   "year": 2023,
+   "citationCount": 5,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2310.07142",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2310.07142, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1491609376",
+     "name": "Timo Breuer"
+    },
+    {
+     "authorId": "1703148",
+     "name": "N. Fuhr"
+    },
+    {
+     "authorId": "34588911",
+     "name": "Philipp Schaer"
+    }
+   ],
+   "abstract": "Evaluating retrieval performance without editorial relevance judgments is challenging, but instead, user interactions can be used as relevance signals. Living labs offer a way for small-scale platforms to validate information retrieval systems with real users. If enough user interaction data are available, then click models can be parameterized from historical sessions to evaluate systems before exposing users to experimental rankings. However, interaction data are sparse in living labs, and little is studied about how click models can be validated for reliable user simulations when click data are available in moderate amounts. This work introduces an evaluation approach for validating synthetic usage data generated by click models in data-sparse human-in-the-loop environments like living labs. We ground our methodology on the click model’s estimates about a system ranking compared to a reference ranking for which the relative performance is known. Our experiments compare different click models and their reliability and robustness as more session log data become available. In our setup, simple click models can reliably determine the relative system performance with already 20 logged sessions for 50 queries. In contrast, more complex click models require more session data for reliable estimates, but they are a better choice in simulated interleaving experiments when enough session data are available. While it is easier for click models to distinguish between more diverse systems, it is harder to reproduce the system ranking based on the same retrieval algorithm with different interpolation weights. Our setup is entirely open, and we share the code to reproduce the experiments."
+  },
+  {
+   "paperId": "8b2ca217b87cbf83be51c13b3a86b3be512b0cde",
+   "externalIds": {
+    "DBLP": "conf/sigir/Saez22",
+    "DOI": "10.1145/3477495.3531686",
+    "CorpusId": 250340253
+   },
+   "title": "Continuous Result Delta Evaluation of IR Systems",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2022,
+   "citationCount": 1,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3477495.3531686?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3477495.3531686, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2003700617",
+     "name": "G. González Sáez"
+    }
+   ],
+   "abstract": "Classical evaluation of information retrieval systems evaluates a system in a static test collection. In the case of Web search, the evaluation environment (EE) is continuously changing and the hypothesis of using a static test collection is not representative of this changing reality. Moreover, the changes in the evaluation environment, as the document set, the topics set, the relevance judgments, and the chosen metrics, have an impact on the performance measurement [1, 4]. To the best of our knowledge, there is no way to evaluate two versions of a search engine with evolving EEs. We aim at proposing a continuous framework to evaluate different versions of a search engine in different evaluation environments. The classical paradigm relies on a controlled test collection (i.e., set of topics, corpus of documents and relevant assessments) as a stable and meaningful EE that guarantees the reproducibility of system results. We define the different EEs as a dynamic test collection (DTC). A DTC is a list of test collections based on a controlled evolution of a static test collection. The DTC allows us to quantify and relate the differences between the test collection elements, called Knowledge delta (K)Δ, and the performance differences between systems evaluated on these varying test collections, called Result delta (R)Δ. Finally, the continuous evaluation is characterized by KΔs and RΔs. The related changes in both deltas will allow for interpreting the evaluations in systems performances. The expected contributions of the thesis are: (i) a pivot strategy based on RΔ to compare systems evaluated in different EEs; (ii) a formalization of DTC to simulate the continuous evaluation and provide significant RΔ in evolving contexts; and (iii) a continuous evaluation framework that incorporates KΔ to explain RΔ of evaluated systems. It is not possible to measure the RΔ of two systems evaluated in different EEs, because the performance variations are dependent on the changes in the EEs. [1]. To get an estimation of this RΔ measure, we propose to use a reference system, called the pivot system, which would be evaluated within the two EEs considered. Then, the RΔ value is measured using the relative distance between the pivot system and each evaluated system. Our results [2, 3] show that using the pivot strategy we improve the correctness of the ranking of systems (RoS) evaluated in two EEs (i.e., similarity with the RoS evaluated in the ground truth), compared to the RoS constructed with the absolute performance values for each system evaluated in the different EEs. The correctness of the RoS depends on the system defined as pivot and the metric. The proposal focus moves to a continuous evaluation as a repeated assessment of the same or different versions of a web search across evolving EEs. Current test collections do not consider the evolution of documents, topics and relevance judgements. We require a DTC to extract RΔs of the compared system and its relation with the changes on the EEs (KΔ). We provide a method to define a DTC from static test collections based on controlled features as a way to better simulate the evolving EE. According to our preliminary experiments, a system evaluated in our proposed DTC shows more variable performances, and larger RΔs, than when it is evaluated in several random shards or bootstraps of documents. As future work, we will integrate the KΔs to formalize an explainable continuous evaluation framework. The pivot strategy tells us when the performance of the system is improving across EEs. The DTC provides us with the required EEs to identify significant RΔs, and the inclusion of KΔs in the framework will define a set of factors that explain the system's performance changes."
+  },
+  {
+   "paperId": "c43f645fc2c48b2123609c379e5ccb8fd600342b",
+   "externalIds": {
+    "DBLP": "journals/aslib/RajagopalRKB18",
+    "MAG": "2896758679",
+    "DOI": "10.1108/AJIM-04-2018-0086",
+    "CorpusId": 59540745
+   },
+   "title": "Evaluating the effectiveness of information retrieval systems using effort-based relevance judgment",
+   "venue": "Aslib Journal of Information Management",
+   "year": 2019,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1108/AJIM-04-2018-0086?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1108/AJIM-04-2018-0086, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2634684",
+     "name": "Prabha Rajagopal"
+    },
+    {
+     "authorId": "3119035",
+     "name": "Sri Devi Ravana"
+    },
+    {
+     "authorId": "34930533",
+     "name": "Yun Sing Koh"
+    },
+    {
+     "authorId": "36391519",
+     "name": "Vimala Balakrishnan"
+    }
+   ],
+   "abstract": "\nPurpose\nThe effort in addition to relevance is a major factor for satisfaction and utility of the document to the actual user. The purpose of this paper is to propose a method in generating relevance judgments that incorporate effort without human judges’ involvement. Then the study determines the variation in system rankings due to low effort relevance judgment in evaluating retrieval systems at different depth of evaluation.\n\n\nDesign/methodology/approach\nEffort-based relevance judgments are generated using a proposed boxplot approach for simple document features, HTML features and readability features. The boxplot approach is a simple yet repeatable approach in classifying documents’ effort while ensuring outlier scores do not skew the grading of the entire set of documents.\n\n\nFindings\nThe retrieval systems evaluation using low effort relevance judgments has a stronger influence on shallow depth of evaluation compared to deeper depth. It is proved that difference in the system rankings is due to low effort documents and not the number of relevant documents.\n\n\nOriginality/value\nHence, it is crucial to evaluate retrieval systems at shallow depth using low effort relevance judgments.\n"
+  },
+  {
+   "paperId": "8443ce093c3e8c0dd2bba17b1720af624e4e33b8",
+   "externalIds": {
+    "DBLP": "conf/sigir/GienappPYSY26",
+    "ArXiv": "2510.04633",
+    "DOI": "10.1145/3805712.3809713",
+    "CorpusId": 281842404
+   },
+   "title": "Topic-Specific Classifiers are Better Relevance Judges than Prompted LLMs",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3805712.3809713",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.04633, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2356415648",
+     "name": "Lukas Gienapp"
+    },
+    {
+     "authorId": "3046200",
+     "name": "Martin Potthast"
+    },
+    {
+     "authorId": "2347038851",
+     "name": "Andrew Yates"
+    },
+    {
+     "authorId": "2356527574",
+     "name": "Harrisen Scells"
+    },
+    {
+     "authorId": "153564640",
+     "name": "Eugene Yang"
+    }
+   ],
+   "abstract": "The unjudged document problem, where systems that did not contribute to the original judgement pool may retrieve documents without a relevance judgement, is a key obstacle to the reuseability of test collections in information retrieval. This is commonly dealt with by treating unjudged documents as non-relevant, and recently, the use of large language models (LLMs) as a relevance judge (LLM-as-a-judge) emerged. However, this has been criticized, among other things, as circular, since the same LLM can be used as the ranker and the judge. We propose to train topic-specific relevance classifiers instead: By finetuning monoT5 with independent LoRA weight adaptation on the judgments of a single assessor for a single topic's pool, we align it to that assessor's notion of relevance for that topic. The system rankings obtained through our classifier's relevance judgments achieve a Spearmans' ρ correlation of >0.94 with ground truth system rankings. As little as 128 initial human judgments per topic suffice to improve the comparability of models, while achieving more reliability than existing LLM-as-a-judge approaches, and maintaining human judgments as the gold standard for retrieval evaluation. Code, models, and data are available."
+  },
+  {
+   "paperId": "254843587e95005cca74ce5d3fac2a2f86503205",
+   "externalIds": {
+    "DOI": "10.1145/3799682.3840214",
+    "CorpusId": 295420131
+   },
+   "title": "LLMJudge: Meta-Evaluating Automatic Relevance Judgments",
+   "venue": "Proceedings of the 35th ACM International Conference on Information and Knowledge Management",
+   "year": 2026,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3799682.3840214",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3799682.3840214?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3799682.3840214, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2301154394",
+     "name": "Hossein A. Rahmani"
+    },
+    {
+     "authorId": "2056776870",
+     "name": "Clemencia Siro"
+    },
+    {
+     "authorId": "3390352",
+     "name": "Mohammad Aliannejadi"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    },
+    {
+     "authorId": "80808662",
+     "name": "Guglielmo Faggioli"
+    },
+    {
+     "authorId": "116506812",
+     "name": "Bhaskar Mitra"
+    },
+    {
+     "authorId": "2292727130",
+     "name": "Paul Thomas"
+    },
+    {
+     "authorId": "2260651117",
+     "name": "Emine Yilmaz"
+    }
+   ],
+   "abstract": "Large language models (LLMs) are increasingly used to produce the relevance labels that underpin the evaluation of information retrieval (IR) and retrieval-augmented generation systems. Yet delegating relevance assessment to an LLM raises a meta-evaluation question that is hard to answer with existing resources: when, and how much, can we trust an automatic judge? We present LLMJudge, a resource for meta-evaluating LLM-generated relevance judgments. LLMJudge collects 42 complete judgment sets over the TREC 2023 Deep Learning track, spanning fine-tuned, proprietary, and open-source models and a wide range of prompting strategies. Each judgment set is paired with official human qrels, enabling two complementary axes of analysis: label agreement with human assessors (e.g., Cohen's κ, Krippendorff's α) and system-ranking fidelity (e.g., Kendall's τ, Spearman's ρ). Beyond the data, we release a standardized format, baselines, and an evaluation harness so that new judges can be plugged in and compared reproducibly. Our analysis shows that high label agreement is neither necessary nor sufficient for faithful system ranking, that open-source judges are markedly more stable than proprietary ones, and that fine-tuning improves correlation at the cost of reliability. LLMJudge is publicly available and provides a reusable testbed for auditing the judges who increasingly judge our systems. Full resources, data, and detailed results are available at https://llm4eval.github.io/LLMJudge-benchmark/."
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(\"assessor disagreement\" | \"inter-assessor agreement\" | \"relevance judgments\") + (variation | reliability) + (\"test collection\" | \"system ranking\")"
+}

@@ -1,0 +1,1 @@
+(abs:pooling OR abs:"incomplete judgments" OR abs:"unjudged documents") AND (abs:"test collection") AND (abs:retrieval) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:[201901010000 TO 202612312359]

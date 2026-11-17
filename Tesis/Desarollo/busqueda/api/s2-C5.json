@@ -1,0 +1,1409 @@
+{
+ "total": 35,
+ "token": null,
+ "data": [
+  {
+   "paperId": "f13b251c8346bc3be19b71b840449831e9716999",
+   "externalIds": {
+    "DBLP": "conf/emnlp/WaddenLKCBWH22",
+    "ArXiv": "2210.13777",
+    "DOI": "10.48550/arXiv.2210.13777",
+    "CorpusId": 253107192
+   },
+   "title": "SciFact-Open: Towards open-domain scientific claim verification",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2022,
+   "citationCount": 145,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2210.13777",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2210.13777, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "30051202",
+     "name": "David Wadden"
+    },
+    {
+     "authorId": "46258841",
+     "name": "Kyle Lo"
+    },
+    {
+     "authorId": "2003338023",
+     "name": "Bailey Kuehl"
+    },
+    {
+     "authorId": "2527954",
+     "name": "Arman Cohan"
+    },
+    {
+     "authorId": "46181066",
+     "name": "Iz Beltagy"
+    },
+    {
+     "authorId": "31860505",
+     "name": "Lucy Lu Wang"
+    },
+    {
+     "authorId": "2548384",
+     "name": "Hannaneh Hajishirzi"
+    }
+   ],
+   "abstract": "While research on scientific claim verification has led to the development of powerful systems that appear to approach human performance, these approaches have yet to be tested in a realistic setting against large corpora of scientific literature. Moving to this open-domain evaluation setting, however, poses unique challenges; in particular, it is infeasible to exhaustively annotate all evidence documents. In this work, we present SciFact-Open, a new test collection designed to evaluate the performance of scientific claim verification systems on a corpus of 500K research abstracts. Drawing upon pooling techniques from information retrieval, we collect evidence for scientific claims by pooling and annotating the top predictions of four state-of-the-art scientific claim verification models. We find that systems developed on smaller corpora struggle to generalize to SciFact-Open, exhibiting performance drops of at least 15 F1. In addition, analysis of the evidence in SciFact-Open reveals interesting phenomena likely to appear when claim verification systems are deployed in practice, e.g., cases where the evidence supports only a special case of the claim. Our dataset is available at https://github.com/dwadden/scifact-open."
+  },
+  {
+   "paperId": "6e2e7df21a5b5457ea4167133a40bc729028250d",
+   "externalIds": {
+    "ArXiv": "2109.00062",
+    "DBLP": "journals/corr/abs-2109-00062",
+    "DOI": "10.1007/s10791-022-09411-0",
+    "CorpusId": 237372888
+   },
+   "title": "Shallow pooling for sparse labels",
+   "venue": "Information Retrieval Journal",
+   "year": 2021,
+   "citationCount": 59,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2109.00062",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2109.00062, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "81447039",
+     "name": "Negar Arabzadeh"
+    },
+    {
+     "authorId": "2125326553",
+     "name": "A. Vtyurina"
+    },
+    {
+     "authorId": "2116538878",
+     "name": "Xinyi Yan"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    }
+   ],
+   "abstract": "Recent years have seen enormous gains in core information retrieval tasks, including document and passage ranking. Datasets and leaderboards, and in particular the MS MARCO datasets, illustrate the dramatic improvements achieved by modern neural rankers. When compared with traditional information retrieval test collections, such as those developed by TREC, the MS MARCO datasets employ substantially more queries—thousands vs. dozens – with substantially fewer known relevant items per query—often just one. For example, 94% of the nearly seven thousand queries in the MS MARCO passage ranking development set have only a single known relevant passage, and no query has more than four. Given the sparsity of these relevance labels, the MS MARCO leaderboards track improvements with mean reciprocal rank (MRR). In essence, the known relevant item is treated as the “right answer” or “best answer”, with rankers scored on their ability to place this item as high in the ranking as possible. In working with these sparse labels, we have observed that the top items returned by a ranker often appear superior to judged relevant items. Others have reported the same observation. To test this observation, we employed crowdsourced workers to make preference judgments between the top item returned by a modern neural ranking stack and a judged relevant item for the nearly seven thousand queries in the passage ranking development set. The results support our observation. If we imagine a hypothetical perfect ranker under MRR, with a score of 1 on all queries, our preference judgments indicate that a searcher would prefer the top result from a modern neural ranking stack more frequently than the top result from the hypothetical perfect ranker, making our neural ranker “better than perfect”. To understand the implications for the leaderboard, we pooled the top document from available runs near the top of the passage ranking leaderboard for over 500 queries. We employed crowdsourced workers to make preference judgments over these pools and re-evaluated the runs. Our results support our concerns that current MS MARCO datasets may no longer be able to recognize genuine improvements in rankers. In future, if rankers are measured against a single answer, this answer should be the best answer or most preferred answer, and maintained with ongoing judgments. Since only the best known answer is required, this ongoing maintenance might be performed with shallow pooling. When a previously unjudged document is surfaced as the top item in a ranking, it can be directly compared with the previous best known answer."
+  },
+  {
+   "paperId": "c671064c39642389980881a5f76ce1f080b81c16",
+   "externalIds": {
+    "DBLP": "conf/ecir/LawrieMOY22",
+    "ArXiv": "2201.09992",
+    "DOI": "10.48550/arXiv.2201.09992",
+    "CorpusId": 246275873
+   },
+   "title": "HC4: A New Suite of Test Collections for Ad Hoc CLIR",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2022,
+   "citationCount": 37,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2201.09992",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2201.09992, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2539674",
+     "name": "Dawn J Lawrie"
+    },
+    {
+     "authorId": "145510552",
+     "name": "J. Mayfield"
+    },
+    {
+     "authorId": "1737250",
+     "name": "Douglas W. Oard"
+    },
+    {
+     "authorId": "153564640",
+     "name": "Eugene Yang"
+    }
+   ],
+   "abstract": "HC4 is a new suite of test collections for ad hoc Cross-Language Information Retrieval (CLIR), with Common Crawl News documents in Chinese, Persian, and Russian, topics in English and in the document languages, and graded relevance judgments. New test collections are needed because existing CLIR test collections built using pooling of traditional CLIR runs have systematic gaps in their relevance judgments when used to evaluate neural CLIR methods. The HC4 collections contain 60 topics and about half a million documents for each of Chinese and Persian, and 54 topics and five million documents for Russian. Active learning was used to determine which documents to annotate after being seeded using interactive search and judgment. Documents were judged on a three-grade relevance scale. This paper describes the design and construction of the new test collections and provides baseline results for demonstrating their utility for evaluating systems."
+  },
+  {
+   "paperId": "6a4deeb40aed8a4d56c8d9401c94b6c7a769e8c3",
+   "externalIds": {
+    "ArXiv": "2103.12906",
+    "DBLP": "conf/nips/MysoreOMZ21",
+    "DOI": "10.48550/arXiv.2103.12906",
+    "CorpusId": 232335540
+   },
+   "title": "CSFCube - A Test Collection of Computer Science Research Articles for Faceted Query by Example",
+   "venue": "NeurIPS Datasets and Benchmarks",
+   "year": 2021,
+   "citationCount": 36,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2103.12906",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2103.12906, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "9076501",
+     "name": "Sheshera Mysore"
+    },
+    {
+     "authorId": "1388957618",
+     "name": "Timothy J. O'Gorman"
+    },
+    {
+     "authorId": "143753639",
+     "name": "Andrew Mccallum"
+    },
+    {
+     "authorId": "2499986",
+     "name": "Hamed Zamani"
+    }
+   ],
+   "abstract": "Query by Example is a well-known information retrieval task in which a document is chosen by the user as the search query and the goal is to retrieve relevant documents from a large collection. However, a document often covers multiple aspects of a topic. To address this scenario we introduce the task of faceted Query by Example in which users can also specify a finer grained aspect in addition to the input query document. We focus on the application of this task in scientific literature search. We envision models which are able to retrieve scientific papers analogous to a query scientific paper along specifically chosen rhetorical structure elements as one solution to this problem. In this work, the rhetorical structure elements, which we refer to as facets, indicate objectives, methods, or results of a scientific paper. We introduce and describe an expert annotated test collection to evaluate models trained to perform this task. Our test collection consists of a diverse set of 50 query documents in English, drawn from computational linguistics and machine learning venues. We carefully follow the annotation guideline used by TREC for depth-k pooling (k = 100 or 250) and the resulting data collection consists of graded relevance scores with high annotation agreement. State of the art models evaluated on our dataset show a significant gap to be closed in further work. Our dataset may be accessed here: https://github.com/iesl/CSFCube"
+  },
+  {
+   "paperId": "e1ca2570b1916398377a7bbd3d3731a389b0bdc2",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2201-11086",
+    "ArXiv": "2201.11086",
+    "DOI": "10.48550/arXiv.2201.11086",
+    "CorpusId": 246285387
+   },
+   "title": "Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?",
+   "venue": "arXiv.org",
+   "year": 2022,
+   "citationCount": 33,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2201.11086",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2201.11086, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1746656",
+     "name": "E. Voorhees"
+    },
+    {
+     "authorId": "144526707",
+     "name": "I. Soboroff"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Neural retrieval models are generally regarded as fundamentally different from the retrieval techniques used in the late 1990's when the TREC ad hoc test collections were constructed. They thus provide the opportunity to empirically test the claim that pooling-built test collections can reliably evaluate retrieval systems that did not contribute to the construction of the collection (in other words, that such collections can be reusable). To test the reusability claim, we asked TREC assessors to judge new pools created from new search results for the TREC-8 ad hoc collection. These new search results consisted of five new runs (one each from three transformer-based models and two baseline runs that use BM25) plus the set of TREC-8 submissions that did not previously contribute to pools. The new runs did retrieve previously unseen documents, but the vast majority of those documents were not relevant. The ranking of all runs by mean evaluation score when evaluated using the official TREC-8 relevance judgment set and the newly expanded relevance set are almost identical, with Kendall's tau correlations greater than 0.99. Correlations for individual topics are also high. The TREC-8 ad hoc collection was originally constructed using deep pools over a diverse set of runs, including several effective manual runs. Its judgment budget, and hence construction cost, was relatively large. However, it does appear that the expense was well-spent: even with the advent of neural techniques, the collection has stood the test of time and remains a reliable evaluation instrument as retrieval techniques have advanced."
+  },
+  {
+   "paperId": "5b64c64c82e31c8005f0a5b803ca023d57aec33b",
+   "externalIds": {
+    "ArXiv": "2106.09775",
+    "DBLP": "journals/corr/abs-2106-09775",
+    "DOI": "10.48550/arXiv.2106.09775",
+    "CorpusId": 235485335
+   },
+   "title": "An Information Retrieval Approach to Building Datasets for Hate Speech Detection",
+   "venue": "NeurIPS Datasets and Benchmarks",
+   "year": 2021,
+   "citationCount": 25,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2106.09775",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2106.09775, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2218027638",
+     "name": "Md. Mustafizur Rahman"
+    },
+    {
+     "authorId": "34559302",
+     "name": "D. Balakrishnan"
+    },
+    {
+     "authorId": "37460521",
+     "name": "D. Murthy"
+    },
+    {
+     "authorId": "38330039",
+     "name": "Mucahid Kutlu"
+    },
+    {
+     "authorId": "1747771",
+     "name": "Matthew Lease"
+    }
+   ],
+   "abstract": "Building a benchmark dataset for hate speech detection presents various challenges. Firstly, because hate speech is relatively rare, random sampling of tweets to annotate is very inefficient in finding hate speech. To address this, prior datasets often include only tweets matching known\"hate words\". However, restricting data to a pre-defined vocabulary may exclude portions of the real-world phenomenon we seek to model. A second challenge is that definitions of hate speech tend to be highly varying and subjective. Annotators having diverse prior notions of hate speech may not only disagree with one another but also struggle to conform to specified labeling guidelines. Our key insight is that the rarity and subjectivity of hate speech are akin to that of relevance in information retrieval (IR). This connection suggests that well-established methodologies for creating IR test collections can be usefully applied to create better benchmark datasets for hate speech. To intelligently and efficiently select which tweets to annotate, we apply standard IR techniques of {\\em pooling} and {\\em active learning}. To improve both consistency and value of annotations, we apply {\\em task decomposition} and {\\em annotator rationale} techniques. We share a new benchmark dataset for hate speech detection on Twitter that provides broader coverage of hate than prior datasets. We also show a dramatic drop in accuracy of existing detection models when tested on these broader forms of hate. Annotator rationales we collect not only justify labeling decisions but also enable future work opportunities for dual-supervision and/or explanation generation in modeling. Further details of our approach can be found in the supplementary materials."
+  },
+  {
+   "paperId": "ff1380deb1cc14e9e6abc2e99f240d8ed752180e",
+   "externalIds": {
+    "MAG": "3035547741",
+    "DBLP": "conf/sigir/YilmazCMC20",
+    "ArXiv": "2004.13486",
+    "DOI": "10.1145/3397271.3401317",
+    "CorpusId": 216562405
+   },
+   "title": "On the Reliability of Test Collections for Evaluating Systems of Different Types",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2020,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2004.13486",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2004.13486, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "49724730",
+     "name": "E. Yilmaz"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "116506812",
+     "name": "Bhaskar Mitra"
+    },
+    {
+     "authorId": "144081089",
+     "name": "Daniel Fernando Campos"
+    }
+   ],
+   "abstract": "As deep learning based models are increasingly being used for information retrieval, a major challenge is to ensure the availability of test collections for measuring their quality. Test collections are usually generated based on pooling results of various retrieval systems, but until recently this did not include deep learning systems. This raises a major challenge for reusable evaluation: Since deep learning based models use external resources (e.g. word embeddings) and advanced representations when compared to traditional methods, they may return different types of relevant document that were not identified in the original pooling. If so, test collections constructed using traditional methods could lead to biased and unfair evaluation results for deep learning systems. This paper uses simulated pooling to test the fairness and reusability of test collections, showing that especially when shallow pools (e.g. depth-10 pools) are used, pooling based on traditional systems only may lead to biased evaluation of deep learning systems."
+  },
+  {
+   "paperId": "d38a7b30949b840d1d28cc4a3fb2b203d5eae35a",
+   "externalIds": {
+    "ArXiv": "2304.11752",
+    "DBLP": "conf/sigir/GangulyY23",
+    "DOI": "10.1145/3539618.3592046",
+    "CorpusId": 258298947
+   },
+   "title": "Query-specific Variable Depth Pooling via Query Performance Prediction",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3539618.3592046",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2304.11752, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1698027",
+     "name": "Debasis Ganguly"
+    },
+    {
+     "authorId": "49724730",
+     "name": "E. Yilmaz"
+    }
+   ],
+   "abstract": "Due to the massive size of test collections, a standard practice in IR evaluation is to construct a 'pool' of candidate relevant documents comprised of the top-k documents retrieved by a wide range of different retrieval systems - a process called depth-k pooling. A standard practice is to set the depth (k) to a constant value for each query constituting the benchmark set. However, in this paper we argue that the annotation effort can be substantially reduced if the depth of the pool is made a variable quantity for each query, the rationale being that the number of documents relevant to the information need can widely vary across queries. Our hypothesis is that a lower depth for queries with a small number of relevant documents, and a higher depth for those with a larger number of relevant documents can potentially reduce the annotation effort without a significant change in IR effectiveness evaluation.We make use of standard query performance prediction (QPP) techniques to estimate the number of potentially relevant documents for each query, which is then used to determine the depth of the pool. Our experiments conducted on standard test collections demonstrate that this proposed method of employing query-specific variable depths is able to adequately reflect the relative effectiveness of IR systems with a substantially smaller annotation effort."
+  },
+  {
+   "paperId": "76736e10e614e99de839ff085cf8dbe0232656e8",
+   "externalIds": {
+    "MAG": "2981180456",
+    "DBLP": "journals/tkde/LipaniLZL21",
+    "DOI": "10.1109/TKDE.2019.2947049",
+    "CorpusId": 208118717
+   },
+   "title": "Fixed-Cost Pooling Strategies",
+   "venue": "IEEE Transactions on Knowledge and Data Engineering",
+   "year": 2019,
+   "citationCount": 17,
+   "openAccessPdf": {
+    "url": "https://discovery.ucl.ac.uk/10083262/13/Lipani_Fixed-Cost%20Pooling%20Strategies_AAM.pdf",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/TKDE.2019.2947049?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/TKDE.2019.2947049, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1850020",
+     "name": "Aldo Lipani"
+    },
+    {
+     "authorId": "2356644",
+     "name": "D. Losada"
+    },
+    {
+     "authorId": "1692855",
+     "name": "G. Zuccon"
+    },
+    {
+     "authorId": "144307089",
+     "name": "M. Lupu"
+    }
+   ],
+   "abstract": "The empirical nature of Information Retrieval (IR) mandates strong experimental practices. A keystone of such experimental practices is the Cranfield evaluation paradigm. Within this paradigm, the collection of relevance judgments has been the subject of intense scientific investigation. This is because, on one hand, consistent, precise, and numerous judgements are keys to reducing evaluation uncertainty and test collection bias; on the other hand, however, relevance judgements are costly to collect. The selection of which documents to judge for relevance, known as pooling method, has therefore a great impact on IR evaluation. In this paper we focus on the bias introduced by the pooling method, known as pool bias, which affects the reusability of test collections, in particular when building test collections with a limited budget. In this paper we formalize and evaluate a set of 22 pooling strategies based on: traditional strategies, voting systems, retrieval fusion methods, evaluation measures, and multi-armed bandit models. To do this we run a large-scale evaluation by considering a set of 9 standard TREC test collections, in which we show that the choice of the pooling strategy has significant effects on the cost needed to obtain an unbiased test collection. We also identify the least biased pooling strategy in terms of pool bias according to three IR evaluation measures: AP, NDCG, and P@10."
+  },
+  {
+   "paperId": "def5064b111f4ce61b39e77208363b2952371443",
+   "externalIds": {
+    "DBLP": "journals/tjs/AlqahtaniPMA22",
+    "DOI": "10.1007/s11227-021-04171-y",
+    "CorpusId": 245927787
+   },
+   "title": "An automatic query expansion based on hybrid CMO-COOT algorithm for optimized information retrieval",
+   "venue": "Journal of Supercomputing",
+   "year": 2022,
+   "citationCount": 16,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s11227-021-04171-y?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s11227-021-04171-y, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1643925051",
+     "name": "A. Alqahtani"
+    },
+    {
+     "authorId": "2004571946",
+     "name": "P. Saravanan"
+    },
+    {
+     "authorId": "2465928443",
+     "name": "M. Maheswari"
+    },
+    {
+     "authorId": "2277778804",
+     "name": "Sami Alshmrany"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "e7a62914c1d4da49f842a747d449337403500420",
+   "externalIds": {
+    "MAG": "2948995460",
+    "PubMedCentral": "6824517",
+    "DOI": "10.1093/jamiaopen/ooz016",
+    "CorpusId": 195441753,
+    "PubMed": "31709390"
+   },
+   "title": "Test collections for electronic health record-based clinical information retrieval",
+   "venue": "JAMIA Open",
+   "year": 2019,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "https://academic.oup.com/jamiaopen/article-pdf/2/3/360/32298754/ooz016.pdf",
+    "status": "GOLD",
+    "license": "CCBYNC",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC6824517, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "13044536",
+     "name": "Yan-Shan Wang"
+    },
+    {
+     "authorId": "32273102",
+     "name": "A. Wen"
+    },
+    {
+     "authorId": "30986714",
+     "name": "Sijia Liu"
+    },
+    {
+     "authorId": "1688124",
+     "name": "W. Hersh"
+    },
+    {
+     "authorId": "2112925",
+     "name": "Steven Bedrick"
+    },
+    {
+     "authorId": "50793079",
+     "name": "Hong-Fang Liu"
+    }
+   ],
+   "abstract": "Abstract Objectives To create test collections for evaluating clinical information retrieval (IR) systems and advancing clinical IR research. Materials and Methods Electronic health record (EHR) data, including structured and free-text data, from 45 000 patients who are a part of the Mayo Clinic Biobank cohort was retrieved from the clinical data warehouse. The clinical IR system indexed a total of 42 million free-text EHR documents. The search queries consisted of 56 topics developed through a collaboration between Mayo Clinic and Oregon Health & Science University. We described the creation of test collections, including a to-be-evaluated document pool using five retrieval models, and human assessment guidelines. We analyzed the relevance judgment results in terms of human agreement and time spent, and results of three levels of relevance, and reported performance of five retrieval models. Results The two judges had a moderate overall agreement with a Kappa value of 0.49, spent a consistent amount of time judging the relevance, and were able to identify easy and difficult topics. The conventional retrieval model performed best on most topics while a concept-based retrieval model had better performance on the topics requiring conceptual level retrieval. Discussion IR can provide an alternate approach to leveraging clinical narratives for patient information discovery as it is less dependent on semantics. Our study showed the feasibility of test collections along with a few challenges. Conclusion The conventional test collections for evaluating the IR system show potential for successfully evaluating clinical IR systems with a few challenges to be investigated."
+  },
+  {
+   "paperId": "66936ce9e6d8727c1ced022dfd128011275a388c",
+   "externalIds": {
+    "DBLP": "conf/sigir/ChenLHL0SEZK024",
+    "DOI": "10.1145/3626772.3657866",
+    "CorpusId": 271114581
+   },
+   "title": "ACORDAR 2.0: A Test Collection for Ad Hoc Dataset Retrieval with Densely Pooled Datasets and Question-Style Queries",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2024,
+   "citationCount": 12,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3626772.3657866?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3626772.3657866, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2175564836",
+     "name": "Qiao-Sheng Chen"
+    },
+    {
+     "authorId": "2153435581",
+     "name": "Weiqing Luo"
+    },
+    {
+     "authorId": "1504347669",
+     "name": "Zixian Huang"
+    },
+    {
+     "authorId": "2143540684",
+     "name": "Tengteng Lin"
+    },
+    {
+     "authorId": "1524736195",
+     "name": "Xiaxia Wang"
+    },
+    {
+     "authorId": "153750193",
+     "name": "A. Soylu"
+    },
+    {
+     "authorId": "3353313",
+     "name": "Basil Ell"
+    },
+    {
+     "authorId": "103418643",
+     "name": "Bai-Fan Zhou"
+    },
+    {
+     "authorId": "2292575610",
+     "name": "Evgeny Kharlamov"
+    },
+    {
+     "authorId": "2311456157",
+     "name": "Gong Cheng"
+    }
+   ],
+   "abstract": "Dataset search, or more specifically, ad hoc dataset retrieval which is a trending specialized IR task, has received increasing attention in both academia and industry. While methods and systems continue evolving, existing test collections for this task exhibit shortcomings, particularly suffering from lexical bias in pooling and limited to keyword-style queries for evaluation. To address these limitations, in this paper, we construct ACORDAR 2.0, a new test collection for this task which is also the largest to date. To reduce lexical bias in pooling, we adapt dense retrieval models to large structured data, using them to find an extended set of semantically relevant datasets to be annotated. To diversify query forms, we employ a large language model to rewrite keyword queries into high-quality question-style queries. We use the test collection to evaluate popular sparse and dense retrieval models to establish a baseline for future studies. The test collection and source code are publicly available."
+  },
+  {
+   "paperId": "ac650c64df9bbef11b672ebe38bede58b2af2e7b",
+   "externalIds": {
+    "DBLP": "conf/clef/VeysGLD26",
+    "CorpusId": 292665390
+   },
+   "title": "Overview of TalentCLEF 2026: Task B, Job-Skill Matching with Skill Type Classification",
+   "venue": "Conference and Labs of the Evaluation Forum",
+   "year": 2026,
+   "citationCount": 10,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://ceur-ws.org/Vol-4283/paper475.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2302152475",
+     "name": "W. Veys"
+    },
+    {
+     "authorId": "2187454154",
+     "name": "Luis Gasco"
+    },
+    {
+     "authorId": "2373727920",
+     "name": "Matthias De Lange"
+    },
+    {
+     "authorId": "2127470139",
+     "name": "Jens-Joris Decorte"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "8b92528032fde67609a8e65de804eeb13092ee4c",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2208-06936",
+    "ArXiv": "2208.06936",
+    "DOI": "10.1145/3511808.3557714",
+    "CorpusId": 251564315
+   },
+   "title": "TripJudge: A Relevance Judgement Test Collection for TripClick Health Retrieval",
+   "venue": "International Conference on Information and Knowledge Management",
+   "year": 2022,
+   "citationCount": 10,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3511808.3557714",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2208.06936, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1620824465",
+     "name": "Sophia Althammer"
+    },
+    {
+     "authorId": "97393346",
+     "name": "Sebastian Hofstätter"
+    },
+    {
+     "authorId": "2394227452",
+     "name": "Suzan Verberne"
+    },
+    {
+     "authorId": "1699657",
+     "name": "A. Hanbury"
+    }
+   ],
+   "abstract": "Robust test collections are crucial for Information Retrieval research. Recently there is a growing interest in evaluating retrieval systems for domain-specific retrieval tasks, however these tasks often lack a reliable test collection with human-annotated relevance assessments following the Cranfield paradigm. In the medical domain, the TripClick collection was recently proposed, which contains click log data from the Trip search engine and includes two click-based test sets. However the clicks are biased to the retrieval model used, which remains unknown, and a previous study shows that the test sets have a low judgement coverage for the Top-10 results of lexical and neural retrieval models. In this paper we present the novel, relevance judgement test collection TripJudge for TripClick health retrieval. We collect relevance judgements in an annotation campaign and ensure the quality and reusability of TripJudge by a variety of ranking methods for pool creation, by multiple judgements per query-document pair and by an at least moderate inter-annotator agreement. We compare system evaluation with TripJudge and TripClick and find that that click and judgement-based evaluation can lead to substantially different system rankings."
+  },
+  {
+   "paperId": "c80f1242c364d4361eb163b89904b457b5ee815c",
+   "externalIds": {
+    "DBLP": "conf/fire/AdeyemiO0ARCL23",
+    "DOI": "10.1145/3632754.3633076",
+    "CorpusId": 267637509
+   },
+   "title": "CIRAL at FIRE 2023: Cross-Lingual Information Retrieval for African Languages",
+   "venue": "Fire",
+   "year": 2023,
+   "citationCount": 7,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3632754.3633076",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3632754.3633076?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3632754.3633076, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2056770646",
+     "name": "Mofetoluwa Adeyemi"
+    },
+    {
+     "authorId": "2175480812",
+     "name": "Akintunde Oladipo"
+    },
+    {
+     "authorId": "2118895402",
+     "name": "Xinyu Crystina Zhang"
+    },
+    {
+     "authorId": "1419474794",
+     "name": "David Alfonso-Hermelo"
+    },
+    {
+     "authorId": "2066076226",
+     "name": "Mehdi Rezagholizadeh"
+    },
+    {
+     "authorId": "2237517964",
+     "name": "Boxing Chen"
+    },
+    {
+     "authorId": "2273564587",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "This paper provides a short overview of the CIRAL track at the Forum for Information Retrieval Evaluation (FIRE) 2023. CIRAL focused on cross-lingual information retrieval (CLIR) between English and four African languages which include Hausa, Somali, Swahili, and Yoruba. In a bid to promote CLIR research for African languages and curate a test collection for the languages, community evaluations were carried out via pooling. We briefly discuss details of the task, dataset, relevance assessment and results from the track in this paper."
+  },
+  {
+   "paperId": "3b5ee7cf05037f9878fd40c33d7cd9b685b89d13",
+   "externalIds": {
+    "DBLP": "conf/sigir/LawrieMOYNG23",
+    "DOI": "10.1145/3539618.3591893",
+    "CorpusId": 259378210
+   },
+   "title": "HC3: A Suite of Test Collections for CLIR Evaluation over Informal Text",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 7,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3539618.3591893",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3539618.3591893?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3539618.3591893, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2539674",
+     "name": "Dawn J Lawrie"
+    },
+    {
+     "authorId": "145510552",
+     "name": "J. Mayfield"
+    },
+    {
+     "authorId": "1737250",
+     "name": "Douglas W. Oard"
+    },
+    {
+     "authorId": "153564640",
+     "name": "Eugene Yang"
+    },
+    {
+     "authorId": "143913642",
+     "name": "Suraj Nair"
+    },
+    {
+     "authorId": "1832372",
+     "name": "P. Galuščáková"
+    }
+   ],
+   "abstract": "While there are many test collections for Cross-Language Information Retrieval (CLIR), none of the large public test collections focus on short informal text documents. This paper introduces a new pair of CLIR test collections with millions of Chinese or Persian Tweets or Tweet threads as documents, sixty event-motivated topics written both in English and in each of the two document languages, and three-point graded relevance judgments constructed using interactive search and active learning. The design and construction of these new test collections are described, and baseline results are presented that demonstrate the utility of the collections for system evaluation. Shallow pooling is used to assess the efficacy of active learning to select documents for judgment."
+  },
+  {
+   "paperId": "1662f404a5b29492ec5203876d901f4978c5bbb5",
+   "externalIds": {
+    "MAG": "3082749320",
+    "DBLP": "conf/circle/0001PB20",
+    "CorpusId": 221012226
+   },
+   "title": "Beaver: Efficiently Building Test Collections for Novel Tasks",
+   "venue": "Joint Conference of the Information Retrieval Communities in Europe",
+   "year": 2020,
+   "citationCount": 6,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://ceur-ws.org/Vol-2621/CIRCLE20_23.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2073115031",
+     "name": "David Otero"
+    },
+    {
+     "authorId": "1898621",
+     "name": "Javier Parapar"
+    },
+    {
+     "authorId": "145747881",
+     "name": "Álvaro Barreiro"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "c10fc0b2b996647dbddd0de3982e91c40a01d563",
+   "externalIds": {
+    "DBLP": "conf/sac/0001PB21",
+    "DOI": "10.1145/3412841.3441947",
+    "CorpusId": 233354142
+   },
+   "title": "The wisdom of the rankers: a cost-effective method for building pooled test collections without participant systems",
+   "venue": "ACM Symposium on Applied Computing",
+   "year": 2021,
+   "citationCount": 5,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3412841.3441947?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3412841.3441947, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2073115031",
+     "name": "David Otero"
+    },
+    {
+     "authorId": "1898621",
+     "name": "Javier Parapar"
+    },
+    {
+     "authorId": "145747881",
+     "name": "Álvaro Barreiro"
+    }
+   ],
+   "abstract": "Information Retrieval is an area where evaluation is crucial to validate newly proposed models. As the first step in the evaluation of models, researchers carry out offline experiments on specific datasets. While the field started around ad-hoc search, the number of new tasks is continuously growing. These tasks demand the development of new test collections (documents, information needs, and judgments). The construction of those datasets relies on expensive campaigns like TREC. Due to the size of modern collections, obtaining the relevance for each document-topic pair is infeasible. To reduce this cost, organizers usually apply a technique called pooling. When building pooled test collections, assessors only judge a portion of the documents selected among the participants' results. Although the judgments will not be exhaustive, they will be sufficiently complete and unbiased if pooling is done correctly. Therefore, researchers may safely use pooled collections to evaluate new models. However, the application of pooling depends on the existence of participant systems. This need is a handicap for tasks for which it is necessary to release training data before the celebration of the competition or for those with few participants. In this paper, we present a simple method for building pooled collections when such restrictions exist. Our proposal relies on two principles: the wisdom of the rankers and the application of pooling. By creating enough artificial participant systems, we can apply pooling on their results to select the documents that merit human assessment. Using an innovative approach to evaluate our method, we show that researchers may use it to produce high-quality collections on the absence of participant systems."
+  },
+  {
+   "paperId": "0bbc561c59d561b145dcdd6cdf765866c402cf82",
+   "externalIds": {
+    "DBLP": "conf/sigir/CormackZGASGRG19",
+    "MAG": "2953642885",
+    "DOI": "10.1145/3331184.3331354",
+    "CorpusId": 197928233
+   },
+   "title": "Dynamic Sampling Meets Pooling",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2019,
+   "citationCount": 5,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3331184.3331354?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3331184.3331354, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "3114123",
+     "name": "G. Cormack"
+    },
+    {
+     "authorId": "9184695",
+     "name": "Haotian Zhang"
+    },
+    {
+     "authorId": "3404697",
+     "name": "Nimesh Ghelani"
+    },
+    {
+     "authorId": "3017884",
+     "name": "Mustafa Abualsaud"
+    },
+    {
+     "authorId": "1689089",
+     "name": "Mark D. Smucker"
+    },
+    {
+     "authorId": "2637161",
+     "name": "Maura R. Grossman"
+    },
+    {
+     "authorId": "74524766",
+     "name": "Shahin Rahbariasl"
+    },
+    {
+     "authorId": "2009092",
+     "name": "Amira Ghenai"
+    }
+   ],
+   "abstract": "A team of six assessors used Dynamic Sampling (Cormack and Grossman 2018) and one hour of assessment effort per topic to form, without pooling, a test collection for the TREC 2018 Common Core Track. Later, official relevance assessments were rendered by NIST for documents selected by depth-10 pooling augmented by move-to-front (MTF) pooling (Cormack et al. 1998), as well as the documents selected by our Dynamic Sampling effort. MAP estimates rendered from dynamically sampled assessments using the xinfAP statistical evaluator are comparable to those rendered from the complete set of official assessments using the standard trec_eval tool. MAP estimates rendered using only documents selected by pooling, on the other hand, differ substantially. The results suggest that the use of Dynamic Sampling without pooling can, for an order of magnitude less assessment effort, yield information-retrieval effectiveness estimates that exhibit lower bias, lower error, and comparable ability to rank system effectiveness."
+  },
+  {
+   "paperId": "e33a3cd8ce38592eeebb076a4be9160c2bb2023b",
+   "externalIds": {
+    "DBLP": "journals/jis/OteroPB25",
+    "DOI": "10.1177/01655515231171085",
+    "CorpusId": 258954038
+   },
+   "title": "Relevance feedback for building pooled test collections",
+   "venue": "Journal of information science",
+   "year": 2023,
+   "citationCount": 4,
+   "openAccessPdf": {
+    "url": "https://ruc.udc.es/bitstreams/aca8ecdf-9d56-4214-acf9-a07e68f07470/download",
+    "status": "GREEN",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1177/01655515231171085?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/01655515231171085, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2073115031",
+     "name": "David Otero"
+    },
+    {
+     "authorId": "1898621",
+     "name": "Javier Parapar"
+    },
+    {
+     "authorId": "145747881",
+     "name": "Álvaro Barreiro"
+    }
+   ],
+   "abstract": "Offline evaluation of information retrieval systems depends on test collections. These datasets provide the researchers with a corpus of documents, topics and relevance judgements indicating which documents are relevant for each topic. Gathering the latter is costly, requiring human assessors to judge the documents. Therefore, experts usually judge only a portion of the corpus. The most common approach for selecting that subset is pooling. By intelligently choosing which documents to assess, it is possible to optimise the number of positive labels for a given budget. For this reason, much work has focused on developing techniques to better select which documents from the corpus merit human assessments. In this article, we propose using relevance feedback to prioritise the documents when building new pooled test collections. We explore several state-of-the-art statistical feedback methods for prioritising the documents the algorithm presents to the assessors. A thorough comparison on eight Text Retrieval Conference (TREC) datasets against strong baselines shows that, among other results, our proposals improve in retrieving relevant documents with lower assessment effort than other state-of-the-art adjudicating methods without harming the reliability, fairness and reusability."
+  },
+  {
+   "paperId": "9b5bb13b9224ec9bb1cd9590bfd97d54198390fb",
+   "externalIds": {
+    "DBLP": "conf/sigir/Soboroff23",
+    "DOI": "10.1145/3539618.3591910",
+    "CorpusId": 259949994
+   },
+   "title": "The BETTER Cross-Language Datasets",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 4,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3539618.3591910?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3539618.3591910, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "144526707",
+     "name": "I. Soboroff"
+    }
+   ],
+   "abstract": "The IARPA BETTER (Better Extraction from Text Through Enhanced Retrieval) program held three evaluations of information retrieval (IR) and information extraction (IE). For both tasks, the only training data available was in English, but systems had to perform cross-language retrieval and extraction from Arabic, Farsi, Chinese, Russian, and Korean. Pooled assessment and information extraction annotation were used to create reusable IR test collections. These datasets are freely available to researchers working in cross-language retrieval, information extraction, or the conjunction of IR and IE. This paper describes the datasets, how they were constructed, and how they might be used by researchers."
+  },
+  {
+   "paperId": "c1166a3c3a0b5bdb413aa339a614f6f24829b238",
+   "externalIds": {
+    "MAG": "2929738314",
+    "DBLP": "conf/ecir/KamateriTSVMK19",
+    "DOI": "10.1007/978-3-030-15719-7_19",
+    "CorpusId": 104292736
+   },
+   "title": "A Test Collection for Passage Retrieval Evaluation of Spanish Health-Related Resources",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2019,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/978-3-030-15719-7_19?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/978-3-030-15719-7_19, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2852041",
+     "name": "Eleni Kamateri"
+    },
+    {
+     "authorId": "1774233",
+     "name": "T. Tsikrika"
+    },
+    {
+     "authorId": "40694866",
+     "name": "Spyridon Symeonidis"
+    },
+    {
+     "authorId": "3019137",
+     "name": "S. Vrochidis"
+    },
+    {
+     "authorId": "1720942",
+     "name": "W. Minker"
+    },
+    {
+     "authorId": "1715604",
+     "name": "Y. Kompatsiaris"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "6d6ef25decd2c65898e989cd6e5c2a9ca05711a6",
+   "externalIds": {
+    "DBLP": "conf/sigir/CormackG19",
+    "MAG": "2954147681",
+    "DOI": "10.1145/3331184.3331355",
+    "CorpusId": 197928228
+   },
+   "title": "Unbiased Low-Variance Estimators for Precision and Related Information Retrieval Effectiveness Measures",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2019,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3331184.3331355?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3331184.3331355, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "3114123",
+     "name": "G. Cormack"
+    },
+    {
+     "authorId": "2637161",
+     "name": "Maura R. Grossman"
+    }
+   ],
+   "abstract": "This work describes an estimator from which unbiased measurements of precision, rank-biased precision, and cumulative gain may be derived from a uniform or non-uniform sample of relevance assessments. Adversarial testing supports the theory that our estimator yields unbiased low-variance measurements from sparse samples, even when used to measure results that are qualitatively different from those returned by known information retrieval methods. Our results suggest that test collections using sampling to select documents for relevance assessment yield more accurate measurements than test collections using pooling, especially for the results of retrieval methods not contributing to the pool."
+  },
+  {
+   "paperId": "06289cbaa50ff2ff3d6e6ee029dc241d85764e55",
+   "externalIds": {
+    "MAG": "3011500873",
+    "DBLP": "conf/aiccsa/BounhasG19",
+    "DOI": "10.1109/AICCSA47632.2019.9035212",
+    "CorpusId": 213183011
+   },
+   "title": "KUNUZ: A Multi-Purpose Reusable Test Collection for Classical Arabic Document Engineering",
+   "venue": "ACS/IEEE International Conference on Computer Systems and Applications",
+   "year": 2019,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/AICCSA47632.2019.9035212?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/AICCSA47632.2019.9035212, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1690092",
+     "name": "Ibrahim Bounhas"
+    },
+    {
+     "authorId": "2513690269",
+     "name": "Souheila Ben Guirat"
+    }
+   ],
+   "abstract": "Corpora are important resources for several applications in Information Retrieval (IR) and Knowledge Extraction (KE). Arabic is a low resourced language characterized by its complex morphology. Furthermore, most existent Arabic language resources focus on Modern Standard Arabic (MSA). This paper describes KUNUZ a multi-purpose test collection composed of voweled and structured classical Arabic documents. Its goal is to provide a unique benchmark for assessing applications in several areas of document engineering including IR, document classification and information extraction. The documents are also translated in English to allow Arabic-English cross-lingual IR and machine translation. As far as IR is concerned, we follow the standard topic development and results sampling used in international campaigns. The paper, describes the process of topic development, results pooling and relevance judgment. It also analyses the results of some processing tools and IR models used in the runs. In order to enhance the results of our experiments, we also proposed to combine the results based on a meta-search approach using Support Vector Machines (SVM) classification."
+  },
+  {
+   "paperId": "f46fad414961038cabfc93ecdf77ba257174ed6d",
+   "externalIds": {
+    "ArXiv": "2012.13292",
+    "DBLP": "conf/iconference/RahmanKL22",
+    "DOI": "10.1007/978-3-030-96960-8_10",
+    "CorpusId": 244896609
+   },
+   "title": "Understanding and Predicting Characteristics of Test Collections in Information Retrieval",
+   "venue": "iConference",
+   "year": 2020,
+   "citationCount": 1,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2012.13292",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2012.13292, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2218027638",
+     "name": "Md. Mustafizur Rahman"
+    },
+    {
+     "authorId": "33407644",
+     "name": "Mucahid Kutlu"
+    },
+    {
+     "authorId": "1747771",
+     "name": "Matthew Lease"
+    }
+   ],
+   "abstract": ". Research community evaluations in information retrieval, such as NIST’s Text REtrieval Conference (TREC), build reusable test collections by pooling document rankings submitted by many teams. Naturally, the quality of the resulting test collection thus greatly depends on the number of participating teams and the quality of their submitted runs. In this work, we investigate: i) how the number of participants, coupled with other factors, aﬀects the quality of a test collection; and ii) whether the quality of a test collection can be inferred prior to collecting relevance judgments from human assessors. Experiments conducted on six TREC collections illustrate how the number of teams interacts with various other factors to inﬂuence the resulting quality of test collections. We also show that the reusability of a test collection can be predicted with high accuracy when the same document collection is used for successive years in an evaluation campaign, as is common in TREC. the We"
+  },
+  {
+   "paperId": "e854e357148a65e27bde23e6e4c755c694e38d83",
+   "externalIds": {
+    "MAG": "3162217608",
+    "DOI": "10.12785/IJCDS/100161",
+    "CorpusId": 235740706
+   },
+   "title": "A Combined Method of Naïve-Bayes and Pooling Strategy for Building Test Collection for Arabic/English Information Retrieval",
+   "venue": "",
+   "year": 2021,
+   "citationCount": 1,
+   "openAccessPdf": {
+    "url": "https://journal.uob.edu.bh:443/bitstream/123456789/4222/4/paper%2061.pdf",
+    "status": "GOLD",
+    "license": "public-domain",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.12785/IJCDS/100161?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.12785/IJCDS/100161, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2013521",
+     "name": "A. Mazari"
+    },
+    {
+     "authorId": "2460430",
+     "name": "Abdelhamid Djeffal"
+    }
+   ],
+   "abstract": "In this paper, we examine the feasibility of building Information retrieval test collections based on two combined methods, the pooling strategy and the Naïve-Bayes machine-learning algorithm. Within the proposed approach, we built a new Arabic/English test collection. This collection consists of 600 parallel Arabic / English documents collected from abstracts of the doctoral dissertations mainly hosted in the ProQuest library and 161 queries in six topics and nineteen sub-topics. The judgment and score of the relevance between each document and each query is determined by the pooling method, where three search engines (Lucene, Whoosh and Hibernate) are used in two languages (Arabic and English). The obtained results are also examined and validated by the Naïve-Bayes algorithm, whereby 0.629 of F-measure metric is calculated from the relevant documents effectively selected. The paper empirically shows that the use of the machine-learning algorithms combined to the pooling strategy serves to build information retrieval collections efficiently and more quickly."
+  },
+  {
+   "paperId": "e3ee91390fff3919bec61d6f65090a1eb365770c",
+   "externalIds": {
+    "DBLP": "conf/trec/RauK21",
+    "CorpusId": 247863283
+   },
+   "title": "Recall Aspects of Transformers for Text Ranking",
+   "venue": "Text Retrieval Conference",
+   "year": 2021,
+   "citationCount": 1,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://pure.uva.nl/ws/files/147066989/UAmsterdam-DL.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "144294375",
+     "name": "David Rau"
+    },
+    {
+     "authorId": "1753628",
+     "name": "J. Kamps"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "1d333a4b283fa76169f6d56823eea18040639990",
+   "externalIds": {
+    "DBLP": "conf/skima/JosephR22",
+    "DOI": "10.1109/SKIMA57145.2022.10029459",
+    "CorpusId": 256645886
+   },
+   "title": "Generation of High-Quality Relevant Judgments through Document Similarity and Document Pooling for the Evaluation of Information Retrieval Systems",
+   "venue": "International Conference on Software, Knowledge, Information Management and Applications",
+   "year": 2022,
+   "citationCount": 1,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/SKIMA57145.2022.10029459?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/SKIMA57145.2022.10029459, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1484005077",
+     "name": "M. Joseph"
+    },
+    {
+     "authorId": "3119035",
+     "name": "Sri Devi Ravana"
+    }
+   ],
+   "abstract": "The Information Retrieval System Evaluation have carried out through Cranfield-paradigm in which the test collections provide the foundation of the evaluation process. The test collections consist of document corpus, topics, and a set of relevance judgements. The relevant judgements are the documents which retrieved from the test collections based on the topics. The precision of the evaluation process is based on the number of relevant documents in the relevant judgement list called qrels. This paper presents a study on how methodologies like pooling and document similarity helps to generate more relevant documents into the relevance judgments set in order to increase the accuracy of the evaluation process. The initial results have shown that combination of pooling with document similarity performs better compared to base clustering or classification."
+  },
+  {
+   "paperId": "edc6d26bb1d393d884a3ea999acbf01c1184151e",
+   "externalIds": {
+    "DOI": "10.54364/aaiml.2026.63319",
+    "CorpusId": 289769511
+   },
+   "title": "Comparative Analysis of Classical Information Retrieval Models for Relevance Judgment List Expansion",
+   "venue": "Advances in Artificial Intelligence and Machine Learning",
+   "year": 2026,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.54364/aaiml.2026.63319",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.54364/aaiml.2026.63319?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.54364/aaiml.2026.63319, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2696636",
+     "name": "Fadi Yamout"
+    }
+   ],
+   "abstract": "Document representations commonly used in classical information retrieval (IR), combined with machine learning classifiers, can be used to automatically expand upon relevance judgment lists with high fidelity. Automatically expanded judgments can be useful when existing relevance assessments are incomplete, which is frequently the case given how labor-intensive and expensive relevance assessment can be. We conduct experiments on multiple IR test collections comparing various IR document representations combined with two classifiers. The IR document representations used include TF-IDF, cosine-normalized TF-IDF, BM25, variants of DFR (PL2, INL2, and IFB2), Dirichlet-smoothed language modeling (LMDir), and Binary weighting. Separate Naïve Bayes and Support Vector Machine (SVM) classifiers were trained on each document representation given existing relevance judgments and then used to predict the relevance of previously-unjudged documents. The experimental results, supported by paired randomization significance testing, demonstrate that both document representation and classifier selection significantly affect relevance judgment expansion performance. Empirically, using paired randomization significance testing, we find that SVM consistently outperforms Naïve Bayes, and TF-IDF and BM25 are typically among the topperforming representations. Additional experiments designed to measure rank-preserving characteristics of the expanded judgments using Kendall’s Tau show that the expanded judgments preserve retrieval-system rankings better than the incomplete judgments do, and that rankings generated using expanded judgments are statistically significantly closer to the rankings generated using the originally complete set of relevance assessments."
+  },
+  {
+   "paperId": "a835ce8cf976bdd2724e38db39e0aa0708c781b8",
+   "externalIds": {
+    "MAG": "3004381856",
+    "DBLP": "conf/fdia/Otero19",
+    "CorpusId": 210847680
+   },
+   "title": "Exploiting Pooling Methods for Building Datasets for Novel Tasks",
+   "venue": "FDIA@ESSIR",
+   "year": 2019,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at http://ceur-ws.org/Vol-2537/paper-16.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2073115031",
+     "name": "David Otero"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "9026844defc80ec18cd39c7846a62bef2a053358",
+   "externalIds": {
+    "DBLP": "conf/sigir/Mansour25",
+    "DOI": "10.1145/3726302.3730129",
+    "CorpusId": 280047386
+   },
+   "title": "Towards Efficient and Effective Multi-modal Retrieval",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730129",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3726302.3730129?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3726302.3730129, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2044959584",
+     "name": "Watheq Mansour"
+    }
+   ],
+   "abstract": "Information Retrieval systems are becoming increasingly multimodal, and one interesting and natural modality for human information interaction is audio. Audio data is rapidly expanding in both volume and popularity. For example, more than 4 million podcasts are available worldwide - each containing tens to thousands of episodes - with over 500 million expected listeners as of 2024. Searching such large and evolving audio corpora involves multiple challenges, ranging from content and style diversity, expensive audio processing, and various indexing considerations such as retrieval segmentation and text vs audio retrieval modalities. In this thesis, we aim to address the challenges linked to audio retrieval and devise novel approaches to improve state-of-the-art (SOTA) performance. We divide the work into four main milestones that target answering the following research questions: RQ1: How does the quality of an ASR model affect retrieval effectiveness? One of the approaches to search spoken audio is to reduce the problem to text retrieval using ASR models to generate text transcripts. Spina et al. [2] showed that the quality of ASR has a clear impact on the summaries generated by ASR. Motivated by this, we are interested in examining how automatic transcription algorithms impact the effectiveness of audio retrieval and re-ranking in dense and sparse retrieval configurations. In many real-world scenarios, resource limits require cheaper ASR models to be used. Therefore, we are interested in exploring if dense semantic search methods can reduce the impact of ASR model choice. RQ2: How can we build more complete, comprehensive, and representative audio retrieval resources to promote further research on audio retrieval? After reviewing the literature and performing a preliminary experiment on the Spotify podcasts dataset [1], we noted two main gaps in the available resources. Firstly, the large audio dataset released in TREC suffers from the shallow pooling issue, where new systems retrieve many unseen judgments, making it difficult to assess the quality of modern IR techniques. Secondly, there is a scarcity of audio datasets available for low-resource languages. Our plan to bridge these gaps comprises two parts: (1) Assessing the missed judgments Motivated by the recent literature on using LLMs as a judge [3], we plan to resolve the unjudged passages issue by assessing the relevance with multiple large language models (LLMs). (2) Curate a multi-lingual audio dataset with a focus on low-resource languages. Since there is a scarcity of audio datasets in low-resource languages, we plan to collect a large number of audio files in multiple low-resource languages, unify their format, and make them publicly available as a first step toward building test collections that enable research and advancements in such languages. RQ3: How can we combine audio and text to produce an efficient and effective multi-modal ranking model? We will focus on solutions that depend on processing both text and audio signals during indexing and retrieval. Our first study will be focused on improving the effectiveness of low-cost ASR systems. Another promising direction is to use the phonetic features as a representation of a word or token. Then, we can devise a suitable indexing paradigm to support searching over these representations. RQ4: What are the challenges affecting audio indexing and search performance, and what is the best way to mitigate against similar issues in the future? One of the main challenges in multi-modal search is identifying the suitable length for the retrieval unit. The retrieval unit satisfying an information need might vary in length from a couple of minutes to 10 minutes to one hour or a whole episode or series. Other challenges will stem from failure cases within state-of-the-art text/audio retrieval systems. So, in parallel with answering the previous questions, we will also study such failure cases, investigate the reasons behind them, and propose solutions that can mitigate their negative impacts."
+  },
+  {
+   "paperId": "8443ce093c3e8c0dd2bba17b1720af624e4e33b8",
+   "externalIds": {
+    "DBLP": "conf/sigir/GienappPYSY26",
+    "ArXiv": "2510.04633",
+    "DOI": "10.1145/3805712.3809713",
+    "CorpusId": 281842404
+   },
+   "title": "Topic-Specific Classifiers are Better Relevance Judges than Prompted LLMs",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3805712.3809713",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.04633, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2356415648",
+     "name": "Lukas Gienapp"
+    },
+    {
+     "authorId": "3046200",
+     "name": "Martin Potthast"
+    },
+    {
+     "authorId": "2347038851",
+     "name": "Andrew Yates"
+    },
+    {
+     "authorId": "2356527574",
+     "name": "Harrisen Scells"
+    },
+    {
+     "authorId": "153564640",
+     "name": "Eugene Yang"
+    }
+   ],
+   "abstract": "The unjudged document problem, where systems that did not contribute to the original judgement pool may retrieve documents without a relevance judgement, is a key obstacle to the reuseability of test collections in information retrieval. This is commonly dealt with by treating unjudged documents as non-relevant, and recently, the use of large language models (LLMs) as a relevance judge (LLM-as-a-judge) emerged. However, this has been criticized, among other things, as circular, since the same LLM can be used as the ranker and the judge. We propose to train topic-specific relevance classifiers instead: By finetuning monoT5 with independent LoRA weight adaptation on the judgments of a single assessor for a single topic's pool, we align it to that assessor's notion of relevance for that topic. The system rankings obtained through our classifier's relevance judgments achieve a Spearmans' ρ correlation of >0.94 with ground truth system rankings. As little as 128 initial human judgments per topic suffice to improve the comparability of models, while achieving more reliability than existing LLM-as-a-judge approaches, and maintaining human judgments as the gold standard for retrieval evaluation. Code, models, and data are available."
+  },
+  {
+   "paperId": "6287fd113845ce53e9207c77a26a43040d400bfe",
+   "externalIds": {
+    "ArXiv": "2011.00479",
+    "DBLP": "journals/corr/abs-2011-00479",
+    "MAG": "3094927943",
+    "DOI": "10.1145/3483382.3483400",
+    "CorpusId": 226227039
+   },
+   "title": "Cheap IR evaluation",
+   "venue": "SIGIR Forum",
+   "year": 2020,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2011.00479",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2011.00479, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "3445334",
+     "name": "Kevin Roitero"
+    }
+   ],
+   "abstract": "To evaluate Information Retrieval (IR) effectiveness, a possible approach is to use test collections, which are composed of a collection of documents, a set of description of information needs (called topics), and a set of relevant documents to each topic. Test collections are modelled in a competition scenario: for example, in the well known TREC initiative, participants run their own retrieval systems over a set of topics and they provide a ranked list of retrieved documents; some of the retrieved documents (usually the first ranked) constitute the so called pool, and their relevance is evaluated by human assessors; the document list is then used to compute effectiveness metrics and rank the participant systems. Private Web Search companies also run their in-house evaluation exercises; although the details are mostly unknown, and the aims are somehow different, the overall approach shares several issues with the test collection approach. The aim of this work is to: (i) develop and improve some state-of-the-art work on the evaluation of IR effectiveness while saving resources, and (ii) propose a novel, more principled and engineered, overall approach to test collection based effectiveness evaluation. In this thesis we focus on three main directions: the first part details the usage of few topics (i.e., information needs) in retrieval evaluation and shows an extensive study detailing the effect of using fewer topics for retrieval evaluation in terms of number of topics, topics subsets, and statistical power. The second part of this thesis discusses the evaluation without relevance judgements, reproducing, extending, and generalizing state-of-the-art methods and investigating their combinations by means of data fusion techniques and machine learning. Finally, the third part uses crowdsourcing to gather relevance labels, and in particular shows the effect of using fine grained judgement scales; furthermore, explores methods to transform judgements between different relevance scales. Awarded by: University of Udine, Udine, Italy on 19 March 2020. Supervised by: Professor Stefano Mizzaro. Available at: https://kevinroitero.com/resources/kr-phd-thesis.pdf."
+  },
+  {
+   "paperId": "55d9c8371314e62c6a5c44dcdc68e96f43dff5d3",
+   "externalIds": {
+    "DBLP": "journals/sigir/Otero24",
+    "DOI": "10.1145/3687273.3687296",
+    "CorpusId": 271787078
+   },
+   "title": "New Algorithms and Methodologies for Building Information Retrieval Collections",
+   "venue": "SIGIR Forum",
+   "year": 2024,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "http://hdl.handle.net/2183/36378",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3687273.3687296?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3687273.3687296, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2073115031",
+     "name": "David Otero"
+    }
+   ],
+   "abstract": "Information retrieval systems play a crucial role in addressing users' information needs by aiding their exploration of vast collections of information. This thesis is framed in a critical information retrieval research aspect: evaluation. In particular, we propose new approaches for creating annotated test collections. Such collections are essential for evaluating retrieval systems' effectiveness in controlled experiments. Reflecting real-world conditions accurately in these test collections is pivotal for progress in the field. We aim to introduce innovative techniques for efficiently assembling reliable test collections, facilitating broader research and development in information retrieval. The thesis first proposes a new method for building new pooled test collections without requiring costly evaluation campaigns [Otero et al., 2021b]. This approach simplifies and economizes the process of building new benchmarks. Then, we introduce a novel adjudication method for determining which pooled documents warrant human judgment, aiming to reduce the need for extensive expert assessments [Otero et al., 2023a]. This method is both cost-effective and efficient. Additionally, the thesis presents a fresh perspective on evaluating adjudication methods, emphasizing statistical significance, an aspect often overlooked in previous document adjudication research [Otero et al., 2023b]. As a demonstration of the methods explored in this thesis, we applied them to develop a new test collection whose construction process we describe here as an example of the use of reduced-budget methods [Otero et al., 2021a, 2020]. In summary, this thesis integrates established information retrieval knowledge with new methodologies to create annotated collections that are both cost-effective and reliable. This fusion is crucial for advancing the development of more effective retrieval systems. Awarded by: Universidade da Coruña, A Coruña, Spain on 5 April 2024. Supervised by: Javier Parapar, Álvaro Barreiro. Available at: http://hdl.handle.net/2183/36378."
+  },
+  {
+   "paperId": "30830e221da366d5e2cb9de00c3a67a643a26c79",
+   "externalIds": {
+    "MAG": "2964823476",
+    "DOI": "10.3390/PROCEEDINGS2019021033",
+    "CorpusId": 201132807
+   },
+   "title": "Building High-Quality Datasets for Information Retrieval Evaluation at a Reduced Cost",
+   "venue": "Proceedings",
+   "year": 2019,
+   "citationCount": 0,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.3390/proceedings2019021033",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.3390/PROCEEDINGS2019021033?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.3390/PROCEEDINGS2019021033, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2073115031",
+     "name": "David Otero"
+    },
+    {
+     "authorId": "2226132",
+     "name": "Daniel Valcarce"
+    },
+    {
+     "authorId": "1898621",
+     "name": "Javier Parapar"
+    },
+    {
+     "authorId": "145747881",
+     "name": "Álvaro Barreiro"
+    }
+   ],
+   "abstract": "Information Retrieval is not any more exclusively about document ranking. Continuously new tasks are proposed on this and sibling fields. With this proliferation of tasks, it becomes crucial to have a cheap way of constructing test collections to evaluate the new developments. Building test collections is time and resource consuming: it requires time to obtain the documents, to define the user needs and it requires the assessors to judge a lot of documents. To reduce the latest, pooling strategies aim to decrease the assessment effort by presenting to the assessors a sample of documents in the corpus with the maximum number of relevant documents in it. In this paper, we propose the preliminary design of different techniques to easily and cheapily build high-quality test collections without the need of having participants systems."
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(pooling | \"incomplete judgments\" | \"unjudged documents\") + (\"test collection\") + (retrieval)"
+}

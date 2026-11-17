@@ -1,0 +1,1096 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/654RHXnUm6eI+TxRb4v0itaX1Xc</id>
+  <title>arXiv Query: search_query=(abs:latency OR abs:"response time") AND (abs:"web search" OR abs:"search engine") AND (abs:user OR abs:satisfaction OR abs:engagement) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:39Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:latency+OR+abs:%22response+time%22)+AND+((abs:%22web+search%22+OR+abs:%22search+engine%22)+AND+((abs:user+OR+(abs:satisfaction+OR+abs:engagement))+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22)))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>31</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2412.04637v1</id>
+    <title>Semantic Retrieval at Walmart</title>
+    <updated>2024-12-05T22:10:58Z</updated>
+    <link href="https://arxiv.org/abs/2412.04637v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.04637v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In product search, the retrieval of candidate products before re-ranking is more critical and challenging than other search like web search, especially for tail queries, which have a complex and specific search intent. In this paper, we present a hybrid system for e-commerce search deployed at Walmart that combines traditional inverted index and embedding-based neural retrieval to better answer user tail queries. Our system significantly improved the relevance of the search engine, measured by both offline and online evaluations. The improvements were achieved through a combination of different approaches. We present a new technique to train the neural model at scale. and describe how the system was deployed in production with little impact on response time. We highlight multiple learnings and practical tricks that were used in the deployment of this system.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-05T22:10:58Z</published>
+    <arxiv:comment>9 page, 2 figures, 10 tables, KDD 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Alessandro Magnani</name>
+    </author>
+    <author>
+      <name>Feng Liu</name>
+    </author>
+    <author>
+      <name>Suthee Chaidaroon</name>
+    </author>
+    <author>
+      <name>Sachin Yadav</name>
+    </author>
+    <author>
+      <name>Praveen Reddy Suram</name>
+    </author>
+    <author>
+      <name>Ajit Puthenputhussery</name>
+    </author>
+    <author>
+      <name>Sijie Chen</name>
+    </author>
+    <author>
+      <name>Min Xie</name>
+    </author>
+    <author>
+      <name>Anirudh Kashi</name>
+    </author>
+    <author>
+      <name>Tony Lee</name>
+    </author>
+    <author>
+      <name>Ciya Liao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09086v1</id>
+    <title>Impact of Response Latency on User Behaviour in Mobile Web Search</title>
+    <updated>2021-01-22T12:43:46Z</updated>
+    <link href="https://arxiv.org/abs/2101.09086v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09086v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traditionally, the efficiency and effectiveness of search systems have both been of great interest to the information retrieval community. However, an in-depth analysis of the interaction between the response latency and users' subjective search experience in the mobile setting has been missing so far. To address this gap, we conduct a controlled study that aims to reveal how response latency affects mobile web search. Our preliminary results indicate that mobile web search users are four times more tolerant to response latency reported for desktop web search users. However, when exceeding a certain threshold of 7-10 sec, the delays have a sizeable impact and users report feeling significantly more tensed, tired, terrible, frustrated and sluggish, all which contribute to a worse subjective user experience.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-22T12:43:46Z</published>
+    <arxiv:comment>In Proceedings of the 2021 ACM SIGIR Conference on Human Information Interaction and Retrieval (CHIIR '21), March 14-19, 2021, Canberra, Australia</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ioannis Arapakis</name>
+    </author>
+    <author>
+      <name>Souneil Park</name>
+    </author>
+    <author>
+      <name>Martin Pielot</name>
+    </author>
+    <arxiv:doi>10.1145/3406522.3446038</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3406522.3446038" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.03449v1</id>
+    <title>MOBIUS: Towards the Next Generation of Query-Ad Matching in Baidu's Sponsored Search</title>
+    <updated>2024-09-05T11:56:40Z</updated>
+    <link href="https://arxiv.org/abs/2409.03449v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.03449v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Baidu runs the largest commercial web search engine in China, serving hundreds of millions of online users every day in response to a great variety of queries. In order to build a high-efficiency sponsored search engine, we used to adopt a three-layer funnel-shaped structure to screen and sort hundreds of ads from billions of ad candidates subject to the requirement of low response latency and the restraints of computing resources. Given a user query, the top matching layer is responsible for providing semantically relevant ad candidates to the next layer, while the ranking layer at the bottom concerns more about business indicators (e.g., CPM, ROI, etc.) of those ads. The clear separation between the matching and ranking objectives results in a lower commercial return. The Mobius project has been established to address this serious issue. It is our first attempt to train the matching layer to consider CPM as an additional optimization objective besides the query-ad relevance, via directly predicting CTR (click-through rate) from billions of query-ad pairs. Specifically, this paper will elaborate on how we adopt active learning to overcome the insufficiency of click history at the matching layer when training our neural click networks offline, and how we use the SOTA ANN search technique for retrieving ads more efficiently (Here ``ANN'' stands for approximate nearest neighbor search). We contribute the solutions to Mobius-V1 as the first version of our next generation query-ad matching system.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-05T11:56:40Z</published>
+    <arxiv:comment>Accepted by KDD'19</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Miao Fan</name>
+    </author>
+    <author>
+      <name>Jiacheng Guo</name>
+    </author>
+    <author>
+      <name>Shuai Zhu</name>
+    </author>
+    <author>
+      <name>Shuo Miao</name>
+    </author>
+    <author>
+      <name>Mingming Sun</name>
+    </author>
+    <author>
+      <name>Ping Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.11108v3</id>
+    <title>Pre-trained Language Model based Ranking in Baidu Search</title>
+    <updated>2021-06-25T09:11:00Z</updated>
+    <link href="https://arxiv.org/abs/2105.11108v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.11108v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As the heart of a search engine, the ranking system plays a crucial role in satisfying users' information demands. More recently, neural rankers fine-tuned from pre-trained language models (PLMs) establish state-of-the-art ranking effectiveness. However, it is nontrivial to directly apply these PLM-based rankers to the large-scale web search system due to the following challenging issues:(1) the prohibitively expensive computations of massive neural PLMs, especially for long texts in the web-document, prohibit their deployments in an online ranking system that demands extremely low latency;(2) the discrepancy between existing ranking-agnostic pre-training objectives and the ad-hoc retrieval scenarios that demand comprehensive relevance modeling is another main barrier for improving the online ranking system;(3) a real-world search engine typically involves a committee of ranking components, and thus the compatibility of the individually fine-tuned ranking model is critical for a cooperative ranking system. In this work, we contribute a series of successfully applied techniques in tackling these exposed issues when deploying the state-of-the-art Chinese pre-trained language model, i.e., ERNIE, in the online search engine system. We first articulate a novel practice to cost-efficiently summarize the web document and contextualize the resultant summary content with the query using a cheap yet powerful Pyramid-ERNIE architecture. Then we endow an innovative paradigm to finely exploit the large-scale noisy and biased post-click behavioral data for relevance-oriented pre-training. We also propose a human-anchored fine-tuning strategy tailored for the online ranking system, aiming to stabilize the ranking signals across various online components. Extensive offline and online experimental results show that the proposed techniques significantly boost the search engine's performance.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-24T06:12:06Z</published>
+    <arxiv:comment>9-pages, 3 figures, 7 tables, SIGKDD 2021 accepted paper</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lixin Zou</name>
+    </author>
+    <author>
+      <name>Shengqiang Zhang</name>
+    </author>
+    <author>
+      <name>Hengyi Cai</name>
+    </author>
+    <author>
+      <name>Dehong Ma</name>
+    </author>
+    <author>
+      <name>Suqi Cheng</name>
+    </author>
+    <author>
+      <name>Daiting Shi</name>
+    </author>
+    <author>
+      <name>Zhifan Zhu</name>
+    </author>
+    <author>
+      <name>Weiyue Su</name>
+    </author>
+    <author>
+      <name>Shuaiqiang Wang</name>
+    </author>
+    <author>
+      <name>Zhicong Cheng</name>
+    </author>
+    <author>
+      <name>Dawei Yin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.20559v1</id>
+    <title>Leveraging Generative Models for Real-Time Query-Driven Text Summarization in Large-Scale Web Search</title>
+    <updated>2025-08-28T08:51:51Z</updated>
+    <link href="https://arxiv.org/abs/2508.20559v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.20559v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the dynamic landscape of large-scale web search, Query-Driven Text Summarization (QDTS) aims to generate concise and informative summaries from textual documents based on a given query, which is essential for improving user engagement and facilitating rapid decision-making. Traditional extractive summarization models, based primarily on ranking candidate summary segments, have been the dominant approach in industrial applications. However, these approaches suffer from two key limitations: 1) The multi-stage pipeline often introduces cumulative information loss and architectural bottlenecks due to its weakest component; 2) Traditional models lack sufficient semantic understanding of both user queries and documents, particularly when dealing with complex search intents. In this study, we propose a novel framework to pioneer the application of generative models to address real-time QDTS in industrial web search. Our approach integrates large model distillation, supervised fine-tuning, direct preference optimization, and lookahead decoding to transform a lightweight model with only 0.1B parameters into a domain-specialized QDTS expert. Evaluated on multiple industry-relevant metrics, our model outperforms the production baseline and achieves a new state of the art. Furthermore, it demonstrates excellent deployment efficiency, requiring only 334 NVIDIA L20 GPUs to handle \textasciitilde50,000 queries per second under 55~ms average latency per query.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-28T08:51:51Z</published>
+    <arxiv:comment>CIKM'25</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zeyu Xiong</name>
+    </author>
+    <author>
+      <name>Yixuan Nan</name>
+    </author>
+    <author>
+      <name>Li Gao</name>
+    </author>
+    <author>
+      <name>Hengzhu Tang</name>
+    </author>
+    <author>
+      <name>Shuaiqiang Wang</name>
+    </author>
+    <author>
+      <name>Junfeng Wang</name>
+    </author>
+    <author>
+      <name>Dawei Yin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.11858v1</id>
+    <title>MAR: A structure-based search engine for models</title>
+    <updated>2020-08-26T23:30:20Z</updated>
+    <link href="https://arxiv.org/abs/2008.11858v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.11858v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The availability of shared software models provides opportunities for reusing, adapting and learning from them. Public models are typically stored in a variety of locations, including model repositories, regular source code repositories, web pages, etc. To profit from them developers need effective search mechanisms to locate the models relevant for their tasks. However, to date, there has been little success in creating a generic and efficient search engine specially tailored to the modelling domain.
+  In this paper we present MAR, a search engine for models. MAR is generic in the sense that it can index any type of model if its meta-model is known. MAR uses a query-by-example approach, that is, it uses example models as queries. The search takes the model structure into account using the notion of bag of paths, which encodes the structure of a model using paths between model elements and is a representation amenable for indexing. MAR is built over HBase using a specific design to deal with large repositories. Our benchmarks show that the engine is efficient and has fast response times in most cases. We have also evaluated the precision of the search engine by creating model mutants which simulate user queries. A REST API is available to perform queries and an Eclipse plug-in allows end users to connect to the search engine from model editors. We have currently indexed more than 50.000 models of different kinds, including Ecore meta-models, BPMN diagrams and UML models. MAR is available at http://mar-search.org.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-26T23:30:20Z</published>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>José Antonio Hernández López</name>
+    </author>
+    <author>
+      <name>Jesús Sánchez Cuadrado</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21124v1</id>
+    <title>PulseCX: Breaking the Closed-World Assumption in Real-Time CX</title>
+    <updated>2026-06-19T05:53:02Z</updated>
+    <link href="https://arxiv.org/abs/2606.21124v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21124v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conversational AI agents in Customer Experience (CX) typically suffer from a Closed-World Constraint, ignoring high-velocity external shifts like viral trends or outages. Ad-hoc web search attempts to bridge this gap but often introduce prohibitive latency and context poisoning. We introduce PulseCX, a framework that decouples knowledge acquisition from consumption. Adopting a structure-first paradigm, PulseCX employs an asynchronous agent to linearize signals into a Decay-Aware Temporal Knowledge Graph (DA-TKG) governed by reinforcement--decay dynamics to actively manage information lifecycles. By coupling this self-evolving memory with hierarchical intent gating, PulseCX removes synchronous search bottlenecks (&lt;10ms overhead) and drives significant gains in Intent Resolution (IRR) and Customer Satisfaction (s-CSAT) in dynamic environments.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-19T05:53:02Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Rajat Agarwal</name>
+    </author>
+    <author>
+      <name>Suvidha Tripathi</name>
+    </author>
+    <author>
+      <name>Shubham Sharma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.01510v1</id>
+    <title>MIRA: Leveraging Multi-Intention Co-click Information in Web-scale Document Retrieval using Deep Neural Networks</title>
+    <updated>2020-07-03T06:32:48Z</updated>
+    <link href="https://arxiv.org/abs/2007.01510v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.01510v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of deep recall model in industrial web search, which is, given a user query, retrieve hundreds of most relevance documents from billions of candidates. The common framework is to train two encoding models based on neural embedding which learn the distributed representations of queries and documents separately and match them in the latent semantic space. However, all the exiting encoding models only leverage the information of the document itself, which is often not sufficient in practice when matching with query terms, especially for the hard tail queries. In this work we aim to leverage the additional information for each document from its co-click neighbour to help document retrieval. The challenges include how to effectively extract information and eliminate noise when involving co-click information in deep model while meet the demands of billion-scale data size for real time online inference.
+  To handle the noise in co-click relations, we firstly propose a web-scale Multi-Intention Co-click document Graph(MICG) which builds the co-click connections between documents on click intention level but not on document level. Then we present an encoding framework MIRA based on Bert and graph attention networks which leverages a two-factor attention mechanism to aggregate neighbours. To meet the online latency requirements, we only involve neighbour information in document side, which can save the time-consuming query neighbor search in real time serving. We conduct extensive offline experiments on both public dataset and private web-scale dataset from two major commercial search engines demonstrating the effectiveness and scalability of the proposed method compared with several baselines. And a further case study reveals that co-click relations mainly help improve web search quality from two aspects: key concept enhancing and query term complementary.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-03T06:32:48Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yusi Zhang</name>
+    </author>
+    <author>
+      <name>Chuanjie Liu</name>
+    </author>
+    <author>
+      <name>Angen Luo</name>
+    </author>
+    <author>
+      <name>Hui Xue</name>
+    </author>
+    <author>
+      <name>Xuan Shan</name>
+    </author>
+    <author>
+      <name>Yuxiang Luo</name>
+    </author>
+    <author>
+      <name>Yiqian Xia</name>
+    </author>
+    <author>
+      <name>Yuanchi Yan</name>
+    </author>
+    <author>
+      <name>Haidong Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.08252v1</id>
+    <title>Deep Natural Language Processing for LinkedIn Search Systems</title>
+    <updated>2021-07-30T17:40:36Z</updated>
+    <link href="https://arxiv.org/abs/2108.08252v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.08252v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many search systems work with large amounts of natural language data, e.g., search queries, user profiles and documents, where deep learning based natural language processing techniques (deep NLP) can be of great help. In this paper, we introduce a comprehensive study of applying deep NLP techniques to five representative tasks in search engines. Through the model design and experiments of the five tasks, readers can find answers to three important questions: (1) When is deep NLP helpful/not helpful in search systems? (2) How to address latency challenges? (3) How to ensure model robustness? This work builds on existing efforts of LinkedIn search, and is tested at scale on a commercial search engine. We believe our experiences can provide useful insights for the industry and research communities.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-30T17:40:36Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Weiwei Guo</name>
+    </author>
+    <author>
+      <name>Xiaowei Liu</name>
+    </author>
+    <author>
+      <name>Sida Wang</name>
+    </author>
+    <author>
+      <name>Michaeel Kazi</name>
+    </author>
+    <author>
+      <name>Zhoutong Fu</name>
+    </author>
+    <author>
+      <name>Huiji Gao</name>
+    </author>
+    <author>
+      <name>Jun Jia</name>
+    </author>
+    <author>
+      <name>Liang Zhang</name>
+    </author>
+    <author>
+      <name>Bo Long</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.02044v1</id>
+    <title>Stream RAG: Instant and Accurate Spoken Dialogue Systems with Streaming Tool Usage</title>
+    <updated>2025-10-02T14:18:20Z</updated>
+    <link href="https://arxiv.org/abs/2510.02044v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.02044v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>End-to-end speech-in speech-out dialogue systems are emerging as a powerful alternative to traditional ASR-LLM-TTS pipelines, generating more natural, expressive responses with significantly lower latency. However, these systems remain prone to hallucinations due to limited factual grounding. While text-based dialogue systems address this challenge by integrating tools such as web search and knowledge graph APIs, we introduce the first approach to extend tool use directly into speech-in speech-out systems. A key challenge is that tool integration substantially increases response latency, disrupting conversational flow. To mitigate this, we propose Streaming Retrieval-Augmented Generation (Streaming RAG), a novel framework that reduces user-perceived latency by predicting tool queries in parallel with user speech, even before the user finishes speaking. Specifically, we develop a post-training pipeline that teaches the model when to issue tool calls during ongoing speech and how to generate spoken summaries that fuse audio queries with retrieved text results, thereby improving both accuracy and responsiveness. To evaluate our approach, we construct AudioCRAG, a benchmark created by converting queries from the publicly available CRAG dataset into speech form. Experimental results demonstrate that our streaming RAG approach increases QA accuracy by up to 200% relative (from 11.1% to 34.2% absolute) and further enhances user experience by reducing tool use latency by 20%. Importantly, our streaming RAG approach is modality-agnostic and can be applied equally to typed input, paving the way for more agentic, real-time AI assistants.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-02T14:18:20Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Siddhant Arora</name>
+    </author>
+    <author>
+      <name>Haidar Khan</name>
+    </author>
+    <author>
+      <name>Kai Sun</name>
+    </author>
+    <author>
+      <name>Xin Luna Dong</name>
+    </author>
+    <author>
+      <name>Sajal Choudhary</name>
+    </author>
+    <author>
+      <name>Seungwhan Moon</name>
+    </author>
+    <author>
+      <name>Xinyuan Zhang</name>
+    </author>
+    <author>
+      <name>Adithya Sagar</name>
+    </author>
+    <author>
+      <name>Surya Teja Appini</name>
+    </author>
+    <author>
+      <name>Kaushik Patnaik</name>
+    </author>
+    <author>
+      <name>Sanat Sharma</name>
+    </author>
+    <author>
+      <name>Shinji Watanabe</name>
+    </author>
+    <author>
+      <name>Anuj Kumar</name>
+    </author>
+    <author>
+      <name>Ahmed Aly</name>
+    </author>
+    <author>
+      <name>Yue Liu</name>
+    </author>
+    <author>
+      <name>Florian Metze</name>
+    </author>
+    <author>
+      <name>Zhaojiang Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.08404v1</id>
+    <title>Generating Query-Relevant Document Summaries via Reinforcement Learning</title>
+    <updated>2025-08-11T18:52:28Z</updated>
+    <link href="https://arxiv.org/abs/2508.08404v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.08404v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>E-commerce search engines often rely solely on product titles as input for ranking models with latency constraints. However, this approach can result in suboptimal relevance predictions, as product titles often lack sufficient detail to capture query intent. While product descriptions provide richer information, their verbosity and length make them unsuitable for real-time ranking, particularly for computationally expensive architectures like cross-encoder ranking models. To address this challenge, we propose ReLSum, a novel reinforcement learning framework designed to generate concise, query-relevant summaries of product descriptions optimized for search relevance. ReLSum leverages relevance scores as rewards to align the objectives of summarization and ranking, effectively overcoming limitations of prior methods, such as misaligned learning targets. The framework employs a trainable large language model (LLM) to produce summaries, which are then used as input for a cross-encoder ranking model. Experimental results demonstrate significant improvements in offline metrics, including recall and NDCG, as well as online user engagement metrics. ReLSum provides a scalable and efficient solution for enhancing search relevance in large-scale e-commerce systems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-11T18:52:28Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Nitin Yadav</name>
+    </author>
+    <author>
+      <name>Changsung Kang</name>
+    </author>
+    <author>
+      <name>Hongwei Shang</name>
+    </author>
+    <author>
+      <name>Ming Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.09236v3</id>
+    <title>Hybrid Semantic Search: Unveiling User Intent Beyond Keywords</title>
+    <updated>2024-09-06T13:34:16Z</updated>
+    <link href="https://arxiv.org/abs/2408.09236v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.09236v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper addresses the limitations of traditional keyword-based search in understanding user intent and introduces a novel hybrid search approach that leverages the strengths of non-semantic search engines, Large Language Models (LLMs), and embedding models. The proposed system integrates keyword matching, semantic vector embeddings, and LLM-generated structured queries to deliver highly relevant and contextually appropriate search results. By combining these complementary methods, the hybrid approach effectively captures both explicit and implicit user intent.The paper further explores techniques to optimize query execution for faster response times and demonstrates the effectiveness of this hybrid search model in producing comprehensive and accurate search outcomes.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-17T16:04:31Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Aman Ahluwalia</name>
+    </author>
+    <author>
+      <name>Bishwajit Sutradhar</name>
+    </author>
+    <author>
+      <name>Karishma Ghosh</name>
+    </author>
+    <author>
+      <name>Indrapal Yadav</name>
+    </author>
+    <author>
+      <name>Arpan Sheetal</name>
+    </author>
+    <author>
+      <name>Prashant Patil</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.07654v3</id>
+    <title>Session-Aware Query Auto-completion using Extreme Multi-label Ranking</title>
+    <updated>2021-08-21T22:48:35Z</updated>
+    <link href="https://arxiv.org/abs/2012.07654v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.07654v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query auto-completion (QAC) is a fundamental feature in search engines where the task is to suggest plausible completions of a prefix typed in the search bar. Previous queries in the user session can provide useful context for the user's intent and can be leveraged to suggest auto-completions that are more relevant while adhering to the user's prefix. Such session-aware QACs can be generated by recent sequence-to-sequence deep learning models; however, these generative approaches often do not meet the stringent latency requirements of responding to each user keystroke. Moreover, these generative approaches pose the risk of showing nonsensical queries.
+  In this paper, we provide a solution to this problem: we take the novel approach of modeling session-aware QAC as an eXtreme Multi-Label Ranking (XMR) problem where the input is the previous query in the session and the user's current prefix, while the output space is the set of tens of millions of queries entered by users in the recent past. We adapt a popular XMR algorithm for this purpose by proposing several modifications to the key steps in the algorithm. The proposed modifications yield a 3.9x improvement in terms of Mean Reciprocal Rank (MRR) over the baseline XMR approach on a public search logs dataset. We are able to maintain an inference latency of less than 10 ms while still using session context. When compared against baseline models of acceptable latency, we observed a 33% improvement in MRR for short prefixes of up to 3 characters. Moreover, our model yielded a statistically significant improvement of 2.81% over a production QAC system in terms of suggestion acceptance rate, when deployed on the search bar of an online shopping store as part of an A/B test.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-09T17:56:22Z</published>
+    <arxiv:comment>Accepted in KDD 2021. Updated results for baseline XMR</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Nishant Yadav</name>
+    </author>
+    <author>
+      <name>Rajat Sen</name>
+    </author>
+    <author>
+      <name>Daniel N. Hill</name>
+    </author>
+    <author>
+      <name>Arya Mazumdar</name>
+    </author>
+    <author>
+      <name>Inderjit S. Dhillon</name>
+    </author>
+    <arxiv:doi>10.1145/3447548.3467087</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3447548.3467087" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.02135v2</id>
+    <title>Robust Interaction-Based Relevance Modeling for Online e-Commerce Search</title>
+    <updated>2024-09-25T14:00:18Z</updated>
+    <link href="https://arxiv.org/abs/2406.02135v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.02135v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Semantic relevance calculation is crucial for e-commerce search engines, as it ensures that the items selected closely align with customer intent. Inadequate attention to this aspect can detrimentally affect user experience and engagement. Traditional text-matching techniques are prevalent but often fail to capture the nuances of search intent accurately, so neural networks now have become a preferred solution to processing such complex text matching. Existing methods predominantly employ representation-based architectures, which strike a balance between high traffic capacity and low latency. However, they exhibit significant shortcomings in generalization and robustness when compared to interaction-based architectures. In this work, we introduce a robust interaction-based modeling paradigm to address these shortcomings. It encompasses 1) a dynamic length representation scheme for expedited inference, 2) a professional terms recognition method to identify subjects and core attributes from complex sentence structures, and 3) a contrastive adversarial training protocol to bolster the model's robustness and matching capabilities. Extensive offline evaluations demonstrate the superior robustness and effectiveness of our approach, and online A/B testing confirms its ability to improve relevance in the same exposure position, resulting in more clicks and conversions. To the best of our knowledge, this method is the first interaction-based approach for large e-commerce search relevance calculation. Notably, we have deployed it for the entire search traffic on alibaba.com, the largest B2B e-commerce platform in the world.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-04T09:24:04Z</published>
+    <arxiv:comment>Accepted by ECML-PKDD'24 as Outstanding Paper. 8 pages, 2 figures, 7 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ben Chen</name>
+    </author>
+    <author>
+      <name>Huangyu Dai</name>
+    </author>
+    <author>
+      <name>Xiang Ma</name>
+    </author>
+    <author>
+      <name>Wen Jiang</name>
+    </author>
+    <author>
+      <name>Wei Ning</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1907.03336v1</id>
+    <title>Search-Based Serving Architecture of Embeddings-Based Recommendations</title>
+    <updated>2019-07-07T19:32:24Z</updated>
+    <link href="https://arxiv.org/abs/1907.03336v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.03336v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Over the past 10 years, many recommendation techniques have been based on embedding users and items in latent vector spaces, where the inner product of a (user,item) pair of vectors represents the predicted affinity of the user to the item. A wealth of literature has focused on the various modeling approaches that result in embeddings, and has compared their quality metrics, learning complexity, etc. However, much less attention has been devoted to the issues surrounding productization of an embeddings-based high throughput, low latency recommender system. In particular, how the system might keep up with the changing embeddings as new models are learnt. This paper describes a reference architecture of a high-throughput, large scale recommendation service which leverages a search engine as its runtime core. We describe how the search index and the query builder adapt to changes in the embeddings, which often happen at a different cadence than index builds. We provide solutions for both id-based and feature-based embeddings, as well as for batch indexing and incremental indexing setups. The described system is at the core of a Web content discovery service that serves tens of billions recommendations per day in response to billions of user requests.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-07T19:32:24Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Sonya Liberman</name>
+    </author>
+    <author>
+      <name>Shaked Bar</name>
+    </author>
+    <author>
+      <name>Raphael Vannerom</name>
+    </author>
+    <author>
+      <name>Danny Rosenstein</name>
+    </author>
+    <author>
+      <name>Ronny Lempel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.06913v1</id>
+    <title>OneSug: The Unified End-to-End Generative Framework for E-commerce Query Suggestion</title>
+    <updated>2025-06-07T20:24:05Z</updated>
+    <link href="https://arxiv.org/abs/2506.06913v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.06913v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query suggestion plays a crucial role in enhancing user experience in e-commerce search systems by providing relevant query recommendations that align with users' initial input. This module helps users navigate towards personalized preference needs and reduces typing effort, thereby improving search experience. Traditional query suggestion modules usually adopt multi-stage cascading architectures, for making a well trade-off between system response time and business conversion. But they often suffer from inefficiencies and suboptimal performance due to inconsistent optimization objectives across stages. To address these, we propose OneSug, the first end-to-end generative framework for e-commerce query suggestion. OneSug incorporates a prefix2query representation enhancement module to enrich prefixes using semantically and interactively related queries to bridge content and business characteristics, an encoder-decoder generative model that unifies the query suggestion process, and a reward-weighted ranking strategy with behavior-level weights to capture fine-grained user preferences. Extensive evaluations on large-scale industry datasets demonstrate OneSug's ability for effective and efficient query suggestion. Furthermore, OneSug has been successfully deployed for the entire traffic on the e-commerce search engine in Kuaishou platform for over 1 month, with statistically significant improvements in user top click position (-9.33%), CTR (+2.01%), Order (+2.04%), and Revenue (+1.69%) over the online multi-stage strategy, showing great potential in e-commercial conversion.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-07T20:24:05Z</published>
+    <arxiv:comment>11 pages, 8 figures, and 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xian Guo</name>
+    </author>
+    <author>
+      <name>Ben Chen</name>
+    </author>
+    <author>
+      <name>Siyuan Wang</name>
+    </author>
+    <author>
+      <name>Ying Yang</name>
+    </author>
+    <author>
+      <name>Chenyi Lei</name>
+    </author>
+    <author>
+      <name>Yuqing Ding</name>
+    </author>
+    <author>
+      <name>Han Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.03411v1</id>
+    <title>Generate-then-Retrieve: Intent-Aware FAQ Retrieval in Product Search</title>
+    <updated>2023-06-06T05:18:21Z</updated>
+    <link href="https://arxiv.org/abs/2306.03411v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.03411v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Customers interacting with product search engines are increasingly formulating information-seeking queries. Frequently Asked Question (FAQ) retrieval aims to retrieve common question-answer pairs for a user query with question intent. Integrating FAQ retrieval in product search can not only empower users to make more informed purchase decisions, but also enhance user retention through efficient post-purchase support. Determining when an FAQ entry can satisfy a user's information need within product search, without disrupting their shopping experience, represents an important challenge. We propose an intent-aware FAQ retrieval system consisting of (1) an intent classifier that predicts when a user's information need can be answered by an FAQ; (2) a reformulation model that rewrites a query into a natural question. Offline evaluation demonstrates that our approach improves Hit@1 by 13% on retrieving ground-truth FAQs, while reducing latency by 95% compared to baseline systems. These improvements are further validated by real user feedback, where 71% of displayed FAQs on top of product search results received explicit positive user feedback. Overall, our findings show promising directions for integrating FAQ retrieval into product search at scale.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-06T05:18:21Z</published>
+    <arxiv:comment>ACL 2023 Industry Track</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhiyu Chen</name>
+    </author>
+    <author>
+      <name>Jason Choi</name>
+    </author>
+    <author>
+      <name>Besnik Fetahu</name>
+    </author>
+    <author>
+      <name>Oleg Rokhlenko</name>
+    </author>
+    <author>
+      <name>Shervin Malmasi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.13322v1</id>
+    <title>CLIP-Branches: Interactive Fine-Tuning for Text-Image Retrieval</title>
+    <updated>2024-06-19T08:15:10Z</updated>
+    <link href="https://arxiv.org/abs/2406.13322v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.13322v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advent of text-image models, most notably CLIP, has significantly transformed the landscape of information retrieval. These models enable the fusion of various modalities, such as text and images. One significant outcome of CLIP is its capability to allow users to search for images using text as a query, as well as vice versa. This is achieved via a joint embedding of images and text data that can, for instance, be used to search for similar items. Despite efficient query processing techniques such as approximate nearest neighbor search, the results may lack precision and completeness. We introduce CLIP-Branches, a novel text-image search engine built upon the CLIP architecture. Our approach enhances traditional text-image search engines by incorporating an interactive fine-tuning phase, which allows the user to further concretize the search query by iteratively defining positive and negative examples. Our framework involves training a classification model given the additional user feedback and essentially outputs all positively classified instances of the entire data catalog. By building upon recent techniques, this inference phase, however, is not implemented by scanning the entire data catalog, but by employing efficient index structures pre-built for the data. Our results show that the fine-tuned results can improve the initial search outputs in terms of relevance and accuracy while maintaining swift response times</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-19T08:15:10Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Christian Lülf</name>
+    </author>
+    <author>
+      <name>Denis Mayr Lima Martins</name>
+    </author>
+    <author>
+      <name>Marcos Antonio Vaz Salles</name>
+    </author>
+    <author>
+      <name>Yongluan Zhou</name>
+    </author>
+    <author>
+      <name>Fabian Gieseke</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.13659v1</id>
+    <title>Exploiting Neural Query Translation into Cross Lingual Information Retrieval</title>
+    <updated>2020-10-26T15:28:19Z</updated>
+    <link href="https://arxiv.org/abs/2010.13659v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.13659v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As a crucial role in cross-language information retrieval (CLIR), query translation has three main challenges: 1) the adequacy of translation; 2) the lack of in-domain parallel training data; and 3) the requisite of low latency. To this end, existing CLIR systems mainly exploit statistical-based machine translation (SMT) rather than the advanced neural machine translation (NMT), limiting the further improvements on both translation and retrieval quality. In this paper, we investigate how to exploit neural query translation model into CLIR system. Specifically, we propose a novel data augmentation method that extracts query translation pairs according to user clickthrough data, thus to alleviate the problem of domain-adaptation in NMT. Then, we introduce an asynchronous strategy which is able to leverage the advantages of the real-time in SMT and the veracity in NMT. Experimental results reveal that the proposed approach yields better retrieval quality than strong baselines and can be well applied into a real-world CLIR system, i.e. Aliexpress e-Commerce search engine. Readers can examine and test their cases on our website: https://aliexpress.com .</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-26T15:28:19Z</published>
+    <arxiv:comment>SIGIR eCom 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Liang Yao</name>
+    </author>
+    <author>
+      <name>Baosong Yang</name>
+    </author>
+    <author>
+      <name>Haibo Zhang</name>
+    </author>
+    <author>
+      <name>Weihua Luo</name>
+    </author>
+    <author>
+      <name>Boxing Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.00800v2</id>
+    <title>Query Rewriting via Cycle-Consistent Translation for E-Commerce Search</title>
+    <updated>2021-05-28T08:25:19Z</updated>
+    <link href="https://arxiv.org/abs/2103.00800v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.00800v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nowadays e-commerce search has become an integral part of many people's shopping routines. One critical challenge in today's e-commerce search is the semantic matching problem where the relevant items may not contain the exact terms in the user query. In this paper, we propose a novel deep neural network based approach to query rewriting, in order to tackle this problem. Specifically, we formulate query rewriting into a cyclic machine translation problem to leverage abundant click log data. Then we introduce a novel cyclic consistent training algorithm in conjunction with state-of-the-art machine translation models to achieve the optimal performance in terms of query rewriting accuracy. In order to make it practical in industrial scenarios, we optimize the syntax tree construction to reduce computational cost and online serving latency. Offline experiments show that the proposed method is able to rewrite hard user queries into more standard queries that are more appropriate for the inverted index to retrieve. Comparing with human curated rule-based method, the proposed model significantly improves query rewriting diversity while maintaining good relevancy. Online A/B experiments show that it improves core e-commerce business metrics significantly. Since the summer of 2020, the proposed model has been launched into our search engine production, serving hundreds of millions of users.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-01T06:47:12Z</published>
+    <arxiv:comment>12 pages, 9 figures; accepted by ICDE2021</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yiming Qiu</name>
+    </author>
+    <author>
+      <name>Kang Zhang</name>
+    </author>
+    <author>
+      <name>Han Zhang</name>
+    </author>
+    <author>
+      <name>Songlin Wang</name>
+    </author>
+    <author>
+      <name>Sulong Xu</name>
+    </author>
+    <author>
+      <name>Yun Xiao</name>
+    </author>
+    <author>
+      <name>Bo Long</name>
+    </author>
+    <author>
+      <name>Wen-Yun Yang</name>
+    </author>
+    <arxiv:doi>10.1109/ICDE51399.2021.00276</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ICDE51399.2021.00276" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.00737v1</id>
+    <title>Searching, fast and slow, through product catalogs</title>
+    <updated>2024-01-01T12:30:46Z</updated>
+    <link href="https://arxiv.org/abs/2401.00737v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.00737v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>String matching algorithms in the presence of abbreviations, such as in Stock Keeping Unit (SKU) product catalogs, remains a relatively unexplored topic. In this paper, we present a unified architecture for SKU search that provides both a real-time suggestion system (based on a Trie data structure) as well as a lower latency search system (making use of character level TF-IDF in combination with language model vector embeddings) where users initiate the search process explicitly. We carry out ablation studies that justify designing a complex search system composed of multiple components to address the delicate trade-off between speed and accuracy. Using SKU search in the Dynamics CRM as an example, we show how our system vastly outperforms, in all aspects, the results provided by the default search engine. Finally, we show how SKU descriptions may be enhanced via generative text models (using gpt-3.5-turbo) so that the consumers of the search results may get more context and a generally better experience when presented with the results of their SKU search.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-01T12:30:46Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>Microsoft Journal of Applied Research, Volume 20, 2024</arxiv:journal_ref>
+    <author>
+      <name>Dayananda Ubrangala</name>
+    </author>
+    <author>
+      <name>Juhi Sharma</name>
+    </author>
+    <author>
+      <name>Sharath Kumar Rangappa</name>
+    </author>
+    <author>
+      <name>Kiran R</name>
+    </author>
+    <author>
+      <name>Ravi Prasad Kondapalli</name>
+    </author>
+    <author>
+      <name>Laurent Boué</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.04345v1</id>
+    <title>Shareable Representations for Search Query Understanding</title>
+    <updated>2019-12-20T22:12:47Z</updated>
+    <link href="https://arxiv.org/abs/2001.04345v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.04345v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding search queries is critical for shopping search engines to deliver a satisfying customer experience. Popular shopping search engines receive billions of unique queries yearly, each of which can depict any of hundreds of user preferences or intents. In order to get the right results to customers it must be known queries like "inexpensive prom dresses" are intended to not only surface results of a certain product type but also products with a low price. Referred to as query intents, examples also include preferences for author, brand, age group, or simply a need for customer service. Recent works such as BERT have demonstrated the success of a large transformer encoder architecture with language model pre-training on a variety of NLP tasks. We adapt such an architecture to learn intents for search queries and describe methods to account for the noisiness and sparseness of search query data. We also describe cost effective ways of hosting transformer encoder models in context with low latency requirements. With the right domain-specific training we can build a shareable deep learning model whose internal representation can be reused for a variety of query understanding tasks including query intent identification. Model sharing allows for fewer large models needed to be served at inference time and provides a platform to quickly build and roll out new search query classifiers.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-20T22:12:47Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Mukul Kumar</name>
+    </author>
+    <author>
+      <name>Youna Hu</name>
+    </author>
+    <author>
+      <name>Will Headden</name>
+    </author>
+    <author>
+      <name>Rahul Goutam</name>
+    </author>
+    <author>
+      <name>Heran Lin</name>
+    </author>
+    <author>
+      <name>Bing Yin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.04604v2</id>
+    <title>TURA: Tool-Augmented Unified Retrieval Agent for AI Search</title>
+    <updated>2026-03-12T12:25:28Z</updated>
+    <link href="https://arxiv.org/abs/2508.04604v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.04604v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advent of Large Language Models (LLMs) is transforming search engines into conversational AI search products, primarily using Retrieval-Augmented Generation (RAG) on web corpora. However, this paradigm has significant industrial limitations. Traditional RAG approaches struggle with real-time needs and structured queries that require accessing dynamically generated content like ticket availability or inventory. Limited to indexing static pages, search engines cannot perform the interactive queries needed for such time-sensitive data. Academic research has focused on optimizing RAG for static content, overlooking complex intents and the need for dynamic sources like databases and real-time APIs. To bridge this gap, we introduce TURA (Tool-Augmented Unified Retrieval Agent for AI Search), a novel three-stage framework that combines RAG with agentic tool-use to access both static content and dynamic, real-time information. TURA has three key components: an Intent-Aware Retrieval module to decompose queries and retrieve information sources encapsulated as Model Context Protocol (MCP) Servers, a DAG-based Task Planner that models task dependencies as a Directed Acyclic Graph (DAG) for optimal parallel execution, and a lightweight Distilled Agent Executor for efficient tool calling. TURA is the first architecture to systematically bridge the gap between static RAG and dynamic information sources for a world-class AI search product. Serving tens of millions of users, it leverages an agentic framework to deliver robust, real-time answers while meeting the low-latency demands of a large-scale industrial system.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-06T16:24:17Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhejun Zhao</name>
+    </author>
+    <author>
+      <name>Yuchen Li</name>
+    </author>
+    <author>
+      <name>Alley Liu</name>
+    </author>
+    <author>
+      <name>Yuehu Dong</name>
+    </author>
+    <author>
+      <name>Xiaolong Wei</name>
+    </author>
+    <author>
+      <name>Lixue Zheng</name>
+    </author>
+    <author>
+      <name>Pingsheng Liu</name>
+    </author>
+    <author>
+      <name>Dongdong Shen</name>
+    </author>
+    <author>
+      <name>Long Xia</name>
+    </author>
+    <author>
+      <name>Jiashu Zhao</name>
+    </author>
+    <author>
+      <name>Dawei Yin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.02694v4</id>
+    <title>MeanCache: User-Centric Semantic Caching for LLM Web Services</title>
+    <updated>2025-03-07T14:49:07Z</updated>
+    <link href="https://arxiv.org/abs/2403.02694v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.02694v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) like ChatGPT and Llama have revolutionized natural language processing and search engine dynamics. However, these models incur exceptionally high computational costs. For instance, GPT-3 consists of 175 billion parameters, where inference demands billions of floating-point operations. Caching is a natural solution to reduce LLM inference costs on repeated queries, which constitute about 31% of the total queries. However, existing caching methods are incapable of finding semantic similarities among LLM queries nor do they operate on contextual queries, leading to unacceptable false hit-and-miss rates. This paper introduces MeanCache, a user-centric semantic cache for LLM-based services that identifies semantically similar queries to determine cache hit or miss. Using MeanCache, the response to a user's semantically similar query can be retrieved from a local cache rather than re-querying the LLM, thus reducing costs, service provider load, and environmental impact. MeanCache leverages Federated Learning (FL) to collaboratively train a query similarity model without violating user privacy. By placing a local cache in each user's device and using FL, MeanCache reduces the latency and costs and enhances model performance, resulting in lower false hit rates. MeanCache also encodes context chains for every cached query, offering a simple yet highly effective mechanism to discern contextual query responses from standalone. Our experiments benchmarked against the state-of-the-art caching method, reveal that MeanCache attains an approximately 17% higher F-score and a 20% increase in precision during semantic cache hit-and-miss decisions while performing even better on contextual queries. It also reduces the storage requirement by 83% and accelerates semantic cache hit-and-miss decisions by 11%.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-05T06:23:50Z</published>
+    <arxiv:comment>Accepted at 2025 IEEE 39th International Parallel and Distributed Processing Symposium (IPDPS)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>2025 IEEE International Parallel and Distributed Processing Symposium (IPDPS)</arxiv:journal_ref>
+    <author>
+      <name>Waris Gill</name>
+      <arxiv:affiliation>Virginia Tech, USA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mohamed Elidrisi</name>
+      <arxiv:affiliation>Cisco, USA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pallavi Kalapatapu</name>
+      <arxiv:affiliation>Cisco, USA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ammar Ahmed</name>
+      <arxiv:affiliation>University of Minnesota, Minneapolis, USA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ali Anwar</name>
+      <arxiv:affiliation>University of Minnesota, Minneapolis, USA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Muhammad Ali Gulzar</name>
+      <arxiv:affiliation>Virginia Tech, USA</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1109/IPDPS64566.2025.00117</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/IPDPS64566.2025.00117" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.05379v4</id>
+    <title>Beyond Semantics: Learning a Behavior Augmented Relevance Model with Self-supervised Learning</title>
+    <updated>2023-10-24T08:49:01Z</updated>
+    <link href="https://arxiv.org/abs/2308.05379v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.05379v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Relevance modeling aims to locate desirable items for corresponding queries, which is crucial for search engines to ensure user experience. Although most conventional approaches address this problem by assessing the semantic similarity between the query and item, pure semantic matching is not everything. In reality, auxiliary query-item interactions extracted from user historical behavior data of the search log could provide hints to reveal users' search intents further. Drawing inspiration from this, we devise a novel Behavior Augmented Relevance Learning model for Alipay Search (BARL-ASe) that leverages neighbor queries of target item and neighbor items of target query to complement target query-item semantic matching. Specifically, our model builds multi-level co-attention for distilling coarse-grained and fine-grained semantic representations from both neighbor and target views. The model subsequently employs neighbor-target self-supervised learning to improve the accuracy and robustness of BARL-ASe by strengthening representation and logit learning. Furthermore, we discuss how to deal with the long-tail query-item matching of the mini apps search scenario of Alipay practically. Experiments on real-world industry data and online A/B testing demonstrate our proposal achieves promising performance with low latency.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-10T06:52:53Z</published>
+    <arxiv:comment>Accepted by CIKM2023</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zeyuan Chen</name>
+    </author>
+    <author>
+      <name>Wei Chen</name>
+    </author>
+    <author>
+      <name>Jia Xu</name>
+    </author>
+    <author>
+      <name>Zhongyi Liu</name>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.01674v1</id>
+    <title>JIZHI: A Fast and Cost-Effective Model-As-A-Service System for Web-Scale Online Inference at Baidu</title>
+    <updated>2021-06-03T08:23:24Z</updated>
+    <link href="https://arxiv.org/abs/2106.01674v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.01674v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In modern internet industries, deep learning based recommender systems have became an indispensable building block for a wide spectrum of applications, such as search engine, news feed, and short video clips. However, it remains challenging to carry the well-trained deep models for online real-time inference serving, with respect to the time-varying web-scale traffics from billions of users, in a cost-effective manner. In this work, we present JIZHI - a Model-as-a-Service system - that per second handles hundreds of millions of online inference requests to huge deep models with more than trillions of sparse parameters, for over twenty real-time recommendation services at Baidu, Inc. In JIZHI, the inference workflow of every recommendation request is transformed to a Staged Event-Driven Pipeline (SEDP), where each node in the pipeline refers to a staged computation or I/O intensive task processor. With traffics of real-time inference requests arrived, each modularized processor can be run in a fully asynchronized way and managed separately. Besides, JIZHI introduces heterogeneous and hierarchical storage to further accelerate the online inference process by reducing unnecessary computations and potential data access latency induced by ultra-sparse model parameters. Moreover, an intelligent resource manager has been deployed to maximize the throughput of JIZHI over the shared infrastructure by searching the optimal resource allocation plan from historical logs and fine-tuning the load shedding policies over intermediate system feedback. Extensive experiments have been done to demonstrate the advantages of JIZHI from the perspectives of end-to-end service latency, system-wide throughput, and resource consumption. JIZHI has helped Baidu saved more than ten million US dollars in hardware and utility costs while handling 200% more traffics without sacrificing inference efficiency.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-03T08:23:24Z</published>
+    <arxiv:comment>Accepted to SIGKDD 2021 applied data science track</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hao Liu</name>
+    </author>
+    <author>
+      <name>Qian Gao</name>
+    </author>
+    <author>
+      <name>Jiang Li</name>
+    </author>
+    <author>
+      <name>Xiaochao Liao</name>
+    </author>
+    <author>
+      <name>Hao Xiong</name>
+    </author>
+    <author>
+      <name>Guangxing Chen</name>
+    </author>
+    <author>
+      <name>Wenlin Wang</name>
+    </author>
+    <author>
+      <name>Guobao Yang</name>
+    </author>
+    <author>
+      <name>Zhiwei Zha</name>
+    </author>
+    <author>
+      <name>Daxiang Dong</name>
+    </author>
+    <author>
+      <name>Dejing Dou</name>
+    </author>
+    <author>
+      <name>Haoyi Xiong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.13300v1</id>
+    <title>Deep Natural Language Processing for LinkedIn Search</title>
+    <updated>2021-08-16T23:37:33Z</updated>
+    <link href="https://arxiv.org/abs/2108.13300v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.13300v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many search systems work with large amounts of natural language data, e.g., search queries, user profiles, and documents. Building a successful search system requires a thorough understanding of textual data semantics, where deep learning based natural language processing techniques (deep NLP) can be of great help. In this paper, we introduce a comprehensive study for applying deep NLP techniques to five representative tasks in search systems: query intent prediction (classification), query tagging (sequential tagging), document ranking (ranking), query auto completion (language modeling), and query suggestion (sequence to sequence). We also introduce BERT pre-training as a sixth task that can be applied to many of the other tasks. Through the model design and experiments of the six tasks, readers can find answers to four important questions: (1). When is deep NLP helpful/not helpful in search systems? (2). How to address latency challenges? (3). How to ensure model robustness? This work builds on existing efforts of LinkedIn search, and is tested at scale on LinkedIn's commercial search engines. We believe our experiences can provide useful insights for the industry and research communities.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-16T23:37:33Z</published>
+    <arxiv:comment>18 pages, 5 figures. arXiv admin note: substantial text overlap with arXiv:2108.08252</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Weiwei Guo</name>
+    </author>
+    <author>
+      <name>Xiaowei Liu</name>
+    </author>
+    <author>
+      <name>Sida Wang</name>
+    </author>
+    <author>
+      <name>Michaeel Kazi</name>
+    </author>
+    <author>
+      <name>Zhiwei Wang</name>
+    </author>
+    <author>
+      <name>Zhoutong Fu</name>
+    </author>
+    <author>
+      <name>Jun Jia</name>
+    </author>
+    <author>
+      <name>Liang Zhang</name>
+    </author>
+    <author>
+      <name>Huiji Gao</name>
+    </author>
+    <author>
+      <name>Bo Long</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.15629v2</id>
+    <title>CiteFix: Enhancing RAG Accuracy Through Post-Processing Citation Correction</title>
+    <updated>2025-06-11T07:56:14Z</updated>
+    <link href="https://arxiv.org/abs/2504.15629v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.15629v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval Augmented Generation (RAG) has emerged as a powerful application of Large Language Models (LLMs), revolutionizing information search and consumption. RAG systems combine traditional search capabilities with LLMs to generate comprehensive answers to user queries, ideally with accurate citations. However, in our experience of developing a RAG product, LLMs often struggle with source attribution, aligning with other industry studies reporting citation accuracy rates of only about 74% for popular generative search engines. To address this, we present efficient post-processing algorithms to improve citation accuracy in LLM-generated responses, with minimal impact on latency and cost. Our approaches cross-check generated citations against retrieved articles using methods including keyword + semantic matching, fine tuned model with BERTScore, and a lightweight LLM-based technique. Our experimental results demonstrate a relative improvement of 15.46% in the overall accuracy metrics of our RAG system. This significant enhancement potentially enables a shift from our current larger language model to a relatively smaller model that is approximately 12x more cost-effective and 3x faster in inference time, while maintaining comparable performance. This research contributes to enhancing the reliability and trustworthiness of AI-generated content in information retrieval and summarization tasks which is critical to gain customer trust especially in commercial products.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-22T06:41:25Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Harsh Maheshwari</name>
+    </author>
+    <author>
+      <name>Srikanth Tenneti</name>
+    </author>
+    <author>
+      <name>Alwarappan Nakkiran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.11182v3</id>
+    <title>Co-design Hardware and Algorithm for Vector Search</title>
+    <updated>2023-07-06T13:52:31Z</updated>
+    <link href="https://arxiv.org/abs/2306.11182v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.11182v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vector search has emerged as the foundation for large-scale information retrieval and machine learning systems, with search engines like Google and Bing processing tens of thousands of queries per second on petabyte-scale document datasets by evaluating vector similarities between encoded query texts and web documents. As performance demands for vector search systems surge, accelerated hardware offers a promising solution in the post-Moore's Law era. We introduce \textit{FANNS}, an end-to-end and scalable vector search framework on FPGAs. Given a user-provided recall requirement on a dataset and a hardware resource budget, \textit{FANNS} automatically co-designs hardware and algorithm, subsequently generating the corresponding accelerator. The framework also supports scale-out by incorporating a hardware TCP/IP stack in the accelerator. \textit{FANNS} attains up to 23.0$\times$ and 37.2$\times$ speedup compared to FPGA and CPU baselines, respectively, and demonstrates superior scalability to GPUs, achieving 5.5$\times$ and 7.6$\times$ speedup in median and 95\textsuperscript{th} percentile (P95) latency within an eight-accelerator configuration. The remarkable performance of \textit{FANNS} lays a robust groundwork for future FPGA integration in data centers and AI supercomputers.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-19T22:12:37Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Wenqi Jiang</name>
+    </author>
+    <author>
+      <name>Shigang Li</name>
+    </author>
+    <author>
+      <name>Yu Zhu</name>
+    </author>
+    <author>
+      <name>Johannes de Fine Licht</name>
+    </author>
+    <author>
+      <name>Zhenhao He</name>
+    </author>
+    <author>
+      <name>Runbin Shi</name>
+    </author>
+    <author>
+      <name>Cedric Renggli</name>
+    </author>
+    <author>
+      <name>Shuai Zhang</name>
+    </author>
+    <author>
+      <name>Theodoros Rekatsinas</name>
+    </author>
+    <author>
+      <name>Torsten Hoefler</name>
+    </author>
+    <author>
+      <name>Gustavo Alonso</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.09585v1</id>
+    <title>On the Necessity of World Knowledge for Mitigating Missing Labels in Extreme Classification</title>
+    <updated>2024-08-18T20:08:42Z</updated>
+    <link href="https://arxiv.org/abs/2408.09585v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.09585v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Extreme Classification (XC) aims to map a query to the most relevant documents from a very large document set. XC algorithms used in real-world applications learn this mapping from datasets curated from implicit feedback, such as user clicks. However, these datasets inevitably suffer from missing labels. In this work, we observe that systematic missing labels lead to missing knowledge, which is critical for accurately modelling relevance between queries and documents. We formally show that this absence of knowledge cannot be recovered using existing methods such as propensity weighting and data imputation strategies that solely rely on the training dataset. While LLMs provide an attractive solution to augment the missing knowledge, leveraging them in applications with low latency requirements and large document sets is challenging. To incorporate missing knowledge at scale, we propose SKIM (Scalable Knowledge Infusion for Missing Labels), an algorithm that leverages a combination of small LM and abundant unstructured meta-data to effectively mitigate the missing label problem. We show the efficacy of our method on large-scale public datasets through exhaustive unbiased evaluation ranging from human annotations to simulations inspired from industrial settings. SKIM outperforms existing methods on Recall@100 by more than 10 absolute points. Additionally, SKIM scales to proprietary query-ad retrieval datasets containing 10 million documents, outperforming contemporary methods by 12% in offline evaluation and increased ad click-yield by 1.23% in an online A/B test conducted on a popular search engine. We release our code, prompts, trained XC models and finetuned SLMs at: https://github.com/bicycleman15/skim</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-18T20:08:42Z</published>
+    <arxiv:comment>Preprint, 23 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jatin Prakash</name>
+    </author>
+    <author>
+      <name>Anirudh Buvanesh</name>
+    </author>
+    <author>
+      <name>Bishal Santra</name>
+    </author>
+    <author>
+      <name>Deepak Saini</name>
+    </author>
+    <author>
+      <name>Sachin Yadav</name>
+    </author>
+    <author>
+      <name>Jian Jiao</name>
+    </author>
+    <author>
+      <name>Yashoteja Prabhu</name>
+    </author>
+    <author>
+      <name>Amit Sharma</name>
+    </author>
+    <author>
+      <name>Manik Varma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25514v1</id>
+    <title>From Item-Only to Query-Item: Query-Conditioned Generative Search with QGS in Quark</title>
+    <updated>2026-05-25T07:18:51Z</updated>
+    <link href="https://arxiv.org/abs/2605.25514v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25514v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generative sequence models have shown strong results in recommendation. Applying them to search ranking is more challenging. Search behavior is inherently query-driven. Each query switch introduces a sharp topic shift in the user's interaction history. Existing generative methods flatten queries and items into a single token sequence. They do not distinguish query boundaries. This causes the model to mix different query intents into one prediction target, resulting in noisy supervision.
+  We present Query-Conditioned Generative Search (QGS). QGS encodes each interaction as a (query, item) pair token. It trains with a query-conditioned next-item objective. The prediction target changes from a noisy marginal P(item_{t+1}|context_{&lt;=t}) to a clean conditional P(item_{t+1}|context_{&lt;=t}, query_{t+1}). This directly removes the semantic discontinuity caused by query switches.
+  Encoding long interaction histories with standard attention has quadratic cost. This is impractical under strict online latency budgets. We introduce a Linear HSTU encoder. It replaces full attention with causal linear recurrence. Per-layer complexity drops from O(L^2) to O(L) with no loss in ranking quality.
+  Traditional search ranking depends on hand-crafted features like text-matching scores, statistical signals, and behavioral features. We propose HFG-Attention to preserve them in the generative framework. It organizes heterogeneous features into semantic groups and fuses them through a dedicated attention block. This bridges sparse engineered signals with dense sequential representations.
+  QGS is deployed in the ranking module of Quark Search, a major commercial search engine in China. Online A/B tests show statistically significant gains: +0.62% CTR, +0.38% Click-Search Ratio, and +3.55% PV Duration over the production deep learning baseline.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T07:18:51Z</published>
+    <arxiv:comment>11 pages, 5 figures, 9 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yanglong Song</name>
+    </author>
+    <author>
+      <name>Zihao Yang</name>
+    </author>
+    <author>
+      <name>Shuo Meng</name>
+    </author>
+    <author>
+      <name>Rujun Guo</name>
+    </author>
+    <author>
+      <name>Jin Zhang</name>
+    </author>
+    <author>
+      <name>Bin Wang</name>
+    </author>
+    <author>
+      <name>Shaoyu Liu</name>
+    </author>
+    <author>
+      <name>Xiaozhao Wang</name>
+    </author>
+    <author>
+      <name>Guanjun Jiang</name>
+    </author>
+  </entry>
+</feed>

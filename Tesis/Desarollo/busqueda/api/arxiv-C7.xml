@@ -1,0 +1,1213 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/M1TiJ2tHOISShupBxTb18RxbqVk</id>
+  <title>arXiv Query: search_query=(abs:"query expansion" OR abs:"document expansion" OR abs:doc2query OR abs:HyDE OR abs:RM3) AND (abs:retrieval) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:28Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:%22query+expansion%22+OR+(abs:%22document+expansion%22+OR+(abs:doc2query+OR+(abs:HyDE+OR+abs:RM3))))+AND+(abs:retrieval+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>207</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.04961v2</id>
+    <title>SAM-D2Q: Aligning Multimodal Doc2Query with Search Demand and Conversion for E-commerce</title>
+    <updated>2026-11-10T00:53:58Z</updated>
+    <link href="https://arxiv.org/abs/2609.04961v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.04961v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>E-commerce search often suffers from vocabulary mismatch between user queries and merchant-authored product titles, since short titles cannot fully cover diverse user expressions or visual product attributes. Although Doc2Query alleviates this issue by generating pseudo-queries for document expansion, traditional methods are text-only and not optimized for e-commerce business objectives. As a result, they may produce semantically plausible but commercially ineffective expansions and miss key attributes present in product images. To this end, we propose E-commerce Search-Aligned Multimodal Doc2Query (SAM-D2Q), a business-aligned multimodal document expansion framework for e-commerce search under Boolean retrieval constraints. SAM-D2Q consists of three stages: (1) task-adapted multimodal supervised fine-tuning to enhance vision-language understanding of product titles, images, and user queries; (2) multimodal data augmentation to improve perception of key visual attributes and expansion coverage; and (3) reinforcement-learning-based preference alignment toward search business objectives, encouraging the model to generate pseudo-queries that better match user intent and commercial value. Offline experiments show that SAM-D2Q substantially improves retrieval performance over traditional Doc2Query methods. Deployed in the AliExpress production search system, SAM-D2Q improves online business metrics, increasing GMV by +3.38% and Pay Count by +2.27%.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T10:09:04Z</published>
+    <arxiv:comment>Accepted by CIKM2026 Oral Full Paper</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hui Zhou</name>
+    </author>
+    <author>
+      <name>Jian Hui Ji</name>
+    </author>
+    <author>
+      <name>Lei Ma</name>
+    </author>
+    <author>
+      <name>Rong Xiao</name>
+    </author>
+    <author>
+      <name>Xiaoyi Zeng</name>
+    </author>
+    <arxiv:doi>10.1145/3799682.3840121</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3799682.3840121" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.19647v1</id>
+    <title>Doc2Token: Bridging Vocabulary Gap by Predicting Missing Tokens for E-commerce Search</title>
+    <updated>2024-06-28T04:26:30Z</updated>
+    <link href="https://arxiv.org/abs/2406.19647v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.19647v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Addressing the "vocabulary mismatch" issue in information retrieval is a central challenge for e-commerce search engines, because product pages often miss important keywords that customers search for. Doc2Query[1] is a popular document-expansion technique that predicts search queries for a document and includes the predicted queries with the document for retrieval. However, this approach can be inefficient for e-commerce search, because the predicted query tokens are often already present in the document. In this paper, we propose Doc2Token, a technique that predicts relevant tokens (instead of queries) that are missing from the document and includes these tokens in the document for retrieval. For the task of predicting missing tokens, we introduce a new metric, "novel ROUGE score". Doc2Token is demonstrated to be superior to Doc2Query in terms of novel ROUGE score and diversity of predictions. Doc2Token also exhibits efficiency gains by reducing both training and inference times. We deployed the feature to production and observed significant revenue gain in an online A/B test, and launched the feature to full traffic on Walmart.com.
+  [1] R. Nogueira, W. Yang, J. Lin, K. Cho, Document expansion by query prediction, arXiv preprint arXiv:1904.08375 (2019)</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-28T04:26:30Z</published>
+    <arxiv:comment>9 pages, 1 figure, SIGIR 2024 Workshop on eCommerce</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Kaihao Li</name>
+    </author>
+    <author>
+      <name>Juexin Lin</name>
+    </author>
+    <author>
+      <name>Tony Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.17093v2</id>
+    <title>DeeperImpact: Optimizing Sparse Learned Index Structures</title>
+    <updated>2024-07-06T04:40:19Z</updated>
+    <link href="https://arxiv.org/abs/2405.17093v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.17093v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A lot of recent work has focused on sparse learned indexes that use deep neural architectures to significantly improve retrieval quality while keeping the efficiency benefits of the inverted index. While such sparse learned structures achieve effectiveness far beyond those of traditional inverted index-based rankers, there is still a gap in effectiveness to the best dense retrievers, or even to sparse methods that leverage more expensive optimizations such as query expansion and query term weighting.
+  We focus on narrowing this gap by revisiting and optimizing DeepImpact, a sparse retrieval approach that uses DocT5Query for document expansion followed by a BERT language model to learn impact scores for document terms. We first reinvestigate the expansion process and find that the recently proposed Doc2Query -- query filtration does not enhance retrieval quality when used with DeepImpact. Instead, substituting T5 with a fine-tuned Llama 2 model for query prediction results in a considerable improvement. Subsequently, we study training strategies that have proven effective for other models, in particular the use of hard negatives, distillation, and pre-trained CoCondenser model initialization. Our results substantially narrow the effectiveness gap with the most effective versions of SPLADE.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-27T12:08:59Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Soyuj Basnet</name>
+    </author>
+    <author>
+      <name>Jerry Gou</name>
+    </author>
+    <author>
+      <name>Antonio Mallia</name>
+    </author>
+    <author>
+      <name>Torsten Suel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.15658v1</id>
+    <title>Chunk Knowledge Generation Model for Enhanced Information Retrieval: A Multi-task Learning Approach</title>
+    <updated>2025-09-19T06:32:30Z</updated>
+    <link href="https://arxiv.org/abs/2509.15658v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.15658v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traditional query expansion techniques for addressing vocabulary mismatch problems in information retrieval are context-sensitive and may lead to performance degradation. As an alternative, document expansion research has gained attention, but existing methods such as Doc2Query have limitations including excessive preprocessing costs, increased index size, and reliability issues with generated content. To mitigate these problems and seek more structured and efficient alternatives, this study proposes a method that divides documents into chunk units and generates textual data for each chunk to simultaneously improve retrieval efficiency and accuracy. The proposed "Chunk Knowledge Generation Model" adopts a T5-based multi-task learning structure that simultaneously generates titles and candidate questions from each document chunk while extracting keywords from user queries. This approach maximizes computational efficiency by generating and extracting three types of semantic information in parallel through a single encoding and two decoding processes. The generated data is utilized as additional information in the retrieval system. GPT-based evaluation on 305 query-document pairs showed that retrieval using the proposed model achieved 95.41% accuracy at Top@10, demonstrating superior performance compared to document chunk-level retrieval. This study contributes by proposing an approach that simultaneously generates titles and candidate questions from document chunks for application in retrieval pipelines, and provides empirical evidence applicable to large-scale information retrieval systems by demonstrating improved retrieval accuracy through qualitative evaluation.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-19T06:32:30Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jisu Kim</name>
+    </author>
+    <author>
+      <name>Jinhee Park</name>
+    </author>
+    <author>
+      <name>Changhyun Jeon</name>
+    </author>
+    <author>
+      <name>Jungwoo Choi</name>
+    </author>
+    <author>
+      <name>Keonwoo Kim</name>
+    </author>
+    <author>
+      <name>Minji Hong</name>
+    </author>
+    <author>
+      <name>Sehyun Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.12631v1</id>
+    <title>Explain like I am BM25: Interpreting a Dense Model's Ranked-List with a Sparse Approximation</title>
+    <updated>2023-04-25T07:58:38Z</updated>
+    <link href="https://arxiv.org/abs/2304.12631v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.12631v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural retrieval models (NRMs) have been shown to outperform their statistical counterparts owing to their ability to capture semantic meaning via dense document representations. These models, however, suffer from poor interpretability as they do not rely on explicit term matching. As a form of local per-query explanations, we introduce the notion of equivalent queries that are generated by maximizing the similarity between the NRM's results and the result set of a sparse retrieval system with the equivalent query. We then compare this approach with existing methods such as RM3-based query expansion and contrast differences in retrieval effectiveness and in the terms generated by each approach.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-25T07:58:38Z</published>
+    <arxiv:comment>Accepted at SIGIR 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Michael Llordes</name>
+    </author>
+    <author>
+      <name>Debasis Ganguly</name>
+    </author>
+    <author>
+      <name>Sumit Bhatia</name>
+    </author>
+    <author>
+      <name>Chirag Agarwal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19349v1</id>
+    <title>Revisiting Feedback Models for HyDE</title>
+    <updated>2025-11-24T17:50:18Z</updated>
+    <link href="https://arxiv.org/abs/2511.19349v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19349v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent approaches that leverage large language models (LLMs) for pseudo-relevance feedback (PRF) have generally not utilized well-established feedback models like Rocchio and RM3 when expanding queries for sparse retrievers like BM25. Instead, they often opt for a simple string concatenation of the query and LLM-generated expansion content. But is this optimal? To answer this question, we revisit and systematically evaluate traditional feedback models in the context of HyDE, a popular method that enriches query representations with LLM-generated hypothetical answer documents. Our experiments show that HyDE's effectiveness can be substantially improved when leveraging feedback algorithms such as Rocchio to extract and weight expansion terms, providing a simple way to further enhance the accuracy of LLM-based PRF methods.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T17:50:18Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Nour Jedidi</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.11238v1</id>
+    <title>LLM-Assisted Pseudo-Relevance Feedback</title>
+    <updated>2026-01-16T12:31:43Z</updated>
+    <link href="https://arxiv.org/abs/2601.11238v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.11238v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query expansion is a long-standing technique to mitigate vocabulary mismatch in ad hoc Information Retrieval. Pseudo-relevance feedback methods, such as RM3, estimate an expanded query model from the top-ranked documents, but remain vulnerable to topic drift when early results include noisy or tangential content. Recent approaches instead prompt Large Language Models to generate synthetic expansions or query variants. While effective, these methods risk hallucinations and misalignment with collection-specific terminology. We propose a hybrid alternative that preserves the robustness and interpretability of classical PRF while leveraging LLM semantic judgement. Our method inserts an LLM-based filtering stage prior to RM3 estimation: the LLM judges the documents in the initial top-$k$ ranking, and RM3 is computed only over those accepted as relevant. This simple intervention improves over blind PRF and a strong baseline across several datasets and metrics.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-16T12:31:43Z</published>
+    <arxiv:comment>Accepted ECIR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>David Otero</name>
+    </author>
+    <author>
+      <name>Javier Parapar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.09557v2</id>
+    <title>Doc2Query++: Topic-Coverage based Document Expansion and its Application to Dense Retrieval via Dual-Index Fusion</title>
+    <updated>2025-10-13T01:34:52Z</updated>
+    <link href="https://arxiv.org/abs/2510.09557v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.09557v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Document expansion (DE) via query generation tackles vocabulary mismatch in sparse retrieval, yet faces limitations: uncontrolled generation producing hallucinated or redundant queries with low diversity; poor generalization from in-domain training (e.g., MS MARCO) to out-of-domain data like BEIR; and noise from concatenation harming dense retrieval. While Large Language Models (LLMs) enable cross-domain query generation, basic prompting lacks control, and taxonomy-based methods rely on domain-specific structures, limiting applicability. To address these challenges, we introduce Doc2Query++, a DE framework that structures query generation by first inferring a document's latent topics via unsupervised topic modeling for cross-domain applicability, then using hybrid keyword selection to create a diverse and relevant keyword set per document. This guides LLM not only to leverage keywords, which ensure comprehensive topic representation, but also to reduce redundancy through diverse, relevant terms. To prevent noise from query appending in dense retrieval, we propose Dual-Index Fusion strategy that isolates text and query signals, boosting performance in dense settings. Extensive experiments show Doc2Query++ significantly outperforms state-of-the-art baselines, achieving substantial gains in MAP, nDCG@10 and Recall@100 across diverse datasets on both sparse and dense retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-10T17:07:48Z</published>
+    <arxiv:comment>11 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Tzu-Lin Kuo</name>
+    </author>
+    <author>
+      <name>Wei-Ning Chiu</name>
+    </author>
+    <author>
+      <name>Wei-Yun Ma</name>
+    </author>
+    <author>
+      <name>Pu-Jen Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.01733v1</id>
+    <title>From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents</title>
+    <updated>2026-04-02T07:53:40Z</updated>
+    <link href="https://arxiv.org/abs/2604.01733v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.01733v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) systems critically depend on retrieval quality, yet no systematic comparison of modern retrieval methods exists for heterogeneous documents containing both text and tabular data. We benchmark ten retrieval strategies spanning sparse, dense, hybrid fusion, cross-encoder reranking, query expansion, index augmentation, and adaptive retrieval on a challenging financial QA benchmark of 23,088 queries over 7,318 documents with mixed text-and-table content. We evaluate retrieval quality via Recall@k, MRR, and nDCG, and end-to-end generation quality via Number Match, with paired bootstrap significance testing. Our results show that (1) a two-stage pipeline combining hybrid retrieval with neural reranking achieves Recall@5 of 0.816 and MRR@3 of 0.605, outperforming all single-stage methods by a large margin; (2) BM25 outperforms state-of-the-art dense retrieval on financial documents, challenging the common assumption that semantic search universally dominates; and (3) query expansion methods (HyDE, multi-query) and adaptive retrieval provide limited benefit for precise numerical queries, while contextual retrieval yields consistent gains. We provide ablation studies on fusion methods and reranker depth, actionable cost-accuracy recommendations, and release our full benchmark code.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-02T07:53:40Z</published>
+    <arxiv:comment>11 pages, 6 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Meftun Akarsu</name>
+    </author>
+    <author>
+      <name>Recep Kaan Karaman</name>
+    </author>
+    <author>
+      <name>Christopher Mierbach</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.27220v1</id>
+    <title>The Coverage Illusion: From Pre-retrieval Routing Failure to Post-retrieval Cascades in a Production RAG System</title>
+    <updated>2026-05-26T16:08:34Z</updated>
+    <link href="https://arxiv.org/abs/2605.27220v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.27220v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In modern RAG pipelines, query augmentation methods such as HyDE and query expansion are applied to every query, resulting in substantial LLM inference costs and increased end-to-end latency. The empirical justification for this overhead in real production traffic remains largely unexplored. We present a case study of the Danish National Encyclopedia, evaluating five retrieval workflows over 20,000 query-workflow pairs from production traffic and synthetic conditions. In this system, synthetic queries suggest that LLM augmentation is needed for over 90% of queries to achieve high retrieval coverage. However, under our production deferral policy, only 27.8% of real user queries need LLM augmentation. We call this gap the Coverage Illusion and attribute it to a structural mismatch between synthetic and real query distributions. Pre-retrieval routing cannot resolve this gap, as the need for LLM augmentation is only revealed after searching the index, a result confirmed by our evaluation of four machine learning paradigms. The coverage gap, undetectable from the query alone, motivates a post-retrieval cascade that runs workflows in cheapest-first order and escalates to LLM augmentation only when a step returns no documents. Operating entirely without training overhead or secondary serving infrastructure, the cascade improves quality by +0.140 Composite Overall points over Always-HyDE, reduces latency by 31.8%, and serves 72.2% of real user queries without LLM augmentation.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T16:08:34Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zafar Hussain</name>
+    </author>
+    <author>
+      <name>Kristoffer Nielbo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.03266v3</id>
+    <title>Doc2Query--: When Less is More</title>
+    <updated>2023-02-27T12:08:24Z</updated>
+    <link href="https://arxiv.org/abs/2301.03266v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.03266v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Doc2Query -- the process of expanding the content of a document before indexing using a sequence-to-sequence model -- has emerged as a prominent technique for improving the first-stage retrieval effectiveness of search engines. However, sequence-to-sequence models are known to be prone to "hallucinating" content that is not present in the source text. We argue that Doc2Query is indeed prone to hallucination, which ultimately harms retrieval effectiveness and inflates the index size. In this work, we explore techniques for filtering out these harmful queries prior to indexing. We find that using a relevance model to remove poor-quality queries can improve the retrieval effectiveness of Doc2Query by up to 16%, while simultaneously reducing mean query execution time by 23% and cutting the index size by 33%. We release the code, data, and a live demonstration to facilitate reproduction and further exploration at https://github.com/terrierteam/pyterrier_doc2query.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-09T11:02:49Z</published>
+    <arxiv:comment>ECIR 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Mitko Gospodinov</name>
+    </author>
+    <author>
+      <name>Sean MacAvaney</name>
+    </author>
+    <author>
+      <name>Craig Macdonald</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.13157v1</id>
+    <title>Generative Relevance Feedback with Large Language Models</title>
+    <updated>2023-04-25T21:35:29Z</updated>
+    <link href="https://arxiv.org/abs/2304.13157v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.13157v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current query expansion models use pseudo-relevance feedback to improve first-pass retrieval effectiveness; however, this fails when the initial results are not relevant. Instead of building a language model from retrieved results, we propose Generative Relevance Feedback (GRF) that builds probabilistic feedback models from long-form text generated from Large Language Models. We study the effective methods for generating text by varying the zero-shot generation subtasks: queries, entities, facts, news articles, documents, and essays. We evaluate GRF on document retrieval benchmarks covering a diverse set of queries and document collections, and the results show that GRF methods significantly outperform previous PRF methods. Specifically, we improve MAP between 5-19% and NDCG@10 17-24% compared to RM3 expansion, and achieve the best R@1k effectiveness on all datasets compared to state-of-the-art sparse, dense, and expansion models.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-25T21:35:29Z</published>
+    <arxiv:comment>SIGIR 2023 Preprint, 6 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Iain Mackie</name>
+    </author>
+    <author>
+      <name>Shubham Chatterjee</name>
+    </author>
+    <author>
+      <name>Jeffrey Dalton</name>
+    </author>
+    <arxiv:doi>10.1145/3539618.3591992</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3539618.3591992" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.04352v1</id>
+    <title>Query Generation with Direct Preference Optimization for Document Expansion in E-commerce Search</title>
+    <updated>2026-10-03T07:40:16Z</updated>
+    <link href="https://arxiv.org/abs/2610.04352v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.04352v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Doc2Query, a popular document expansion technique, leverages sequence-to-sequence models to generate relevant queries, effectively addressing the "vocabulary mismatch" problem in information retrieval. However, these models often suffer from generating either hallucinations unrelated to the document or repetitive content already present in the document. Training sequence-to-sequence models to produce high-quality, novel, and relevant tokens remains a significant challenge. To address these issues, we introduce a novel approach, QGDPO, that employs direct preference optimization (DPO) to guide the generation process. We first fine-tune a base sequence-to-sequence model and subsequently utilize a relevance model to score its predictions. Based on these scores, we construct pairs of winning and losing predictions as relevance preferences for the DPO training. Furthermore, we enhance our pipeline by using the relevance model to filter out poor predictions, retaining only the most relevant generated content for indexing. QGDPO effectively eliminates 50% of irrelevant predictions comparing against Doc2Query baselines, while the relevance filter removes an additional 14.61%. This feature has been successfully deployed to production on Walmart.com for full traffic, with a substantial improvement in relevance and user engagement.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-03T07:40:16Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Kaihao Li</name>
+    </author>
+    <author>
+      <name>Feng Liu</name>
+    </author>
+    <author>
+      <name>Juexin Lin</name>
+    </author>
+    <author>
+      <name>Xunfan Cai</name>
+    </author>
+    <author>
+      <name>Zhen Yang</name>
+    </author>
+    <author>
+      <name>Tony Lee</name>
+    </author>
+    <author>
+      <name>Ciya Liao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.08787v1</id>
+    <title>Query expansion with artificially generated texts</title>
+    <updated>2020-12-16T08:13:08Z</updated>
+    <link href="https://arxiv.org/abs/2012.08787v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.08787v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A well-known way to improve the performance of document retrieval is to expand the user's query. Several approaches have been proposed in the literature, and some of them are considered as yielding state-of-the-art results in IR. In this paper, we explore the use of text generation to automatically expand the queries. We rely on a well-known neural generative model, GPT-2, that comes with pre-trained models for English but can also be fine-tuned on specific corpora. Through different experiments, we show that text generation is a very effective way to improve the performance of an IR system, with a large margin (+10% MAP gains), and that it outperforms strong baselines also relying on query expansion (LM+RM3). This conceptually simple approach can easily be implemented on any IR system thanks to the availability of GPT code and models.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-16T08:13:08Z</published>
+    <arxiv:comment>12 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Vincent Claveau</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.29271v2</id>
+    <title>CoHyDE: Iterative Co-Training of LLM Rewriter &amp; Dense Encoder for Tool Retrieval</title>
+    <updated>2026-09-11T03:55:54Z</updated>
+    <link href="https://arxiv.org/abs/2605.29271v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.29271v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tool retrieval over large API catalogs is a core bottleneck for LLM agents: user queries arrive in colloquial, often underspecified language, while the catalog uses technical API vocabulary that no fixed encoder can bridge on its own. The two dominant training approaches, contrastive encoder fine-tuning and HyDE-style query expansion with a frozen LLM, address this problem from opposite ends and fail in complementary directions: the fine-tuned encoder excels when the query's surface form already matches the catalog but collapses when it does not, while zero-shot HyDE is more robust to underspecified queries yet generates catalog-unaware hypothetical descriptions that degrade retrieval when queries are well-formed. We introduce CoHyDE, an iterative procedure that trains the dense encoder and the LLM rewriter as a single co-evolving system: the encoder is retrained with InfoNCE on catalog-style hypothetical descriptions produced by the rewriter, and the rewriter is preference-aligned via DPO against the encoder's retrieval scores, with both sides warm-started on the tool catalog before the loop begins. On a ~10k tool subset of the ToolBench catalog, three rounds of CoHyDE improve over the strongest single-component baseline by +2.5 pp NDCG@5 on standard queries and +6.3 pp on held-out vague queries, with gains as large as +8 pp on the hardest vague tier. Ablations confirm that co-training is the key ingredient: using either component in isolation fails to match CoHyDE on both well-formed and vague queries, with losses of up to -8 pp on vague queries.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T02:41:30Z</published>
+    <arxiv:comment>REALM Workshop, EMNLP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Vaishali Senthil</name>
+    </author>
+    <author>
+      <name>Ashutosh Hathidara</name>
+    </author>
+    <author>
+      <name>Sebastian Schreiber</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.00452v1</id>
+    <title>CeQe: Grounding Lexical Retrieval in Semantic Evidence</title>
+    <updated>2026-08-01T05:27:20Z</updated>
+    <link href="https://arxiv.org/abs/2608.00452v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.00452v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lexical retrieval (BM25) captures exact keyword matches and weights terms by corpus-wide significance, but it is blind to the semantic vocabulary gap: when a relevant document phrases an answer differently from the query, BM25 never retrieves it, and no amount of downstream reranking or fusion can recover a document that was never in the candidate set. We present Cross-Encoder Query Expansion (CE-QE), which reads the per-token relevance attributions of a cross-encoder applied to top semantic search results, selects the terms the cross-encoder treats as decisive, and appends them to the BM25 query. Unlike classical pseudo-relevance feedback, which reuses BM25's own (possibly wrong) top results, CE-QE seeds expansion from the semantic retriever's results, avoiding self-reinforcing query drift. Unlike recent generative query expansion (HyDE, Query2doc), which prompts a large language model to hallucinate text from its parametric knowledge, every CE-QE expansion term is copied verbatim from a retrieved passage, so it cannot introduce vocabulary the corpus does not contain, and its only added cost is attribution extraction on a cross-encoder a hybrid pipeline already runs for reranking. On seven BEIR datasets, CE-QE improves lexical recall substantially where query and answer vocabulary diverge (e.g., NQ Recall@100 from 0.32 to 0.47), and its score-fusion variant (SESF) beats cross-encoder score fusion by 2.5% on Recall@100 and beats SPLADEv2 and ColBERTv2 by 5.3% and 4.6% on nDCG@10, while leaving the underlying BM25 index completely unmodified.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-01T05:27:20Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Adam Kahirov</name>
+    </author>
+    <author>
+      <name>Umesh Deshpande</name>
+    </author>
+    <author>
+      <name>Swaminathan Sundararaman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.13416v1</id>
+    <title>A Unified Framework for Learned Sparse Retrieval</title>
+    <updated>2023-03-23T16:38:18Z</updated>
+    <link href="https://arxiv.org/abs/2303.13416v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.13416v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learned sparse retrieval (LSR) is a family of first-stage retrieval methods that are trained to generate sparse lexical representations of queries and documents for use with an inverted index. Many LSR methods have been recently introduced, with Splade models achieving state-of-the-art performance on MSMarco. Despite similarities in their model architectures, many LSR methods show substantial differences in effectiveness and efficiency. Differences in the experimental setups and configurations used make it difficult to compare the methods and derive insights. In this work, we analyze existing LSR methods and identify key components to establish an LSR framework that unifies all LSR methods under the same perspective. We then reproduce all prominent methods using a common codebase and re-train them in the same environment, which allows us to quantify how components of the framework affect effectiveness and efficiency. We find that (1) including document term weighting is most important for a method's effectiveness, (2) including query weighting has a small positive impact, and (3) document expansion and query expansion have a cancellation effect. As a result, we show how removing query expansion from a state-of-the-art model can reduce latency significantly while maintaining effectiveness on MSMarco and TripClick benchmarks. Our code is publicly available at https://github.com/thongnt99/learned-sparse-retrieval</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-23T16:38:18Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>ECIR 2023</arxiv:journal_ref>
+    <author>
+      <name>Thong Nguyen</name>
+    </author>
+    <author>
+      <name>Sean MacAvaney</name>
+    </author>
+    <author>
+      <name>Andrew Yates</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.05508v1</id>
+    <title>Do the Findings of Document and Passage Retrieval Generalize to the Retrieval of Responses for Dialogues?</title>
+    <updated>2023-01-13T12:18:43Z</updated>
+    <link href="https://arxiv.org/abs/2301.05508v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.05508v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A number of learned sparse and dense retrieval approaches have recently been proposed and proven effective in tasks such as passage retrieval and document retrieval. In this paper we analyze with a replicability study if the lessons learned generalize to the retrieval of responses for dialogues, an important task for the increasingly popular field of conversational search. Unlike passage and document retrieval where documents are usually longer than queries, in response ranking for dialogues the queries (dialogue contexts) are often longer than the documents (responses). Additionally, dialogues have a particular structure, i.e. multiple utterances by different users. With these differences in mind, we here evaluate how generalizable the following major findings from previous works are: (F1) query expansion outperforms a no-expansion baseline; (F2) document expansion outperforms a no-expansion baseline; (F3) zero-shot dense retrieval underperforms sparse baselines; (F4) dense retrieval outperforms sparse baselines; (F5) hard negative sampling is better than random sampling for training dense models. Our experiments -- based on three different information-seeking dialogue datasets -- reveal that four out of five findings (F2-F5) generalize to our domain</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-13T12:18:43Z</published>
+    <arxiv:comment>Accepted for publication in the European Conference on Information Retrieval (ECIR'23). arXiv admin note: substantial text overlap with arXiv:2204.10558</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Gustavo Penha</name>
+    </author>
+    <author>
+      <name>Claudia Hauff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.21237v1</id>
+    <title>Query-Centric Graph Retrieval Augmented Generation</title>
+    <updated>2025-09-25T14:35:44Z</updated>
+    <link href="https://arxiv.org/abs/2509.21237v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.21237v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Graph-based retrieval-augmented generation (RAG) enriches large language models (LLMs) with external knowledge for long-context understanding and multi-hop reasoning, but existing methods face a granularity dilemma: fine-grained entity-level graphs incur high token costs and lose context, while coarse document-level graphs fail to capture nuanced relations. We introduce QCG-RAG, a query-centric graph RAG framework that enables query-granular indexing and multi-hop chunk retrieval. Our query-centric approach leverages Doc2Query and Doc2Query{-}{-} to construct query-centric graphs with controllable granularity, improving graph quality and interpretability. A tailored multi-hop retrieval mechanism then selects relevant chunks via the generated queries. Experiments on LiHuaWorld and MultiHop-RAG show that QCG-RAG consistently outperforms prior chunk-based and graph-based RAG methods in question answering accuracy, establishing a new paradigm for multi-hop reasoning.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-25T14:35:44Z</published>
+    <arxiv:comment>25 pages, 6 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yaxiong Wu</name>
+    </author>
+    <author>
+      <name>Jianyuan Bo</name>
+    </author>
+    <author>
+      <name>Yongyue Zhang</name>
+    </author>
+    <author>
+      <name>Sheng Liang</name>
+    </author>
+    <author>
+      <name>Yong Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.20050v2</id>
+    <title>AutoMIR: Effective Zero-Shot Medical Information Retrieval without Relevance Labels</title>
+    <updated>2025-05-26T13:31:40Z</updated>
+    <link href="https://arxiv.org/abs/2410.20050v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.20050v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Medical information retrieval (MIR) is essential for retrieving relevant medical knowledge from diverse sources, including electronic health records, scientific literature, and medical databases. However, achieving effective zero-shot dense retrieval in the medical domain poses substantial challenges due to the lack of relevance-labeled data. In this paper, we introduce a novel approach called \textbf{S}elf-\textbf{L}earning \textbf{Hy}pothetical \textbf{D}ocument \textbf{E}mbeddings (\textbf{SL-HyDE}) to tackle this issue. SL-HyDE leverages large language models (LLMs) as generators to generate hypothetical documents based on a given query. These generated documents encapsulate key medical context, guiding a dense retriever in identifying the most relevant documents. The self-learning framework progressively refines both pseudo-document generation and retrieval, utilizing unlabeled medical corpora without requiring any relevance-labeled data. Additionally, we present the Chinese Medical Information Retrieval Benchmark (CMIRB), a comprehensive evaluation framework grounded in real-world medical scenarios, encompassing five tasks and ten datasets. By benchmarking ten models on CMIRB, we establish a rigorous standard for evaluating medical information retrieval systems. Experimental results demonstrate that SL-HyDE significantly surpasses HyDE in retrieval accuracy while showcasing strong generalization and scalability across various LLM and retriever configurations. Our code and data are publicly available at: https://github.com/ll0ruc/AutoMIR</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-26T02:53:20Z</published>
+    <arxiv:comment>19 pages, 15 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lei Li</name>
+    </author>
+    <author>
+      <name>Xiangxu Zhang</name>
+    </author>
+    <author>
+      <name>Xiao Zhou</name>
+    </author>
+    <author>
+      <name>Zheng Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.10496v1</id>
+    <title>Precise Zero-Shot Dense Retrieval without Relevance Labels</title>
+    <updated>2022-12-20T18:09:52Z</updated>
+    <link href="https://arxiv.org/abs/2212.10496v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.10496v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While dense retrieval has been shown effective and efficient across tasks and languages, it remains difficult to create effective fully zero-shot dense retrieval systems when no relevance label is available. In this paper, we recognize the difficulty of zero-shot learning and encoding relevance. Instead, we propose to pivot through Hypothetical Document Embeddings~(HyDE). Given a query, HyDE first zero-shot instructs an instruction-following language model (e.g. InstructGPT) to generate a hypothetical document. The document captures relevance patterns but is unreal and may contain false details. Then, an unsupervised contrastively learned encoder~(e.g. Contriever) encodes the document into an embedding vector. This vector identifies a neighborhood in the corpus embedding space, where similar real documents are retrieved based on vector similarity. This second step ground the generated document to the actual corpus, with the encoder's dense bottleneck filtering out the incorrect details. Our experiments show that HyDE significantly outperforms the state-of-the-art unsupervised dense retriever Contriever and shows strong performance comparable to fine-tuned retrievers, across various tasks (e.g. web search, QA, fact verification) and languages~(e.g. sw, ko, ja).</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-20T18:09:52Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Luyu Gao</name>
+    </author>
+    <author>
+      <name>Xueguang Ma</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+    <author>
+      <name>Jamie Callan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.13810v1</id>
+    <title>Tracing and Taming Hallucinated Terms via Subsequence-Association Filtering and Breadth-Aware Selection for LLM Query Expansion</title>
+    <updated>2026-10-09T16:22:16Z</updated>
+    <link href="https://arxiv.org/abs/2610.13810v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.13810v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are now a standard source of query expansion terms but they hallucinate. They inject non existent entities and off-topic terms that add ranking noise and can hurt strong retrievers. Existing remedies such as corpus grounding, mutual verification and preference alignment treat hallucinated terms as an undifferentiated nuisance to be filtered by agreement heuristics, without a mechanistic account of why a given term appears or a principled criterion for how many terms to keep. We propose Subsequence-Association Filtered, breadth-aware query expansion (SAFE-QE), a training-free, retriever agnostic method that draws on the subsequence-association account of hallucination. We score each candidate expansion term by its corpus conditioned cross-context reproducibility, terms that reappear under randomised query contexts yet lack support in the pseudo-relevant set are flagged as products of dominant hallucinatory associations and down-weighted. Drawing on the characterisation of language generation as a trade-off between consistency (no hallucination) and breadth (coverage), we cast term selection as constrained coverage maximisation over the pseudo-relevant set, keeping a set that is approximately broad but consistent and stable across resampling. We also introduce the Hallucinated Expansion Term Rate, a query side faithfulness metric that counts injected expansion terms no relevant document supports. We evaluate our approach on benchmarked TREC and BEIR collections. Our SAFE-QE is statistically indistinguishable from generative and corpus-steered expansion on nDCG@10 while injecting fewer unsupported terms 4.3 per query against 27.8 for Query2doc and 57.5 for HyDE and on a strong learned sparse retriever, where every expansion method regresses. Faithfulness is therefore available at no measurable cost in ranking quality.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-09T16:22:16Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Amit Kumar Jaiswal</name>
+    </author>
+    <author>
+      <name>Sagar Uprety</name>
+    </author>
+    <author>
+      <name>Prayag Tiwari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.08285v1</id>
+    <title>Pre-training with Large Language Model-based Document Expansion for Dense Passage Retrieval</title>
+    <updated>2023-08-16T11:10:43Z</updated>
+    <link href="https://arxiv.org/abs/2308.08285v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.08285v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we systematically study the potential of pre-training with Large Language Model(LLM)-based document expansion for dense passage retrieval. Concretely, we leverage the capabilities of LLMs for document expansion, i.e. query generation, and effectively transfer expanded knowledge to retrievers using pre-training strategies tailored for passage retrieval. These strategies include contrastive learning and bottlenecked query generation. Furthermore, we incorporate a curriculum learning strategy to reduce the reliance on LLM inferences. Experimental results demonstrate that pre-training with LLM-based document expansion significantly boosts the retrieval performance on large-scale web-search tasks. Our work shows strong zero-shot and out-of-domain retrieval abilities, making it more widely applicable for retrieval when initializing with no human-labeled data.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-16T11:10:43Z</published>
+    <arxiv:comment>10 pages, 3 tables, 4 figures, under review</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Guangyuan Ma</name>
+    </author>
+    <author>
+      <name>Xing Wu</name>
+    </author>
+    <author>
+      <name>Peng Wang</name>
+    </author>
+    <author>
+      <name>Zijia Lin</name>
+    </author>
+    <author>
+      <name>Songlin Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.04760v1</id>
+    <title>Exp4Fuse: A Rank Fusion Framework for Enhanced Sparse Retrieval using Large Language Model-based Query Expansion</title>
+    <updated>2025-06-05T08:44:34Z</updated>
+    <link href="https://arxiv.org/abs/2506.04760v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.04760v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) have shown potential in generating hypothetical documents for query expansion, thereby enhancing information retrieval performance. However, the efficacy of this method is highly dependent on the quality of the generated documents, which often requires complex prompt strategies and the integration of advanced dense retrieval techniques. This can be both costly and computationally intensive. To mitigate these limitations, we explore the use of zero-shot LLM-based query expansion to improve sparse retrieval, particularly for learned sparse retrievers. We introduce a novel fusion ranking framework, Exp4Fuse, which enhances the performance of sparse retrievers through an indirect application of zero-shot LLM-based query expansion. Exp4Fuse operates by simultaneously considering two retrieval routes-one based on the original query and the other on the LLM-augmented query. It then generates two ranked lists using a sparse retriever and fuses them using a modified reciprocal rank fusion method. We conduct extensive evaluations of Exp4Fuse against leading LLM-based query expansion methods and advanced retrieval techniques on three MS MARCO-related datasets and seven low-resource datasets. Experimental results reveal that Exp4Fuse not only surpasses existing LLM-based query expansion methods in enhancing sparse retrievers but also, when combined with advanced sparse retrievers, achieves SOTA results on several benchmarks. This highlights the superior performance and effectiveness of Exp4Fuse in improving query expansion for sparse retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-05T08:44:34Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lingyuan Liu</name>
+    </author>
+    <author>
+      <name>Mengxiang Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.04999v1</id>
+    <title>BIT.UA at BioASQ 14B: Modular Retrieval with pg_textsearch and Qdrant, and Agent-Based Answer Generation</title>
+    <updated>2026-09-04T11:10:07Z</updated>
+    <link href="https://arxiv.org/abs/2609.04999v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.04999v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper describes the participation of the BIT.UA team from the University of Aveiro in the 14th edition of the BioASQ Task B challenge on biomedical question answering. Building on our previous submissions, we introduced a substantially refactored and modular codebase, and made significant changes to both the retrieval and generation components of the pipeline. For Phase~A document retrieval, we replaced the PyTerrier PISA index with PostgreSQL-based pg\_textsearch for BM25 retrieval and adopted Qdrant for dense embedding indexing, enabling more efficient storage and GPU-accelerated similarity search. We explored HyDE-based query expansion alongside a Context-1 retrieval strategy. A new reranker training pipeline was developed, incorporating dense retrieval for negative sampling. For Phases A+ and B answer generation, we introduced an LLM-as-a-judge framework and a novel agent quorum mechanism, where multiple agents with diverse prompts debate and iteratively converge on a consensus answer using adaptive document retention. We also participated in the snippets generation subtask for the first time. Our systems achieved competitive results across all batches, with Phase~A systems achieving MAP ranks of 5 (Batch~1,3). We discuss the impact of these architectural changes, lessons learned, and outline directions for future work including SPLADE and ColBERT integration. All code is openly available: https://github.com/bioinformatics-ua/BioASQ14b.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T11:10:07Z</published>
+    <arxiv:comment>1 figure, 15 tables, 25 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>CLEF 2026 Working Notes, 21 - 24 September 2026, Jena, Germany</arxiv:journal_ref>
+    <author>
+      <name>André Ribeiro</name>
+    </author>
+    <author>
+      <name>Rúben Garrido</name>
+    </author>
+    <author>
+      <name>Alexander Christiansen</name>
+    </author>
+    <author>
+      <name>Richard A. A. Jonker</name>
+    </author>
+    <author>
+      <name>Sérgio Matos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.17080v1</id>
+    <title>Expand, Rerank, and Retrieve: Query Reranking for Open-Domain Question Answering</title>
+    <updated>2023-05-26T16:41:03Z</updated>
+    <link href="https://arxiv.org/abs/2305.17080v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.17080v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose EAR, a query Expansion And Reranking approach for improving passage retrieval, with the application to open-domain question answering. EAR first applies a query expansion model to generate a diverse set of queries, and then uses a query reranker to select the ones that could lead to better retrieval results. Motivated by the observation that the best query expansion often is not picked by greedy decoding, EAR trains its reranker to predict the rank orders of the gold passages when issuing the expanded queries to a given retriever. By connecting better the query expansion model and retriever, EAR significantly enhances a traditional sparse retrieval method, BM25. Empirically, EAR improves top-5/20 accuracy by 3-8 and 5-10 points in in-domain and out-of-domain settings, respectively, when compared to a vanilla query expansion model, GAR, and a dense retrieval model, DPR.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-26T16:41:03Z</published>
+    <arxiv:comment>ACL 2023 long paper (Findings)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yung-Sung Chuang</name>
+    </author>
+    <author>
+      <name>Wei Fang</name>
+    </author>
+    <author>
+      <name>Shang-Wen Li</name>
+    </author>
+    <author>
+      <name>Wen-tau Yih</name>
+    </author>
+    <author>
+      <name>James Glass</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.13624v1</id>
+    <title>TREC CAsT 2019: The Conversational Assistance Track Overview</title>
+    <updated>2020-03-30T16:58:04Z</updated>
+    <link href="https://arxiv.org/abs/2003.13624v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.13624v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Conversational Assistance Track (CAsT) is a new track for TREC 2019 to facilitate Conversational Information Seeking (CIS) research and to create a large-scale reusable test collection for conversational search systems. The document corpus is 38,426,252 passages from the TREC Complex Answer Retrieval (CAR) and Microsoft MAchine Reading COmprehension (MARCO) datasets. Eighty information seeking dialogues (30 train, 50 test) are an average of 9 to 10 questions long. Relevance assessments are provided for 30 training topics and 20 test topics. This year 21 groups submitted a total of 65 runs using varying methods for conversational query understanding and ranking. Methods include traditional retrieval based methods, feature based learning-to-rank, neural models, and knowledge enhanced methods. A common theme through the runs is the use of BERT-based neural reranking methods. Leading methods also employed document expansion, conversational query expansion, and generative language models for conversational query rewriting (GPT-2). The results show a gap between automatic systems and those using the manually resolved utterances, with a 35% relative improvement of manual rewrites over the best automatic system.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-30T16:58:04Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jeffrey Dalton</name>
+    </author>
+    <author>
+      <name>Chenyan Xiong</name>
+    </author>
+    <author>
+      <name>Jamie Callan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04088v1</id>
+    <title>Submitted and Diagnostic Analysis of Full-Text Temporal Retrieval for LongEval-Sci</title>
+    <updated>2026-07-05T02:52:30Z</updated>
+    <link href="https://arxiv.org/abs/2607.04088v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04088v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LongEval-Sci evaluates scientific retrieval under collection change, where a system should be effective on the current corpus and remain usable as documents accumulate over time. This paper reports both official Task 1 results and development diagnostics for LongEval-Sci 2026. We compare the official PyTerrier BM25 and Qwen3 dense baselines with full-text BM25, additive and router variants, temporal full-text retrieval, temporal+citation retrieval, RM3 query expansion, cross-encoder reranking, and reciprocal rank fusion (RRF). In the official DCTR evaluation, the temporalized full-text runs are our strongest submissions: FT BM25+temporal and FT BM25+temporal+citation obtain the best ARP on all three snapshots (0.285, 0.267, and 0.180 nDCG@10) and reduce snapshot-3 relative change from 0.481 for the BM25 pivot to 0.368. Citation features match the temporal-only variant but do not provide a measurable additional gain in the official summary. Our internal snapshot-1 diagnostics show a complementary pattern: full-text BM25 is the strongest single development retriever (DCTR nDCG@10 = 0.3302, MAP = 0.2853), RRF gives the best deep recall (Recall@1000 = 0.9667), and some uncalibrated overlays can sharply degrade top-rank quality. We therefore conclude that full-text retrieval is the strongest foundation, temporal integration can improve official longitudinal effectiveness when applied to that foundation, and citation evidence still requires cleaner ablation and calibration. Beyond ranking, we also report a qualitative weekly IR-system update-monitoring analysis based on ingestion velocity and stale-coverage drift.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-05T02:52:30Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yingdong Yang</name>
+    </author>
+    <author>
+      <name>Haijian Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.08085v1</id>
+    <title>Experiments on Manual Thesaurus based Query Expansion for Ad-hoc Monolingual Gujarati Information Retrieval Tasks</title>
+    <updated>2020-01-18T10:23:48Z</updated>
+    <link href="https://arxiv.org/abs/2001.08085v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.08085v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we present the experimental work done on Query Expansion (QE) for retrieval tasks of Gujarati text documents. In information retrieval, it is very difficult to estimate the exact user need, query expansion adds terms to the original query, which provides more information about the user need. There are various approaches to query expansion. In our work, manual thesaurus based query expansion was performed to evaluate the performance of widely used information retrieval models for Gujarati text documents. Results show that query expansion improves the recall of text documents.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-18T10:23:48Z</published>
+    <arxiv:comment>arXiv admin note: substantial text overlap with arXiv:1209.0126</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hardik Joshi</name>
+    </author>
+    <author>
+      <name>Jyoti Pareek</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.22670v1</id>
+    <title>Tools are under-documented: Simple Document Expansion Boosts Tool Retrieval</title>
+    <updated>2025-10-26T13:17:01Z</updated>
+    <link href="https://arxiv.org/abs/2510.22670v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.22670v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) have recently demonstrated strong capabilities in tool use, yet progress in tool retrieval remains hindered by incomplete and heterogeneous tool documentation. To address this challenge, we introduce Tool-DE, a new benchmark and framework that systematically enriches tool documentation with structured fields to enable more effective tool retrieval, together with two dedicated models, Tool-Embed and Tool-Rank. We design a scalable document expansion pipeline that leverages both open- and closed-source LLMs to generate, validate, and refine enriched tool profiles at low cost, producing large-scale corpora with 50k instances for embedding-based retrievers and 200k for rerankers. On top of this data, we develop two models specifically tailored for tool retrieval: Tool-Embed, a dense retriever, and Tool-Rank, an LLM-based reranker. Extensive experiments on ToolRet and Tool-DE demonstrate that document expansion substantially improves retrieval performance, with Tool-Embed and Tool-Rank achieving new state-of-the-art results on both benchmarks. We further analyze the contribution of individual fields to retrieval effectiveness, as well as the broader impact of document expansion on both training and evaluation. Overall, our findings highlight both the promise and limitations of LLM-driven document expansion, positioning Tool-DE, along with the proposed Tool-Embed and Tool-Rank, as a foundation for future research in tool retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-26T13:17:01Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xuan Lu</name>
+    </author>
+    <author>
+      <name>Haohang Huang</name>
+    </author>
+    <author>
+      <name>Rui Meng</name>
+    </author>
+    <author>
+      <name>Yaohui Jin</name>
+    </author>
+    <author>
+      <name>Wenjun Zeng</name>
+    </author>
+    <author>
+      <name>Xiaoyu Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.13905v1</id>
+    <title>ADORE: Iterative Query Expansion with Retrieval-Grounded Relevance Feedback</title>
+    <updated>2026-06-11T20:52:37Z</updated>
+    <link href="https://arxiv.org/abs/2606.13905v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.13905v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-based query expansion improves retrieval by enriching the original query with additional context. Yet most methods remain generation-driven, producing plausible pseudo-documents or expansions without checking how the target corpus responds. This can introduce retrieval drift, amplify misleading vocabulary, or miss terms that distinguish relevant from non-relevant documents. We argue that effective expansion requires retrieval-grounded feedback, not just single-pass generation or unverified iteration. We introduce ADORE (ADapt, Observe, Relevance Evaluate), an iterative framework that turns retrieval outcomes into feedback for the next expansion. At each round, an LLM generates pseudo-passages, a retriever exposes the corpus response, and a relevance assessor evaluates retrieved documents against the original query. These judgments identify what to reinforce, what remains undercovered, and what to suppress. Across TREC Deep Learning, BEIR, and BRIGHT, ADORE consistently outperforms strong query expansion baselines with notable improvements across nearly all evaluation settings, improving average nDCG@10 by 24.5% over BM25 and 3.6% over the strongest prior query expansion method on BEIR, and by 122.9% over BM25 and 9.2% over the best query expansion baseline on BRIGHT. Our code and data are publicly available.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-11T20:52:37Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Amin Bigdeli</name>
+    </author>
+    <author>
+      <name>Negar Arabzadeh</name>
+    </author>
+    <author>
+      <name>Radin Hamidi Rad</name>
+    </author>
+    <author>
+      <name>Sajad Ebrahimi</name>
+    </author>
+    <author>
+      <name>Charles L. A. Clarke</name>
+    </author>
+    <author>
+      <name>Ebrahim Bagheri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.16369v1</id>
+    <title>Enhancing Financial RAG with Agentic AI and Multi-HyDE: A Novel Approach to Knowledge Retrieval and Hallucination Reduction</title>
+    <updated>2025-09-19T19:24:30Z</updated>
+    <link href="https://arxiv.org/abs/2509.16369v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.16369v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurate and reliable knowledge retrieval is vital for financial question-answering, where continually updated data sources and complex, high-stakes contexts demand precision. Traditional retrieval systems rely on a single database and retriever, but financial applications require more sophisticated approaches to handle intricate regulatory filings, market analyses, and extensive multi-year reports. We introduce a framework for financial Retrieval Augmented Generation (RAG) that leverages agentic AI and the Multi-HyDE system, an approach that generates multiple, nonequivalent queries to boost the effectiveness and coverage of retrieval from large, structured financial corpora. Our pipeline is optimized for token efficiency and multi-step financial reasoning, and we demonstrate that their combination improves accuracy by 11.2% and reduces hallucinations by 15%. Our method is evaluated on standard financial QA benchmarks, showing that integrating domain-specific retrieval mechanisms such as Multi-HyDE with robust toolsets, including keyword and table-based retrieval, significantly enhances both the accuracy and reliability of answers. This research not only delivers a modular, adaptable retrieval framework for finance but also highlights the importance of structured agent workflows and multi-perspective retrieval for trustworthy deployment of AI in high-stakes financial applications.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-19T19:24:30Z</published>
+    <arxiv:comment>14 Pages, 8 Tables, 2 Figures. Accepted and to be published in the proceedings of FinNLP, Empirical Methods in Natural Language Processing 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Akshay Govind Srinivasan</name>
+    </author>
+    <author>
+      <name>Ryan Jacob George</name>
+    </author>
+    <author>
+      <name>Jayden Koshy Joe</name>
+    </author>
+    <author>
+      <name>Hrushikesh Kant</name>
+    </author>
+    <author>
+      <name>Harshith M R</name>
+    </author>
+    <author>
+      <name>Sachin Sundar</name>
+    </author>
+    <author>
+      <name>Sudharshan Suresh</name>
+    </author>
+    <author>
+      <name>Rahul Vimalkanth</name>
+    </author>
+    <author>
+      <name> Vijayavallabh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.14005v1</id>
+    <title>Neural document expansion for ad-hoc information retrieval</title>
+    <updated>2020-12-27T20:00:08Z</updated>
+    <link href="https://arxiv.org/abs/2012.14005v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.14005v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Nogueira et al. [2019] proposed a new approach to document expansion based on a neural Seq2Seq model, showing significant improvement on short text retrieval task. However, this approach needs a large amount of in-domain training data. In this paper, we show that this neural document expansion approach can be effectively adapted to standard IR tasks, where labels are scarce and many long documents are present.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-27T20:00:08Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Cheng Tang</name>
+    </author>
+    <author>
+      <name>Andrew Arnold</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.21568v1</id>
+    <title>Assessing RAG and HyDE on 1B vs. 4B-Parameter Gemma LLMs for Personal Assistants Integretion</title>
+    <updated>2025-06-12T15:05:39Z</updated>
+    <link href="https://arxiv.org/abs/2506.21568v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.21568v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Resource efficiency is a critical barrier to deploying large language models (LLMs) in edge and privacy-sensitive applications. This study evaluates the efficacy of two augmentation strategies--Retrieval-Augmented Generation (RAG) and Hypothetical Document Embeddings (HyDE)--on compact Gemma LLMs of 1 billion and 4 billion parameters, within the context of a privacy-first personal assistant. We implement short-term memory via MongoDB and long-term semantic storage via Qdrant, orchestrated through FastAPI and LangChain, and expose the system through a React.js frontend. Across both model scales, RAG consistently reduces latency by up to 17\% and eliminates factual hallucinations when responding to user-specific and domain-specific queries. HyDE, by contrast, enhances semantic relevance--particularly for complex physics prompts--but incurs a 25--40\% increase in response time and a non-negligible hallucination rate in personal-data retrieval. Comparing 1 B to 4 B models, we observe that scaling yields marginal throughput gains for baseline and RAG pipelines, but magnifies HyDE's computational overhead and variability. Our findings position RAG as the pragmatic choice for on-device personal assistants powered by small-scale LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-12T15:05:39Z</published>
+    <arxiv:comment>Technical report as part of research project</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Andrejs Sorstkins</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.06010v1</id>
+    <title>GQE-PRF: Generative Query Expansion with Pseudo-Relevance Feedback</title>
+    <updated>2021-08-13T01:09:02Z</updated>
+    <link href="https://arxiv.org/abs/2108.06010v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.06010v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query expansion with pseudo-relevance feedback (PRF) is a powerful approach to enhance the effectiveness in information retrieval. Recently, with the rapid advance of deep learning techniques, neural text generation has achieved promising success in many natural language tasks. To leverage the strength of text generation for information retrieval, in this article, we propose a novel approach which effectively integrates text generation models into PRF-based query expansion. In particular, our approach generates augmented query terms via neural text generation models conditioned on both the initial query and pseudo-relevance feedback. Moreover, in order to train the generative model, we adopt the conditional generative adversarial nets (CGANs) and propose the PRF-CGAN method in which both the generator and the discriminator are conditioned on the pseudo-relevance feedback. We evaluate the performance of our approach on information retrieval tasks using two benchmark datasets. The experimental results show that our approach achieves comparable performance or outperforms traditional query expansion methods on both the retrieval and reranking tasks.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-13T01:09:02Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Minghui Huang</name>
+    </author>
+    <author>
+      <name>Dong Wang</name>
+    </author>
+    <author>
+      <name>Shuang Liu</name>
+    </author>
+    <author>
+      <name>Meizhen Ding</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.37574v2</id>
+    <title>MERGE: Multi-LLM Ensemble for Retrieval via Generative Enrichment</title>
+    <updated>2026-09-30T17:32:02Z</updated>
+    <link href="https://arxiv.org/abs/2609.37574v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.37574v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are increasingly used to enrich user queries in information retrieval (IR) so that a standard retriever such as BM25 can bridge vocabulary gaps with the target corpus. Any single LLM, however, is limited by its training data and architectural biases, and its enrichment behavior depends on hand-crafted prompts that must be re-engineered for each new model -- an expensive and poorly scalable process. We present MERGE (Multi-LLM Ensemble for Retrieval via Generative Enrichment), a two-stage framework: three heterogeneous 7-8B open-source LLMs independently produce candidate expansions, and a larger LLM generatively synthesizes them into a single query. To make prompt engineering scalable across the ensemble, we integrate a task-grounded Automatic Prompt Optimization (APO) loop into both stages. Unlike APO methods that judge candidates with an LLM evaluator, our loop scores each candidate by its downstream retrieval performance and runs a small tournament between the current champion prompt and optimizer-proposed drafts, terminating once the champion survives two consecutive rounds; a history-augmented variant additionally feeds the recent tournament trajectory back to the optimizer. MERGE is retriever-agnostic and issues a single BM25 pass with no rank fusion, no supervised document expansion, and no re-indexing. On five BEIR benchmarks (NQ, SciFact, FiQA, Touche-2020, DBPedia), MERGE improves BM25 nDCG@10 over the original queries by +2.1 to +14.9 points and matches or outperforms strong LLM-based query-expansion baselines despite using only compact open-source models. Ablations confirm that the Stage-2 ensemble beats any single Stage-1 LLM, and that task-grounded APO converts large seed-prompt regressions into consistent gains without hand-tuning.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-29T13:39:54Z</published>
+    <arxiv:comment>9 pages, 4 tables, 1 figure. Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Tzu-I Ho</name>
+    </author>
+    <author>
+      <name>Yung-Yu Shih</name>
+    </author>
+    <author>
+      <name>Shang-Yu Su</name>
+    </author>
+    <author>
+      <name>Dongzhe Wang</name>
+    </author>
+    <author>
+      <name>Yun-Nung Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.11314v1</id>
+    <title>Faster Learned Sparse Retrieval with Guided Traversal</title>
+    <updated>2022-04-24T16:10:07Z</updated>
+    <link href="https://arxiv.org/abs/2204.11314v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.11314v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural information retrieval architectures based on transformers such as BERT are able to significantly improve system effectiveness over traditional sparse models such as BM25. Though highly effective, these neural approaches are very expensive to run, making them difficult to deploy under strict latency constraints. To address this limitation, recent studies have proposed new families of learned sparse models that try to match the effectiveness of learned dense models, while leveraging the traditional inverted index data structure for efficiency. Current learned sparse models learn the weights of terms in documents and, sometimes, queries; however, they exploit different vocabulary structures, document expansion techniques, and query expansion strategies, which can make them slower than traditional sparse models such as BM25. In this work, we propose a novel indexing and query processing technique that exploits a traditional sparse model's "guidance" to efficiently traverse the index, allowing the more effective learned model to execute fewer scoring operations. Our experiments show that our guided processing heuristic is able to boost the efficiency of the underlying learned sparse model by a factor of four without any measurable loss of effectiveness.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-24T16:10:07Z</published>
+    <arxiv:comment>Accepted at SIGIR 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Antonio Mallia</name>
+    </author>
+    <author>
+      <name>Joel Mackenzie</name>
+    </author>
+    <author>
+      <name>Torsten Suel</name>
+    </author>
+    <author>
+      <name>Nicola Tonellotto</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19325v1</id>
+    <title>Generative Query Expansion with Multilingual LLMs for Cross-Lingual Information Retrieval</title>
+    <updated>2025-11-24T17:18:25Z</updated>
+    <link href="https://arxiv.org/abs/2511.19325v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19325v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query expansion is the reformulation of a user query by adding semantically related information, and is an essential component of monolingual and cross-lingual information retrieval used to ensure that relevant documents are not missed. Recently, multilingual large language models (mLLMs) have shifted query expansion from semantic augmentation with synonyms and related words to pseudo-document generation. Pseudo-documents both introduce additional relevant terms and bridge the gap between short queries and long documents, which is particularly beneficial in dense retrieval. This study evaluates recent mLLMs and fine-tuned variants across several generative expansion strategies to identify factors that drive cross-lingual retrieval performance. Results show that query length largely determines which prompting technique is effective, and that more elaborate prompts often do not yield further gains. Substantial linguistic disparities persist: cross-lingual query expansion can produce the largest improvements for languages with the weakest baselines, yet retrieval is especially poor between languages written in different scripts. Fine-tuning is found to lead to performance gains only when the training and test data are of similar format. These outcomes underline the need for more balanced multilingual and cross-lingual training and evaluation resources.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T17:18:25Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Olivia Macmillan-Scott</name>
+    </author>
+    <author>
+      <name>Roksana Goworek</name>
+    </author>
+    <author>
+      <name>Eda B. Özyiğit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.14493v4</id>
+    <title>FinSage: A Multi-aspect RAG System for Financial Filings Question Answering</title>
+    <updated>2025-08-13T23:01:34Z</updated>
+    <link href="https://arxiv.org/abs/2504.14493v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.14493v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Leveraging large language models in real-world settings often entails a need to utilize domain-specific data and tools in order to follow the complex regulations that need to be followed for acceptable use. Within financial sectors, modern enterprises increasingly rely on Retrieval-Augmented Generation (RAG) systems to address complex compliance requirements in financial document workflows. However, existing solutions struggle to account for the inherent heterogeneity of data (e.g., text, tables, diagrams) and evolving nature of regulatory standards used in financial filings, leading to compromised accuracy in critical information extraction. We propose the FinSage framework as a solution, utilizing a multi-aspect RAG framework tailored for regulatory compliance analysis in multi-modal financial documents. FinSage introduces three innovative components: (1) a multi-modal pre-processing pipeline that unifies diverse data formats and generates chunk-level metadata summaries, (2) a multi-path sparse-dense retrieval system augmented with query expansion (HyDE) and metadata-aware semantic search, and (3) a domain-specialized re-ranking module fine-tuned via Direct Preference Optimization (DPO) to prioritize compliance-critical content. Extensive experiments demonstrate that FinSage achieves an impressive recall of 92.51% on 75 expert-curated questions derived from surpasses the best baseline method on the FinanceBench question answering datasets by 24.06% in accuracy. Moreover, FinSage has been successfully deployed as financial question-answering agent in online meetings, where it has already served more than 1,200 people.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-20T04:58:14Z</published>
+    <arxiv:comment>Accepted at the 34th ACM International Conference on Information and Knowledge Management (CIKM2025)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xinyu Wang</name>
+    </author>
+    <author>
+      <name>Jijun Chi</name>
+    </author>
+    <author>
+      <name>Zhenghan Tai</name>
+    </author>
+    <author>
+      <name>Tung Sum Thomas Kwok</name>
+    </author>
+    <author>
+      <name>Muzhi Li</name>
+    </author>
+    <author>
+      <name>Zhuhong Li</name>
+    </author>
+    <author>
+      <name>Hailin He</name>
+    </author>
+    <author>
+      <name>Yuchen Hua</name>
+    </author>
+    <author>
+      <name>Peng Lu</name>
+    </author>
+    <author>
+      <name>Suyuchen Wang</name>
+    </author>
+    <author>
+      <name>Yihong Wu</name>
+    </author>
+    <author>
+      <name>Jerry Huang</name>
+    </author>
+    <author>
+      <name>Jingrui Tian</name>
+    </author>
+    <author>
+      <name>Fengran Mo</name>
+    </author>
+    <author>
+      <name>Yufei Cui</name>
+    </author>
+    <author>
+      <name>Ling Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.09260v2</id>
+    <title>ThinkQE: Query Expansion via an Evolving Thinking Process</title>
+    <updated>2026-03-09T18:02:48Z</updated>
+    <link href="https://arxiv.org/abs/2506.09260v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.09260v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Effective query expansion for web search benefits from promoting both exploration and result diversity to capture multiple interpretations and facets of a query. While recent LLM-based methods have improved retrieval performance and demonstrate strong domain generalization without additional training, they often generate narrowly focused expansions that overlook these desiderata. We propose ThinkQE, a test-time query expansion framework addressing this limitation through two key components: a thinking-based expansion process that encourages deeper and comprehensive semantic exploration, and a corpus-interaction strategy that iteratively refines expansions using retrieval feedback from the corpus. Experiments on diverse web search benchmarks (DL19, DL20, and BRIGHT) show ThinkQE consistently outperforms prior approaches, including training-intensive dense retrievers and rerankers.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-10T21:41:01Z</published>
+    <arxiv:comment>EMNLP 2025 Findings</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yibin Lei</name>
+    </author>
+    <author>
+      <name>Tao Shen</name>
+    </author>
+    <author>
+      <name>Andrew Yates</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.13869v1</id>
+    <title>Query Expansion and Entity Weighting for Query Reformulation Retrieval in Voice Assistant Systems</title>
+    <updated>2022-02-22T23:03:29Z</updated>
+    <link href="https://arxiv.org/abs/2202.13869v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.13869v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Voice assistants such as Alexa, Siri, and Google Assistant have become increasingly popular worldwide. However, linguistic variations, variability of speech patterns, ambient acoustic conditions, and other such factors are often correlated with the assistants misinterpreting the user's query. In order to provide better customer experience, retrieval based query reformulation (QR) systems are widely used to reformulate those misinterpreted user queries. Current QR systems typically focus on neural retrieval model training or direct entities retrieval for the reformulating. However, these methods rarely focus on query expansion and entity weighting simultaneously, which may limit the scope and accuracy of the query reformulation retrieval. In this work, we propose a novel Query Expansion and Entity Weighting method (QEEW), which leverages the relationships between entities in the entity catalog (consisting of users' queries, assistant's responses, and corresponding entities), to enhance the query reformulation performance. Experiments on Alexa annotated data demonstrate that QEEW improves all top precision metrics, particularly 6% improvement in top10 precision, compared with baselines not using query expansion and weighting; and more than 5% improvement in top10 precision compared with other baselines using query expansion and weighting.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-22T23:03:29Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zhongkai Sun</name>
+    </author>
+    <author>
+      <name>Sixing Lu</name>
+    </author>
+    <author>
+      <name>Chengyuan Ma</name>
+    </author>
+    <author>
+      <name>Xiaohu Liu</name>
+    </author>
+    <author>
+      <name>Chenlei Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.21365v1</id>
+    <title>KSE-Web: An Analysis of Hybrid Retrieval and LLM-Assisted Query Expansion for Low-Resource Khmer Semantic Search</title>
+    <updated>2026-06-17T00:51:03Z</updated>
+    <link href="https://arxiv.org/abs/2608.21365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.21365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As a low-resource language, Khmer presents several retrieval challenges, including limited annotated data, ambiguous word boundaries, weak support in multilingual embedding models, and frequent mixed Khmer-English usage. This paper presents KSE-Web, an analysis of hybrid retrieval and LLM-assisted query expansion for Khmer semantic search. We construct the dataset from approximately 17K candidate Khmer titles and retain 3K cleaned full-text Khmer documents after filtering, normalization, deduplication, and document-length control. The dataset includes 300 manually reviewed user-style Khmer search queries and silver relevance labels with partial human verification. We evaluate character n-gram BM25, multilingual dense retrieval, hybrid BM25+dense retrieval, and LLM-assisted query expansion using Qwen2.5 models. Experimental results show that BM25 achieves the strongest overall performance, reaching 0.943 Recall and 0.876 nDCG. Hybrid BM25+dense retrieval performs comparably, achieving 0.929 Recall and 0.871 nDCG, while dense retrieval alone performs lower. LLM-assisted query expansion does not outperform non-expanded retrieval; however, Qwen2.5-3B produces substantially stronger expanded-query results than Qwen2.5-0.5B, suggesting that LLM size and expansion quality matter for low-resource Khmer retrieval. Our analysis further shows that direct LLM expansion can introduce topic drift, generic terms, and noisy reformulations, while simple filtering may remove useful semantic cues. These findings highlight both the potential and limitations of LLM-assisted retrieval for Khmer semantic search and provide a foundation for future Khmer retrieval datasets with stronger human-verified annotations and Khmer-aware retrieval models. The dataset and documentation will be made available at github.com/back-kh/KhmerSemantic-Search.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-17T00:51:03Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Nimol Thuon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.11784v1</id>
+    <title>Ontology-Guided Query Expansion for Biomedical Document Retrieval using Large Language Models</title>
+    <updated>2025-08-15T19:23:26Z</updated>
+    <link href="https://arxiv.org/abs/2508.11784v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.11784v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Effective Question Answering (QA) on large biomedical document collections requires effective document retrieval techniques. The latter remains a challenging task due to the domain-specific vocabulary and semantic ambiguity in user queries. We propose BMQExpander, a novel ontology-aware query expansion pipeline that combines medical knowledge - definitions and relationships - from the UMLS Metathesaurus with the generative capabilities of large language models (LLMs) to enhance retrieval effectiveness. We implemented several state-of-the-art baselines, including sparse and dense retrievers, query expansion methods, and biomedical-specific solutions. We show that BMQExpander has superior retrieval performance on three popular biomedical Information Retrieval (IR) benchmarks: NFCorpus, TREC-COVID, and SciFact - with improvements of up to 22.1% in NDCG@10 over sparse baselines and up to 6.5% over the strongest baseline. Further, BMQExpander generalizes robustly under query perturbation settings, in contrast to supervised baselines, achieving up to 15.7% improvement over the strongest baseline. As a side contribution, we publish our paraphrased benchmarks. Finally, our qualitative analysis shows that BMQExpander has fewer hallucinations compared to other LLM-based query expansion baselines.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-15T19:23:26Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zabir Al Nazi</name>
+    </author>
+    <author>
+      <name>Vagelis Hristidis</name>
+    </author>
+    <author>
+      <name>Aaron Lawson McLean</name>
+    </author>
+    <author>
+      <name>Jannat Ara Meem</name>
+    </author>
+    <author>
+      <name>Md Taukir Azam Chowdhury</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.06703v1</id>
+    <title>Improved Learned Sparse Retrieval with Corpus-Specific Vocabularies</title>
+    <updated>2024-01-12T17:10:39Z</updated>
+    <link href="https://arxiv.org/abs/2401.06703v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.06703v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We explore leveraging corpus-specific vocabularies that improve both efficiency and effectiveness of learned sparse retrieval systems. We find that pre-training the underlying BERT model on the target corpus, specifically targeting different vocabulary sizes incorporated into the document expansion process, improves retrieval quality by up to 12% while in some scenarios decreasing latency by up to 50%. Our experiments show that adopting corpus-specific vocabulary and increasing vocabulary size decreases average postings list length which in turn reduces latency. Ablation studies show interesting interactions between custom vocabularies, document expansion techniques, and sparsification objectives of sparse models. Both effectiveness and efficiency improvements transfer to different retrieval approaches such as uniCOIL and SPLADE and offer a simple yet effective approach to providing new efficiency-effectiveness trade-offs for learned sparse retrieval systems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-12T17:10:39Z</published>
+    <arxiv:comment>ECIR 2024 Full Paper</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Puxuan Yu</name>
+    </author>
+    <author>
+      <name>Antonio Mallia</name>
+    </author>
+    <author>
+      <name>Matthias Petri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.07258v2</id>
+    <title>BERT-QE: Contextualized Query Expansion for Document Re-ranking</title>
+    <updated>2020-11-03T16:08:25Z</updated>
+    <link href="https://arxiv.org/abs/2009.07258v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.07258v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query expansion aims to mitigate the mismatch between the language used in a query and in a document. However, query expansion methods can suffer from introducing non-relevant information when expanding the query. To bridge this gap, inspired by recent advances in applying contextualized models like BERT to the document retrieval task, this paper proposes a novel query expansion model that leverages the strength of the BERT model to select relevant document chunks for expansion. In evaluation on the standard TREC Robust04 and GOV2 test collections, the proposed BERT-QE model significantly outperforms BERT-Large models.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-15T17:50:09Z</published>
+    <arxiv:comment>Accepted in EMNLP-Findings 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zhi Zheng</name>
+    </author>
+    <author>
+      <name>Kai Hui</name>
+    </author>
+    <author>
+      <name>Ben He</name>
+    </author>
+    <author>
+      <name>Xianpei Han</name>
+    </author>
+    <author>
+      <name>Le Sun</name>
+    </author>
+    <author>
+      <name>Andrew Yates</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.17164v1</id>
+    <title>TCDE: Topic-Centric Dual Expansion of Queries and Documents with Large Language Models for Information Retrieval</title>
+    <updated>2025-12-19T01:57:17Z</updated>
+    <link href="https://arxiv.org/abs/2512.17164v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.17164v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query Expansion (QE) enriches queries and Document Expansion (DE) enriches documents, and these two techniques are often applied separately. However, such separate application may lead to semantic misalignment between the expanded queries (or documents) and their relevant documents (or queries). To address this serious issue, we propose TCDE, a dual expansion strategy that leverages large language models (LLMs) for topic-centric enrichment on both queries and documents. In TCDE, we design two distinct prompt templates for processing each query and document. On the query side, an LLM is guided to identify distinct sub-topics within each query and generate a focused pseudo-document for each sub-topic. On the document side, an LLM is guided to distill each document into a set of core topic sentences. The resulting outputs are used to expand the original query and document. This topic-centric dual expansion process establishes semantic bridges between queries and their relevant documents, enabling better alignment for downstream retrieval models. Experiments on two challenging benchmarks, TREC Deep Learning and BEIR, demonstrate that TCDE achieves substantial improvements over strong state-of-the-art expansion baselines. In particular, on dense retrieval tasks, it outperforms several state-of-the-art methods, with a relative improvement of 2.8\% in NDCG@10 on the SciFact dataset. Experimental results validate the effectiveness of our topic-centric and dual expansion strategy.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-19T01:57:17Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yu Yang</name>
+    </author>
+    <author>
+      <name>Feng Tian</name>
+    </author>
+    <author>
+      <name>Ping Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.26683v1</id>
+    <title>LITTA: Late-Interaction and Test-Time Alignment for Visually-Grounded Multimodal Retrieval</title>
+    <updated>2026-03-10T13:25:39Z</updated>
+    <link href="https://arxiv.org/abs/2603.26683v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.26683v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieving relevant evidence from visually rich documents such as textbooks, technical reports, and manuals is challenging due to long context, complex layouts, and weak lexical overlap between user questions and supporting pages. We propose LITTA, a query-expansion-centric retrieval framework for evidence page retrieval that improves multimodal document retrieval without retriever retraining. Given a user query, LITTA generates complementary query variants using a large language model and retrieves candidate pages for each variant using a frozen vision retriever with late-interaction scoring. Candidates from expanded queries are then aggregated through reciprocal rank fusion to improve evidence coverage and reduce sensitivity to any single phrasing. This simple test-time strategy significantly improves retrieval robustness while remaining compatible with existing multimodal embedding indices. We evaluate LITTA on visually grounded document retrieval tasks across three domains: computer science, pharmaceuticals, and industrial manuals. Multi-query retrieval consistently improves top-k accuracy, recall, and MRR compared to single-query retrieval, with particularly large gains in domains with high visual and semantic variability. Moreover, the accuracy-efficiency trade-off is directly controllable by the number of query variants, making LITTA practical for deployment under latency constraints. These results demonstrate that query expansion provides a simple yet effective mechanism for improving visually grounded multimodal retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T13:25:39Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Seonok Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.10549v1</id>
+    <title>Evaluating Temporal Persistence Using Replicability Measures</title>
+    <updated>2023-08-21T08:05:16Z</updated>
+    <link href="https://arxiv.org/abs/2308.10549v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.10549v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In real-world Information Retrieval (IR) experiments, the Evaluation Environment (EE) is exposed to constant change. Documents are added, removed, or updated, and the information need and the search behavior of users is evolving. Simultaneously, IR systems are expected to retain a consistent quality. The LongEval Lab seeks to investigate the longitudinal persistence of IR systems, and in this work, we describe our participation. We submitted runs of five advanced retrieval systems, namely a Reciprocal Rank Fusion (RRF) approach, ColBERT, monoT5, Doc2Query, and E5, to both sub-tasks. Further, we cast the longitudinal evaluation as a replicability study to better understand the temporal change observed. As a result, we quantify the persistence of the submitted runs and see great potential in this evaluation method.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-21T08:05:16Z</published>
+    <arxiv:comment>To be published in Proceedings of the Working Notes of CLEF 2023 - Conference and Labs of the Evaluation Forum, Thessaloniki, Greece 18 - 21, 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jüri Keller</name>
+    </author>
+    <author>
+      <name>Timo Breuer</name>
+    </author>
+    <author>
+      <name>Philipp Schaer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.14635v2</id>
+    <title>Compute Allocation for Reasoning-Intensive Retrieval Agents</title>
+    <updated>2026-03-21T05:36:15Z</updated>
+    <link href="https://arxiv.org/abs/2603.14635v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.14635v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As agents operate over long horizons, their memory stores grow continuously, making retrieval critical to accessing relevant information. Many agent queries require reasoning-intensive retrieval, where the connection between query and relevant documents is implicit and requires inference to bridge. LLM-augmented pipelines address this through query expansion and candidate re-ranking, but introduce significant inference costs. We study computation allocation in reasoning-intensive retrieval pipelines using the BRIGHT benchmark and Gemini 2.5 model family. We vary model capacity, inference-time thinking, and re-ranking depth across query expansion and re-ranking stages. We find that re-ranking benefits substantially from stronger models (+7.5 NDCG@10) and deeper candidate pools (+21% from $k$=10 to 100), while query expansion shows diminishing returns beyond lightweight models (+1.1 NDCG@10 from weak to strong). Inference-time thinking provides minimal improvement at either stage. These results suggest that compute should be concentrated on re-ranking rather than distributed uniformly across pipeline stages.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-15T22:12:17Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Sreeja Apparaju</name>
+    </author>
+    <author>
+      <name>Nilesh Gupta</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.11042v1</id>
+    <title>Aligned Query Expansion: Efficient Query Expansion for Information Retrieval through LLM Alignment</title>
+    <updated>2025-07-15T07:11:29Z</updated>
+    <link href="https://arxiv.org/abs/2507.11042v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.11042v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the breakthroughs in large language models (LLMs), query generation techniques that expand documents and queries with related terms are becoming increasingly popular in the information retrieval field. Such techniques have been shown to improve the effectiveness of traditional lexical retrieval methods by dealing with the vocabulary mismatch problem. Recent work has found that generating queries with a greedy decoding strategy can produce sub-optimal queries, including hallucinations, and proposed to filter out queries before expansion. This `generate-then-filter' approach is costly, as it requires generating multiple queries and applying a relevance model to all of them and does not teach the LLM which of the generated queries is more effective for expansion. To overcome such limitations, we propose Aligned Query Expansion (AQE), a novel approach to enhance query expansion for passage retrieval in open-domain question answering. AQE leverages recent techniques in LLM alignment to fine-tune models for generating query expansions that directly optimize the effectiveness of the retrieval task, eliminating the need for additional filtering steps. This alignment ensures that queries are more relevant, reducing computational costs while improving retrieval effectiveness. Empirical evaluations show that AQE outperforms baseline models for query expansion in both in-domain and out-of-domain settings, demonstrating significant improvements in retrieval effectiveness.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-15T07:11:29Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Adam Yang</name>
+    </author>
+    <author>
+      <name>Gustavo Penha</name>
+    </author>
+    <author>
+      <name>Enrico Palumbo</name>
+    </author>
+    <author>
+      <name>Hugues Bouchard</name>
+    </author>
+  </entry>
+</feed>

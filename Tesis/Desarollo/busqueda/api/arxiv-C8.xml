@@ -1,0 +1,1334 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/PJ6YaotGHKZ4RDJmRVujBSVQtsQ</id>
+  <title>arXiv Query: search_query=(abs:RankGPT OR abs:"listwise reranking" OR abs:"LLM reranking") AND (abs:retrieval) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:34Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:RankGPT+OR+(abs:%22listwise+reranking%22+OR+abs:%22LLM+reranking%22))+AND+(abs:retrieval+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>84</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2411.05508v2</id>
+    <title>An Early FIRST Reproduction and Improvements to Single-Token Decoding for Fast Listwise Reranking</title>
+    <updated>2024-11-12T15:36:04Z</updated>
+    <link href="https://arxiv.org/abs/2411.05508v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.05508v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances have demonstrated that large language models (LLMs) excel as listwise rerankers, but their high computational demands remain a barrier to widespread adoption. Further, the traditional language modeling (LM) objective is not ideally suited for reranking tasks. FIRST is a novel approach that addresses these challenges by integrating a learning-to-rank objective and leveraging the logits of only the first generated token, thereby significantly reducing inference latency compared to traditional LLM rerankers. In this study, we extend the evaluation of FIRST to the TREC Deep Learning datasets (DL19-22), validating its robustness across diverse domains. We investigate the influence of different first-stage retrievers on FIRST rerankers, observing diminishing returns and patterns consistent with traditional LLM rerankers. Through applying the FIRST objective to a broader range of backbone models, we achieve effectiveness surpassing the original implementation. Our experiments confirm that fast reranking with single-token logits does not compromise out-of-domain reranking quality. To better quantify the computational savings in the original study, we measure and compare latency to find a 21%-42% gain across various models and benchmarks. Moreover, while LM training implicitly improves zero-shot single-token reranking, our experiments also raise questions about whether LM pre-training may hinder subsequent fine-tuning with the FIRST objective. These findings pave the way for more efficient and effective listwise reranking in future applications.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-08T12:08:17Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zijian Chen</name>
+    </author>
+    <author>
+      <name>Ronak Pradeep</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.09186v1</id>
+    <title>Guiding Retrieval using LLM-based Listwise Rankers</title>
+    <updated>2025-01-15T22:23:53Z</updated>
+    <link href="https://arxiv.org/abs/2501.09186v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.09186v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) have shown strong promise as rerankers, especially in ``listwise'' settings where an LLM is prompted to rerank several search results at once. However, this ``cascading'' retrieve-and-rerank approach is limited by the bounded recall problem: relevant documents not retrieved initially are permanently excluded from the final ranking. Adaptive retrieval techniques address this problem, but do not work with listwise rerankers because they assume a document's score is computed independently from other documents. In this paper, we propose an adaptation of an existing adaptive retrieval method that supports the listwise setting and helps guide the retrieval process itself (thereby overcoming the bounded recall problem for LLM rerankers). Specifically, our proposed algorithm merges results both from the initial ranking and feedback documents provided by the most relevant documents seen up to that point. Through extensive experiments across diverse LLM rerankers, first stage retrievers, and feedback sources, we demonstrate that our method can improve nDCG@10 by up to 13.23% and recall by 28.02%--all while keeping the total number of LLM inferences constant and overheads due to the adaptive process minimal. The work opens the door to leveraging LLM-based search in settings where the initial pool of results is limited, e.g., by legacy systems, or by the cost of deploying a semantic first-stage.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-15T22:23:53Z</published>
+    <arxiv:comment>16 pages, 2 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Mandeep Rathee</name>
+    </author>
+    <author>
+      <name>Sean MacAvaney</name>
+    </author>
+    <author>
+      <name>Avishek Anand</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.02969v1</id>
+    <title>Rank-without-GPT: Building GPT-Independent Listwise Rerankers on Open-Source Large Language Models</title>
+    <updated>2023-12-05T18:57:40Z</updated>
+    <link href="https://arxiv.org/abs/2312.02969v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.02969v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Listwise rerankers based on large language models (LLM) are the zero-shot state-of-the-art. However, current works in this direction all depend on the GPT models, making it a single point of failure in scientific reproducibility. Moreover, it raises the concern that the current research findings only hold for GPT models but not LLM in general. In this work, we lift this pre-condition and build for the first time effective listwise rerankers without any form of dependency on GPT. Our passage retrieval experiments show that our best list se reranker surpasses the listwise rerankers based on GPT-3.5 by 13% and achieves 97% effectiveness of the ones built on GPT-4. Our results also show that the existing training datasets, which were expressly constructed for pointwise ranking, are insufficient for building such listwise rerankers. Instead, high-quality listwise ranking data is required and crucial, calling for further work on building human-annotated listwise data resources.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-05T18:57:40Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xinyu Zhang</name>
+    </author>
+    <author>
+      <name>Sebastian Hofstätter</name>
+    </author>
+    <author>
+      <name>Patrick Lewis</name>
+    </author>
+    <author>
+      <name>Raphael Tang</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.10407v1</id>
+    <title>A Thorough Comparison of Cross-Encoders and LLMs for Reranking SPLADE</title>
+    <updated>2024-03-15T15:39:56Z</updated>
+    <link href="https://arxiv.org/abs/2403.10407v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.10407v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a comparative study between cross-encoder and LLMs rerankers in the context of re-ranking effective SPLADE retrievers. We conduct a large evaluation on TREC Deep Learning datasets and out-of-domain datasets such as BEIR and LoTTE. In the first set of experiments, we show how cross-encoder rerankers are hard to distinguish when it comes to re-rerank SPLADE on MS MARCO. Observations shift in the out-of-domain scenario, where both the type of model and the number of documents to re-rank have an impact on effectiveness. Then, we focus on listwise rerankers based on Large Language Models -- especially GPT-4. While GPT-4 demonstrates impressive (zero-shot) performance, we show that traditional cross-encoders remain very competitive. Overall, our findings aim to to provide a more nuanced perspective on the recent excitement surrounding LLM-based re-rankers -- by positioning them as another factor to consider in balancing effectiveness and efficiency in search systems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-15T15:39:56Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hervé Déjean</name>
+    </author>
+    <author>
+      <name>Stéphane Clinchant</name>
+    </author>
+    <author>
+      <name>Thibault Formal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.06716v3</id>
+    <title>Analyzing the Effectiveness of Listwise Reranking with Positional Invariance on Temporal Generalizability</title>
+    <updated>2024-09-30T10:49:26Z</updated>
+    <link href="https://arxiv.org/abs/2407.06716v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.06716v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This working note outlines our participation in the retrieval task at CLEF 2024. We highlight the considerable gap between studying retrieval performance on static knowledge documents and understanding performance in real-world environments. Therefore, Addressing these discrepancies and measuring the temporal persistence of IR systems is crucial. By investigating the LongEval benchmark, specifically designed for such dynamic environments, our findings demonstrate the effectiveness of a listwise reranking approach, which proficiently handles inaccuracies induced by temporal distribution shifts. Among listwise rerankers, our findings show that ListT5, which effectively mitigates the positional bias problem by adopting the Fusion-in-Decoder architecture, is especially effective, and more so, as temporal drift increases, on the test-long subset.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-09T09:43:42Z</published>
+    <arxiv:comment>Accepted at CLEF 2024 LongEval track. Abstract revised: its first two (background) sentences were too similar to an earlier paper arXiv:2305.18952</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Soyoung Yoon</name>
+    </author>
+    <author>
+      <name>Jongyoon Kim</name>
+    </author>
+    <author>
+      <name>Seung-won Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.11700v1</id>
+    <title>CompRank: Efficient LLM Reranking via Token-Level Compression and Decoding-Free Scoring</title>
+    <updated>2026-06-10T06:23:46Z</updated>
+    <link href="https://arxiv.org/abs/2606.11700v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.11700v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language model (LLM) rerankers have become an important component of modern retrieval and retrieval-augmented generation pipelines, but their high computational cost limits their applicability to long candidate lists. In this paper, we propose \textbf{CompRank}, a token-efficient reranking framework that reduces redundant computation by aligning reranker design with the sparsity of ranking signals. CompRank decouples document representations from candidate order and query context, enabling reusable document-side states; applies segment-wise token compression to reduce query--document interaction cost; and introduces a CopyNet-style objective that directly aligns attention-based document scoring with training supervision. Experiments on seven BEIR datasets show that CompRank achieves strong reranking performance while retaining only 10.2\% of document tokens, reaching an average NDCG@10 of 39.2 compared with 39.7 under full-token attention. Further scaling experiments on TREC-COVID show that CompRank remains stable when evaluated on candidate lists of up to 500 documents after training on 30-document lists, while achieving $4.9\times$--$9.5\times$ end-to-end speedup over generation-based listwise reranking and approximately $1.3\times$ speedup over the full-token CompRank variant. These results suggest that token-level compression and decoding-free attention scoring provide an effective path toward scalable LLM-based reranking.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-10T06:23:46Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xuan Lu</name>
+    </author>
+    <author>
+      <name>Haohang Huang</name>
+    </author>
+    <author>
+      <name>Yingqi Fan</name>
+    </author>
+    <author>
+      <name>Junlong Tong</name>
+    </author>
+    <author>
+      <name>Yuxuan Zhang</name>
+    </author>
+    <author>
+      <name>Ping Nie</name>
+    </author>
+    <author>
+      <name>Rui Meng</name>
+    </author>
+    <author>
+      <name>Xiaoyu Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.22733v3</id>
+    <title>E2Rank: Unifying Text Embedding and Listwise Reranking for Effective and Efficient Search</title>
+    <updated>2026-08-26T06:13:32Z</updated>
+    <link href="https://arxiv.org/abs/2510.22733v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.22733v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Text embedding models deliver competitive retrieval performance with high efficiency, but their ranking fidelity remains limited compared to LLM-based listwise rerankers, which capture fine-grained query-document and document-document interactions at high computational cost. We propose E2Rank (Efficient Embedding-based Ranking), a unified framework that extends a single text embedding model to perform both retrieval and listwise reranking via continued training under a listwise ranking objective. The key insight is to treat the listwise prompt---constructed from the query and its top-K candidates---as a pseudo-relevance feedback (PRF) query, enabling reranking via cosine similarity against precomputed document embeddings without autoregressive decoding. Empirically, E2Rank achieves state-of-the-art results on BEIR, competitive performance on the reasoning-intensive BRIGHT benchmark, significantly lower latency than existing LLM-based rerankers, and improved embedding performance on MTEB---all within a single model.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-26T16:04:48Z</published>
+    <arxiv:comment>Accepted by EMNLP 2026 main conference. Code and models are avaliable at https://alibaba-nlp.github.io/E2Rank</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Qi Liu</name>
+    </author>
+    <author>
+      <name>Yanzhao Zhang</name>
+    </author>
+    <author>
+      <name>Mingxin Li</name>
+    </author>
+    <author>
+      <name>Dingkun Long</name>
+    </author>
+    <author>
+      <name>Pengjun Xie</name>
+    </author>
+    <author>
+      <name>Jiaxin Mao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.20683v2</id>
+    <title>Layer-wise Token Compression for Efficient Document Reranking</title>
+    <updated>2026-05-21T04:53:43Z</updated>
+    <link href="https://arxiv.org/abs/2605.20683v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.20683v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transformer-based document cross-encoder rerankers are a central component of modern information retrieval systems. Despite their success, these models suffer from high computational costs due to processing long query-document sequences at inference time. A known approach to improve efficiency is token compression, which consists of aggregating groups of tokens together in the initial embedding layer, reducing the effective number of tokens, and making the computation faster. While token compression has proven to be successful for bi-encoder retrievers, we empirically observed that this approach may be ineffective for cross-encoder rerankers. In this paper, we propose Layer-wise Token Compression (LTC), which applies adaptive token pooling at intermediate transformer layers. Through extensive ablation studies on MS MARCO passage and document ranking tasks, we demonstrate that compression at middle layers preserves ranking quality while increasing inference QPS by up to 25% for passage ranking and up to 116% for document ranking. We also extend LTC to listwise LLM rerankers and show that the same approach can be easily applied to long-context listwise reranking, where the QPS improvements are even greater. More surprisingly, when applying rerankers trained on short passages to long-document ranking tasks, models trained with compression outperform their uncompressed counterparts, suggesting that compression may act as a beneficial regularizer that encourages length-invariant representations.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T03:52:31Z</published>
+    <arxiv:comment>SIGIR2026 short paper</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Shengyao Zhuang</name>
+    </author>
+    <author>
+      <name>Zhichao Xu</name>
+    </author>
+    <author>
+      <name>Ivano Lauriola</name>
+    </author>
+    <arxiv:doi>10.1145/3805712.3809871</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3805712.3809871" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.26483v1</id>
+    <title>Efficient Listwise Reranking with Compressed Document Representations</title>
+    <updated>2026-04-29T09:48:44Z</updated>
+    <link href="https://arxiv.org/abs/2604.26483v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.26483v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reranking, the process of refining the output from a first-stage retriever, is often considered computationally expensive, especially when using Large Language Models (LLMs). A common approach to mitigate this cost involves utilizing smaller LLMs or controlling input length. Inspired by recent advances in document compression for retrieval-augmented generation (RAG), we introduce RRK, an efficient and effective listwise reranker compressing documents into multi-token fixed-size embedding representations. Our simple training via distillation shows that this combination of rich compressed representations and listwise reranking yields a highly efficient and effective system. In particular, our 8B-parameter model runs 3x-18x faster than smaller rerankers (0.6-4B parameters) while matching or outperforming them in effectiveness. The efficiency gains are even more striking on long-document benchmarks, where RRK widens its advantage further.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-29T09:48:44Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hervé Déjean</name>
+    </author>
+    <author>
+      <name>Stéphane Clinchant</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.13757v2</id>
+    <title>CoRank: LLM-Based Compact Reranking with Document Features for Scientific Retrieval</title>
+    <updated>2025-08-17T00:03:54Z</updated>
+    <link href="https://arxiv.org/abs/2505.13757v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.13757v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Scientific retrieval is essential for advancing scientific knowledge discovery. Within this process, document reranking plays a critical role in refining first-stage retrieval results. However, standard LLM listwise reranking faces challenges in the scientific domain. First-stage retrieval is often suboptimal in the scientific domain, so relevant documents are ranked lower. Meanwhile, conventional listwise reranking places the full text of candidates into the context window, limiting the number of candidates that can be considered. As a result, many relevant documents are excluded before reranking, constraining overall retrieval performance. To address these challenges, we explore semantic-feature-based compact document representations (e.g., categories, sections, and keywords) and propose CoRank, a training-free, model-agnostic reranking framework for scientific retrieval. It presents a three-stage solution: (i) offline extraction of document features, (ii) coarse-grained reranking using these compact representations, and (iii) fine-grained reranking on full texts of the top candidates from (ii). This integrated process addresses suboptimal first-stage retrieval: Compact representations allow more documents to fit within the context window, improving candidate set coverage, while the final fine-grained ranking ensures a more accurate ordering. Experiments on 5 academic retrieval datasets show that CoRank significantly improves reranking performance across different LLM backbones (average nDCG@10 from 50.6 to 55.5). Overall, these results underscore the synergistic interaction between information extraction and information retrieval, demonstrating how structured semantic features can enhance reranking in the scientific domain.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-19T22:10:27Z</published>
+    <arxiv:comment>12 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Runchu Tian</name>
+    </author>
+    <author>
+      <name>Xueqiang Xu</name>
+    </author>
+    <author>
+      <name>Bowen Jin</name>
+    </author>
+    <author>
+      <name>SeongKu Kang</name>
+    </author>
+    <author>
+      <name>Jiawei Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.11945v1</id>
+    <title>uva-irlab-conv at SemEval-2026 Task 8: Multi-Turn RAG with Learned Sparse Retrieval and Listwise Reranking</title>
+    <updated>2026-06-10T11:16:29Z</updated>
+    <link href="https://arxiv.org/abs/2606.11945v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.11945v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This report describes our participation in SemEval-2026 Task 8 on multi-turn retrieval and question answering. The task evaluates conversational systems across four domains (finance, cloud documentation, government, Wikipedia), and includes unanswerable queries where the available collection does not contain sufficient evidence to produce a complete response. We propose a multi-turn retrieval-augmented generation pipeline that combines learned sparse retrieval with LLM-based reranking and generation. Using sparse retrieval as the primary retrieval method, we leverage its strong generalization across domains. In addition, we make use of the long-context capabilities of LLMs for conversational query rewriting, pointwise and listwise reranking, and generating the final response, each conditioned on the full conversational history. This multi-step design enables effective integration of conversational context throughout retrieval and generation, improving robustness across domains.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-10T11:16:29Z</published>
+    <arxiv:comment>SemEval-2026, The 20th International Workshop on Semantic Evaluation, collocated with ACL 2026, 9 pages, 5 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Simon Lupart</name>
+    </author>
+    <author>
+      <name>Kidist Amde Mekonnen</name>
+    </author>
+    <author>
+      <name>Zahra Abbasiantaeb</name>
+    </author>
+    <author>
+      <name>Mohammad Aliannejadi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.18152v1</id>
+    <title>jina-reranker-v3.5: An Efficient Listwise Reranker with Hybrid Attention and Self-Distillation</title>
+    <updated>2026-07-20T16:50:20Z</updated>
+    <link href="https://arxiv.org/abs/2607.18152v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.18152v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Listwise rerankers are the discriminative core of agentic retrieval pipelines, yet production deployment demands efficiency, domain robustness, and fluency on semi-structured data at the same time. We present jina-reranker-v3.5, a 0.6B-parameter listwise reranker that meets these demands together without sacrificing the cross-document comparison that makes its predecessor jina-reranker-v3 effective. jina-reranker-v3.5 keeps the last-but-not-late (LBNL) interaction of jina-reranker-v3 and reworks it along three axes. It replaces uniform global attention with a hybrid schedule of three sliding-window layers followed by two global layers, pinning the terminal layer to global as LBNL readout requires. It trains on a curated multi-domain mixture that spans legal, medical, financial, multilingual, and structured retrieval. It transfers quality through a three-stage self-distillation recipe in which a full-attention teacher sets an upper bound that a sparse-attention student then recovers under a staged adaptation protocol. jina-reranker-v3.5 reaches 63.20 nDCG@10 on BEIR, matching a 4B model at roughly 7x fewer parameters, and improves over jina-reranker-v3 on MIRACL and RTEB as well. Its largest gains come on semi-structured retrieval, where it lifts nDCG@10 by 9.6 points over jina-reranker-v3 and leads all rerankers of comparable size. The hybrid schedule further cuts listwise inference latency by up to 1.56x. We release the model weights on Hugging Face under a non-commercial license.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-20T16:50:20Z</published>
+    <arxiv:comment>13 pages, 2 figures, 9 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Christina Nasika</name>
+    </author>
+    <author>
+      <name>Feng Wang</name>
+    </author>
+    <author>
+      <name>Antonis Krasakis</name>
+    </author>
+    <author>
+      <name>Han Xiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.14224v2</id>
+    <title>Rerank Before You Reason: Analyzing Reranking Tradeoffs through Effective Token Cost in Deep Search Agents</title>
+    <updated>2026-06-01T03:09:08Z</updated>
+    <link href="https://arxiv.org/abs/2601.14224v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.14224v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep research agents rely on iterative retrieval and reasoning to answer complex queries, but scaling test-time computation raises significant efficiency concerns. We study how to allocate reasoning budget in deep search pipelines, focusing on the role of listwise reranking. Using the BrowseComp-Plus benchmark, we analyze tradeoffs between model scale, reasoning effort, reranking depth, and total token cost via a novel effective token cost (ETC) metric. Our results show that reranking consistently improves retrieval and end-to-end accuracy, and that moderate reranking often yields larger gains than increasing search-time reasoning, achieving comparable accuracy at substantially lower cost. All our code is available at https://github.com/sahel-sh/DeepHone</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-20T18:38:35Z</published>
+    <arxiv:comment>Findings of ACL 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Sahel Sharifymoghaddam</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.15621v1</id>
+    <title>Rethinking the Necessity of Adaptive Retrieval-Augmented Generation through the Lens of Adaptive Listwise Ranking</title>
+    <updated>2026-04-17T02:00:52Z</updated>
+    <link href="https://arxiv.org/abs/2604.15621v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.15621v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Adaptive Retrieval-Augmented Generation aims to mitigate the interference of extraneous noise by dynamically determining the necessity of retrieving supplementary passages. However, as Large Language Models evolve with increasing robustness to noise, the necessity of adaptive retrieval warrants re-evaluation. In this paper, we rethink this necessity and propose AdaRankLLM, a novel adaptive retrieval framework. To effectively verify the necessity of adaptive listwise reranking, we first develop an adaptive ranker employing a zero-shot prompt with a passage dropout mechanism, and compare its generation outcomes against static fixed-depth retrieval strategies. Furthermore, to endow smaller open-source LLMs with this precise listwise ranking and adaptive filtering capability, we introduce a two-stage progressive distillation paradigm enhanced by data sampling and augmentation techniques. Extensive experiments across three datasets and eight LLMs demonstrate that AdaRankLLM consistently achieves optimal performance in most scenarios with significantly reduced context overhead. Crucially, our analysis reveals a role shift in adaptive retrieval: it functions as a critical noise filter for weaker models to overcome their limitations, while serving as a cost-effective efficiency optimizer for stronger reasoning models.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-17T02:00:52Z</published>
+    <arxiv:comment>7pages, 2figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jun Feng</name>
+    </author>
+    <author>
+      <name>Jiahui Tang</name>
+    </author>
+    <author>
+      <name>Zhicheng He</name>
+    </author>
+    <author>
+      <name>Hang Lv</name>
+    </author>
+    <author>
+      <name>Hongchao Gu</name>
+    </author>
+    <author>
+      <name>Hao Wang</name>
+    </author>
+    <author>
+      <name>Xuezhi Yang</name>
+    </author>
+    <author>
+      <name>Shuai Fang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.14432v1</id>
+    <title>Rank-K: Test-Time Reasoning for Listwise Reranking</title>
+    <updated>2025-05-20T14:39:34Z</updated>
+    <link href="https://arxiv.org/abs/2505.14432v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.14432v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieve-and-rerank is a popular retrieval pipeline because of its ability to make slow but effective rerankers efficient enough at query time by reducing the number of comparisons. Recent works in neural rerankers take advantage of large language models for their capability in reasoning between queries and passages and have achieved state-of-the-art retrieval effectiveness. However, such rerankers are resource-intensive, even after heavy optimization. In this work, we introduce Rank-K, a listwise passage reranking model that leverages the reasoning capability of the reasoning language model at query time that provides test time scalability to serve hard queries. We show that Rank-K improves retrieval effectiveness by 23\% over the RankZephyr, the state-of-the-art listwise reranker, when reranking a BM25 initial ranked list and 19\% when reranking strong retrieval results by SPLADE-v3. Since Rank-K is inherently a multilingual model, we found that it ranks passages based on queries in different languages as effectively as it does in monolingual retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-20T14:39:34Z</published>
+    <arxiv:comment>15 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Eugene Yang</name>
+    </author>
+    <author>
+      <name>Andrew Yates</name>
+    </author>
+    <author>
+      <name>Kathryn Ricci</name>
+    </author>
+    <author>
+      <name>Orion Weller</name>
+    </author>
+    <author>
+      <name>Vivek Chari</name>
+    </author>
+    <author>
+      <name>Benjamin Van Durme</name>
+    </author>
+    <author>
+      <name>Dawn Lawrie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.15657v1</id>
+    <title>FIRST: Faster Improved Listwise Reranking with Single Token Decoding</title>
+    <updated>2024-06-21T21:27:50Z</updated>
+    <link href="https://arxiv.org/abs/2406.15657v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.15657v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) have significantly advanced the field of information retrieval, particularly for reranking. Listwise LLM rerankers have showcased superior performance and generalizability compared to existing supervised approaches. However, conventional listwise LLM reranking methods lack efficiency as they provide ranking output in the form of a generated ordered sequence of candidate passage identifiers. Further, they are trained with the typical language modeling objective, which treats all ranking errors uniformly--potentially at the cost of misranking highly relevant passages. Addressing these limitations, we introduce FIRST, a novel listwise LLM reranking approach leveraging the output logits of the first generated identifier to directly obtain a ranked ordering of the candidates. Further, we incorporate a learning-to-rank loss during training, prioritizing ranking accuracy for the more relevant passages. Empirical results demonstrate that FIRST accelerates inference by 50% while maintaining a robust ranking performance with gains across the BEIR benchmark. Finally, to illustrate the practical effectiveness of listwise LLM rerankers, we investigate their application in providing relevance feedback for retrievers during inference. Our results show that LLM rerankers can provide a stronger distillation signal compared to cross-encoders, yielding substantial improvements in retriever recall after relevance feedback.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-21T21:27:50Z</published>
+    <arxiv:comment>Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Revanth Gangi Reddy</name>
+    </author>
+    <author>
+      <name>JaeHyeok Doo</name>
+    </author>
+    <author>
+      <name>Yifei Xu</name>
+    </author>
+    <author>
+      <name>Md Arafat Sultan</name>
+    </author>
+    <author>
+      <name>Deevya Swain</name>
+    </author>
+    <author>
+      <name>Avirup Sil</name>
+    </author>
+    <author>
+      <name>Heng Ji</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.08985v1</id>
+    <title>Rethinking Reasoning in Document Ranking: Why Chain-of-Thought Falls Short</title>
+    <updated>2025-10-10T03:59:17Z</updated>
+    <link href="https://arxiv.org/abs/2510.08985v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.08985v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Document reranking is a key component in information retrieval (IR), aimed at refining initial retrieval results to improve ranking quality for downstream tasks. Recent studies--motivated by large reasoning models (LRMs)--have begun incorporating explicit chain-of-thought (CoT) reasoning into LLM-based rerankers. However, the effectiveness of such reasoning for ranking tasks remains underexplored. In this work, we present the first systematic study of reasoning in reranking across both pointwise and listwise settings, under both supervised fine-tuning and reinforcement learning. Using diverse benchmarks, including reasoning-intensive datasets (BRIGHT) and standard IR benchmarks (BEIR), we find that reasoning-augmented rerankers consistently underperform their direct counterparts that predict rankings without CoT, despite substantially higher inference costs. Our analysis reveals three core limitations: (i) in pointwise rerankers, reasoning breaks calibration and biases models toward the positive class, raising TPR but lowering TNR, which inflates false positives and degrades ranking in negative-dominant pools; (ii) in listwise rerankers, reasoning improves in-domain fit but increases variance and fails to generalize out-of-domain, even when reinforcement learning shortens rationales; and (iii) overall, directly fine-tuned rerankers remain more stable, effective, and robust. These findings challenge the assumption that explicit reasoning is universally beneficial for reranking. We conclude by highlighting future directions, including calibration-aware scoring for pointwise rerankers and the design of concise, targeted reasoning strategies to mitigate overfitting and overthinking in listwise rerankers.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-10T03:59:17Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xuan Lu</name>
+    </author>
+    <author>
+      <name>Haohang Huang</name>
+    </author>
+    <author>
+      <name>Rui Meng</name>
+    </author>
+    <author>
+      <name>Yaohui Jin</name>
+    </author>
+    <author>
+      <name>Wenjun Zeng</name>
+    </author>
+    <author>
+      <name>Xiaoyu Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.00887v2</id>
+    <title>On Listwise Reranking for Corpus Feedback</title>
+    <updated>2025-12-21T15:31:26Z</updated>
+    <link href="https://arxiv.org/abs/2510.00887v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.00887v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reranker improves retrieval performance by capturing document interactions. At one extreme, graph-aware adaptive retrieval (GAR) represents an information-rich regime, requiring a pre-computed document similarity graph in reranking. However, as such graphs are often unavailable, or incur quadratic memory costs even when available, graph-free rerankers leverage large language model (LLM) calls to achieve competitive performance. We introduce L2G, a novel framework that implicitly induces document graphs from listwise reranker logs. By converting reranker signals into a graph structure, L2G enables scalable graph-based retrieval without the overhead of explicit graph computation. Results on the TREC-DL and BEIR subset show that L2G matches the effectiveness of oracle-based graph methods, while incurring zero additional LLM calls.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-01T13:34:02Z</published>
+    <arxiv:comment>Accepted for WSDM 2026 (short)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Soyoung Yoon</name>
+    </author>
+    <author>
+      <name>Jongho Kim</name>
+    </author>
+    <author>
+      <name>Daeyong Kwon</name>
+    </author>
+    <author>
+      <name>Avishek Anand</name>
+    </author>
+    <author>
+      <name>Seung-won Hwang</name>
+    </author>
+    <arxiv:doi>10.1145/3773966.3779404</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3773966.3779404" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.20513v1</id>
+    <title>ReBOL: Retrieval via Bayesian Optimization with Batched LLM Relevance Observations and Query Reformulation</title>
+    <updated>2026-03-20T21:30:13Z</updated>
+    <link href="https://arxiv.org/abs/2603.20513v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.20513v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-reranking is limited by the top-k documents retrieved by vector similarity, which neither enables contextual query-document token interactions nor captures multimodal relevance distributions. While LLM query reformulation attempts to improve recall by generating improved or additional queries, it is still followed by vector similarity retrieval. We thus propose to address these top-k retrieval stage failures by introducing ReBOL, which 1) uses LLM query reformulations to initialize a multimodal Bayesian Optimization (BO) posterior over document relevance, and 2) iteratively acquires document batches for LLM query-document relevance scoring followed by posterior updates to optimize relevance. After exploring query reformulation and document batch diversification techniques, we evaluate ReBOL against LLM reranker baselines on five BEIR datasets and using two LLMs (Gemini-2.5-Flash-Lite, GPT-5.2). ReBOL consistently achieves higher recall and competitive rankings, for example compared to the best LLM reranker on the Robust04 dataset with 46.5% vs. 35.0% recall@100 and 63.6% vs. 61.2% NDCG@10. We also show that ReBOL can achieve comparable latency to LLM rerankers.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-20T21:30:13Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Anton Korikov</name>
+    </author>
+    <author>
+      <name>Scott Sanner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.23419v2</id>
+    <title>Robustness of IR Models to Collection Growth</title>
+    <updated>2026-08-25T13:45:03Z</updated>
+    <link href="https://arxiv.org/abs/2608.23419v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.23419v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Information Retrieval (IR) systems seek to identify relevant documents within a collection. In practical applications, collections are dynamic, with documents frequently added. We argue that ideally, a retriever's effectiveness should not decrease when non-relevant documents are added to a collection. This study formalises this concept and empirically evaluates it by merging two collections with negligible topic overlap. We hypothesise that the way an IR model conditions its ranking on other documents in a collection (e.g., the IDF component in BM25 or contextual documents in listwise rerankers) plays an important role in its robustness to the addition of non-relevant documents. We broadly classify models as those that do not depend on other documents (Multi-Document-Agnostic, MDA) and those that do (Multi-Document-Dependent, MDD). Our results show that neither MDD nor MDA models are fully robust to the addition of non-relevant documents, as all models exhibit some performance degradation. Interestingly, among the models we test, MDA is more effective than MDD for retrieval, whereas MDD and MDA rerankers are equally effective.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-24T16:00:20Z</published>
+    <arxiv:comment>CIKM 2026 Short Paper track</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Emmanouil Georgios Lionis</name>
+    </author>
+    <author>
+      <name>Sean MacAvaney</name>
+    </author>
+    <author>
+      <name>Debasis Ganguly</name>
+    </author>
+    <arxiv:doi>10.1145/3799682.3839935</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3799682.3839935" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.14749v1</id>
+    <title>Evaluating Large Language Models for Cross-Lingual Retrieval</title>
+    <updated>2025-09-18T08:54:17Z</updated>
+    <link href="https://arxiv.org/abs/2509.14749v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.14749v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-stage information retrieval (IR) has become a widely-adopted paradigm in search. While Large Language Models (LLMs) have been extensively evaluated as second-stage reranking models for monolingual IR, a systematic large-scale comparison is still lacking for cross-lingual IR (CLIR). Moreover, while prior work shows that LLM-based rerankers improve CLIR performance, their evaluation setup relies on lexical retrieval with machine translation (MT) for the first stage. This is not only prohibitively expensive but also prone to error propagation across stages. Our evaluation on passage-level and document-level CLIR reveals that further gains can be achieved with multilingual bi-encoders as first-stage retrievers and that the benefits of translation diminishes with stronger reranking models. We further show that pairwise rerankers based on instruction-tuned LLMs perform competitively with listwise rerankers. To the best of our knowledge, we are the first to study the interaction between retrievers and rerankers in two-stage CLIR with LLMs. Our findings reveal that, without MT, current state-of-the-art rerankers fall severely short when directly applied in CLIR.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-18T08:54:17Z</published>
+    <arxiv:comment>Accepted at EMNLP 2025 (Findings)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Longfei Zuo</name>
+    </author>
+    <author>
+      <name>Pingjun Hong</name>
+    </author>
+    <author>
+      <name>Oliver Kraus</name>
+    </author>
+    <author>
+      <name>Barbara Plank</name>
+    </author>
+    <author>
+      <name>Robert Litschko</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.15838v3</id>
+    <title>ListT5: Listwise Reranking with Fusion-in-Decoder Improves Zero-shot Retrieval</title>
+    <updated>2024-06-06T17:32:45Z</updated>
+    <link href="https://arxiv.org/abs/2402.15838v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.15838v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose ListT5, a novel reranking approach based on Fusion-in-Decoder (FiD) that handles multiple candidate passages at both train and inference time. We also introduce an efficient inference framework for listwise ranking based on m-ary tournament sort with output caching. We evaluate and compare our model on the BEIR benchmark for zero-shot retrieval task, demonstrating that ListT5 (1) outperforms the state-of-the-art RankT5 baseline with a notable +1.3 gain in the average NDCG@10 score, (2) has an efficiency comparable to pointwise ranking models and surpasses the efficiency of previous listwise ranking models, and (3) overcomes the lost-in-the-middle problem of previous listwise rerankers. Our code, model checkpoints, and the evaluation framework are fully open-sourced at \url{https://github.com/soyoung97/ListT5}.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-24T15:31:59Z</published>
+    <arxiv:comment>Accepted to ACL 2024 main (long)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Soyoung Yoon</name>
+    </author>
+    <author>
+      <name>Eunbi Choi</name>
+    </author>
+    <author>
+      <name>Jiyeon Kim</name>
+    </author>
+    <author>
+      <name>Hyeongu Yun</name>
+    </author>
+    <author>
+      <name>Yireun Kim</name>
+    </author>
+    <author>
+      <name>Seung-won Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.19899v1</id>
+    <title>A Reproducibility Study of Metacognitive Retrieval-Augmented Generation</title>
+    <updated>2026-04-21T18:22:15Z</updated>
+    <link href="https://arxiv.org/abs/2604.19899v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.19899v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Retrieval Augmented Generation (RAG) has shifted focus to multi-retrieval approaches to tackle complex tasks such as multi-hop question answering. However, these systems struggle to decide when to stop searching once enough information has been gathered. To address this, \citet{zhou2024metacognitive} introduced Metacognitive Retrieval Augmented Generation (MetaRAG), a framework inspired by metacognition that enables Large Language Models to critique and refine their reasoning. In this reproducibility paper, we reproduce MetaRAG following its original experimental setup and extend it in two directions: (i) by evaluating the effect of PointWise and ListWise rerankers, and (ii) by comparing with SIM-RAG, which employs a lightweight critic model to stop retrieval. Our results confirm MetaRAG's relative improvements over standard RAG and reasoning-based baselines, but also reveal lower absolute scores than reported, reflecting challenges with closed-source LLM updates, missing implementation details, and unreleased prompts. We show that MetaRAG is partially reproduced, gains substantially from reranking, and is more robust than SIM-RAG when extended with additional retrieval features.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-21T18:22:15Z</published>
+    <arxiv:comment>Paper accepted at ACM SIGIR Conference 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Gabriel Iturra-Bocaz</name>
+    </author>
+    <author>
+      <name>Petra Galuscakova</name>
+    </author>
+    <arxiv:doi>10.1145/3805712.3808551</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3805712.3808551" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.02156v1</id>
+    <title>Zero-Shot Listwise Document Reranking with a Large Language Model</title>
+    <updated>2023-05-03T14:45:34Z</updated>
+    <link href="https://arxiv.org/abs/2305.02156v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.02156v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Supervised ranking methods based on bi-encoder or cross-encoder architectures have shown success in multi-stage text ranking tasks, but they require large amounts of relevance judgments as training data. In this work, we propose Listwise Reranker with a Large Language Model (LRL), which achieves strong reranking effectiveness without using any task-specific training data. Different from the existing pointwise ranking methods, where documents are scored independently and ranked according to the scores, LRL directly generates a reordered list of document identifiers given the candidate documents. Experiments on three TREC web search datasets demonstrate that LRL not only outperforms zero-shot pointwise methods when reranking first-stage retrieval results, but can also act as a final-stage reranker to improve the top-ranked results of a pointwise method for improved efficiency. Additionally, we apply our approach to subsets of MIRACL, a recent multilingual retrieval dataset, with results showing its potential to generalize across different languages.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-03T14:45:34Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xueguang Ma</name>
+    </author>
+    <author>
+      <name>Xinyu Zhang</name>
+    </author>
+    <author>
+      <name>Ronak Pradeep</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.18512v2</id>
+    <title>AcuRank: Uncertainty-Aware Adaptive Computation for Listwise Reranking</title>
+    <updated>2025-10-24T06:55:54Z</updated>
+    <link href="https://arxiv.org/abs/2505.18512v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.18512v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Listwise reranking with large language models (LLMs) enhances top-ranked results in retrieval-based applications. Due to the limit in context size and high inference cost of long context, reranking is typically performed over a fixed size of small subsets, with the final ranking aggregated from these partial results. This fixed computation disregards query difficulty and document distribution, leading to inefficiencies. We propose AcuRank, an adaptive reranking framework that dynamically adjusts both the amount and target of computation based on uncertainty estimates over document relevance. Using a Bayesian TrueSkill model, we iteratively refine relevance estimates until reaching sufficient confidence levels, and our explicit modeling of ranking uncertainty enables principled control over reranking behavior and avoids unnecessary updates to confident predictions. Results on the TREC-DL and BEIR benchmarks show that our method consistently achieves a superior accuracy-efficiency trade-off and scales better with compute than fixed-computation baselines. These results highlight the effectiveness and generalizability of our method across diverse retrieval tasks and LLM-based reranking models.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-24T05:15:49Z</published>
+    <arxiv:comment>Accepted at NeurIPS 2025. The first two authors contributed equally. Author order is randomly determined via coin toss</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Soyoung Yoon</name>
+    </author>
+    <author>
+      <name>Gyuwan Kim</name>
+    </author>
+    <author>
+      <name>Gyu-Hwung Cho</name>
+    </author>
+    <author>
+      <name>Seung-won Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2611.02550v1</id>
+    <title>Re$^3$Rank: Listwise Reranking with Reasoning-Conditioned Retrieval Heads</title>
+    <updated>2026-11-02T05:24:12Z</updated>
+    <link href="https://arxiv.org/abs/2611.02550v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2611.02550v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Attention-based rerankers score each candidate by the attention mass that retrieval heads route to it from the question, but the question, serving as a fixed query, carries limited information for locating relevant evidence. We propose Re$^3$Rank, a listwise reranker built on reasoning-conditioned retrieval heads (RRHeads). A generator first writes a reasoning trace over the question and the candidates, and a scorer then uses the trace tokens as the attention query of a few selected RRHeads, reading relevance as continuous scores. We present a straight-through estimator to propagate the ranking loss through the discrete trace, so that the generator and the scorer can be trained jointly for ranking. Averaged over 9 benchmarks, Re$^3$Rank outperforms 11 baseline rerankers: our 4B variant exceeds the strongest baseline by 3.11 NDCG@10 points on average, and even our 0.6B variant surpasses rerankers with up to 32B parameters.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-11-02T05:24:12Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ruiyi Yan</name>
+    </author>
+    <author>
+      <name>Zhuoyuan Mao</name>
+    </author>
+    <author>
+      <name>Yugo Murawaki</name>
+    </author>
+    <author>
+      <name>Yiwen Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.15088v1</id>
+    <title>RankVicuna: Zero-Shot Listwise Document Reranking with Open-Source Large Language Models</title>
+    <updated>2023-09-26T17:31:57Z</updated>
+    <link href="https://arxiv.org/abs/2309.15088v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.15088v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Researchers have successfully applied large language models (LLMs) such as ChatGPT to reranking in an information retrieval context, but to date, such work has mostly been built on proprietary models hidden behind opaque API endpoints. This approach yields experimental results that are not reproducible and non-deterministic, threatening the veracity of outcomes that build on such shaky foundations. To address this significant shortcoming, we present RankVicuna, the first fully open-source LLM capable of performing high-quality listwise reranking in a zero-shot setting. Experimental results on the TREC 2019 and 2020 Deep Learning Tracks show that we can achieve effectiveness comparable to zero-shot reranking with GPT-3.5 with a much smaller 7B parameter model, although our effectiveness remains slightly behind reranking with GPT-4. We hope our work provides the foundation for future research on reranking with modern LLMs. All the code necessary to reproduce our results is available at https://github.com/castorini/rank_llm.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-26T17:31:57Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ronak Pradeep</name>
+    </author>
+    <author>
+      <name>Sahel Sharifymoghaddam</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03883v1</id>
+    <title>DS@GT-ARC at eRisk 2026 Task 3: Sparse, Semantic, and LLM Reranking for ADHD Symptom Sentences</title>
+    <updated>2026-08-04T16:19:22Z</updated>
+    <link href="https://arxiv.org/abs/2608.03883v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03883v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper describes our submissions to eRisk 2026 Task 3, ADHD Symptom Sentence Ranking. The task requires systems to rank candidate Reddit sentences according to their relevance to each of the 18 symptoms in the Adult ADHD Self-Report Scale (ASRS-v1.1). Because no annotated training data were released for this first edition of the task, we relied on zero-shot experimentation, manual validation, and unsupervised or weakly guided retrieval pipelines. Our systems combine sparse BM25 retrieval, evidence-aware rescoring for self-referential symptom reports, embedding-based reranking, query-prototype expansion, and LLM-based reranking. All submitted systems follow a staged retrieval design in which BM25 retrieves candidates at scale and semantic or LLM rerankers refine the final rankings. Among our submissions, the LLM reranker achieved the strongest official scores, followed by the prototype query-expansion run. Our manual top-10 analysis aligned with the official expert scoring trend, suggesting that staged reranking is a promising direction for further development.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T16:19:22Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>David Guecha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.24236v2</id>
+    <title>MeVer at CheckThat! 2026: Cluster-Aware Hard-Negative Mining for Multilingual Scientific Source Retrieval</title>
+    <updated>2026-07-06T08:37:13Z</updated>
+    <link href="https://arxiv.org/abs/2605.24236v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.24236v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Identifying the scientific source behind a social media claim requires matching short, informal, and often multilingual claims against large collections of scientific publications, where semantically related papers may act as challenging distractors or false negatives during training. We present our submission to CheckThat! 2026 Task 1 on multilingual scientific-source retrieval, focusing on how hard-negative mining should be adapted to multi-stage retrieval pipelines for scientific source retrieval. We propose cluster-aware hard-negative mining strategies that exploit the semantic structure of retrieved candidate pools in order to construct more informative training negatives for dense retrieval and reranking. Our experiments show that different hard-negative structures induce different retrieval behaviors. Localized cluster negatives tend to favor precision-oriented retrieval, whereas broader non-gold semantic negatives provide stronger candidate coverage and more consistent reranking performance across languages. We further study multiple LLM-based evidence selection formulations, including direct classification, pairwise comparison, and listwise reranking prompts, and find that constrained classification prompts provide the most reliable final document selection. The final system combines a dense retriever, a multilingual cross-encoder reranker, and a selective LLM-based disagreement resolver, ranking 6th among 37 submissions in the shared task evaluation. Overall, our results suggest that hard-negative mining should be treated as a stage-aware design problem rather than as a single retrieval optimization strategy.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-22T21:24:14Z</published>
+    <arxiv:comment>Technical report for CLEF 2026 CheckThat! Task 1 shared task submission. 13 pages, 14 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Juli Bakagianni</name>
+    </author>
+    <author>
+      <name>Symeon Papadopoulos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.11864v1</id>
+    <title>Very Efficient Listwise Multimodal Reranking for Long Documents</title>
+    <updated>2026-05-12T09:45:59Z</updated>
+    <link href="https://arxiv.org/abs/2605.11864v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.11864v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Listwise reranking is a key yet computationally expensive component in vision-centric retrieval and multimodal retrieval-augmented generation (M-RAG) over long documents. While recent VLM-based rerankers achieve strong accuracy, their practicality is often limited by long visual-token sequences and multi-step autoregressive decoding. We propose ZipRerank, a highly efficient listwise multimodal reranker that directly addresses both bottlenecks. It reduces input length via a lightweight query-image early interaction mechanism and eliminates autoregressive decoding by scoring all candidates in a single forward pass. To enable effective learning, ZipRerank adopts a two-stage training strategy: (i) listwise pretraining on large-scale text data rendered as images, and (ii) multimodal finetuning with VLM-teacher-distilled soft-ranking supervision. Extensive experiments on the MMDocIR benchmark show that ZipRerank matches or surpasses state-of-the-art multimodal rerankers while reducing LLM inference latency by up to an order of magnitude, making it well-suited for latency-sensitive real-world systems. The code is available at https://github.com/dukesun99/ZipRerank.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-12T09:45:59Z</published>
+    <arxiv:comment>To appear in ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yiqun Sun</name>
+    </author>
+    <author>
+      <name>Pengfei Wei</name>
+    </author>
+    <author>
+      <name>Lawrence B. Hsieh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17692v1</id>
+    <title>LegalMALR:Multi-Agent Query Understanding and LLM-Based Reranking for Chinese Statute Retrieval</title>
+    <updated>2026-01-25T04:44:56Z</updated>
+    <link href="https://arxiv.org/abs/2601.17692v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17692v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Statute retrieval is essential for legal assistance and judicial decision support, yet real-world legal queries are often implicit, multi-issue, and expressed in colloquial or underspecified forms. These characteristics make it difficult for conventional retrieval-augmented generation pipelines to recover the statutory elements required for accurate retrieval. Dense retrievers focus primarily on the literal surface form of the query, whereas lightweight rerankers lack the legal-reasoning capacity needed to assess statutory applicability. We present LegalMALR, a retrieval framework that integrates a Multi-Agent Query Understanding System (MAS) with a zero-shot large-language-model-based reranking module (LLM Reranker). MAS generates diverse, legally grounded reformulations and conducts iterative dense retrieval to broaden candidate coverage. To stabilise the stochastic behaviour of LLM-generated rewrites, we optimise a unified MAS policy using Generalized Reinforcement Policy Optimization(GRPO). The accumulated candidate set is subsequently evaluated by the LLM Reranker, which performs natural-language legal reasoning to produce the final ranking. We further construct CSAID, a dataset of 118 difficult Chinese legal queries annotated with multiple statutory labels, and evaluate LegalMALR on both CSAID and the public STARD benchmark. Experiments show that LegalMALR substantially outperforms strong Retrieval-augmented generation(RAG) baselines in both in-distribution and out-of-distribution settings, demonstrating the effectiveness of combining multi-perspective query interpretation, reinforcement-based policy optimisation, and large-model reranking for statute retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-25T04:44:56Z</published>
+    <arxiv:comment>31pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yunhan Li</name>
+    </author>
+    <author>
+      <name>Mingjie Xie</name>
+    </author>
+    <author>
+      <name>Gaoli Kang</name>
+    </author>
+    <author>
+      <name>Zihan Gong</name>
+    </author>
+    <author>
+      <name>Gengshen Wu</name>
+    </author>
+    <author>
+      <name>Min Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.10150v1</id>
+    <title>Learning from Emptiness: De-biasing Listwise Rerankers with Content-Agnostic Probability Calibration</title>
+    <updated>2026-04-11T10:47:22Z</updated>
+    <link href="https://arxiv.org/abs/2604.10150v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.10150v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generative listwise reranking leverages global context for superior retrieval but is plagued by intrinsic position bias, where models exhibit structural sensitivity to input order independent of relevance. Existing mitigations present a dilemma: inference-time aggregation incurs prohibitive latency, while training-based methods often fail to eradicate ingrained priors, particularly in compact models. To resolve this dilemma, we propose CapCal (Content-Agnostic Probability Calibration), a training-free framework that mechanically decouples positional bias from ranking decisions. By estimating the bias distribution via content-free placeholders, CapCal rectifies output logits through an entropy-adaptive contrastive mechanism. Evaluations across 10 benchmarks confirm that CapCal achieves superior performance among training-free methods while preserving single-pass efficiency. Notably, it unlocks the latent potential of lightweight models (e.g., 0.6B), delivering absolute NDCG gains exceeding 10 points and outperforming both permutation-based aggregation and data-augmentation baselines.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-11T10:47:22Z</published>
+    <arxiv:comment>ACL2026</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Hang Lv</name>
+    </author>
+    <author>
+      <name>Hongchao Gu</name>
+    </author>
+    <author>
+      <name>Ruiqing Yang</name>
+    </author>
+    <author>
+      <name>Liangyue Li</name>
+    </author>
+    <author>
+      <name>Zulong Chen</name>
+    </author>
+    <author>
+      <name>Defu Lian</name>
+    </author>
+    <author>
+      <name>Hao Wang</name>
+    </author>
+    <author>
+      <name>Enhong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.22262v1</id>
+    <title>JointRank: Rank Large Set with Single Pass</title>
+    <updated>2025-06-27T14:30:12Z</updated>
+    <link href="https://arxiv.org/abs/2506.22262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.22262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Efficiently ranking relevant items from large candidate pools is a cornerstone of modern information retrieval systems -- such as web search, recommendation, and retrieval-augmented generation. Listwise rerankers, which improve relevance by jointly considering multiple candidates, are often limited in practice: either by model input size constraints, or by degraded quality when processing large sets. We propose a model-agnostic method for fast reranking large sets that exceed a model input limits. The method first partitions candidate items into overlapping blocks, each of which is ranked independently in parallel. Implicit pairwise comparisons are then derived from these local rankings. Finally, these comparisons are aggregated to construct a global ranking using algorithms such as Winrate or PageRank. Experiments on TREC DL-2019 show that our method achieves an nDCG@10 of 70.88 compared to the 57.68 for full-context listwise approach using gpt-4.1-mini as long-context model, while reducing latency from 21 to 8 seconds.
+  The implementation of the algorithm and the experiments is available in the repository: https://github.com/V3RGANz/jointrank</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-27T14:30:12Z</published>
+    <arxiv:comment>ICTIR'25 Accepted</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Evgeny Dedov</name>
+    </author>
+    <arxiv:doi>10.1145/3731120.3744587</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3731120.3744587" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.03535v1</id>
+    <title>Can LLM Rerankers Predict Their Own Ranking Performance?</title>
+    <updated>2026-06-02T11:57:27Z</updated>
+    <link href="https://arxiv.org/abs/2606.03535v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.03535v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval effectiveness varies substantially across queries, making it important to estimate ranking quality before relevance judgments are available. Query performance prediction (QPP) addresses this need, but most existing methods rely on external predictors after retrieval or reranking. In this paper, we study \textit{reranker-internal QPP}: can an LLM reranker estimate the quality of the ranking it has just produced? We investigate both training-free and training-based approaches. For training-free estimation, we examine metric-specific self-consistency across sampled rankings and verbalized confidence produced directly by the reranker. Experiments on TREC Deep Learning 2019--2022 with four LLMs show that self-consistency is competitive with the state-of-the-art (SOTA) approach and better calibrated in almost all settings, while direct verbalized confidence is severely overconfident. To improve verbalized confidence, we propose two supervised methods, Verb-Num and Verb-List, which enable LLM rerankers to produce calibrated ranking-quality estimates with only a few additional output tokens.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-02T11:57:27Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Shiyu Ni</name>
+    </author>
+    <author>
+      <name>Keping Bi</name>
+    </author>
+    <author>
+      <name>Jiafeng Guo</name>
+    </author>
+    <author>
+      <name>Jingtong Wu</name>
+    </author>
+    <author>
+      <name>Zengxin Han</name>
+    </author>
+    <author>
+      <name>Xueqi Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.11353v2</id>
+    <title>Do Large Language Models Favor Recent Content? A Study on Recency Bias in LLM-Based Reranking</title>
+    <updated>2026-09-21T16:59:30Z</updated>
+    <link href="https://arxiv.org/abs/2509.11353v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.11353v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly deployed in information systems, including being used as second-stage rerankers in information retrieval pipelines, yet their susceptibility to recency bias has received little attention. We investigate whether LLMs implicitly favour newer documents by prepending artificial publication dates to passages in the TREC Deep Learning passage retrieval collections in 2021 (DL21) and 2022 (DL22). Across seven models, GPT-3.5-turbo, GPT-4o, GPT-4, LLaMA-3 8B/70B, and Qwen-2.5 7B/72B, "fresh" passages are consistently promoted, shifting the Top-10's mean publication year forward by up to 4.78 years and moving individual items by as many as 95 ranks in our listwise reranking experiments. Although larger models attenuate the effect, none eliminate it. We also observe that the preference of LLMs between two passages with an identical relevance level can be reversed by up to 25% on average after date injection in our pairwise preference experiments. These findings provide quantitative evidence of a pervasive recency bias in LLMs and highlight the importance of effective bias-mitigation strategies.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-14T17:11:07Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hanpei Fang</name>
+    </author>
+    <author>
+      <name>Sijie Tao</name>
+    </author>
+    <author>
+      <name>Nuo Chen</name>
+    </author>
+    <author>
+      <name>Kai-Xin Chang</name>
+    </author>
+    <author>
+      <name>Tetsuya Sakai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.14450v1</id>
+    <title>Stop Overthinking: Unlocking Efficient Listwise Reranking with Minimal Reasoning</title>
+    <updated>2026-05-14T06:44:44Z</updated>
+    <link href="https://arxiv.org/abs/2605.14450v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.14450v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Listwise reranking utilizing Large Language Models (LLMs) has achieved state-of-the-art retrieval effectiveness. Recently, reasoning-enhanced models have further pushed these boundaries by employing Chain-of-Thought (CoT) to perform deep comparative analysis of candidate documents. However, this performance gain comes at a prohibitive computational cost, as models often generate thousands of reasoning tokens before producing a final ranking. In this work, we investigate the relationship between reasoning length and ranking quality, revealing an overthinking phenomenon where extended reasoning yields diminishing returns. To address this, we propose a Length-Regularized Self-Distillation framework. We synthesize a dataset by sampling diverse reasoning traces from a teacher model (Rank-K) and applying a Pareto-inspired filter to select traces that achieve high ranking performance with minimal token usage. By fine-tuning on these concise, high-quality rationales, the student model learns to internalize efficient reasoning patterns, effectively pruning redundant deliberation. Experiments on TREC Deep Learning and NeuCLIR benchmarks demonstrate that our method maintains the teacher's effectiveness while reducing inference token consumption by 34%-37% across different retrieval settings, offering a practical solution for deploying reasoning-enhanced rerankers in latency-sensitive applications.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-14T06:44:44Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Danyang Liu</name>
+    </author>
+    <author>
+      <name>Kan Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.12192v3</id>
+    <title>Query-focused and Memory-aware Reranker for Long Context Processing</title>
+    <updated>2026-05-29T05:59:56Z</updated>
+    <link href="https://arxiv.org/abs/2602.12192v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.12192v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Built upon the existing analysis of retrieval heads in large language models, we propose an alternative reranking framework that trains models to estimate passage-query relevance using the attention scores of selected heads. This approach provides a listwise solution that leverages the holistic information within the entire candidate shortlist during ranking. At the same time, it naturally produces continuous relevance scores, enabling training on arbitrary retrieval datasets without requiring Likert-scale supervision. Our framework is lightweight and effective, requiring only small-scale models, such as 3B parameters, to achieve strong performance. Extensive experiments demonstrate that our method outperforms existing state-of-the-art pointwise and listwise rerankers across multiple domains, including Wikipedia and long narrative datasets. It further establishes a new state-of-the-art on the LoCoMo benchmark, which assesses dialogue understanding and memory usage. We further demonstrate that our framework supports flexible extensions. For example, augmenting candidate passages with contextual information further improves ranking accuracy, while training attention heads from middle layers enhances efficiency without sacrificing performance.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-12T17:23:38Z</published>
+    <arxiv:comment>Add new experiments and compare more baselines</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yuqing Li</name>
+    </author>
+    <author>
+      <name>Jiangnan Li</name>
+    </author>
+    <author>
+      <name>Mo Yu</name>
+    </author>
+    <author>
+      <name>Guoxuan Ding</name>
+    </author>
+    <author>
+      <name>Yanyu Chen</name>
+    </author>
+    <author>
+      <name>Zheng Lin</name>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+    </author>
+    <author>
+      <name>Jie Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.16159v1</id>
+    <title>Zero-Shot Cross-Lingual Reranking with Large Language Models for Low-Resource Languages</title>
+    <updated>2023-12-26T18:38:54Z</updated>
+    <link href="https://arxiv.org/abs/2312.16159v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.16159v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) have shown impressive zero-shot capabilities in various document reranking tasks. Despite their successful implementations, there is still a gap in existing literature on their effectiveness in low-resource languages. To address this gap, we investigate how LLMs function as rerankers in cross-lingual information retrieval (CLIR) systems for African languages. Our implementation covers English and four African languages (Hausa, Somali, Swahili, and Yoruba) and we examine cross-lingual reranking with queries in English and passages in the African languages. Additionally, we analyze and compare the effectiveness of monolingual reranking using both query and document translations. We also evaluate the effectiveness of LLMs when leveraging their own generated translations. To get a grasp of the effectiveness of multiple LLMs, our study focuses on the proprietary models RankGPT-4 and RankGPT-3.5, along with the open-source model, RankZephyr. While reranking remains most effective in English, our results reveal that cross-lingual reranking may be competitive with reranking in African languages depending on the multilingual capability of the LLM.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-26T18:38:54Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Mofetoluwa Adeyemi</name>
+    </author>
+    <author>
+      <name>Akintunde Oladipo</name>
+    </author>
+    <author>
+      <name>Ronak Pradeep</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.00142v1</id>
+    <title>JudgeRank: Leveraging Large Language Models for Reasoning-Intensive Reranking</title>
+    <updated>2024-10-31T18:43:12Z</updated>
+    <link href="https://arxiv.org/abs/2411.00142v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.00142v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurate document retrieval is crucial for the success of retrieval-augmented generation (RAG) applications, including open-domain question answering and code completion. While large language models (LLMs) have been employed as dense encoders or listwise rerankers in RAG systems, they often struggle with reasoning-intensive tasks because they lack nuanced analysis when judging document relevance. To address this limitation, we introduce JudgeRank, a novel agentic reranker that emulates human cognitive processes when assessing document relevance. Our approach consists of three key steps: (1) query analysis to identify the core problem, (2) document analysis to extract a query-aware summary, and (3) relevance judgment to provide a concise assessment of document relevance. We evaluate JudgeRank on the reasoning-intensive BRIGHT benchmark, demonstrating substantial performance improvements over first-stage retrieval methods and outperforming other popular reranking approaches. In addition, JudgeRank performs on par with fine-tuned state-of-the-art rerankers on the popular BEIR benchmark, validating its zero-shot generalization capability. Through comprehensive ablation studies, we demonstrate that JudgeRank's performance generalizes well across LLMs of various sizes while ensembling them yields even more accurate reranking than individual models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-31T18:43:12Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Tong Niu</name>
+    </author>
+    <author>
+      <name>Shafiq Joty</name>
+    </author>
+    <author>
+      <name>Ye Liu</name>
+    </author>
+    <author>
+      <name>Caiming Xiong</name>
+    </author>
+    <author>
+      <name>Yingbo Zhou</name>
+    </author>
+    <author>
+      <name>Semih Yavuz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.27394v4</id>
+    <title>RATIO: A Benchmark for Retrieval Across Typed Ideation Operations in Scientific Literature</title>
+    <updated>2026-10-13T19:23:07Z</updated>
+    <link href="https://arxiv.org/abs/2608.27394v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.27394v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieved scientific literature can serve as inspiration for both human and AI scientists. Inspiration can take different forms: prior work may directly suggest how to address a problem, or surface directions at different levels of abstraction---zooming out to a more general view or zooming in to a concrete realization. We introduce RATIO (Retrieval Across Typed Ideation Operations), a large-scale benchmark in which relevance is defined by three operations which we name ideation moves: Address retrieves potential approaches for stated problems, Broaden retrieves more general formulations, and Specify retrieves concrete instantiations. RATIO is constructed from millions of full-text scientific papers across CS literature via a general recipe that extends discourse-marker distant supervision---previously used only for classification---to corpus-scale retrieval, combined with extensive LLM and human vetting. Experiments show that operation-specific fine-tuning substantially boosts retrievers and LLM reranking helps further, but much room for improvement remains. Researchers blind to condition found the fine-tuned retriever's candidates more useful as inspirations. RATIO provides a scalable training and evaluation framework for retrieval components that support literature-grounded ideation, opening up new research avenues in scientific inspiration retrieval. We release full data, code, models, and annotations.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-27T17:24:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Maayan Sharon</name>
+    </author>
+    <author>
+      <name>Tom Hope</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29947v1</id>
+    <title>Diagnosing and Mitigating Retrieval Bottlenecks in LLM-Based Cold-Start Recommendation</title>
+    <updated>2026-06-29T08:23:40Z</updated>
+    <link href="https://arxiv.org/abs/2606.29947v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29947v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) are increasingly used as rerankers in recommender systems, with the expectation that semantic understanding will help in cold-start and long-tail regimes. We test this assumption with a five-domain benchmark that explicitly separates reranking quality from retrieval coverage. In a positive-controlled regime where the gold item is guaranteed present, calibrated LLM rerankers fail to consistently outperform strong collaborative and content baselines under natural traffic, and within-family scaling from Qwen3-8B to Qwen3-32B narrows but does not close the gap on most domains. In a retrieval-realistic regime where the gold item is not injected, the bottleneck is more severe: standard single retrievers place the gold item in a 200-item pool only 4.6-22.9% of the time, largely because 32-91% of cold-start targets are brand-new items with no training interactions. We introduce LHF, a validation-trained learned hybrid fusion layer over a multi-retriever union pool, as a retrieval-side realizability baseline. LHF is the only combiner we test that beats every single retriever on all five domains and recovers 17-61% of oracle coverage headroom on content-rich domains, but only 5-7% on collaboratively strong domains. End-to-end experiments reveal the remaining mismatch: learned non-LLM ranking exploits the LHF pool, while prompt-level LLM reranking often degrades it. LLMs exhibit pockets of semantic cold-start advantage, especially in text-rich domains when the item is already present, but this advantage is largely unreachable in current retrieve-then-rerank pipelines. We release the benchmark protocol, splits, prompts, evaluation tooling, and archived reproducibility artifacts: data at https://doi.org/10.5281/zenodo.20991039 and code at https://doi.org/10.5281/zenodo.20993306.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T08:23:40Z</published>
+    <arxiv:comment>17 pages, 6 figures, 13 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zhe Dong</name>
+      <arxiv:affiliation>University of Maine at Presque Isle</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Fang Qin</name>
+      <arxiv:affiliation>Stanford University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Manish Shah</name>
+      <arxiv:affiliation>Independent Researcher</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Yicheng Wang</name>
+      <arxiv:affiliation>Independent Researcher</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.15383v1</id>
+    <title>A Compliance-Preserving Retrieval System for Aircraft MRO Task Search</title>
+    <updated>2025-11-19T12:25:40Z</updated>
+    <link href="https://arxiv.org/abs/2511.15383v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.15383v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Aircraft Maintenance Technicians (AMTs) spend up to 30% of work time searching manuals, a documented efficiency bottleneck in MRO operations where every procedure must be traceable to certified sources. We present a compliance-preserving retrieval system that adapts LLM reranking and semantic search to aviation MRO environments by operating alongside, rather than replacing, certified legacy viewers. The system constructs revision-robust embeddings from ATA chapter hierarchies and uses vision-language parsing to structure certified content, allowing technicians to preview ranked tasks and access verified procedures in existing viewers. Evaluation on 49k synthetic queries achieves &gt;90% retrieval accuracy, while bilingual controlled studies with 10 licensed AMTs demonstrate 90.9% top-10 success rate and 95% reduction in lookup time, from 6-15 minutes to 18 seconds per task. These gains provide concrete evidence that semantic retrieval can operate within strict regulatory constraints and meaningfully reduce operational workload in real-world multilingual MRO workflows.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-19T12:25:40Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Byungho Jo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.01037v1</id>
+    <title>ARAGOG: Advanced RAG Output Grading</title>
+    <updated>2024-04-01T10:43:52Z</updated>
+    <link href="https://arxiv.org/abs/2404.01037v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.01037v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) is essential for integrating external knowledge into Large Language Model (LLM) outputs. While the literature on RAG is growing, it primarily focuses on systematic reviews and comparisons of new state-of-the-art (SoTA) techniques against their predecessors, with a gap in extensive experimental comparisons. This study begins to address this gap by assessing various RAG methods' impacts on retrieval precision and answer similarity. We found that Hypothetical Document Embedding (HyDE) and LLM reranking significantly enhance retrieval precision. However, Maximal Marginal Relevance (MMR) and Cohere rerank did not exhibit notable advantages over a baseline Naive RAG system, and Multi-query approaches underperformed. Sentence Window Retrieval emerged as the most effective for retrieval precision, despite its variable performance on answer similarity. The study confirms the potential of the Document Summary Index as a competent retrieval approach. All resources related to this research are publicly accessible for further investigation through our GitHub repository ARAGOG (https://github.com/predlico/ARAGOG). We welcome the community to further this exploratory study in RAG systems.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-01T10:43:52Z</published>
+    <arxiv:comment>14 pages, 8 figures, associated Github repo: https://github.com/predlico/ARAGOG</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Matouš Eibich</name>
+    </author>
+    <author>
+      <name>Shivay Nagpal</name>
+    </author>
+    <author>
+      <name>Alexander Fred-Ojala</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.09492v3</id>
+    <title>Generate to Accelerate: Improved Reranking via LLM-Generated Pivot Documents</title>
+    <updated>2026-08-27T09:00:06Z</updated>
+    <link href="https://arxiv.org/abs/2604.09492v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.09492v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Common approaches to reduce the computational overhead of reranking models include identifying a candidate set of documents for reranking or constructing comparison graphs to minimize redundant comparisons. For pointwise rankers, determining a candidate set typically involves estimating a query-dependent cutoff based on the scores of the top-ranked documents. In contrast, comparison graphs for listwise approaches are often derived using heuristics, such as propagating local comparisons within sliding windows in a bottom-up fashion or reducing comparisons via pivot-based strategies in a top-down manner. In this work, we argue that restricting these processes to existing documents in the collection is unnecessary. Instead, we propose leveraging the generative capabilities of large language models to synthesize a pseudo-relevant document for a given query. We then adapt existing reranking approaches and also propose a novel parallel reranking approach to leverage this LLM-generated document as a pivot. Our experiments demonstrate that using LLM-generated pivots for ranked list truncation reduces the number of pointwise ranker inferences by up to 66\%. In both in-domain and out-of-domain settings, we observe speedups of up to $2.95\times$ in listwise reranking, while maintaining comparable or improved retrieval effectiveness.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-10T16:59:54Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Nilanjan Sinhababu</name>
+    </author>
+    <author>
+      <name>Soumedhik Bharati</name>
+    </author>
+    <author>
+      <name>Debasis Ganguly</name>
+    </author>
+    <author>
+      <name>Pabitra Mitra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.22180v1</id>
+    <title>ResRank: Unifying Retrieval and Listwise Reranking via End-to-End Joint Training with Residual Passage Compression</title>
+    <updated>2026-04-24T03:11:51Z</updated>
+    <link href="https://arxiv.org/abs/2604.22180v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.22180v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language model (LLM) based listwise reranking has emerged as the dominant paradigm for achieving state-of-the-art ranking effectiveness in information retrieval. However, its reliance on feeding full passage texts into the LLM introduces two critical bottlenecks: the "lost in the middle" phenomenon degrades ranking quality as input length grows, and the inference latency scales super-linearly with sequence length, rendering it impractical for industrial deployment. In this paper, we present ResRank, a unified retrieval-reranking framework that fundamentally addresses both challenges. Inspired by multimodal LLMs that project visual inputs into compact token representations, ResRank employs an Encoder-LLM to compress each candidate passage into a single embedding, which is then fed alongside the query text into a Reranker-LLM for listwise ranking. To alleviate the misalignment between the compressed representation space and the ranking space, we introduce a residual connection structure that combines encoder embeddings with contextualized hidden states from the reranker. Furthermore, we replace the conventional autoregressive decoding with a one-step cosine-similarity-based scoring mechanism, eliminating the generation bottleneck entirely. ResRank is trained through a carefully designed dual-stage, multi-task, end-to-end joint optimization strategy that simultaneously trains the encoder and reranker, achieving learning objective alignment between retrieval and reranking while substantially reducing training complexity. Extensive experiments on TREC Deep Learning and eight BEIR benchmark datasets demonstrate that ResRank achieves competitive or superior ranking effectiveness compared to existing approaches while requiring zero generated tokens and processing only one token per passage, yielding a fundamentally better balance between effectiveness and efficiency.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-24T03:11:51Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xiaojie Ke</name>
+    </author>
+    <author>
+      <name>Shuai Zhang</name>
+    </author>
+    <author>
+      <name>Liansheng Sun</name>
+    </author>
+    <author>
+      <name>Yongjin Wang</name>
+    </author>
+    <author>
+      <name>Hengjun Jiang</name>
+    </author>
+    <author>
+      <name>Xiangkun Liu</name>
+    </author>
+    <author>
+      <name>Cunxin Gu</name>
+    </author>
+    <author>
+      <name>Jian Xu</name>
+    </author>
+    <author>
+      <name>Guanjun Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.25104v1</id>
+    <title>SWIM: Step-Wise Integrated Measure for Session-supervised List Evaluation in Generative Re-ranking</title>
+    <updated>2026-08-25T19:57:48Z</updated>
+    <link href="https://arxiv.org/abs/2608.25104v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.25104v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern industrial recommender systems have increasingly adopted the Generator-Evaluator (G-E) framework for the re-ranking stage. Within this paradigm, the generator produces candidate item lists from a pool filtered by upstream retrieval and ranking modules, while the evaluator scores these lists and selects the highest-scoring one for final exposure per request. However, on sequential platforms (e.g., short-video apps), users consume items continuously, ignoring artificial list boundaries. Conventional evaluators score lists by aggregating point-wise values, implicitly assuming exposure independence. This fails to capture critical session-level dynamics, such as contextual dependencies, user continuation, and diminishing marginal utility from repetitive content.
+  To bridge this gap, we propose SWIM (Step-Wise Integrated Measure), a list-level evaluator that models user behaviors as a finite-horizon prefix session-level survival process. SWIM estimates the prefix-conditioned contribution of the current list to the session-level objective by factorizing it into a recursive survival distribution and reached-position conditional rewards. Leveraging a causally-masked Transformer, SWIM efficiently estimates continuation probabilities and utilities in parallel, satisfying strict industrial latency constraints. Extensive experiments demonstrate that SWIM significantly outperforms baselines in listwise reranking tasks, yielding substantial improvements in overall recommendation engagement.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-25T19:57:48Z</published>
+    <arxiv:comment>12 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yuanhao Pu</name>
+    </author>
+    <author>
+      <name>Chenghao Zhang</name>
+    </author>
+    <author>
+      <name>Chao Feng</name>
+    </author>
+    <author>
+      <name>Xunyong Yang</name>
+    </author>
+    <author>
+      <name>Xiang Li</name>
+    </author>
+    <author>
+      <name>Yongqi Liu</name>
+    </author>
+    <author>
+      <name>Defu Lian</name>
+    </author>
+    <author>
+      <name>Kaiqiao Zhan</name>
+    </author>
+    <author>
+      <name>Kun Gai</name>
+    </author>
+    <arxiv:doi>10.1145/3799682.3840732</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3799682.3840732" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.09944v2</id>
+    <title>Query-Focused Retrieval Heads Improve Long-Context Reasoning and Re-ranking</title>
+    <updated>2025-09-28T03:15:02Z</updated>
+    <link href="https://arxiv.org/abs/2506.09944v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.09944v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent work has identified retrieval heads, a subset of attention heads responsible for retrieving salient information in long-context language models (LMs), as measured by their copy-paste behavior in Needlein-a-Haystack tasks. In this paper, we introduce QRHead (Query-Focused Retrieval Head), an improved set of attention heads that enhance retrieval from long context. We identify QRHead by aggregating attention scores with respect to the input query, using a handful of examples from real-world tasks (e.g., long-context QA). We further introduce QRRetriever, an efficient and effective retriever that uses the accumulated attention mass of QRHead as retrieval scores. We use QRRetriever for long-context reasoning by selecting the most relevant parts with the highest retrieval scores. On multi-hop reasoning tasks LongMemEval and CLIPPER, this yields over 10% performance gains over full context and outperforms strong dense retrievers. We also evaluate QRRetriever as a re-ranker on the BEIR benchmark and find that it achieves strong zero-shot performance, outperforming other LLM-based re-rankers such as RankGPT. Further analysis shows that both the query-context attention scoring and task selection are crucial for identifying QRHead with strong downstream utility. Overall, our work contributes a general-purpose retriever and offers interpretability insights into the long-context capabilities of LMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-11T17:12:06Z</published>
+    <arxiv:comment>EMNLP 2025; Code at https://github.com/princeton-pli/QRHead</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Wuwei Zhang</name>
+    </author>
+    <author>
+      <name>Fangcong Yin</name>
+    </author>
+    <author>
+      <name>Howard Yen</name>
+    </author>
+    <author>
+      <name>Danqi Chen</name>
+    </author>
+    <author>
+      <name>Xi Ye</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.07606v2</id>
+    <title>Zero-shot Audio Topic Reranking using Large Language Models</title>
+    <updated>2024-09-10T13:39:28Z</updated>
+    <link href="https://arxiv.org/abs/2309.07606v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.07606v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Video Search by Examples (MVSE) investigates using video clips as the query term for information retrieval, rather than the more traditional text query. This enables far richer search modalities such as images, speaker, content, topic, and emotion. A key element for this process is highly rapid and flexible search to support large archives, which in MVSE is facilitated by representing video attributes with embeddings. This work aims to compensate for any performance loss from this rapid archive search by examining reranking approaches. In particular, zero-shot reranking methods using large language models (LLMs) are investigated as these are applicable to any video archive audio content. Performance is evaluated for topic-based retrieval on a publicly available video archive, the BBC Rewind corpus. Results demonstrate that reranking significantly improves retrieval ranking without requiring any task-specific in-domain training data. Furthermore, three sources of information (ASR transcriptions, automatic summaries and synopses) as input for LLM reranking were compared. To gain a deeper understanding and further insights into the performance differences and limitations of these text sources, we employ a fact-checking approach to analyse the information consistency among them.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-14T11:13:36Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mengjie Qian</name>
+    </author>
+    <author>
+      <name>Rao Ma</name>
+    </author>
+    <author>
+      <name>Adian Liusie</name>
+    </author>
+    <author>
+      <name>Erfan Loweimi</name>
+    </author>
+    <author>
+      <name>Kate M. Knill</name>
+    </author>
+    <author>
+      <name>Mark J. F. Gales</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.00667v1</id>
+    <title>From Saliency to Discriminability: Rank-Preserving Visual Token Pruning for VLM Rerankers</title>
+    <updated>2026-09-01T03:45:21Z</updated>
+    <link href="https://arxiv.org/abs/2609.00667v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.00667v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models used as listwise rerankers must jointly process visual tokens from tens of candidates per query, making token pruning essential for practical deployment. Existing pruning methods retain tokens by attention saliency, yet we show that saliency is systematically misaligned with ranking contribution: visually prominent tokens often capture order-neutral patterns shared across candidates. This mismatch is layer-dependent: saliency becomes informative only where attention is concentrated, and normalized attention entropy diagnoses the reliability shift (Pearson r=0.87). We propose RaDiCal (Rank-Discriminative Calibration), a training-free framework that uses normalized attention entropy to decide when saliency can be trusted, fusing it with an attention-free rank-discriminative prior and selecting pruning layers from the same trust landscape. Across three retrieval benchmarks and multiple VLM architectures, RaDiCal matches Dense MRR@10 on Flickr30K and surpasses it on MSCOCO at a 20% token budget, ranks first among all pruning methods on FashionIQ, and holds within 1.2 pp on Flickr30K and MSCOCO at 10% retention. It cuts FLOPs by 39--45% and delivers 1.28--1.45$\times$ measured speedups across two VLM architectures without dataset-specific retuning.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-01T03:45:21Z</published>
+    <arxiv:comment>EMNLP 2026 (Main Conference)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Siyi Liu</name>
+    </author>
+    <author>
+      <name>Hanjun Yang</name>
+    </author>
+    <author>
+      <name>Chenchen Zhang</name>
+    </author>
+    <author>
+      <name>Xiaorong Zhu</name>
+    </author>
+    <author>
+      <name>Xinyu Zuo</name>
+    </author>
+    <author>
+      <name>Lisheng Duan</name>
+    </author>
+    <author>
+      <name>Haijin Liang</name>
+    </author>
+    <author>
+      <name>Jin Ma</name>
+    </author>
+    <author>
+      <name>Junfu Pu</name>
+    </author>
+    <author>
+      <name>Yongqi Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.25678v1</id>
+    <title>Cross-Pollination Retrieval: Finding Transferable Ideas Across Fields in Scientific Literature</title>
+    <updated>2026-10-19T02:29:15Z</updated>
+    <link href="https://arxiv.org/abs/2610.25678v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.25678v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many scientific advances come from cross-pollination, carrying an idea from one field over to a problem in another. Yet retrieving papers across fields remains underexplored, with existing benchmarks confined to a narrow range of fields. We study cross-pollination retrieval, the problem of identifying transferable ideas across research fields, and introduce CPR-Dataset, a large-scale dataset constructed by mining cross-topic citations. Its evaluation split CPR-eval has 1,300 queries in 26 fields, and its training split CPR-train has 10,573 pairs. On CPR-eval, the best of eleven existing retrievers reaches a Recall@10 of only 0.26, whereas an LLM reranker reaches 0.81. Standard contrastive fine-tuning on CPR-train raises Recall@10 to as high as 0.70. The gain carries over to domains held out from training and to analogy and reasoning-intensive retrieval. On AnaloBench, it raises nDCG@10 by up to 33% over the untrained retriever, whereas training on three existing retrieval datasets lowers it. On BRIGHT, it raises nDCG@10 by up to 70%, more than twice the gain from those datasets. CPR-Dataset is available at https://huggingface.co/CPR-Dataset, and the code at https://github.com/SeokwonJung-Jay/Cross-Pollination-Retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-19T02:29:15Z</published>
+    <arxiv:comment>35 pages, 11 figures, 19 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Seokwon Jung</name>
+    </author>
+    <author>
+      <name>Yerang Kim</name>
+    </author>
+    <author>
+      <name>Yejin Kim</name>
+    </author>
+    <author>
+      <name>Alexander Rubinstein</name>
+    </author>
+    <author>
+      <name>Arnas Uselis</name>
+    </author>
+    <author>
+      <name>Sangwoo Park</name>
+    </author>
+    <author>
+      <name>Seong Joon Oh</name>
+    </author>
+    <author>
+      <name>Sangdoo Yun</name>
+    </author>
+  </entry>
+</feed>

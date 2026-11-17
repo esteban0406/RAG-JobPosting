@@ -1,0 +1,1301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/PpjL5cag8Dy06YCNL1vAWWlMOus</id>
+  <title>arXiv Query: search_query=(abs:"retrieval-augmented generation" OR abs:RAG) AND (abs:evaluation) AND (abs:component OR abs:ablation OR abs:retriever OR abs:reranker) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:07Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:%22retrieval-augmented+generation%22+OR+abs:RAG)+AND+(abs:evaluation+AND+((abs:component+OR+(abs:ablation+OR+(abs:retriever+OR+abs:reranker)))+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22)))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>2266</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2510.24402v1</id>
+    <title>Metadata-Driven Retrieval-Augmented Generation for Financial Question Answering</title>
+    <updated>2025-10-28T13:16:36Z</updated>
+    <link href="https://arxiv.org/abs/2510.24402v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.24402v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) struggles on long, structured financial filings where relevant evidence is sparse and cross-referenced. This paper presents a systematic investigation of advanced metadata-driven Retrieval-Augmented Generation (RAG) techniques, proposing and evaluating a novel, multi-stage RAG architecture that leverages LLM-generated metadata. We introduce a sophisticated indexing pipeline to create contextually rich document chunks and benchmark a spectrum of enhancements, including pre-retrieval filtering, post-retrieval reranking, and enriched embeddings, benchmarked on the FinanceBench dataset. Our results reveal that while a powerful reranker is essential for precision, the most significant performance gains come from embedding chunk metadata directly with text ("contextual chunks"). Our proposed optimal architecture combines LLM-driven pre-retrieval optimizations with these contextual embeddings to achieve superior performance. Additionally, we present a custom metadata reranker that offers a compelling, cost-effective alternative to commercial solutions, highlighting a practical trade-off between peak performance and operational efficiency. This study provides a blueprint for building robust, metadata-aware RAG systems for financial document analysis.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-28T13:16:36Z</published>
+    <arxiv:comment>Preprint version submitted to the International Journal of Accounting Information Systems; currently under major revision. 20 pages, 1 figure, 1 table</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Michail Dadopoulos</name>
+    </author>
+    <author>
+      <name>Anestis Ladas</name>
+    </author>
+    <author>
+      <name>Stratos Moschidis</name>
+    </author>
+    <author>
+      <name>Ioannis Negkakis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09040v3</id>
+    <title>RAGGED: Towards Informed Design of Scalable and Stable RAG Systems</title>
+    <updated>2025-07-16T09:39:02Z</updated>
+    <link href="https://arxiv.org/abs/2403.09040v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09040v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation (RAG) enhances language models by integrating external knowledge, but its effectiveness is highly dependent on system configuration. Improper retrieval settings can degrade performance, making RAG less reliable than closed-book generation. In this work, we introduce RAGGED, a framework for systematically evaluating RAG systems across diverse retriever-reader configurations, retrieval depths, and datasets. Our analysis reveals that reader robustness to noise is the key determinant of RAG stability and scalability. Some readers benefit from increased retrieval depth, while others degrade due to their sensitivity to distracting content. Through large-scale experiments on open-domain, multi-hop, and specialized-domain datasets, we show that retrievers, rerankers, and prompts influence performance but do not fundamentally alter these reader-driven trends. By providing a principled framework and new metrics to assess RAG stability and scalability, RAGGED enables systematic evaluation of retrieval-augmented generation systems, guiding future research on optimizing retrieval depth and model robustness.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T02:26:31Z</published>
+    <arxiv:comment>Project page: https://github.com/neulab/ragged</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>ICML 2025</arxiv:journal_ref>
+    <author>
+      <name>Jennifer Hsia</name>
+    </author>
+    <author>
+      <name>Afreen Shaikh</name>
+    </author>
+    <author>
+      <name>Zhiruo Wang</name>
+    </author>
+    <author>
+      <name>Graham Neubig</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.06339v1</id>
+    <title>Optimizing RAG Pipelines for Arabic: A Systematic Analysis of Core Components</title>
+    <updated>2025-06-01T00:04:58Z</updated>
+    <link href="https://arxiv.org/abs/2506.06339v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.06339v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) has emerged as a powerful architecture for combining the precision of retrieval systems with the fluency of large language models. While several studies have investigated RAG pipelines for high-resource languages, the optimization of RAG components for Arabic remains underexplored. This study presents a comprehensive empirical evaluation of state-of-the-art RAG components-including chunking strategies, embedding models, rerankers, and language models-across a diverse set of Arabic datasets. Using the RAGAS framework, we systematically compare performance across four core metrics: context precision, context recall, answer faithfulness, and answer relevancy. Our experiments demonstrate that sentence-aware chunking outperforms all other segmentation methods, while BGE-M3 and Multilingual-E5-large emerge as the most effective embedding models. The inclusion of a reranker (bge-reranker-v2-m3) significantly boosts faithfulness in complex datasets, and Aya-8B surpasses StableLM in generation quality. These findings provide critical insights for building high-quality Arabic RAG pipelines and offer practical guidelines for selecting optimal components across different document types.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-01T00:04:58Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jumana Alsubhi</name>
+    </author>
+    <author>
+      <name>Mohammad D. Alahmadi</name>
+    </author>
+    <author>
+      <name>Ahmed Alhusayni</name>
+    </author>
+    <author>
+      <name>Ibrahim Aldailami</name>
+    </author>
+    <author>
+      <name>Israa Hamdine</name>
+    </author>
+    <author>
+      <name>Ahmad Shabana</name>
+    </author>
+    <author>
+      <name>Yazeed Iskandar</name>
+    </author>
+    <author>
+      <name>Suhayb Khayyat</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.19899v1</id>
+    <title>A Reproducibility Study of Metacognitive Retrieval-Augmented Generation</title>
+    <updated>2026-04-21T18:22:15Z</updated>
+    <link href="https://arxiv.org/abs/2604.19899v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.19899v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Retrieval Augmented Generation (RAG) has shifted focus to multi-retrieval approaches to tackle complex tasks such as multi-hop question answering. However, these systems struggle to decide when to stop searching once enough information has been gathered. To address this, \citet{zhou2024metacognitive} introduced Metacognitive Retrieval Augmented Generation (MetaRAG), a framework inspired by metacognition that enables Large Language Models to critique and refine their reasoning. In this reproducibility paper, we reproduce MetaRAG following its original experimental setup and extend it in two directions: (i) by evaluating the effect of PointWise and ListWise rerankers, and (ii) by comparing with SIM-RAG, which employs a lightweight critic model to stop retrieval. Our results confirm MetaRAG's relative improvements over standard RAG and reasoning-based baselines, but also reveal lower absolute scores than reported, reflecting challenges with closed-source LLM updates, missing implementation details, and unreleased prompts. We show that MetaRAG is partially reproduced, gains substantially from reranking, and is more robust than SIM-RAG when extended with additional retrieval features.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-21T18:22:15Z</published>
+    <arxiv:comment>Paper accepted at ACM SIGIR Conference 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Gabriel Iturra-Bocaz</name>
+    </author>
+    <author>
+      <name>Petra Galuscakova</name>
+    </author>
+    <arxiv:doi>10.1145/3805712.3808551</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3805712.3808551" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.00142v1</id>
+    <title>JudgeRank: Leveraging Large Language Models for Reasoning-Intensive Reranking</title>
+    <updated>2024-10-31T18:43:12Z</updated>
+    <link href="https://arxiv.org/abs/2411.00142v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.00142v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurate document retrieval is crucial for the success of retrieval-augmented generation (RAG) applications, including open-domain question answering and code completion. While large language models (LLMs) have been employed as dense encoders or listwise rerankers in RAG systems, they often struggle with reasoning-intensive tasks because they lack nuanced analysis when judging document relevance. To address this limitation, we introduce JudgeRank, a novel agentic reranker that emulates human cognitive processes when assessing document relevance. Our approach consists of three key steps: (1) query analysis to identify the core problem, (2) document analysis to extract a query-aware summary, and (3) relevance judgment to provide a concise assessment of document relevance. We evaluate JudgeRank on the reasoning-intensive BRIGHT benchmark, demonstrating substantial performance improvements over first-stage retrieval methods and outperforming other popular reranking approaches. In addition, JudgeRank performs on par with fine-tuned state-of-the-art rerankers on the popular BEIR benchmark, validating its zero-shot generalization capability. Through comprehensive ablation studies, we demonstrate that JudgeRank's performance generalizes well across LLMs of various sizes while ensembling them yields even more accurate reranking than individual models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-31T18:43:12Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Tong Niu</name>
+    </author>
+    <author>
+      <name>Shafiq Joty</name>
+    </author>
+    <author>
+      <name>Ye Liu</name>
+    </author>
+    <author>
+      <name>Caiming Xiong</name>
+    </author>
+    <author>
+      <name>Yingbo Zhou</name>
+    </author>
+    <author>
+      <name>Semih Yavuz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.14318v1</id>
+    <title>Assessing generalization capability of text ranking models in Polish</title>
+    <updated>2024-02-22T06:21:41Z</updated>
+    <link href="https://arxiv.org/abs/2402.14318v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.14318v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation (RAG) is becoming an increasingly popular technique for integrating internal knowledge bases with large language models. In a typical RAG pipeline, three models are used, responsible for the retrieval, reranking, and generation stages. In this article, we focus on the reranking problem for the Polish language, examining the performance of rerankers and comparing their results with available retrieval models. We conduct a comprehensive evaluation of existing models and those trained by us, utilizing a benchmark of 41 diverse information retrieval tasks for the Polish language. The results of our experiments show that most models struggle with out-of-domain generalization. However, a combination of effective optimization method and a large training dataset allows for building rerankers that are both compact in size and capable of generalization. The best of our models establishes a new state-of-the-art for reranking in the Polish language, outperforming existing models with up to 30 times more parameters.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-22T06:21:41Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sławomir Dadas</name>
+    </author>
+    <author>
+      <name>Małgorzata Grębowiec</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.12300v3</id>
+    <title>Unanswerability Evaluation for Retrieval Augmented Generation</title>
+    <updated>2025-04-21T04:16:29Z</updated>
+    <link href="https://arxiv.org/abs/2412.12300v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.12300v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing evaluation frameworks for retrieval-augmented generation (RAG) systems focus on answerable queries, but they overlook the importance of appropriately rejecting unanswerable requests. In this paper, we introduce UAEval4RAG, a framework designed to evaluate whether RAG systems can handle unanswerable queries effectively. We define a taxonomy with six unanswerable categories, and UAEval4RAG automatically synthesizes diverse and challenging queries for any given knowledge base with unanswered ratio and acceptable ratio metrics. We conduct experiments with various RAG components, including retrieval models, rewriting methods, rerankers, language models, and prompting strategies, and reveal hidden trade-offs in performance of RAG systems. Our findings highlight the critical role of component selection and prompt design in optimizing RAG systems to balance the accuracy of answerable queries with high rejection rates of unanswerable ones. UAEval4RAG provides valuable insights and tools for developing more robust and reliable RAG systems.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-16T19:11:55Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xiangyu Peng</name>
+    </author>
+    <author>
+      <name>Prafulla Kumar Choubey</name>
+    </author>
+    <author>
+      <name>Caiming Xiong</name>
+    </author>
+    <author>
+      <name>Chien-Sheng Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.01102v1</id>
+    <title>BERGEN: A Benchmarking Library for Retrieval-Augmented Generation</title>
+    <updated>2024-07-01T09:09:27Z</updated>
+    <link href="https://arxiv.org/abs/2407.01102v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.01102v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation allows to enhance Large Language Models with external knowledge. In response to the recent popularity of generative LLMs, many RAG approaches have been proposed, which involve an intricate number of different configurations such as evaluation datasets, collections, metrics, retrievers, and LLMs. Inconsistent benchmarking poses a major challenge in comparing approaches and understanding the impact of each component in the pipeline. In this work, we study best practices that lay the groundwork for a systematic evaluation of RAG and present BERGEN, an end-to-end library for reproducible research standardizing RAG experiments. In an extensive study focusing on QA, we benchmark different state-of-the-art retrievers, rerankers, and LLMs. Additionally, we analyze existing RAG metrics and datasets. Our open-source library BERGEN is available under \url{https://github.com/naver/bergen}.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-01T09:09:27Z</published>
+    <arxiv:comment>29 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>David Rau</name>
+    </author>
+    <author>
+      <name>Hervé Déjean</name>
+    </author>
+    <author>
+      <name>Nadezhda Chirkova</name>
+    </author>
+    <author>
+      <name>Thibault Formal</name>
+    </author>
+    <author>
+      <name>Shuai Wang</name>
+    </author>
+    <author>
+      <name>Vassilina Nikoulina</name>
+    </author>
+    <author>
+      <name>Stéphane Clinchant</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.28737v1</id>
+    <title>5ting at SemEval-2026 Task 8: Strong End-to-End Multi-Turn RAG via LLM-Based Reranking and Faithfulness Control</title>
+    <updated>2026-06-27T05:13:49Z</updated>
+    <link href="https://arxiv.org/abs/2606.28737v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.28737v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce 5ting, our system for the SemEval2026 Task 8 (MTRAGEval), which evaluates multi-turn Retrieval Augmented Generation (RAG) systems. Multi turn RAG involves context drift, under specification, and hallucination risk. Our system combines BGE-M3 dense retrieval with FAISS indexing, dual-query merged retrieval, and LLM based reranking, followed by role separated generation constrained to retrieved evidence. The retriever achieved nDCG@5 = 0.4719 in Task A, while the end to end system ranked in Task C with a harmonic score of 0.5597 and RL_F = 0.7692.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-27T05:13:49Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name> Thien-Qua-T-Nguyen</name>
+    </author>
+    <author>
+      <name>Chi Hoang</name>
+    </author>
+    <author>
+      <name>Nguyen Tran</name>
+    </author>
+    <author>
+      <name>Tri Le</name>
+    </author>
+    <author>
+      <name>Khanh Truong</name>
+    </author>
+    <author>
+      <name>Chinh Trong Nguyen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.10802v1</id>
+    <title>Constructing and Evaluating Declarative RAG Pipelines in PyTerrier</title>
+    <updated>2025-06-12T15:16:34Z</updated>
+    <link href="https://arxiv.org/abs/2506.10802v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.10802v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Search engines often follow a pipeline architecture, where complex but effective reranking components are used to refine the results of an initial retrieval. Retrieval augmented generation (RAG) is an exciting application of the pipeline architecture, where the final component generates a coherent answer for the users from the retrieved documents. In this demo paper, we describe how such RAG pipelines can be formulated in the declarative PyTerrier architecture, and the advantages of doing so. Our PyTerrier-RAG extension for PyTerrier provides easy access to standard RAG datasets and evaluation measures, state-of-the-art LLM readers, and using PyTerrier's unique operator notation, easy-to-build pipelines. We demonstrate the succinctness of indexing and RAG pipelines on standard datasets (including Natural Questions) and how to build on the larger PyTerrier ecosystem with state-of-the-art sparse, learned-sparse, and dense retrievers, and other neural rankers.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-12T15:16:34Z</published>
+    <arxiv:comment>4 pages, 3 tables, Accepted to SIGIR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Craig Macdonald</name>
+    </author>
+    <author>
+      <name>Jinyuan Fang</name>
+    </author>
+    <author>
+      <name>Andrew Parry</name>
+    </author>
+    <author>
+      <name>Zaiqiao Meng</name>
+    </author>
+    <arxiv:doi>10.1145/3726302.3730150</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3726302.3730150" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17692v1</id>
+    <title>LegalMALR:Multi-Agent Query Understanding and LLM-Based Reranking for Chinese Statute Retrieval</title>
+    <updated>2026-01-25T04:44:56Z</updated>
+    <link href="https://arxiv.org/abs/2601.17692v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17692v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Statute retrieval is essential for legal assistance and judicial decision support, yet real-world legal queries are often implicit, multi-issue, and expressed in colloquial or underspecified forms. These characteristics make it difficult for conventional retrieval-augmented generation pipelines to recover the statutory elements required for accurate retrieval. Dense retrievers focus primarily on the literal surface form of the query, whereas lightweight rerankers lack the legal-reasoning capacity needed to assess statutory applicability. We present LegalMALR, a retrieval framework that integrates a Multi-Agent Query Understanding System (MAS) with a zero-shot large-language-model-based reranking module (LLM Reranker). MAS generates diverse, legally grounded reformulations and conducts iterative dense retrieval to broaden candidate coverage. To stabilise the stochastic behaviour of LLM-generated rewrites, we optimise a unified MAS policy using Generalized Reinforcement Policy Optimization(GRPO). The accumulated candidate set is subsequently evaluated by the LLM Reranker, which performs natural-language legal reasoning to produce the final ranking. We further construct CSAID, a dataset of 118 difficult Chinese legal queries annotated with multiple statutory labels, and evaluate LegalMALR on both CSAID and the public STARD benchmark. Experiments show that LegalMALR substantially outperforms strong Retrieval-augmented generation(RAG) baselines in both in-distribution and out-of-distribution settings, demonstrating the effectiveness of combining multi-perspective query interpretation, reinforcement-based policy optimisation, and large-model reranking for statute retrieval.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-25T04:44:56Z</published>
+    <arxiv:comment>31pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yunhan Li</name>
+    </author>
+    <author>
+      <name>Mingjie Xie</name>
+    </author>
+    <author>
+      <name>Gaoli Kang</name>
+    </author>
+    <author>
+      <name>Zihan Gong</name>
+    </author>
+    <author>
+      <name>Gengshen Wu</name>
+    </author>
+    <author>
+      <name>Min Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.02520v1</id>
+    <title>Benchmarking Retrieval Strategies for Biomedical Retrieval-Augmented Generation: A Controlled Empirical Study</title>
+    <updated>2026-05-04T12:21:46Z</updated>
+    <link href="https://arxiv.org/abs/2605.02520v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.02520v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) offers a well-established path to grounding large language model (LLM) outputs in external knowledge, yet the question of which retrieval strategy works best in a high-stakes domain such as biomedicine has not received the controlled, multi-metric treatment it deserves. This paper presents a systematic empirical comparison of five retrieval strategies -- Dense Vector Search, Hybrid BM25 + Dense retrieval, Cross-Encoder Reranking, Multi-Query Expansion, and Maximal Marginal Relevance (MMR) -- within a biomedical question-answering RAG pipeline. All strategies share a fixed generation model (GPT-4o-mini), a common vector store (ChromaDB), and OpenAI's text-embedding-3-small embeddings, ensuring that observed differences are attributable to retrieval alone. Evaluation is conducted on 250 question-answer pairs drawn from a preprocessed subset of the BioASQ benchmark (rag-mini-bioasq) using four DeepEval metrics: contextual precision, contextual recall, faithfulness, and answer relevancy, each reported with 95% confidence intervals. A no-context ablation is included as a lower bound. Cross-Encoder Reranking achieves the best composite score (0.827) and highest contextual precision (0.852), confirming that query-document interaction yields measurable retrieval gains. Multi-Query Expansion, despite its recall-oriented design, produces the weakest contextual precision (0.671), suggesting naive query diversification introduces retrieval noise. MMR sacrifices answer relevancy for diversity, while the Dense baseline (composite 0.822) falls within 0.005 points of the top strategy. All RAG conditions dramatically outperform the no-context ablation on answer relevancy (0.658-0.701 vs. 0.287), confirming the practical value of retrieval. The full pipeline, hyperparameters, and evaluation code are publicly available.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-04T12:21:46Z</published>
+    <arxiv:comment>15 pages, 4 figures, 2 tables. Code and data: https://github.com/deviprasadbal/RAGHealthcareRetrievalStrategies Also archived at Zenodo: https://doi.org/10.5281/zenodo.19774692</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Devi Prasad Bal</name>
+    </author>
+    <author>
+      <name>Subhashree Puhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.05512v1</id>
+    <title>RankArena: A Unified Platform for Evaluating Retrieval, Reranking and RAG with Human and LLM Feedback</title>
+    <updated>2025-08-07T15:46:53Z</updated>
+    <link href="https://arxiv.org/abs/2508.05512v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.05512v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluating the quality of retrieval-augmented generation (RAG) and document reranking systems remains challenging due to the lack of scalable, user-centric, and multi-perspective evaluation tools. We introduce RankArena, a unified platform for comparing and analysing the performance of retrieval pipelines, rerankers, and RAG systems using structured human and LLM-based feedback as well as for collecting such feedback. RankArena supports multiple evaluation modes: direct reranking visualisation, blind pairwise comparisons with human or LLM voting, supervised manual document annotation, and end-to-end RAG answer quality assessment. It captures fine-grained relevance feedback through both pairwise preferences and full-list annotations, along with auxiliary metadata such as movement metrics, annotation time, and quality ratings. The platform also integrates LLM-as-a-judge evaluation, enabling comparison between model-generated rankings and human ground truth annotations. All interactions are stored as structured evaluation datasets that can be used to train rerankers, reward models, judgment agents, or retrieval strategy selectors. Our platform is publicly available at https://rankarena.ngrok.io/, and the Demo video is provided https://youtu.be/jIYAP4PaSSI.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-07T15:46:53Z</published>
+    <arxiv:comment>Accept at CIKM 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Abdelrahman Abdallah</name>
+    </author>
+    <author>
+      <name>Mahmoud Abdalla</name>
+    </author>
+    <author>
+      <name>Bhawna Piryani</name>
+    </author>
+    <author>
+      <name>Jamshid Mozafari</name>
+    </author>
+    <author>
+      <name>Mohammed Ali</name>
+    </author>
+    <author>
+      <name>Adam Jatowt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.23793v1</id>
+    <title>Transformer Tafsir at QIAS 2025 Shared Task: Hybrid Retrieval-Augmented Generation for Islamic Knowledge Question Answering</title>
+    <updated>2025-09-28T10:27:08Z</updated>
+    <link href="https://arxiv.org/abs/2509.23793v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.23793v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents our submission to the QIAS 2025 shared task on Islamic knowledge understanding and reasoning. We developed a hybrid retrieval-augmented generation (RAG) system that combines sparse and dense retrieval methods with cross-encoder reranking to improve large language model (LLM) performance. Our three-stage pipeline incorporates BM25 for initial retrieval, a dense embedding retrieval model for semantic matching, and cross-encoder reranking for precise content retrieval. We evaluate our approach on both subtasks using two LLMs, Fanar and Mistral, demonstrating that the proposed RAG pipeline enhances performance across both, with accuracy improvements up to 25%, depending on the task and model configuration. Our best configuration is achieved with Fanar, yielding accuracy scores of 45% in Subtask 1 and 80% in Subtask 2.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-28T10:27:08Z</published>
+    <arxiv:comment>Accepted at ArabicNLP 2025, co-located with EMNLP 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Muhammad Abu Ahmad</name>
+    </author>
+    <author>
+      <name>Mohamad Ballout</name>
+    </author>
+    <author>
+      <name>Raia Abu Ahmad</name>
+    </author>
+    <author>
+      <name>Elia Bruni</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.01840v2</id>
+    <title>LRAGE: Legal Retrieval Augmented Generation Evaluation Tool</title>
+    <updated>2025-04-25T01:57:31Z</updated>
+    <link href="https://arxiv.org/abs/2504.01840v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.01840v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, building retrieval-augmented generation (RAG) systems to enhance the capability of large language models (LLMs) has become a common practice. Especially in the legal domain, previous judicial decisions play a significant role under the doctrine of stare decisis which emphasizes the importance of making decisions based on (retrieved) prior documents. However, the overall performance of RAG system depends on many components: (1) retrieval corpora, (2) retrieval algorithms, (3) rerankers, (4) LLM backbones, and (5) evaluation metrics. Here we propose LRAGE, an open-source tool for holistic evaluation of RAG systems focusing on the legal domain. LRAGE provides GUI and CLI interfaces to facilitate seamless experiments and investigate how changes in the aforementioned five components affect the overall accuracy. We validated LRAGE using multilingual legal benches including Korean (KBL), English (LegalBench), and Chinese (LawBench) by demonstrating how the overall accuracy changes when varying the five components mentioned above. The source code is available at https://github.com/hoorangyee/LRAGE.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-02T15:45:03Z</published>
+    <arxiv:comment>12 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Minhu Park</name>
+    </author>
+    <author>
+      <name>Hongseok Oh</name>
+    </author>
+    <author>
+      <name>Eunkyung Choi</name>
+    </author>
+    <author>
+      <name>Wonseok Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.04696v1</id>
+    <title>EncouRAGe: Evaluating RAG Local, Fast, and Reliable</title>
+    <updated>2025-10-31T15:19:29Z</updated>
+    <link href="https://arxiv.org/abs/2511.04696v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.04696v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce EncouRAGe, a comprehensive Python framework designed to streamline the development and evaluation of Retrieval-Augmented Generation (RAG) systems using Large Language Models (LLMs) and Embedding Models. EncouRAGe comprises five modular and extensible components: Type Manifest, RAG Factory, Inference, Vector Store, and Metrics, facilitating flexible experimentation and extensible development. The framework emphasizes scientific reproducibility, diverse evaluation metrics, and local deployment, enabling researchers to efficiently assess datasets within RAG workflows. This paper presents implementation details and an extensive evaluation across multiple benchmark datasets, including 25k QA pairs and over 51k documents. Our results show that RAG still underperforms compared to the Oracle Context, while Hybrid BM25 consistently achieves the best results across all four datasets. We further examine the effects of reranking, observing only marginal performance improvements accompanied by higher response latency.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-31T15:19:29Z</published>
+    <arxiv:comment>Currently under review</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jan Strich</name>
+    </author>
+    <author>
+      <name>Adeline Scharfenberg</name>
+    </author>
+    <author>
+      <name>Chris Biemann</name>
+    </author>
+    <author>
+      <name>Martin Semmann</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.01733v1</id>
+    <title>From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents</title>
+    <updated>2026-04-02T07:53:40Z</updated>
+    <link href="https://arxiv.org/abs/2604.01733v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.01733v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) systems critically depend on retrieval quality, yet no systematic comparison of modern retrieval methods exists for heterogeneous documents containing both text and tabular data. We benchmark ten retrieval strategies spanning sparse, dense, hybrid fusion, cross-encoder reranking, query expansion, index augmentation, and adaptive retrieval on a challenging financial QA benchmark of 23,088 queries over 7,318 documents with mixed text-and-table content. We evaluate retrieval quality via Recall@k, MRR, and nDCG, and end-to-end generation quality via Number Match, with paired bootstrap significance testing. Our results show that (1) a two-stage pipeline combining hybrid retrieval with neural reranking achieves Recall@5 of 0.816 and MRR@3 of 0.605, outperforming all single-stage methods by a large margin; (2) BM25 outperforms state-of-the-art dense retrieval on financial documents, challenging the common assumption that semantic search universally dominates; and (3) query expansion methods (HyDE, multi-query) and adaptive retrieval provide limited benefit for precise numerical queries, while contextual retrieval yields consistent gains. We provide ablation studies on fusion methods and reranker depth, actionable cost-accuracy recommendations, and release our full benchmark code.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-02T07:53:40Z</published>
+    <arxiv:comment>11 pages, 6 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Meftun Akarsu</name>
+    </author>
+    <author>
+      <name>Recep Kaan Karaman</name>
+    </author>
+    <author>
+      <name>Christopher Mierbach</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.16877v2</id>
+    <title>Enhancing Financial Report Question-Answering: A Retrieval-Augmented Generation System with Reranking Analysis</title>
+    <updated>2026-04-28T06:59:31Z</updated>
+    <link href="https://arxiv.org/abs/2603.16877v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.16877v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Financial analysts face significant challenges extracting information from lengthy 10-K reports, which often exceed 100 pages. This paper presents a Retrieval-Augmented Generation (RAG) system designed to answer questions about S&amp;P 500 financial reports and evaluates the impact of neural reranking on system performance. Our pipeline employs hybrid search combining full-text and semantic retrieval, followed by an optional reranking stage using a cross-encoder model. We conduct systematic evaluation using the FinDER benchmark dataset, comprising 1,500 queries across five experimental groups. Results demonstrate that reranking significantly improves answer quality, achieving 49.0 percent correctness for scores of 8 or above compared to 33.5 percent without reranking, representing a 15.5 percentage point improvement. Additionally, the error rate for completely incorrect answers decreases from 35.3 percent to 22.5 percent. Our findings emphasize the critical role of reranking in financial RAG systems and demonstrate performance improvements over baseline methods through modern language models and refined retrieval strategies.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-18T20:54:23Z</published>
+    <arxiv:comment>7 pages, 2 figures. Accepted to ICECET 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhiyuan Cheng</name>
+    </author>
+    <author>
+      <name>Longying Lai</name>
+    </author>
+    <author>
+      <name>Yue Liu</name>
+    </author>
+    <author>
+      <name>Kai Cheng</name>
+    </author>
+    <author>
+      <name>Xiaoxi Qi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.05760v1</id>
+    <title>RAGMark: A Comprehensive Framework for Benchmarking Retrieval-Augmented Generation Systems</title>
+    <updated>2026-09-04T22:44:05Z</updated>
+    <link href="https://arxiv.org/abs/2609.05760v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.05760v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present RAGMark, a modular benchmarking framework for advanced Retrieval-Augmented Generation (RAG) systems targeting small-scale multi-GPU environments. RAGMark evaluates diverse RAG components, including retrievers, vector databases, prompt-processing methods, and generator models, while collecting detailed per-stage metrics such as latency, GPU utilization, memory consumption, power usage, time to first token (TTFT), throughput, and answer quality. The framework is highly extensible, separating RAG stages, timing, and resource monitoring into modular components, and is designed to efficiently sweep large configuration spaces while minimizing repeated model and database initialization overhead. Using RAGMark, we characterize five RAG workloads on open-domain QA datasets across varying retrieval depths, model scales, reranking, compression methods, and vector database configurations. We show that while autoregressive generation dominates latency in naive pipelines, context-reduction techniques shift bottlenecks across compute, memory bandwidth, and preprocessing stages. Reranking and compression produce compounding benefits: reranking reduces compression workload itself, while both jointly reduce prefill and KV-cache traversal costs, lowering energy consumption by up to 66%. We further observe strong cross-stage interactions, where small upstream context reductions cascade through downstream latency, memory traffic, and energy consumption. The RAGMark source code is publicly available at: https://github.com/zferic/RAGMark.</summary>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T22:44:05Z</published>
+    <arxiv:comment>18 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.PF"/>
+    <author>
+      <name>Zlatan Feric</name>
+    </author>
+    <author>
+      <name>Amir Taherin</name>
+    </author>
+    <author>
+      <name>Bin Ren</name>
+    </author>
+    <author>
+      <name>Yanzhi Wang</name>
+    </author>
+    <author>
+      <name>Jennifer Dy</name>
+    </author>
+    <author>
+      <name>David Kaeli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.16478v1</id>
+    <title>DeepEra: A Deep Evidence Reranking Agent for Scientific Retrieval-Augmented Generated Question Answering</title>
+    <updated>2026-01-23T06:19:08Z</updated>
+    <link href="https://arxiv.org/abs/2601.16478v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.16478v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the rapid growth of scientific literature, scientific question answering (SciQA) has become increasingly critical for exploring and utilizing scientific knowledge. Retrieval-Augmented Generation (RAG) enhances LLMs by incorporating knowledge from external sources, thereby providing credible evidence for scientific question answering. But existing retrieval and reranking methods remain vulnerable to passages that are semantically similar but logically irrelevant, often reducing factual reliability and amplifying hallucinations.To address this challenge, we propose a Deep Evidence Reranking Agent (DeepEra) that integrates step-by-step reasoning, enabling more precise evaluation of candidate passages beyond surface-level semantics. To support systematic evaluation, we construct SciRAG-SSLI (Scientific RAG - Semantically Similar but Logically Irrelevant), a large-scale dataset comprising about 300K SciQA instances across 10 subjects, constructed from 10M scientific corpus. The dataset combines naturally retrieved contexts with systematically generated distractors to test logical robustness and factual grounding. Comprehensive evaluations confirm that our approach achieves superior retrieval performance compared to leading rerankers. To our knowledge, this work is the first to comprehensively study and empirically validate innegligible SSLI issues in two-stage RAG frameworks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-23T06:19:08Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haotian Chen</name>
+    </author>
+    <author>
+      <name>Qingqing Long</name>
+    </author>
+    <author>
+      <name>Siyu Pu</name>
+    </author>
+    <author>
+      <name>Xiao Luo</name>
+    </author>
+    <author>
+      <name>Wei Ju</name>
+    </author>
+    <author>
+      <name>Meng Xiao</name>
+    </author>
+    <author>
+      <name>Yuanchun Zhou</name>
+    </author>
+    <author>
+      <name>Jianghua Zhao</name>
+    </author>
+    <author>
+      <name>Xuezhi Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.21931v2</id>
+    <title>ARAG: Agentic Retrieval Augmented Generation for Personalized Recommendation</title>
+    <updated>2025-08-11T16:24:36Z</updated>
+    <link href="https://arxiv.org/abs/2506.21931v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.21931v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) has shown promise in enhancing recommendation systems by incorporating external context into large language model prompts. However, existing RAG-based approaches often rely on static retrieval heuristics and fail to capture nuanced user preferences in dynamic recommendation scenarios. In this work, we introduce ARAG, an Agentic Retrieval-Augmented Generation framework for Personalized Recommendation, which integrates a multi-agent collaboration mechanism into the RAG pipeline. To better understand the long-term and session behavior of the user, ARAG leverages four specialized LLM-based agents: a User Understanding Agent that summarizes user preferences from long-term and session contexts, a Natural Language Inference (NLI) Agent that evaluates semantic alignment between candidate items retrieved by RAG and inferred intent, a context summary agent that summarizes the findings of NLI agent, and an Item Ranker Agent that generates a ranked list of recommendations based on contextual fit. We evaluate ARAG accross three datasets. Experimental results demonstrate that ARAG significantly outperforms standard RAG and recency-based baselines, achieving up to 42.1% improvement in NDCG@5 and 35.5% in Hit@5. We also, conduct an ablation study to analyse the effect by different components of ARAG. Our findings highlight the effectiveness of integrating agentic reasoning into retrieval-augmented recommendation and provide new directions for LLM-based personalization.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-27T05:45:59Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Reza Yousefi Maragheh</name>
+    </author>
+    <author>
+      <name>Pratheek Vadla</name>
+    </author>
+    <author>
+      <name>Priyank Gupta</name>
+    </author>
+    <author>
+      <name>Kai Zhao</name>
+    </author>
+    <author>
+      <name>Aysenur Inan</name>
+    </author>
+    <author>
+      <name>Kehui Yao</name>
+    </author>
+    <author>
+      <name>Jianpeng Xu</name>
+    </author>
+    <author>
+      <name>Praveen Kanumala</name>
+    </author>
+    <author>
+      <name>Jason Cho</name>
+    </author>
+    <author>
+      <name>Sushant Kumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.12322v1</id>
+    <title>RAG Playground: A Framework for Systematic Evaluation of Retrieval Strategies and Prompt Engineering in RAG Systems</title>
+    <updated>2024-12-16T19:40:26Z</updated>
+    <link href="https://arxiv.org/abs/2412.12322v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.12322v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present RAG Playground, an open-source framework for systematic evaluation of Retrieval-Augmented Generation (RAG) systems. The framework implements and compares three retrieval approaches: naive vector search, reranking, and hybrid vector-keyword search, combined with ReAct agents using different prompting strategies. We introduce a comprehensive evaluation framework with novel metrics and provide empirical results comparing different language models (Llama 3.1 and Qwen 2.5) across various retrieval configurations. Our experiments demonstrate significant performance improvements through hybrid search methods and structured self-evaluation prompting, achieving up to 72.7% pass rate on our multi-metric evaluation framework. The results also highlight the importance of prompt engineering in RAG systems, with our custom-prompted agents showing consistent improvements in retrieval accuracy and response quality.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-16T19:40:26Z</published>
+    <arxiv:comment>Work In Progress</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ioannis Papadimitriou</name>
+      <arxiv:affiliation>Yiannis</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ilias Gialampoukidis</name>
+      <arxiv:affiliation>Yiannis</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Stefanos Vrochidis</name>
+      <arxiv:affiliation>Yiannis</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Ioannis</name>
+      <arxiv:affiliation>Yiannis</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Kompatsiaris</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.11933v1</id>
+    <title>Transforming LLMs into Efficient Cross-Encoders via Knowledge Distillation for RAG Reranking</title>
+    <updated>2026-07-11T04:31:20Z</updated>
+    <link href="https://arxiv.org/abs/2607.11933v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.11933v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cross-encoders achieve high reranking accuracy in Retrieval-Augmented Generation (RAG) pipelines but impose quadratic inference costs that limit real-time deployment. We address this by fine-tuning LLaMA 3 (8B) as a drop-in reranker using a two-stage pipeline: supervised fine-tuning on a custom query-document relevance dataset via the Unsloth framework with LoRA adapters, followed by 4-bit quantization for efficient inference. The resulting model replaces the cross-encoder in a dual-retriever RAG pipeline combining BM25 and dense vector search. Evaluated on a domain-specific question-answering benchmark using the RAGAS framework, our fine-tuned LLaMA 3 reranker achieves gains of 14% in answer relevancy, 16% in context precision, 19% in answer similarity, and 21% in answer correctness over the cross-encoder baseline, while reducing inference overhead through 4-bit quantization. These results demonstrate that instruction-tuned LLMs can be adapted into accurate, efficient rerankers without the quadratic complexity of traditional cross-encoders.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-11T04:31:20Z</published>
+    <arxiv:comment>6 pages, 4 figures. This work was completed in 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Shreeya Dasa Lakshminath</name>
+    </author>
+    <author>
+      <name>Shubhan S</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.05411v2</id>
+    <title>A Systematic Framework for Enterprise Knowledge Retrieval: Leveraging LLM-Generated Metadata to Enhance RAG Systems</title>
+    <updated>2026-03-31T04:10:06Z</updated>
+    <link href="https://arxiv.org/abs/2512.05411v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.05411v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In enterprise settings, efficiently retrieving relevant information from large and complex knowledge bases is essential for operational productivity and informed decision-making. This research presents a systematic empirical framework for metadata enrichment using large language models (LLMs) to enhance document retrieval in Retrieval-Augmented Generation (RAG) systems. Our approach employs a structured pipeline that dynamically generates meaningful metadata for document segments, substantially improving their semantic representations and retrieval accuracy. Through a controlled 3 X 3 experimental matrix, we compare three chunking strategies -- semantic, recursive, and naive -- and evaluate their interactions with three embedding techniques -- content-only, TF-IDF weighted, and prefix-fusion -- isolating the contribution of each component through ablation analysis. The results demonstrate that metadata-enriched approaches consistently outperform content-only baselines, with recursive chunking paired with TF-IDF weighted embeddings yielding 82.5% precision and naive chunking with prefix-fusion achieving the strongest ranking quality (NDCG 0.813). Our evaluation employs cross-encoder reranking for silver-standard ground truth generation, with statistical significance confirmed via Bonferroni-corrected paired t-tests. These findings confirm that metadata enrichment improves vector space organization and retrieval effectiveness while maintaining sub-30 ms P95 latency, providing a quantitative decision framework for deploying high-performance, scalable RAG systems in enterprise settings.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-05T04:05:06Z</published>
+    <arxiv:comment>Accepted to 2026 IEEE Conference on Artificial Intelligence (CAI). 8 pages, 1 figures, 9 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Pranav Pushkar Mishra</name>
+    </author>
+    <author>
+      <name>Kranti Prakash Yeole</name>
+    </author>
+    <author>
+      <name>Ramyashree Keshavamurthy</name>
+    </author>
+    <author>
+      <name>Mokshit Bharat Surana</name>
+    </author>
+    <author>
+      <name>Fatemeh Sarayloo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.26194v1</id>
+    <title>A Reranker for Orchestrating Heterogeneous Speech and Text Retrievers</title>
+    <updated>2026-08-24T11:32:05Z</updated>
+    <link href="https://arxiv.org/abs/2608.26194v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.26194v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) systems have attracted significant interest for their ability to mitigate hallucinations in Large Language Models (LLMs). Although knowledge databases for RAG are increasingly diversifying to include various modalities such as speech and text, research on handling such multi-modal database scenarios remains limited. In this paper, we propose STeReO (Speech and Text Reranking Orchestrator), a reranker based on speech and text retrievers that aggregates disparate modality databases. To address the lack of specialized training data, we first curate a dataset comprising queries, mixed-modality evidence, and their corresponding relevance ranks. We then train the reranker and evaluate its effectiveness in both single-modality and mixed-modality scenarios. Our results demonstrate that the proposed algorithm excels at selecting the most relevant evidence, thereby significantly improving downstream question-answering performance.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-24T11:32:05Z</published>
+    <arxiv:comment>Accepted to Interspeech 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Inho Kim</name>
+    </author>
+    <author>
+      <name>Sumyeong Ahn</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.20059v1</id>
+    <title>RAG in the Wild: On the (In)effectiveness of LLMs with Mixture-of-Knowledge Retrieval Augmentation</title>
+    <updated>2025-07-26T20:57:24Z</updated>
+    <link href="https://arxiv.org/abs/2507.20059v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.20059v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation (RAG) enhances large language models (LLMs) by integrating external knowledge retrieved at inference time. While RAG demonstrates strong performance on benchmarks largely derived from general-domain corpora like Wikipedia, its effectiveness under realistic, diverse retrieval scenarios remains underexplored. We evaluated RAG systems using MassiveDS, a large-scale datastore with mixture of knowledge, and identified critical limitations: retrieval mainly benefits smaller models, rerankers add minimal value, and no single retrieval source consistently excels. Moreover, current LLMs struggle to route queries across heterogeneous knowledge sources. These findings highlight the need for adaptive retrieval strategies before deploying RAG in real-world settings. Our code and data can be found at https://github.com/ritaranx/RAG_in_the_Wild.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-26T20:57:24Z</published>
+    <arxiv:comment>Work in Progress. Code will be published at: https://github.com/ritaranx/RAG_in_the_Wild</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ran Xu</name>
+    </author>
+    <author>
+      <name>Yuchen Zhuang</name>
+    </author>
+    <author>
+      <name>Yue Yu</name>
+    </author>
+    <author>
+      <name>Haoyu Wang</name>
+    </author>
+    <author>
+      <name>Wenqi Shi</name>
+    </author>
+    <author>
+      <name>Carl Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.01664v1</id>
+    <title>A Hybrid Retrieval and Reranking Framework for Evidence-Grounded Retrieval-Augmented Generation</title>
+    <updated>2026-05-03T01:33:31Z</updated>
+    <link href="https://arxiv.org/abs/2605.01664v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.01664v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation (RAG) improves large language model reliability by grounding generated responses in external evidence. However, RAG performance depends on the relevance of retrieved passages, the quality of evidence ranking, and the ability to verify whether generated claims are supported by source documents. This study presents a hybrid retrieval and reranking framework for citation-aware RAG in biomedical and healthcare-related document question answering. The framework uses Amazon Bedrock Knowledge Bases for document ingestion, parsing, chunking, embedding generation, and evidence retrieval. Source PDF documents are stored in Amazon S3, embedded using Amazon Titan Text Embeddings V2, and indexed with Amazon OpenSearch Serverless. Hybrid retrieval first retrieves candidate evidence chunks, and Cohere reranking then prioritizes the most relevant passages before answer generation. The answer-generation stage uses top-ranked evidence chunks to produce controlled, evidence-grounded responses, while a separate judge model evaluates each generated factual claim against the retrieved evidence. The framework was evaluated using 25 biomedical NLP and healthcare transformer queries as a pilot-scale proof-of-concept study. Across the evaluation set, the system retrieved and reranked 500 evidence chunks and generated answers from top-ranked evidence. Claim-level grounding evaluation extracted 200 factual claims, all of which were judged to be supported by retrieved evidence, resulting in 100.0% grounding accuracy. The results suggest that hybrid retrieval, reranking, conservative prompting, and claim-level evaluation can support reliable evidence-grounded RAG responses when sufficient source evidence is available.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-03T01:33:31Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Fariba Afrin Irany</name>
+    </author>
+    <author>
+      <name>Sampson Akwafuo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.13571v1</id>
+    <title>LLM-Confidence Reranker: A Training-Free Approach for Enhancing Retrieval-Augmented Generation Systems</title>
+    <updated>2026-02-14T03:12:05Z</updated>
+    <link href="https://arxiv.org/abs/2602.13571v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.13571v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) have revolutionized natural language processing, yet hallucinations in knowledge-intensive tasks remain a critical challenge. Retrieval-augmented generation (RAG) addresses this by integrating external knowledge, but its efficacy depends on accurate document retrieval and ranking. Although existing rerankers demonstrate effectiveness, they frequently necessitate specialized training, impose substantial computational expenses, and fail to fully exploit the semantic capabilities of LLMs, particularly their inherent confidence signals. We propose the LLM-Confidence Reranker (LCR), a training-free, plug-and-play algorithm that enhances reranking in RAG systems by leveraging black-box LLM confidence derived from Maximum Semantic Cluster Proportion (MSCP). LCR employs a two-stage process: confidence assessment via multinomial sampling and clustering, followed by binning and multi-level sorting based on query and document confidence thresholds. This approach prioritizes relevant documents while preserving original rankings for high-confidence queries, ensuring robustness. Evaluated on BEIR and TREC benchmarks with BM25 and Contriever retrievers, LCR--using only 7--9B-parameter pre-trained LLMs--consistently improves NDCG@5 by up to 20.6% across pre-trained LLM and fine-tuned Transformer rerankers, without degradation. Ablation studies validate the hypothesis that LLM confidence positively correlates with document relevance, elucidating LCR's mechanism. LCR offers computational efficiency, parallelism for scalability, and broad compatibility, mitigating hallucinations in applications like medical diagnosis.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-14T03:12:05Z</published>
+    <arxiv:comment>Published by ESWA</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Expert Systems with Applications. (2026) 131627</arxiv:journal_ref>
+    <author>
+      <name>Zhipeng Song</name>
+    </author>
+    <author>
+      <name>Xiangyu Kong</name>
+    </author>
+    <author>
+      <name>Xinrui Bao</name>
+    </author>
+    <author>
+      <name>Yizhi Zhou</name>
+    </author>
+    <author>
+      <name>Jiulong Jiao</name>
+    </author>
+    <author>
+      <name>Sitong Liu</name>
+    </author>
+    <author>
+      <name>Yuhang Zhou</name>
+    </author>
+    <author>
+      <name>Heng Qi</name>
+    </author>
+    <arxiv:doi>10.1016/j.eswa.2026.131627</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.eswa.2026.131627" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.08748v1</id>
+    <title>A Survey of Multimodal Retrieval-Augmented Generation</title>
+    <updated>2025-03-26T02:43:09Z</updated>
+    <link href="https://arxiv.org/abs/2504.08748v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.08748v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Retrieval-Augmented Generation (MRAG) enhances large language models (LLMs) by integrating multimodal data (text, images, videos) into retrieval and generation processes, overcoming the limitations of text-only Retrieval-Augmented Generation (RAG). While RAG improves response accuracy by incorporating external textual knowledge, MRAG extends this framework to include multimodal retrieval and generation, leveraging contextual information from diverse data types. This approach reduces hallucinations and enhances question-answering systems by grounding responses in factual, multimodal knowledge. Recent studies show MRAG outperforms traditional RAG, especially in scenarios requiring both visual and textual understanding. This survey reviews MRAG's essential components, datasets, evaluation methods, and limitations, providing insights into its construction and improvement. It also identifies challenges and future research directions, highlighting MRAG's potential to revolutionize multimodal information retrieval and generation. By offering a comprehensive perspective, this work encourages further exploration into this promising paradigm.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-26T02:43:09Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lang Mei</name>
+    </author>
+    <author>
+      <name>Siyu Mo</name>
+    </author>
+    <author>
+      <name>Zhihan Yang</name>
+    </author>
+    <author>
+      <name>Chong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.00355v1</id>
+    <title>Question Decomposition for Retrieval-Augmented Generation</title>
+    <updated>2025-07-01T01:01:54Z</updated>
+    <link href="https://arxiv.org/abs/2507.00355v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.00355v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Grounding large language models (LLMs) in verifiable external sources is a well-established strategy for generating reliable answers. Retrieval-augmented generation (RAG) is one such approach, particularly effective for tasks like question answering: it retrieves passages that are semantically related to the question and then conditions the model on this evidence. However, multi-hop questions, such as "Which company among NVIDIA, Apple, and Google made the biggest profit in 2023?," challenge RAG because relevant facts are often distributed across multiple documents rather than co-occurring in one source, making it difficult for standard RAG to retrieve sufficient information. To address this, we propose a RAG pipeline that incorporates question decomposition: (i) an LLM decomposes the original query into sub-questions, (ii) passages are retrieved for each sub-question, and (iii) the merged candidate pool is reranked to improve the coverage and precision of the retrieved evidence. We show that question decomposition effectively assembles complementary documents, while reranking reduces noise and promotes the most relevant passages before answer generation. Although reranking itself is standard, we show that pairing an off-the-shelf cross-encoder reranker with LLM-driven question decomposition bridges the retrieval gap on multi-hop questions and provides a practical, drop-in enhancement, without any extra training or specialized indexing. We evaluate our approach on the MultiHop-RAG and HotpotQA, showing gains in retrieval (MRR@10: +36.7%) and answer accuracy (F1: +11.6%) over standard RAG baselines.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-01T01:01:54Z</published>
+    <arxiv:comment>Accepted to ACL SRW 2025. 9 Pages, 2 Figures, 4 Tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Paul J. L. Ammann</name>
+    </author>
+    <author>
+      <name>Jonas Golde</name>
+    </author>
+    <author>
+      <name>Alan Akbik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.01859v1</id>
+    <title>Optimizing Retrieval-Augmented Generation of Medical Content for Spaced Repetition Learning</title>
+    <updated>2025-02-23T20:56:31Z</updated>
+    <link href="https://arxiv.org/abs/2503.01859v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.01859v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Advances in Large Language Models revolutionized medical education by enabling scalable and efficient learning solutions. This paper presents a pipeline employing Retrieval-Augmented Generation (RAG) system to prepare comments generation for Poland's State Specialization Examination (PES) based on verified resources. The system integrates these generated comments and source documents with a spaced repetition learning algorithm to enhance knowledge retention while minimizing cognitive overload. By employing a refined retrieval system, query rephraser, and an advanced reranker, our modified RAG solution promotes accuracy more than efficiency. Rigorous evaluation by medical annotators demonstrates improvements in key metrics such as document relevance, credibility, and logical coherence of generated content, proven by a series of experiments presented in the paper. This study highlights the potential of RAG systems to provide scalable, high-quality, and individualized educational resources, addressing non-English speaking users.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-23T20:56:31Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Proceedings of the 17th International Conference on Computer Supported Education (CSEDU 2025), Vol. 2, pp. 174-186, 2025</arxiv:journal_ref>
+    <author>
+      <name>Jeremi I. Kaczmarek</name>
+    </author>
+    <author>
+      <name>Jakub Pokrywka</name>
+    </author>
+    <author>
+      <name>Krzysztof Biedalak</name>
+    </author>
+    <author>
+      <name>Grzegorz Kurzyp</name>
+    </author>
+    <author>
+      <name>Łukasz Grzybowski</name>
+    </author>
+    <arxiv:doi>10.5220/0013477700003932</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5220/0013477700003932" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.03262v1</id>
+    <title>Roles of MLLMs in Visually Rich Document Retrieval for RAG: A Survey</title>
+    <updated>2025-12-16T16:32:10Z</updated>
+    <link href="https://arxiv.org/abs/2601.03262v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.03262v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visually rich documents (VRDs) challenge retrieval-augmented generation (RAG) with layout-dependent semantics, brittle OCR, and evidence spread across complex figures and structured tables. This survey examines how Multimodal Large Language Models (MLLMs) are being used to make VRD retrieval practical for RAG. We organize the literature into three roles: Modality-Unifying Captioners, Multimodal Embedders, and End-to-End Representers. We compare these roles along retrieval granularity, information fidelity, latency and index size, and compatibility with reranking and grounding. We also outline key trade-offs and offer some practical guidance on when to favor each role. Finally, we identify promising directions for future research, including adaptive retrieval units, model size reduction, and the development of evaluation methods.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-16T16:32:10Z</published>
+    <arxiv:comment>18 pages; accepted at AACL-IJCNLP 2025 (main conference)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Xiantao Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.07917v2</id>
+    <title>Efficient and Reproducible Biomedical Question Answering using Retrieval Augmented Generation</title>
+    <updated>2026-01-13T17:00:37Z</updated>
+    <link href="https://arxiv.org/abs/2505.07917v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.07917v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Biomedical question-answering (QA) systems require effective retrieval and generation components to ensure accuracy, efficiency, and scalability. This study systematically examines a Retrieval-Augmented Generation (RAG) system for biomedical QA, evaluating retrieval strategies and response time trade-offs. We first assess state-of-the-art retrieval methods, including BM25, BioBERT, MedCPT, and a hybrid approach, alongside common data stores such as Elasticsearch, MongoDB, and FAISS, on a ~10% subset of PubMed (2.4M documents) to measure indexing efficiency, retrieval latency, and retriever performance in the end-to-end RAG system. Based on these insights, we deploy the final RAG system on the full 24M PubMed corpus, comparing different retrievers' impact on overall performance. Evaluations of the retrieval depth show that retrieving 50 documents with BM25 before reranking with MedCPT optimally balances accuracy (0.90), recall (0.90), and response time (1.91s). BM25 retrieval time remains stable (82ms), while MedCPT incurs the main computational cost. These results highlight previously not well-known trade-offs in retrieval depth, efficiency, and scalability for biomedical QA. With open-source code, the system is fully reproducible and extensible.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-12T14:51:47Z</published>
+    <arxiv:comment>Minor wording corrections and updated author contact information</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>2025 IEEE Swiss Conference on Data Science (SDS), pp. 154-157</arxiv:journal_ref>
+    <author>
+      <name>Linus Stuhlmann</name>
+    </author>
+    <author>
+      <name>Michael Alexander Saxer</name>
+    </author>
+    <author>
+      <name>Jonathan Fürst</name>
+    </author>
+    <arxiv:doi>10.1109/SDS66131.2025.00029</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/SDS66131.2025.00029" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.30205v2</id>
+    <title>LexPath: A domain-oriented multi-path framework for legal article retrieval</title>
+    <updated>2026-08-31T14:21:59Z</updated>
+    <link href="https://arxiv.org/abs/2605.30205v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.30205v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Legal article retrieval is critical for building traceable and reliable legal AI systems, where conclusions must be grounded in specific legal articles. However, general-purpose retrieval methods rely heavily on lexical or semantic similarity, making it difficult to distinguish legally relevant articles from textually similar but legally inapplicable ones, particularly when they differ in their underlying legal intent. To bridge this gap, we propose LexPath, a domain-oriented multi-path framework comprising a multi-path retrieval module and an intent-aware reranking module. The retrieval module combines two complementary domain-specific paths to collect candidate articles: an IRAC-guided sparse path that expands queries with legally informative keywords, and a structure-guided dense path trained with hard negatives derived from legal hierarchy and citation relations. The reranking module further refines candidate rankings by incorporating the intent compatibility between queries and legal articles. We evaluate LexPath on three Chinese benchmarks spanning diverse query scenarios and further assess its cross-jurisdictional applicability on a Japanese benchmark. Experimental results demonstrate that LexPath consistently outperforms lexical, dense, hybrid, and adaptive retrieval-augmented generation (RAG) baselines across all four benchmarks. Ablation studies further verify the effectiveness of each component. The data and code are available at https://github.com/wxliuabigail/LexPath.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T16:43:17Z</published>
+    <arxiv:comment>Revised version. Accepted at EMNLP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Weixuan Liu</name>
+    </author>
+    <author>
+      <name>Qingfeng Zhuge</name>
+    </author>
+    <author>
+      <name>Xuyang Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04008v1</id>
+    <title>Candidate-Constrained Retrieval-Augmented Generation for LongEval-RAG: System Design and Empirical Analysis</title>
+    <updated>2026-07-04T20:07:57Z</updated>
+    <link href="https://arxiv.org/abs/2607.04008v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04008v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a candidate-constrained retrieval-augmented generation system for LongEval-RAG, where each query is associated with an organizer-provided candidate set and all retrieved evidence and final citations must remain within that set. The system combines deterministic provenance tracking with passage-based retrieval, deterministic query expansion, pseudo-relevance feedback (PRF), reciprocal rank fusion (RRF), lightweight evidence reranking, citation-aware evidence aggregation, and optional MiniLM sentence reranking. We evaluate ten pipeline variants using a primary organizer evaluation and a supplementary self-generated diagnostic protocol. The primary evaluation shows that the strongest balanced variant is rule-minilm: a rule-based chunking pipeline with query expansion, PRF, RRF, reranking, citation prior, and late MiniLM sentence selection. This variant obtains the highest BERTScore, retrieval precision, nugget coverage, and average grade among our submissions. The result suggests that the main gain does not come from more complex semantic or topic-shift chunking, but from pairing stable rule-based evidence units with sentence-level neural selection before generation. The supplementary LLM-judge evaluation remains useful for early diagnosis and additional analysis, but it emphasizes different systems than the primary gold-answer and nugget-based evaluation, highlighting the need for multi-metric RAG evaluation.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-04T20:07:57Z</published>
+    <arxiv:comment>Published in CEUR Workshop Proceedings 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yingdong Yang</name>
+    </author>
+    <author>
+      <name>Haijian Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.02464v3</id>
+    <title>Rankify: A Comprehensive Python Toolkit for Retrieval, Re-Ranking, and Retrieval-Augmented Generation</title>
+    <updated>2025-02-19T22:46:25Z</updated>
+    <link href="https://arxiv.org/abs/2502.02464v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.02464v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval, re-ranking, and retrieval-augmented generation (RAG) are critical components of modern applications in information retrieval, question answering, or knowledge-based text generation. However, existing solutions are often fragmented, lacking a unified framework that easily integrates these essential processes. The absence of a standardized implementation, coupled with the complexity of retrieval and re-ranking workflows, makes it challenging for researchers to compare and evaluate different approaches in a consistent environment. While existing toolkits such as Rerankers and RankLLM provide general-purpose reranking pipelines, they often lack the flexibility required for fine-grained experimentation and benchmarking. In response to these challenges, we introduce Rankify, a powerful and modular open-source toolkit designed to unify retrieval, re-ranking, and RAG within a cohesive framework. Rankify supports a wide range of retrieval techniques, including dense and sparse retrievers, while incorporating state-of-the-art re-ranking models to enhance retrieval quality. Additionally, Rankify includes a collection of pre-retrieved datasets to facilitate benchmarking, available at Huggingface (https://huggingface.co/datasets/abdoelsayed/reranking-datasets-light). To encourage adoption and ease of integration, we provide comprehensive documentation (http://rankify.readthedocs.io/), an open-source implementation on GitHub (https://github.com/DataScienceUIBK/rankify), and a PyPI package for easy installation (https://pypi.org/project/rankify/). As a unified and lightweight framework, Rankify allows researchers and practitioners to advance retrieval and re-ranking methodologies while ensuring consistency, scalability, and ease of use.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-04T16:33:25Z</published>
+    <arxiv:comment>Work in Progress</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Abdelrahman Abdallah</name>
+    </author>
+    <author>
+      <name>Bhawna Piryani</name>
+    </author>
+    <author>
+      <name>Jamshid Mozafari</name>
+    </author>
+    <author>
+      <name>Mohammed Ali</name>
+    </author>
+    <author>
+      <name>Adam Jatowt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.26339v1</id>
+    <title>Large-Scale Biomedical RAG: Corpus Scaling, Document Representation, and Efficiency Trade-offs</title>
+    <updated>2026-10-19T13:08:38Z</updated>
+    <link href="https://arxiv.org/abs/2610.26339v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.26339v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a controlled, large-scale evaluation of how corpus scale, document representation, and reranking affect the effectiveness and efficiency of biomedical Retrieval-Augmented Generation (RAG) systems. Retrieval collections were progressively expanded while retaining the relevant source documents, enabling consistent comparisons across corpus sizes. We compared abstract, flat full-text, and hierarchical full-text representations across first-stage retrieval, reranking, and end-to-end multiple-choice question answering. Configurations selected on development data were evaluated on five external biomedical benchmarks and a held-out test set, while retrieval latency and index storage were measured to quantify operational cost. Performance patterns observed with small or controlled collections did not consistently persist as collections grew, and the usefulness of reranking depended on the corpus and retrieval setting. RAG improved three of four model configurations across the external benchmarks, with mean gains of up to 9.6 percentage points, and improved all four configurations on the held-out test set by 10.2-30.3 points. Abstract retrieval performed best when reference evidence was abstract-aligned, whereas full-text representations were generally more effective when richer evidence was needed. Hierarchical representation matched or outperformed flat full-text retrieval in most end-to-end comparisons while requiring 67% fewer indexed units and 44-56% less storage. These findings show that corpus scale should be treated as an explicit evaluation variable in biomedical RAG, and that the most appropriate design depends on evidence format, model behavior, and operational constraints.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-19T13:08:38Z</published>
+    <arxiv:comment>15 pages, 4 figures, 3 tables, plus 11 pages of supplementary material. Preprint submitted to Elsevier. Code: https://github.com/hitz-zentroa/biomedical-rag-scaling and https://github.com/hitz-zentroa/qa-to-mcqa</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Adrián Sánchez-Freire</name>
+    </author>
+    <author>
+      <name>Gonzalo Pérez-Gómez</name>
+    </author>
+    <author>
+      <name>Aitziber Atutxa</name>
+    </author>
+    <author>
+      <name>Ander Barrena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21553v1</id>
+    <title>Dissecting Agentic RAG: A Component Ablation for Multi-Hop QA with a Local 7B Model</title>
+    <updated>2026-06-19T15:50:35Z</updated>
+    <link href="https://arxiv.org/abs/2606.21553v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21553v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Agentic retrieval-augmented generation (RAG) systems combine iterative reasoning loops, query decomposition, and adaptive retrieval to tackle multi-hop question answering. However, the contribution of each component remains poorly understood, particularly under resource-constrained settings using only local language models. Many agentic designs add adaptive retrieval routing and deeper retrieval loops on the assumption that the added complexity helps. To test whether it does, we run a controlled ablation study of a full agentic RAG pipeline evaluated on 5,000 questions from the HotpotQA distractor development set using a local 7B parameter model (Qwen2.5-7B-Instruct). Our full pipeline achieves EM=53.2% and F1=61.6%, compared to a single-pass dense-retrieval baseline of EM=43.1% and F1=54.0%. Across eight ablation conditions, we find that: (1) fixed hybrid retrieval via reciprocal rank fusion consistently outperforms rule-based adaptive routing (+1.8 EM, +1.9 F1), as the routing heuristic over-routes to BM25 by firing on named entities present in nearly all multi-hop sub-questions; (2) two retrieval iterations over the decomposed sub-questions capture 95% of the gains of five, with no meaningful benefit from deeper loops; and (3) query decomposition and cross-encoder reranking each contribute statistically significant but smaller gains (p&lt;0.01 and p&lt;0.001 respectively). Taken together, on a fixed local-model budget, the simpler and fixed choices turn out to be competitive with or better than their adaptive versions: most of the gain comes from running a short retrieval loop, not from adaptive routing or from many iterations. We use no proprietary APIs or large-scale compute.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-19T15:50:35Z</published>
+    <arxiv:comment>8 pages, 4 figures, 4 tables. Code: https://github.com/sherozshaikh/agentic-rag-eval</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sheroz Shaikh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.07274v1</id>
+    <title>A Systematic Study of Retrieval Pipeline Design for Retrieval-Augmented Medical Question Answering</title>
+    <updated>2026-04-08T16:37:22Z</updated>
+    <link href="https://arxiv.org/abs/2604.07274v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.07274v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) have demonstrated strong capabilities in medical question answering; however, purely parametric models often suffer from knowledge gaps and limited factual grounding. Retrieval-augmented generation (RAG) addresses this limitation by integrating external knowledge retrieval into the reasoning process. Despite increasing interest in RAG-based medical systems, the impact of individual retrieval components on performance remains insufficiently understood. This study presents a systematic evaluation of retrieval-augmented medical question answering using the MedQA USMLE benchmark and a structured textbook-based knowledge corpus. We analyze the interaction between language models, embedding models, retrieval strategies, query reformulation, and cross-encoder reranking within a unified experimental framework comprising forty configurations. Results show that retrieval augmentation significantly improves zero-shot medical question answering performance. The best-performing configuration was dense retrieval with query reformulation and reranking achieved 60.49% accuracy. Domain-specialized language models were also found to better utilize retrieved medical evidence than general-purpose models. The analysis further reveals a clear tradeoff between retrieval effectiveness and computational cost, with simpler dense retrieval configurations providing strong performance while maintaining higher throughput. All experiments were conducted on a single consumer-grade GPU, demonstrating that systematic evaluation of retrieval-augmented medical QA systems can be performed under modest computational resources.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-08T16:37:22Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Nusrat Sultana</name>
+    </author>
+    <author>
+      <name>Abdullah Muhammad Moosa</name>
+    </author>
+    <author>
+      <name>Kazi Afzalur Rahman</name>
+    </author>
+    <author>
+      <name>Sajal Chandra Banik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.16503v2</id>
+    <title>MRAG: Benchmarking Retrieval-Augmented Generation for Bio-medicine</title>
+    <updated>2026-02-11T03:33:28Z</updated>
+    <link href="https://arxiv.org/abs/2601.16503v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.16503v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Retrieval-Augmented Generation (RAG) has been swiftly adopted in scientific and clinical QA systems, a comprehensive evaluation benchmark in the medical domain is lacking. To address this gap, we introduce the Medical Retrieval-Augmented Generation (MRAG) benchmark, covering various tasks in English and Chinese languages, and building a corpus with Wikipedia and Pubmed. Additionally, we develop the MRAG-Toolkit, facilitating systematic exploration of different RAG components. Our experiments reveal that: (a) RAG enhances LLM reliability across MRAG tasks. (b) the performance of RAG systems is influenced by retrieval approaches, model sizes, and prompting strategies. (c) While RAG improves usefulness and reasoning quality, LLM responses may become slightly less readable for long-form questions. We will release the MRAG-Bench's dataset and toolkit with CCBY-4.0 license upon acceptance, to facilitate applications from both academia and industry.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-23T07:07:13Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Liz Li</name>
+    </author>
+    <author>
+      <name>Wei Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.21384v1</id>
+    <title>Leveraging LLM-Assisted Query Understanding for Live Retrieval-Augmented Generation</title>
+    <updated>2025-06-26T15:35:12Z</updated>
+    <link href="https://arxiv.org/abs/2506.21384v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.21384v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Real-world live retrieval-augmented generation (RAG) systems face significant challenges when processing user queries that are often noisy, ambiguous, and contain multiple intents. While RAG enhances large language models (LLMs) with external knowledge, current systems typically struggle with such complex inputs, as they are often trained or evaluated on cleaner data. This paper introduces Omni-RAG, a novel framework designed to improve the robustness and effectiveness of RAG systems in live, open-domain settings. Omni-RAG employs LLM-assisted query understanding to preprocess user inputs through three key modules: (1) Deep Query Understanding and Decomposition, which utilizes LLMs with tailored prompts to denoise queries (e.g., correcting spelling errors) and decompose multi-intent queries into structured sub-queries; (2) Intent-Aware Knowledge Retrieval, which performs retrieval for each sub-query from a corpus (i.e., FineWeb using OpenSearch) and aggregates the results; and (3) Reranking and Generation, where a reranker (i.e., BGE) refines document selection before a final response is generated by an LLM (i.e., Falcon-10B) using a chain-of-thought prompt. Omni-RAG aims to bridge the gap between current RAG capabilities and the demands of real-world applications, such as those highlighted by the SIGIR 2025 LiveRAG Challenge, by robustly handling complex and noisy queries.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-26T15:35:12Z</published>
+    <arxiv:comment>Accepted at SIGIR 2025 LiveRAG Workshop (Oral Presentation)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Guanting Dong</name>
+    </author>
+    <author>
+      <name>Xiaoxi Li</name>
+    </author>
+    <author>
+      <name>Yuyao Zhang</name>
+    </author>
+    <author>
+      <name>Mengjie Deng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.03367v2</id>
+    <title>RAG-Fusion: a New Take on Retrieval-Augmented Generation</title>
+    <updated>2024-02-21T21:19:39Z</updated>
+    <link href="https://arxiv.org/abs/2402.03367v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.03367v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Infineon has identified a need for engineers, account managers, and customers to rapidly obtain product information. This problem is traditionally addressed with retrieval-augmented generation (RAG) chatbots, but in this study, I evaluated the use of the newly popularized RAG-Fusion method. RAG-Fusion combines RAG and reciprocal rank fusion (RRF) by generating multiple queries, reranking them with reciprocal scores and fusing the documents and scores. Through manually evaluating answers on accuracy, relevance, and comprehensiveness, I found that RAG-Fusion was able to provide accurate and comprehensive answers due to the generated queries contextualizing the original query from various perspectives. However, some answers strayed off topic when the generated queries' relevance to the original query is insufficient. This research marks significant progress in artificial intelligence (AI) and natural language processing (NLP) applications and demonstrates transformations in a global and multi-industry context.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-31T22:06:07Z</published>
+    <arxiv:comment>8 pages, 2 figures, 8 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>International Journal on Natural Language Computing (IJNLC) Vol.13, No.1, February 2024</arxiv:journal_ref>
+    <author>
+      <name>Zackary Rackauckas</name>
+    </author>
+    <arxiv:doi>10.5121/ijnlc.2024.13103</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5121/ijnlc.2024.13103" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.08724v1</id>
+    <title>QCG-Rerank: Chunks Graph Rerank with Query Expansion in Retrieval-Augmented LLMs for Tourism Domain</title>
+    <updated>2024-11-04T08:15:22Z</updated>
+    <link href="https://arxiv.org/abs/2411.08724v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.08724v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) mitigates the issue of hallucination in Large Language Models (LLMs) by integrating information retrieval techniques. However, in the tourism domain, since the query is usually brief and the content in the database is diverse, existing RAG may contain a significant amount of irrelevant or contradictory information contents after retrieval. To address this challenge, we propose the QCG-Rerank model. This model first performs an initial retrieval to obtain candidate chunks and then enhances semantics by extracting critical information to expand the original query. Next, we utilize the expanded query and candidate chunks to calculate similarity scores as the initial transition probability and construct the chunks graph. Subsequently, We iteratively compute the transition probabilities based on an initial estimate until convergence. The chunks with the highest score are selected and input into the LLMs to generate responses. We evaluate the model on Cultour, IIRC, StrategyQA, HotpotQA, SQuAD, and MuSiQue datasets. The experimental results demonstrate the effectiveness and superiority of the QCG-Rerank method.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-04T08:15:22Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Qikai Wei</name>
+    </author>
+    <author>
+      <name>Mingzhi Yang</name>
+    </author>
+    <author>
+      <name>Chunlong Han</name>
+    </author>
+    <author>
+      <name>Jingfu Wei</name>
+    </author>
+    <author>
+      <name>Minghao Zhang</name>
+    </author>
+    <author>
+      <name>Feifei Shi</name>
+    </author>
+    <author>
+      <name>Huansheng Ning</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.28222v1</id>
+    <title>Analyzing Quality-Latency-Resource Trade-offs in a Technical Documentation RAG Assistant Using LoRA Adaptation</title>
+    <updated>2026-05-27T09:37:55Z</updated>
+    <link href="https://arxiv.org/abs/2605.28222v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.28222v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study quality-latency-resource trade-offs in a documentation-grounded retrieval-augmented generation (RAG) system that uses Low-Rank Adaptation (LoRA) of the generator. We build a manually verified benchmark of 5,144 question-answer pairs over the official Kubernetes documentation and combine it with a fixed hybrid-retrieval pipeline (BGE-M3 dense, BGE-M3 native sparse, Reciprocal Rank Fusion, cross-encoder reranking). Over this benchmark we ablate 20 LoRA configurations on Llama-3.2-3B-Instruct and Llama-3.1-8B-Instruct across rank and target-module choices, and evaluate each on token-level F1, LLM-judged groundedness and correctness (pass@4), inference latency, inference memory, and training cost, all reported with bootstrap 95% confidence intervals. Pareto analysis shows that LoRA adapters acting only on the q and v attention projections consistently dominate the front, while the 3B/8B choice mainly defines operating regime. A param-matched control comparison further indicates that the q/v advantage is structural rather than purely parametric. The benchmark, selected adapters, and code are available at https://github.com/EugPal/rag-lora-tradeoffs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-27T09:37:55Z</published>
+    <arxiv:comment>13-page main body plus extended appendix; 6 figures; benchmark, LoRA adapters, and code at https://github.com/EugPal/rag-lora-tradeoffs</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Evgenii Palnikov</name>
+    </author>
+    <author>
+      <name>Elizaveta Gavrilova</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.01431v2</id>
+    <title>Benchmarking Large Language Models in Retrieval-Augmented Generation</title>
+    <updated>2023-12-20T11:54:11Z</updated>
+    <link href="https://arxiv.org/abs/2309.01431v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.01431v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) is a promising approach for mitigating the hallucination of large language models (LLMs). However, existing research lacks rigorous evaluation of the impact of retrieval-augmented generation on different large language models, which make it challenging to identify the potential bottlenecks in the capabilities of RAG for different LLMs. In this paper, we systematically investigate the impact of Retrieval-Augmented Generation on large language models. We analyze the performance of different large language models in 4 fundamental abilities required for RAG, including noise robustness, negative rejection, information integration, and counterfactual robustness. To this end, we establish Retrieval-Augmented Generation Benchmark (RGB), a new corpus for RAG evaluation in both English and Chinese. RGB divides the instances within the benchmark into 4 separate testbeds based on the aforementioned fundamental abilities required to resolve the case. Then we evaluate 6 representative LLMs on RGB to diagnose the challenges of current LLMs when applying RAG. Evaluation reveals that while LLMs exhibit a certain degree of noise robustness, they still struggle significantly in terms of negative rejection, information integration, and dealing with false information. The aforementioned assessment outcomes indicate that there is still a considerable journey ahead to effectively apply RAG to LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-04T08:28:44Z</published>
+    <arxiv:comment>Accepted to AAAI 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jiawei Chen</name>
+    </author>
+    <author>
+      <name>Hongyu Lin</name>
+    </author>
+    <author>
+      <name>Xianpei Han</name>
+    </author>
+    <author>
+      <name>Le Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.23136v1</id>
+    <title>LLM-Assisted Question-Answering on Technical Documents Using Structured Data-Aware Retrieval Augmented Generation</title>
+    <updated>2025-06-29T08:22:03Z</updated>
+    <link href="https://arxiv.org/abs/2506.23136v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.23136v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are capable of natural language understanding and generation. But they face challenges such as hallucination and outdated knowledge. Fine-tuning is one possible solution, but it is resource-intensive and must be repeated with every data update. Retrieval-Augmented Generation (RAG) offers an efficient solution by allowing LLMs to access external knowledge sources. However, traditional RAG pipelines struggle with retrieving information from complex technical documents with structured data such as tables and images. In this work, we propose a RAG pipeline, capable of handling tables and images in documents, for technical documents that support both scanned and searchable formats. Its retrieval process combines vector similarity search with a fine-tuned reranker based on Gemma-2-9b-it. The reranker is trained using RAFT (Retrieval-Augmented Fine-Tuning) on a custom dataset designed to improve context identification for question answering. Our evaluation demonstrates that the proposed pipeline achieves a high faithfulness score of 94% (RAGas) and 96% (DeepEval), and an answer relevancy score of 87% (RAGas) and 93% (DeepEval). Comparative analysis demonstrates that the proposed architecture is superior to general RAG pipelines in terms of table-based questions and handling questions outside context.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-29T08:22:03Z</published>
+    <arxiv:comment>29 Pages, 11 Tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Shadman Sobhan</name>
+    </author>
+    <author>
+      <name>Mohammad Ariful Haque</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.11440v1</id>
+    <title>RACCOON: A Retrieval-Augmented Generation Approach for Location Coordinate Capture from News Articles</title>
+    <updated>2025-01-20T12:26:39Z</updated>
+    <link href="https://arxiv.org/abs/2501.11440v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.11440v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Geocoding involves automatic extraction of location coordinates of incidents reported in news articles, and can be used for epidemic intelligence or disaster management. This paper introduces Retrieval-Augmented Coordinate Capture Of Online News articles (RACCOON), an open-source geocoding approach that extracts geolocations from news articles. RACCOON uses a retrieval-augmented generation (RAG) approach where candidate locations and associated information are retrieved in the form of context from a location database, and a prompt containing the retrieved context, location mentions and news articles is fed to an LLM to generate the location coordinates. Our evaluation on three datasets, two underlying LLMs, three baselines and several ablation tests based on the components of RACCOON demonstrate the utility of RACCOON. To the best of our knowledge, RACCOON is the first RAG-based approach for geocoding using pre-trained LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-20T12:26:39Z</published>
+    <arxiv:comment>Accepted at WWW 2025 as a short paper. 4 pages with references</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jonathan Lin</name>
+    </author>
+    <author>
+      <name>Aditya Joshi</name>
+    </author>
+    <author>
+      <name>Hye-young Paik</name>
+    </author>
+    <author>
+      <name>Tri Dung Doung</name>
+    </author>
+    <author>
+      <name>Deepti Gurdasani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.18234v1</id>
+    <title>Evaluating Multi-Hop Reasoning in RAG Systems: A Comparison of LLM-Based Retriever Evaluation Strategies</title>
+    <updated>2026-04-20T13:20:57Z</updated>
+    <link href="https://arxiv.org/abs/2604.18234v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.18234v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation (RAG) enhances large language models (LLMs) with external knowledge to answer questions more accurately.
+  However, research on evaluating RAG systems-particularly the retriever component-remains limited, as most existing work focuses on single-context retrieval rather than multi-hop queries, where individual contexts may appear irrelevant in isolation but are essential when combined. In this research, we use the HotPotQA, MuSiQue, and SQuAD datasets to simulate a RAG system and compare three LLM-as-judge evaluation strategies, including our proposed Context-Aware Retriever Evaluation (CARE). Our goal is to better understand how multi-hop reasoning can be most effectively evaluated in RAG systems.
+  Experiments with LLMs from OpenAI, Meta, and Google demonstrate that CARE consistently outperforms existing methods for evaluating multi-hop reasoning in RAG systems. The performance gains are most pronounced in models with larger parameter counts and longer context windows, while single-hop queries show minimal sensitivity to context-aware evaluation. Overall, the results highlight the critical role of context-aware evaluation in improving the reliability and accuracy of retrieval-augmented generation systems, particularly in complex query scenarios. To ensure reproducibility, we provide the complete data of our experiments at https://github.com/lorenzbrehme/CARE.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-20T13:20:57Z</published>
+    <arxiv:comment>15 Pages, Accepted for publication at the SynIRgy Workshop, ECIR 2026 (48th European Conference on Information Retrieval)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lorenz Brehme</name>
+    </author>
+    <author>
+      <name>Thomas Ströhle</name>
+    </author>
+    <author>
+      <name>Ruth Breu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.28337v1</id>
+    <title>A Systems-Level Analysis of Sensitivity, Robustness, and Stability in Retrieval-Augmented Generation</title>
+    <updated>2026-05-29T17:24:40Z</updated>
+    <link href="https://arxiv.org/abs/2606.28337v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.28337v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-Augmented Generation (RAG) systems are often evaluated using final answer accuracy, even though their failures can originate from preprocessing, retrieval, context packing, or generation. This paper presents a controlled empirical study of RAG sensitivity, robustness, and stability across 56 experimental runs. We evaluate how chunk size, retrieval depth (top k), embedding-based reranking, probabilistic retrieval noise, and repeated seeded runs affect retrieval, context packing, and generation behavior. Using a fixed 500-question QA subset mapped to 20,958 unique corpus contexts, we analyze both final answer metrics and intermediate failure modes. Across these experiments, retrieval-oriented metrics improved under broader retrieval settings, while downstream exact-match and F1 scores often behaved non-monotonically. We also observe preprocessing-induced answer loss under smaller chunk sizes, progressive degradation under retrieval corruption, and higher observed variance in broader retrieval regimes. These findings suggest that RAG evaluation should include sensitivity, robustness, stability, and multi-stage failure analysis rather than relying only on final answer accuracy.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-29T17:24:40Z</published>
+    <arxiv:comment>11 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Bharath Simha Reddy Muthyam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.22026v1</id>
+    <title>Literature-Grounded Novelty Assessment of Scientific Ideas</title>
+    <updated>2025-06-27T08:47:28Z</updated>
+    <link href="https://arxiv.org/abs/2506.22026v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.22026v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated scientific idea generation systems have made remarkable progress, yet the automatic evaluation of idea novelty remains a critical and underexplored challenge. Manual evaluation of novelty through literature review is labor-intensive, prone to error due to subjectivity, and impractical at scale. To address these issues, we propose the Idea Novelty Checker, an LLM-based retrieval-augmented generation (RAG) framework that leverages a two-stage retrieve-then-rerank approach. The Idea Novelty Checker first collects a broad set of relevant papers using keyword and snippet-based retrieval, then refines this collection through embedding-based filtering followed by facet-based LLM re-ranking. It incorporates expert-labeled examples to guide the system in comparing papers for novelty evaluation and in generating literature-grounded reasoning. Our extensive experiments demonstrate that our novelty checker achieves approximately 13% higher agreement than existing approaches. Ablation studies further showcases the importance of the facet-based re-ranker in identifying the most relevant literature for novelty evaluation.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-27T08:47:28Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Simra Shahid</name>
+    </author>
+    <author>
+      <name>Marissa Radensky</name>
+    </author>
+    <author>
+      <name>Raymond Fok</name>
+    </author>
+    <author>
+      <name>Pao Siangliulue</name>
+    </author>
+    <author>
+      <name>Daniel S. Weld</name>
+    </author>
+    <author>
+      <name>Tom Hope</name>
+    </author>
+  </entry>
+</feed>

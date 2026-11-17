@@ -1,0 +1,2603 @@
+{
+ "total": 264,
+ "token": null,
+ "data": [
+  {
+   "paperId": "f06df61bc34b53a1961b50a515460b87bf1e9bcd",
+   "externalIds": {
+    "MAG": "2971635999",
+    "PubMedCentral": "6818529",
+    "DOI": "10.2196/14017",
+    "CorpusId": 201845680,
+    "PubMed": "31489843"
+   },
+   "title": "Literature on Wearable Technology for Connected Health: Scoping Review of Research Trends, Advances, and Barriers",
+   "venue": "Journal of Medical Internet Research",
+   "year": 2019,
+   "citationCount": 198,
+   "openAccessPdf": {
+    "url": "https://www.jmir.org/2019/9/e14017/PDF",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC6818529, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "1399309684",
+     "name": "T. Lončar-Turukalo"
+    },
+    {
+     "authorId": "2269444",
+     "name": "Eftim Zdravevski"
+    },
+    {
+     "authorId": "116654954",
+     "name": "José Machado da Silva"
+    },
+    {
+     "authorId": "32405725",
+     "name": "I. Chouvarda"
+    },
+    {
+     "authorId": "3272045",
+     "name": "V. Trajkovik"
+    }
+   ],
+   "abstract": "Background Wearable sensing and information and communication technologies are key enablers driving the transformation of health care delivery toward a new model of connected health (CH) care. The advances in wearable technologies in the last decade are evidenced in a plethora of original articles, patent documentation, and focused systematic reviews. Although technological innovations continuously respond to emerging challenges and technology availability further supports the evolution of CH solutions, the widespread adoption of wearables remains hindered. Objective This study aimed to scope the scientific literature in the field of pervasive wearable health monitoring in the time interval from January 2010 to February 2019 with respect to four important pillars: technology, safety and security, prescriptive insight, and user-related concerns. The purpose of this study was multifold: identification of (1) trends and milestones that have driven research in wearable technology in the last decade, (2) concerns and barriers from technology and user perspective, and (3) trends in the research literature addressing these issues. Methods This study followed the scoping review methodology to identify and process the available literature. As the scope surpasses the possibilities of manual search, we relied on the natural language processing tool kit to ensure an efficient and exhaustive search of the literature corpus in three large digital libraries: Institute of Electrical and Electronics Engineers, PubMed, and Springer. The search was based on the keywords and properties to be found in articles using the search engines of the digital libraries. Results The annual number of publications in all segments of research on wearable technology shows an increasing trend from 2010 to February 2019. The technology-related topics dominated in the number of contributions, followed by research on information delivery, safety, and security, whereas user-related concerns were the topic least addressed. The literature corpus evidences milestones in sensor technology (miniaturization and placement), communication architectures and fifth generation (5G) cellular network technology, data analytics, and evolution of cloud and edge computing architectures. The research lag in battery technology makes energy efficiency a relevant consideration in the design of both sensors and network architectures with computational offloading. The most addressed user-related concerns were (technology) acceptance and privacy, whereas research gaps indicate that more efforts should be invested into formalizing clear use cases with timely and valuable feedback and prescriptive recommendations. Conclusions This study confirms that applications of wearable technology in the CH domain are becoming mature and established as a scientific domain. The current research should bring progress to sustainable delivery of valuable recommendations, enforcement of privacy by design, energy-efficient pervasive sensing, seamless monitoring, and low-latency 5G communications. To complement technology achievements, future work involving all stakeholders providing research evidence on improved care pathways and cost-effectiveness of the CH model is needed."
+  },
+  {
+   "paperId": "09affb9dab6442ca19a4cedc23090789d0e8e227",
+   "externalIds": {
+    "DOI": "10.1016/j.aap.2021.105973",
+    "CorpusId": 231642104,
+    "PubMed": "33461071"
+   },
+   "title": "Traffic accident detection and condition analysis based on social networking data.",
+   "venue": "Accident Analysis and Prevention",
+   "year": 2021,
+   "citationCount": 193,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.aap.2021.105973?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.aap.2021.105973, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "3713566",
+     "name": "Farman Ali"
+    },
+    {
+     "authorId": "2131186187",
+     "name": "Amjad Ali"
+    },
+    {
+     "authorId": "2113544692",
+     "name": "Muhammad Imran"
+    },
+    {
+     "authorId": "8683310",
+     "name": "R. Naqvi"
+    },
+    {
+     "authorId": "1711083",
+     "name": "Muhammad Hameed Siddiqi"
+    },
+    {
+     "authorId": "144640685",
+     "name": "K. Kwak"
+    }
+   ],
+   "abstract": "Accurate detection of traffic accidents as well as condition analysis are essential to effectively restoring traffic flow and reducing serious injuries and fatalities. This goal can be obtained using an advanced data classification model with a rich source of traffic information. Several systems based on sensors and social networking platforms have been presented recently to detect traffic events and monitor traffic conditions. However, sensor-based systems provide limited information, and may fail owing to the long detection times and high false-alarm rates. In addition, social networking data are unstructured, unpredictable, and contain idioms, jargon, and dynamic topics. The machine learning algorithms utilized for traffic event detection might not extract valuable information from social networking data. In this paper, a social network-based, real-time monitoring framework is proposed for traffic accident detection and condition analysis using ontology and latent Dirichlet allocation (OLDA) and bidirectional long short-term memory (Bi-LSTM). First, the query-based search engine effectively collects traffic information from social networks, and the data preprocessing module transforms it into structured form. Second, the proposed OLDA-based topic modeling method automatically labels each sentence (e.g., traffic or non-traffic) to identify the exact traffic information. In addition, the ontology-based event recognition approach detects traffic events from traffic-related data. Next, the sentiment analysis technique identifies the polarity of traffic events employing user's opinions, which helps determine accurate conditions of traffic events. Finally, the FastText model and Bi-LSTM with softmax regression are trained for traffic event detection and condition analysis. The proposed framework is evaluated using traffic-related data, comparing OLDA and Bi-LSTM with existing topic modeling methods and traditional classifiers using word embedding models, respectively. Our system outperforms state-of-the-art methods and achieves accuracy of 97 %. This finding demonstrates that the proposed system is more efficient for traffic event detection and condition analysis, in comparison to other existing systems."
+  },
+  {
+   "paperId": "57c4e8877bde057f50601d1bf7ddd24364d5e048",
+   "externalIds": {
+    "ArXiv": "2108.08826",
+    "DBLP": "journals/corr/abs-2108-08826",
+    "DOI": "10.1109/ICCV48922.2021.01411",
+    "CorpusId": 237213282
+   },
+   "title": "Towards Vivid and Diverse Image Colorization with Generative Color Prior",
+   "venue": "IEEE International Conference on Computer Vision",
+   "year": 2021,
+   "citationCount": 136,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2108.08826",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2108.08826, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2291445033",
+     "name": "Yan-Ze Wu"
+    },
+    {
+     "authorId": "47119707",
+     "name": "Xintao Wang"
+    },
+    {
+     "authorId": "2116609855",
+     "name": "Yu Li"
+    },
+    {
+     "authorId": "9184712",
+     "name": "Hong-Lun Zhang"
+    },
+    {
+     "authorId": "2145742614",
+     "name": "Xun Zhao"
+    },
+    {
+     "authorId": "2311884929",
+     "name": "Ying Shan"
+    }
+   ],
+   "abstract": "Colorization has attracted increasing interest in recent years. Classic reference-based methods usually rely on external color images for plausible results. A large image database or online search engine is inevitably required for retrieving such exemplars. Recent deep-learning-based methods could automatically colorize images at a low cost. However, unsatisfactory artifacts and incoherent colors are always accompanied. In this work, we aim at recovering vivid colors by leveraging the rich and diverse color priors encapsulated in a pretrained Generative Adversarial Networks (GAN). Specifically, we first \"retrieve\" matched features (similar to exemplars) via a GAN encoder and then incorporate these features into the colorization process with feature modulations. Thanks to the powerful generative color prior and delicate designs, our method could produce vivid colors with a single forward pass. Moreover, it is highly convenient to obtain diverse results by modifying GAN latent codes. Our method also inherits the merit of interpretable controls of GANs and could attain controllable and smooth transitions by walking through GAN latent space. Extensive experiments and user studies demonstrate that our method achieves superior performance than previous works."
+  },
+  {
+   "paperId": "f19a93cd237cabc1080454754626e8cd47ee22ad",
+   "externalIds": {
+    "MAG": "2984020950",
+    "DBLP": "conf/cikm/ZhaoZXQJ019",
+    "DOI": "10.1145/3357384.3358045",
+    "CorpusId": 207757346
+   },
+   "title": "AIBox: CTR Prediction Model Training on a Single Node",
+   "venue": "International Conference on Information and Knowledge Management",
+   "year": 2019,
+   "citationCount": 119,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3357384.3358045",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3357384.3358045?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3357384.3358045, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1720751439",
+     "name": "Wei-Jie Zhao"
+    },
+    {
+     "authorId": "2144192495",
+     "name": "Jingyuan Zhang"
+    },
+    {
+     "authorId": "2816898",
+     "name": "De-Ping Xie"
+    },
+    {
+     "authorId": "2114899402",
+     "name": "Yulei Qian"
+    },
+    {
+     "authorId": "46754987",
+     "name": "Ronglai Jia"
+    },
+    {
+     "authorId": "1739405774",
+     "name": "Ping Li"
+    }
+   ],
+   "abstract": "As one of the major search engines in the world, Baidu's Sponsored Search has long adopted the use of deep neural network (DNN) models for Ads click-through rate (CTR) predictions, as early as in 2013. The input futures used by Baidu's online advertising system (a.k.a. \"Phoenix Nest'') are extremely high-dimensional (e.g., hundreds or even thousands of billions of features) and also extremely sparse. The size of the CTR models used by Baidu's production system can well exceed 10TB. This imposes tremendous challenges for training, updating, and using such models in production. For Baidu's Ads system, it is obviously important to keep the model training process highly efficient so that engineers (and researchers) are able to quickly refine and test their new models or new features. Moreover, as billions of user ads click history entries are arriving every day, the models have to be re-trained rapidly because CTR prediction is an extremely time-sensitive task. Baidu's current CTR models are trained on MPI (Message Passing Interface) clusters, which require high fault tolerance and synchronization that incur expensive communication and computation costs. And, of course, the maintenance costs for clusters are also substantial. This paper presents AIBox, a centralized system to train CTR models with tens-of-terabytes-scale parameters by employing solid-state drives (SSDs) and GPUs. Due to the memory limitation on GPUs, we carefully partition the CTR model into two parts: one is suitable for CPUs and another for GPUs. We further introduce a bi-level cache management system over SSDs to store the 10TB parameters while providing low-latency accesses. Extensive experiments on production data reveal the effectiveness of the new system. AIBox has comparable training performance with a large MPI cluster, while requiring only a small fraction of the cost for the cluster."
+  },
+  {
+   "paperId": "76ea5ca2f98f0c5b09bd8611366a0fc7604f852c",
+   "externalIds": {
+    "MAG": "2950960796",
+    "DBLP": "conf/kdd/FanGZMSL19",
+    "ArXiv": "2409.03449",
+    "DOI": "10.1145/3292500.3330651",
+    "CorpusId": 195801634
+   },
+   "title": "MOBIUS: Towards the Next Generation of Query-Ad Matching in Baidu's Sponsored Search",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2019,
+   "citationCount": 104,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2409.03449, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "145104988",
+     "name": "Miao Fan"
+    },
+    {
+     "authorId": "2148901200",
+     "name": "Jiacheng Guo"
+    },
+    {
+     "authorId": "2109849456",
+     "name": "Shuai Zhu"
+    },
+    {
+     "authorId": "2394279509",
+     "name": "Shuo Miao"
+    },
+    {
+     "authorId": "46611108",
+     "name": "Mingming Sun"
+    },
+    {
+     "authorId": "1739405774",
+     "name": "Ping Li"
+    }
+   ],
+   "abstract": "Baidu runs the largest commercial web search engine in China, serving hundreds of millions of online users every day in response to a great variety of queries. In order to build a high-efficiency sponsored search engine, we used to adopt a three-layer funnel-shaped structure to screen and sort hundreds of ads from billions of ad candidates subject to the requirement of low response latency and the restraints of computing resources. Given a user query, the top matching layer is responsible for providing semantically relevant ad candidates to the next layer, while the ranking layer at the bottom concerns more about business indicators (e.g., CPM, ROI, etc.) of those ads. The clear separation between the matching and ranking objectives results in a lower commercial return. The Mobius project has been established to address this serious issue. It is our first attempt to train the matching layer to consider CPM as an additional optimization objective besides the query-ad relevance, via directly predicting CTR (click-through rate) from billions of query-ad pairs. Specifically, this paper will elaborate on how we adopt active learning to overcome the insufficiency of click history at the matching layer when training our neural click networks offline, and how we use the SOTA ANN search technique for retrieving ads more efficiently (Here \"ANN'' stands for approximate nearest neighbor search). We contribute the solutions to Mobius-V1 as the first version of our next generation query-ad matching system."
+  },
+  {
+   "paperId": "9248bddda2ac3adb4dc24d28844990fa639e2bf5",
+   "externalIds": {
+    "DBLP": "journals/iet-com/MMHVMRA22",
+    "MAG": "3173865055",
+    "DOI": "10.1049/CMU2.12251",
+    "CorpusId": 237822552
+   },
+   "title": "5G based Blockchain network for authentic and ethical keyword search engine",
+   "venue": "IET Communications",
+   "year": 2021,
+   "citationCount": 81,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1049/cmu2.12251",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1049/CMU2.12251?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1049/CMU2.12251, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2883936",
+     "name": "M. Poongodi"
+    },
+    {
+     "authorId": "2051608554",
+     "name": "Mohit Malviya"
+    },
+    {
+     "authorId": "145614682",
+     "name": "M. Hamdi"
+    },
+    {
+     "authorId": "2066326067",
+     "name": "V. Vijayakumar"
+    },
+    {
+     "authorId": "7349492",
+     "name": "M. Mohammed"
+    },
+    {
+     "authorId": "1387447444",
+     "name": "Hafiz Tayyab Rauf"
+    },
+    {
+     "authorId": "2077132125",
+     "name": "Kawther A. Al-Dhlan"
+    }
+   ],
+   "abstract": "The evolution of 4G telecommunication propagated various resource-crunched clients to experience rate-effective resources at ease. However, it extends its underlying centralised architecture, which arouses various challenges correlated with network data availability, network information protection, and operational infrastructure charges. With the recent revolution of telecommunication, 5G networks promised to provide credible schemes like the high quality of service, ultra-low latency, and much security over the pre-existing architecture. However, the deployment of end-to-end 5G network cutting-edge systems in the present heterogeneous world limits its core idea of extensive data privacy, native interoperability, risk-free interference, and radio spectrum sharing. Perhaps, to achieve its true capability, improved versions of blockchain technology could be aligned to strengthen various real-time complex applications at a flourishing rate. One of the multiplexed real-time enterprise applications is a keyword search engine where the integrity of user data files and keyword searches are bound to come under cyber hackers. On the one hand, it was found that when a 5G-based blockchain emulated network gets deployed with intact encryption techniques, the entire system facilitates to give reliable, efficient, and risk-free keyword search over variegated 5G network data and its complex computational calculations. Consequently, the use of blockchain-based decentralised cloud orchestration scheme at various levels enabled the architecture to remain incorruptible and protects all the confidential files and keywords in a fully controlled file access environment. The results of the simulation kernel shows that proposed architecture which, when combined with blockchain-based decentralised cloud orchestration network system, justify all the essential characteristics and effectuates the optimal use of 5G network sharing by each network entity."
+  },
+  {
+   "paperId": "396ba5b07b9a863fd1e595d77ed29a3e5a546197",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2105-11108",
+    "ArXiv": "2105.11108",
+    "DOI": "10.1145/3447548.3467147",
+    "CorpusId": 235166906
+   },
+   "title": "Pre-trained Language Model based Ranking in Baidu Search",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2021,
+   "citationCount": 76,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2105.11108",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2105.11108, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "8718022",
+     "name": "Li-Xin Zou"
+    },
+    {
+     "authorId": "3461291",
+     "name": "Shengqiang Zhang"
+    },
+    {
+     "authorId": "22561596",
+     "name": "Hengyi Cai"
+    },
+    {
+     "authorId": "2963245",
+     "name": "Dehong Ma"
+    },
+    {
+     "authorId": "2111102795",
+     "name": "Suqi Cheng"
+    },
+    {
+     "authorId": "2104450297",
+     "name": "Dai-Ting Shi"
+    },
+    {
+     "authorId": "74123394",
+     "name": "Zhifan Zhu"
+    },
+    {
+     "authorId": "116236876",
+     "name": "Wei-Yue Su"
+    },
+    {
+     "authorId": "2386396",
+     "name": "Shuai-Qiang Wang"
+    },
+    {
+     "authorId": "2788612",
+     "name": "Zhi-Cong Cheng"
+    },
+    {
+     "authorId": "50559722",
+     "name": "Da-Wei Yin"
+    }
+   ],
+   "abstract": "As the heart of a search engine, the ranking system plays a crucial role in satisfying users' information demands. More recently, neural rankers fine-tuned from pre-trained language models (PLMs) establish state-of-the-art ranking effectiveness. However, it is nontrivial to directly apply these PLM-based rankers to the large-scale web search system due to the following challenging issues: (1) the prohibitively expensive computations of massive neural PLMs, especially for long texts in the web document, prohibit their deployments in an online ranking system that demands extremely low latency; (2) the discrepancy between existing ranking-agnostic pre-training objectives and the ad-hoc retrieval scenarios that demand comprehensive relevance modeling is another main barrier for improving the online ranking system; (3) a real-world search engine typically involves a committee of ranking components, and thus the compatibility of the individually fine-tuned ranking model is critical for a cooperative ranking system. In this work, we contribute a series of successfully applied techniques in tackling these exposed issues when deploying the state-of-the-art Chinese pre-trained language model, i.e., ERNIE, in the online search engine system. We first articulate a novel practice to cost-efficiently summarize the web document and contextualize the resultant summary content with the query using a cheap yet powerful Pyramid-ERNIE architecture. Then we endow an innovative paradigm to finely exploit the large-scale noisy and biased post-click behavioral data for relevance-oriented pre-training. We also propose a human-anchored fine-tuning strategy tailored for the online ranking system, aiming to stabilize the ranking signals across various online components. Extensive offline and online experimental results show that the proposed techniques significantly boost the search engine's performance."
+  },
+  {
+   "paperId": "e39a0dfe48da9a51defb80fb4b839418e2981b8d",
+   "externalIds": {
+    "MAG": "3044799436",
+    "DBLP": "journals/corr/abs-2007-12731",
+    "ArXiv": "2007.12731",
+    "ACL": "2020.knlp-1.1",
+    "DOI": "10.48550/arXiv.2007.12731",
+    "CorpusId": 220793196
+   },
+   "title": "COVID-19 Knowledge Graph: Accelerating Information Retrieval and Discovery for Scientific Literature",
+   "venue": "KNLP",
+   "year": 2020,
+   "citationCount": 74,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2007.12731",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2007.12731, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1824126957",
+     "name": "Colby Wise"
+    },
+    {
+     "authorId": "2521530859",
+     "name": "Miguel Romero Calvo"
+    },
+    {
+     "authorId": "2502849591",
+     "name": "Pariminder Bhatia"
+    },
+    {
+     "authorId": "40043851",
+     "name": "Vassilis N. Ioannidis"
+    },
+    {
+     "authorId": "2521533078",
+     "name": "George Karypus"
+    },
+    {
+     "authorId": "1486136128",
+     "name": "George D. Price"
+    },
+    {
+     "authorId": "2118943843",
+     "name": "Xiang Song"
+    },
+    {
+     "authorId": "2066945288",
+     "name": "Ryan Brand"
+    },
+    {
+     "authorId": "2521530752",
+     "name": "Ninad Kulkani"
+    }
+   ],
+   "abstract": "The coronavirus disease (COVID-19) has claimed the lives of over one million people and infected more than thirty-five million people worldwide. Several search engines have surfaced to provide researchers with additional tools to find and retrieve information from the rapidly growing corpora on COVID19. These engines lack extraction and visualization tools necessary to retrieve and interpret complex relations inherent to scientific literature. Moreover, because these engines mainly rely upon semantic information, their ability to capture complex global relationships across documents is limited, which reduces the quality of similarity-based article recommendations for users. In this work, we present the COVID-19 Knowledge Graph (CKG), a heterogeneous graph for extracting and visualizing complex relationships between COVID-19 scientific articles. The CKG combines semantic information with document topological information for the application of similar document retrieval. The CKG is constructed using the latent schema of the data, and then enriched with biomedical entity information extracted from the unstructured text of articles using scalable AWS technologies to form relations in the graph. Finally, we propose a document similarity engine that leverages low-dimensional graph embeddings from the CKG with semantic embeddings for similar article retrieval. Analysis demonstrates the quality of relationships in the CKG and shows that it can be used to uncover meaningful information in COVID-19 scientific articles. The CKG helps power www.cord19.aws and is publicly available."
+  },
+  {
+   "paperId": "9a97198fe893f0bb9b0c5fb73088586c9a2a9089",
+   "externalIds": {
+    "ArXiv": "1909.07212",
+    "MAG": "2973173174",
+    "DBLP": "journals/tois/AiZBC20",
+    "DOI": "10.1145/3361738",
+    "CorpusId": 202577664
+   },
+   "title": "Explainable Product Search with a Dynamic Relation Embedding Model",
+   "venue": "ACM Trans. Inf. Syst.",
+   "year": 2019,
+   "citationCount": 68,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/1909.07212",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1909.07212, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "144922928",
+     "name": "Qingyao Ai"
+    },
+    {
+     "authorId": "1739818",
+     "name": "Yongfeng Zhang"
+    },
+    {
+     "authorId": "2112104",
+     "name": "Ke-Ping Bi"
+    },
+    {
+     "authorId": "144456145",
+     "name": "W. Bruce Croft"
+    }
+   ],
+   "abstract": "Product search is one of the most popular methods for customers to discover products online. Most existing studies on product search focus on developing effective retrieval models that rank items by their likelihood to be purchased. However, they ignore the problem that there is a gap between how systems and customers perceive the relevance of items. Without explanations, users may not understand why product search engines retrieve certain items for them, which consequentially leads to imperfect user experience and suboptimal system performance in practice. In this work, we tackle this problem by constructing explainable retrieval models for product search. Specifically, we propose to model the “search and purchase” behavior as a dynamic relation between users and items, and create a dynamic knowledge graph based on both the multi-relational product data and the context of the search session. Ranking is conducted based on the relationship between users and items in the latent space, and explanations are generated with logic inferences and entity soft matching on the knowledge graph. Empirical experiments show that our model, which we refer to as the Dynamic Relation Embedding Model (DREM), significantly outperforms the state-of-the-art baselines and has the ability to produce reasonable explanations for search results."
+  },
+  {
+   "paperId": "cf62fedeb35a45f4c82a1036f197253db27e80f6",
+   "externalIds": {
+    "MAG": "2965967244",
+    "DBLP": "conf/lats/LeeHJO19",
+    "DOI": "10.1145/3330430.3333658",
+    "CorpusId": 241784595
+   },
+   "title": "automaTA: Human-Machine Interaction for Answering Context-Specific Questions",
+   "venue": "ACM Conference on Learning @ Scale",
+   "year": 2019,
+   "citationCount": 66,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3330430.3333658?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3330430.3333658, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "151506322",
+     "name": "Changyoon Lee"
+    },
+    {
+     "authorId": "2122024622",
+     "name": "Donghoon Han"
+    },
+    {
+     "authorId": "113524309",
+     "name": "Hyoungwook Jin"
+    },
+    {
+     "authorId": "2463290",
+     "name": "Alice H. Oh"
+    }
+   ],
+   "abstract": "When online learners have questions that are related to a specific task, they often use Q&A boards instead of web search because they are looking for context-specific answers. While lecturers, teaching assistants, and other learners can provide context-specific answers on the Q&A boards, there is often a high response latency which can impede their learning. We present automaTA, a prototype that suggests context-specific answers to online learners' questions by capturing the context of the questions. Our solution is to automate the response generation with a human-machine mixed approach, where humans generate high-quality answers, and the human-generated responses are used to train an automated algorithm to provide context-specific answers. automaTA adopts this approach as a prototype in which it generates automated answers for function-related questions in an online programming course. We conduct two user studies with undergraduate and graduate students with little or no experience with Python and found the potential that automaTA can automatically provide answers to context-specific questions without a human instructor, at scale."
+  },
+  {
+   "paperId": "85c702717b1a75d2b1ce67fcb5d5baa7cb43ece0",
+   "externalIds": {
+    "DBLP": "conf/kdd/YaoTCZZY22",
+    "DOI": "10.1145/3534678.3539090",
+    "CorpusId": 251518306
+   },
+   "title": "ReprBERT: Distilling BERT to an Efficient Representation-Based Relevance Model for E-Commerce",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2022,
+   "citationCount": 50,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3534678.3539090?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3534678.3539090, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "47188971",
+     "name": "Shao-Wei Yao"
+    },
+    {
+     "authorId": "2796928",
+     "name": "Jiwei Tan"
+    },
+    {
+     "authorId": "2145308090",
+     "name": "Xi Chen"
+    },
+    {
+     "authorId": "2108047574",
+     "name": "Jun-Hao Zhang"
+    },
+    {
+     "authorId": "47923642",
+     "name": "Xiao-Yi Zeng"
+    },
+    {
+     "authorId": "15766535",
+     "name": "Keping Yang"
+    }
+   ],
+   "abstract": "Text relevance or text matching of query and product is an essential technique for e-commerce search engine, which helps users find the desirable products and is also crucial to ensuring user experience. A major difficulty for e-commerce text relevance is the severe vocabulary gap between query and product. Recently, neural networks have been the mainstream for the text matching task owing to the better performance for semantic matching. Practical e-commerce relevance models are usually representation-based architecture, which can pre-compute representations offline and are therefore online efficient. Interaction-based models, although can achieve better performance, are mostly time-consuming and hard to be deployed online. Recently BERT has achieved significant progress on many NLP tasks including text matching, and it is of great value but also big challenge to deploy BERT to the e-commerce relevance task. To realize this goal, we propose ReprBERT, which has the advantages of both excellent performance and low latency, by distilling the interaction-based BERT model to a representation-based architecture. To reduce the performance decline, we investigate the key reasons and propose two novel interaction strategies to resolve the absence of representation interaction and low-level semantic interaction. Finally, ReprBERT can achieve only about 1.5% AUC loss from the interaction-based BERT, but has more than 10% AUC improvement compared to previous state-of-the-art representation-based models. ReprBERT has already been deployed on the search engine of Taobao and serving the entire search traffic, achieving significant gain of user experience and business profit."
+  },
+  {
+   "paperId": "a11551634d20a14665cdb9f718cd1282055c4540",
+   "externalIds": {
+    "MAG": "3033114586",
+    "DOI": "10.1088/1757-899X/801/1/012136",
+    "CorpusId": 219919495
+   },
+   "title": "Comparison between client-side and server-side rendering in the web development",
+   "venue": "IOP Conference Series: Materials Science and Engineering",
+   "year": 2020,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "https://iopscience.iop.org/article/10.1088/1757-899X/801/1/012136/pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1088/1757-899X/801/1/012136?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1088/1757-899X/801/1/012136, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2538736070",
+     "name": "Taufan Fadhilah Iskandar"
+    },
+    {
+     "authorId": "144432618",
+     "name": "M. Lubis"
+    },
+    {
+     "authorId": null,
+     "name": "Tien Fabrianti Kusumasari"
+    },
+    {
+     "authorId": "2510130002",
+     "name": "Arif Ridho Lubis"
+    }
+   ],
+   "abstract": "Mandatory servers for universal applications that is accessible to number of users may be a deterrent for the corporation and excessive for small applications even though it could bring the compatibility advantages. Knowing that demand of web application increases to provide convenience and ease of use to the users, client side rendering comes to create software more fast and efficient. It has been done by redirecting the request towards an HTML file then the server will give messages without any content or a loading screen until the device takes all JavaScript to allow the browser compiling everything before displaying the content. Therefore, the purpose of this paper is to analyse the comparison between client side and server side method in the respect of technical aspects in term of first content paint, speed index, time to interactive, first meaningful paint, first idle CPU and estimated input latency that present better performance with 2.1s, 2.0s, 2.2s, 2.1s, 2.2s and 20ms respectively on server side. It also provide better result based on Google Audit with 100% performance, 48% accessibility, 93% best practice and 89% of search engine optimization (SEO)."
+  },
+  {
+   "paperId": "231b753ae413964f279db551795da7965366450c",
+   "externalIds": {
+    "DBLP": "conf/sc/JiangLZLHSRZRHA23",
+    "ArXiv": "2306.11182",
+    "DOI": "10.1145/3581784.3607045",
+    "CorpusId": 259203955
+   },
+   "title": "Co-design Hardware and Algorithm for Vector Search",
+   "venue": "International Conference for High Performance Computing, Networking, Storage and Analysis",
+   "year": 2023,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3581784.3607045",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2306.11182, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "38818042",
+     "name": "Wenqi Jiang"
+    },
+    {
+     "authorId": "2298884755",
+     "name": "Shi-Gang Li"
+    },
+    {
+     "authorId": "2109388499",
+     "name": "Yu Zhu"
+    },
+    {
+     "authorId": "35608738",
+     "name": "J. D. F. Licht"
+    },
+    {
+     "authorId": "72181587",
+     "name": "Zhen-Hao He"
+    },
+    {
+     "authorId": "2834680",
+     "name": "Runbin Shi"
+    },
+    {
+     "authorId": "37833666",
+     "name": "Cédric Renggli"
+    },
+    {
+     "authorId": "1583098764",
+     "name": "Shuai Zhang"
+    },
+    {
+     "authorId": "145071799",
+     "name": "Theodoros Rekatsinas"
+    },
+    {
+     "authorId": "1713648",
+     "name": "T. Hoefler"
+    },
+    {
+     "authorId": "144641551",
+     "name": "G. Alonso"
+    }
+   ],
+   "abstract": "Vector search has emerged as the foundation for large-scale information retrieval and machine learning systems, with search engines like Google and Bing processing tens of thousands of queries per second on petabyte-scale document datasets by evaluating vector similarities between encoded query texts and web documents. As performance demands for vector search systems surge, accelerated hardware offers a promising solution in the post-Moore's Law era. We introduce FANNS, an end-to-end and scalable vector search framework on FPGAs. Given a user-provided recall requirement on a dataset and a hardware resource budget, FANNS automatically co-designs hardware and algorithm, subsequently generating the corresponding accelerator. The framework also supports scale-out by incorporating a hardware TCP/IP stack in the accelerator. FANNS attains up to 23.0× and 37.2× speedup compared to FPGA and CPU baselines, respectively, and demonstrates superior scalability to GPUs, achieving 5.5× and 7.6× speedup in median and 95th per-centile (P95) latency within an eight-accelerator configuration. The remarkable performance of FANNS lays a robust groundwork for future FPGA integration in data centers and AI supercomputers."
+  },
+  {
+   "paperId": "b27f9263f9b94de59dce9e9ae5a0623131051989",
+   "externalIds": {
+    "DBLP": "conf/kdd/MagnaniLCYSPC0K22",
+    "ArXiv": "2412.04637",
+    "DOI": "10.1145/3534678.3539164",
+    "CorpusId": 251518382
+   },
+   "title": "Semantic Retrieval at Walmart",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2022,
+   "citationCount": 42,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2412.04637",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2412.04637, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2079082945",
+     "name": "Alessandro Magnani"
+    },
+    {
+     "authorId": "2315891424",
+     "name": "Feng Liu"
+    },
+    {
+     "authorId": "21746902",
+     "name": "Suthee Chaidaroon"
+    },
+    {
+     "authorId": "2449269646",
+     "name": "Sachin Yadav"
+    },
+    {
+     "authorId": null,
+     "name": "Praveen Reddy Suram"
+    },
+    {
+     "authorId": "2118435",
+     "name": "Ajit Puthenputhussery"
+    },
+    {
+     "authorId": "2111637671",
+     "name": "Si-An Chen"
+    },
+    {
+     "authorId": "2112818026",
+     "name": "Min Xie"
+    },
+    {
+     "authorId": "40381032",
+     "name": "Anirudh Kashi"
+    },
+    {
+     "authorId": "2181382603",
+     "name": "Tony Lee"
+    },
+    {
+     "authorId": "2922252",
+     "name": "Ciya Liao"
+    }
+   ],
+   "abstract": "In product search, the retrieval of candidate products before re-ranking is more mission critical and challenging than other search like web search, especially for tail queries, which have a complex and specific search intent. In this paper, we present a hybrid system for e-commerce search deployed at Walmart that combines traditional inverted index and embedding-based neural retrieval to better answer user tail queries. Our system significantly improved the relevance of the search engine, measured by both offline and online evaluations. The improvements were achieved through a combination of different approaches. We present a new technique to train the neural model at scale. and describe how the system was deployed in production with little impact on response time. We highlight multiple learnings and practical tricks that were used in the deployment of this system."
+  },
+  {
+   "paperId": "a05e5eb5322b9a30bd1223773b77823e1580b717",
+   "externalIds": {
+    "DBLP": "conf/aaai/GuoCWYCLDL26",
+    "ArXiv": "2506.06913",
+    "DOI": "10.48550/arXiv.2506.06913",
+    "CorpusId": 279251776
+   },
+   "title": "OneSug: The Unified End-to-End Generative Framework for E-commerce Query Suggestion",
+   "venue": "AAAI Conference on Artificial Intelligence",
+   "year": 2025,
+   "citationCount": 42,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.06913, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2366172393",
+     "name": "Xian Guo"
+    },
+    {
+     "authorId": "2366158403",
+     "name": "Ben Chen"
+    },
+    {
+     "authorId": "2366724849",
+     "name": "Siyuan Wang"
+    },
+    {
+     "authorId": "2367079072",
+     "name": "Ying Yang"
+    },
+    {
+     "authorId": "2410744081",
+     "name": "Ming-Yue Cheng"
+    },
+    {
+     "authorId": "2366079231",
+     "name": "Chen-Yi Lei"
+    },
+    {
+     "authorId": "2366313102",
+     "name": "Yu-Qing Ding"
+    },
+    {
+     "authorId": "2367333196",
+     "name": "Han Li"
+    }
+   ],
+   "abstract": "Query suggestion plays a crucial role in enhancing user experience in e-commerce search systems by providing relevant query recommendations that align with users' initial input. This module helps users navigate towards personalized preference needs and reduces typing effort, thereby improving search experience. Traditional query suggestion modules usually adopt multi-stage cascading architectures, for making a well trade-off between system response time and business conversion. But they often suffer from inefficiencies and suboptimal performance due to inconsistent optimization objectives across stages. To address these, we propose OneSug, the first end-to-end generative framework for e-commerce query suggestion. OneSug incorporates a prefix2query representation enhancement module to enrich prefixes using semantically and interactively related queries to bridge content and business characteristics, an encoder-decoder generative model that unifies the query suggestion process, and a reward-weighted ranking strategy with behavior-level weights to capture fine-grained user preferences. Extensive evaluations on large-scale industry datasets demonstrate OneSug's ability for effective and efficient query suggestion. Furthermore, OneSug has been successfully deployed for the entire traffic on the e-commerce search engine in TEST platform for over 1 month, with statistically significant improvements in user top click position (-9.33%), CTR (+2.01%), Order (+2.04%), and Revenue (+1.69%) over the online multi-stage strategy, showing great potential in e-commercial conversion."
+  },
+  {
+   "paperId": "1b9947864bb945fb3f2f2fb1c6fd62cb56fd95d9",
+   "externalIds": {
+    "ArXiv": "2101.09086",
+    "DBLP": "journals/corr/abs-2101-09086",
+    "DOI": "10.1145/3406522.3446038",
+    "CorpusId": 231693069
+   },
+   "title": "Impact of Response Latency on User Behaviour in Mobile Web Search",
+   "venue": "Conference on Human Information Interaction and Retrieval",
+   "year": 2021,
+   "citationCount": 39,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2101.09086",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2101.09086, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2646401",
+     "name": "Ioannis Arapakis"
+    },
+    {
+     "authorId": "2474998",
+     "name": "Souneil Park"
+    },
+    {
+     "authorId": "2884328",
+     "name": "M. Pielot"
+    }
+   ],
+   "abstract": "Traditionally, the efficiency and effectiveness of search systems have both been of great interest to the information retrieval community. However, an in-depth analysis of the interaction between the response latency and users' subjective search experience in the mobile setting has been missing so far. To address this gap, we conduct a controlled study that aims to reveal how response latency affects mobile web search. Our preliminary results indicate that mobile web search users are four times more tolerant to response latency reported for desktop web search users. However, when exceeding a certain threshold of 7-10 sec, the delays have a sizeable impact and users report feeling significantly more tensed, tired, terrible, frustrated and sluggish, all which contribute to a worse subjective user experience."
+  },
+  {
+   "paperId": "9577150b53e55f8aa998d5001585d6b902519135",
+   "externalIds": {
+    "ArXiv": "1912.02322",
+    "DBLP": "conf/ic2e/LeMayL020",
+    "MAG": "3026530461",
+    "DOI": "10.1109/IC2E48712.2020.00014",
+    "CorpusId": 208636936
+   },
+   "title": "PERSEUS: Characterizing Performance and Cost of Multi-Tenant Serving for CNN Models",
+   "venue": "2020 IEEE International Conference on Cloud Engineering (IC2E)",
+   "year": 2019,
+   "citationCount": 32,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/1912.02322",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1912.02322, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1381213887",
+     "name": "Matt Lemay"
+    },
+    {
+     "authorId": "66841497",
+     "name": "Shi-Jian Li"
+    },
+    {
+     "authorId": "144554004",
+     "name": "Tian Guo"
+    }
+   ],
+   "abstract": "Deep learning models are increasingly used for end-user applications, supporting both novel features such as facial recognition, and traditional features, e.g. web search. To accommodate high inference throughput, it is common to host a single pre-trained Convolutional Neural Network (CNN) in dedicated cloud-based servers with hardware accelerators such as Graphics Processing Units (GPUs). However, GPUs can be orders of magnitude more expensive than traditional Central Processing Unit (CPU) servers. These resources could also be under-utilized facing dynamic workloads, which may result in inflated serving costs. One potential way to alleviate this problem is by allowing hosted models to share the underlying resources, which we refer to as multi-tenant inference serving. One of the key challenges is maximizing the resource efficiency for multi-tenant serving given hardware with diverse characteristics, models with unique response time Service Level Agreement (SLA), and dynamic inference workloads. In this paper, we present PERSEUS, a measurement framework that provides the basis for understanding the performance and cost trade-offs of multi-tenant model serving. We implemented PERSEUS in Python atop a popular cloud inference server called Nvidia TensorRT Inference Server. Leveraging PERSEUS, we evaluated the inference throughput and cost for serving various models and demonstrated that multi-tenant model serving led to up to 12% cost reduction."
+  },
+  {
+   "paperId": "da60d771fb26cebefe28a70f5fc6b352515cc8a8",
+   "externalIds": {
+    "DBLP": "journals/sosym/LopezC22",
+    "DOI": "10.1007/s10270-021-00960-4",
+    "CorpusId": 245525263
+   },
+   "title": "An efficient and scalable search engine for models",
+   "venue": "Journal of Software and Systems Modeling",
+   "year": 2021,
+   "citationCount": 31,
+   "openAccessPdf": {
+    "url": "https://link.springer.com/content/pdf/10.1007/s10270-021-00960-4.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s10270-021-00960-4?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s10270-021-00960-4, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2150340450",
+     "name": "José Antonio Hernández López"
+    },
+    {
+     "authorId": "1742213",
+     "name": "Jesús Cuadrado"
+    }
+   ],
+   "abstract": "Search engines extract data from relevant sources and make them available to users via queries. A search engine typically crawls the web to gather data, analyses and indexes it and provides some query mechanism to obtain ranked results. There exist search engines for websites, images, code, etc., but the specific properties required to build a search engine for models have not been explored much. In the previous work, we presented MAR, a search engine for models which has been designed to support a query-by-example mechanism with fast response times and improved precision over simple text search engines. The goal of MAR is to assist developers in the task of finding relevant models. In this paper, we report new developments of MAR which are aimed at making it a useful and stable resource for the community. We present the crawling and analysis architecture with which we have processed about 600,000 models. The indexing process is now incremental and a new index for keyword-based search has been added. We have also added a web user interface intended to facilitate writing queries and exploring the results. Finally, we have evaluated the indexing times, the response time and search precision using different configurations. MAR has currently indexed over 500,000 valid models of different kinds, including Ecore meta-models, BPMN diagrams, UML models and Petri nets. MAR is available at http://mar-search.org."
+  },
+  {
+   "paperId": "a3683fa4943f1bea24f769584e30c062d15305e2",
+   "externalIds": {
+    "DBLP": "conf/recsys/NieZYDZCZCLCXH24",
+    "DOI": "10.1145/3640457.3688061",
+    "CorpusId": 273232430
+   },
+   "title": "A Hybrid Multi-Agent Conversational Recommender System with LLM and Search Engine in E-commerce",
+   "venue": "ACM Conference on Recommender Systems",
+   "year": 2024,
+   "citationCount": 31,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3640457.3688061?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3640457.3688061, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "24101800",
+     "name": "Guang-Tao Nie"
+    },
+    {
+     "authorId": "25226863",
+     "name": "R. Zhi"
+    },
+    {
+     "authorId": "2198052756",
+     "name": "Xiaofan Yan"
+    },
+    {
+     "authorId": "2330143721",
+     "name": "Yu-Fan Du"
+    },
+    {
+     "authorId": "2362984533",
+     "name": "Xiangyang Zhang"
+    },
+    {
+     "authorId": "2118000977",
+     "name": "Jianwei Chen"
+    },
+    {
+     "authorId": "2325304709",
+     "name": "Mi Zhou"
+    },
+    {
+     "authorId": "2325195421",
+     "name": "Hongshen Chen"
+    },
+    {
+     "authorId": "2272187064",
+     "name": "Tianhao Li"
+    },
+    {
+     "authorId": "2325536646",
+     "name": "Zi-Guang Cheng"
+    },
+    {
+     "authorId": "2239394494",
+     "name": "Su-Long Xu"
+    },
+    {
+     "authorId": "2271810352",
+     "name": "Jinghe Hu"
+    }
+   ],
+   "abstract": "Multi-agent collaboration is the latest trending method to build conversational recommender systems (CRS), especially with the widespread use of Large Language Models (LLMs) recently. Typically, these systems employ several LLM agents, each serving distinct roles to meet user needs. In an industrial setting, it’s essential for a CRS to exhibit low first token latency (i.e., the time taken from a user’s input until the system outputs its first response token.) and high scalability—for instance, minimizing the number of LLM inferences per user request—to enhance user experience and boost platform profit. For example, JD.com’s baseline CRS features two LLM agents and a search API but suffers from high first token latency and requires two LLM inferences per request (LIPR), hindering its performance. To address these issues, we introduce a Hybrid Multi-Agent Collaborative Recommender System (Hybrid-MACRS). It includes a central agent powered by a fine-tuned proprietary LLM and a search agent combining a related search module with a search engine. This hybrid system notably reduces first token latency by about 70% and cuts the LIPR from 2 to 1. We conducted thorough online A/B testing to confirm this approach’s efficiency."
+  },
+  {
+   "paperId": "7772f3d1fd12dfdc0185412a6c09624ff759b94c",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2510-02044",
+    "ArXiv": "2510.02044",
+    "DOI": "10.48550/arXiv.2510.02044",
+    "CorpusId": 281724928
+   },
+   "title": "Stream RAG: Instant and Accurate Spoken Dialogue Systems with Streaming Tool Usage",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 30,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.02044, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "72401599",
+     "name": "Siddhant Arora"
+    },
+    {
+     "authorId": "2375175371",
+     "name": "Haidar Khan"
+    },
+    {
+     "authorId": "2332094619",
+     "name": "Kai Sun"
+    },
+    {
+     "authorId": "2283964663",
+     "name": "Xin Dong"
+    },
+    {
+     "authorId": "2305482313",
+     "name": "Sajal Choudhary"
+    },
+    {
+     "authorId": "2256132624",
+     "name": "Seungwhan Moon"
+    },
+    {
+     "authorId": "2383945354",
+     "name": "Xin-Yuan Zhang"
+    },
+    {
+     "authorId": "2063995456",
+     "name": "Adithya Sagar"
+    },
+    {
+     "authorId": "2383308597",
+     "name": "Surya Teja Appini"
+    },
+    {
+     "authorId": "2051284843",
+     "name": "Kaushik Patnaik"
+    },
+    {
+     "authorId": "2383684077",
+     "name": "Sanat Sharma"
+    },
+    {
+     "authorId": "2243132102",
+     "name": "Shinji Watanabe"
+    },
+    {
+     "authorId": "2247977368",
+     "name": "Anuj Kumar"
+    },
+    {
+     "authorId": "2381732017",
+     "name": "Ahmed A. Aly"
+    },
+    {
+     "authorId": "2247965931",
+     "name": "Yue Liu"
+    },
+    {
+     "authorId": "2335557092",
+     "name": "Florian Metze"
+    },
+    {
+     "authorId": "2366173653",
+     "name": "Zhao-Jiang Lin"
+    }
+   ],
+   "abstract": "End-to-end speech-in speech-out dialogue systems are emerging as a powerful alternative to traditional ASR-LLM-TTS pipelines, generating more natural, expressive responses with significantly lower latency. However, these systems remain prone to hallucinations due to limited factual grounding. While text-based dialogue systems address this challenge by integrating tools such as web search and knowledge graph APIs, we introduce the first approach to extend tool use directly into speech-in speech-out systems. A key challenge is that tool integration substantially increases response latency, disrupting conversational flow. To mitigate this, we propose Streaming Retrieval-Augmented Generation (Streaming RAG), a novel framework that reduces user-perceived latency by predicting tool queries in parallel with user speech, even before the user finishes speaking. Specifically, we develop a post-training pipeline that teaches the model when to issue tool calls during ongoing speech and how to generate spoken summaries that fuse audio queries with retrieved text results, thereby improving both accuracy and responsiveness. To evaluate our approach, we construct AudioCRAG, a benchmark created by converting queries from the publicly available CRAG dataset into speech form. Experimental results demonstrate that our streaming RAG approach increases QA accuracy by up to 200% relative (from 11.1% to 34.2% absolute) and further enhances user experience by reducing tool use latency by 20%. Importantly, our streaming RAG approach is modality-agnostic and can be applied equally to typed input, paving the way for more agentic, real-time AI assistants."
+  },
+  {
+   "paperId": "551f49482f84a90a9b76f4f6a064462805545ccf",
+   "externalIds": {
+    "MAG": "3134299352",
+    "DBLP": "journals/mansci/LiuTH21",
+    "DOI": "10.2139/ssrn.3372751",
+    "CorpusId": 232673688
+   },
+   "title": "Content-Based Model of Web Search Behavior: An Application to TV Show Search",
+   "venue": "Management Sciences",
+   "year": 2019,
+   "citationCount": 29,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.2139/ssrn.3372751",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.2139/ssrn.3372751?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.2139/ssrn.3372751, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2108772005",
+     "name": "Jia Liu"
+    },
+    {
+     "authorId": "3089062",
+     "name": "Olivier Toubia"
+    },
+    {
+     "authorId": "2249694",
+     "name": "Shawndra Hill"
+    }
+   ],
+   "abstract": "We develop a flexible content-based search model that links the content preferences of search engine users to query search volume and click-through rates, while allowing content preferences to vary systematically based on the context of a search. Content preferences are defined over latent topics that describe the content of search queries and search result descriptions. Compared with existing applications of topic modeling in marketing and recommendation systems, our proposed approach can simultaneously capture multiple types of information and investigate multiple aspects of behavioral dynamics in a single framework that enables interpretable results for business decision making. To facilitate efficient and scalable inference, we develop a full Bayesian variational inference algorithm. We evaluate our modeling framework using real-world search data for TV shows from the Bing search engine. We illustrate how our model can quantify the content preferences associated with each query and how these preferences vary systematically based on whether the query is observed before, during, or after a TV show is aired. We also show that our model can help the search engine improve its ranking of search results as well as address the cold-start problem for new page links. This paper was accepted by Hamid Nazerzadeh, big data analytics."
+  },
+  {
+   "paperId": "91cc6339ae41ab43a5f099a331b36f60fd7608e4",
+   "externalIds": {
+    "ArXiv": "2106.01674",
+    "DBLP": "journals/corr/abs-2106-01674",
+    "DOI": "10.1145/3447548.3467146",
+    "CorpusId": 235313336
+   },
+   "title": "JIZHI: A Fast and Cost-Effective Model-As-A-Service System for Web-Scale Online Inference at Baidu",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2021,
+   "citationCount": 28,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2106.01674",
+    "status": "GREEN",
+    "license": "CCBYNCSA",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2106.01674, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "145127257",
+     "name": "Hao Liu"
+    },
+    {
+     "authorId": "2117206233",
+     "name": "Qian Gao"
+    },
+    {
+     "authorId": "3893083",
+     "name": "Jiang Li"
+    },
+    {
+     "authorId": "2283161927",
+     "name": "X. Liao"
+    },
+    {
+     "authorId": "2054473890",
+     "name": "Hao Xiong"
+    },
+    {
+     "authorId": "2149510208",
+     "name": "Guang-Xing Chen"
+    },
+    {
+     "authorId": "2900282",
+     "name": "Wen-Lin Wang"
+    },
+    {
+     "authorId": "2109946024",
+     "name": "Guobao Yang"
+    },
+    {
+     "authorId": "2106993471",
+     "name": "Zhi-Wei Zha"
+    },
+    {
+     "authorId": "9532787",
+     "name": "Da-Xiang Dong"
+    },
+    {
+     "authorId": "1721158",
+     "name": "D. Dou"
+    },
+    {
+     "authorId": "2093122747",
+     "name": "Haoyi Xiong"
+    }
+   ],
+   "abstract": "In modern internet industries, deep learning based recommender systems have became an indispensable building block for a wide spectrum of applications, such as search engine, news feed, and short video clips. However, it remains challenging to carry the well-trained deep models for online real-time inference serving, with respect to the time-varying web-scale traffics from billions of users, in a cost-effective manner. In this work, we present JIZHI - a Model-as-a-Service system - that per second handles hundreds of millions of online inference requests to huge deep models with more than trillions of sparse parameters, for over twenty real-time recommendation services at Baidu, Inc. In JIZHI, the inference workflow of every recommendation request is transformed to a Staged Event-Driven Pipeline (SEDP), where each node in the pipeline refers to a staged computation or I/O intensive task processor. With traffics of real-time inference requests arrived, each modularized processor can be run in a fully asynchronized way and managed separately. Besides, JIZHI introduces the heterogeneous and hierarchical storage to further accelerate the online inference process by reducing unnecessary computations and potential data access latency induced by ultra-sparse model parameters. Moreover, an intelligent resource manager has been deployed to maximize the throughput of JIZHI over the shared infrastructure by searching the optimal resource allocation plan from historical logs and fine-tuning the load shedding policies over intermediate system feedback. Extensive experiments have been done to demonstrate the advantages of JIZHI from the perspectives of end-to-end service latency, system-wide throughput, and resource consumption. Since launched in July 2019, JIZHI has helped Baidu saved more than ten million US dollars in hardware and utility costs per year while handling 200% more traffics without sacrificing the inference efficiency."
+  },
+  {
+   "paperId": "5eb9de35fbdc9616dc61e1a8a4004b4beae1b661",
+   "externalIds": {
+    "DBLP": "conf/icde/QiuZZWXXLY21",
+    "ArXiv": "2103.00800",
+    "DOI": "10.1109/ICDE51399.2021.00276",
+    "CorpusId": 232076189
+   },
+   "title": "Query Rewriting via Cycle-Consistent Translation for E-Commerce Search",
+   "venue": "IEEE International Conference on Data Engineering",
+   "year": 2021,
+   "citationCount": 28,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2103.00800",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2103.00800, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2114967623",
+     "name": "Yi-Ming Qiu"
+    },
+    {
+     "authorId": "2145459834",
+     "name": "Kang Zhang"
+    },
+    {
+     "authorId": "2119078075",
+     "name": "Han Zhang"
+    },
+    {
+     "authorId": "31093111",
+     "name": "Songlin Wang"
+    },
+    {
+     "authorId": "1752741172",
+     "name": "Su-Long Xu"
+    },
+    {
+     "authorId": "2122427161",
+     "name": "Yun Xiao"
+    },
+    {
+     "authorId": "2052143728",
+     "name": "Bo Long"
+    },
+    {
+     "authorId": "49230310",
+     "name": "Wen-Yun Yang"
+    }
+   ],
+   "abstract": "Nowadays e-commerce search has become an integral part of many people’s shopping routines. One critical challenge in today’s e-commerce search is the semantic matching problem where the relevant items may not contain the exact terms in the user query. In this paper, we propose a novel deep neural network based approach to query rewriting, in order to tackle this problem. Specifically, we formulate query rewriting into a cyclic machine translation problem to leverage abundant click log data. Then we introduce a novel cyclic consistent training algorithm in conjunction with state-of-the-art machine translation models to achieve the optimal performance in terms of query rewriting accuracy. In order to make it practical in industrial scenarios, we optimize the syntax tree construction to reduce computational cost and online serving latency. Offline experiments show that the proposed method is able to rewrite hard user queries into more standard queries that are more appropriate for the inverted index to retrieve. Comparing with human curated rule-based method, the proposed model significantly improves query rewriting diversity while maintaining good relevancy. Online A/B experiments show that it improves core e-commerce business metrics significantly. Since the summer of 2020, the proposed model has been launched into our search engine production, serving hundreds of millions of users."
+  },
+  {
+   "paperId": "c4135aa1e023e33519ef3dc3ae3ec2906bbd1928",
+   "externalIds": {
+    "DBLP": "conf/mir/AlamGG21",
+    "DOI": "10.1145/3463948.3469069",
+    "CorpusId": 237217187
+   },
+   "title": "Memento: A Prototype Lifelog Search Engine for LSC'21",
+   "venue": "LSC@ICMR",
+   "year": 2021,
+   "citationCount": 26,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3463948.3469069",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3463948.3469069?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3463948.3469069, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2126204827",
+     "name": "Naushad Alam"
+    },
+    {
+     "authorId": "1562121827",
+     "name": "Yvette Graham"
+    },
+    {
+     "authorId": "1737981",
+     "name": "C. Gurrin"
+    }
+   ],
+   "abstract": "In this paper, we introduce a new lifelog retrieval system called Memento that leverages semantic representations of images and textual queries projected into a common latent space to facilitate effective retrieval. It bridges the semantic gap between complex visual scenes/events and user information needs expressed as textual and faceted queries. The system, developed for the 2021 Lifelog Search Challenge, also has a minimalist user interface that includes primary search, temporal search, and visual data filtering components."
+  },
+  {
+   "paperId": "0ad96a2b0330a3f29cbf63c57655f385a68eee5f",
+   "externalIds": {
+    "DBLP": "journals/dase/HeLZTHD20",
+    "MAG": "2990133442",
+    "DOI": "10.1007/s41019-019-00113-0",
+    "CorpusId": 208337793
+   },
+   "title": "Bi-Labeled LDA: Inferring Interest Tags for Non-famous Users in Social Network",
+   "venue": "Data Science and Engineering",
+   "year": 2019,
+   "citationCount": 26,
+   "openAccessPdf": {
+    "url": "https://link.springer.com/content/pdf/10.1007/s41019-019-00113-0.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s41019-019-00113-0?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s41019-019-00113-0, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2109930553",
+     "name": "Jun He"
+    },
+    {
+     "authorId": "46935958",
+     "name": "Hong-Yan Liu"
+    },
+    {
+     "authorId": "2219033772",
+     "name": "Yiqi Zheng"
+    },
+    {
+     "authorId": "11237619",
+     "name": "Shu Tang"
+    },
+    {
+     "authorId": "48692318",
+     "name": "W. He"
+    },
+    {
+     "authorId": "144589756",
+     "name": "Xiao-Yong Du"
+    }
+   ],
+   "abstract": "User tags in social network are valuable information for many applications such as Web search, recommender systems and online advertising. Thus, extracting high quality tags to capture user interest has attracted many researchers’ study in recent years. Most previous studies inferred users’ interest based on text posted in social network. In some cases, ordinary users usually only publish a small number of text posts and text information is not related to their interest very much. Compared with famous user, it is more challenging to find non-famous (ordinary) user’s interest. In this paper, we propose a probabilistic topic model, Bi-Labeled LDA, to automatically find interest tags for non-famous users in social network such as Twitter. Instead of extracting tags from text posts, tags of non-famous users are inferred from interest topics of famous users. With the proposed model, the formulation of social relationship between non-famous users and famous user is simulated and interest tags of famous users are exploited to supervise the training of the model and to make use of latent relation among famous users. Furthermore, the influence of popularity of famous user and popular tags are considered, and tags of non-famous users are ranked based on random walk model. Experiments were conducted on Twitter real datasets. Comparison with state-of-the-art methods shows that our method is more superior in terms of both ranking and quality of the tagging results."
+  },
+  {
+   "paperId": "82026f80dbdfeecdb5823edb2568c451145cda99",
+   "externalIds": {
+    "DBLP": "conf/wosp/SoltaniyehRBYMN22",
+    "DOI": "10.1145/3489525.3511672",
+    "CorpusId": 247681825
+   },
+   "title": "Near-Storage Processing for Solid State Drive Based Recommendation Inference with SmartSSDs®",
+   "venue": "International Conference on Performance Engineering",
+   "year": 2022,
+   "citationCount": 24,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3489525.3511672?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3489525.3511672, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2269814",
+     "name": "M. Soltaniyeh"
+    },
+    {
+     "authorId": null,
+     "name": "Veronica Lagrange Moutinho Dos Reis"
+    },
+    {
+     "authorId": "2066318945",
+     "name": "M. Bryson"
+    },
+    {
+     "authorId": "2160108776",
+     "name": "Xuebin Yao"
+    },
+    {
+     "authorId": "2428247789",
+     "name": "Richard P. Martin"
+    },
+    {
+     "authorId": "2375915",
+     "name": "Santosh Nagarakatte"
+    }
+   ],
+   "abstract": "Deep learning-based recommendation systems are extensively deployed in numerous internet services, including social media, entertainment services, and search engines, to provide users with the most relevant and personalized content. Production scale deep learning models consist of large embedding tables with billions of parameters. DRAM-based recommendation systems incur a high infrastructure cost and limit the size of the deployed models. Recommendation systems based on solid-state drives (SSDs) are a promising alternative for DRAM-based systems. Systems based on SSDs can offer ample storage required for deep learning models with large embedding tables. This paper proposes SmartRec, an inference engine for deep learning-based recommendation systems that utilizes Samsung SmartSSD, an SSD with an on-board FPGA that can process data in-situ. We evaluate SmartRec with state-of-the-art recommendation models from Facebook and compare its performance and energy efficiency to a DRAM-based system on a CPU. We show SmartRec improves the energy efficiency of the recommendation inference task up to 10x in comparison to the baseline CPU implementation. In addition, we propose a novel application-specific caching system for SmartSSDs that allows the kernel on the FPGA to use its DRAM as a cache to minimize high latency SSD accesses. Finally, we demonstrate the scalability of our design by offloading the computation to multiple SmartSSDs to further improve performance."
+  },
+  {
+   "paperId": "a16bdb0d5e66acce9769556226fe1789ad2b20d9",
+   "externalIds": {
+    "MAG": "3004998147",
+    "DOI": "10.12928/TELKOMNIKA.V18I3.14028",
+    "CorpusId": 213388282
+   },
+   "title": "Design of optimal search engine using text summarization through artificial intelligence techniques",
+   "venue": "TELKOMNIKA (Telecommunication Computing Electronics and Control)",
+   "year": 2020,
+   "citationCount": 23,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.12928/telkomnika.v18i3.14028",
+    "status": "GOLD",
+    "license": "CCBYSA",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.12928/TELKOMNIKA.V18I3.14028?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.12928/TELKOMNIKA.V18I3.14028, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2305946290",
+     "name": "Kaushik Sekaran"
+    },
+    {
+     "authorId": "145398014",
+     "name": "P. Chandana"
+    },
+    {
+     "authorId": "8041708",
+     "name": "J. Jeny"
+    },
+    {
+     "authorId": "82552244",
+     "name": "M. N. Meqdad"
+    },
+    {
+     "authorId": "152571594",
+     "name": "Seifedine Kadry"
+    }
+   ],
+   "abstract": "Natural language processing is the trending topic in the latest research areas, which allows the developers to create the human-computer interactions to come into existence. The natural language processing is an integration of artificial intelligence, computer science and computer linguistics. The research towards natural Language Processing is focused on creating innovations towards creating the devices or machines which operates basing on the single command of a human. It allows various Bot creations to innovate the instructions from the mobile devices to control the physical devices by allowing the speech-tagging. In our paper, we design a search engine which not only displays the data according to user query but also performs the detailed display of the content or topic user is interested for using the summarization concept. We find the designed search engine is having optimal response time for the user queries by analyzing with number of transactions as inputs. Also, the result findings in the performance analysis show that the text summarization method has been an efficient way for improving the response time in the search engine optimizations."
+  },
+  {
+   "paperId": "2d6748433cce2b073eece7169df1e86216e95de9",
+   "externalIds": {
+    "ArXiv": "2403.02694",
+    "DBLP": "conf/ipps/GillEKA0G25",
+    "DOI": "10.1109/IPDPS64566.2025.00117",
+    "CorpusId": 276884552
+   },
+   "title": "MeanCache: User-Centric Semantic Caching for LLM Web Services",
+   "venue": "IEEE International Parallel and Distributed Processing Symposium",
+   "year": 2024,
+   "citationCount": 23,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2403.02694",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2403.02694, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2046872596",
+     "name": "Waris Gill"
+    },
+    {
+     "authorId": "2290016307",
+     "name": "Mohamed Elidrisi"
+    },
+    {
+     "authorId": "2290013176",
+     "name": "Pallavi Kalapatapu"
+    },
+    {
+     "authorId": "2374426191",
+     "name": "Ammar Ahmed"
+    },
+    {
+     "authorId": "2275568141",
+     "name": "Ali Anwar"
+    },
+    {
+     "authorId": "33828413",
+     "name": "Muhammad Ali Gulzar"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) like ChatGPT and Llama have revolutionized natural language processing and search engine dynamics. However, these models incur exceptionally high computational costs. For instance, GPT-3 consists of 175 billion parameters, where inference demands billions of floating-point operations. Caching is a natural solution to reduce LLM inference costs on repeated queries. However, existing caching methods are incapable of finding semantic similarities among LLM queries nor do they operate effectively on contextual queries, leading to unacceptable false hit-and-miss rates. This paper introduces MeanCache, a user-centric semantic cache for LLM-based services that identifies semantically similar queries to determine cache hit or miss. Using MeanCache, the response to a user's semantically similar query can be retrieved from a local cache rather than re-querying the LLM, thus reducing costs, service provider load, and environmental impact. MeanCache leverages Federated Learning (FL) to collaboratively train a query similarity model without violating user privacy. By placing a local cache in each user's device and using FL, MeanCache reduces the latency, costs, and enhances model performance, resulting in lower false-hit rates. MeanCache also encodes context chains for every cached query, offering a simple yet highly effective mechanism to discern contextual query responses from standalone queries. Our experiments benchmarked against the state-of-the-art caching method reveal that MeanCache attains an approximately 17 % higher F -score and a 20 % increase in precision during semantic cache hit-and-miss decisions while performing even better on contextual queries. It also reduces the storage requirement by 83 % and accelerates semantic cache hit-and-miss decisions by 11 %."
+  },
+  {
+   "paperId": "094fd8ef0db3fb5fb2278de97e191565e97f90ec",
+   "externalIds": {
+    "DOI": "10.4018/978-1-4666-3610-1.ch012",
+    "CorpusId": 16814702
+   },
+   "title": "Semantics discovery via Human computation Games",
+   "venue": "",
+   "year": 2019,
+   "citationCount": 22,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.4018/978-1-4666-3610-1.ch012?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.4018/978-1-4666-3610-1.ch012, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "3165716",
+     "name": "Jakub Šimko"
+    },
+    {
+     "authorId": "2848550",
+     "name": "M. Tvarozek"
+    },
+    {
+     "authorId": "1726847",
+     "name": "Maria Bielikova"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "6ec619676070db13d024e93f5d18d7d73c12cd99",
+   "externalIds": {
+    "DBLP": "journals/ett/ShuklaMV24",
+    "DOI": "10.1002/ett.4872",
+    "CorpusId": 263238191
+   },
+   "title": "HTTP header based phishing attack detection using machine learning",
+   "venue": "Transactions on Emerging Telecommunications Technologies",
+   "year": 2023,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/ett.4872?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/ett.4872, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2151581254",
+     "name": "Sanjeev Shukla"
+    },
+    {
+     "authorId": "2248760279",
+     "name": "Manoj Misra"
+    },
+    {
+     "authorId": "2051299627",
+     "name": "Gaurav Varshney"
+    }
+   ],
+   "abstract": "In the past, many techniques like blacklisting/whitelisting, third‐party, search engine, visual similarity, heuristic, URL features, and website content were used for anti‐phishing. Search engine‐based, third‐party assisted tools and blacklist/whitelist fail to identify new phishing attacks resulting in high FPR. Heuristic and visual similarity approaches are slow, whereas URL and web content‐based techniques do not mimic the dynamic content of current websites and hence cannot stop zero‐day attacks. A study was conducted to understand the critical features used in the past for anti‐phishing, and we found 16 HTTP header features that were novel. In this paper, we have developed a real‐time, highly scalable, feature‐rich anti‐phishing detection technique based on ML that extracts the HTTP headers (predominantly security headers) from web pages to identify them as legitimate or phished. It is observed that phishing sites are short‐lived and are created to achieve a specific objective, like stealing the credential of a user. Once the goal is met, the sites are pulled down immediately. Hence these sites do not take pain to use the security features of web technology and only focus on making the site as similar as possible to the original website. Test results based on our novel features show high accuracy of 97.8% with an average response time of 1.57 s. We have created multiple datasets for different scenarios, like a dataset for website creation through phishing tools and a new dataset for testing unseen phishing attacks. The results thus obtained show detection accuracy of 99% and 95%, respectively."
+  },
+  {
+   "paperId": "55aded59d6668c2bb55d9aecdd48c775fb232bb9",
+   "externalIds": {
+    "DBLP": "journals/nms/HoofMMT24",
+    "DOI": "10.1177/14614448221104405",
+    "CorpusId": 250464454
+   },
+   "title": "Searching differently? How political attitudes impact search queries about political issues",
+   "venue": "New Media & Society",
+   "year": 2022,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1177/14614448221104405",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1177/14614448221104405?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/14614448221104405, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2492194843",
+     "name": "Marieke van Hoof"
+    },
+    {
+     "authorId": "1828107",
+     "name": "Corine S. Meppelink"
+    },
+    {
+     "authorId": "2121387472",
+     "name": "Judith Moeller"
+    },
+    {
+     "authorId": "10721627",
+     "name": "D. Trilling"
+    }
+   ],
+   "abstract": "For many, search engines are crucial gateways to (political) information. While extant research is concerned with algorithmic bias, user choices had been largely neglected. Yet, search queries are the key way in which searchers explicate their information need. Building on framing theory and selective exposure, we argue that queries are ingrained with (political) predispositions: issue frames in mind of searchers manifest themselves in search terms and queries. Using Dutch survey data (N = 1994), and manual coding and latent class analysis, we explore how types of people formulate search queries about immigration and climate change (RQ1). A regression analysis shows how these searcher types relate to political attitudes and socio-demographic characteristics (RQ2). Notably, searchers formulate queries in ways that are related to their political positions, but this differs for different issues. These findings imply systematic differences in user choices which future research needs to consider when auditing search engines."
+  },
+  {
+   "paperId": "20342c641592d9349618439b19ca0d0b2388341f",
+   "externalIds": {
+    "DBLP": "journals/jcis/SharmaKRAD23",
+    "DOI": "10.1080/08874417.2021.2021114",
+    "CorpusId": 246115365
+   },
+   "title": "Journal of Computer Information Systems: Intellectual and Conceptual Structure",
+   "venue": "Journal of Computational Information Systems",
+   "year": 2022,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://cronfa.swan.ac.uk/Record/cronfa59022",
+    "status": "GREEN",
+    "license": "CCBYNC",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1080/08874417.2021.2021114?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1080/08874417.2021.2021114, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2115246061",
+     "name": "Anuj Sharma"
+    },
+    {
+     "authorId": "2978712",
+     "name": "A. Koohang"
+    },
+    {
+     "authorId": "1688149",
+     "name": "Nripendra P. Rana"
+    },
+    {
+     "authorId": "2910385",
+     "name": "Salma S. Abed"
+    },
+    {
+     "authorId": "145800152",
+     "name": "Yogesh K. Dwivedi"
+    }
+   ],
+   "abstract": "ABSTRACT This study examines the intellectual and conceptual structure of the Journal of Computer Information Systems (JCIS) from 1995 to 2021. The evolution of the key topics and the performance of different actors like the key publications, authors, institutions, countries, etc., are reported using a hybrid methodology based upon scientometrics and topic modeling. The latent topics are discovered using structural topic models, and the temporal deviation in the topic prevalences from 1995 to 2021 is visualized. Further, this study reports the most prominent articles, themes, and collaboration patterns using co-citation network analysis, assessment of keywords co-occurrences, and exploration of coauthorship patterns. Finally, the disciplinary influences and knowledge exchange across disciplines are reported. The most significant findings from the study reveal that themes such as “Information Security and Privacy,” “Social Commerce and Social Networking Sites,” “Social Media, Web Search and User Satisfaction,” “Big Data Analytics and Cloud Computing, and “ICT for Economic Development and Empowerment” may become the hotspot for future research. The social exchange of knowledge reveals intra-disciplinarity, where JCIS gets most of the knowledge from the information systems domain itself. However, closest associations with the general business domain, computer science, marketing, organization science, and psychology for knowledge inflows make JCIS a net knowledge receiver."
+  },
+  {
+   "paperId": "7757834f8b5d417b9c6f901d78c78dd74a3cfcd4",
+   "externalIds": {
+    "MAG": "3008049802",
+    "DBLP": "journals/www/ChenSLYM20",
+    "DOI": "10.1007/s11280-020-00787-x",
+    "CorpusId": 211171139
+   },
+   "title": "Web service QoS prediction: when collaborative filtering meets data fluctuating in big-range",
+   "venue": "World wide web (Bussum)",
+   "year": 2020,
+   "citationCount": 19,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s11280-020-00787-x?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s11280-020-00787-x, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2117102347",
+     "name": "Zhen Chen"
+    },
+    {
+     "authorId": "145527865",
+     "name": "Limin Shen"
+    },
+    {
+     "authorId": "2146312376",
+     "name": "Feng Li"
+    },
+    {
+     "authorId": "2828391",
+     "name": "Dian-Long You"
+    },
+    {
+     "authorId": "51907858",
+     "name": "Jean Pepe Buanga Mapetu"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "73d8d53c16c5d3ca3b237fc322a3ad1d84406415",
+   "externalIds": {
+    "DBLP": "journals/tois/ZhaoHDCX22",
+    "DOI": "10.1145/3476106",
+    "CorpusId": 245609985
+   },
+   "title": "Are Topics Interesting or Not? An LDA-based Topic-graph Probabilistic Model for Web Search Personalization",
+   "venue": "ACM Trans. Inf. Syst.",
+   "year": 2021,
+   "citationCount": 19,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3476106?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3476106, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2109974571",
+     "name": "Jia-Shu Zhao"
+    },
+    {
+     "authorId": "1683391",
+     "name": "J. Huang"
+    },
+    {
+     "authorId": "2642895",
+     "name": "Hong-Bo Deng"
+    },
+    {
+     "authorId": "2118858521",
+     "name": "Yi Chang"
+    },
+    {
+     "authorId": "2150331467",
+     "name": "Long Xia"
+    }
+   ],
+   "abstract": "In this article, we propose a Latent Dirichlet Allocation– (LDA) based topic-graph probabilistic personalization model for Web search. This model represents a user graph in a latent topic graph and simultaneously estimates the probabilities that the user is interested in the topics, as well as the probabilities that the user is not interested in the topics. For a given query issued by the user, the webpages that have higher relevancy to the interested topics are promoted, and the webpages more relevant to the non-interesting topics are penalized. In particular, we simulate a user’s search intent by building two profiles: A positive user profile for the probabilities of the user is interested in the topics and a corresponding negative user profile for the probabilities of being not interested in the the topics. The profiles are estimated based on the user’s search logs. A clicked webpage is assumed to include interesting topics. A skipped (viewed but not clicked) webpage is assumed to cover some non-interesting topics to the user. Such estimations are performed in the latent topic space generated by LDA. Moreover, a new approach is proposed to estimate the correlation between a given query and the user’s search history so as to determine how much personalization should be considered for the query. We compare our proposed models with several strong baselines including state-of-the-art personalization approaches. Experiments conducted on a large-scale real user search log collection illustrate the effectiveness of the proposed models."
+  },
+  {
+   "paperId": "5e1e1ba7ded31f7ab2d72eddfc159cc1fcb2855d",
+   "externalIds": {
+    "MAG": "2974030101",
+    "DBLP": "journals/access/El-GayarMAS19",
+    "DOI": "10.1109/ACCESS.2019.2941937",
+    "CorpusId": 203655863
+   },
+   "title": "Enhanced Search Engine Using Proposed Framework and Ranking Algorithm Based on Semantic Relations",
+   "venue": "IEEE Access",
+   "year": 2019,
+   "citationCount": 19,
+   "openAccessPdf": {
+    "url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08840848.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/ACCESS.2019.2941937?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/ACCESS.2019.2941937, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2364168515",
+     "name": "M. M. El-Gayar"
+    },
+    {
+     "authorId": "9390209",
+     "name": "N. Mekky"
+    },
+    {
+     "authorId": "2349943",
+     "name": "A. Atwan"
+    },
+    {
+     "authorId": "40586445",
+     "name": "Hassan H. Soliman"
+    }
+   ],
+   "abstract": "Today, most users need search engines to facilitate search and information retrieval processes. Unfortunately, traditional search engines have a significant challenge that they should retrieve high-precision results for a specific unclear query at a minimum response time. Also, a traditional search engine cannot expand a small, ambiguous query based on the meaning of each keyword and their semantic relationship. Therefore, this paper proposes a comprehensive search engine framework that combines the benefits of both a keyword-based and a semantic ontology-based search engine. The main contributions of this work are developing an algorithm for ranking results based on fuzzy membership value and a mathematical model of exploring a semantic relationship between different keywords. In the conducting experiments, eight different test cases were implemented to evaluate the proposed system. Executed test cases have achieved a precision rate of 97% with appropriate response time compared to the relevant systems."
+  },
+  {
+   "paperId": "c9f275190697b93736ea4a16411416d0e880cddc",
+   "externalIds": {
+    "DOI": "10.3390/telecom4010008",
+    "CorpusId": 256523892
+   },
+   "title": "Machine Learning Based Recommendation System for Web-Search Learning",
+   "venue": "Telecom",
+   "year": 2023,
+   "citationCount": 18,
+   "openAccessPdf": {
+    "url": "https://www.mdpi.com/2673-4001/4/1/8/pdf?version=1675917978",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.3390/telecom4010008?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.3390/telecom4010008, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2209218776",
+     "name": "V. M."
+    },
+    {
+     "authorId": "2147297102",
+     "name": "C. Rodriguez"
+    },
+    {
+     "authorId": "2495904989",
+     "name": "Carlos Edmundo Navarro Depaz"
+    },
+    {
+     "authorId": "2104924310",
+     "name": "U. R. Concha"
+    },
+    {
+     "authorId": "2057760464",
+     "name": "B. Pandey"
+    },
+    {
+     "authorId": "2267289435",
+     "name": "Reena Kharat"
+    },
+    {
+     "authorId": "9441219",
+     "name": "Raja Marappan"
+    }
+   ],
+   "abstract": "Nowadays, e-learning and web-based learning are the most integrated new learning methods in schools, colleges, and higher educational institutions. The recent web-search-based learning methodological approach has helped online users (learners) to search for the required topics from the available online resources. The learners extracted knowledge from textual, video, and image formats through web searching. This research analyzes the learner’s significant attention to searching for the required information online and develops a new recommendation system using machine learning (ML) to perform the web searching. The learner’s navigation and eye movements are recorded using sensors. The proposed model automatically analyzes the learners’ interests while performing online searches and the origin of the acquired and learned information. The ML model maps the text and video contents and obtains a better recommendation. The proposed model analyzes and tracks online resource usage and comprises the following steps: information logging, information processing, and word mapping operations. The learner’s knowledge of the captured online resources using the sensors is analyzed to enhance the response time, selectivity, and sensitivity. On average, the learners spent more hours accessing the video and the textual information and fewer hours accessing the images. The percentage of participants addressing the two different subject quizzes, Q1 and Q2, increased when the learners attempted the quiz after the web search; 43.67% of the learners addressed the quiz Q1 before completing the web search, and 75.92% addressed the quiz Q2 after the web search. The average word counts analysis corresponding to text, videos, overlapping text or video, and comprehensive resources indicates that the proposed model can also apply for a continuous multi sessions online search learning environment. The experimental analysis indicates that better measures are obtained for the proposed recommender using sensors and ML compared with other methods in terms of recall, ranking score, and precision. The proposed model achieves a precision of 27% when the recommendation size becomes 100. The root mean square error (RMSE) lies between 8% and 16% when the number of learners < 500, and the maximum value of RMSE is 21% when the number of learners reaches 1500. The proposed recommendation model achieves better results than the state-of-the-art methods."
+  },
+  {
+   "paperId": "905c78ac3e691c51cf106f2dc127961980a3df0b",
+   "externalIds": {
+    "ArXiv": "2504.15629",
+    "DBLP": "journals/corr/abs-2504-15629",
+    "DOI": "10.48550/arXiv.2504.15629",
+    "CorpusId": 277994166
+   },
+   "title": "CiteFix: Enhancing RAG Accuracy Through Post-Processing Citation Correction",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2025,
+   "citationCount": 17,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.15629, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2297104338",
+     "name": "Harsh Maheshwari"
+    },
+    {
+     "authorId": "2182849",
+     "name": "S. Tenneti"
+    },
+    {
+     "authorId": "2353069286",
+     "name": "Alwarappan Nakkiran"
+    }
+   ],
+   "abstract": "Retrieval Augmented Generation (RAG) has emerged as a powerful application of Large Language Models (LLMs), revolutionizing information search and consumption. RAG systems combine traditional search capabilities with LLMs to generate comprehensive answers to user queries, ideally with accurate citations. However, in our experience of developing a RAG product, LLMs often struggle with source attribution, aligning with other industry studies reporting citation accuracy rates of only about 74% for popular generative search engines. To address this, we present efficient post-processing algorithms to improve citation accuracy in LLM-generated responses, with minimal impact on latency and cost. Our approaches cross-check generated citations against retrieved articles using methods including keyword + semantic matching, fine tuned model with BERTScore, and a lightweight LLM-based technique. Our experimental results demonstrate a relative improvement of 15.46% in the overall accuracy metrics of our RAG system. This significant enhancement potentially enables a shift from our current larger language model to a relatively smaller model that is approximately 12x more cost-effective and 3x faster in inference time, while maintaining comparable performance. This research contributes to enhancing the reliability and trustworthiness of AI-generated content in information retrieval and summarization tasks which is critical to gain customer trust especially in commercial products."
+  },
+  {
+   "paperId": "1ff17c28e4480eb74d2e2ff8b2a8155e5dd353bb",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2509-06887",
+    "ArXiv": "2509.06887",
+    "DOI": "10.48550/arXiv.2509.06887",
+    "CorpusId": 281203134
+   },
+   "title": "UniSearch: Rethinking Search System with a Unified Generative Architecture",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 17,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2509.06887, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2379887651",
+     "name": "Jiahui Chen"
+    },
+    {
+     "authorId": "2364417776",
+     "name": "Xiaoze Jiang"
+    },
+    {
+     "authorId": "2389030883",
+     "name": "Zhi-Bo Wang"
+    },
+    {
+     "authorId": "2379719958",
+     "name": "Quanzhi Zhu"
+    },
+    {
+     "authorId": "8766113",
+     "name": "Jun-Yao Zhao"
+    },
+    {
+     "authorId": "2333427902",
+     "name": "Feng Hu"
+    },
+    {
+     "authorId": "2329104084",
+     "name": "Kang Pan"
+    },
+    {
+     "authorId": "2379645222",
+     "name": "Ao Xie"
+    },
+    {
+     "authorId": "2380541381",
+     "name": "Maohua Pei"
+    },
+    {
+     "authorId": "2363843742",
+     "name": "Zhi-Heng Qin"
+    },
+    {
+     "authorId": "2108699129",
+     "name": "Hongjing Zhang"
+    },
+    {
+     "authorId": "2329285587",
+     "name": "Zhi-Xin Zhai"
+    },
+    {
+     "authorId": "2349837256",
+     "name": "Xiao-Bo Guo"
+    },
+    {
+     "authorId": "2390446320",
+     "name": "Runbin Zhou"
+    },
+    {
+     "authorId": "2342500590",
+     "name": "Ke-Feng Wang"
+    },
+    {
+     "authorId": "2141549468",
+     "name": "Ming-Yang Geng"
+    },
+    {
+     "authorId": "2341673158",
+     "name": "Cheng Chen"
+    },
+    {
+     "authorId": "2385443949",
+     "name": "Jing-Shan Lv"
+    },
+    {
+     "authorId": "2375556909",
+     "name": "Yupeng Huang"
+    },
+    {
+     "authorId": "2379978003",
+     "name": "Xiao Liang"
+    },
+    {
+     "authorId": "2342352472",
+     "name": "Han Li"
+    }
+   ],
+   "abstract": "Modern search systems play a crucial role in facilitating information acquisition. Traditional search engines typically rely on a cascaded architecture, where results are retrieved through recall, pre-ranking, and ranking stages. The complexity of designing and maintaining multiple modules makes it difficult to achieve holistic performance gains. Recent advances in generative recommendation have motivated the exploration of unified generative search as an alternative. However, existing approaches are not genuinely end-to-end: they typically train an item encoder to tokenize candidates first and then optimize a generator separately, leading to objective inconsistency and limited generalization. To address these limitations, we propose UniSearch, a unified generative search framework for Kuaishou Search. UniSearch replaces the cascaded pipeline with an end-to-end architecture that integrates a Search Generator and a Video Encoder. The Generator produces semantic identifiers of relevant items given a user query, while the Video Encoder learns latent item embeddings and provides their tokenized representations. A unified training framework jointly optimizes both components, enabling mutual enhancement and improving representation quality and generation accuracy. Furthermore, we introduce Search Preference Optimization (SPO), which leverages a reward model and real user feedback to better align generation with user preferences. Extensive experiments on industrial-scale datasets, together with online A/B testing in both short-video and live search scenarios, demonstrate the strong effectiveness and deployment potential of UniSearch. Notably, its deployment in live search yields the largest single-experiment improvement in recent years of our product's history, highlighting its practical value for real-world applications."
+  },
+  {
+   "paperId": "83fa8ba0664165d5900b8a7d6dcf86c876838965",
+   "externalIds": {
+    "DBLP": "journals/mdpinetwork/MhawiOSA22",
+    "DOI": "10.3390/network2040034",
+    "CorpusId": 253274264
+   },
+   "title": "An Efficient Information Retrieval System Using Evolutionary Algorithms",
+   "venue": "Network",
+   "year": 2022,
+   "citationCount": 16,
+   "openAccessPdf": {
+    "url": "https://www.mdpi.com/2673-8732/2/4/34/pdf?version=1668508578",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.3390/network2040034?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.3390/network2040034, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2144938759",
+     "name": "Doaa N. Mhawi"
+    },
+    {
+     "authorId": "2158593520",
+     "name": "Haider W. Oleiwi"
+    },
+    {
+     "authorId": "40281438",
+     "name": "N. Saeed"
+    },
+    {
+     "authorId": "2168161894",
+     "name": "Heba L. Al-Taie"
+    }
+   ],
+   "abstract": "When it comes to web search, information retrieval (IR) represents a critical technique as web pages have been increasingly growing. However, web users face major problems; unrelated user query retrieved documents (i.e., low precision), a lack of relevant document retrieval (i.e., low recall), acceptable retrieval time, and minimum storage space. This paper proposed a novel advanced document-indexing method (ADIM) with an integrated evolutionary algorithm. The proposed IRS includes three main stages; the first stage (i.e., the advanced documents indexing method) is preprocessing, which consists of two steps: dataset documents reading and advanced documents indexing method (ADIM), resulting in a set of two tables. The second stage is the query searching algorithm to produce a set of words or keywords and the related documents retrieving. The third stage (i.e., the searching algorithm) consists of two steps. The modified genetic algorithm (MGA) proposed new fitness functions using a cross-point operator with dynamic length chromosomes with the adaptive function of the culture algorithm (CA). The proposed system ranks the most relevant documents to the user query by adding a simple parameter (∝) to the fitness function to guarantee the convergence solution, retrieving the most relevant user’s document by integrating MGA with the CA algorithm to achieve the best accuracy. This system was simulated using a free dataset called WebKb containing Worldwide Webpages of computer science departments at multiple universities. The dataset is composed of 8280 HTML-programed semi-structured documents. Experimental results and evaluation measurements showed 100% average precision with 98.5236% average recall for 50 test queries, while the average response time was 00.46.74.78 milliseconds with 18.8 MB memory space for document indexing. The proposed work outperforms all the literature, comparatively, representing a remarkable leap in the studied field."
+  },
+  {
+   "paperId": "6c3eda8ba387b03d1c9561ebe48affaa05e05000",
+   "externalIds": {
+    "MAG": "3007702683",
+    "DBLP": "conf/www/QinLBM20",
+    "DOI": "10.1145/3366423.3380046",
+    "CorpusId": 211140310
+   },
+   "title": "Matching Cross Network for Learning to Rank in Personal Search",
+   "venue": "The Web Conference",
+   "year": 2020,
+   "citationCount": 16,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3366423.3380046",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3366423.3380046?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3366423.3380046, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "145144957",
+     "name": "Zhen Qin"
+    },
+    {
+     "authorId": "2145408854",
+     "name": "Zhongliang Li"
+    },
+    {
+     "authorId": "1815447",
+     "name": "Michael Bendersky"
+    },
+    {
+     "authorId": "1680617",
+     "name": "Donald Metzler"
+    }
+   ],
+   "abstract": "Recent neural ranking algorithms focus on learning semantic matching between query and document terms. However, practical learning to rank systems typically rely on a wide range of side information beyond query and document textual features, like location, user context, etc. It is common practice to concatenate all of these features and rely on deep models to learn a complex representation. We study how to effectively and efficiently combine textual information from queries and documents with other useful but less prominent side information for learning to rank. We conduct synthetic experiments to show that: 1) neural networks are inefficient at learning the interaction between two prominent features (e.g., query and document embedding features) in the presence of other less prominent features; 2) direct application of a state-of-art method for higher-order feature generation is also inefficient. Based on the above observations, we propose a simple but effective matching cross network (MCN) method for learning to rank with side information. MCN conducts an element-wise multiplication matching of query and document embeddings and leverages a technique called latent cross to effectively learn the interaction between matching output and all side information. The approach is easy to implement, and adds minimal parameters and latency overhead to standard neural ranking architectures. We conduct extensive experiments using two of the world’s largest personal search engines, Gmail and Google Drive search, and show that each proposed component adds meaningful gains against a strong production baseline with minimal latency overhead, thereby demonstrating the practical effectiveness and efficiency of the proposed approach."
+  },
+  {
+   "paperId": "b0711b3de380a445dd5341cf67c713e2daed17c4",
+   "externalIds": {
+    "DBLP": "conf/sc/BatsoyolPWBS22",
+    "DOI": "10.1109/SC41404.2022.00014",
+    "CorpusId": 257157843
+   },
+   "title": "P-Massive: A Real-Time Search Engine for a Multi-Terabyte Mass Spectrometry Database",
+   "venue": "International Conference for High Performance Computing, Networking, Storage and Analysis",
+   "year": 2022,
+   "citationCount": 15,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/SC41404.2022.00014?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/SC41404.2022.00014, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "10776987",
+     "name": "Narangerelt Batsoyol"
+    },
+    {
+     "authorId": "1581115332",
+     "name": "Benjamin Pullman"
+    },
+    {
+     "authorId": "1949898",
+     "name": "Ming-Xun Wang"
+    },
+    {
+     "authorId": "2865038",
+     "name": "N. Bandeira"
+    },
+    {
+     "authorId": "143846212",
+     "name": "Steven Swanson"
+    }
+   ],
+   "abstract": "Queries of multi-TB Mass Spectrometry (MS) repositories provide deep insights into biological processes and pose challenging data processing problems. The key bottleneck for running these queries is the number of small random reads. Byte-addressable persistent main memory (PMEM) technologies enable real-time MS search systems by delivering low-latency, high-bandwidth storage. This work presents P-Massive, real-time multi-terabyte scale MS search system. P-Massive takes advantage of PMEM and the underlying nature of its data access patterns to maximize performance. We evaluate P-Massive across various storage hierarchies and project forward over the next decade to understand how MS query systems might evolve. Our evaluation shows that P-Massive offers a cost-effective solution that achieves near-DRAM performance. A single query takes 1.7 seconds in P-Massive, 69× faster than state-of-the-art implementation. In an end-to-end, user-facing application, P-Massive delivers a 90% shorter wait time than the latest MS search tool, returning results within seconds rather than minutes."
+  },
+  {
+   "paperId": "5cdd43ac15ade574ac1177c1e68ba5f3e2d62362",
+   "externalIds": {
+    "MAG": "3043170443",
+    "DBLP": "conf/um/AbriAC20",
+    "DOI": "10.1145/3386392.3399559",
+    "CorpusId": 220497382
+   },
+   "title": "Group-based Personalization Using Topical User Profile",
+   "venue": "User Modeling, Adaptation, and Personalization",
+   "year": 2020,
+   "citationCount": 15,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3386392.3399559?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3386392.3399559, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "1726081044",
+     "name": "Sara Abri"
+    },
+    {
+     "authorId": "1726053216",
+     "name": "R. Abri"
+    },
+    {
+     "authorId": "93768504",
+     "name": "S. Cetin"
+    }
+   ],
+   "abstract": "Although user profiles are indicative of the user's interests, they can be incomplete to reflect all the user's interests and in more times it is needed to use a group of personalized user profiles to re-rank the returned results by search engines. One of the disadvantages of the personalization based on the user profile is that it is built by considering only the documents that the user has clicked. The set of the clicked documents might be sparse for some users. Data sparsity can be resolved by backing off to the group of users with similar behavior to the user. In this paper, we present a group-based personalization model using topical user-profiles and compare the result of the proposed ranking methods based on the group and user profiles. To cluster the groups of users we use the Kmeans clustering algorithm and the similarity between users is measured by symmetric Kullback-Leibler divergence between their latent topic distributions. Using the proposed group-based personalization model, we can improve the ranking result using group-based profiles and solve the cold start problem of users without history. In the issues related to privacy concerns, group profiles are also more secure than user profiles because both the computation and the storage of the user information are done as a group of users. The result reveals that the group-based personalization using topical user profile improves the Mean Reciprocal Rank and the Normalized Discounted Cumulative Gain by 7% and 6% respectively in all short, long and session term profiles while the short term user profile obtains more effective than the others profiles."
+  },
+  {
+   "paperId": "afcd98b57b3185fbc4152f16c395aeff2b453066",
+   "externalIds": {
+    "MAG": "2955053348",
+    "DBLP": "journals/access/TianZWZLG19",
+    "DOI": "10.1109/ACCESS.2019.2926559",
+    "CorpusId": 198146064
+   },
+   "title": "Semantic Sparse Service Discovery Using Word Embedding and Gaussian LDA",
+   "venue": "IEEE Access",
+   "year": 2019,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08754673.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/ACCESS.2019.2926559?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/ACCESS.2019.2926559, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "47697916",
+     "name": "Gang Tian"
+    },
+    {
+     "authorId": "2111159845",
+     "name": "Sheng-Tao Zhao"
+    },
+    {
+     "authorId": "2152766458",
+     "name": "Jian Wang"
+    },
+    {
+     "authorId": "2117927837",
+     "name": "Zi-Qi Zhao"
+    },
+    {
+     "authorId": "11025063",
+     "name": "Jun-Ju Liu"
+    },
+    {
+     "authorId": "2300321",
+     "name": "Lantian Guo"
+    }
+   ],
+   "abstract": "Nowadays, a growing number of web services are offered in API marketplaces browsed by service developers or third-party registries. Under this situation, API marketplaces’ users greatly rely on a search engine to find suitable web services. However, due to the fact that functional attributes of web services are usually described in short texts, the search engine-based discovery approach suffers from the semantic sparsity problem, which hinders the effect of service discovery. To address this issue, we propose a novel web service discovery approach using word embedding and Gaussian latent Dirichlet allocation (Gaussian LDA). Unlike most existing service discovery approaches, our approach first uses context information generated by word embedding to enrich the semantics of service descriptions and users’ queries. Then, the enriched service description is loaded into the Gaussian LDA model to acquire service description representation. Finally, the services are ranked by considering the relevance between the extended user’s query and service description representation. The experiments conducted on a real-world web service dataset and the results demonstrate that the proposed approach achieves superior effectiveness on web service discovery."
+  },
+  {
+   "paperId": "70fb744946ed61b9d390fee9bece24317facb90c",
+   "externalIds": {
+    "DBLP": "conf/www/LuoLSCNGLSY22",
+    "DOI": "10.1145/3487553.3524213",
+    "CorpusId": 248347631
+   },
+   "title": "ROSE: Robust Caches for Amazon Product Search",
+   "venue": "The Web Conference",
+   "year": 2022,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3487553.3524213",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3487553.3524213?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3487553.3524213, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2112751280",
+     "name": "Chen Luo"
+    },
+    {
+     "authorId": "70235149",
+     "name": "Vihan Lakshman"
+    },
+    {
+     "authorId": "4260659",
+     "name": "Anshumali Shrivastava"
+    },
+    {
+     "authorId": "2151070",
+     "name": "Tianyu Cao"
+    },
+    {
+     "authorId": "7529854",
+     "name": "Sreyashi Nag"
+    },
+    {
+     "authorId": "3057049",
+     "name": "R. Goutam"
+    },
+    {
+     "authorId": "2149891871",
+     "name": "Hanqing Lu"
+    },
+    {
+     "authorId": "2115714424",
+     "name": "Yi-Wei Song"
+    },
+    {
+     "authorId": "2021632793",
+     "name": "Bing Yin"
+    }
+   ],
+   "abstract": "Product search engines like Amazon Search often use caches to improve the customer user experience; caches can improve both the system’s latency as well as search quality. However, as search traffic increases over time, the cache’s ever-growing size can diminish the overall system performance. Furthermore, typos, misspellings, and redundancy widely witnessed in real-world product search queries can cause unnecessary cache misses, reducing the cache’s utility. In this paper, we introduce ROSE, a RObuSt cachE, a system that is tolerant to misspellings and typos while retaining the look-up cost of traditional caches. The core component of ROSE is a randomized hashing schema that makes ROSE able to index and retrieve an arbitrarily large set of queries with constant memory and constant time. ROSE is also robust to any query intent, typos, and grammatical errors with theoretical guarantees. Extensive experiments on real-world datasets demonstrate the effectiveness and efficiency of ROSE. ROSE is deployed in the Amazon Search Engine and produced a significant improvement over the existing solutions across several key business metrics."
+  },
+  {
+   "paperId": "63a893715328a29ff652348fe19ec5f165bba580",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2510-24668",
+    "ArXiv": "2510.24668",
+    "DOI": "10.48550/arXiv.2510.24668",
+    "CorpusId": 282401680
+   },
+   "title": "InteractComp: Evaluating Search Agents With Ambiguous Queries",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.24668, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2387866410",
+     "name": "Mingyi Deng"
+    },
+    {
+     "authorId": "2362140869",
+     "name": "Lijun Huang"
+    },
+    {
+     "authorId": "2261069426",
+     "name": "Yan Fan"
+    },
+    {
+     "authorId": "2305774655",
+     "name": "Fan-Qi Kong"
+    },
+    {
+     "authorId": "2288348676",
+     "name": "Jiayi Zhang"
+    },
+    {
+     "authorId": "2387972699",
+     "name": "Fa-Shen Ren"
+    },
+    {
+     "authorId": "2391112748",
+     "name": "Jinyi Bai"
+    },
+    {
+     "authorId": "2112497195",
+     "name": "Fu-Zheng Yang"
+    },
+    {
+     "authorId": "2387977106",
+     "name": "Dayi Miao"
+    },
+    {
+     "authorId": "2310389702",
+     "name": "Zhao-Yang Yu"
+    },
+    {
+     "authorId": "2301165577",
+     "name": "Yi-Fan Wu"
+    },
+    {
+     "authorId": "2372760398",
+     "name": "Yan-Fei Zhang"
+    },
+    {
+     "authorId": "2325905355",
+     "name": "Feng-Wei Teng"
+    },
+    {
+     "authorId": "2303955786",
+     "name": "Yingjia Wan"
+    },
+    {
+     "authorId": "2388142971",
+     "name": "Song Hu"
+    },
+    {
+     "authorId": "2380464380",
+     "name": "Yu-De Li"
+    },
+    {
+     "authorId": "2363636116",
+     "name": "Xin Jin"
+    },
+    {
+     "authorId": "2343469417",
+     "name": "Cong Hu"
+    },
+    {
+     "authorId": "2320837632",
+     "name": "Hao-Yu Li"
+    },
+    {
+     "authorId": "28607215",
+     "name": "Qirui Fu"
+    },
+    {
+     "authorId": "2387977408",
+     "name": "Tai Zhong"
+    },
+    {
+     "authorId": "2334735071",
+     "name": "Xinyu Wang"
+    },
+    {
+     "authorId": "2376415283",
+     "name": "Xiang-Ru Tang"
+    },
+    {
+     "authorId": "2301154561",
+     "name": "Nan Tang"
+    },
+    {
+     "authorId": "2326297106",
+     "name": "Cheng-Lin Wu"
+    },
+    {
+     "authorId": "2325963851",
+     "name": "Yu-Yu Luo"
+    }
+   ],
+   "abstract": "Language agents have demonstrated remarkable potential in web search and information retrieval. However, many search-agent benchmarks assume that user queries are complete and unambiguous. This assumption leaves under-tested a practical failure mode: agents may face ambiguous requests where the intended target cannot be identified without clarification. Yet most agents lack interactive mechanisms during the search process, and existing benchmarks cannot assess this capability. To address this gap, we introduce InteractComp, a benchmark designed to evaluate whether search agents can recognize query ambiguity and actively interact to resolve it during search. Following the principle of easy to verify, interact to disambiguate, we construct 210 expert-curated questions across 9 domains through a target-distractor methodology that creates controlled ambiguity resolvable only through interaction. Evaluation of 17 models reveals striking failure: the best model achieves only 13.73% accuracy despite 71.50% with complete context, exposing systematic overconfidence rather than reasoning deficits. Forced interaction produces dramatic gains, demonstrating latent capability current strategies fail to engage. Longitudinal analysis shows interaction capabilities stagnated over 15 months while search performance improved seven-fold, revealing a critical blind spot. This stagnation, coupled with the immediate feedback inherent to search tasks, makes InteractComp a valuable resource for both evaluating and training interaction capabilities in search agents. The code is available at https://github.com/FoundationAgents/InteractComp."
+  },
+  {
+   "paperId": "23a22844361a5760cd27f31f87d9c4f66169ba51",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2302-08714",
+    "ArXiv": "2302.08714",
+    "DOI": "10.1145/3580305.3599782",
+    "CorpusId": 257019701
+   },
+   "title": "Binary Embedding-based Retrieval at Tencent",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2023,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3580305.3599782",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2302.08714, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "40366185",
+     "name": "Yukang Gan"
+    },
+    {
+     "authorId": "152988335",
+     "name": "Yixiao Ge"
+    },
+    {
+     "authorId": "50133138",
+     "name": "Chang Zhou"
+    },
+    {
+     "authorId": "2066632016",
+     "name": "Shupeng Su"
+    },
+    {
+     "authorId": "2115481964",
+     "name": "Zhou Xu"
+    },
+    {
+     "authorId": "1714200",
+     "name": "Xu-Yuan Xu"
+    },
+    {
+     "authorId": "2208322267",
+     "name": "Quan-Chao Hui"
+    },
+    {
+     "authorId": "153773753",
+     "name": "Xiang Chen"
+    },
+    {
+     "authorId": "2155353485",
+     "name": "Ye-Xin Wang"
+    },
+    {
+     "authorId": "1387190008",
+     "name": "Shan Ying"
+    }
+   ],
+   "abstract": "Large-scale embedding-based retrieval (EBR) is the cornerstone of search-related industrial applications. Given a user query, the system of EBR aims to identify relevant information from a large corpus of documents that may be tens or hundreds of billions in size. The storage and computation turn out to be expensive and inefficient with massive documents and high concurrent queries, making it difficult to further scale up. To tackle the challenge, we propose a binary embedding-based retrieval (BEBR) engine equipped with a recurrent binarization algorithm that enables customized bits per dimension. Specifically, we compress the full-precision query and document embeddings, formulated as float vectors in general, into a composition of multiple binary vectors using a lightweight transformation model with residual multi-layer perception (MLP) blocks. The bits of transformed binary vectors are jointly determined by the output dimension of MLP blocks (termed m) and the number of residual blocks (termed u), i.e., m X (u + 1). We can therefore tailor the number of bits for different applications to trade off accuracy loss and cost savings. Importantly, we enable task-agnostic efficient training of the binarization model using a new embedding-to-embedding strategy,e.g., only 2 V100 GPU hours are required by millions of vectors for training. We also exploit the compatible training of binary embeddings so that the BEBR engine can support indexing among multiple embedding versions within a unified system. To further realize efficient search, we propose Symmetric Distance Calculation (SDC) to achieve lower response time than Hamming codes. The technique exploits Single Instruction Multiple Data (SIMD) units widely available in current CPUs. We successfully employed the introduced BEBR to web search and copyright detection of Tencent products, including Sogou, Tencent Video, QQ World, etc. The binarization algorithm can be seamlessly generalized to various tasks with multiple modalities, for instance, natural language processing (NLP) and computer vision (CV). Extensive experiments on offline benchmarks and online A/B tests demonstrate the efficiency and effectiveness of our method, significantly saving 30% ~ 50% index costs with almost no loss of accuracy at the system level1 is publicly available at https://github.com/ganyk/BEBR."
+  },
+  {
+   "paperId": "1ad6341b44baee1a87b07b844a90bcf4ec36a6fb",
+   "externalIds": {
+    "DOI": "10.1002/jdd.13560",
+    "CorpusId": 269625371,
+    "PubMed": "38715215"
+   },
+   "title": "An artificial intelligence-based dental semantic search engine as a reliable tool for dental students and educators.",
+   "venue": "Journal of Dental Education",
+   "year": 2024,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/jdd.13560?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/jdd.13560, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2292830807",
+     "name": "K. Prakash"
+    },
+    {
+     "authorId": "2062756826",
+     "name": "Ram Prakash"
+    }
+   ],
+   "abstract": "PURPOSE/OBJECTIVES\nThis study proposes the utilization of a Natural Language Processing tool to create a semantic search engine for dental education while addressing the increasing concerns of accuracy, bias, and hallucination in outputs generated by AI tools. The paper focuses on developing and evaluating DentQA, a specialized question-answering tool that makes it easy for students to seek information to access information located in handouts or study material distributed by an institution.\n\n\nMETHODS\nDentQA is structured upon the GPT3.5 language model, utilizing prompt engineering to extract information from external dental documents that experts have verified. Evaluation involves non-human metrics (BLEU scores) and human metrics for the tool's performance, relevance, accuracy, and functionality.\n\n\nRESULTS\nNon-human metrics confirm DentQA's linguistic proficiency, achieving a Unigram BLEU score of 0.85. Human metrics reveal DentQA's superiority over GPT3.5 in terms of accuracy (p = 0.00004) and absence of hallucination (p = 0.026). Additional metrics confirmed consistent performance across different question types (X2 (4, N = 200) = 13.0378, p = 0.012). User satisfaction and performance metrics support DentQA's usability and effectiveness, with a response time of 3.5 s and over 70% satisfaction across all evaluated parameters.\n\n\nCONCLUSIONS\nThe study advocates using a semantic search engine in dental education, mitigating concerns of misinformation and hallucination. By outlining the workflow and the utilization of open-source tools and methods, the study encourages the utilization of similar tools for dental education while underscoring the importance of customizing AI models for dentistry. Further optimizations, testing, and utilization of recent advances can contribute to dental education significantly."
+  },
+  {
+   "paperId": "0882e606a186ddea352201afd826d5ebdfaf656b",
+   "externalIds": {
+    "MAG": "3128155302",
+    "DOI": "10.4236/MSCE.2021.91005",
+    "CorpusId": 234294317
+   },
+   "title": "New Approach on the Techniques of Content-Based Image Retrieval (CBIR) Using Color, Texture and Shape Features",
+   "venue": "",
+   "year": 2021,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "https://content.scirp.org/pdf/msce_2021020213104157.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.4236/MSCE.2021.91005?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.4236/MSCE.2021.91005, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2557836",
+     "name": "M. Shukran"
+    },
+    {
+     "authorId": "2362060020",
+     "name": "M. Abdullah"
+    },
+    {
+     "authorId": "153830038",
+     "name": "M. Yunus"
+    }
+   ],
+   "abstract": "Digital image collection as rapidly increased along with the development of computer network. Image retrieval system was developed purposely to provide an efficient tool for a set of images from a collection of images in the database that matches the user’s requirements in similarity evaluations such as image content similarity, edge, and color similarity. Retrieving images based on the content which is color, texture, and shape is called content based image retrieval (CBIR). The content is actually the feature of an image and these features are extracted and used as the basis for a similarity check between images. The algorithms used to calculate the similarity between extracted features. There are two kinds of content based image retrieval which are general image retrieval and application specific image retrieval. For the general image retrieval, the goal of the query is to obtain images with the same object as the query. Such CBIR imitates web search engines for images rather than for text. For application specific, the purpose tries to match a query image to a collection of images of a specific type such as fingerprints image and x-ray. In this paper, the general architecture, various functional components, and techniques of CBIR system are discussed. CBIR techniques discussed in this paper are categorized as CBIR using color, CBIR using texture, and CBIR using shape features. This paper also describe about the comparison study about color features, texture features, shape features, and combined features (hybrid techniques) in terms of several parameters. The parameters are precision, recall and response time."
+  },
+  {
+   "paperId": "dbb669f6e028f97717c84075e3c2377a07e26841",
+   "externalIds": {
+    "MAG": "3111577740",
+    "ArXiv": "2012.07654",
+    "DBLP": "journals/corr/abs-2012-07654",
+    "DOI": "10.1145/3447548.3467087",
+    "CorpusId": 229153281
+   },
+   "title": "Session-Aware Query Auto-completion using Extreme Multi-Label Ranking",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2020,
+   "citationCount": 13,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3447548.3467087",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2012.07654, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "144132372",
+     "name": "Nishant Yadav"
+    },
+    {
+     "authorId": "145897034",
+     "name": "Rajat Sen"
+    },
+    {
+     "authorId": "2113373342",
+     "name": "Daniel N. Hill"
+    },
+    {
+     "authorId": "143764713",
+     "name": "A. Mazumdar"
+    },
+    {
+     "authorId": "1783667",
+     "name": "I. Dhillon"
+    }
+   ],
+   "abstract": "Query auto-completion (QAC) is a fundamental feature in search engines where the task is to suggest plausible completions of a prefix typed in the search bar. Previous queries in the user session can provide useful context for the user's intent and can be leveraged to suggest auto-completions that are more relevant while adhering to the user's prefix. Such session-aware QACs can be generated by recent sequence-to-sequence deep learning models; however, these generative approaches often do not meet the stringent latency requirements of responding to each user keystroke. Moreover, these generative approaches pose the risk of showing nonsensical queries. One can pre-compute a relatively small subset of relevant queries for common prefixes and rank them based on the context. However, such an approach fails when no relevant queries for the current context are present in the pre-computed set. In this paper, we provide a solution to this problem: we take the novel approach of modeling session-aware QAC as an eXtreme Multi-Label Ranking (XMR) problem where the input is the previous query in the session and the user's current prefix, while the output space is the set of tens of millions of queries entered by users in the recent past. We adapt a popular XMR algorithm for this purpose by proposing several modifications to the key steps in the algorithm. The proposed modifications yield a 10x improvement in terms of Mean Reciprocal Rank (MRR) over the baseline XMR approach on a public search logs dataset. We are able to maintain an inference latency of less than 10 ms while still using session context. When compared against baseline models of acceptable latency, we observed a 33% improvement in MRR for short prefixes of up to 3 characters. Moreover, our model yielded a statistically significant improvement of 2.81% over a production QAC system in terms of suggestion acceptance rate, when deployed on the search bar of an online shopping store as part of an A/B test."
+  },
+  {
+   "paperId": "356933aea1bf351ad9e8148b40e3345f15da1ea1",
+   "externalIds": {
+    "ArXiv": "2010.13659",
+    "DBLP": "journals/corr/abs-2010-13659",
+    "MAG": "3094810300",
+    "DOI": "10.48550/arXiv.2010.13659",
+    "CorpusId": 225070167
+   },
+   "title": "Exploiting Neural Query Translation into Cross Lingual Information Retrieval",
+   "venue": "arXiv.org",
+   "year": 2020,
+   "citationCount": 13,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2010.13659, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2106354196",
+     "name": "Liang Yao"
+    },
+    {
+     "authorId": "21299583",
+     "name": "Baosong Yang"
+    },
+    {
+     "authorId": "2111126458",
+     "name": "Haibo Zhang"
+    },
+    {
+     "authorId": "48244817",
+     "name": "Wei-Hua Luo"
+    },
+    {
+     "authorId": "2152687324",
+     "name": "Bo-Xing Chen"
+    }
+   ],
+   "abstract": "As a crucial role in cross-language information retrieval (CLIR), query translation has three main challenges: 1) the adequacy of translation; 2) the lack of in-domain parallel training data; and 3) the requisite of low latency. To this end, existing CLIR systems mainly exploit statistical-based machine translation (SMT) rather than the advanced neural machine translation (NMT), limiting the further improvements on both translation and retrieval quality. In this paper, we investigate how to exploit neural query translation model into CLIR system. Specifically, we propose a novel data augmentation method that extracts query translation pairs according to user clickthrough data, thus to alleviate the problem of domain-adaptation in NMT. Then, we introduce an asynchronous strategy which is able to leverage the advantages of the real-time in SMT and the veracity in NMT. Experimental results reveal that the proposed approach yields better retrieval quality than strong baselines and can be well applied into a real-world CLIR system, i.e. Aliexpress e-Commerce search engine. Readers can examine and test their cases on our website: this https URL ."
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(latency | \"response time\") + (\"web search\" | \"search engine\") + (user | satisfaction | engagement)"
+}

@@ -1,0 +1,2620 @@
+{
+ "total": 511,
+ "token": null,
+ "data": [
+  {
+   "paperId": "1d9c21a0fdb1cc16a32c5d490ebaf98436a23382",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2504-19413",
+    "ArXiv": "2504.19413",
+    "DOI": "10.48550/arXiv.2504.19413",
+    "CorpusId": 278165315
+   },
+   "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+   "venue": "European Conference on Artificial Intelligence",
+   "year": 2025,
+   "citationCount": 926,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.19413, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1416534710",
+     "name": "P. Chhikara"
+    },
+    {
+     "authorId": "2357971314",
+     "name": "Dev Khant"
+    },
+    {
+     "authorId": "2344539330",
+     "name": "Saket Aryan"
+    },
+    {
+     "authorId": "2112769962",
+     "name": "Taranjeet Singh"
+    },
+    {
+     "authorId": "24508084",
+     "name": "Deshraj Yadav"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have demonstrated remarkable prowess in generating contextually coherent responses, yet their fixed context windows pose fundamental challenges for maintaining consistency over prolonged multi-session dialogues. We introduce Mem0, a scalable memory-centric architecture that addresses this issue by dynamically extracting, consolidating, and retrieving salient information from ongoing conversations. Building on this foundation, we further propose an enhanced variant that leverages graph-based memory representations to capture complex relational structures among conversational elements. Through comprehensive evaluations on LOCOMO benchmark, we systematically compare our approaches against six baseline categories: (i) established memory-augmented systems, (ii) retrieval-augmented generation (RAG) with varying chunk sizes and k-values, (iii) a full-context approach that processes the entire conversation history, (iv) an open-source memory solution, (v) a proprietary model system, and (vi) a dedicated memory management platform. Empirical results show that our methods consistently outperform all existing memory systems across four question categories: single-hop, temporal, multi-hop, and open-domain. Notably, Mem0 achieves 26% relative improvements in the LLM-as-a-Judge metric over OpenAI, while Mem0 with graph memory achieves around 2% higher overall score than the base configuration. Beyond accuracy gains, we also markedly reduce computational overhead compared to full-context method. In particular, Mem0 attains a 91% lower p95 latency and saves more than 90% token cost, offering a compelling balance between advanced reasoning capabilities and practical deployment constraints. Our findings highlight critical role of structured, persistent memory mechanisms for long-term conversational coherence, paving the way for more reliable and efficient LLM-driven AI agents."
+  },
+  {
+   "paperId": "70da4fb798a86cbe8cad96c27ced0415885bbd9d",
+   "externalIds": {
+    "DBLP": "conf/naacl/HeLGJZLJYDC24",
+    "ArXiv": "2303.16854",
+    "DOI": "10.48550/arXiv.2303.16854",
+    "CorpusId": 257805087
+   },
+   "title": "AnnoLLM: Making Large Language Models to Be Better Crowdsourced Annotators",
+   "venue": "North American Chapter of the Association for Computational Linguistics",
+   "year": 2023,
+   "citationCount": 318,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2303.16854",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2303.16854, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1754500",
+     "name": "Xingwei He"
+    },
+    {
+     "authorId": "31113759",
+     "name": "Zheng-Wen Lin"
+    },
+    {
+     "authorId": "2171182",
+     "name": "Yeyun Gong"
+    },
+    {
+     "authorId": "15796861",
+     "name": "Alex Jin"
+    },
+    {
+     "authorId": "2119077859",
+     "name": "Hang Zhang"
+    },
+    {
+     "authorId": "2186278677",
+     "name": "Chen Lin"
+    },
+    {
+     "authorId": "2143968416",
+     "name": "Jian Jiao"
+    },
+    {
+     "authorId": "145964453",
+     "name": "Siu-Ming Yiu"
+    },
+    {
+     "authorId": "46429989",
+     "name": "Nan Duan"
+    },
+    {
+     "authorId": "2109136147",
+     "name": "Wei-Zhu Chen"
+    }
+   ],
+   "abstract": "Many natural language processing (NLP) tasks rely on labeled data to train machine learning models with high performance. However, data annotation is time-consuming and expensive, especially when the task involves a large amount of data or requires specialized domains. Recently, GPT-3.5 series models have demonstrated remarkable few-shot and zero-shot ability across various NLP tasks. In this paper, we first claim that large language models (LLMs), such as GPT-3.5, can serve as an excellent crowdsourced annotator when provided with sufficient guidance and demonstrated examples. Accordingly, we propose AnnoLLM, an annotation system powered by LLMs, which adopts a two-step approach, explain-then-annotate. Concretely, we first prompt LLMs to provide explanations for why the specific ground truth answer/label was assigned for a given example. Then, we construct the few-shot chain-of-thought prompt with the self-generated explanation and employ it to annotate the unlabeled data with LLMs. Our experiment results on three tasks, including user input and keyword relevance assessment, BoolQ, and WiC, demonstrate that AnnoLLM surpasses or performs on par with crowdsourced annotators. Furthermore, we build the first conversation-based information retrieval dataset employing AnnoLLM. This dataset is designed to facilitate the development of retrieval models capable of retrieving pertinent documents for conversational text. Human evaluation has validated the dataset's high quality."
+  },
+  {
+   "paperId": "c8b271d6bf6f3906edb012c62a5ba1193e9c74ae",
+   "externalIds": {
+    "DBLP": "conf/ictir/FaggioliDCDHHKK23",
+    "ArXiv": "2304.09161",
+    "DOI": "10.1145/3578337.3605136",
+    "CorpusId": 258187001
+   },
+   "title": "Perspectives on Large Language Models for Relevance Judgment",
+   "venue": "International Conference on the Theory of Information Retrieval",
+   "year": 2023,
+   "citationCount": 297,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3578337.3605136",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2304.09161, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "80808662",
+     "name": "Guglielmo Faggioli"
+    },
+    {
+     "authorId": "145798497",
+     "name": "Laura Dietz"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    },
+    {
+     "authorId": "1694274",
+     "name": "Gianluca Demartini"
+    },
+    {
+     "authorId": "145072133",
+     "name": "Matthias Hagen"
+    },
+    {
+     "authorId": "2731925",
+     "name": "C. Hauff"
+    },
+    {
+     "authorId": "1678892",
+     "name": "Noriko Kando"
+    },
+    {
+     "authorId": "1713134",
+     "name": "E. Kanoulas"
+    },
+    {
+     "authorId": "3046200",
+     "name": "Martin Potthast"
+    },
+    {
+     "authorId": "1405867539",
+     "name": "Benno Stein"
+    },
+    {
+     "authorId": "2626599",
+     "name": "Henning Wachsmuth"
+    }
+   ],
+   "abstract": "When asked, large language models~(LLMs) like ChatGPT claim that they can assist with relevance judgments but it is not clear whether automated judgments can reliably be used in evaluations of retrieval systems. In this perspectives paper, we discuss possible ways for~LLMs to support relevance judgments along with concerns and issues that arise. We devise a human--machine collaboration spectrum that allows to categorize different relevance judgment strategies, based on how much humans rely on machines. For the extreme point of 'fully automated judgments', we further include a pilot experiment on whether LLM-based relevance judgments correlate with judgments from trained human assessors. We conclude the paper by providing opposing perspectives for and against the use of~LLMs for automatic relevance judgments, and a compromise perspective, informed by our analyses of the literature, our preliminary experimental evidence, and our experience as IR~researchers."
+  },
+  {
+   "paperId": "8be0ec99f80710887e3a8e6bac5fba51a8fd7186",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2305-02156",
+    "ArXiv": "2305.02156",
+    "DOI": "10.48550/arXiv.2305.02156",
+    "CorpusId": 258461030
+   },
+   "title": "Zero-Shot Listwise Document Reranking with a Large Language Model",
+   "venue": "arXiv.org",
+   "year": 2023,
+   "citationCount": 125,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2305.02156",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2305.02156, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2461713",
+     "name": "Xueguang Ma"
+    },
+    {
+     "authorId": "2118895402",
+     "name": "Xinyu Crystina Zhang"
+    },
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Supervised ranking methods based on bi-encoder or cross-encoder architectures have shown success in multi-stage text ranking tasks, but they require large amounts of relevance judgments as training data. In this work, we propose Listwise Reranker with a Large Language Model (LRL), which achieves strong reranking effectiveness without using any task-specific training data. Different from the existing pointwise ranking methods, where documents are scored independently and ranked according to the scores, LRL directly generates a reordered list of document identifiers given the candidate documents. Experiments on three TREC web search datasets demonstrate that LRL not only outperforms zero-shot pointwise methods when reranking first-stage retrieval results, but can also act as a final-stage reranker to improve the top-ranked results of a pointwise method for improved efficiency. Additionally, we apply our approach to subsets of MIRACL, a recent multilingual retrieval dataset, with results showing its potential to generalize across different languages."
+  },
+  {
+   "paperId": "d6077b167684567cfc35017709872b298a96a92d",
+   "externalIds": {
+    "ArXiv": "2406.06519",
+    "DBLP": "journals/corr/abs-2406-06519",
+    "DOI": "10.48550/arXiv.2406.06519",
+    "CorpusId": 270371474
+   },
+   "title": "UMBRELA: UMbrela is the (Open-Source Reproduction of the) Bing RELevance Assessor",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 121,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2406.06519, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2300284044",
+     "name": "Shivani Upadhyay"
+    },
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "47583894",
+     "name": "Nandan Thakur"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "2300329796",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Copious amounts of relevance judgments are necessary for the effective training and accurate evaluation of retrieval systems. Conventionally, these judgments are made by human assessors, rendering this process expensive and laborious. A recent study by Thomas et al. from Microsoft Bing suggested that large language models (LLMs) can accurately perform the relevance assessment task and provide human-quality judgments, but unfortunately their study did not yield any reusable software artifacts. Our work presents UMBRELA (a recursive acronym that stands for UMbrela is the Bing RELevance Assessor), an open-source toolkit that reproduces the results of Thomas et al. using OpenAI's GPT-4o model and adds more nuance to the original paper. Across Deep Learning Tracks from TREC 2019 to 2023, we find that LLM-derived relevance judgments correlate highly with rankings generated by effective multi-stage retrieval systems. Our toolkit is designed to be easily extensible and can be integrated into existing multi-stage retrieval and evaluation pipelines, offering researchers a valuable resource for studying retrieval evaluation methodologies. UMBRELA will be used in the TREC 2024 RAG Track to aid in relevance assessments, and we envision our toolkit becoming a foundation for further innovation in the field. UMBRELA is available at https://github.com/castorini/umbrela."
+  },
+  {
+   "paperId": "03a93e2e7f57d3e1d1c1aee921ccf2161ac03872",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2506-00641",
+    "ArXiv": "2506.00641",
+    "DOI": "10.48550/arXiv.2506.00641",
+    "CorpusId": 279075247
+   },
+   "title": "AgentAuditor: Human-Level Safety and Security Evaluation for LLM Agents",
+   "venue": "Neural Information Processing Systems",
+   "year": 2025,
+   "citationCount": 115,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.00641, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2357857537",
+     "name": "Han-Jun Luo"
+    },
+    {
+     "authorId": "2365045099",
+     "name": "Shen-Yu Dai"
+    },
+    {
+     "authorId": "2364739076",
+     "name": "Chiming Ni"
+    },
+    {
+     "authorId": "2144405890",
+     "name": "Xin-Feng Li"
+    },
+    {
+     "authorId": "2340212538",
+     "name": "Gui-Min Zhang"
+    },
+    {
+     "authorId": "2363281493",
+     "name": "Kun Wang"
+    },
+    {
+     "authorId": "2353560912",
+     "name": "Tongliang Liu"
+    },
+    {
+     "authorId": "2364747273",
+     "name": "H. Salam"
+    }
+   ],
+   "abstract": "Despite the rapid advancement of LLM-based agents, the reliable evaluation of their safety and security remains a significant challenge. Existing rule-based or LLM-based evaluators often miss dangers in agents'step-by-step actions, overlook subtle meanings, fail to see how small issues compound, and get confused by unclear safety or security rules. To overcome this evaluation crisis, we introduce AgentAuditor, a universal, training-free, memory-augmented reasoning framework that empowers LLM evaluators to emulate human expert evaluators. AgentAuditor constructs an experiential memory by having an LLM adaptively extract structured semantic features (e.g., scenario, risk, behavior) and generate associated chain-of-thought reasoning traces for past interactions. A multi-stage, context-aware retrieval-augmented generation process then dynamically retrieves the most relevant reasoning experiences to guide the LLM evaluator's assessment of new cases. Moreover, we developed ASSEBench, the first benchmark designed to check how well LLM-based evaluators can spot both safety risks and security threats. ASSEBench comprises 2293 meticulously annotated interaction records, covering 15 risk types across 29 application scenarios. A key feature of ASSEBench is its nuanced approach to ambiguous risk situations, employing\"Strict\"and\"Lenient\"judgment standards. Experiments demonstrate that AgentAuditor not only consistently improves the evaluation performance of LLMs across all benchmarks but also sets a new state-of-the-art in LLM-as-a-judge for agent safety and security, achieving human-level accuracy. Our work is openly accessible at https://github.com/Astarojth/AgentAuditor."
+  },
+  {
+   "paperId": "352bcafbcc95a84d96019688955cab5c43eb23f0",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2302-11266",
+    "ArXiv": "2302.11266",
+    "DOI": "10.1145/3539618.3592032",
+    "CorpusId": 257078657
+   },
+   "title": "One-Shot Labeling for Automatic Relevance Estimation",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 106,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3539618.3592032",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2302.11266, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "22214396",
+     "name": "Sean MacAvaney"
+    },
+    {
+     "authorId": "3328733",
+     "name": "Luca Soldaini"
+    }
+   ],
+   "abstract": "Dealing with unjudged documents (\"holes\") in relevance assessments is a perennial problem when evaluating search systems with offline experiments. Holes can reduce the apparent effectiveness of retrieval systems during evaluation and introduce biases in models trained with incomplete data. In this work, we explore whether large language models can help us fill such holes to improve offline evaluations. We examine an extreme, albeit common, evaluation setting wherein only a single known relevant document per query is available for evaluation. We then explore various approaches for predicting the relevance of unjudged documents with respect to a query and the known relevant document, including nearest neighbor, supervised, and prompting techniques. We find that although the predictions of these One-Shot Labelers (1SL) frequently disagree with human assessments, the labels they produce yield a far more reliable ranking of systems than the single labels do alone. Specifically, the strongest approaches can consistently reach system ranking correlations of over 0.86 with the full rankings over a variety of measures. Meanwhile, the approach substantially increases the reliability of t-tests due to filling holes in relevance assessments, giving researchers more confidence in results they find to be significant. Alongside this work, we release an easy-to-use software package to enable the use of 1SL for evaluation of other ad-hoc collections or systems."
+  },
+  {
+   "paperId": "bb7047071062aea5d846005ff6dcd7782d29103e",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2501-03468",
+    "ArXiv": "2501.03468",
+    "DOI": "10.48550/arXiv.2501.03468",
+    "CorpusId": 275342782
+   },
+   "title": "MTRAG: A Multi-Turn Conversational Benchmark for Evaluating Retrieval-Augmented Generation Systems",
+   "venue": "Transactions of the Association for Computational Linguistics",
+   "year": 2025,
+   "citationCount": 104,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2501.03468, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2208580",
+     "name": "Yannis Katsis"
+    },
+    {
+     "authorId": "144063596",
+     "name": "Sara Rosenthal"
+    },
+    {
+     "authorId": "3468202",
+     "name": "Kshitij P. Fadnis"
+    },
+    {
+     "authorId": "66161659",
+     "name": "Chulaka Gunasekara"
+    },
+    {
+     "authorId": "2145430350",
+     "name": "Young-Suk Lee"
+    },
+    {
+     "authorId": "145378077",
+     "name": "L. Popa"
+    },
+    {
+     "authorId": "2338890600",
+     "name": "Vraj Shah"
+    },
+    {
+     "authorId": "2338972625",
+     "name": "Huaiyu Zhu"
+    },
+    {
+     "authorId": "2283769527",
+     "name": "Danish Contractor"
+    },
+    {
+     "authorId": "1994333",
+     "name": "Marina Danilevsky"
+    }
+   ],
+   "abstract": "\n Retrieval-augmented generation (RAG) has recently become a very popular task for Large Language Models (LLMs). Evaluating them on multi-turn RAG conversations, where the system is asked to generate a response to a question in the context of a preceding conversation, is an important and often overlooked task with several additional challenges. We present mtRAG, an end-to-end human-generated multi-turn RAG benchmark that reflects several real-world properties across diverse dimensions for evaluating the full RAG pipeline. mtRAG contains 110 conversations averaging 7.7 turns each across four domains for a total of 842 tasks. We also explore automation paths via synthetic data and LLM-as-a-Judge evaluation. Our human and automatic evaluations show that even state-of-the-art LLM RAG systems struggle on mtRAG. We demonstrate the need for strong retrieval and generation systems that can handle later turns, unanswerable questions, non-standalone questions, and multiple domains. mtRAG is available at https://github.com/ibm/mt-rag-benchmark."
+  },
+  {
+   "paperId": "9de9fa60a786ca23f924f5521326b2a264c22228",
+   "externalIds": {
+    "ArXiv": "2407.08488",
+    "DBLP": "journals/corr/abs-2407-08488",
+    "DOI": "10.48550/arXiv.2407.08488",
+    "CorpusId": 271097527
+   },
+   "title": "Lynx: An Open Source Hallucination Evaluation Model",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 80,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2407.08488, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1749231011",
+     "name": "Selvan Sunitha Ravi"
+    },
+    {
+     "authorId": "2300406",
+     "name": "B. Mielczarek"
+    },
+    {
+     "authorId": "2266468273",
+     "name": "Anand Kannappan"
+    },
+    {
+     "authorId": "2111313627",
+     "name": "Douwe Kiela"
+    },
+    {
+     "authorId": "2266468744",
+     "name": "Rebecca Qian"
+    }
+   ],
+   "abstract": "Retrieval Augmented Generation (RAG) techniques aim to mitigate hallucinations in Large Language Models (LLMs). However, LLMs can still produce information that is unsupported or contradictory to the retrieved contexts. We introduce LYNX, a SOTA hallucination detection LLM that is capable of advanced reasoning on challenging real-world hallucination scenarios. To evaluate LYNX, we present HaluBench, a comprehensive hallucination evaluation benchmark, consisting of 15k samples sourced from various real-world domains. Our experiment results show that LYNX outperforms GPT-4o, Claude-3-Sonnet, and closed and open-source LLM-as-a-judge models on HaluBench. We release LYNX, HaluBench and our evaluation code for public access."
+  },
+  {
+   "paperId": "6dfd2b4466368c28c1e0ba7637a55c2707d8dda0",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2409-15133",
+    "ArXiv": "2409.15133",
+    "PubMedCentral": "11984504",
+    "DOI": "10.54195/irrj.19625",
+    "CorpusId": 272828021,
+    "PubMed": "40212105"
+   },
+   "title": "Don’t Use LLMs to Make Relevance Judgments",
+   "venue": "Inf. Retr. Res. J.",
+   "year": 2024,
+   "citationCount": 70,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.54195/irrj.19625",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2409.15133, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2299328116",
+     "name": "Ian Soboroff"
+    }
+   ],
+   "abstract": "Relevance judgments and other truth data for information retrieval (IR) evaluations are created manually. There is a strong temptation to use large language models (LLMs) as proxies for human judges. However, letting the LLM write your truth data handicaps the evaluation by setting that LLM as a ceiling on performance. There are ways to use LLMs in the relevance assessment process, but just generating relevance judgments with a prompt isn’t one of them.1"
+  },
+  {
+   "paperId": "287fc092d552d4a77d914833c371c0e0b1119067",
+   "externalIds": {
+    "DBLP": "conf/evia/0001D25",
+    "ArXiv": "2412.17156",
+    "DOI": "10.20736/0002002105",
+    "CorpusId": 274982001
+   },
+   "title": "LLM-based relevance assessment still can't replace human relevance assessment",
+   "venue": "International Workshop on Evaluating Information Access",
+   "year": 2024,
+   "citationCount": 68,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2412.17156, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    },
+    {
+     "authorId": "2302798511",
+     "name": "Laura Dietz"
+    }
+   ],
+   "abstract": "The use of large language models (LLMs) for relevance assessment in information retrieval has gained significant attention, with recent studies suggesting that LLM-based judgments provide comparable evaluations to human judgments. Notably, based on TREC 2024 data, Upadhyay et al make a bold claim that LLM-based relevance assessments, such as those generated by the Umbrela system, can fully replace traditional human relevance assessments in TREC-style evaluations. This paper critically examines this claim, highlighting practical and theoretical limitations that undermine the validity of this conclusion. First, we question whether the evidence provided by Upadhyay et al. genuinely supports their claim, particularly when the test collection is intended to serve as a benchmark for future research innovations.Second, we submit a system deliberately crafted to exploit automatic evaluation metrics, demonstrating that it can achieve artificially inflated scores without truly improving retrieval quality. Third, we simulate the consequences of circularity by analyzing Kendall's tau correlations under the hypothetical scenario in which all systems adopt Umbrela as a final-stage re-ranker, illustrating how reliance on LLM-based assessments can distort system rankings. Theoretical challenges - including the inherent narcissism of LLMs, the risk of overfitting to LLM-based metrics, and the potential degradation of future LLM performance - that must be addressed before LLM-based relevance assessments can be considered a viable replacement for human judgments."
+  },
+  {
+   "paperId": "202ed1e8df676c3aa2b9d627863a5d8cb19cc23a",
+   "externalIds": {
+    "DBLP": "conf/kdd/MoZCYCLLHHS26",
+    "ArXiv": "2508.01780",
+    "DOI": "10.1145/3770855.3817478",
+    "CorpusId": 280422081
+   },
+   "title": "LiveMCPBench: Can Agents Navigate an Ocean of MCP Tools?",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2025,
+   "citationCount": 67,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3770855.3817478",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2508.01780, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2239885325",
+     "name": "Guozhao Mo"
+    },
+    {
+     "authorId": "2367129594",
+     "name": "Wen-Liang Zhong"
+    },
+    {
+     "authorId": "2115448879",
+     "name": "Jiawei Chen"
+    },
+    {
+     "authorId": "2346056910",
+     "name": "Qian-Hao Yuan"
+    },
+    {
+     "authorId": "49794910",
+     "name": "Xuanang Chen"
+    },
+    {
+     "authorId": "1831434",
+     "name": "Yaojie Lu"
+    },
+    {
+     "authorId": "2116455765",
+     "name": "Hong-Yu Lin"
+    },
+    {
+     "authorId": "2304906129",
+     "name": "Ben He"
+    },
+    {
+     "authorId": "2118233348",
+     "name": "Xian-Pei Han"
+    },
+    {
+     "authorId": "2372156137",
+     "name": "Le Sun"
+    }
+   ],
+   "abstract": "Model Context Protocol (MCP) has become a key infrastructure for connecting LLMs with external tools, scaling to 10,000+ MCP servers with diverse tools. Unfortunately, there is still a large gap between real-world MCP usage and current evaluation: they typically assume single-server settings and directly inject tools into the model's context, bypassing the challenges of large-scale retrieval and multi-tool composition. To bridge this gap, we propose LiveMCPBench, which evaluates 95 real-world daily tasks explicitly constructed to stress diverse tools and scaled multi-server routing. The benchmark includes a ready-to-deploy tool suite of 70 servers with 527 tools, ensuring reproducibility without scattered API configuration. We further introduce an LLM-as-a-Judge evaluation framework that directly verifies task outcomes, handling dynamic data sources and multiple valid solution paths. We benchmark 12 state-of-the-art LLMs and observe a substantial performance gap: while Claude-Sonnet-4 reaches 78.95% task success, most models achieve only 30-50%. Our analysis reveals that active tool composition strongly correlates with task success, whereas retrieval errors account for nearly half of all failures—highlighting retrieval as the dominant bottleneck. Together, these results provide the first large-scale, reproducible diagnosis of MCP agent capabilities and point towards future research on improving retrieval robustness and encouraging effective tool composition. Our code and data are publicly available at https://icip-cas.github.io/LiveMCPBench."
+  },
+  {
+   "paperId": "d44ff975b27dbfbf748ebb8fa815cb423c6fe53f",
+   "externalIds": {
+    "ArXiv": "2505.19253",
+    "DBLP": "journals/corr/abs-2505-19253",
+    "DOI": "10.48550/arXiv.2505.19253",
+    "CorpusId": 278905384
+   },
+   "title": "DeepResearchGym: A Free, Transparent, and Reproducible Evaluation Sandbox for Deep Research",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 61,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.19253, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2295512058",
+     "name": "João Coelho"
+    },
+    {
+     "authorId": "2363497397",
+     "name": "Jing-Jie Ning"
+    },
+    {
+     "authorId": "2329357611",
+     "name": "Jingyuan He"
+    },
+    {
+     "authorId": "2363495867",
+     "name": "Kangrui Mao"
+    },
+    {
+     "authorId": "2283501463",
+     "name": "A. Paladugu"
+    },
+    {
+     "authorId": "2363497330",
+     "name": "P. Setlur"
+    },
+    {
+     "authorId": "2363690794",
+     "name": "Jiahe Jin"
+    },
+    {
+     "authorId": "144987107",
+     "name": "Jamie Callan"
+    },
+    {
+     "authorId": "2283772665",
+     "name": "João Magalhães"
+    },
+    {
+     "authorId": "2283771934",
+     "name": "Bruno Martins"
+    },
+    {
+     "authorId": "2295512254",
+     "name": "Chen-Yan Xiong"
+    }
+   ],
+   "abstract": "Deep research systems represent an emerging class of agentic information retrieval methods that generate comprehensive and well-supported reports to complex queries. However, most existing frameworks rely on dynamic commercial search APIs, which pose reproducibility and transparency challenges in addition to their cost. To address these limitations, we introduce \\textsc{DeepResearchGym} as an open-source sandbox that combines a reproducible search API with a rigorous evaluation protocol for benchmarking deep research systems. The API indexes large-scale public web corpora, namely ClueWeb22 and FineWeb, using a state-of-the-art dense retriever and approximate nearest neighbor search via DiskANN. It achieves lower latency than popular commercial APIs while ensuring stable document rankings across runs, and is free for research use. To evaluate deep research systems'outputs, we extend the Researchy Questions benchmark with automatic metrics through LLM-as-a-judge to measure alignment with users'information needs, retrieval faithfulness, and report quality. Experimental results show that systems integrated with~\\textsc{DeepResearchGym} achieve performance comparable to those using commercial APIs, with performance rankings remaining consistent across evaluation metrics. A case study on short-answer search agents further demonstrates the sandbox's utility for cost-effective training, showing that models trained within the sandbox can generalize to commercial search."
+  },
+  {
+   "paperId": "a09a4744753fb5010e7aa477ce4c3a0d3b76c812",
+   "externalIds": {
+    "ArXiv": "2405.07767",
+    "DBLP": "conf/sigir/RahmaniCY0C24",
+    "DOI": "10.1145/3626772.3657942",
+    "CorpusId": 269757476
+   },
+   "title": "Synthetic Test Collections for Retrieval Evaluation",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2024,
+   "citationCount": 57,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3626772.3657942",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2405.07767, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2301154394",
+     "name": "Hossein A. Rahmani"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "2261495702",
+     "name": "Emine Yilmaz"
+    },
+    {
+     "authorId": "116506812",
+     "name": "Bhaskar Mitra"
+    },
+    {
+     "authorId": "2308033528",
+     "name": "Daniel Campos"
+    }
+   ],
+   "abstract": "Constructing test collections in Information Retrieval (IR) is vital for evaluating search algorithms. Obtaining a diverse set of user queries for test collection construction can be challenging, and acquiring relevance judgments, which indicate the appropriateness of retrieved documents, is often costly and resource-intensive. Generating synthetic datasets using Large Language Models (LLMs) has recently gained significant attention in various applications. In information retrieval, while previous work exploited the capabilities of LLMs to generate synthetic queries or documents to augment training data and improve the performance of ranking models, using LLMs for constructing synthetic test collections is relatively unexplored. Previous studies demonstrate that LLMs have the potential to generate synthetic relevance judgments for use in the evaluation of information retrieval systems. In this paper, we comprehensively investigate whether it is possible to use LLMs to construct fully synthetic test collections by generating not only synthetic judgments but also synthetic queries. To qualify the efficacy of synthetic queries for examining system ordering, we analyze how these synthetic data are suitable for building a reliable and reusable test collection and the potential risks of bias such test collections may exhibit towards LLM-based models. Our comprehensive experiments indicate that test collections generated using LLMs can effectively and reliably evaluate system performance."
+  },
+  {
+   "paperId": "a78fbbe5d4ddeed2fb935295cbf80f3905ee98aa",
+   "externalIds": {
+    "ArXiv": "2504.19076",
+    "DBLP": "conf/ictir/DietzZBCC0HSC25",
+    "DOI": "10.1145/3731120.3744588",
+    "CorpusId": 280282275
+   },
+   "title": "Principles and Guidelines for the Use of LLM Judges",
+   "venue": "International Conference on the Theory of Information Retrieval",
+   "year": 2025,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2504.19076",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.19076, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2291573651",
+     "name": "Laura Dietz"
+    },
+    {
+     "authorId": "151163604",
+     "name": "Oleg Zendel"
+    },
+    {
+     "authorId": "144753756",
+     "name": "P. Bailey"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    },
+    {
+     "authorId": "48115818",
+     "name": "Ellese Cotterill"
+    },
+    {
+     "authorId": "2357974505",
+     "name": "Jeff Dalton"
+    },
+    {
+     "authorId": "1951737",
+     "name": "F. Hasibi"
+    },
+    {
+     "authorId": "144721996",
+     "name": "M. Sanderson"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    }
+   ],
+   "abstract": "Relevance judgments for information retrieval (IR) evaluation, once the domain of human assessors, are now often produced by Large Language Models (LLMs). While some studies report alignment between LLM and human judgments, claims that LLMs can replace human judges raise concerns about reliability, validity, and long-term impact. As IR systems increasingly rely on LLM-generated signals, evaluation risks becoming self-reinforcing, leading to potentially misleading conclusions. This paper examines scenarios where LLM evaluators may falsely indicate success, particularly when LLM-based judgments influence both system development and evaluation. We highlight key risks, including bias reinforcement, reproducibility challenges, and inconsistencies in assessment methodologies. To address these concerns, we propose tests to quantify adverse effects, guardrails, and a collaborative framework for constructing reusable test collections that integrate LLM judgments responsibly. By providing perspectives from academia and industry, this work aims to establish best practices for the principled use of LLMs in IR evaluation."
+  },
+  {
+   "paperId": "631cebaddca4d93b9d533f131fbd12adb49d5b85",
+   "externalIds": {
+    "ArXiv": "2410.21943",
+    "DBLP": "journals/corr/abs-2410-21943",
+    "DOI": "10.48550/arXiv.2410.21943",
+    "CorpusId": 273661709
+   },
+   "title": "Beyond Text: Optimizing RAG with Multimodal Inputs for Industrial Applications",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2410.21943, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2353279302",
+     "name": "Monica Riedler"
+    },
+    {
+     "authorId": "46626086",
+     "name": "Stefan Langer"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have demonstrated impressive capabilities in answering questions, but they lack domain-specific knowledge and are prone to hallucinations. Retrieval Augmented Generation (RAG) is one approach to address these challenges, while multimodal models are emerging as promising AI assistants for processing both text and images. In this paper we describe a series of experiments aimed at determining how to best integrate multimodal models into RAG systems for the industrial domain. The purpose of the experiments is to determine whether including images alongside text from documents within the industrial domain increases RAG performance and to find the optimal configuration for such a multimodal RAG system. Our experiments include two approaches for image processing and retrieval, as well as two LLMs (GPT4-Vision and LLaVA) for answer synthesis. These image processing strategies involve the use of multimodal embeddings and the generation of textual summaries from images. We evaluate our experiments with an LLM-as-a-Judge approach. Our results reveal that multimodal RAG can outperform single-modality RAG settings, although image retrieval poses a greater challenge than text retrieval. Additionally, leveraging textual summaries from images presents a more promising approach compared to the use of multimodal embeddings, providing more opportunities for future advancements."
+  },
+  {
+   "paperId": "cb23a10128b05fa73ae26f29c0cb6c765ff8c55b",
+   "externalIds": {
+    "DBLP": "conf/trec/CraswellMYRCLVS23",
+    "ArXiv": "2507.08890",
+    "DOI": "10.48550/arXiv.2507.08890",
+    "CorpusId": 274280641
+   },
+   "title": "Overview of the TREC 2023 Deep Learning Track",
+   "venue": "Text Retrieval Conference",
+   "year": 2025,
+   "citationCount": 51,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2507.08890, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "116506812",
+     "name": "Bhaskar Mitra"
+    },
+    {
+     "authorId": "2261495702",
+     "name": "Emine Yilmaz"
+    },
+    {
+     "authorId": "2301154394",
+     "name": "Hossein A. Rahmani"
+    },
+    {
+     "authorId": "2308033528",
+     "name": "Daniel Campos"
+    },
+    {
+     "authorId": "2300329796",
+     "name": "Jimmy Lin"
+    },
+    {
+     "authorId": "1746656",
+     "name": "E. Voorhees"
+    },
+    {
+     "authorId": "144526707",
+     "name": "I. Soboroff"
+    }
+   ],
+   "abstract": "This is the fifth year of the TREC Deep Learning track. As in previous years, we leverage the MS MARCO datasets that made hundreds of thousands of human-annotated training labels available for both passage and document ranking tasks. We mostly repeated last year's design, to get another matching test set, based on the larger, cleaner, less-biased v2 passage and document set, with passage ranking as primary and document ranking as a secondary task (using labels inferred from passage). As we did last year, we sample from MS MARCO queries that were completely held out, unused in corpus construction, unlike the test queries in the first three years. This approach yields a more difficult test with more headroom for improvement. Alongside the usual MS MARCO (human) queries from MS MARCO, this year we generated synthetic queries using a fine-tuned T5 model and using a GPT-4 prompt. The new headline result this year is that runs using Large Language Model (LLM) prompting in some way outperformed runs that use the\"nnlm\"approach, which was the best approach in the previous four years. Since this is the last year of the track, future iterations of prompt-based ranking can happen in other tracks. Human relevance assessments were applied to all query types, not just human MS MARCO queries. Evaluation using synthetic queries gave similar results to human queries, with system ordering agreement of $\\tau=0.8487$. However, human effort was needed to select a subset of the synthetic queries that were usable. We did not see clear evidence of bias, where runs using GPT-4 were favored when evaluated using synthetic GPT-4 queries, or where runs using T5 were favored when evaluated on synthetic T5 queries."
+  },
+  {
+   "paperId": "7868eec09c2999bf1022fc0f5766878a528ceaf5",
+   "externalIds": {
+    "ArXiv": "2411.08275",
+    "DBLP": "journals/corr/abs-2411-08275",
+    "DOI": "10.48550/arXiv.2411.08275",
+    "CorpusId": 273993590
+   },
+   "title": "A Large-Scale Study of Relevance Assessments with Large Language Models: An Initial Look",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 51,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2411.08275, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2300284044",
+     "name": "Shivani Upadhyay"
+    },
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "47583894",
+     "name": "Nandan Thakur"
+    },
+    {
+     "authorId": "2308033528",
+     "name": "Daniel Campos"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "144526707",
+     "name": "I. Soboroff"
+    },
+    {
+     "authorId": "2122755",
+     "name": "H. Dang"
+    },
+    {
+     "authorId": "2300329796",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "The application of large language models to provide relevance assessments presents exciting opportunities to advance information retrieval, natural language processing, and beyond, but to date many unknowns remain. This paper reports on the results of a large-scale evaluation (the TREC 2024 RAG Track) where four different relevance assessment approaches were deployed in situ: the\"standard\"fully manual process that NIST has implemented for decades and three different alternatives that take advantage of LLMs to different extents using the open-source UMBRELA tool. This setup allows us to correlate system rankings induced by the different approaches to characterize tradeoffs between cost and quality. We find that in terms of nDCG@20, nDCG@100, and Recall@100, system rankings induced by automatically generated relevance assessments from UMBRELA correlate highly with those induced by fully manual assessments across a diverse set of 77 runs from 19 teams. Our results suggest that automatically generated UMBRELA judgments can replace fully manual judgments to accurately capture run-level effectiveness. Surprisingly, we find that LLM assistance does not appear to increase correlation with fully manual assessments, suggesting that costs associated with human-in-the-loop processes do not bring obvious tangible benefits. Overall, human assessors appear to be stricter than UMBRELA in applying relevance criteria. Our work validates the use of LLMs in academic TREC-style evaluations and provides the foundation for future studies."
+  },
+  {
+   "paperId": "cc6eee541ec937508ff925aaea61cd6fb1cbc71d",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2502-20640",
+    "ArXiv": "2502.20640",
+    "DOI": "10.1145/3726302.3730340",
+    "CorpusId": 276724956
+   },
+   "title": "LexRAG: Benchmarking Retrieval-Augmented Generation in Multi-Turn Legal Consultation Conversation",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 48,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730340",
+    "status": "HYBRID",
+    "license": "CCBYNC",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2502.20640, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2108590438",
+     "name": "Hai-Tao Li"
+    },
+    {
+     "authorId": "2347188766",
+     "name": "Yifan Chen"
+    },
+    {
+     "authorId": "2290787291",
+     "name": "Yi-Ran Hu"
+    },
+    {
+     "authorId": "2256982003",
+     "name": "Qing-Yao Ai"
+    },
+    {
+     "authorId": "2326124996",
+     "name": "Junjie Chen"
+    },
+    {
+     "authorId": "2332722210",
+     "name": "Xiao-Yu Yang"
+    },
+    {
+     "authorId": "2348187330",
+     "name": "Jianhui Yang"
+    },
+    {
+     "authorId": "2257126236",
+     "name": "Yue-Yue Wu"
+    },
+    {
+     "authorId": "2376510143",
+     "name": "Zeyan Liu"
+    },
+    {
+     "authorId": "1783406",
+     "name": "Yi-Qun Liu"
+    }
+   ],
+   "abstract": "Retrieval-augmented generation (RAG) has proven highly effective in improving large language models (LLMs) across various domains. However, there is no benchmark specifically designed to assess the effectiveness of RAG in the legal domain, which restricts progress in this area. To fill this gap, we propose LexRAG, the first benchmark to evaluate RAG systems for multi-turn legal consultations. LexRAG consists of 1,013 multi-turn dialogue samples and 17,228 candidate legal articles. Each sample is annotated by legal experts and consists of five rounds of progressive questioning. LexRAG includes two key tasks: (1) Conversational knowledge retrieval, requiring accurate retrieval of relevant legal articles based on multi-turn context. (2) Response generation, focusing on producing legally sound answers. To ensure reliable reproducibility, we develop LexiT, a legal RAG toolkit that provides a comprehensive implementation of RAG system components tailored for the legal domain. Additionally, we introduce an LLM-as-a-judge evaluation pipeline to enable detailed and effective assessment. Through experimental analysis of various LLMs and retrieval methods, we reveal the key limitations of existing RAG systems in handling legal consultation conversations. LexRAG establishes a new benchmark for the practical application of RAG systems in the legal domain, with its code and data available at https://github.com/CSHaitao/LexRAG."
+  },
+  {
+   "paperId": "eba1bb44ec1d9e69816ab8e644ac384212bcdc51",
+   "externalIds": {
+    "DBLP": "journals/tois/MengAAAR25",
+    "ArXiv": "2404.01012",
+    "DOI": "10.1145/3736402",
+    "CorpusId": 268819361
+   },
+   "title": "Query Performance Prediction Using Relevance Judgments Generated by Large Language Models",
+   "venue": "ACM Trans. Inf. Syst.",
+   "year": 2024,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3736402",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2404.01012, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2238309431",
+     "name": "Chuan Meng"
+    },
+    {
+     "authorId": "81447039",
+     "name": "Negar Arabzadeh"
+    },
+    {
+     "authorId": "77879474",
+     "name": "Arian Askari"
+    },
+    {
+     "authorId": "3390352",
+     "name": "Mohammad Aliannejadi"
+    },
+    {
+     "authorId": "121213569",
+     "name": "M. de Rijke"
+    }
+   ],
+   "abstract": "Query performance prediction (QPP) aims to estimate the retrieval quality of a search system for a query without human relevance judgments. Previous QPP methods typically return a single scalar value and do not require the predicted values to approximate a specific information retrieval (IR) evaluation measure, leading to certain drawbacks: (i) a single scalar is insufficient to accurately represent different IR evaluation measures, especially when metrics do not highly correlate, and (ii) a single scalar limits the interpretability of QPP methods because solely using a scalar is insufficient to explain QPP results. To address these issues, we propose a QPP framework using automatically generated relevance judgments (QPP-GenRE), which decomposes QPP into independent subtasks of predicting the relevance of each item in a ranked list to a given query. This allows us to predict any IR evaluation measure using the generated relevance judgments as pseudo-labels. This also allows us to interpret predicted IR evaluation measures, and identify, track, and rectify errors in generated relevance judgments to improve QPP quality. We predict an item’s relevance by using open source large language models (LLMs) to ensure scientific reproducibility. We face two main challenges: (i) excessive computational costs of judging an entire corpus for predicting a metric considering recall, and (ii) limited performance in prompting open source LLMs in a zero-/few-shot manner. To solve the challenges, we devise an approximation strategy to predict an IR measure considering recall and propose to fine-tune open source LLMs using human-labeled relevance judgments. Experiments on the TREC 2019–2022 deep learning tracks and CAsT-19–20 datasets show that QPP-GenRE achieves state-of-the-art QPP quality for both lexical and neural rankers."
+  },
+  {
+   "paperId": "a6f05eda1cc24a13f114754ebb685537374c62a1",
+   "externalIds": {
+    "ArXiv": "2405.05600",
+    "DBLP": "conf/emtcir/AbbasiantaebMAA24",
+    "DOI": "10.48550/arXiv.2405.05600",
+    "CorpusId": 269635791
+   },
+   "title": "Can We Use Large Language Models to Fill Relevance Judgment Holes?",
+   "venue": "EMTCIR/UM-CIR@SIGIR-AP",
+   "year": 2024,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2405.05600, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2277449569",
+     "name": "Zahra Abbasiantaeb"
+    },
+    {
+     "authorId": "2238309431",
+     "name": "Chuan Meng"
+    },
+    {
+     "authorId": "1716332",
+     "name": "L. Azzopardi"
+    },
+    {
+     "authorId": "3390352",
+     "name": "Mohammad Aliannejadi"
+    }
+   ],
+   "abstract": "Incomplete relevance judgments limit the re-usability of test collections. When new systems are compared against previous systems used to build the pool of judged documents, they often do so at a disadvantage due to the ``holes'' in test collection (i.e., pockets of un-assessed documents returned by the new system). In this paper, we take initial steps towards extending existing test collections by employing Large Language Models (LLM) to fill the holes by leveraging and grounding the method using existing human judgments. We explore this problem in the context of Conversational Search using TREC iKAT, where information needs are highly dynamic and the responses (and, the results retrieved) are much more varied (leaving bigger holes). While previous work has shown that automatic judgments from LLMs result in highly correlated rankings, we find substantially lower correlates when human plus automatic judgments are used (regardless of LLM, one/two/few shot, or fine-tuned). We further find that, depending on the LLM employed, new runs will be highly favored (or penalized), and this effect is magnified proportionally to the size of the holes. Instead, one should generate the LLM annotations on the whole document pool to achieve more consistent rankings with human-generated labels. Future work is required to prompt engineering and fine-tuning LLMs to reflect and represent the human annotations, in order to ground and align the models, such that they are more fit for purpose."
+  },
+  {
+   "paperId": "9933a51591a449875e046a0fe21a6b50a5c200ce",
+   "externalIds": {
+    "ArXiv": "2411.00142",
+    "DBLP": "journals/corr/abs-2411-00142",
+    "DOI": "10.48550/arXiv.2411.00142",
+    "CorpusId": 273798418
+   },
+   "title": "JudgeRank: Leveraging Large Language Models for Reasoning-Intensive Reranking",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2411.00142, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2263863440",
+     "name": "Tong Niu"
+    },
+    {
+     "authorId": "2708940",
+     "name": "Shafiq R. Joty"
+    },
+    {
+     "authorId": "2238385821",
+     "name": "Ye Liu"
+    },
+    {
+     "authorId": "2267728986",
+     "name": "Cai-Ming Xiong"
+    },
+    {
+     "authorId": "2118860628",
+     "name": "Ying-Bo Zhou"
+    },
+    {
+     "authorId": "3014143",
+     "name": "Semih Yavuz"
+    }
+   ],
+   "abstract": "Accurate document retrieval is crucial for the success of retrieval-augmented generation (RAG) applications, including open-domain question answering and code completion. While large language models (LLMs) have been employed as dense encoders or listwise rerankers in RAG systems, they often struggle with reasoning-intensive tasks because they lack nuanced analysis when judging document relevance. To address this limitation, we introduce JudgeRank, a novel agentic reranker that emulates human cognitive processes when assessing document relevance. Our approach consists of three key steps: (1) query analysis to identify the core problem, (2) document analysis to extract a query-aware summary, and (3) relevance judgment to provide a concise assessment of document relevance. We evaluate JudgeRank on the reasoning-intensive BRIGHT benchmark, demonstrating substantial performance improvements over first-stage retrieval methods and outperforming other popular reranking approaches. In addition, JudgeRank performs on par with fine-tuned state-of-the-art rerankers on the popular BEIR benchmark, validating its zero-shot generalization capability. Through comprehensive ablation studies, we demonstrate that JudgeRank's performance generalizes well across LLMs of various sizes while ensembling them yields even more accurate reranking than individual models."
+  },
+  {
+   "paperId": "725dc49a8b157f8447fb860e9f4bf6edd351c5d2",
+   "externalIds": {
+    "DBLP": "conf/sigir-ap/0004LDLS024",
+    "ArXiv": "2409.16022",
+    "DOI": "10.1145/3673791.3698420",
+    "CorpusId": 272832166
+   },
+   "title": "AI Can Be Cognitively Biased: An Exploratory Study on Threshold Priming in LLM-Based Batch Relevance Assessment",
+   "venue": "SIGIR-AP",
+   "year": 2024,
+   "citationCount": 43,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2409.16022",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2409.16022, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2257286538",
+     "name": "Nuo Chen"
+    },
+    {
+     "authorId": "2108965174",
+     "name": "Ji-Qun Liu"
+    },
+    {
+     "authorId": "2300177888",
+     "name": "Xiao-Yu Dong"
+    },
+    {
+     "authorId": "150270469",
+     "name": "Qijiong Liu"
+    },
+    {
+     "authorId": "2257233277",
+     "name": "Tetsuya Sakai"
+    },
+    {
+     "authorId": "2265517306",
+     "name": "Xiao-Ming Wu"
+    }
+   ],
+   "abstract": "Cognitive biases are systematic deviations in thinking that lead to irrational judgments and problematic decision-making, extensively studied across various fields. Recently, large language models (LLMs) have shown advanced understanding capabilities but may inherit human biases from their training data. While social biases in LLMs have been well-studied, cognitive biases have received less attention, with existing research focusing on specific scenarios. The broader impact of cognitive biases on LLMs in various decision-making contexts remains underexplored. We investigated whether LLMs are influenced by the threshold priming effect in relevance judgments, a core task and widely-discussed research topic in the Information Retrieval (IR) coummunity. The priming effect occurs when exposure to certain stimuli unconsciously affects subsequent behavior and decisions. Our experiment employed 10 topics from the TREC 2019 Deep Learning passage track collection, and tested AI judgments under different document relevance scores, batch lengths, and LLM models, including GPT-3.5, GPT-4, LLaMa2-13B and LLaMa2-70B. Results showed that LLMs tend to give lower scores to later documents if earlier ones have high relevance, and vice versa, regardless of the combination and model used. Our finding demonstrates that LLM's judgments, similar to human judgments, are also influenced by threshold priming biases, and suggests that researchers and system engineers should take into account potential human-like cognitive biases in designing, evaluating, and auditing LLMs in IR tasks and beyond"
+  },
+  {
+   "paperId": "bd80fff94d8774c5f7182d9694438ece57a1a933",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2504-12408",
+    "ArXiv": "2504.12408",
+    "DOI": "10.1145/3726302.3730159",
+    "CorpusId": 277857279
+   },
+   "title": "A Human-AI Comparative Analysis of Prompt Sensitivity in LLM-Based Relevance Judgment",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 42,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730159",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.12408, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "81447039",
+     "name": "Negar Arabzadeh"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) are increasingly used to automate relevance judgments for information retrieval (IR) tasks, often demonstrating agreement with human labels that approaches inter-human agreement. To assess the robustness and reliability of LLM-based relevance judgments, we systematically investigate impact of prompt sensitivity on the task. We collected prompts for relevance assessment from 15 human experts and 15 LLMs across three tasks-binary, graded, and pairwise-yielding 90 prompts in total. We compare LLM-generated labels with TREC official human labels using Cohen's κ and pairwise agreement measures. In addition, we compare human- and LLM-generated prompts and analyze differences among different LLMs as judges. We release all data and prompts at https://github.com/Narabzad/prompt-sensitivity-relevance-judgements/."
+  },
+  {
+   "paperId": "5d6ea8c124549450394d016a1e95f603b74fc198",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2505-04847",
+    "ArXiv": "2505.04847",
+    "DOI": "10.48550/arXiv.2505.04847",
+    "CorpusId": 278394690
+   },
+   "title": "Benchmarking LLM Faithfulness in RAG with Evolving Leaderboards",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2025,
+   "citationCount": 41,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.04847, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2124417361",
+     "name": "M. Tamber"
+    },
+    {
+     "authorId": "2324255814",
+     "name": "Forrest Sheng Bao"
+    },
+    {
+     "authorId": "2326347818",
+     "name": "Chenyu Xu"
+    },
+    {
+     "authorId": "2326296182",
+     "name": "Ge Luo"
+    },
+    {
+     "authorId": "51001264",
+     "name": "Suleman Kazi"
+    },
+    {
+     "authorId": "2359634396",
+     "name": "Minseok Bae"
+    },
+    {
+     "authorId": "2291442936",
+     "name": "Miaoran Li"
+    },
+    {
+     "authorId": "3271019",
+     "name": "O. Mendelevitch"
+    },
+    {
+     "authorId": "2326297726",
+     "name": "Renyi Qu"
+    },
+    {
+     "authorId": "2306070594",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Retrieval-augmented generation (RAG) aims to reduce hallucinations by grounding responses in external context, yet large language models (LLMs) still frequently introduce unsupported information or contradictions even when provided with relevant context. This paper presents two complementary efforts at Vectara to measure and benchmark LLM faithfulness in RAG. First, we describe our original hallucination leaderboard, which has tracked hallucination rates for LLMs since 2023 using our HHEM hallucination detection model. Motivated by limitations observed in current hallucination detection methods, we introduce FaithJudge, an LLM-as-a-judge framework that leverages a pool of diverse human-annotated hallucination examples to substantially improve the automated hallucination evaluation of LLMs. We introduce an enhanced hallucination leaderboard centered on FaithJudge that benchmarks LLMs on RAG faithfulness in summarization, question-answering, and data-to-text generation tasks. FaithJudge enables a more reliable benchmarking of LLM hallucinations in RAG and supports the development of more trustworthy generative AI systems: https://github.com/vectara/FaithJudge."
+  },
+  {
+   "paperId": "39c974bb16dad006353032942186087b40e25949",
+   "externalIds": {
+    "DBLP": "conf/acl/FengTG0XLZJ24",
+    "ArXiv": "2305.07402",
+    "DOI": "10.18653/v1/2024.acl-long.517",
+    "CorpusId": 258676297
+   },
+   "title": "Synergistic Interplay between Search and Large Language Models for Information Retrieval",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2023,
+   "citationCount": 38,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2024.acl-long.517.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2305.07402, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "147062881",
+     "name": "Jiazhan Feng"
+    },
+    {
+     "authorId": "8801869",
+     "name": "Chongyang Tao"
+    },
+    {
+     "authorId": "2442662",
+     "name": "Xiu-Bo Geng"
+    },
+    {
+     "authorId": "143681703",
+     "name": "Tao Shen"
+    },
+    {
+     "authorId": "46747953",
+     "name": "Can Xu"
+    },
+    {
+     "authorId": "2062835",
+     "name": "Guodong Long"
+    },
+    {
+     "authorId": "144060462",
+     "name": "Dongyan Zhao"
+    },
+    {
+     "authorId": "2086994543",
+     "name": "Daxin Jiang"
+    }
+   ],
+   "abstract": "Information retrieval (IR) plays a crucial role in locating relevant resources from vast amounts of data, and its applications have evolved from traditional knowledge bases to modern retrieval models (RMs). The emergence of large language models (LLMs) has further revolutionized the IR field by enabling users to interact with search systems in natural languages. In this paper, we explore the advantages and disadvantages of LLMs and RMs, highlighting their respective strengths in understanding user-issued queries and retrieving up-to-date information. To leverage the benefits of both paradigms while circumventing their limitations, we propose InteR, a novel framework that facilitates information refinement through synergy between RMs and LLMs. InteR allows RMs to expand knowledge in queries using LLM-generated knowledge collections and enables LLMs to enhance prompt formulation using retrieved documents. This iterative refinement process augments the inputs of RMs and LLMs, leading to more accurate retrieval. Experiments on large-scale retrieval benchmarks involving web search and low-resource retrieval tasks demonstrate that InteR achieves overall superior zero-shot retrieval performance compared to state-of-the-art methods, even those using relevance judgment. Source code is available at https://github.com/Cyril-JZ/InteR"
+  },
+  {
+   "paperId": "d704f7c327968963e6f3bf7b02cc2189564b2d02",
+   "externalIds": {
+    "ArXiv": "2412.13746",
+    "DBLP": "journals/corr/abs-2412-13746",
+    "DOI": "10.48550/arXiv.2412.13746",
+    "CorpusId": 274822300
+   },
+   "title": "RAG-RewardBench: Benchmarking Reward Models in Retrieval Augmented Generation for Preference Alignment",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 34,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2412.13746, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2152843772",
+     "name": "Zhuo-Ran Jin"
+    },
+    {
+     "authorId": "2165224410",
+     "name": "Hong-Bang Yuan"
+    },
+    {
+     "authorId": "2165227300",
+     "name": "Tian-Yi Men"
+    },
+    {
+     "authorId": "49776272",
+     "name": "Pengfei Cao"
+    },
+    {
+     "authorId": "1763402",
+     "name": "Yubo Chen"
+    },
+    {
+     "authorId": "2284814101",
+     "name": "Kang Liu"
+    },
+    {
+     "authorId": "2269147239",
+     "name": "Jun Zhao"
+    }
+   ],
+   "abstract": "Despite the significant progress made by existing retrieval augmented language models (RALMs) in providing trustworthy responses and grounding in reliable sources, they often overlook effective alignment with human preferences. In the alignment process, reward models (RMs) act as a crucial proxy for human values to guide optimization. However, it remains unclear how to evaluate and select a reliable RM for preference alignment in RALMs. To this end, we propose RAG-RewardBench, the first benchmark for evaluating RMs in RAG settings. First, we design four crucial and challenging RAG-specific scenarios to assess RMs, including multi-hop reasoning, fine-grained citation, appropriate abstain, and conflict robustness. Then, we incorporate 18 RAG subsets, six retrievers, and 24 RALMs to increase the diversity of data sources. Finally, we adopt an LLM-as-a-judge approach to improve preference annotation efficiency and effectiveness, exhibiting a strong correlation with human annotations. Based on the RAG-RewardBench, we conduct a comprehensive evaluation of 45 RMs and uncover their limitations in RAG scenarios. Additionally, we also reveal that existing trained RALMs show almost no improvement in preference alignment, highlighting the need for a shift towards preference-aligned training.We release our benchmark and code publicly at https://huggingface.co/datasets/jinzhuoran/RAG-RewardBench/ for future work."
+  },
+  {
+   "paperId": "a43de6cf6060a0711790a13a2d7682aec0b3580a",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2405-04727",
+    "ArXiv": "2405.04727",
+    "DOI": "10.48550/arXiv.2405.04727",
+    "CorpusId": 269626105
+   },
+   "title": "LLMs Can Patch Up Missing Relevance Judgments in Evaluation",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 33,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2405.04727, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2300284044",
+     "name": "Shivani Upadhyay"
+    },
+    {
+     "authorId": "2023642",
+     "name": "Ehsan Kamalloo"
+    },
+    {
+     "authorId": "2300329796",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Unjudged documents or holes in information retrieval benchmarks are considered non-relevant in evaluation, yielding no gains in measuring effectiveness. However, these missing judgments may inadvertently introduce biases into the evaluation as their prevalence for a retrieval model is heavily contingent on the pooling process. Thus, filling holes becomes crucial in ensuring reliable and accurate evaluation. Collecting human judgment for all documents is cumbersome and impractical. In this paper, we aim at leveraging large language models (LLMs) to automatically label unjudged documents. Our goal is to instruct an LLM using detailed instructions to assign fine-grained relevance judgments to holes. To this end, we systematically simulate scenarios with varying degrees of holes by randomly dropping relevant documents from the relevance judgment in TREC DL tracks. Our experiments reveal a strong correlation between our LLM-based method and ground-truth relevance judgments. Based on our simulation experiments conducted on three TREC DL datasets, in the extreme scenario of retaining only 10% of judgments, our method achieves a Kendall tau correlation of 0.87 and 0.92 on an average for Vicu\\~na-7B and GPT-3.5 Turbo respectively."
+  },
+  {
+   "paperId": "d245095e76711783437c4181c3246d111c7673ff",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2504-12558",
+    "ArXiv": "2504.12558",
+    "DOI": "10.1145/3726302.3730305",
+    "CorpusId": 277856768
+   },
+   "title": "Benchmarking LLM-based Relevance Judgment Methods",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 31,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730305",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2504.12558, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "81447039",
+     "name": "Negar Arabzadeh"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) are increasingly deployed in both academic and industry settings to automate the evaluation of information seeking systems, particularly by generating graded relevance judgments. Several studies report Kendall τ correlations exceeding 0.85 when comparing system rankings derived from human versus LLM-generated relevance labels. Previous work on LLM-based relevance assessment has primarily focused on replicating graded human relevance judgments through various prompting strategies. However, there has been limited exploration of alternative assessment methods or comprehensive comparative studies. In this paper, we systematically compare multiple LLM-based relevance assessment methods, including binary relevance judgments, graded relevance assessments, pairwise preference-based methods, and two nugget-based evaluation methods~-~document-agnostic and document-dependent. Wherever possible, we employ state-of-the-art tools and optimized prompts tailored for these methods. In addition to a traditional comparison based on system rankings using Kendall correlations, we also examine how well LLM judgments align with human preferences, as inferred from relevance grades. We conduct extensive experiments on datasets from three TREC Deep Learning tracks 2019, 2020 and 2021 as well as the ANTIQUE dataset, which focuses on non-factoid open-domain question answering. Beyond dataset-specific results, our work offers a practical methodology for evaluating diverse LLM-based relevance assessment methods. As part of our data release, we include relevance judgments generated by both an open-source (Llama3.2b) and a commercial (gpt-4o) model. Our goal is to reproduce various LLM-based relevance judgment methods to provide a comprehensive comparison. We release all the relevance judgments as a resource that establishes a baseline for future work, ensuring a level playing field for evaluation of LLM-based relevance judgments. All code, data, and resources are publicly available in our GitHub Repository at https://github.com/Narabzad/llm-relevance-judgement-comparison"
+  },
+  {
+   "paperId": "babd098744d3ab051781323c1062b8d6395ca2e8",
+   "externalIds": {
+    "DBLP": "conf/llm4eval/RackauckasCZ24",
+    "ArXiv": "2406.14783",
+    "DOI": "10.48550/arXiv.2406.14783",
+    "CorpusId": 270688403
+   },
+   "title": "Evaluating RAG-Fusion with RAGElo: an Automated Elo-based Framework",
+   "venue": "LLM4Eval@SIGIR",
+   "year": 2024,
+   "citationCount": 29,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2406.14783, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2282961608",
+     "name": "Zackary Rackauckas"
+    },
+    {
+     "authorId": "2305972859",
+     "name": "Arthur Câmara"
+    },
+    {
+     "authorId": "3316623",
+     "name": "Jakub Zavrel"
+    }
+   ],
+   "abstract": "Challenges in the automated evaluation of Retrieval-Augmented Generation (RAG) Question-Answering (QA) systems include hallucination problems in domain-specific knowledge and the lack of gold standard benchmarks for company internal tasks. This results in difficulties in evaluating RAG variations, like RAG-Fusion (RAGF), in the context of a product QA task at Infineon Technologies. To solve these problems, we propose a comprehensive evaluation framework, which leverages Large Language Models (LLMs) to generate large datasets of synthetic queries based on real user queries and in-domain documents, uses LLM-as-a-judge to rate retrieved documents and answers, evaluates the quality of answers, and ranks different variants of Retrieval-Augmented Generation (RAG) agents with RAGElo's automated Elo-based competition. LLM-as-a-judge rating of a random sample of synthetic queries shows a moderate, positive correlation with domain expert scoring in relevance, accuracy, completeness, and precision. While RAGF outperformed RAG in Elo score, a significance analysis against expert annotations also shows that RAGF significantly outperforms RAG in completeness, but underperforms in precision. In addition, Infineon's RAGF assistant demonstrated slightly higher performance in document relevance based on MRR@5 scores. We find that RAGElo positively aligns with the preferences of human annotators, though due caution is still required. Finally, RAGF's approach leads to more complete answers based on expert annotations and better answers overall based on RAGElo's evaluation criteria."
+  },
+  {
+   "paperId": "f22669abd00e6567ac30e72f5ef0768072885dcb",
+   "externalIds": {
+    "ArXiv": "2403.18405",
+    "DBLP": "journals/corr/abs-2403-18405",
+    "DOI": "10.48550/arXiv.2403.18405",
+    "CorpusId": 268724165
+   },
+   "title": "Leveraging Large Language Models for Relevance Judgments in Legal Case Retrieval",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 27,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2403.18405, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2311556497",
+     "name": "Sheng-Jie Ma"
+    },
+    {
+     "authorId": "2323503698",
+     "name": "Qi-Zhi Chu"
+    },
+    {
+     "authorId": "2289744328",
+     "name": "Jiaxin Mao"
+    },
+    {
+     "authorId": "144267788",
+     "name": "Xuhui Jiang"
+    },
+    {
+     "authorId": "2354553487",
+     "name": "Hao-Zhe Duan"
+    },
+    {
+     "authorId": "2309659454",
+     "name": "Chong Chen"
+    }
+   ],
+   "abstract": "Determining which legal cases are relevant to a given query involves navigating lengthy texts and applying nuanced legal reasoning. Traditionally, this task has demanded significant time and domain expertise to identify key Legal Facts and reach sound juridical conclusions. In addition, existing data with legal case similarities often lack interpretability, making it difficult to understand the rationale behind relevance judgments. With the growing capabilities of large language models (LLMs), researchers have begun investigating their potential in this domain. Nonetheless, the method of employing a general large language model for reliable relevance judgments in legal case retrieval remains largely unexplored. To address this gap in research, we propose a novel few-shot approach where LLMs assist in generating expert-aligned interpretable relevance judgments. The proposed approach decomposes the judgment process into several stages, mimicking the workflow of human annotators and allowing for the flexible incorporation of expert reasoning to improve the accuracy of relevance judgments. Importantly, it also ensures interpretable data labeling, providing transparency and clarity in the relevance assessment process. Through a comparison of relevance judgments made by LLMs and human experts, we empirically demonstrate that the proposed approach can yield reliable and valid relevance assessments. Furthermore, we demonstrate that with minimal expert supervision, our approach enables a large language model to acquire case analysis expertise and subsequently transfers this ability to a smaller model via annotation-based knowledge distillation."
+  },
+  {
+   "paperId": "d390580b7a836ea36df7f219d780fa6ed02d13bc",
+   "externalIds": {
+    "ArXiv": "2411.06877",
+    "DBLP": "conf/sigir/TakehiVSS25",
+    "DOI": "10.1145/3726302.3729916",
+    "CorpusId": 273962929
+   },
+   "title": "LLM-Assisted Relevance Assessments: When Should We Ask LLMs for Help?",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2024,
+   "citationCount": 27,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3729916",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2411.06877, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2249757897",
+     "name": "Rikiya Takehi"
+    },
+    {
+     "authorId": "1746656",
+     "name": "E. Voorhees"
+    },
+    {
+     "authorId": "2330531513",
+     "name": "Tetsuya Sakai"
+    },
+    {
+     "authorId": "144526707",
+     "name": "I. Soboroff"
+    }
+   ],
+   "abstract": "Test collections are information retrieval tools that allow researchers to quickly and easily evaluate ranking algorithms. While test collections have become an integral part of IR research, the process of data creation involves significant manual annotation effort, which often makes it very expensive and time-consuming. Consequently, test collections could become too small when the budget is limited, which may lead to unstable evaluations. As a cheaper alternative, recent studies have proposed the use of large language models (LLMs) to completely replace human assessors. However, while LLMs seem to somewhat correlate with human judgments, their predictions are not perfect and often show bias. Thus, a complete replacement with LLMs is argued to be too risky and not fully reliable. In this paper, we propose LLM-Assisted Relevance Assessments (LARA), an effective method to balance manual annotations with LLM annotations, which helps to build a rich and reliable test collection even under a low budget. We use the LLM's predicted relevance probabilities to select the most profitable documents to manually annotate under a budget constraint. With theoretical reasoning, LARA effectively guides the human annotation process by actively learning to calibrate the LLM's predicted relevance probabilities. Then, using the calibration model learned from the limited manual annotations, LARA debiases the LLM predictions to annotate the remaining non-assessed data. Empirical evaluations on TREC-7 Ad Hoc, TREC-8 Ad Hoc, TREC Robust 2004, and TREC-COVID datasets show that LARA outperforms alternative solutions under almost any budget constraint."
+  },
+  {
+   "paperId": "743aaa58513e8a3311eaf3d2ecb1284f50bfec33",
+   "externalIds": {
+    "DBLP": "conf/naacl/ThakurKLLA25",
+    "ArXiv": "2410.13716",
+    "DOI": "10.48550/arXiv.2410.13716",
+    "CorpusId": 273403553
+   },
+   "title": "MIRAGE-Bench: Automatic Multilingual Benchmark Arena for Retrieval-Augmented Generation Systems",
+   "venue": "North American Chapter of the Association for Computational Linguistics",
+   "year": 2024,
+   "citationCount": 27,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2410.13716, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "47583894",
+     "name": "Nandan Thakur"
+    },
+    {
+     "authorId": "51001264",
+     "name": "Suleman Kazi"
+    },
+    {
+     "authorId": "2326296182",
+     "name": "Ge Luo"
+    },
+    {
+     "authorId": "2300329796",
+     "name": "Jimmy Lin"
+    },
+    {
+     "authorId": "2326638455",
+     "name": "Amin Ahmad"
+    }
+   ],
+   "abstract": "Traditional retrieval-augmented generation (RAG) benchmarks evaluate systems using heuristic-based metrics, but these require human preferences as the ground truth for reference. In contrast, arena-based benchmarks, where systems compete against each other, require an expensive large language model (LLM) as a judge for a reliable evaluation. We present a simple efficient technique to combine the best of both worlds. The idea is to train a surrogate judge using heuristic metrics as input, to output the LLM as a judge prediction. In our work, we develop MIRAGE-Bench, a synthetic arena-based RAG benchmark for 18 diverse languages on Wikipedia focused on multilingual answer generation evaluation. It extensively couples both heuristic features and LLM as a judge for evaluation. We benchmark 19 multilingual LLMs, and observe a high correlation (Kendall Tau ($\\tau$) = 0.909) using our surrogate judge and between GPT-4o as a teacher using the Bradley-Terry framework. Our results show proprietary and large open-source LLMs currently dominate on MIRAGE-Bench. Our code and datasets are made publicly available here: https://github.com/vectara/mirage-bench."
+  },
+  {
+   "paperId": "6157da75636cc558dc768601a3708b9952daddb0",
+   "externalIds": {
+    "ArXiv": "2501.03447",
+    "DBLP": "journals/corr/abs-2501-03447",
+    "DOI": "10.48550/arXiv.2501.03447",
+    "CorpusId": 275342586
+   },
+   "title": "CoReQA: Uncovering Potentials of Language Models in Code Repository Question Answering",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 27,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2501.03447, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2293028293",
+     "name": "Jialiang Chen"
+    },
+    {
+     "authorId": "2375754271",
+     "name": "Kai-Fa Zhao"
+    },
+    {
+     "authorId": "2319844900",
+     "name": "Jie Liu"
+    },
+    {
+     "authorId": "2291442955",
+     "name": "Chao Peng"
+    },
+    {
+     "authorId": "2327020248",
+     "name": "Jie-Rui Liu"
+    },
+    {
+     "authorId": "2350609023",
+     "name": "Hang Zhu"
+    },
+    {
+     "authorId": "2315281915",
+     "name": "Peng-Fei Gao"
+    },
+    {
+     "authorId": "2306755158",
+     "name": "Ping Yang"
+    },
+    {
+     "authorId": "2290908925",
+     "name": "Shui-Guang Deng"
+    }
+   ],
+   "abstract": "Large language models that enhance software development tasks, such as code generation, code completion, and code question answering (QA), have been extensively studied in both academia and the industry. The models are integrated into popular intelligent IDEs like JetBrains and Cursor. Current benchmarks for evaluating models' code comprehension capabilities primarily focus on code generation or completion, often neglecting QA, which is a crucial aspect of understanding code. Existing code QA benchmarks are derived from code comments with predefined patterns (e.g., CodeQA) or focus on specific domains, such as education (e.g., CS1QA). These benchmarks fail to capture the real-world complexity of software engineering and user requirements for understanding code repositories. To address this gap, we introduce CoReQA, a benchmark for Code Repository-level question answering, constructed from GitHub issues and comments from 176 popular repositories across four programming languages. Since questions and answers may include both natural language and code snippets, traditional evaluation metrics such as BLEU are inadequate for assessing repository-level QA performance. Thus, we provide an LLM-as-a-judge framework to evaluate QA performance from five aspects. Based on CoReQA, we evaluate the performance of three baselines, including two short-context models using generic retrieval strategies and one long-context model that utilizes the entire repository context. Evaluation results show that state-of-the-art proprietary and long-context models struggle to address repository-level questions effectively. Our analysis highlights the limitations of language models in assisting developers in understanding repositories and suggests future directions for improving repository comprehension systems through effective context retrieval methodologies."
+  },
+  {
+   "paperId": "51a017f1f52875c9873ceb3a3a42e561c6aa6440",
+   "externalIds": {
+    "DBLP": "conf/siggraph/Sandoval-Castaneda25",
+    "ArXiv": "2509.10761",
+    "DOI": "10.1145/3721238.3730761",
+    "CorpusId": 280362021
+   },
+   "title": "EditDuet: A Multi-Agent System for Video Non-Linear Editing",
+   "venue": "International Conference on Computer Graphics and Interactive Techniques",
+   "year": 2025,
+   "citationCount": 27,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3721238.3730761",
+    "status": "HYBRID",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2509.10761, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2237991092",
+     "name": "Marcelo Sandoval-Castañeda"
+    },
+    {
+     "authorId": "2269989846",
+     "name": "Bryan C. Russell"
+    },
+    {
+     "authorId": "2265755786",
+     "name": "Josef Sivic"
+    },
+    {
+     "authorId": "2269460767",
+     "name": "Gregory Shakhnarovich"
+    },
+    {
+     "authorId": "2307597572",
+     "name": "Fabian Caba Heilbron"
+    }
+   ],
+   "abstract": "Automated tools for video editing and assembly have applications ranging from filmmaking and advertisement to content creation for social media. Previous video editing work has mainly focused on either retrieval or user interfaces, leaving actual editing to the user. In contrast, we propose to automate the core task of video editing, formulating it as sequential decision making process. Ours is a multi-agent approach. We design an Editor agent and a Critic agent. The Editor takes as input a collection of video clips together with natural language instructions and uses tools commonly found in video editing software to produce an edited sequence. On the other hand, the Critic gives natural language feedback to the editor based on the produced sequence or renders it if it is satisfactory. We introduce a learning-based approach for enabling effective communication across specialized agents to address the language-driven video editing task. Finally, we explore an LLM-as-a-judge metric for evaluating the quality of video editing system and compare it with general human preference. We evaluate our system’s output video sequences qualitatively and quantitatively through a user study and find that our system vastly outperforms existing approaches in terms of coverage, time constraint satisfaction, and human preference. Please see our companion supplemental video for qualitative results."
+  },
+  {
+   "paperId": "ee816cb0a774e8c8a162be7cbc7718965fd672ec",
+   "externalIds": {
+    "DBLP": "conf/ecir/ArabzadehMAB24",
+    "DOI": "10.1007/978-3-031-56069-9_51",
+    "CorpusId": 268752651
+   },
+   "title": "Query Performance Prediction: From Fundamentals to Advanced Techniques",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2024,
+   "citationCount": 26,
+   "openAccessPdf": {
+    "url": "https://pure.uva.nl/ws/files/243375214/Query_Performance_Prediction.pdf",
+    "status": "GREEN",
+    "license": "other-oa",
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/978-3-031-56069-9_51?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/978-3-031-56069-9_51, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "81447039",
+     "name": "Negar Arabzadeh"
+    },
+    {
+     "authorId": "2238309431",
+     "name": "Chuan Meng"
+    },
+    {
+     "authorId": "3390352",
+     "name": "Mohammad Aliannejadi"
+    },
+    {
+     "authorId": "2256361856",
+     "name": "Ebrahim Bagheri"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "c4e1b0b3b0bc4c8bf3b2dd1a2f6fcd57009c9485",
+   "externalIds": {
+    "DOI": "10.1056/aidbp2500418",
+    "CorpusId": 284210816,
+    "PubMed": "42932523"
+   },
+   "title": "Verifying Facts in Patient Care Documents Generated by Large Language Models Using Electronic Health Records.",
+   "venue": "NEJM AI",
+   "year": 2025,
+   "citationCount": 26,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2501.16672",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1056/aidbp2500418?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1056/aidbp2500418, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2282524884",
+     "name": "P. Chung"
+    },
+    {
+     "authorId": "120874998",
+     "name": "Akshay Swaminathan"
+    },
+    {
+     "authorId": "4905211",
+     "name": "Alex J. Goodell"
+    },
+    {
+     "authorId": "2195835908",
+     "name": "Yeasul Kim"
+    },
+    {
+     "authorId": "6290116",
+     "name": "S. Reincke"
+    },
+    {
+     "authorId": "2346909974",
+     "name": "Lichy Han"
+    },
+    {
+     "authorId": "2849012",
+     "name": "B. Deverett"
+    },
+    {
+     "authorId": "2342503729",
+     "name": "Mohammad Amin Sadeghi"
+    },
+    {
+     "authorId": "2044878450",
+     "name": "Abdel-Badih Ariss"
+    },
+    {
+     "authorId": "2331017123",
+     "name": "Marc Ghanem"
+    },
+    {
+     "authorId": "2055737641",
+     "name": "David Seong"
+    },
+    {
+     "authorId": "2342769190",
+     "name": "Andrew A. Lee"
+    },
+    {
+     "authorId": "2302856928",
+     "name": "Caitlin E. Coombes"
+    },
+    {
+     "authorId": "2342503168",
+     "name": "Brad Bradshaw"
+    },
+    {
+     "authorId": "48271774",
+     "name": "Mahir A. Sufian"
+    },
+    {
+     "authorId": "2315981724",
+     "name": "Hyo Jung Hong"
+    },
+    {
+     "authorId": "2265681326",
+     "name": "Teresa P. Nguyen"
+    },
+    {
+     "authorId": "2388191576",
+     "name": "Mohammad R. Rasouli"
+    },
+    {
+     "authorId": "2350551684",
+     "name": "Komal Kamra"
+    },
+    {
+     "authorId": "32566459",
+     "name": "M. Burbridge"
+    },
+    {
+     "authorId": "1393602658",
+     "name": "James C. McAvoy"
+    },
+    {
+     "authorId": "6193801",
+     "name": "R. Saffary"
+    },
+    {
+     "authorId": "2342645704",
+     "name": "Stephen P. Ma"
+    },
+    {
+     "authorId": "2543243404",
+     "name": "Debadutta Dash"
+    },
+    {
+     "authorId": "2262515940",
+     "name": "James Xie"
+    },
+    {
+     "authorId": "2262456158",
+     "name": "Ellen Y. Wang"
+    },
+    {
+     "authorId": "2310196038",
+     "name": "Clifford A. Schmiesing"
+    },
+    {
+     "authorId": "2258980963",
+     "name": "Nigam H. Shah"
+    },
+    {
+     "authorId": "3135425",
+     "name": "N. Aghaeepour"
+    }
+   ],
+   "abstract": "BACKGROUND\nLarge language models (LLMs) can generate clinical documents, but inaccuracies due to hallucinations create a barrier for use in medical practice. Reliance on clinician vigilance to remedy errors is infeasible, since mistakes may be subtle and interleaved among accurate statements within the document. An increasing trend in artificial intelligence (AI) has been to deploy LLMs as evaluators of LLM output (LLM-as-a-Judge), which has been shown to have high concordance with human judgment.\n\n\nMETHODS\nWe hypothesize that an LLM-as-a-Judge with relevant facts from a patient's electronic health record (EHR) can be used to automatically verify facts in any clinical document written about a patient and provide an overall estimate of the document's accuracy. To evaluate this hypothesis, we created a benchmark dataset called VeriFact - Brief Hospital Course (VeriFact-BHC), consisting of statements derived from the brief hospital course sections of discharge summaries, and established a ground truth from clinician chart review. We then devised an AI system, VeriFact, that combines retrieval-augmented generation of facts from a patient's EHR along with an LLM-as-a-Judge to perform automated evaluation of all statements in the dataset.\n\n\nRESULTS\nVeriFact-BHC contains 100 patients with 13,070 statements derived from brief hospital courses, each annotated by three or more clinicians. VeriFact achieved 93.2% agreement with clinicians. The highest interrater agreement among clinicians was 88.5%, indicating that VeriFact can produce more consistent fact verification than humans. Scaling the size of the LLM-as-a-Judge model and adding reasoning capability improve different facets of AI judgment and are synergistic when combined.\n\n\nCONCLUSIONS\nVeriFact can help clinicians verify facts in documents drafted by LLMs prior to committing them to the patient's EHR and can automate tasks requiring chart review. VeriFact-BHC can be used to develop and benchmark new methodologies for verifying facts in patient care documents. (Funded by Stanford University and others.)."
+  },
+  {
+   "paperId": "00feceeef17951e02e499517031182623bd73b20",
+   "externalIds": {
+    "DBLP": "conf/ecir/AlamSKS25",
+    "ArXiv": "2412.16086",
+    "DOI": "10.1007/978-3-031-88714-7_18",
+    "CorpusId": 274965367
+   },
+   "title": "Towards Interpretable Radiology Report Generation via Concept Bottlenecks using a Multi-Agentic RAG",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2024,
+   "citationCount": 26,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2412.16086",
+    "status": "GREEN",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2412.16086, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2123355044",
+     "name": "Hasan Md Tusfiqur Alam"
+    },
+    {
+     "authorId": "2057091334",
+     "name": "Devansh Srivastav"
+    },
+    {
+     "authorId": "2123357318",
+     "name": "M. A. Kadir"
+    },
+    {
+     "authorId": "2264313286",
+     "name": "Daniel Sonntag"
+    }
+   ],
+   "abstract": "Deep learning has advanced medical image classification, but interpretability challenges hinder its clinical adoption. This study enhances interpretability in Chest X-ray (CXR) classification by using concept bottleneck models (CBMs) and a multi-agent Retrieval-Augmented Generation (RAG) system for report generation. By modeling relationships between visual features and clinical concepts, we create interpretable concept vectors that guide a multi-agent RAG system to generate radiology reports, enhancing clinical relevance, explainability, and transparency. Evaluation of the generated reports using an LLM-as-a-judge confirmed the interpretability and clinical utility of our model's outputs. On the COVID-QU dataset, our model achieved 81% classification accuracy and demonstrated robust report generation performance, with five key metrics ranging between 84% and 90%. This interpretable multi-agent framework bridges the gap between high-performance AI and the explainability required for reliable AI-driven CXR analysis in clinical settings. Our code is available at https://github.com/tifat58/IRR-with-CBM-RAG.git."
+  },
+  {
+   "paperId": "e90146597f09e4ca967eedba79ccf32fa88cd52f",
+   "externalIds": {
+    "ArXiv": "2609.23986",
+    "DBLP": "journals/corr/abs-2609-23986",
+    "DOI": "10.48550/arXiv.2609.23986",
+    "CorpusId": 292218992
+   },
+   "title": "Jev-Mem: System-One-Controlled Agentic Memory for Efficient AI Agents",
+   "venue": "arXiv.org",
+   "year": 2026,
+   "citationCount": 25,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2609.23986, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2385444978",
+     "name": "Dongming Jiang"
+    },
+    {
+     "authorId": "2197376439",
+     "name": "Yi Li"
+    },
+    {
+     "authorId": "1887514",
+     "name": "Bing-Zhe Li"
+    }
+   ],
+   "abstract": "Agentic memory is becoming essential for long-horizon AI agents, yet many existing systems rely on autoregressive LLMs to control how memories are organized, retrieved, and used, placing expensive generation on the critical path of memory operations. We introduce \\textbf{\\method}, a new agentic memory architecture inspired by System-One/System-Two cognition. System One captures fast, lightweight decision-making, whereas System Two performs slower, deliberative reasoning. Jev-Mem brings this division of labor to agentic memory through a dedicated System-One control plane, a structured multi-relational memory plane, and a System-Two reasoning plane. The System-One controller governs memory typing and relational organization during construction, and dynamically performs query routing, retrieval-budget allocation, graph traversal, candidate scoring, and adaptive stopping during retrieval. System Two is invoked only for complex reasoning and answer synthesis. This design improves both memory effectiveness and system efficiency: on LoCoMo Jev-Mem achieves an overall LLM-as-a-Judge score of 0.777, an 11.0\\% relative improvement over the strongest baseline, while reducing memory construction time to 158\\,s, a 6.6$\\times$ speedup over the fastest competing memory system, and lowering average query latency to 0.93\\,s, a 36.7\\% reduction."
+  },
+  {
+   "paperId": "ab4b325dbd0ab003f034e17ee1ebe33c7c398413",
+   "externalIds": {
+    "DOI": "10.1145/3807246.3807349",
+    "CorpusId": 288144337
+   },
+   "title": "CalibJudge: Calibrated LLM-as-a-Judge for Multilingual RAG with Uncertainty-Aware Scoring",
+   "venue": "Proceedings of the 2026 International Conference on Artificial Intelligence and Control",
+   "year": 2026,
+   "citationCount": 23,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3807246.3807349",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3807246.3807349?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3807246.3807349, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2276474843",
+     "name": "Chenfeiyu Wen"
+    },
+    {
+     "authorId": "2291587107",
+     "name": "A. Zhu"
+    },
+    {
+     "authorId": "2433919527",
+     "name": "Runkun Long"
+    },
+    {
+     "authorId": "2281901750",
+     "name": "He-Jun Huang"
+    },
+    {
+     "authorId": "2383830894",
+     "name": "Junjie Jiang"
+    },
+    {
+     "authorId": "2427677380",
+     "name": "Chi-Shing Lee"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) serving as automatic evaluators (LLM-as-a-Judge) have become essential for assessing Retrieval-Augmented Generation (RAG) systems. However, in multilingual settings, these judges exhibit significant calibration drift across languages, producing scores that are neither comparable nor aligned with human judgments. We present CalibJudge, a post-hoc calibration framework that addresses this challenge through: (1) language-specific temperature scaling, (2) uncertainty quantification, and (3) selective abstention. We evaluate CalibJudge on the MEMERAG benchmark covering five languages. Our experiments demonstrate that CalibJudge improves correlation with human annotations by up to 21.3% relative improvement in Kendall's \\(\\tau \\) while reducing cross-lingual fairness gaps by 42% and achieving 88% balanced accuracy at 70% coverage."
+  },
+  {
+   "paperId": "aab67aa8208a41b500735045e373d95d457724b9",
+   "externalIds": {
+    "DBLP": "conf/ictir/UpadhyayPTCCSL25",
+    "DOI": "10.1145/3731120.3744605",
+    "CorpusId": 280246993
+   },
+   "title": "A Large-Scale Study of Relevance Assessments with Large Language Models Using UMBRELA",
+   "venue": "International Conference on the Theory of Information Retrieval",
+   "year": 2025,
+   "citationCount": 23,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3731120.3744605?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3731120.3744605, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2300284044",
+     "name": "Shivani Upadhyay"
+    },
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "47583894",
+     "name": "Nandan Thakur"
+    },
+    {
+     "authorId": "2308033528",
+     "name": "Daniel Campos"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "144526707",
+     "name": "I. Soboroff"
+    },
+    {
+     "authorId": "2300329796",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "There is substantial interest in applying large language models (LLMs) to provide relevance assessments in information retrieval (IR) applications from both industry and academia. To date, researchers and practitioners have presented several studies, but many questions remain. In this paper, we examine four different relevance assessment strategies: a fully manual process and three variants that rely on LLMs to different extents using our tool called UMBRELA. These were deployed in the TREC 2024 RAG Track on a diverse set of 77 runs from 19 teams in situ, which allowed us to correlate system rankings induced by the different approaches and to characterize tradeoffs between cost and quality. We find that system rankings produced by the three LLM-based strategies correlate well at the run level with those produced by fully manual assessments in terms of nDCG@20, nDCG@100, and Recall@100. On a topic-by-topic basis, the correlations are lower, and results using our setup indicate that increased human involvement does not improve correlations sufficiently to justify their costs. Our study suggests that LLMs can potentially replace fully manual judgments to measure run-level effectiveness in a coarse-grained manner."
+  },
+  {
+   "paperId": "5ad65bcd78ec0f38c5334a902f297219754cb1ba",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2604-08256",
+    "ArXiv": "2604.08256",
+    "DOI": "10.48550/arXiv.2604.08256",
+    "CorpusId": 287256320
+   },
+   "title": "HyperMem: Hypergraph Memory for Long-Term Conversations",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2026,
+   "citationCount": 23,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2604.08256, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1999184651",
+     "name": "Ju-Wei Yue"
+    },
+    {
+     "authorId": "2402792494",
+     "name": "Chuan-Rui Hu"
+    },
+    {
+     "authorId": "2054250919",
+     "name": "Jiawei Sheng"
+    },
+    {
+     "authorId": "2402859376",
+     "name": "Zuyi Zhou"
+    },
+    {
+     "authorId": "2391638755",
+     "name": "Wen-Yuan Zhang"
+    },
+    {
+     "authorId": "2347026967",
+     "name": "Ting-Wen Liu"
+    },
+    {
+     "authorId": "2356885684",
+     "name": "Li Guo"
+    },
+    {
+     "authorId": "2403131370",
+     "name": "Ya-Feng Deng"
+    }
+   ],
+   "abstract": "Long-term memory is essential for conversational agents to maintain coherence, track persistent tasks, and provide personalized interactions across extended dialogues. However, existing approaches as Retrieval-Augmented Generation (RAG) and graph-based memory mostly rely on pairwise relations, which can hardly capture high-order associations, i.e., joint dependencies among multiple elements, causing fragmented retrieval. To this end, we propose HyperMem, a hypergraph-based hierarchical memory architecture that explicitly models such associations using hyperedges. Particularly, HyperMem structures memory into three levels: topics, episodes, and facts, and groups related episodes and their facts via hyperedges, unifying scattered content into coherent units. Leveraging this structure, we design a hybrid lexical-semantic index and a coarse-to-fine retrieval strategy, supporting accurate and efficient retrieval of high-order associations. Experiments on the LoCoMo benchmark show that HyperMem achieves state-of-the-art performance with 92.73% LLM-as-a-judge accuracy, demonstrating the effectiveness of HyperMem for long-term conversations."
+  },
+  {
+   "paperId": "7b65f42190359ca69874d0ac5401ac836c8773af",
+   "externalIds": {
+    "DBLP": "conf/cikm/RahmaniRYC025",
+    "ArXiv": "2506.10301",
+    "DOI": "10.1145/3746252.3760908",
+    "CorpusId": 279318266
+   },
+   "title": "Towards Understanding Bias in Synthetic Data for Evaluation",
+   "venue": "International Conference on Information and Knowledge Management",
+   "year": 2025,
+   "citationCount": 22,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3746252.3760908",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.10301, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2301154394",
+     "name": "Hossein A. Rahmani"
+    },
+    {
+     "authorId": "2308273854",
+     "name": "Varsha Ramineni"
+    },
+    {
+     "authorId": "2261495702",
+     "name": "Emine Yilmaz"
+    },
+    {
+     "authorId": "1703980",
+     "name": "Nick Craswell"
+    },
+    {
+     "authorId": "116506812",
+     "name": "Bhaskar Mitra"
+    }
+   ],
+   "abstract": "Test collections are crucial for evaluating Information Retrieval (IR) systems. Creating a diverse set of user queries for these collections can be challenging, and obtaining relevance judgments, which indicate how well retrieved documents match a query, is often costly and resource-intensive. Recently, generating synthetic datasets using Large Language Models (LLMs) has gained attention in various applications. While previous work has used LLMs to generate synthetic queries or documents to improve ranking models, using LLMs to create synthetic test collections is still relatively unexplored. Previous work showed that synthetic test collections have the potential to be used for system evaluation, however, more analysis is needed to validate this claim. In this paper, we thoroughly investigate the reliability of synthetic test collections constructed using LLMs, where LLMs are used to generate synthetic queries, labels, or both. In particular, we examine the potential biases that might occur when such test collections are used for evaluation. We first empirically show the presence of such bias in evaluation results and analyse the effects it might have on system evaluation. We further validate the presence of such bias using a linear mixed-effects model. Our analysis shows that while the effect of bias present in evaluation results obtained using synthetic test collections could be significant, for e.g. computing absolute system performance, its effect may not be as significant in comparing relative system performance. Codes and data are available at: https://github.com/rahmanidashti/BiasSyntheticData"
+  },
+  {
+   "paperId": "b1531697f4ecc4aede148d1d2f235ba162f6c533",
+   "externalIds": {
+    "ArXiv": "2312.03494",
+    "DBLP": "journals/corr/abs-2312-03494",
+    "DOI": "10.1145/3624918.3625328",
+    "CorpusId": 265422486
+   },
+   "title": "Boosting legal case retrieval by query content selection with large language models",
+   "venue": "SIGIR-AP",
+   "year": 2023,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3624918.3625328",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2312.03494, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2268177887",
+     "name": "You-Chao Zhou"
+    },
+    {
+     "authorId": "2146258255",
+     "name": "He-Yan Huang"
+    },
+    {
+     "authorId": "2268322517",
+     "name": "Zhi-Jing Wu"
+    }
+   ],
+   "abstract": "Legal case retrieval, which aims to retrieve relevant cases to a given query case, benefits judgment justice and attracts increasing attention. Unlike generic retrieval queries, legal case queries are typically long and the definition of relevance is closely related to legal-specific elements. Therefore, legal case queries may suffer from noise and sparsity of salient content, which hinders retrieval models from perceiving correct information in a query. While previous studies have paid attention to improving retrieval models and understanding relevance judgments, we focus on enhancing legal case retrieval by utilizing the salient content in legal case queries. We first annotate the salient content in queries manually and investigate how sparse and dense retrieval models attend to those content. Then we experiment with various query content selection methods utilizing large language models (LLMs) to extract or summarize salient content and incorporate it into the retrieval models. Experimental results show that reformulating long queries using LLMs improves the performance of both sparse and dense models in legal case retrieval."
+  },
+  {
+   "paperId": "729322a59f584dd56bfaef50dca0f7748bdba572",
+   "externalIds": {
+    "DBLP": "journals/access/NawaraK25",
+    "DOI": "10.1109/ACCESS.2025.3599832",
+    "CorpusId": 280706391
+   },
+   "title": "A Comprehensive Survey on LLM-Powered Recommender Systems: From Discriminative, Generative to Multi-Modal Paradigms",
+   "venue": "IEEE Access",
+   "year": 2025,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1109/access.2025.3599832",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/ACCESS.2025.3599832?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/ACCESS.2025.3599832, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "1994536695",
+     "name": "Dina Nawara"
+    },
+    {
+     "authorId": "2279618771",
+     "name": "R. Kashef"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have become transformative tools in Natural Language Processing (NLP). They are increasingly being integrated into recommendation systems to address existing limitations such as data sparsity, novelty, cold start, and long-tail challenges. Unlike traditional recommendation techniques that rely on user-item interaction matrices, LLMs provide context-aware reasoning and multi-modal processing capabilities. However, existing research mainly focuses on fine-tuning and prompt engineering strategies without fully exploring hybrid models, retrieval-augmented generation (RAG), graph-enhanced recommendations, and evaluation methodologies. This survey offers a comprehensive and structured examination of LLM-based recommendation systems, categorizing them into discriminative, generative, hybrid, graph-enhanced, and multimodal paradigms. Additionally, we explore adaptive fine-tuning techniques, prompt engineering strategies, and retrieval-augmented generation (RAG) approaches that improve LLM performance in personalized recommendations. We also examine evaluation methodologies, including LLM-as-a-Judge frameworks, benchmark limitations, and fairness considerations. Finally, we present a detailed discussion of open challenges, such as hallucination, scalability, bias, and privacy, highlighting critical research gaps and opportunities for future exploration. This survey aims to guide researchers in navigating the evolving landscape of LLM-driven recommendation systems."
+  },
+  {
+   "paperId": "6dd1e1973fb7b65dbb73369344605c61656b6489",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2403-11335",
+    "ArXiv": "2403.11335",
+    "DOI": "10.1145/3589335.3651940",
+    "CorpusId": 268513097
+   },
+   "title": "ConvSDG: Session Data Generation for Conversational Search",
+   "venue": "The Web Conference",
+   "year": 2024,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2403.11335",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2403.11335, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2007643794",
+     "name": "Fengran Mo"
+    },
+    {
+     "authorId": "2292028662",
+     "name": "Bole Yi"
+    },
+    {
+     "authorId": "1580228663",
+     "name": "Ke-Long Mao"
+    },
+    {
+     "authorId": "2281831588",
+     "name": "Chen Qu"
+    },
+    {
+     "authorId": "2281961173",
+     "name": "Kai-Yu Huang"
+    },
+    {
+     "authorId": "2261086903",
+     "name": "Jian-Yun Nie"
+    }
+   ],
+   "abstract": "Conversational search provides a more convenient interface for users to search by allowing multi-turn interaction with the search engine. However, the effectiveness of the conversational dense retrieval methods is limited by the scarcity of training data required for their fine-tuning. Thus, generating more training conversational sessions with relevant labels could potentially improve search performance. Based on the promising capabilities of large language models (LLMs) on text generation, we propose ConvSDG, a simple yet effective framework to explore the feasibility of boosting conversational search by using LLM for session data generation. Within this framework, we design dialogue/session-level and query-level data generation with unsupervised and semi-supervised learning, according to the availability of relevance judgments. The generated data are used to fine-tune the conversational dense retriever. Extensive experiments on four widely used datasets demonstrate the effectiveness and broad applicability of our ConvSDG framework compared with several strong baselines."
+  },
+  {
+   "paperId": "64aa50e16a32aaf2702d92cddd3e3f91ea4fe7e1",
+   "externalIds": {
+    "ArXiv": "2501.16672",
+    "DBLP": "journals/corr/abs-2501-16672",
+    "DOI": "10.48550/arXiv.2501.16672",
+    "CorpusId": 275931918
+   },
+   "title": "VeriFact: Verifying Facts in LLM-Generated Clinical Text with Electronic Health Records",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2501.16672, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2282524884",
+     "name": "P. Chung"
+    },
+    {
+     "authorId": "120874998",
+     "name": "Akshay Swaminathan"
+    },
+    {
+     "authorId": "4905211",
+     "name": "Alex J. Goodell"
+    },
+    {
+     "authorId": "2195835908",
+     "name": "Yeasul Kim"
+    },
+    {
+     "authorId": "6290116",
+     "name": "S. Reincke"
+    },
+    {
+     "authorId": "2346909974",
+     "name": "Lichy Han"
+    },
+    {
+     "authorId": "2849012",
+     "name": "B. Deverett"
+    },
+    {
+     "authorId": "2342503729",
+     "name": "Mohammad Amin Sadeghi"
+    },
+    {
+     "authorId": "2044878450",
+     "name": "Abdel-Badih Ariss"
+    },
+    {
+     "authorId": "2331017123",
+     "name": "Marc Ghanem"
+    },
+    {
+     "authorId": "2055737641",
+     "name": "David Seong"
+    },
+    {
+     "authorId": "2342769190",
+     "name": "Andrew A. Lee"
+    },
+    {
+     "authorId": "1388549285",
+     "name": "Caitlin E. Coombes"
+    },
+    {
+     "authorId": "2342503168",
+     "name": "Brad Bradshaw"
+    },
+    {
+     "authorId": "48271774",
+     "name": "Mahir A. Sufian"
+    },
+    {
+     "authorId": "2315981724",
+     "name": "Hyo Jung Hong"
+    },
+    {
+     "authorId": "2265681326",
+     "name": "Teresa P. Nguyen"
+    },
+    {
+     "authorId": "143772205",
+     "name": "M. Rasouli"
+    },
+    {
+     "authorId": "4518306",
+     "name": "K. Kamra"
+    },
+    {
+     "authorId": "32566459",
+     "name": "M. Burbridge"
+    },
+    {
+     "authorId": "1393602658",
+     "name": "James C. McAvoy"
+    },
+    {
+     "authorId": "6193801",
+     "name": "R. Saffary"
+    },
+    {
+     "authorId": "2342645704",
+     "name": "Stephen P. Ma"
+    },
+    {
+     "authorId": "2156939237",
+     "name": "D. Dash"
+    },
+    {
+     "authorId": "2109725044",
+     "name": "James Xie"
+    },
+    {
+     "authorId": "2262456158",
+     "name": "Ellen Y. Wang"
+    },
+    {
+     "authorId": "2310196038",
+     "name": "Clifford A. Schmiesing"
+    },
+    {
+     "authorId": "2262093570",
+     "name": "Nigam H. Shah"
+    },
+    {
+     "authorId": "3135425",
+     "name": "N. Aghaeepour"
+    }
+   ],
+   "abstract": "Methods to ensure factual accuracy of text generated by large language models (LLM) in clinical medicine are lacking. VeriFact is an artificial intelligence system that combines retrieval-augmented generation and LLM-as-a-Judge to verify whether LLM-generated text is factually supported by a patient's medical history based on their electronic health record (EHR). To evaluate this system, we introduce VeriFact-BHC, a new dataset that decomposes Brief Hospital Course narratives from discharge summaries into a set of simple statements with clinician annotations for whether each statement is supported by the patient's EHR clinical notes. Whereas highest agreement between clinicians was 88.5%, VeriFact achieves up to 92.7% agreement when compared to a denoised and adjudicated average human clinican ground truth, suggesting that VeriFact exceeds the average clinician's ability to fact-check text against a patient's medical record. VeriFact may accelerate the development of LLM-based EHR applications by removing current evaluation bottlenecks."
+  },
+  {
+   "paperId": "182a8db5b76cf69294ade7b8a3902850135218ba",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2401-04842",
+    "ArXiv": "2401.04842",
+    "DOI": "10.48550/arXiv.2401.04842",
+    "CorpusId": 266902788
+   },
+   "title": "Adapting Standard Retrieval Benchmarks to Evaluate Generated Answers",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2024,
+   "citationCount": 21,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2401.04842, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "81447039",
+     "name": "Negar Arabzadeh"
+    },
+    {
+     "authorId": "2073050239",
+     "name": "Amin Bigdeli"
+    },
+    {
+     "authorId": "1751287",
+     "name": "C. Clarke"
+    }
+   ],
+   "abstract": "Large language models can now directly generate answers to many factual questions without referencing external sources. Unfortunately, relatively little attention has been paid to methods for evaluating the quality and correctness of these answers, for comparing the performance of one model to another, or for comparing one prompt to another. In addition, the quality of generated answers are rarely directly compared to the quality of retrieved answers. As models evolve and prompts are modified, we have no systematic way to measure improvements without resorting to expensive human judgments. To address this problem we adapt standard retrieval benchmarks to evaluate answers generated by large language models. Inspired by the BERTScore metric for summarization, we explore two approaches. In the first, we base our evaluation on the benchmark relevance judgments. We empirically run experiments on how information retrieval relevance judgments can be utilized as an anchor to evaluating the generated answers. In the second, we compare generated answers to the top results retrieved by a diverse set of retrieval models, ranging from traditional approaches to advanced methods, allowing us to measure improvements without human judgments. In both cases, we measure the similarity between an embedded representation of the generated answer and an embedded representation of a known, or assumed, relevant passage from the retrieval benchmark."
+  },
+  {
+   "paperId": "cdbb7f2ae1901780c0f0122fdeb56e2f39b728df",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2507-21105",
+    "ArXiv": "2507.21105",
+    "DOI": "10.48550/arXiv.2507.21105",
+    "CorpusId": 280337378
+   },
+   "title": "AgentMaster: A Multi-Agent Conversational Framework Using A2A and MCP Protocols for Multimodal Information Retrieval and Analysis",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2025,
+   "citationCount": 20,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2507.21105, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2199741121",
+     "name": "Callie C. Liao"
+    },
+    {
+     "authorId": "40628279",
+     "name": "Duoduo Liao"
+    },
+    {
+     "authorId": "2336870086",
+     "name": "Sai Surya Gadiraju"
+    }
+   ],
+   "abstract": "The rise of Multi-Agent Systems (MAS) in Artificial Intelligence (AI), especially integrated with Large Language Models (LLMs), has greatly facilitated the resolution of complex tasks. However, current systems are still facing challenges of inter-agent communication, coordination, and interaction with heterogeneous tools and resources. Most recently, the Model Context Protocol (MCP) by Anthropic and Agent-to-Agent (A2A) communication protocol by Google have been introduced, and to the best of our knowledge, very few applications exist where both protocols are employed within a single MAS framework. We present a pilot study of AgentMaster, a novel modular multi-protocol MAS framework with self-implemented A2A and MCP, enabling dynamic coordination, flexible communication, and rapid development with faster iteration. Through a unified conversational interface, the system supports natural language interaction without prior technical expertise and responds to multimodal queries for tasks including information retrieval, question answering, and image analysis. The experiments are validated through both human evaluation and quantitative metrics, including BERTScore F1 (96.3%) and LLM-as-a-Judge G-Eval (87.1%). These results demonstrate robust automated inter-agent coordination, query decomposition, task allocation, dynamic routing, and domain-specific relevant responses. Overall, our proposed framework contributes to the potential capabilities of domain-specific, cooperative, and scalable conversational AI powered by MAS."
+  },
+  {
+   "paperId": "059f8137f3c5439d59ea433c7ff91ab74da76bf0",
+   "externalIds": {
+    "DBLP": "conf/www/RenW0ZW0WC25",
+    "ArXiv": "2411.04602",
+    "DOI": "10.1145/3696410.3714658",
+    "CorpusId": 273878136
+   },
+   "title": "Self-Calibrated Listwise Reranking with Large Language Models",
+   "venue": "The Web Conference",
+   "year": 2024,
+   "citationCount": 20,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3696410.3714658",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2411.04602, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "1708171825",
+     "name": "Ruiyang Ren"
+    },
+    {
+     "authorId": "2198466349",
+     "name": "Yu-Hao Wang"
+    },
+    {
+     "authorId": "2265383494",
+     "name": "Kun Zhou"
+    },
+    {
+     "authorId": "2257376413",
+     "name": "W. Zhao"
+    },
+    {
+     "authorId": "2326948181",
+     "name": "Wenjie Wang"
+    },
+    {
+     "authorId": "2287961461",
+     "name": "Jing Liu"
+    },
+    {
+     "authorId": "2274218622",
+     "name": "Ji-Rong Wen"
+    },
+    {
+     "authorId": "2279753672",
+     "name": "Tat-Seng Chua"
+    }
+   ],
+   "abstract": "Large language models (LLMs), with advanced linguistic capabilities, have been employed in reranking tasks through a sequence-to-sequence approach. In this paradigm, multiple passages are reranked in a listwise manner and a textual reranked permutation is generated. However, due to the limited context window of LLMs, this reranking paradigm requires a sliding window strategy to iteratively handle larger candidate sets. This not only increases computational costs but also restricts the LLM from fully capturing all the comparison information for all candidates. To address these challenges, we propose a novel self-calibrated listwise reranking method, which aims to leverage LLMs to produce global relevance scores for ranking. To achieve it, we first propose the relevance-aware listwise reranking framework, which incorporates explicit list-view relevance scores to improve reranking efficiency and enable global comparison across the entire candidate set. Second, to ensure the comparability of the computed scores, we propose self-calibrated training that uses point-view relevance assessments generated internally by the LLM itself to calibrate the list-view relevance assessments. Extensive experiments and comprehensive analysis on the BEIR benchmark and TREC Deep Learning Tracks demonstrate the effectiveness and efficiency of our proposed method."
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(\"large language model\" | LLM) + (\"relevance judgments\" | \"relevance assessment\" | \"LLM-as-a-judge\") + (retrieval | TREC)"
+}

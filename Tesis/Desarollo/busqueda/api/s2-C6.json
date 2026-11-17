@@ -1,0 +1,2248 @@
+{
+ "total": 3007,
+ "token": "PCOKWVSKJJGM4TWNJNI3EUSQJIWVNUSRKBFEYK2JFUBHFI4NQCOFII3DKNF6GJELCTBVIA3TIOZVIE6LCTRSIY2DOMBZBKEZPGNGTIURSFI3FBNJKJWC2AAWGEKCM",
+ "data": [
+  {
+   "paperId": "c4afa2b3eda95a1194313394901e0e96e24cefaa",
+   "externalIds": {
+    "MAG": "3105536512",
+    "DBLP": "conf/fat/De-ArteagaRWCBC19",
+    "ArXiv": "1901.09451",
+    "DOI": "10.1145/3287560.3287572",
+    "CorpusId": 58006082
+   },
+   "title": "Bias in Bios: A Case Study of Semantic Representation Bias in a High-Stakes Setting",
+   "venue": "FAT",
+   "year": 2019,
+   "citationCount": 639,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/1901.09451",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1901.09451, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "1406443102",
+     "name": "Maria De-Arteaga"
+    },
+    {
+     "authorId": "145020546",
+     "name": "Alexey Romanov"
+    },
+    {
+     "authorId": "1831395",
+     "name": "H. Wallach"
+    },
+    {
+     "authorId": "1695997",
+     "name": "J. Chayes"
+    },
+    {
+     "authorId": "1721812",
+     "name": "C. Borgs"
+    },
+    {
+     "authorId": "2359380329",
+     "name": "Alexandra Chouldechova"
+    },
+    {
+     "authorId": "6748971",
+     "name": "S. Geyik"
+    },
+    {
+     "authorId": "1769861",
+     "name": "K. Kenthapadi"
+    },
+    {
+     "authorId": "2186481",
+     "name": "A. Kalai"
+    }
+   ],
+   "abstract": "We present a large-scale study of gender bias in occupation classification, a task where the use of machine learning may lead to negative outcomes on peoples' lives. We analyze the potential allocation harms that can result from semantic representation bias. To do so, we study the impact on occupation classification of including explicit gender indicators---such as first names and pronouns---in different semantic representations of online biographies. Additionally, we quantify the bias that remains when these indicators are \"scrubbed,\" and describe proxy behavior that occurs in the absence of explicit gender indicators. As we demonstrate, differences in true positive rates between genders are correlated with existing gender imbalances in occupations, which may compound these imbalances."
+  },
+  {
+   "paperId": "53772f800766d13c92dc22072f563fd2cd811874",
+   "externalIds": {
+    "PubMedCentral": "8061095",
+    "DOI": "10.1016/j.jmh.2021.100041",
+    "CorpusId": 229348626,
+    "PubMed": "33903857"
+   },
+   "title": "Clinical outcomes and risk factors for COVID-19 among migrant populations in high-income countries: A systematic review",
+   "venue": "medRxiv",
+   "year": 2020,
+   "citationCount": 316,
+   "openAccessPdf": {
+    "url": "https://www.sciencedirect.com/science/article/pii/S2666623521000088/pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8061095, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "46475575",
+     "name": "S. Hayward"
+    },
+    {
+     "authorId": "1397246277",
+     "name": "A. Deal"
+    },
+    {
+     "authorId": "2207577300",
+     "name": "Cherie Cheng"
+    },
+    {
+     "authorId": "34000085",
+     "name": "Alison F. Crawshaw"
+    },
+    {
+     "authorId": "48674722",
+     "name": "M. Orcutt"
+    },
+    {
+     "authorId": "8462554",
+     "name": "T. Vandrevala"
+    },
+    {
+     "authorId": "5708784",
+     "name": "M. Norredam"
+    },
+    {
+     "authorId": "145787833",
+     "name": "M. Carballo"
+    },
+    {
+     "authorId": "153890482",
+     "name": "Y. Çiftçi"
+    },
+    {
+     "authorId": "2261524233",
+     "name": "A. Requena-Méndez"
+    },
+    {
+     "authorId": "46694744",
+     "name": "C. Greenaway"
+    },
+    {
+     "authorId": "145292910",
+     "name": "J. Carter"
+    },
+    {
+     "authorId": "31695346",
+     "name": "F. Knights"
+    },
+    {
+     "authorId": "48860942",
+     "name": "A. Mehrotra"
+    },
+    {
+     "authorId": "50434500",
+     "name": "F. Seedat"
+    },
+    {
+     "authorId": "4418148",
+     "name": "K. Bozorgmehr"
+    },
+    {
+     "authorId": "15627360",
+     "name": "A. Veizis"
+    },
+    {
+     "authorId": "1399517580",
+     "name": "I. Campos-Matos"
+    },
+    {
+     "authorId": "4169883",
+     "name": "F. Wurie"
+    },
+    {
+     "authorId": "3589455",
+     "name": "T. Noori"
+    },
+    {
+     "authorId": "144228140",
+     "name": "M. Mckee"
+    },
+    {
+     "authorId": "2120128218",
+     "name": "B. Kumar"
+    },
+    {
+     "authorId": "144212266",
+     "name": "S. Hargreaves"
+    }
+   ],
+   "abstract": "Background Migrants, including refugees, asylum seekers, labour migrants, and undocumented migrants, now constitute a considerable proportion of most high-income countries' populations, including their skilled and unskilled workforces. Migrants may be at increased risk of COVID-19 due to their health and social circumstances, yet the extent to which they are being affected and their predisposing risk factors are not clearly understood. We did a systematic review to assess clinical outcomes of COVID-19 in migrant populations (cases, hospitalisations, deaths), indirect health and social impacts, and to determine key risk factors. Methods We did a systematic review following PRISMA guidelines, registered with PROSPERO (CRD42020222135). We searched databases including PubMed, Global Health, Scopus, CINAHL, and pre-print databases (medRxiv) via the WHO Global Research on COVID-19 database to Nov 18, 2020 for peer-reviewed and grey literature pertaining to migrants (defined as foreign born) and COVID-19 in 82 high-income countries. We used our international networks to source national datasets and grey literature. Data were extracted on our primary outcomes (cases, hospitalisations, deaths) and we evaluated secondary outcomes on indirect health and social impacts, and risk factors, using narrative synthesis. Results 3016 data sources were screened with 158 from 15 countries included in the analysis (35 data sources for primary outcomes: cases [21], hospitalisations [4]; deaths [15]; 123 for secondary outcomes). We found that migrants are at increased risk of infection and are disproportionately represented among COVID-19 cases. Available datasets suggest a similarly disproportionate representation of migrants in reported COVID-19 deaths, as well as increased all-cause mortality in migrants in some countries in 2020. Undocumented migrants, migrant health and care workers, and migrants housed in camps and labour compounds may have been especially affected. In general, migrants have higher levels of many risk factors and vulnerabilities relevant to COVID-19, including increased exposure to SARS-CoV-2 due to high-risk occupations and overcrowded accommodation, and barriers to health care including inadequate information, language barriers, and reduced entitlement to healthcare coverage related to their immigration status. Conclusions Migrants in high-income countries are at high risk of exposure to, and infection with, COVID-19. These data are of immediate relevance to national public health responses to the pandemic and should inform policymaking on strategies for reducing transmission of COVID-19 in this population. Robust data on testing uptake and clinical outcomes in migrants, and barriers and facilitators to COVID-19 vaccination, are urgently needed, alongside strengthening engagement with diverse migrant groups."
+  },
+  {
+   "paperId": "76540cdd760f659e1a1ad20ce8b1acc1444f7435",
+   "externalIds": {
+    "ArXiv": "1911.03064",
+    "MAG": "3101767999",
+    "DBLP": "journals/corr/abs-1911-03064",
+    "ACL": "2020.findings-emnlp.7",
+    "DOI": "10.48550/arXiv.1911.03064",
+    "CorpusId": 207847197
+   },
+   "title": "Reducing Sentiment Bias in Language Models via Counterfactual Evaluation",
+   "venue": "Findings",
+   "year": 2019,
+   "citationCount": 261,
+   "openAccessPdf": {
+    "url": "https://www.aclweb.org/anthology/2020.findings-emnlp.7.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1911.03064, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2421691",
+     "name": "Po-Sen Huang"
+    },
+    {
+     "authorId": "49723481",
+     "name": "Huan Zhang"
+    },
+    {
+     "authorId": "35076395",
+     "name": "Ray Jiang"
+    },
+    {
+     "authorId": "49860489",
+     "name": "Robert Stanforth"
+    },
+    {
+     "authorId": "1851564",
+     "name": "Johannes Welbl"
+    },
+    {
+     "authorId": "34269227",
+     "name": "Jack W. Rae"
+    },
+    {
+     "authorId": "51965508",
+     "name": "Vishal Maini"
+    },
+    {
+     "authorId": "1755465",
+     "name": "Dani Yogatama"
+    },
+    {
+     "authorId": "143967473",
+     "name": "Pushmeet Kohli"
+    }
+   ],
+   "abstract": "Advances in language modeling architectures and the availability of large text corpora have driven progress in automatic text generation. While this results in models capable of generating coherent texts, it also prompts models to internalize social biases present in the training corpus. This paper aims to quantify and reduce a particular type of bias exhibited by language models: bias in the sentiment of generated text. Given a conditioning context (e.g., a writing prompt) and a language model, we analyze if (and how) the sentiment of the generated text is affected by changes in values of sensitive attributes (e.g., country names, occupations, genders) in the conditioning context using a form of counterfactual evaluation. We quantify sentiment bias by adopting individual and group fairness metrics from the fair machine learning literature, and demonstrate that large-scale models trained on two different corpora (news articles, and Wikipedia) exhibit considerable levels of bias. We then propose embedding and sentiment prediction-derived regularization on the language model’s latent representations. The regularizations improve fairness metrics while retaining comparable levels of perplexity and semantic similarity."
+  },
+  {
+   "paperId": "beb50051b22f6ebd1e7ecf2dfcc06558c31ddcff",
+   "externalIds": {
+    "MAG": "2036832562",
+    "DOI": "10.1525/jlca.2006.11.1.238",
+    "CorpusId": 126970902
+   },
+   "title": "Crude Chronicles",
+   "venue": "",
+   "year": 2020,
+   "citationCount": 209,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1525/jlca.2006.11.1.238?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1525/jlca.2006.11.1.238, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "50016216",
+     "name": "S. Sawyer"
+    }
+   ],
+   "abstract": "Ecuador is the third largest foreign supplier of crude oil to the western United States. As the source of this oil, the Ecuadorian Amazon has borne the far-reaching social and environmental consequences of a growing U.S. demand for petroleum and the dynamics of economic globalization it necessitates. Crude Chronicles traces the emergence during the 1990s of a highly organized indigenous movement and its struggles against a U.S. oil company and Ecuadorian neo-liberal policies. Against the backdrop of mounting government attempts to privatize and liberalize the national economy, Suzana Sawyer shows how neo-liberal reforms in Ecuador led to a crisis of governance, accountability, and representation that spurred one of twentieth-century Latin America's strongest indigenous movements. Through her rich ethnography of indigenous marches, demonstrations, occupations, and negotiations, Sawyer tracks the growing sophistication of indigenous politics as Indians subverted, re-deployed, and, at times, capitulated to the dictates and desires of a trans-national neo-liberal logic. At the same time, she follows the multiple maneouvres and discourses that the multinational corporation and the Ecuadorian state used to circumscribe and contain indigenous opposition. Ultimately, Sawyer reveals that indigenous struggles over land and oil operations in Ecuador were as much about reconfiguring national and transnational inequality--that is, rupturing the silence around racial injustice, exacting spaces of accountability, and re-writing narratives of national belonging--as they were about the material use and extraction of rain forest resources."
+  },
+  {
+   "paperId": "1a349f1e597f40620aa37e078f2d00d125c873da",
+   "externalIds": {
+    "MAG": "2893743980",
+    "DOI": "10.1016/J.PMATSCI.2018.09.003",
+    "CorpusId": 106394520
+   },
+   "title": "Metal–organic framework membranes: Production, modification, and applications",
+   "venue": "Progress in Materials Science",
+   "year": 2019,
+   "citationCount": 208,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/J.PMATSCI.2018.09.003?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/J.PMATSCI.2018.09.003, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "3634086",
+     "name": "Wan-Bin Li"
+    }
+   ],
+   "abstract": "Abstract Great developments in the field of metal–organic framework (MOF) membranes have been achieved recently, especially in production with a large membrane area, modification for better performance, and application with additional functions. However, their significance has not been fully recognized and understood. This review summarizes production methodologies, including direct crystallization, interfacial/contra-diffusion synthesis, layer-by-layer assembly, confinement conversion, microfluidic processing, and vapor deposition. The mechanisms and merits of these synthesis methods are analyzed. Modification strategies for the combination of MOFs and introduced components are discussed, and classified into coating, heteroepitaxial growth, embedding, occupation, grafting, and substitution. Modification improves the performance distinctly by changing the construction, microstructure, affinity, and pore size of MOF membranes. The application of MOF membranes in gas separation, nanofiltration, ionic sieving, stimuli responsiveness, and catalysis are reviewed, and the separation mechanisms are analyzed. Moreover, some possible opportunities and challenges for further development of MOF membranes are pointed out."
+  },
+  {
+   "paperId": "50154080ccbaec1a3b4ba401bebd94b80225d21a",
+   "externalIds": {
+    "MAG": "2909620036",
+    "DBLP": "journals/corr/abs-1901-03116",
+    "ArXiv": "1901.03116",
+    "ACL": "W19-3821",
+    "DOI": "10.18653/v1/W19-3821",
+    "CorpusId": 57761084
+   },
+   "title": "Equalizing Gender Bias in Neural Machine Translation with Word Embeddings Techniques",
+   "venue": "Proceedings of the First Workshop on Gender Bias in Natural Language Processing",
+   "year": 2019,
+   "citationCount": 188,
+   "openAccessPdf": {
+    "url": "https://www.aclweb.org/anthology/W19-3821.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1901.03116, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2525360541",
+     "name": "Joel Escudé Font"
+    },
+    {
+     "authorId": "1398996347",
+     "name": "M. Costa-jussà"
+    }
+   ],
+   "abstract": "Neural machine translation has significantly pushed forward the quality of the field. However, there are remaining big issues with the output translations and one of them is fairness. Neural models are trained on large text corpora which contain biases and stereotypes. As a consequence, models inherit these social biases. Recent methods have shown results in reducing gender bias in other natural language processing tools such as word embeddings. We take advantage of the fact that word embeddings are used in neural machine translation to propose a method to equalize gender biases in neural machine translation using these representations. Specifically, we propose, experiment and analyze the integration of two debiasing techniques over GloVe embeddings in the Transformer translation architecture. We evaluate our proposed system on the WMT English-Spanish benchmark task, showing gains up to one BLEU point. As for the gender bias evaluation, we generate a test set of occupations and we show that our proposed system learns to equalize existing biases from the baseline system."
+  },
+  {
+   "paperId": "e5c7b8f99fe1bafc0ebe7bfcc75fa997915e9def",
+   "externalIds": {
+    "PubMedCentral": "9702931",
+    "MAG": "3030900705",
+    "DOI": "10.1177/00197939221076856",
+    "CorpusId": 219763911,
+    "PubMed": "36605816"
+   },
+   "title": "Heterogeneous Labor Market Impacts of the COVID-19 Pandemic",
+   "venue": "Industrial & labor relations review",
+   "year": 2020,
+   "citationCount": 178,
+   "openAccessPdf": {
+    "url": "https://research.upjohn.org/cgi/viewcontent.cgi?article=1346&context=up_workingpapers",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC9702931, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "113273099",
+     "name": "Guido Matias Cortes"
+    },
+    {
+     "authorId": "121519277",
+     "name": "E. Forsythe"
+    }
+   ],
+   "abstract": "The authors study the distributional consequences of the COVID-19 pandemic’s impact on employment, both during the onset of the pandemic and over subsequent months. Using cross-sectional and matched longitudinal data from the Current Population Survey, they show that the pandemic has exacerbated pre-existing inequalities. Although employment losses have been widespread, they have been substantially larger—and more persistent—in lower-paying occupations and industries. Hispanics and non-White workers suffered larger increases in job losses, not only because of their over-representation in lower-paying jobs but also because of a disproportionate increase in their job displacement probability relative to non-Hispanic White workers with the same job background. Gaps in year-on-year job displacement probabilities between Black and White workers have widened over the course of the pandemic recession, both overall and conditional on pre-displacement occupation and industry. These gaps are not explained by state-level differences in the severity of the pandemic nor by the associated response in terms of mitigation policies. In addition, evidence suggests that older workers have been retiring at faster rates."
+  },
+  {
+   "paperId": "577821d28a62b0c6f8fa8e42f871451e141a73d4",
+   "externalIds": {
+    "MAG": "3178861276",
+    "PubMedCentral": "8264166",
+    "DOI": "10.1057/s11369-021-00230-7",
+    "CorpusId": 225314240,
+    "PubMed": "34253931"
+   },
+   "title": "Who are the essential and frontline workers?",
+   "venue": "Business Economics",
+   "year": 2020,
+   "citationCount": 169,
+   "openAccessPdf": {
+    "url": "https://link.springer.com/content/pdf/10.1057/s11369-021-00230-7.pdf",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8264166, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2592906",
+     "name": "Francine D. Blau"
+    },
+    {
+     "authorId": "2086562665",
+     "name": "Josefine Koebe"
+    },
+    {
+     "authorId": "147819072",
+     "name": "Pamela Meyerhofer"
+    }
+   ],
+   "abstract": "Identifying essential and frontline workers and understanding their characteristics is useful for policymakers and researchers in targeting social insurance and safety net policies in response to the COVID-19 crisis and allocating scarce resources like personal protective equipment (PPE) and vaccines. We develop a working definition and provide data on the demographic and labor market composition of these workers. We first apply the official industry guidelines issued by the Department of Homeland Security (DHS) in March 2020 to microdata from the 2018 and 2019 American Community Survey to identify essential workers regardless of actual operation status of their industry. We then use the feasibility of work from home in the worker’s occupation group (Dingel and Neiman 2020) to identify those most likely to be frontline workers who worked in-person early in the COVID-19 crisis in March/April 2020. In a third step, we exclude industries that were shut down or running under limited demand at that time (Vavra 2020). We find that the broader group of essential workers comprises a large share of the labor force and tends to mirror its demographic and labor market characteristics. In contrast, the narrower category of frontline workers is, on average, less educated, has lower wages, and has a higher representation of men, disadvantaged minorities, especially Hispanics, and immigrants. These results hold even when excluding industries that were shut down or operating at a limited level. Results for essential and frontline workers are similar when accounting for changes in the federal guidelines over time by using the December 2020 guidelines which include a few additional groups of workers, including the education sector."
+  },
+  {
+   "paperId": "6abd0e67dabc1841a61ad48b52cdfe0ee8c3c918",
+   "externalIds": {
+    "DOI": "10.1177/0956797620963619",
+    "CorpusId": 230784927,
+    "PubMed": "33400629"
+   },
+   "title": "Gender Stereotypes in Natural Language: Word Embeddings Show Robust Consistency Across Child and Adult Language Corpora of More Than 65 Million Words",
+   "venue": "Psychology Science",
+   "year": 2021,
+   "citationCount": 163,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1177/0956797620963619?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/0956797620963619, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "66649568",
+     "name": "T. Charlesworth"
+    },
+    {
+     "authorId": "2067828845",
+     "name": "Victor Yang"
+    },
+    {
+     "authorId": "153094622",
+     "name": "Thomas C. Mann"
+    },
+    {
+     "authorId": "8774286",
+     "name": "Benedek Kurdi"
+    },
+    {
+     "authorId": "1968771",
+     "name": "M. Banaji"
+    }
+   ],
+   "abstract": "Stereotypes are associations between social groups and semantic attributes that are widely shared within societies. The spoken and written language of a society affords a unique way to measure the magnitude and prevalence of these widely shared collective representations. Here, we used word embeddings to systematically quantify gender stereotypes in language corpora that are unprecedented in size (65+ million words) and scope (child and adult conversations, books, movies, TV). Across corpora, gender stereotypes emerged consistently and robustly for both theoretically selected stereotypes (e.g., work–home) and comprehensive lists of more than 600 personality traits and more than 300 occupations. Despite underlying differences across language corpora (e.g., time periods, formats, age groups), results revealed the pervasiveness of gender stereotypes in every corpus. Using gender stereotypes as the focal issue, we unite 19th-century theories of collective representations and 21st-century evidence on implicit social cognition to understand the subtle yet persistent presence of collective representations in language."
+  },
+  {
+   "paperId": "0fd0654e9f7b57b0a2f736a240065203d9811f88",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2407-20371",
+    "ArXiv": "2407.20371",
+    "DOI": "10.1609/aies.v7i1.31748",
+    "CorpusId": 271543948
+   },
+   "title": "Gender, Race, and Intersectional Bias in Resume Screening via Language Model Retrieval",
+   "venue": "AAAI/ACM Conference on AI, Ethics, and Society",
+   "year": 2024,
+   "citationCount": 162,
+   "openAccessPdf": {
+    "url": "https://ojs.aaai.org/index.php/AIES/article/download/31748/33915",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2407.20371, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2313732747",
+     "name": "Kyra Wilson"
+    },
+    {
+     "authorId": "2314109809",
+     "name": "Aylin Caliskan"
+    }
+   ],
+   "abstract": "Artificial intelligence (AI) hiring tools have revolutionized resume screening, and large language models (LLMs) have the potential to do the same. However, given the biases which are embedded within LLMs, it is unclear whether they can be used in this scenario without disadvantaging groups based on their protected attributes. In this work, we investigate the possibilities of using LLMs in a resume screening setting via a document retrieval framework that simulates job candidate selection. Using that framework, we then perform a resume audit study to determine whether a selection of Massive Text Embedding (MTE) models are biased in resume screening scenarios. We simulate this for nine occupations, using a collection of over 500 publicly available resumes and 500 job descriptions. We find that the MTEs are biased, significantly favoring White-associated names in 85.1% of cases and female-associated names in only 11.1% of cases, with a minority of cases showing no statistically significant differences. Further analyses show that Black males are disadvantaged in up to 100% of cases, replicating real-world patterns of bias in employment settings, and validate three hypotheses of intersectionality. We also find an impact of document length as well as the corpus frequency of names in the selection of resumes. These findings have implications for widely used AI tools that are automating employment, fairness, and tech policy."
+  },
+  {
+   "paperId": "9a1e545a1fea77a49e8eebbbbbf6a37e255d888c",
+   "externalIds": {
+    "MAG": "3047278215",
+    "DOI": "10.1038/s41562-020-0918-6",
+    "CorpusId": 220948164,
+    "PubMed": "32747806"
+   },
+   "title": "Gender stereotypes are reflected in the distributional structure of 25 languages",
+   "venue": "Nature Human Behaviour",
+   "year": 2019,
+   "citationCount": 143,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.31234/osf.io/7qd3g",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1038/s41562-020-0918-6?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1038/s41562-020-0918-6, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "32520564",
+     "name": "M. Lewis"
+    },
+    {
+     "authorId": "2180063",
+     "name": "G. Lupyan"
+    }
+   ],
+   "abstract": "Cultural stereotypes such as the idea that men are more suited for paid work and women are more suited for taking care of the home and family, may contribute to gender imbalances in science, technology, engineering and mathematics (STEM) fields, among other undesirable gender disparities. Might these stereotypes be learned from language? Here we examine whether gender stereotypes are reflected in the large-scale distributional structure of natural language semantics. We measure gender associations embedded in the statistics of 25 languages and relate these to data on an international dataset of psychological gender associations (N = 656,636). People’s implicit gender associations are strongly predicted by gender associations encoded in the statistics of the language they speak. These associations are further related to the extent that languages mark gender in occupation terms (for example, ‘waiter’/‘waitress’). Our pattern of findings is consistent with the possibility that linguistic associations shape people’s implicit judgements. Lewis and Lupyan find that gender stereotypes, such as the idea that men are more suited for paid work and women are more suited for taking care of the home and family, are reflected in the large-scale distributional structure of natural language."
+  },
+  {
+   "paperId": "7ac22cbc6137d47dd624981d832842768b7fe123",
+   "externalIds": {
+    "DOI": "10.1126/science.abf1667",
+    "CorpusId": 233260228,
+    "PubMed": "33858989"
+   },
+   "title": "Unearthing Neanderthal population history using nuclear and mitochondrial DNA from cave sediments",
+   "venue": "Science",
+   "year": 2021,
+   "citationCount": 139,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1126/science.abf1667?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1126/science.abf1667, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "1997488",
+     "name": "B. Vernot"
+    },
+    {
+     "authorId": "150097225",
+     "name": "E. I. Zavala"
+    },
+    {
+     "authorId": "1398463834",
+     "name": "A. Gómez-Olivencia"
+    },
+    {
+     "authorId": "5587204",
+     "name": "Z. Jacobs"
+    },
+    {
+     "authorId": "3935325",
+     "name": "V. Slon"
+    },
+    {
+     "authorId": "6313500",
+     "name": "F. Mafessoni"
+    },
+    {
+     "authorId": "2546535",
+     "name": "Frédéric Romagné"
+    },
+    {
+     "authorId": "2077513689",
+     "name": "A. Pearson"
+    },
+    {
+     "authorId": "47326846",
+     "name": "M. Petr"
+    },
+    {
+     "authorId": "32667039",
+     "name": "N. Sala"
+    },
+    {
+     "authorId": "39872457",
+     "name": "A. Pablos"
+    },
+    {
+     "authorId": "9352406",
+     "name": "A. Aranburu"
+    },
+    {
+     "authorId": "27842683",
+     "name": "J. de Castro"
+    },
+    {
+     "authorId": "144879195",
+     "name": "E. Carbonell"
+    },
+    {
+     "authorId": "33308873",
+     "name": "Bo Li"
+    },
+    {
+     "authorId": "40790681",
+     "name": "M. Krajcarz"
+    },
+    {
+     "authorId": "104299695",
+     "name": "A. Krivoshapkin"
+    },
+    {
+     "authorId": "104735283",
+     "name": "K. Kolobova"
+    },
+    {
+     "authorId": "51195425",
+     "name": "M. Kozlikin"
+    },
+    {
+     "authorId": "6326394",
+     "name": "M. Shunkov"
+    },
+    {
+     "authorId": "88152188",
+     "name": "A. Derevianko"
+    },
+    {
+     "authorId": "69393688",
+     "name": "B. Viola"
+    },
+    {
+     "authorId": "33620116",
+     "name": "Steffi Grote"
+    },
+    {
+     "authorId": "10682791",
+     "name": "Elena Essel"
+    },
+    {
+     "authorId": "9683839",
+     "name": "David López Herráez"
+    },
+    {
+     "authorId": "151215332",
+     "name": "Sarah Nagel"
+    },
+    {
+     "authorId": "48132223",
+     "name": "Birgit Nickel"
+    },
+    {
+     "authorId": "2054475523",
+     "name": "J. Richter"
+    },
+    {
+     "authorId": "2116879186",
+     "name": "Anna Schmidt"
+    },
+    {
+     "authorId": "144511312",
+     "name": "B. Peter"
+    },
+    {
+     "authorId": "144288817",
+     "name": "J. Kelso"
+    },
+    {
+     "authorId": "145670872",
+     "name": "R. Roberts"
+    },
+    {
+     "authorId": "2926045",
+     "name": "J. Arsuaga"
+    },
+    {
+     "authorId": "87185505",
+     "name": "M. Meyer"
+    }
+   ],
+   "abstract": "The value of dirty DNA Environmental DNA can identify the presence of species, even from the distant past. Surveying three cave sites in western Europe and southern Siberia, Vernot et al. identified nuclear DNA and confirmed that it is from the close relatives of anatomically modern humans—Neanderthal and Denisovan individuals. A phylogenetic analysis and modeling show that the DNA in sediment samples from several layers corresponds to previously studied skeletal remains. These results demonstrate that environmental data can be applied to study the population genetics of the extinct Neanderthal and Denisovan lineages, identifying a turnover of Neanderthal populations ∼100,000 years ago. Science, this issue p. eabf1667 The retrieval and analysis of ancient hominin nuclear DNA from cave deposits allows for the study of ancient populations. INTRODUCTION The study of hominin history has progressed through both archaeological and genetic insights. Although DNA sequencing from hominin skeletal remains allows the association of ancient populations with specific places in time and space, many archaeological sites lack associated hominin remains, limiting the scope of genetic analyses. Even when ancient hominin remains are found, they often do not cover the full time span of a site or sampling them for DNA may not be possible. The fossil record is particularly sparse for Pleistocene hominins, leaving large gaps in our understanding of the genetic histories of archaic and early modern humans. RATIONALE Recent work has demonstrated the feasibility of sequencing ancient mammalian mitochondrial DNA (mtDNA), including that of hominins, from Pleistocene cave sediments. However, mtDNA represents only the maternal lineage and thus provides limited data for the resolution of population relationships. It is therefore desirable to complement mtDNA analysis with the retrieval of nuclear DNA, but no strategies are in place to enrich hominin nuclear DNA from a background of related sequences from other mammals present in most sedimentary deposits. To close this gap, we developed a set of probes for hybridization capture that targets 1.6 million ancestry-informative positions in the hominin nuclear genome, specifically at loci with high mammalian sequence divergence. We then developed computational methods to deplete residual microbial and faunal DNA sequences, along with methods to account for such non-hominin DNA in population genetic analyses. RESULTS We applied these methods to explore the history of Neanderthal populations in western Europe and southern Siberia using sediment samples from three Pleistocene caves: Galería de las Estatuas, a site in northern Spain with 40 thousand years of Neanderthal occupation but that is genetically unexplored, and Chagyrskaya and Denisova Caves, which have previously yielded high-coverage genomes of two Neanderthals and one Denisovan hominin. In total, we recovered Neanderthal or Denisovan mtDNA from >60 sediment samples and nuclear DNA from 30 of these. For Chagyrskaya and Denisova Caves, our phylogenetic results from sediment DNA were consistent with previously published results from skeletal remains, confirming the accuracy of our approach. At Galería de las Estatuas, we recovered Neanderthal DNA from layers spanning nearly the entire stratigraphy, and identified a population turnover ~100,000 years ago accompanied by a loss of mtDNA diversity. By incorporating genetic data from previously published skeletal samples, we associated this turnover with two putative radiations in Neanderthal history. CONCLUSION We developed methods for the effective retrieval and analysis of ancient hominin nuclear DNA from sediments and used them to uncover previously unknown events in Neanderthal history. This work demonstrates that detailed genetic analyses are now possible for many more archaeological sites than previously thought, with DNA from abundant sediments allowing dense time-series studies that are independent of the fossil record. Sediments from Pleistocene caves contain hominin mitochondrial and nuclear DNA that can be enriched, sequenced, and analyzed to reveal the genetic histories of past occupants even in the absence of their skeletal remains. Shown is a view of pit I at the Galería de las Estatuas, Spain, and stratigraphic column with ages in thousands of years (ka). PHOTO CREDIT : PANTOJA-PÉREZ,NTTF Bones and teeth are important sources of Pleistocene hominin DNA, but are rarely recovered at archaeological sites. Mitochondrial DNA (mtDNA) has been retrieved from cave sediments but provides limited value for studying population relationships. We therefore developed methods for the enrichment and analysis of nuclear DNA from sediments and applied them to cave deposits in western Europe and southern Siberia dated to between 200,000 and 50,000 years ago. We detected a population replacement in northern Spain about 100,000 years ago, which was accompanied by a turnover of mtDNA. We also identified two radiation events in Neanderthal history during the early part of the Late Pleistocene. Our work lays the ground for studying the population history of ancient hominins from trace amounts of nuclear DNA in sediments."
+  },
+  {
+   "paperId": "efe4fcc1e288223b077f5526350106d11f068c60",
+   "externalIds": {
+    "MAG": "3119631793",
+    "PubMedCentral": "8052554",
+    "DOI": "10.1186/s12889-021-10788-8",
+    "CorpusId": 233261690,
+    "PubMed": "33865354"
+   },
+   "title": "Impact of the COVID-19 crisis on work and private life, mental well-being and self-rated health in German and Swiss employees: a cross-sectional online survey",
+   "venue": "BMC Public Health",
+   "year": 2021,
+   "citationCount": 123,
+   "openAccessPdf": {
+    "url": "https://bmcpublichealth.biomedcentral.com/counter/pdf/10.1186/s12889-021-10788-8",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8052554, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "87097327",
+     "name": "M. Tušl"
+    },
+    {
+     "authorId": "4991939",
+     "name": "R. Brauchli"
+    },
+    {
+     "authorId": "8495093",
+     "name": "Philipp Kerksieck"
+    },
+    {
+     "authorId": "46756710",
+     "name": "G. Bauer"
+    }
+   ],
+   "abstract": "Background The COVID-19 crisis has radically changed the way people live and work. While most studies have focused on prevailing negative consequences, potential positive shifts in everyday life have received less attention. Thus, we examined the actual and perceived overall impact of the COVID-19 crisis on work and private life, and the consequences for mental well-being (MWB), and self-rated health (SRH) in German and Swiss employees. Methods Cross-sectional data were collected via an online questionnaire from 2118 German and Swiss employees recruited through an online panel service (18–65 years, working at least 20 h/week, various occupations). The sample provides a good representation of the working population in both countries. Using logistic regression, we analyzed how sociodemographic factors and self-reported changes in work and private life routines were associated with participants’ perceived overall impact of the COVID-19 crisis on work and private life. Moreover, we explored how the perceived impact and self-reported changes were associated with MWB and SRH. Results About 30% of employees reported that their work and private life had worsened, whereas about 10% reported improvements in work and 13% in private life. Mandatory short-time work was strongly associated with perceived negative impact on work life, while work from home, particularly if experienced for the first time, was strongly associated with a perceived positive impact on work life. Concerning private life, younger age, living alone, reduction in leisure time, and changes in quantity of caring duties were strongly associated with perceived negative impact. In contrast, living with a partner or family, short-time work, and increases in leisure time and caring duties were associated with perceived positive impact on private life. Perceived negative impact of the crisis on work and private life and mandatory short-time work were associated with lower MWB and SRH. Moreover, perceived positive impact on private life and an increase in leisure time were associated with higher MWB. Conclusion The results of this study show the differential impact of the COVID-19 crisis on people’s work and private life as well as the consequences for MWB and SRH. This may inform target groups and situation-specific interventions to ameliorate the crisis."
+  },
+  {
+   "paperId": "9c546d533fcb3f0df9974dc78332b94a53a629cf",
+   "externalIds": {
+    "CorpusId": 210172014
+   },
+   "title": "Robot Adoption and Labor Market Dynamics",
+   "venue": "",
+   "year": 2019,
+   "citationCount": 116,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://static1.squarespace.com/static/5d35e72fcff15f0001b48fc2/t/61a4e7d3dfd0aa67849b9918/1638197204858/humlumJMP.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2078831814",
+     "name": "Anders Humlum"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "623b1c61aa36048a38485a44551cb3fdcbcc827b",
+   "externalIds": {
+    "MAG": "2963524349",
+    "DBLP": "journals/corr/abs-1905-12801",
+    "ArXiv": "1905.12801",
+    "ACL": "P19-2031",
+    "DOI": "10.18653/v1/P19-2031",
+    "CorpusId": 170078973
+   },
+   "title": "Reducing Gender Bias in Word-Level Language Models with a Gender-Equalizing Loss Function",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2019,
+   "citationCount": 106,
+   "openAccessPdf": {
+    "url": "https://www.aclweb.org/anthology/P19-2031.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1905.12801, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "134894281",
+     "name": "Yusu Qian"
+    },
+    {
+     "authorId": "3375824",
+     "name": "Urwa Muaz"
+    },
+    {
+     "authorId": "152705090",
+     "name": "Ben Zhang"
+    },
+    {
+     "authorId": "2058870034",
+     "name": "J. Hyun"
+    }
+   ],
+   "abstract": "Gender bias exists in natural language datasets, which neural language models tend to learn, resulting in biased text generation. In this research, we propose a debiasing approach based on the loss function modification. We introduce a new term to the loss function which attempts to equalize the probabilities of male and female words in the output. Using an array of bias evaluation metrics, we provide empirical evidence that our approach successfully mitigates gender bias in language models without increasing perplexity. In comparison to existing debiasing strategies, data augmentation, and word embedding debiasing, our method performs better in several aspects, especially in reducing gender bias in occupation words. Finally, we introduce a combination of data augmentation and our approach and show that it outperforms existing strategies in all bias evaluation metrics."
+  },
+  {
+   "paperId": "759e4971592883f23b202628757674b3fd7ec8fc",
+   "externalIds": {
+    "MAG": "3013936382",
+    "DOI": "10.1016/j.jenvman.2020.110457",
+    "CorpusId": 214731087,
+    "PubMed": "32224292"
+   },
+   "title": "Community resilience to cyclone and storm surge disasters: Evidence from coastal communities of Bangladesh.",
+   "venue": "Journal of Environmental Management",
+   "year": 2020,
+   "citationCount": 105,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.jenvman.2020.110457?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.jenvman.2020.110457, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "90543665",
+     "name": "M. Uddin"
+    },
+    {
+     "authorId": "7678869",
+     "name": "C. E. Haque"
+    },
+    {
+     "authorId": "2116410195",
+     "name": "D. Walker"
+    },
+    {
+     "authorId": "144881578",
+     "name": "Mahed-Ul-Islam Choudhury"
+    }
+   ],
+   "abstract": "In this study, we posit that in determining the underpinnings and attributes of community resilience to disaster-shocks, an analysis of actual and potential disaster victims' emic perspectives, that is the views of cultural insiders, on recovery processes and community resilience is crucial. We argue that community resilience must be framed within a deeper understanding of the subjective views of the actors themselves, their local knowledge and culture, and the historical context of the place or social formation. In this context, the primary goal of this study was to delineate the fundamental elements of community recovery and attributes of resilience to cyclones, storm surges, and other environmental disaster-shocks in Bangladesh's coastal communities, and, recognizing that social actions are pivotal elements of community resilience, we attempt to make a novel contribution by underscoring local emic perspectives. Using the tools of participatory research methods, we collected empirical data from four sources: a household survey of 300 household heads, eight focus group discussions, 20 key informant interviews, and five in-depth, household case studies. Our research findings revealed that the roles of traditional-informal as well as quasi-formal institutions were vital for rapid recovery and transformation to new local economic and livelihood trajectories. Resilience attributes that were deeply embedded in community characteristics assisted in ameliorating immediate impacts as well as in building future adaptive capacities. Out of 12 resilience attributes identified by the respondents, 'knowledge, skills and learning', 'values and beliefs', 'people-place connection', 'social networks and support', 'active institutions', and 'self-organization' capacities were ranked highest. The community resilience attributes and their functionality in the context of the coastal communities studied varied significantly depending on their economic base, occupations, and their respective contexts of vulnerability. Overall, the findings demonstrate that community resilience attributes function interactively rather than independently, and analyses of community attributes therefore require a clear understanding of network functioning and the processes that drive institutional structures, relations, and outcomes."
+  },
+  {
+   "paperId": "d02bbcc305e7810951fb13524240b48718a506fd",
+   "externalIds": {
+    "ArXiv": "2306.03009",
+    "DBLP": "journals/ncs/SavcisensEHMLRZ24",
+    "DOI": "10.1038/s43588-023-00573-5",
+    "CorpusId": 259075492,
+    "PubMed": "38177491"
+   },
+   "title": "Using sequences of life-events to predict human lives",
+   "venue": "Nature Computational Science",
+   "year": 2023,
+   "citationCount": 104,
+   "openAccessPdf": {
+    "url": "https://www.researchsquare.com/article/rs-2975478/latest.pdf",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2306.03009, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2218892062",
+     "name": "Germans Savcisens"
+    },
+    {
+     "authorId": "1397398770",
+     "name": "Tina Eliassi-Rad"
+    },
+    {
+     "authorId": "49254475",
+     "name": "L. K. Hansen"
+    },
+    {
+     "authorId": "5941407",
+     "name": "L. Mortensen"
+    },
+    {
+     "authorId": "10790823",
+     "name": "Lau Lilleholt"
+    },
+    {
+     "authorId": "145046059",
+     "name": "Anna Rogers"
+    },
+    {
+     "authorId": "2049795",
+     "name": "Ingo Zettler"
+    },
+    {
+     "authorId": "31413949",
+     "name": "S. Lehmann"
+    }
+   ],
+   "abstract": "Here we represent human lives in a way that shares structural similarity to language, and we exploit this similarity to adapt natural language processing techniques to examine the evolution and predictability of human lives based on detailed event sequences. We do this by drawing on a comprehensive registry dataset, which is available for Denmark across several years, and that includes information about life-events related to health, education, occupation, income, address and working hours, recorded with day-to-day resolution. We create embeddings of life-events in a single vector space, showing that this embedding space is robust and highly structured. Our models allow us to predict diverse outcomes ranging from early mortality to personality nuances, outperforming state-of-the-art models by a wide margin. Using methods for interpreting deep learning models, we probe the algorithm to understand the factors that enable our predictions. Our framework allows researchers to discover potential mechanisms that impact life outcomes as well as the associated possibilities for personalized interventions. Using registry data from Denmark, Lehmann et al. create individual-level trajectories of events related to health, education, occupation, income and address, and also apply transformer models to build rich embeddings of life-events and to predict outcomes ranging from time of death to personality."
+  },
+  {
+   "paperId": "b95402732603d83b62419c7c1cfc5a68755ef2f5",
+   "externalIds": {
+    "MAG": "3022404989",
+    "DOI": "10.1016/j.jclepro.2020.121928",
+    "CorpusId": 218969965
+   },
+   "title": "A decision support framework for the design and operation of sustainable urban farming systems",
+   "venue": "",
+   "year": 2020,
+   "citationCount": 102,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.jclepro.2020.121928?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.jclepro.2020.121928, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "50703577",
+     "name": "Lan-Yu Li"
+    },
+    {
+     "authorId": "98228918",
+     "name": "Xian Li"
+    },
+    {
+     "authorId": "14353065",
+     "name": "Clive Chong"
+    },
+    {
+     "authorId": "8950187",
+     "name": "Chi-Hwa Wang"
+    },
+    {
+     "authorId": "122024361",
+     "name": "Xiao-Nan Wang"
+    }
+   ],
+   "abstract": "Abstract The increasing population and continuous urbanization make food security prominent in sustainable development. It is important to develop economic and resource-efficient farming solutions to meet food demand. Renewable energy and waste valorization may bring benefits to build sustainable food production systems and facilitate circular economy. This work aims to develop a decision support framework for the stakeholders to quantitatively assess and optimize their urban farming systems for efficient investment and operation. The proposed framework is based on a holistic system model that considers the energy and material consumption in vegetable production processes and the economic and environmental performance of urban farming systems. In the multi-dimensional assessment model, the net present value and cradle-to-gate CO2 emission, water consumption, and land occupation of different configurations of urban farming systems were assessed. In a further development, the assessment model was embedded in an optimization framework to identify the optimal system design and operation. The optimal crop mix and the corresponding cultivation set points (such as temperature, humidity, irradiance, illumination time, and CO2 concentration) for the farming modules were determined via optimization. To demonstrate the proposed framework, a case study on the design and operation of a vertical farm in Singapore was carried out. The case study examined alternative farming systems with glass-enclosed vs window-free structural design, grid vs solar photovoltaic (PV) energy supply, and traditional chemical fertilizers vs food waste compost fertilization. Results showed that plant-factory farming systems integrated with solar PV and beer-residue-derived fertilizer could be a promising and sustainable farming solution for Singapore as a tropical megacity."
+  },
+  {
+   "paperId": "b78debcb672bc95d33c72609be52aa032229e561",
+   "externalIds": {
+    "MAG": "3037383500",
+    "DBLP": "conf/aaai/GugnaniM20",
+    "DOI": "10.1609/aaai.v34i08.7038",
+    "CorpusId": 219300953
+   },
+   "title": "Implicit Skills Extraction Using Document Embedding and Its Use in Job Recommendation",
+   "venue": "AAAI Conference on Artificial Intelligence",
+   "year": 2020,
+   "citationCount": 95,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1609/aaai.v34i08.7038",
+    "status": "GOLD",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1609/aaai.v34i08.7038?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1609/aaai.v34i08.7038, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "71822910",
+     "name": "Akshay Gugnani"
+    },
+    {
+     "authorId": "144134771",
+     "name": "Hemant Misra"
+    }
+   ],
+   "abstract": "This paper presents a job recommender system to match resumes to job descriptions (JD), both of which are non-standard and unstructured/semi-structured in form. First, the paper proposes a combination of natural language processing (NLP) techniques for the task of skill extraction. The performance of the combined techniques on an industrial scale dataset yielded a precision and recall of 0.78 and 0.88 respectively. The paper then introduces the concept of extracting implicit skills – the skills which are not explicitly mentioned in a JD but may be implicit in the context of geography, industry or role. To mine and infer implicit skills for a JD, we find the other JDs similar to this JD. This similarity match is done in the semantic space. A Doc2Vec model is trained on 1.1 Million JDs covering several domains crawled from the web, and all the JDs are projected onto this semantic space. The skills absent in the JD but present in similar JDs are obtained, and the obtained skills are weighted using several techniques to obtain the set of final implicit skills. Finally, several similarity measures are explored to match the skills extracted from a candidate's resume to explicit and implicit skills of JDs. Empirical results for matching resumes and JDs demonstrate that the proposed approach gives a mean reciprocal rank of 0.88, an improvement of 29.4% when compared to the performance of a baseline method that uses only explicit skills."
+  },
+  {
+   "paperId": "2e282bca209a3bad3ee0e35ea03b24056af7975c",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-1904-05233",
+    "ArXiv": "1904.05233",
+    "MAG": "2936687512",
+    "ACL": "N19-1424",
+    "DOI": "10.18653/v1/N19-1424",
+    "CorpusId": 131773759
+   },
+   "title": "What’s in a Name? Reducing Bias in Bios without Access to Protected Attributes",
+   "venue": "North American Chapter of the Association for Computational Linguistics",
+   "year": 2019,
+   "citationCount": 89,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.18653/v1/n19-1424",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1904.05233, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "145020546",
+     "name": "Alexey Romanov"
+    },
+    {
+     "authorId": "1406443102",
+     "name": "Maria De-Arteaga"
+    },
+    {
+     "authorId": "1831395",
+     "name": "H. Wallach"
+    },
+    {
+     "authorId": "1695997",
+     "name": "J. Chayes"
+    },
+    {
+     "authorId": "1721812",
+     "name": "C. Borgs"
+    },
+    {
+     "authorId": "2359380329",
+     "name": "Alexandra Chouldechova"
+    },
+    {
+     "authorId": "6748971",
+     "name": "S. Geyik"
+    },
+    {
+     "authorId": "1769861",
+     "name": "K. Kenthapadi"
+    },
+    {
+     "authorId": "1681193",
+     "name": "Anna Rumshisky"
+    },
+    {
+     "authorId": "2186481",
+     "name": "A. Kalai"
+    }
+   ],
+   "abstract": "There is a growing body of work that proposes methods for mitigating bias in machine learning systems. These methods typically rely on access to protected attributes such as race, gender, or age. However, this raises two significant challenges: (1) protected attributes may not be available or it may not be legal to use them, and (2) it is often desirable to simultaneously consider multiple protected attributes, as well as their intersections. In the context of mitigating bias in occupation classification, we propose a method for discouraging correlation between the predicted probability of an individual’s true occupation and a word embedding of their name. This method leverages the societal biases that are encoded in word embeddings, eliminating the need for access to protected attributes. Crucially, it only requires access to individuals’ names at training time and not at deployment time. We evaluate two variations of our proposed method using a large-scale dataset of online biographies. We find that both variations simultaneously reduce race and gender biases, with almost no reduction in the classifier’s overall true positive rate."
+  },
+  {
+   "paperId": "cd5d0e0a35b83fac6aeff0f3b010e3fb553cc95d",
+   "externalIds": {
+    "MAG": "2972583494",
+    "DOI": "10.1080/01419870.2019.1654114",
+    "CorpusId": 203520043
+   },
+   "title": "Taste or statistics? A correspondence study of ethnic, racial and religious labour market discrimination in Germany",
+   "venue": "Ethnic and Racial Studies",
+   "year": 2019,
+   "citationCount": 88,
+   "openAccessPdf": {
+    "url": "https://www.tandfonline.com/doi/pdf/10.1080/01419870.2019.1654114?needAccess=true",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1080/01419870.2019.1654114?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1080/01419870.2019.1654114, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "102593096",
+     "name": "R. Koopmans"
+    },
+    {
+     "authorId": "33510571",
+     "name": "Susanne Veit"
+    },
+    {
+     "authorId": "115544492",
+     "name": "Ruta Yemane"
+    }
+   ],
+   "abstract": "ABSTRACT In this study we compare rates of discrimination across German-born applicants from thirty-five ethnic groups in which various racial and religious treatment groups are embedded, this study allows us to better distinguish taste and statistical sources of discrimination, and to assess the relative importance of ethnicity, phenotype and religious affiliation as signals triggering discrimination. The study is based on applications to almost 6,000 job vacancies with male and female applicants in eight occupations across Germany. We test taste discrimination based on cultural value distance between groups against statistical discrimination based on average education levels and find that discrimination is mostly driven by the former. Based on this pattern, ethnic, racial and religious groups whose average values are relatively distant from the German average face the strongest discrimination. By contrast, employers do not treat minority groups with value patterns closer to Germany’s different from ethnic German applicants without a migration background."
+  },
+  {
+   "paperId": "f63d9acf4c11bb7d7bf47b1bddc8ae873a809286",
+   "externalIds": {
+    "MAG": "3021956865",
+    "DOI": "10.2139/ssrn.3584941",
+    "CorpusId": 218465646
+   },
+   "title": "Immigrant Key Workers: Their Contribution to Europe's COVID-19 Response",
+   "venue": "Social Science Research Network",
+   "year": 2020,
+   "citationCount": 86,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.2139/ssrn.3584941",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.2139/ssrn.3584941?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.2139/ssrn.3584941, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "46796157",
+     "name": "Francesco Fasani"
+    },
+    {
+     "authorId": "103604981",
+     "name": "J. Mazza"
+    }
+   ],
+   "abstract": "\n This paper contributes to the literature on the unequal effects of Covid-19 on workers and labor markets by focusing on the experience of migrant key workers in EU countries. Using survey data on over 2.7 million workers, our analysis explores three main dimensions. First, we document the over-representation of migrant workers in key occupations, particularly in low-qualified roles. Second, we examine the selection into key occupations. According to our estimates, women are more likely to be key workers, the relationship with education is V-shaped, and EU and Extra EU migrants are, respectively, 12 and 15 percent more likely than comparable natives to be key workers. Migrant women almost entirely drive these latter gaps. Finally, we estimate the labor market impact of Covid-19, showing that migrant key workers endured reductions in working hours similar to those of natives during the pandemic, but faced a 3 times higher increase in job loss probability. Our findings imply that although migrant workers played a crucial role in the response to the pandemic, they endured a harsher fate than native workers."
+  },
+  {
+   "paperId": "d068de1fd05bb399c5609c68005129746ca74782",
+   "externalIds": {
+    "PubMedCentral": "8547854",
+    "DOI": "10.1016/j.bios.2021.113729",
+    "CorpusId": 239890424,
+    "PubMed": "34736101"
+   },
+   "title": "An ultrasensitive molecularly imprinted polymer-based electrochemical sensor for the determination of SARS-CoV-2-RBD by using macroporous gold screen-printed electrode",
+   "venue": "Biosensors & bioelectronics",
+   "year": 2021,
+   "citationCount": 86,
+   "openAccessPdf": {
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8547854/pdf/",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8547854, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2488542607",
+     "name": "Mahmoud Amouzadeh Tabrizi"
+    },
+    {
+     "authorId": "1397828666",
+     "name": "J. Fernández-Blázquez"
+    },
+    {
+     "authorId": "2544220833",
+     "name": "Dahiana Mojena Medina"
+    },
+    {
+     "authorId": "145932287",
+     "name": "P. Acedo"
+    }
+   ],
+   "abstract": "Herein, a novel molecularly imprinted polymer (MIP) based electrochemical sensor for the determination of the receptor-binding domain of severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2-RBD) has been developed. For this purpose, first, a macroporous gold screen-printed electrode (MP-Au-SPE) has been fabricated. The MIP was then synthesized on the surface of the MP-Au-SPE through the electro-polymerization of ortho-phenylenediamine in the presence of SARS-CoV-2-RBD molecules as matrix polymer, and template molecules, respectively. During the fabrication process, the SARS-CoV-2-RBD molecules were embedded in the polymer matrix. Subsequently, the template molecules were removed from the electrode by using alkaline ethanol. The template molecules removal was studied using cyclic voltammetry (CV), electrochemical impedance spectroscopy (EIS), scanning electron microscope (SEM), energy-dispersive X-ray spectroscopy (EDX), and attenuated total reflectance spectroscopy (ATR). The fabricated MIP film acted as an artificial recognition element for the measurement of SARS-CoV-2-RBD. The EIS technique was used for the measurement of the SARS-CoV-2-RBD in the saliva solution. The electron transfer resistance (Ret) of the MIP-based sensor in a ferri/ferrocyanide solution increased as the SARS-CoV-2-RBD concentration increased due to the occupation of the imprinted cavities by the SARS-CoV-2-RBD. The MIP-based sensor exhibited a good response to the SARS-CoV-2-RBD in the concentration range between 2.0 and 40.0 pg mL-1 with a limit of detection of 0.7 pg mL-1. The obtained results showed that the fabricated MIP sensor has high selectivity sensitivity, and stability."
+  },
+  {
+   "paperId": "b7e5c2a14d72c9491d4325fc7969011ece71acb3",
+   "externalIds": {
+    "CorpusId": 206767119
+   },
+   "title": "Title : “ Do it all by myself ” : a salutogenic approach of masculine health practice among farming men coping with stress",
+   "venue": "",
+   "year": 2021,
+   "citationCount": 77,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null
+   },
+   "publicationTypes": null,
+   "authors": [],
+   "abstract": null
+  },
+  {
+   "paperId": "7c1572d0330324280d2b9ffa86806e39fb938b7b",
+   "externalIds": {
+    "MAG": "3128340727",
+    "DOI": "10.1177/0022242921996661",
+    "CorpusId": 210170875
+   },
+   "title": "Visual Elicitation of Brand Perception",
+   "venue": "Journal of Marketing",
+   "year": 2021,
+   "citationCount": 76,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.2139/ssrn.3496538",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1177/0022242921996661?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/0022242921996661, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2530415",
+     "name": "Daria Dzyabura"
+    },
+    {
+     "authorId": "33297753",
+     "name": "Renana Peres"
+    }
+   ],
+   "abstract": "Understanding consumers’ associations with brands is at the core of brand management. However, measuring associations is challenging because consumers can associate a brand with many objects, emotions, activities, sceneries, and concepts. This article presents an elicitation platform, analysis methodology, and results on consumer associations of U.S. national brands. The elicitation is direct, unaided, scalable, and quantitative and uses the power of visuals to depict a detailed representation of respondents’ relationships with a brand. The proposed brand visual elicitation platform allows firms to collect online brand collages created by respondents and analyze them quantitatively to elicit brand associations. The authors use the platform to collect 4,743 collages from 1,851 respondents for 303 large U.S. brands. Using unsupervised machine-learning and image-processing approaches, they analyze the collages and obtain a detailed set of associations for each brand, including objects (e.g., animals, food, people), constructs (e.g., abstract art, horror, delicious, famous, fantasy), occupations (e.g., musician, bodybuilder, baker), nature (e.g., beach, misty, snowscape, wildlife), and institutions (e.g., corporate, army, school). The authors demonstrate the following applications for brand management: obtaining prototypical brand visuals, relating associations to brand personality and equity, identifying favorable associations per category, exploring brand uniqueness through differentiating associations, and identifying commonalities between brands across categories for potential collaborations."
+  },
+  {
+   "paperId": "b01dd81fc103c7864a61f80085cb33bf69d90eb1",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2306-12424",
+    "ArXiv": "2306.12424",
+    "DOI": "10.48550/arXiv.2306.12424",
+    "CorpusId": 259212007
+   },
+   "title": "VisoGender: A dataset for benchmarking gender bias in image-text pronoun resolution",
+   "venue": "Neural Information Processing Systems",
+   "year": 2023,
+   "citationCount": 75,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2306.12424",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2306.12424, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1939997577",
+     "name": "S. Hall"
+    },
+    {
+     "authorId": "2531140968",
+     "name": "Fernanda Gonçalves Abrantes"
+    },
+    {
+     "authorId": "2315988620",
+     "name": "Thomas (Hanwen) Zhu"
+    },
+    {
+     "authorId": "88993978",
+     "name": "Grace A. Sodunke"
+    },
+    {
+     "authorId": "2048000614",
+     "name": "Aleksandar Shtedritski"
+    },
+    {
+     "authorId": "90729626",
+     "name": "Hannah Rose Kirk"
+    }
+   ],
+   "abstract": "We introduce VisoGender, a novel dataset for benchmarking gender bias in vision-language models. We focus on occupation-related biases within a hegemonic system of binary gender, inspired by Winograd and Winogender schemas, where each image is associated with a caption containing a pronoun relationship of subjects and objects in the scene. VisoGender is balanced by gender representation in professional roles, supporting bias evaluation in two ways: i) resolution bias, where we evaluate the difference between pronoun resolution accuracies for image subjects with gender presentations perceived as masculine versus feminine by human annotators and ii) retrieval bias, where we compare ratios of professionals perceived to have masculine and feminine gender presentations retrieved for a gender-neutral search query. We benchmark several state-of-the-art vision-language models and find that they demonstrate bias in resolving binary gender in complex scenes. While the direction and magnitude of gender bias depends on the task and the model being evaluated, captioning models are generally less biased than Vision-Language Encoders. Dataset and code are available at https://github.com/oxai/visogender"
+  },
+  {
+   "paperId": "d4b743a6ed652caa044bec69a475d85541f7170a",
+   "externalIds": {
+    "DOI": "10.1177/00187267221097937",
+    "CorpusId": 248335440
+   },
+   "title": "How is social inequality maintained in the Global South? Critiquing the concept of dirty work",
+   "venue": "Human Relations",
+   "year": 2022,
+   "citationCount": 74,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1177/00187267221097937",
+    "status": "HYBRID",
+    "license": "CCBYNC",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1177/00187267221097937?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/00187267221097937, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "115088389",
+     "name": "G. Zulfiqar"
+    },
+    {
+     "authorId": "143718135",
+     "name": "Ajnesh Prasad"
+    }
+   ],
+   "abstract": "Extant research on dirty work—occupations involving physical, social, or moral taint, which affect worker identities—has been read primarily through the lens of social identity theory (SIT). There are two notable shortcomings that emerge as a consequence of dirty work being too heavily reliant upon the precepts of SIT, which we seek to remedy in this article: (1) the overemphasis on the symbolic to the detriment of the material has led to false optimism regarding the ability for subjects doing dirty work to exercise agency in constructing their own sense of selves, and (2) the failure to substantively account for the role of identity differences suggests that empirical research on the phenomenon is devoid of proper historical and cultural contextualization. Drawing on a qualitive study on low-caste toilet cleaners in Pakistan, our findings were largely incongruous with the scholarly conceptualization of dirty work that has been propagated to date. We explicate the embedded role of power and context in dirty work, which are not adequately considered using SIT alone. Repudiating the overly romanticized version of the concept, we argue that SIT’s account of dirty work ought to be complemented by status construction theory going forward."
+  },
+  {
+   "paperId": "cf0f101b469abadf19c55338287b992a71e57833",
+   "externalIds": {
+    "DOI": "10.1007/s11896-020-09424-9",
+    "CorpusId": 231792293
+   },
+   "title": "A National Study of Police Mental Health in the USA: Stigma, Mental Health and Help-Seeking Behaviors",
+   "venue": "",
+   "year": 2021,
+   "citationCount": 74,
+   "openAccessPdf": {
+    "url": "http://hdl.handle.net/10072/401486",
+    "status": "GREEN",
+    "license": "other-oa",
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s11896-020-09424-9?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s11896-020-09424-9, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "115974026",
+     "name": "J. Drew"
+    },
+    {
+     "authorId": "50383640",
+     "name": "Sherri Martin"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "a3b1020648f90b1d3414fec4859472dded65ec0c",
+   "externalIds": {
+    "MAG": "2908048108",
+    "DOI": "10.1002/wps.20580",
+    "CorpusId": 58617114,
+    "PubMed": "30600627"
+   },
+   "title": "Prevention of depression will only succeed when it is structurally embedded and targets big determinants",
+   "venue": "World Psychiatry",
+   "year": 2019,
+   "citationCount": 73,
+   "openAccessPdf": {
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/6313244",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/wps.20580?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/wps.20580, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "LettersAndComments"
+   ],
+   "authors": [
+    {
+     "authorId": "3029609",
+     "name": "J. Ormel"
+    },
+    {
+     "authorId": "1802487",
+     "name": "P. Cuijpers"
+    },
+    {
+     "authorId": "5389694",
+     "name": "Anthony F Jorm"
+    },
+    {
+     "authorId": "6393723",
+     "name": "R. Schoevers"
+    }
+   ],
+   "abstract": "About 150million people worldwide are affected withmajor depressive disorder (further depression) at any moment, and one in every five women and one in every eight men experience an episode of major depression over the course of their life. Although, since the 1970s, more and more people in Western countries have received mental health care, most notably pharmacotherapy, epidemiological data do not indicate a drop in the population prevalence of depression. It is clear that the effectiveness of current therapies relative to placebo is modest, and substantial treatment quality gaps still exist. However, even with optimal treatment delivery, other approaches are necessary to address the public health burden of depression and other commonmental disorders. Prevention is a largely neglected option, but has its own complexities. Recent meta-analyses of randomized controlled trials of preventive interventions that seek to reduce the incidence of depression consistently report small to occasionally moderate effectiveness, with numbers needed to treat (NNT) around 22. Notably, these effects sizes are similar to those for the use of statins to prevent an acute myocardial infarction during a 5 year period. However, the large majority of prevention trials concern psychological therapies administered to motivated people with sub-threshold symptoms. In addition, studies are limited to short-term outcomes and effects decrease over time, suggesting that repeated age-adapted exposures are essential. Active comparators are rarely used, and higher quality studies report substantially smaller effects. In addition, adherence is far from optimal. Populations at the highest risk are often the least motivated to participate in psychological therapies. The biggest problems of current prevention are that it does not target the strongest determinants of risk and is not structurally embedded inmajor social systems. Strong proximal determinants include exposure to poor parenting (risky prenatal behavior, emotional neglect, rejection, lack of structure, over-control and over-involvement, inter-parental conflict, family instability), as well as children’s maladaptive personality traits (negative affectivity, low selfcontrol) and poor social and problem-solving skills. These have well-established long-term effects on a broad range of outcomes. When both poor parenting and child risks are present, maladaptive person-environment transactions may develop that often result in intractable personality problems which are resistant to change. It is therefore essential to target simultaneously both parentand child-related determinants of risk. Thus, prevention needs to start early in life, address both child and parent, be long-term and structural, and improve parenting skills and children’s self-control, negative affectivity and life skills, partly through better parenting and partly through better education. Negative affectivity and self-control are especially important, given the prospective significance of early-onset phobia, hyperactivity and oppositional-defiant behavior. Also of interest, but less thoroughly investigated, are the mental health effects of distal socio-economic and cultural factors, such as inferior social status, income inequality, migration, and their effect mediators. The second problem of current prevention is that it is not structurally and socially embedded. Large-scale, long-term implementation and utilization of prevention can only be successful if prevention is embedded at local, district/state, and national levels. Two forms of embedment are important. First, the “socio-political form”, in which local administrations and national governments embed prevention (programs/activities) in existing institutions in the domains of education, pregnancy and child care, health and social work. Second, the “social-psychological form”, in which mental health values and behaviors develop into widely accepted social norms (as is happening with smoking). The first form of embedding is probably the best way to guarantee structural funding, political collaboration and thus long-term implementation. The second form is important as it rewards (mental) health behaviors. For instance, if life skills become part of the regular curriculum of schools (in smaller classes!), repeated age-adapted exposure to universal “prevention” becomes a normal component of preparation for adult life. Mental health professionals and organizations cannot achieve this alone. As advocated by the World Health Organization, it requires the joint collaboration of multiple parties at multiple levels of organization (community, municipality, district, state). The major advantages of embedded universal programs are that they: a) may normalize prevention activities because they are anchored in systems that are (virtually) mandatory (education, obstetric, child care); b) reduce risk of stigma; c) improve parenting, child characteristics and life skills (and hence lifestyles), which d) will benefit multiple domains of life. This may range from mental and physical health to educational attainment, occupation and income, but even relationships, social embeddedness and crime rates. Although ceiling effects certainly exist, even parents and children who do relatively well on all fronts may benefit from universal programs. Despite the expectation that population effects will be substantial, universal programs will not involve everybody at the desired level. Some people will need additional input: remedial prevention, analogous to remedial teaching for pupils with unsatisfactory academic progress. In this way, selective/ indicated prevention supplements universal prevention. We are facing a remarkable paradox. On the one hand, stakeholders (policy makers, consumers, insurance companies,"
+  },
+  {
+   "paperId": "85b681e08c9db87dc19a5d5d8664e0027a8e8ad9",
+   "externalIds": {
+    "DBLP": "journals/asc/GiabelliMMMS21",
+    "DOI": "10.1016/j.asoc.2020.107049",
+    "CorpusId": 261513356
+   },
+   "title": "Skills2Job: A recommender system that encodes job offer embeddings on graph databases",
+   "venue": "Applied Soft Computing",
+   "year": 2021,
+   "citationCount": 71,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.asoc.2020.107049?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.asoc.2020.107049, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1770437474",
+     "name": "Anna Giabelli"
+    },
+    {
+     "authorId": "36039638",
+     "name": "Lorenzo Malandri"
+    },
+    {
+     "authorId": "3306904",
+     "name": "Fabio Mercorio"
+    },
+    {
+     "authorId": "2000131",
+     "name": "Mario Mezzanzanica"
+    },
+    {
+     "authorId": "101904272",
+     "name": "Andrea Seveso"
+    }
+   ],
+   "abstract": "We propose a recommender system that, starting from a set of users’ skills, identifies the most suitable jobs as they emerge from a large dataset of Online Job Vacancies (OJVs). To this aim, we process 2.5M+ OJVs posted in three different countries (United Kingdom, France, and Germany), training several embeddings and performing an intrinsic evaluation of their quality. Besides, we compute a measure of skill importance for each occupation in each country, the Revealed Comparative Advantage ( rca ). The best vector model, one for each country, together with the rca , is used to feed a graph database, which will serve as the keystone for the recommender system. Results are evaluated through a user study of 10 labor market experts, using P@3 and nDCG as scores. Results show a high precision for the recommendations provided by skills2job , and the high values of nDCG (0.985 and 0.984 in a [0,1] range) indicate a strong correlation between the experts’ scores and the rankings generated by skills2job ."
+  },
+  {
+   "paperId": "e2451f5e8cbbcaf604c155d505d25edf3bb36f70",
+   "externalIds": {
+    "MAG": "2795886141",
+    "DOI": "10.1177/0001839218769252",
+    "CorpusId": 149621062
+   },
+   "title": "The Hidden Side of Trust: Supporting and Sustaining Leaps of Faith among Firefighters*",
+   "venue": "",
+   "year": 2019,
+   "citationCount": 70,
+   "openAccessPdf": {
+    "url": "https://journals.sagepub.com/doi/pdf/10.1177/0001839218769252",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1177/0001839218769252?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1177/0001839218769252, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2058579",
+     "name": "Michael G. Pratt"
+    },
+    {
+     "authorId": "23122762",
+     "name": "Douglas A. Lepisto"
+    },
+    {
+     "authorId": "71661442",
+     "name": "Erik Dane"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "9b1075cb3bdbdf5d29539da8074a9670c8c1e5e5",
+   "externalIds": {
+    "PubMedCentral": "8009945",
+    "DOI": "10.1038/s41467-021-22086-3",
+    "CorpusId": 232431148,
+    "PubMed": "33785734"
+   },
+   "title": "Universal resilience patterns in labor markets",
+   "venue": "Nature Communications",
+   "year": 2021,
+   "citationCount": 69,
+   "openAccessPdf": {
+    "url": "https://www.nature.com/articles/s41467-021-22086-3.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8009945, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "40025432",
+     "name": "E. Moro"
+    },
+    {
+     "authorId": "2327052",
+     "name": "Morgan R. Frank"
+    },
+    {
+     "authorId": "144994682",
+     "name": "A. Pentland"
+    },
+    {
+     "authorId": "47193909",
+     "name": "A. Rutherford"
+    },
+    {
+     "authorId": "145512648",
+     "name": "M. Cebrián"
+    },
+    {
+     "authorId": "1705156",
+     "name": "I. Rahwan"
+    }
+   ],
+   "abstract": "Cities are the innovation centers of the US economy, but technological disruptions can exclude workers and inhibit a middle class. Therefore, urban policy must promote the jobs and skills that increase worker pay, create employment, and foster economic resilience. In this paper, we model labor market resilience with an ecologically-inspired job network constructed from the similarity of occupations’ skill requirements. This framework reveals that the economic resilience of cities is universally and uniquely determined by the connectivity within a city’s job network. US cities with greater job connectivity experienced lower unemployment during the Great Recession. Further, cities that increase their job connectivity see increasing wage bills, and workers of embedded occupations enjoy higher wages than their peers elsewhere. Finally, we show how job connectivity may clarify the augmenting and deleterious impact of automation in US cities. Policies that promote labor connectivity may grow labor markets and promote economic resilience. Recent technological, social, and educational changes are profoundly impacting our work, but what makes labour markets resilient to those labour shocks? Here, the authors show that labour markets resemble ecological systems whose resilience depends critically on the network of skill similarities between different jobs."
+  },
+  {
+   "paperId": "aba809596e8cdb9ebab3b16d6209663eb7966052",
+   "externalIds": {
+    "MAG": "3109985717",
+    "DOI": "10.33367/psi.v5i2.1036",
+    "CorpusId": 229397465
+   },
+   "title": "Quarterlife Crisis Pada Masa Dewasa Awal di Pekanbaru",
+   "venue": "",
+   "year": 2020,
+   "citationCount": 68,
+   "openAccessPdf": {
+    "url": "https://ejournal.iai-tribakti.ac.id/index.php/psikologi/article/download/1036/781",
+    "status": "GOLD",
+    "license": "CCBYSA",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.33367/psi.v5i2.1036?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.33367/psi.v5i2.1036, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "117572970",
+     "name": "Icha Herawati"
+    },
+    {
+     "authorId": "2070629742",
+     "name": "Ahmad Hidayat"
+    }
+   ],
+   "abstract": "The transition from adolescents to adult challenges is different from the challenges of life in the previous development process. Towards the age of 25, individuals face a new life such as work, marital status, and mindset. The quarter-life crisis is a phenomenon that is common in individuals aged 20-30 years old. The crisis of a quarter of a century, that's how the term counts with individuals who attend 25 years. The quarter-life crisis experiences’ by individuals grew up. This research is descriptive quantitative research. The subjects in this study consist of 236 adults in Pekanbaru who attended for 20-30 years. The retrieval of data in this study uses the quarter-life crisis scale. The results showed that the early adult individual quarter-life crisis in Pekanbaru reached 43.22%, increasing the high category of 27.97%. The results showed the fact that factors affecting the quarterly life crisis estimated as gender, status, and occupation. The conclusions of this study show that adults in Pekanbaru who spend a quarter of life issued by women, are single and do not have jobs. "
+  },
+  {
+   "paperId": "fd0963b99569140d58c9fbb368ca3aa4fac5e8cf",
+   "externalIds": {
+    "DOI": "10.1108/ijebr-04-2021-0312",
+    "CorpusId": 247240299
+   },
+   "title": "“Think entrepreneur – think male”: the effect of reduced gender stereotype threat on women's entrepreneurial intention and opportunity motivation",
+   "venue": "International Journal of Entrepreneurial Behavior &amp; Research",
+   "year": 2022,
+   "citationCount": 67,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1108/ijebr-04-2021-0312?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1108/ijebr-04-2021-0312, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "9636498",
+     "name": "A. Laguía"
+    },
+    {
+     "authorId": "84742198",
+     "name": "Dominika Wach"
+    },
+    {
+     "authorId": "1402837608",
+     "name": "Cristina García-Ael"
+    },
+    {
+     "authorId": "3842239",
+     "name": "J. Moriano"
+    }
+   ],
+   "abstract": "PurposeEntrepreneurship, which traditionally has been a male occupation, still attracts fewer women than men. Challenging gender stereotypes within entrepreneurship is one avenue to increase women's entrepreneurial intention and promote women entrepreneurship. This study adapts the “think manager – think male” leadership perspective to the entrepreneurship context and explores gender stereotype's implications for both entrepreneurial intention and motivation to become an entrepreneur.Design/methodology/approachA total of 902 Spanish non-entrepreneurs, both male and female, were randomly asked about the representation of successful entrepreneurs (no-gender-mention), successful men entrepreneurs or successful women entrepreneurs (reduced stereotype threat condition vs no-gender-mention or men entrepreneurs' conditions). Then, female participants' entrepreneurial intention, its antecedents (i.e. attitudes toward entrepreneurship, subjective norms and entrepreneurial self-efficacy) and necessity vs opportunity motivation were measured and compared to their male counterparts' scores in those three conditions.FindingsFemale participants reported higher entrepreneurial intention, self-efficacy and opportunity motivation when assigned to the successful women entrepreneurs' condition. Younger participants – compared to older ones – also exhibited higher entrepreneurial intention and opportunity motivation, more positive attitudes toward entrepreneurship and higher scores in subjective norms. Furthermore, findings suggest a woman entrepreneur seems to be less accessible (or more counter-stereotypical) to male participants than to female participants and, thus, the “think entrepreneur – think male” bias is more noticeable in male participants. Therefore, reducing negative stereotype threat for women in entrepreneurship may increase women's entrepreneurial career aspirations. This is of utmost importance to optimize training courses and mentoring programs to strengthen women's self-efficacy in their entrepreneurial skills and capabilities.Originality/valueThis study contributes to the literature about gender, entrepreneurial intention and motivation by adapting a leadership paradigm (“think manager – think male”) to entrepreneurship (“think entrepreneur – think male”). These findings shed new light on the antecedents of entrepreneurial intention and motivation and have implications for policy measures. Acknowledging that exposure to successful women entrepreneurs as role models potentially facilitates entrepreneurship among women, governments should provide tailor-made incentives and support for women entrepreneurs in the form of awareness raising, networking and in the mass media."
+  },
+  {
+   "paperId": "ec38ec96402dfe98a8e8c850eff476b5a3382637",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2109-09605",
+    "ArXiv": "2109.09605",
+    "DOI": "10.48550/arXiv.2109.09605",
+    "CorpusId": 237572142
+   },
+   "title": "JobBERT: Understanding Job Titles through Skills",
+   "venue": "arXiv.org",
+   "year": 2021,
+   "citationCount": 63,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2109.09605",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2109.09605, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2127470139",
+     "name": "Jens-Joris Decorte"
+    },
+    {
+     "authorId": "1382199471",
+     "name": "Jeroen Van Hautte"
+    },
+    {
+     "authorId": "1388296896",
+     "name": "Thomas Demeester"
+    },
+    {
+     "authorId": "2067842103",
+     "name": "Chris Develder"
+    }
+   ],
+   "abstract": "Job titles form a cornerstone of today's human resources (HR) processes. Within online recruitment, they allow candidates to understand the contents of a vacancy at a glance, while internal HR departments use them to organize and structure many of their processes. As job titles are a compact, convenient, and readily available data source, modeling them with high accuracy can greatly benefit many HR tech applications. In this paper, we propose a neural representation model for job titles, by augmenting a pre-trained language model with co-occurrence information from skill labels extracted from vacancies. Our JobBERT method leads to considerable improvements compared to using generic sentence encoders, for the task of job title normalization, for which we release a new evaluation benchmark."
+  },
+  {
+   "paperId": "ebbc7e09095c13766058796d00552c3df00ed05f",
+   "externalIds": {
+    "PubMedCentral": "8659563",
+    "DBLP": "journals/sensors/AlvarengaCHCFN21",
+    "DOI": "10.3390/s21237937",
+    "CorpusId": 244826434,
+    "PubMed": "34883941"
+   },
+   "title": "Detection and Classification System for Rail Surface Defects Based on Eddy Current",
+   "venue": "Italian National Conference on Sensors",
+   "year": 2021,
+   "citationCount": 62,
+   "openAccessPdf": {
+    "url": "https://www.mdpi.com/1424-8220/21/23/7937/pdf?version=1638241370",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC8659563, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "83329723",
+     "name": "T. Alvarenga"
+    },
+    {
+     "authorId": "2107100184",
+     "name": "A. L. Carvalho"
+    },
+    {
+     "authorId": "2851677",
+     "name": "L. Honório"
+    },
+    {
+     "authorId": "2461776330",
+     "name": "A. Cerqueira"
+    },
+    {
+     "authorId": "3055102",
+     "name": "L. Filho"
+    },
+    {
+     "authorId": "48397042",
+     "name": "R. Nóbrega"
+    }
+   ],
+   "abstract": "The prospect of growth of a railway system impacts both the network size and its occupation. Due to the overloaded infrastructure, it is necessary to increase reliability by adopting fast maintenance services to reach economic and security conditions. In this context, one major problem is the excessive friction caused by the wheels. This contingency may cause ruptures with severe consequences. While eddy’s current approaches are adequate to detect superficial damages in metal structures, there are still open challenges concerning automatic identification of rail defects. Herein, we propose an embedded system for online detection and location of rails defects based on eddy current. Moreover, we propose a new method to interpret eddy current signals by analyzing their wavelet transforms through a convolutional neural network. With this approach, the embedded system locates and classifies different types of anomalies, enabling an optimization of the railway maintenance plan. Field tests were performed, in which the rail anomalies were grouped in three classes: squids, weld and joints. The results showed a classification efficiency of ~98%, surpassing the most commonly used methods found in the literature."
+  },
+  {
+   "paperId": "69b10e8eb001acb567716c32b6d1632aec2e071c",
+   "externalIds": {
+    "DOI": "10.1111/1468-2427.13044",
+    "CorpusId": 239209907
+   },
+   "title": "CONCEPTUALIZING AFRICAN URBAN PERIPHERIES",
+   "venue": "International Journal of Urban and Regional Research",
+   "year": 2021,
+   "citationCount": 61,
+   "openAccessPdf": {
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/1468-2427.13044",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1111/1468-2427.13044?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1111/1468-2427.13044, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "152232612",
+     "name": "P. Meth"
+    },
+    {
+     "authorId": "2776065",
+     "name": "T. Goodfellow"
+    },
+    {
+     "authorId": "12481614",
+     "name": "A. Todes"
+    },
+    {
+     "authorId": "46412848",
+     "name": "S. Charlton"
+    }
+   ],
+   "abstract": "Recent years have seen a rising interest in peri-urban spaces, urban frontiers and new suburbanisms, including in African contexts. However, given the scale of urban growth and the extreme diversity of formations emerging on the geographical edges of African city-regions, a deeper understanding is needed of the drivers of peripheral urbanisms and the lived experiences of urban change in these spaces. Based on a comparative research project in South Africa and Ethiopia, this article draws out the epistemologies of researching African urban peripheries and presents a new conceptual framework. It offers a language for interpreting processes of peripheral development and change, highlighting five distinct but overlapping logics which we term speculative, vanguard, auto-constructed, transitioning and inherited. Rather than describing bounded peripheral spaces, we argue that these logics can co-exist, hybridize and bleed into each other in different ways in specific places and at different temporal junctures. Centring our methodological practices of comparative analysis, and privileging the voices of those living in urban peripheries, the article employs critical readings of urban scholarship before exploring how these five logics illuminate the complex processes of urban peripheral evolution and transformation. Formulating these logics helps to fill a lacuna in urban conceptualization with potential relevance beyond African contexts. Introduction Reflecting on a major international research programme on ‘global suburbanisms’, Keil (2018: 41) notes that we live ‘in the age of the urban periphery’. Scholarship on African cities has recently begun to explore this, evidenced by the proliferation of literature on peri-urban spaces (Mbiba and Huchzermeyer,  2002; Kinfu et al.,  2019), urban peripheries (Sawyer,  2014), suburbanisms and ‘new centralities’ (Mabin et al., 2013; Güney et al., 2019), by-pass urbanism (Sawyer et al., 2021), urban frontiers (McGregor and Chatiza, 2019) and ‘postcolonial suburbs’ (Mercer, 2017). Collectively, this literature bolsters Keil’s claim that urban peripheries exhibit greater diversity ‘than perhaps anywhere else in the modern history of city-building and re-building’ (Keil,  2018: 13). It is increasingly apparent that the geographical edges of cities are characterized by dynamism as well as stagnation, boredom as well as violence, and luxury alongside destitution. Meanwhile, debates on ‘extended’ urbanization and its ‘planetary’ reach (Brenner, 2013; Brenner and Schmid, 2015) render a focus on urban frontiers, liminal spaces and dispersed urban forms all the more important. Indeed, if it is in the peripheries that twenty-first century urbanization is ultimately taking shape, then despite some recent scholarly attention, the work of researching, analysing and conceptualizing this has only just begun. METH, GOODFELLOW, TODES AND CHARLTON 986 This article discusses our conceptualizations of African urban peripheries following our ESRC/NRF-funded research project, ‘Living the Urban Periphery: Investment, Infrastructure and Economic Change in African City-Regions’ (2016–2019). Our research focused on how transformation is shaped, governed and experienced in the spatial peripheries of three African city-regions: Gauteng and eThekwini in South Africa, and Addis Ababa in Ethiopia. Comparing these urban formations enables us to explore countries that are vastly different in terms of economic status and urban land tenure systems, but which have important similarities in their developmentalist orientation and the dominance of state-sponsored housing provision. We argue that the distinctiveness of these countries in being at the forefront of peripheral housing and infrastructure provision in Africa makes them especially relevant for thinking about the development of urban peripheries more generally. Meanwhile, our comparison of Gauteng and eThekwini within South Africa enables us to examine the peripheries in areas of former mining and industrial investment, sometimes now in decline, alongside those being reshaped by new state-led and commercial mega-projects. Through these multiple lines of comparison, drawing on Robinson’s (2016) exhortation to engage in comparison beyond the usual conventions of comparability, our wider project generates fresh insights, with broader relevance to urban peripheries globally. The article’s contribution is specifically conceptual, drawing out the epistemologies of researching African urban peripheries and offering a conceptual framework to inform the practice of analysing geographic peripheries. It opens with a critical reading of theoretical and empirical material examining urban peripheries, with an emphasis on work on African cities. Attention is drawn to the insights but also limitations of some of this work, particularly its varied ability to engage with the complexities of urban change as narrated by residents in these spaces. The article then centres our methodological practices, which privilege the voices of those living in the urban peripheries in shaping our conceptualization, and reflects on our ability to generalize through the comparative analysis of these cases. We show how our mixedmethod approach places a particular emphasis on in-depth, multi-method qualitative research with residents, alongside a range of other methods. Based on the extensive body of empirical research underpinning this project, we argue that peripheral spaces are not simply Cartesian spaces identifiable through mapping and boundaries and understood through abstracted trends, but that they reveal their essence through the voices and views of those living there. Thus, we are concerned less with the representation of these spaces than with peripheries as ‘lived space’, although we also explore the economic and political drivers and planning processes that produce these spaces. Because its focus is conceptual, the article does not detail the complex experiences of residents revealed through our project, although it builds on their narratives (alongside those of key informants involved in shaping and governing urban peripheries from the outside) to inform our conceptualizations. Following a discussion of our project’s methodological approach and case selection, the article turns to its core contribution: the conceptualization of five distinct (though often intersecting) logics of urban peripheral development emerging from our research. We became aware during the course of our project that defining the periphery as a singular concept was insufficient; we are also attuned to Schmid et al.’s (2018) call for new vocabularies to describe processes of urbanization, given the limitations of dominant concepts in Urban Studies––particularly in capturing urban formations in the global South. Our main contribution in this article is therefore to unpack the urban periphery concept in new ways, through placing attention on peripheral areas, urban processes and practices evident in peripheral sites, as well as the experiences of a wide variety of residents living in these areas. Drawing on these various epistemologies of the periphery, the five peripheral logics we propose are speculative, vanguard, autoconstructed, transitioning and inherited. The value of this classification lies not in CONCEPTUALIZING AFRICAN URBAN PERIPHERIES 987 describing exclusive bounded instances of the urban periphery; indeed, we reject this approach. Instead, we argue for an approach that recognizes these modes of peripheral development as logics that can co-exist, hybridize and bleed into each other in specific places and at different temporal junctures. Rather than being discrete categories, the five logics privilege the dynamic, interconnected and multi-scalar aspects of urban change occurring in African cities. We conclude the article by considering the significance of these logics for studying other urban peripheries, within Africa and beyond. Existing conceptualizations of urban peripheries Urban peripheries have been conceptualized in a number of ways, which variously highlight their drivers, economic dynamics, spatial characteristics and key actors, with most accounts focusing on one or other dimension. Early conceptions of urban peripheries saw them as places on the urban edge, transitioning from rural to urban, with limited economies, and where land costs, densities and access to economic opportunities were lower than more central areas. This was often conceptualized as a moving edge, as earlier peripheries were absorbed into the city and new ones emerged. Literatures on peri-urbanization have emphasized this rural-urban interface, the processes of urbanization, changing land uses and associated land conflicts, and the influence of tenurial systems, inter alia (Mbiba and Huchzermeyer, 2002). This literature has been important in African contexts such as Ghana, where growth is occurring on customary lands at city edges, with distinct tenurial and management systems (Gough and Yankson, 2000). The peri-urban concept is also relevant for those African cities where urban-rural distinctions are blurred and where the absorption of densifying rural settlements (Potts, 2018), or piecemeal lateral expansion (Sawyer, 2014), are significant parts of urban growth. Such edges might be less regulated spaces, providing easier access for migrants and cheaper housing for the urban poor (Simon, 2004). However, while the earlier literature often saw these as places of poverty, more recent work documents increased middle-class occupation and housing construction (Mbatha and Mchunu, 2016; Bartels, 2020; Mercer, 2020). The equation between geographic peripherality, poverty and marginality has also been challenged by authors such as Peberdy (2017), drawing on Wallerstein’s conception of the periphery as a social and political rather than spatial construct, and Pieterse (2019), who points to deep poverty and social marginality in cent"
+  },
+  {
+   "paperId": "a04922c31944368a8425036841df553860529d24",
+   "externalIds": {
+    "PubMedCentral": "7142069",
+    "MAG": "3016110662",
+    "DOI": "10.1038/s41598-020-63237-8",
+    "CorpusId": 215411943,
+    "PubMed": "32269297"
+   },
+   "title": "Probing the structural evolution and electronic properties of divalent metal Be2Mgn clusters from small to medium-size",
+   "venue": "Scientific Reports",
+   "year": 2020,
+   "citationCount": 59,
+   "openAccessPdf": {
+    "url": "https://www.nature.com/articles/s41598-020-63237-8.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC7142069, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2115710432",
+     "name": "Fei-Ge Zhang"
+    },
+    {
+     "authorId": "1618771294",
+     "name": "Hai-Rong Zhang"
+    },
+    {
+     "authorId": "1391188887",
+     "name": "W. Xin"
+    },
+    {
+     "authorId": "2158502710",
+     "name": "Peng Chen"
+    },
+    {
+     "authorId": "46972380",
+     "name": "Yan-Fei Hu"
+    },
+    {
+     "authorId": "2109107151",
+     "name": "Xiao-Yi Zhang"
+    },
+    {
+     "authorId": "2132558590",
+     "name": "Ya-Ru Zhao"
+    }
+   ],
+   "abstract": "Bimetallic clusters have aroused increased attention because of the ability to tune their own properties by changing size, shape, and doping. In present work, a structural search of the global minimum for divalent bimetal Be2Mgn (n = 1–20) clusters are performed by utilizing CALYPSO structural searching method with subsequent DFT optimization. We investigate the evolution of geometries, electronic properties, and nature of bonding from small to medium-sized clusters. It is found that the structural transition from hollow 3D structures to filled cage-like frameworks emerges at n = 10 for Be2Mgn clusters, which is obviously earlier than that of Mgn clusters. The Be atoms prefer the surface sites in small cluster size, then one Be atom tend to embed itself inside the magnesium motif. At the number of Mg larger than eighteen, two Be atoms have been completely encapsulated by caged magnesium frameworks. In all Be2Mgn clusters, the partial charge transfer from Mg to Be takes place. An increase in the occupations of the Be-2p and Mg-3p orbitals reveals the increasing metallic behavior of Be2Mgn clusters. The analysis of stability shows that the cluster stability can be enhanced by Be atoms doping and the Be2Mg8 cluster possesses robust stability across the cluster size range of n = 1–20. There is s-p hybridization between the Be and Mg atoms leading to stronger Be-Mg bonds in Be2Mg8 cluster. This finding is supported by the multi-center bonds and Mayer bond order analysis."
+  },
+  {
+   "paperId": "f397df630e0708d411e76309b85f56440b853b86",
+   "externalIds": {
+    "MAG": "2972663293",
+    "ACL": "W19-3810",
+    "ArXiv": "1908.02810",
+    "DBLP": "journals/corr/abs-1908-02810",
+    "DOI": "10.18653/v1/W19-3810",
+    "CorpusId": 199501874
+   },
+   "title": "Debiasing Embeddings for Reduced Gender Bias in Text Classification",
+   "venue": "Proceedings of the First Workshop on Gender Bias in Natural Language Processing",
+   "year": 2019,
+   "citationCount": 57,
+   "openAccessPdf": {
+    "url": "https://www.aclweb.org/anthology/W19-3810.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1908.02810, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "151502827",
+     "name": "Flavien Prost"
+    },
+    {
+     "authorId": "2665391",
+     "name": "Nithum Thain"
+    },
+    {
+     "authorId": "2843215",
+     "name": "T. Bolukbasi"
+    }
+   ],
+   "abstract": "(Bolukbasi et al., 2016) demonstrated that pretrained word embeddings can inherit gender bias from the data they were trained on. We investigate how this bias affects downstream classification tasks, using the case study of occupation classification (De-Arteaga et al., 2019). We show that traditional techniques for debiasing embeddings can actually worsen the bias of the downstream classifier by providing a less noisy channel for communicating gender information. With a relatively minor adjustment, however, we show how these same techniques can be used to simultaneously reduce bias and maintain high classification accuracy."
+  },
+  {
+   "paperId": "275d1399c914520bf731632d5ed231a4aea518aa",
+   "externalIds": {
+    "DOI": "10.1101/2021.02.04.21251012",
+    "CorpusId": 231821932,
+    "PubMed": "33564778"
+   },
+   "title": "Prioritizing allocation of COVID-19 vaccines based on social contacts increases vaccination effectiveness",
+   "venue": "medRxiv",
+   "year": 2021,
+   "citationCount": 57,
+   "openAccessPdf": {
+    "url": "https://www.medrxiv.org/content/medrxiv/early/2021/02/16/2021.02.04.21251012.full.pdf",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1101/2021.02.04.21251012?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1101/2021.02.04.21251012, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "12860660",
+     "name": "Jiang-Zhuo Chen"
+    },
+    {
+     "authorId": "2088452515",
+     "name": "Stefan Hoops"
+    },
+    {
+     "authorId": "143900982",
+     "name": "A. Marathe"
+    },
+    {
+     "authorId": "1758907",
+     "name": "H. Mortveit"
+    },
+    {
+     "authorId": "2262688033",
+     "name": "B. Lewis"
+    },
+    {
+     "authorId": "2758886",
+     "name": "S. Venkatramanan"
+    },
+    {
+     "authorId": null,
+     "name": "Arash Haddadan"
+    },
+    {
+     "authorId": "101249913",
+     "name": "Parantapa Bhattacharya"
+    },
+    {
+     "authorId": "1783013",
+     "name": "Abhijin Adiga"
+    },
+    {
+     "authorId": "3271584",
+     "name": "A. Vullikanti"
+    },
+    {
+     "authorId": "143780771",
+     "name": "A. Srinivasan"
+    },
+    {
+     "authorId": "2107700135",
+     "name": "Mandy L. Wilson"
+    },
+    {
+     "authorId": "2071879803",
+     "name": "Gal Ehrlich"
+    },
+    {
+     "authorId": "11812469",
+     "name": "M. Fenster"
+    },
+    {
+     "authorId": "144441581",
+     "name": "S. Eubank"
+    },
+    {
+     "authorId": "2261445390",
+     "name": "Christopher L. Barrett"
+    },
+    {
+     "authorId": "2007521700",
+     "name": "M. Marathe"
+    }
+   ],
+   "abstract": "We study allocation of COVID-19 vaccines to individuals based on the structural properties of their underlying social contact network. Even optimistic estimates suggest that most countries will likely take 6 to 24 months to vaccinate their citizens. These time estimates and the emergence of new viral strains urge us to find quick and effective ways to allocate the vaccines and contain the pandemic. While current approaches use combinations of age-based and occupation-based prioritizations, our strategy marks a departure from such largely aggregate vaccine allocation strategies. We propose a novel approach motivated by recent advances in (i) science of real-world networks that point to efficacy of certain vaccination strategies and (ii) digital technologies that improve our ability to estimate some of these structural properties. Using a realistic representation of a social contact network for the Commonwealth of Virginia, combined with accurate surveillance data on spatiotemporal cases and currently accepted models of within- and between-host disease dynamics, we study how a limited number of vaccine doses can be strategically distributed to individuals to reduce the overall burden of the pandemic. We show that allocation of vaccines based on individuals' degree (number of social contacts) and total social proximity time is significantly more effective than the currently used age-based allocation strategy in terms of number of infections, hospitalizations and deaths. Our results suggest that in just two months, by March 31, 2021, compared to age-based allocation, the proposed degree-based strategy can result in reducing an additional 56-110k infections, 3.2- 5.4k hospitalizations, and 700-900 deaths just in the Commonwealth of Virginia. Extrapolating these results for the entire US, this strategy can lead to 3-6 million fewer infections, 181-306k fewer hospitalizations, and 51-62k fewer deaths compared to age-based allocation. The overall strategy is robust even: (i) if the social contacts are not estimated correctly; (ii) if the vaccine efficacy is lower than expected or only a single dose is given; (iii) if there is a delay in vaccine production and deployment; and (iv) whether or not non-pharmaceutical interventions continue as vaccines are deployed. For reasons of implementability, we have used degree, which is a simple structural measure and can be easily estimated using several methods, including the digital technology available today. These results are significant, especially for resource-poor countries, where vaccines are less available, have lower efficacy, and are more slowly distributed."
+  },
+  {
+   "paperId": "0fad16512d9c0fd82e78d15e32a421ccb5d4ac16",
+   "externalIds": {
+    "DOI": "10.1016/j.jsr.2022.01.005",
+    "CorpusId": 246599825,
+    "PubMed": "35589305"
+   },
+   "title": "Occupational health and safety of multinational construction companies through evaluation of corporate social responsibility reports.",
+   "venue": "Journal of Safety Research",
+   "year": 2022,
+   "citationCount": 57,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.jsr.2022.01.005?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.jsr.2022.01.005, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2153183668",
+     "name": "M. Mavroulidis"
+    },
+    {
+     "authorId": "122437089",
+     "name": "P. Vouros"
+    },
+    {
+     "authorId": "123727302",
+     "name": "S. Fotiadis"
+    },
+    {
+     "authorId": "2050332388",
+     "name": "F. Konstantakopoulou"
+    },
+    {
+     "authorId": "2134408531",
+     "name": "G. Fountoulakis"
+    },
+    {
+     "authorId": "145610999",
+     "name": "I. Nikolaou"
+    },
+    {
+     "authorId": "13365629",
+     "name": "K. Evangelinos"
+    }
+   ],
+   "abstract": "INTRODUCTION\nThe aim of this paper is to examine Occupational Health and Safety (OHS) behavior in the construction industry through the assessment of Corporate Social Responsibility reports. The level of accident rates in the construction industry place OHS issues at the heart of their strategic management.\n\n\nMETHOD\nThe assessment of OHS issues was made by drawing appropriate data from the Corporate Social Responsibility reports of 19 multinational construction companies published on a voluntary basis.\n\n\nRESULTS\nThe findings show a low response rate by the companies sampled to the requirements of stakeholders for responsible organizational behavior and accountability for their consequences. Most of the companies sampled have only focused on a small number of OHS issues to assure the transparency of the information published such as OHS governance, accident and illness rates, training hours, third party assurance, and membership of externally developed OHS charters. Similarly, other important OHS issues seem to be less covered by the companies sampled such as the representation of total workforce in OHS committees, the percentage of high risk occupations, and OHS practices in the supply chain."
+  },
+  {
+   "paperId": "297ecb536ba3d24eafb4be239b2f4d144f19359d",
+   "externalIds": {
+    "DBLP": "journals/tsmc/ShaoSZ22",
+    "DOI": "10.1109/tsmc.2021.3129275",
+    "CorpusId": 244846114
+   },
+   "title": "Input-and-Measurement Event-Triggered Output-Feedback Chattering Reduction Control for MEMS Gyroscopes",
+   "venue": "IEEE Transactions on Systems, Man, and Cybernetics: Systems",
+   "year": 2022,
+   "citationCount": 56,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/tsmc.2021.3129275?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/tsmc.2021.3129275, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2128362",
+     "name": "Xing-Ling Shao"
+    },
+    {
+     "authorId": "40026159",
+     "name": "Yi Shi"
+    },
+    {
+     "authorId": "2145505917",
+     "name": "Wendong Zhang"
+    }
+   ],
+   "abstract": "This article presents an input-and-measurement event-triggered output-feedback chattering reduction control for microelectromechanical system (MEMS) gyroscopes. To realize online estimation with decreased communication burden along sensor-to-control channel, a switching threshold-based sampler is embedded to achieve an intermittent measurement-based extended state observer (IMESO) capable of synchronously observing unavailable velocity states and disturbances, meanwhile, a mathematical presentation reflecting the interaction between design parameters and upper boundary of estimation errors is deduced to make argument tuning easy. Next, an event-triggered output-feedback control rule is developed in the controller-to-actuator channel to obtain a discrete control signal with less occupation on communication resources without inducing Zeno phenomena. Besides, to enforce system profiles evolve within the predefined performance boundaries with reduced chattering, a tracking differentiator (TD)-based prescribed performance control (TDPPC) is proposed, where the time differentiation of the preselected envelopes can be managed with smooth transient, and a balance between system performance and sampling cost can be ensured. Finally, a sigmoid function-based TD (STD), rather than dynamic surface control, is utilized to overcome the complexity explosion. Comparison simulations are performed to show the superiorities and effectiveness of the established controller."
+  },
+  {
+   "paperId": "e65e2a03b169fcf201889991868822a242834feb",
+   "externalIds": {
+    "MAG": "3024346484",
+    "DOI": "10.1002/jcop.22367",
+    "CorpusId": 218617807,
+    "PubMed": "32399970"
+   },
+   "title": "Social suffering and the psychological impact of structural violence and economic oppression in an ongoing conflict setting: The Gaza Strip.",
+   "venue": "Journal of Community Psychology",
+   "year": 2020,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/jcop.22367",
+    "status": "HYBRID",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1002/jcop.22367?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1002/jcop.22367, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "73971333",
+     "name": "J. Hammad"
+    },
+    {
+     "authorId": "145765069",
+     "name": "Rachel Tribe"
+    }
+   ],
+   "abstract": "Structural violence and economic oppression (e.g. control over resources, politically engineered poverty and unemployment) are common features of warfare, yet there is a lack of research exploring the impact this has on civilian wellbeing in conflict-affected areas. This study, embedded within a human rights and community liberation psychology framework, aims to address this need by studying young Palestinian university graduates living under military blockade and occupation in the Gaza Strip. Semi-structured interviews were conducted. Thematic analysis indicated that economic and political domains adversely affected multiple aspects of civilian life and wellbeing. The findings revealed the deleterious effects of structural violence and economic oppression which created: human insecurity; poor psychological wellbeing and quality of life; existential, psychological and social suffering; humiliation; injuries to dignity; multiple losses; and led to life being experienced as 'on hold'. Local expressions and idioms to express distress were identified. The findings contributed to unique insights regarding how continual, systemic, and structural oppression can be potentially more psychologically detrimental than specific incidents of conflict and violence. The implications and the relevance of the findings to mental health and disaster relief are considered. Interventions providing human security and economic security should be prioritised."
+  },
+  {
+   "paperId": "3d9f02cbc9704fc6e7a31996c7aa5adcb31e0bd7",
+   "externalIds": {
+    "MAG": "3039098144",
+    "DOI": "10.1016/j.respol.2020.104059",
+    "CorpusId": 225792639
+   },
+   "title": "The knowledge and skill content of production complexity",
+   "venue": "",
+   "year": 2020,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1016/j.respol.2020.104059?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1016/j.respol.2020.104059, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "2502360584",
+     "name": "Alessia Lo Turco"
+    },
+    {
+     "authorId": "35646807",
+     "name": "Daniela Maggioni"
+    }
+   ],
+   "abstract": "Abstract In this paper we investigate the labour content of complex products. By exploiting O*NET information on the skill and knowledge required by occupations, we find that the product complexity measure suggested by Hausmann and Hidalgo (2009) is highly intensive in STEM knowledge and in Science, Mathematics and Critical Thinking skill requirements. We then propose a new measure of occupational complexity based on these occupational features. Among other advantages, this indicator has the merit to measure complexity for service industries that, so far, has never been measured. In an empirical model of the growth of USA Metropolitan Areas (MSAs), we find that MSAs whose initial industrial structure embeds a higher level of occupational complexity experience higher real per capita GDP growth over the 2001–2017 period. The occupational complexity measure is a stronger predictor of growth than other metrics of industries’ occupational and task content as well as compared to indicators of local occupational and industrial composition. When we separately compute occupational complexity of service and manufacturing industries and delve into their specific role for long run growth, we find a prominent role of the occupation complexity embedded in local services with respect to the one embedded in local manufacturing. Our baseline evidence is corroborated in the context of the NUTS3 regions of France over the period 2010–2017."
+  },
+  {
+   "paperId": "12307236e3872f18d52a95958b6ce2149b96203b",
+   "externalIds": {
+    "MAG": "2989128247",
+    "ArXiv": "1911.02610",
+    "DOI": "10.1093/mnras/staa623",
+    "CorpusId": 207847910
+   },
+   "title": "Limitations to the ‘basic’ HOD model and beyond",
+   "venue": "",
+   "year": 2019,
+   "citationCount": 55,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/1911.02610",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1911.02610, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "94278650",
+     "name": "B. Hadzhiyska"
+    },
+    {
+     "authorId": "144067593",
+     "name": "S. Bose"
+    },
+    {
+     "authorId": "145614599",
+     "name": "D. Eisenstein"
+    },
+    {
+     "authorId": "2746070",
+     "name": "L. Hernquist"
+    },
+    {
+     "authorId": "49071192",
+     "name": "D. Spergel"
+    }
+   ],
+   "abstract": "We make use of the IllustrisTNG cosmological, hydrodynamical simulations to test fundamental assumptions of the mass-based Halo Occupation Distribution (HOD) approach to modelling the galaxy-halo connection. By comparing the clustering of galaxies measured in the 300 Mpc TNG box (TNG300) with that predicted by the standard (\"basic\") HOD model (bHOD), we find that, on average, the bHOD model underpredicts the real-space correlation function in the TNG300 box by $\\sim$ 15\\% on scales of $1 \\ {\\rm Mpc}/h < r < 20 \\ {\\rm Mpc}/h$, which is well beyond the target precision demanded of next-generation galaxy redshift surveys. We perform several tests to establish the robustness of our findings to systematic effects, including the effect of finite box size and the choice of halo finder. In our exploration of \"secondary\" parameters with which to augment the bHOD, we find that the local environment of the halo, the velocity dispersion anisotropy, $\\beta$, and the product of the half-mass radius and the velocity dispersion, $\\sigma^2 R_{\\rm halfmass}$, are the three most effective measures of assembly bias that help reconcile the bHOD-predicted clustering with that in TNG300. In addition, we test other halo properties such as halo spin, formation epoch and halo concentration. We also find that at fixed halo mass, galaxies in one type of environment cluster differently from galaxies in another. We demonstrate that a more complete model of the galaxy-halo connection can be constructed if both the mass and information regarding the local environment in which a halo is embedded are combined."
+  },
+  {
+   "paperId": "12072eb4647be6e0d46ea6e940933a412f8a61ab",
+   "externalIds": {
+    "DBLP": "conf/chi/ChenVM21",
+    "DOI": "10.1145/3411764.3445359",
+    "CorpusId": 233987700
+   },
+   "title": "What Happens After Death? Using a Design Workbook to Understand User Expectations for Preparing their Data",
+   "venue": "International Conference on Human Factors in Computing Systems",
+   "year": 2021,
+   "citationCount": 54,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1145/3411764.3445359?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1145/3411764.3445359, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2108205147",
+     "name": "Janet X. Chen"
+    },
+    {
+     "authorId": "1639965739",
+     "name": "Francesco Vitale"
+    },
+    {
+     "authorId": "1713735",
+     "name": "J. McGrenere"
+    }
+   ],
+   "abstract": "Digital data has become a key part of everyday life: people manage increasingly large and disparate collections of photos, documents, media, etc. But what happens after death? How can users select and prepare what data to leave behind before their eventual death? To explore how to support users, we first ran an ideation workshop to generate design ideas; then, we created a design workbook with 12 speculative concepts that explore diverging approaches and perspectives. We elicited reactions to the concepts from 20 participants (18-81, varied occupations). We found that participants anticipated different types of motivation at different life stages, wished for tools to feel personal and intimate, and preferred individual control on their post-death self-representation. They also found comprehensive data replicas creepy and saw smart assistants as potential aides for suggesting meaningful data. Based on the results, we discuss key directions for designing more personalized and respectful death-preparation tools."
+  },
+  {
+   "paperId": "ad22813ec7a2f006d719129470f4c433dace5858",
+   "externalIds": {
+    "MAG": "2905342727",
+    "DBLP": "conf/aaai/XiaHLS19",
+    "DOI": "10.1609/AAAI.V33I01.33017297",
+    "CorpusId": 58290705
+   },
+   "title": "Graph Based Translation Memory for Neural Machine Translation",
+   "venue": "AAAI Conference on Artificial Intelligence",
+   "year": 2019,
+   "citationCount": 53,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1609/aaai.v33i01.33017297",
+    "status": "GOLD",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1609/AAAI.V33I01.33017297?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1609/AAAI.V33I01.33017297, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "67284811",
+     "name": "Mengzhou Xia"
+    },
+    {
+     "authorId": "47752841",
+     "name": "Guoping Huang"
+    },
+    {
+     "authorId": "2978364",
+     "name": "Le-Mao Liu"
+    },
+    {
+     "authorId": "34720053",
+     "name": "Shuming Shi"
+    }
+   ],
+   "abstract": "A translation memory (TM) is proved to be helpful to improve neural machine translation (NMT). Existing approaches either pursue the decoding efficiency by merely accessing local information in a TM or encode the global information in a TM yet sacrificing efficiency due to redundancy. We propose an efficient approach to making use of the global information in a TM. The key idea is to pack a redundant TM into a compact graph and perform additional attention mechanisms over the packed graph for integrating the TM representation into the decoding network. We implement the model by extending the state-of-the-art NMT, Transformer. Extensive experiments on three language pairs show that the proposed approach is efficient in terms of running time and space occupation, and particularly it outperforms multiple strong baselines in terms of BLEU scores."
+  },
+  {
+   "paperId": "8b5c66886e1b1731cc88aba913bbd56b7ac278a4",
+   "externalIds": {
+    "DOI": "10.1111/1440-1630.12778",
+    "CorpusId": 245514235,
+    "PubMed": "34959251"
+   },
+   "title": "The parenting occupations and purposes conceptual framework: A scoping review of 'doing' parenting.",
+   "venue": "Australian Occupational Therapy Journal",
+   "year": 2021,
+   "citationCount": 53,
+   "openAccessPdf": {
+    "url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/1440-1630.12778",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1111/1440-1630.12778?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1111/1440-1630.12778, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Review",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2150375979",
+     "name": "Yu Zhuang Germaine Lim"
+    },
+    {
+     "authorId": "3486524",
+     "name": "A. Honey"
+    },
+    {
+     "authorId": "51110552",
+     "name": "M. McGrath"
+    }
+   ],
+   "abstract": "INTRODUCTION\nParenting is a valued, common and challenging adult role. Many parents, including some living with disability or difficult social circumstances, experience barriers to fulfilling their parenting roles. Yet, occupational therapy involvement in parenting is rarely documented. Current understandings about 'doing' parenting lack cohesion and are dispersed in occupational therapy literature. This study aims to map and synthesise occupational therapy literature on 'doing' parenting to describe the state of the existing knowledge base, and develop a conceptual framework of parenting occupations as portrayed in occupational therapy literature.\n\n\nMETHODS\nA scoping review was conducted. Medline, EMBASE, CINAHL, PsycINFO, Scopus, and Web of Science were searched on 28 October 2019 and updated on 18 February 2021. Journal articles and book chapters were screened for eligibility. Included texts' publication characteristics, methodological characteristics, and areas of focus were summarised. Interpretive content analysis was conducted.\n\n\nRESULTS\nFrom 5945 unique records, 105 texts were included. These discussed general parenting, parents with disabilities, and parenting in challenging social situations. Most texts focussed on mothers caring for young children in Western cultural contexts. The analysis culminated in the development of a conceptual framework: the Parenting Occupations and Purposes (POP) Framework. This comprises 10 interrelated areas of parenting occupations, which are performed for the purposes of addressing the child's basic, developmental and social needs. Parenting occupations were also found to be influenced by additional, underlying occupations that build parenting capacity - Continuous Parental Development (CPD) occupations.\n\n\nCONCLUSION\nThese findings provide an overview of current occupational therapy conceptualisations of parenting. Unlike most of the existing literature on parenting, the POP Framework is parent-centric rather than child-centric. More research on parenting occupations is needed, especially with more diverse representation (fathers, ages of children, parental disability and sociocultural background). Further research is required to examine the POP Framework's usefulness in guiding research and practice, particularly among parents with diverse characteristics."
+  },
+  {
+   "paperId": "5e1015d81e4b1e4d55767cbd6768ba2406dc8846",
+   "externalIds": {
+    "MAG": "3032441065",
+    "DOI": "10.1007/s12119-020-09752-2",
+    "CorpusId": 219743992
+   },
+   "title": "Female Representation in Government-Mandated English Language Textbooks Used in Indonesian Junior High Schools",
+   "venue": "",
+   "year": 2020,
+   "citationCount": 53,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s12119-020-09752-2?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s12119-020-09752-2, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": null,
+   "authors": [
+    {
+     "authorId": "121326952",
+     "name": "Reni Puspitasari Dwi Lestariyana"
+    },
+    {
+     "authorId": "66132796",
+     "name": "H. P. Widodo"
+    },
+    {
+     "authorId": "65975653",
+     "name": "U. Sulistiyo"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "4ad292445b0e74b735cade6e9cb79ead5fa6afd9",
+   "externalIds": {
+    "ArXiv": "2503.02056",
+    "DBLP": "journals/eswa/RosenbergerWWKZ25",
+    "DOI": "10.1016/j.eswa.2025.127043",
+    "CorpusId": 276764365
+   },
+   "title": "CareerBERT: Matching resumes to ESCO jobs in a shared embedding space for generic job recommendations",
+   "venue": "Expert systems with applications",
+   "year": 2025,
+   "citationCount": 53,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1016/j.eswa.2025.127043",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2503.02056, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2322264757",
+     "name": "Julian Rosenberger"
+    },
+    {
+     "authorId": "2348404346",
+     "name": "Lukas Wolfrum"
+    },
+    {
+     "authorId": "113190661",
+     "name": "Sven Weinzierl"
+    },
+    {
+     "authorId": "2270179954",
+     "name": "Mathias Kraus"
+    },
+    {
+     "authorId": "2148733",
+     "name": "Patrick Zschech"
+    }
+   ],
+   "abstract": "The rapidly evolving labor market, driven by technological advancements and economic shifts, presents significant challenges for traditional job matching and consultation services. In response, we introduce an advanced support tool for career counselors and job seekers based on CareerBERT, a novel approach that leverages the power of unstructured textual data sources, such as resumes, to provide more accurate and comprehensive job recommendations. In contrast to previous approaches that primarily focus on job recommendations based on a fixed set of concrete job advertisements, our approach involves the creation of a corpus that combines data from the European Skills, Competences, and Occupations (ESCO) taxonomy and EURopean Employment Services (EURES) job advertisements, ensuring an up-to-date and well-defined representation of general job titles in the labor market. Our two-step evaluation approach, consisting of an application-grounded evaluation using EURES job advertisements and a human-grounded evaluation using real-world resumes and Human Resources (HR) expert feedback, provides a comprehensive assessment of CareerBERT's performance. Our experimental results demonstrate that CareerBERT outperforms both traditional and state-of-the-art embedding approaches while showing robust effectiveness in human expert evaluations. These results confirm the effectiveness of CareerBERT in supporting career consultants by generating relevant job recommendations based on resumes, ultimately enhancing the efficiency of job consultations and expanding the perspectives of job seekers. This research contributes to the field of NLP and job recommendation systems, offering valuable insights for both researchers and practitioners in the domain of career consulting and job matching."
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(JobBERT | ESCO | \"skill extraction\" | occupation) + (embedding | representation | retrieval)"
+}

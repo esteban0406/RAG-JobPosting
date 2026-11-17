@@ -1,0 +1,2208 @@
+{
+ "total": 95,
+ "token": null,
+ "data": [
+  {
+   "paperId": "459c82205d2a27a8542bba7a4d478a8a23be2f5d",
+   "externalIds": {
+    "ArXiv": "2304.09542",
+    "DBLP": "conf/emnlp/0001YMWRCYR23",
+    "DOI": "10.48550/arXiv.2304.09542",
+    "CorpusId": 258212638
+   },
+   "title": "Is ChatGPT Good at Search? Investigating Large Language Models as Re-Ranking Agent",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2023,
+   "citationCount": 718,
+   "openAccessPdf": {
+    "url": "http://arxiv.org/pdf/2304.09542",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2304.09542, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2153198380",
+     "name": "Weiwei Sun"
+    },
+    {
+     "authorId": "1387839383",
+     "name": "Lingyong Yan"
+    },
+    {
+     "authorId": "121875983",
+     "name": "Xinyu Ma"
+    },
+    {
+     "authorId": "2237948548",
+     "name": "Shuai-Qiang Wang"
+    },
+    {
+     "authorId": "1749477",
+     "name": "P. Ren"
+    },
+    {
+     "authorId": "1721165",
+     "name": "Zhu-Min Chen"
+    },
+    {
+     "authorId": "2136400100",
+     "name": "Da-Wei Yin"
+    },
+    {
+     "authorId": "2780667",
+     "name": "Zhao-Chun Ren"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have demonstrated remarkable zero-shot generalization across various language-related tasks, including search engines. However, existing work utilizes the generative ability of LLMs for Information Retrieval (IR) rather than direct passage ranking. The discrepancy between the pre-training objectives of LLMs and the ranking objective poses another challenge. In this paper, we first investigate generative LLMs such as ChatGPT and GPT-4 for relevance ranking in IR. Surprisingly, our experiments reveal that properly instructed LLMs can deliver competitive, even superior results to state-of-the-art supervised methods on popular IR benchmarks. Furthermore, to address concerns about data contamination of LLMs, we collect a new test set called NovelEval, based on the latest knowledge and aiming to verify the model's ability to rank unknown knowledge. Finally, to improve efficiency in real-world applications, we delve into the potential for distilling the ranking capabilities of ChatGPT into small specialized models using a permutation distillation scheme. Our evaluation results turn out that a distilled 440M model outperforms a 3B supervised model on the BEIR benchmark. The code to reproduce our results is available at www.github.com/sunnweiwei/RankGPT."
+  },
+  {
+   "paperId": "a531e9a328ad1488567fa68c15d5bf30bfb90c78",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2310-08319",
+    "ArXiv": "2310.08319",
+    "DOI": "10.1145/3626772.3657951",
+    "CorpusId": 263908865
+   },
+   "title": "Fine-Tuning LLaMA for Multi-Stage Text Retrieval",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2023,
+   "citationCount": 514,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2310.08319",
+    "status": "GREEN",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2310.08319, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2461713",
+     "name": "Xueguang Ma"
+    },
+    {
+     "authorId": "145769448",
+     "name": "Liang Wang"
+    },
+    {
+     "authorId": "2242947624",
+     "name": "Nan Yang"
+    },
+    {
+     "authorId": "2257346447",
+     "name": "Fu-Ru Wei"
+    },
+    {
+     "authorId": "2257085301",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "While large language models (LLMs) have shown impressive NLP capabilities, existing IR applications mainly focus on prompting LLMs to generate query expansions or generating permutations for listwise reranking. In this study, we leverage LLMs directly to serve as components in the widely used multi-stage text ranking pipeline. Specifically, we fine-tune the open-source LLaMA-2 model as a dense retriever (repLLaMA) and a pointwise reranker (rankLLaMA). This is performed for both passage and document retrieval tasks using the MS MARCO training data. Our study shows that finetuned LLM retrieval models outperform smaller models. They are more effective and exhibit greater generalizability, requiring only a straightforward training strategy. Moreover, our pipeline allows for the fine-tuning of LLMs at each stage of a multi-stage retrieval pipeline. This demonstrates the strong potential for optimizing LLMs to enhance a variety of retrieval tasks. Furthermore, as LLMs are naturally pre-trained with longer contexts, they can directly represent longer documents. This eliminates the need for heuristic segmenting and pooling strategies to rank long documents. On the MS MARCO and BEIR datasets, our repLLaMA-rankLLaMA pipeline demonstrates a high level of effectiveness."
+  },
+  {
+   "paperId": "5605e5bbe71a6d52be0930865f1635ed8644dea8",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2312-02724",
+    "ArXiv": "2312.02724",
+    "DOI": "10.48550/arXiv.2312.02724",
+    "CorpusId": 265659387
+   },
+   "title": "RankZephyr: Effective and Robust Zero-Shot Listwise Reranking is a Breeze!",
+   "venue": "arXiv.org",
+   "year": 2023,
+   "citationCount": 274,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2312.02724, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "71076877",
+     "name": "Sahel Sharifymoghaddam"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "In information retrieval, proprietary large language models (LLMs) such as GPT-4 and open-source counterparts such as LLaMA and Vicuna have played a vital role in reranking. However, the gap between open-source and closed models persists, with reliance on proprietary, non-transparent models constraining reproducibility. Addressing this gap, we introduce RankZephyr, a state-of-the-art, open-source LLM for listwise zero-shot reranking. RankZephyr not only bridges the effectiveness gap with GPT-4 but in some cases surpasses the proprietary model. Our comprehensive evaluations across several datasets (TREC Deep Learning Tracks; NEWS and COVID from BEIR) showcase this ability. RankZephyr benefits from strategic training choices and is resilient against variations in initial document ordering and the number of documents reranked. Additionally, our model outperforms GPT-4 on the NovelEval test set, comprising queries and passages past its training period, which addresses concerns about data contamination. To foster further research in this rapidly evolving field, we provide all code necessary to reproduce our results at https://github.com/castorini/rank_llm."
+  },
+  {
+   "paperId": "b032771ea21c36dc006331449f8f42a2b2fa585d",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2412-01720",
+    "ArXiv": "2412.01720",
+    "DOI": "10.1109/CVPR52734.2025.00380",
+    "CorpusId": 274436406
+   },
+   "title": "LamRA: Large Multimodal Model as Your Advanced Retrieval Assistant",
+   "venue": "Computer Vision and Pattern Recognition",
+   "year": 2024,
+   "citationCount": 134,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2412.01720",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2412.01720, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2292088338",
+     "name": "Yi-Kun Liu"
+    },
+    {
+     "authorId": "2504323186",
+     "name": "Ya-Jie Zhang"
+    },
+    {
+     "authorId": "2309120403",
+     "name": "Jia-Yin Cai"
+    },
+    {
+     "authorId": "2290971123",
+     "name": "Xiao-Long Jiang"
+    },
+    {
+     "authorId": "2309080041",
+     "name": "Yao Hu"
+    },
+    {
+     "authorId": "3213796",
+     "name": "Jiangchao Yao"
+    },
+    {
+     "authorId": "2308357228",
+     "name": "Yan-Feng Wang"
+    },
+    {
+     "authorId": "2239247182",
+     "name": "Wei-Di Xie"
+    }
+   ],
+   "abstract": "With the rapid advancement of multimodal information retrieval, increasingly complex retrieval tasks have emerged. Existing methods predominately rely on task-specific fine-tuning of vision-language models, often those trained with image-text contrastive learning. In this paper, we explore the possibility of re-purposing generative Large Multimodal Models (LMMs) for retrieval. This approach enables unifying all retrieval tasks under the same formulation and, more importantly, allows for extrapolation towards unseen retrieval tasks without additional training. Our contributions can be summarised in the following aspects: (i) We introduce LamRA, a versatile framework designed to empower LMMs with sophisticated retrieval and reranking capabilities. (ii) For retrieval, we adopt a two-stage training strategy comprising language-only pre-training and multimodal instruction tuning to progressively enhance LMM’s retrieval performance. (iii) For reranking, we employ joint training of both pointwise and listwise reranking, offering two distinct ways to further boost the retrieval performance. (iv) Extensive experiments underscore the efficacy of our method in handling more than ten retrieval tasks, demonstrating robust performance in both supervised and zero-shot settings, including scenarios involving previously unseen retrieval tasks. Project page: https://code-kunkun.github.io/LamRA/."
+  },
+  {
+   "paperId": "ba03ca8faa9f01cd9d26b80f08d421376f70de22",
+   "externalIds": {
+    "ArXiv": "2309.15088",
+    "DBLP": "journals/corr/abs-2309-15088",
+    "DOI": "10.48550/arXiv.2309.15088",
+    "CorpusId": 262825475
+   },
+   "title": "RankVicuna: Zero-Shot Listwise Document Reranking with Open-Source Large Language Models",
+   "venue": "arXiv.org",
+   "year": 2023,
+   "citationCount": 109,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2309.15088",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2309.15088, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "71076877",
+     "name": "Sahel Sharifymoghaddam"
+    },
+    {
+     "authorId": "2121626141",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Researchers have successfully applied large language models (LLMs) such as ChatGPT to reranking in an information retrieval context, but to date, such work has mostly been built on proprietary models hidden behind opaque API endpoints. This approach yields experimental results that are not reproducible and non-deterministic, threatening the veracity of outcomes that build on such shaky foundations. To address this significant shortcoming, we present RankVicuna, the first fully open-source LLM capable of performing high-quality listwise reranking in a zero-shot setting. Experimental results on the TREC 2019 and 2020 Deep Learning Tracks show that we can achieve effectiveness comparable to zero-shot reranking with GPT-3.5 with a much smaller 7B parameter model, although our effectiveness remains slightly behind reranking with GPT-4. We hope our work provides the foundation for future research on reranking with modern LLMs. All the code necessary to reproduce our results is available at https://github.com/castorini/rank_llm."
+  },
+  {
+   "paperId": "0b8adc7a995a045393aa560abfcd3acf4bb2b386",
+   "externalIds": {
+    "ACL": "2024.emnlp-main.491",
+    "DBLP": "journals/corr/abs-2406-15657",
+    "ArXiv": "2406.15657",
+    "DOI": "10.48550/arXiv.2406.15657",
+    "CorpusId": 270702598
+   },
+   "title": "FIRST: Faster Improved Listwise Reranking with Single Token Decoding",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2024,
+   "citationCount": 103,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2406.15657, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2119585381",
+     "name": "Revanth Gangi Reddy"
+    },
+    {
+     "authorId": "2284065406",
+     "name": "Jae Doo"
+    },
+    {
+     "authorId": "2308071674",
+     "name": "Yifei Xu"
+    },
+    {
+     "authorId": "2937809",
+     "name": "Md Arafat Sultan"
+    },
+    {
+     "authorId": "2348105606",
+     "name": "D. Swain"
+    },
+    {
+     "authorId": "2707234",
+     "name": "Avirup Sil"
+    },
+    {
+     "authorId": "2294678297",
+     "name": "Heng Ji"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have significantly advanced the field of information retrieval, particularly for reranking. Listwise LLM rerankers have showcased superior performance and generalizability compared to existing supervised approaches. However, conventional listwise LLM reranking methods lack efficiency as they provide ranking output in the form of a generated ordered sequence of candidate passage identifiers. Further, they are trained with the typical language modeling objective, which treats all ranking errors uniformly–potentially at the cost of misranking highly relevant passages. Addressing these limitations, we introduce FIRST, a novel listwise LLM reranking approach leveraging the output logits of the first generated identifier to directly obtain a ranked ordering of the candidates. Further, we incorporate a learning-to-rank loss during training, prioritizing ranking accuracy for the more relevant passages. Empirical results demonstrate that FIRST accelerates inference by 50% while maintaining a robust ranking performance with gains across the BEIR benchmark. Finally, to illustrate the practical effectiveness of listwise LLM rerankers, we investigate their application in providing relevance feedback for retrievers during inference. Our results show that LLM rerankers can provide a stronger distillation signal compared to cross-encoders, yielding substantial improvements in retriever recall after relevance feedback."
+  },
+  {
+   "paperId": "c78422dff7c4dbf0aa7e41f08aa610a0d317eb3d",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2410-02642",
+    "ArXiv": "2410.02642",
+    "DOI": "10.48550/arXiv.2410.02642",
+    "CorpusId": 273098593
+   },
+   "title": "Attention in Large Language Models Yields Efficient Zero-Shot Re-Rankers",
+   "venue": "International Conference on Learning Representations",
+   "year": 2024,
+   "citationCount": 64,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2410.02642, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2115939351",
+     "name": "Shijie Chen"
+    },
+    {
+     "authorId": "1666169546",
+     "name": "Bernal Jimenez Gutierrez"
+    },
+    {
+     "authorId": "1758652",
+     "name": "Yu Su"
+    }
+   ],
+   "abstract": "Information retrieval (IR) systems have played a vital role in modern digital life and have cemented their continued usefulness in this new era of generative AI via retrieval-augmented generation. With strong language processing capabilities and remarkable versatility, large language models (LLMs) have become popular choices for zero-shot re-ranking in IR systems. So far, LLM-based re-ranking methods rely on strong generative capabilities, which restricts their use to either specialized or powerful proprietary models. Given these restrictions, we ask: is autoregressive generation necessary and optimal for LLMs to perform re-ranking? We hypothesize that there are abundant signals relevant to re-ranking within LLMs that might not be used to their full potential via generation. To more directly leverage such signals, we propose in-context re-ranking (ICR), a novel method that leverages the change in attention pattern caused by the search query for accurate and efficient re-ranking. To mitigate the intrinsic biases in LLMs, we propose a calibration method using a content-free query. Due to the absence of generation, ICR only requires two ($O(1)$) forward passes to re-rank $N$ documents, making it substantially more efficient than generative re-ranking methods that require at least $O(N)$ forward passes. Our novel design also enables ICR to be applied to any LLM without specialized training while guaranteeing a well-formed ranking. Extensive experiments with two popular open-weight LLMs on standard single-hop and multi-hop information retrieval benchmarks show that ICR outperforms RankGPT while cutting the latency by more than 60% in practice. Through detailed analyses, we show that ICR's performance is specially strong on tasks that require more complex re-ranking signals. Our findings call for further exploration on novel ways of utilizing open-weight LLMs beyond text generation."
+  },
+  {
+   "paperId": "56981f89e2b30088aa2eb9a4c5c575665eb3f57b",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2402-15838",
+    "ArXiv": "2402.15838",
+    "DOI": "10.48550/arXiv.2402.15838",
+    "CorpusId": 267938301
+   },
+   "title": "ListT5: Listwise Reranking with Fusion-in-Decoder Improves Zero-shot Retrieval",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2024,
+   "citationCount": 60,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2402.15838, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2287336807",
+     "name": "Soyoung Yoon"
+    },
+    {
+     "authorId": "2287970016",
+     "name": "Eunbi Choi"
+    },
+    {
+     "authorId": "2323825389",
+     "name": "Jiyeon Kim"
+    },
+    {
+     "authorId": "2286896884",
+     "name": "Hyeongu Yun"
+    },
+    {
+     "authorId": "2181032855",
+     "name": "Yireun Kim"
+    },
+    {
+     "authorId": "2287694374",
+     "name": "Seung-won Hwang"
+    }
+   ],
+   "abstract": "We propose ListT5, a novel reranking approach based on Fusion-in-Decoder (FiD) that handles multiple candidate passages at both train and inference time. We also introduce an efficient inference framework for listwise ranking based on m-ary tournament sort with output caching. We evaluate and compare our model on the BEIR benchmark for zero-shot retrieval task, demonstrating that ListT5 (1) outperforms the state-of-the-art RankT5 baseline with a notable +1.3 gain in the average NDCG@10 score, (2) has an efficiency comparable to pointwise ranking models and surpasses the efficiency of previous listwise ranking models, and (3) overcomes the lost-in-the-middle problem of previous listwise rerankers. Our code, model checkpoints, and the evaluation framework are fully open-sourced at \\url{https://github.com/soyoung97/ListT5}."
+  },
+  {
+   "paperId": "1e94331d12051b41a8fc80948e8531acdb0613c8",
+   "externalIds": {
+    "ArXiv": "2506.09944",
+    "DBLP": "conf/emnlp/ZhangYYCY25",
+    "DOI": "10.48550/arXiv.2506.09944",
+    "CorpusId": 279305653
+   },
+   "title": "Query-Focused Retrieval Heads Improve Long-Context Reasoning and Re-ranking",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2025,
+   "citationCount": 48,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.09944, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2155443288",
+     "name": "Wu Zhang"
+    },
+    {
+     "authorId": "2304461507",
+     "name": "Fangcong Yin"
+    },
+    {
+     "authorId": "2287806228",
+     "name": "Howard Yen"
+    },
+    {
+     "authorId": "2311929494",
+     "name": "Dan-Qi Chen"
+    },
+    {
+     "authorId": "50183897",
+     "name": "Xi Ye"
+    }
+   ],
+   "abstract": "Recent work has identified retrieval heads, a subset of attention heads responsible for retrieving salient information in long-context language models (LMs), as measured by their copy-paste behavior in Needlein-a-Haystack tasks. In this paper, we introduce QRHead (Query-Focused Retrieval Head), an improved set of attention heads that enhance retrieval from long context. We identify QRHead by aggregating attention scores with respect to the input query, using a handful of examples from real-world tasks (e.g., long-context QA). We further introduce QRRetriever, an efficient and effective retriever that uses the accumulated attention mass of QRHead as retrieval scores. We use QRRetriever for long-context reasoning by selecting the most relevant parts with the highest retrieval scores. On multi-hop reasoning tasks LongMemEval and CLIPPER, this yields over 10% performance gains over full context and outperforms strong dense retrievers. We also evaluate QRRetriever as a re-ranker on the BEIR benchmark and find that it achieves strong zero-shot performance, outperforming other LLM-based re-rankers such as RankGPT. Further analysis shows that both the query-context attention scoring and task selection are crucial for identifying QRHead with strong downstream utility. Overall, our work contributes a general-purpose retriever and offers interpretability insights into the long-context capabilities of LMs."
+  },
+  {
+   "paperId": "eb00b03933c67b763fdd43331a82178e003874dd",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2505-14432",
+    "ArXiv": "2505.14432",
+    "DOI": "10.48550/arXiv.2505.14432",
+    "CorpusId": 278769246
+   },
+   "title": "Rank-K: Test-Time Reasoning for Listwise Reranking",
+   "venue": "arXiv.org",
+   "year": 2025,
+   "citationCount": 45,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.14432, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "153564640",
+     "name": "Eugene Yang"
+    },
+    {
+     "authorId": "2347038851",
+     "name": "Andrew Yates"
+    },
+    {
+     "authorId": "2347038686",
+     "name": "Kathryn Ricci"
+    },
+    {
+     "authorId": "47433471",
+     "name": "Orion Weller"
+    },
+    {
+     "authorId": "2349805820",
+     "name": "Vivek Chari"
+    },
+    {
+     "authorId": "2292194313",
+     "name": "Benjamin Van Durme"
+    },
+    {
+     "authorId": "2261984405",
+     "name": "Dawn J. Lawrie"
+    }
+   ],
+   "abstract": "Retrieve-and-rerank is a popular retrieval pipeline because of its ability to make slow but effective rerankers efficient enough at query time by reducing the number of comparisons. Recent works in neural rerankers take advantage of large language models for their capability in reasoning between queries and passages and have achieved state-of-the-art retrieval effectiveness. However, such rerankers are resource-intensive, even after heavy optimization. In this work, we introduce Rank-K, a listwise passage reranking model that leverages the reasoning capability of the reasoning language model at query time that provides test time scalability to serve hard queries. We show that Rank-K improves retrieval effectiveness by 23\\% over the RankZephyr, the state-of-the-art listwise reranker, when reranking a BM25 initial ranked list and 19\\% when reranking strong retrieval results by SPLADE-v3. Since Rank-K is inherently a multilingual model, we found that it ranks passages based on queries in different languages as effectively as it does in monolingual retrieval."
+  },
+  {
+   "paperId": "ccc32e354ec5abba42e7504ab7fae64f0d16e15f",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2505-19284",
+    "ArXiv": "2505.19284",
+    "DOI": "10.1145/3726302.3730331",
+    "CorpusId": 278904465
+   },
+   "title": "RankLLM: A Python Package for Reranking with LLMs",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2025,
+   "citationCount": 41,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3726302.3730331",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.19284, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "71076877",
+     "name": "Sahel Sharifymoghaddam"
+    },
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "2279641138",
+     "name": "Andre Slavescu"
+    },
+    {
+     "authorId": "2308034071",
+     "name": "Ryan Nguyen"
+    },
+    {
+     "authorId": "2363496399",
+     "name": "Andrew Xu"
+    },
+    {
+     "authorId": "2330147593",
+     "name": "Zi-Jian Chen"
+    },
+    {
+     "authorId": "2314077786",
+     "name": "Yi-Lin Zhang"
+    },
+    {
+     "authorId": "2109265550",
+     "name": "Yi-Di Chen"
+    },
+    {
+     "authorId": "2235064158",
+     "name": "Jasper Xian"
+    },
+    {
+     "authorId": "2334697526",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "The adoption of large language models (LLMs) as rerankers in multi-stage retrieval systems has gained significant traction in academia and industry. These models refine a candidate list of retrieved documents, often through carefully designed prompts, and are typically used in applications built on retrieval-augmented generation (RAG). This paper introduces RankLLM, an open-source Python package for reranking that is modular, highly configurable, and supports both proprietary and open-source LLMs in customized reranking workflows. To improve usability, RankLLM features optional integration with Pyserini for retrieval and provides integrated evaluation for multi-stage pipelines. Additionally, RankLLM includes a module for detailed analysis of input prompts and LLM responses, addressing reliability concerns with LLM APIs and non-deterministic behavior in Mixture-of-Experts (MoE) models. This paper presents the architecture of RankLLM, along with a detailed step-by-step guide and sample code. We reproduce results from RankGPT, LRL, RankVicuna, RankZephyr, and other recent models. RankLLM integrates with common inference frameworks and a wide range of LLMs. This compatibility allows for quick reproduction of reported results, helping to speed up both research and real-world applications. The complete repository is available at rankllm.ai, and the package can be installed via PyPI."
+  },
+  {
+   "paperId": "daa475da0602008b72aa61a369fd8af1ebfadbfa",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2312-16159",
+    "ArXiv": "2312.16159",
+    "DOI": "10.48550/arXiv.2312.16159",
+    "CorpusId": 266550847
+   },
+   "title": "Zero-Shot Cross-Lingual Reranking with Large Language Models for Low-Resource Languages",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2023,
+   "citationCount": 29,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2312.16159, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2056770646",
+     "name": "Mofetoluwa Adeyemi"
+    },
+    {
+     "authorId": "2175480812",
+     "name": "Akintunde Oladipo"
+    },
+    {
+     "authorId": "1816753042",
+     "name": "Ronak Pradeep"
+    },
+    {
+     "authorId": "145580839",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Large language models (LLMs) have shown impressive zero-shot capabilities in various document reranking tasks. Despite their successful implementations, there is still a gap in existing literature on their effectiveness in low-resource languages. To address this gap, we investigate how LLMs function as rerankers in cross-lingual information retrieval (CLIR) systems for African languages. Our implementation covers English and four African languages (Hausa, Somali, Swahili, and Yoruba) and we examine cross-lingual reranking with queries in English and passages in the African languages. Additionally, we analyze and compare the effectiveness of monolingual reranking using both query and document translations. We also evaluate the effectiveness of LLMs when leveraging their own generated translations. To get a grasp of the effectiveness of multiple LLMs, our study focuses on the proprietary models RankGPT-4 and RankGPT-3.5, along with the open-source model, RankZephyr. While reranking remains most effective in English, our results reveal that cross-lingual reranking may be competitive with reranking in African languages depending on the multilingual capability of the LLM."
+  },
+  {
+   "paperId": "d170eb391abaa1675bde709a9aaba692090616a0",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2404-03192",
+    "ArXiv": "2404.03192",
+    "ACL": "2024.naacl-long.319",
+    "DOI": "10.48550/arXiv.2404.03192",
+    "CorpusId": 268889326
+   },
+   "title": "Do Large Language Models Rank Fairly? An Empirical Study on the Fairness of LLMs as Rankers",
+   "venue": "North American Chapter of the Association for Computational Linguistics",
+   "year": 2024,
+   "citationCount": 23,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2404.03192, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2293749337",
+     "name": "Yuan Wang"
+    },
+    {
+     "authorId": "2293800171",
+     "name": "Xu-Yang Wu"
+    },
+    {
+     "authorId": "2112254647",
+     "name": "Hsin-Tai Wu"
+    },
+    {
+     "authorId": "2294871850",
+     "name": "Zhi-Qiang Tao"
+    },
+    {
+     "authorId": "2293772877",
+     "name": "Yi Fang"
+    }
+   ],
+   "abstract": "The integration of Large Language Models (LLMs) in information retrieval has raised a critical reevaluation of fairness in the text-ranking models. LLMs, such as GPT models and Llama2, have shown effectiveness in natural language understanding tasks, and prior works such as RankGPT have demonstrated that the LLMs have better performance than the traditional ranking models in the ranking task. However, their fairness remains largely unexplored. This paper presents an empirical study evaluating these LLMs using the TREC Fair Ranking dataset, focusing on the representation of binary protected attributes such as gender and geographic location, which are historically underrepresented in search outcomes. Our analysis delves into how these LLMs handle queries and documents related to these attributes, aiming to uncover biases in their ranking algorithms. We assess fairness from both user and content perspectives, contributing an empirical benchmark for evaluating LLMs as the fair ranker."
+  },
+  {
+   "paperId": "bd4d4dfe8e48a82768c5cd3f6d27530d6d355740",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2404-01037",
+    "ArXiv": "2404.01037",
+    "DOI": "10.48550/arXiv.2404.01037",
+    "CorpusId": 268819923
+   },
+   "title": "ARAGOG: Advanced RAG Output Grading",
+   "venue": "arXiv.org",
+   "year": 2024,
+   "citationCount": 22,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2404.01037, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "2531313080",
+     "name": "Matouš Eibich"
+    },
+    {
+     "authorId": "2341075481",
+     "name": "S. Nagpal"
+    },
+    {
+     "authorId": "2294362877",
+     "name": "Alexander Fred-Ojala"
+    }
+   ],
+   "abstract": "Retrieval-Augmented Generation (RAG) is essential for integrating external knowledge into Large Language Model (LLM) outputs. While the literature on RAG is growing, it primarily focuses on systematic reviews and comparisons of new state-of-the-art (SoTA) techniques against their predecessors, with a gap in extensive experimental comparisons. This study begins to address this gap by assessing various RAG methods' impacts on retrieval precision and answer similarity. We found that Hypothetical Document Embedding (HyDE) and LLM reranking significantly enhance retrieval precision. However, Maximal Marginal Relevance (MMR) and Cohere rerank did not exhibit notable advantages over a baseline Naive RAG system, and Multi-query approaches underperformed. Sentence Window Retrieval emerged as the most effective for retrieval precision, despite its variable performance on answer similarity. The study confirms the potential of the Document Summary Index as a competent retrieval approach. All resources related to this research are publicly accessible for further investigation through our GitHub repository ARAGOG (https://github.com/predlico/ARAGOG). We welcome the community to further this exploratory study in RAG systems."
+  },
+  {
+   "paperId": "b642713476bd67a51f330efb0e8cf4e26e6961b7",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2509-11353",
+    "ArXiv": "2509.11353",
+    "DOI": "10.48550/arXiv.2509.11353",
+    "CorpusId": 281314971
+   },
+   "title": "Do Large Language Models Favor Recent Content? A Study on Recency Bias in LLM-Based Reranking",
+   "venue": "SIGIR-AP",
+   "year": 2025,
+   "citationCount": 22,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2509.11353, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2293660445",
+     "name": "Hanpei Fang"
+    },
+    {
+     "authorId": "2054575809",
+     "name": "Si-Jie Tao"
+    },
+    {
+     "authorId": "2349308838",
+     "name": "Nuo Chen"
+    },
+    {
+     "authorId": "2151394",
+     "name": "Kai Chang"
+    },
+    {
+     "authorId": "2374045456",
+     "name": "Tetsuya Sakai"
+    }
+   ],
+   "abstract": "Large language models (LLMs) are increasingly deployed in information systems, including being used as second-stage rerankers in information retrieval pipelines, yet their susceptibility to recency bias has received little attention. We investigate whether LLMs implicitly favour newer documents by prepending artificial publication dates to passages in the TREC Deep Learning passage retrieval collections in 2021 (DL21) and 2022 (DL22). Across seven models, GPT-3.5-turbo, GPT-4o, GPT-4, LLaMA-3 8B/70B, and Qwen-2.5 7B/72B, ''fresh'' passages are consistently promoted, shifting the Top-10's mean publication year forward by up to 4.78 years and moving individual items by as many as 95 ranks in our listwise reranking experiments. Although larger models attenuate the effect, none eliminate it. We also observe that the preference of LLMs between two passages with an identical relevance level can be reversed by up to 25% on average after date injection in our pairwise preference experiments. These findings provide quantitative evidence of a pervasive recency bias in LLMs and highlight the importance of effective bias-mitigation strategies."
+  },
+  {
+   "paperId": "a1273de51a6193b9f4e19fedf48d6992708b7acb",
+   "externalIds": {
+    "ArXiv": "2508.16757",
+    "DBLP": "journals/corr/abs-2508-16757",
+    "DOI": "10.48550/arXiv.2508.16757",
+    "CorpusId": 280710953
+   },
+   "title": "How Good are LLM-based Rerankers? An Empirical Analysis of State-of-the-Art Reranking Models",
+   "venue": "Conference on Empirical Methods in Natural Language Processing",
+   "year": 2025,
+   "citationCount": 19,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2508.16757, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2502045306",
+     "name": "Abdelrahman Abdallah"
+    },
+    {
+     "authorId": "1935823995",
+     "name": "Bhawna Piryani"
+    },
+    {
+     "authorId": "1389526186",
+     "name": "Jamshid Mozafari"
+    },
+    {
+     "authorId": "2343952059",
+     "name": "Mohammed Ali"
+    },
+    {
+     "authorId": "1774986",
+     "name": "A. Jatowt"
+    }
+   ],
+   "abstract": "In this work, we present a systematic and comprehensive empirical evaluation of state-of-the-art reranking methods, encompassing large language model (LLM)-based, lightweight contextual, and zero-shot approaches, with respect to their performance in information retrieval tasks. We evaluate in total 22 methods, including 40 variants (depending on used LLM) across several established benchmarks, including TREC DL19, DL20, and BEIR, as well as a novel dataset designed to test queries unseen by pretrained models. Our primary goal is to determine, through controlled and fair comparisons, whether a performance disparity exists between LLM-based rerankers and their lightweight counterparts, particularly on novel queries, and to elucidate the underlying causes of any observed differences. To disentangle confounding factors, we analyze the effects of training data overlap, model architecture, and computational efficiency on reranking performance. Our findings indicate that while LLM-based rerankers demonstrate superior performance on familiar queries, their generalization ability to novel queries varies, with lightweight models offering comparable efficiency. We further identify that the novelty of queries significantly impacts reranking effectiveness, highlighting limitations in existing approaches. https://github.com/DataScienceUIBK/llm-reranking-generalization-study"
+  },
+  {
+   "paperId": "261b012fd5d51a085e8967e983f38aaccb677fb9",
+   "externalIds": {
+    "DBLP": "conf/acl/LiSHLCL26",
+    "ArXiv": "2506.03487",
+    "DOI": "10.48550/arXiv.2506.03487",
+    "CorpusId": 279155239
+   },
+   "title": "ProRank: Prompt Warmup via Reinforcement Learning for Small Language Models Reranking",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2025,
+   "citationCount": 19,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.03487, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2244698613",
+     "name": "Xianming Li"
+    },
+    {
+     "authorId": "2315986581",
+     "name": "Aamir Shakir"
+    },
+    {
+     "authorId": "2316260403",
+     "name": "Rui Huang"
+    },
+    {
+     "authorId": "2430927853",
+     "name": "Tsz-fung Andrew Lee"
+    },
+    {
+     "authorId": "2315986562",
+     "name": "Julius Lipp"
+    },
+    {
+     "authorId": "31430199",
+     "name": "Benjamin Clavié"
+    },
+    {
+     "authorId": "2256795636",
+     "name": "Jing Li"
+    }
+   ],
+   "abstract": "Reranking is fundamental to information retrieval and retrieval-augmented generation, with recent Large Language Models (LLMs) significantly advancing reranking quality. Most current works rely on large-scale LLMs (>7B parameters), presenting high computational costs. Small Language Models (SLMs) offer a promising alternative because of computational efficiency. However, our preliminary quantitative analysis reveals key limitations of SLMs: their representation space is narrow, leading to reduced expressiveness, and they struggle with understanding task prompts without fine-tuning. To address these issues, we introduce a novel two-stage training approach, ProRank, for SLM-based document reranking. We propose using reinforcement learning to improve the understanding of task prompts. Additionally, we introduce fine-grained score learning to enhance representation expressiveness and further improve document reranking quality. Extensive experiments suggest that ProRank consistently outperforms both the most advanced open-source and proprietary reranking models. Notably, our 0.5B ProRank even surpasses powerful LLM reranking models on the BEIR benchmark, establishing that properly trained SLMs can achieve superior document reranking performance while maintaining computational efficiency."
+  },
+  {
+   "paperId": "96b7a5c88b033bb5b4b1f7336c0de3b34155fc44",
+   "externalIds": {
+    "ArXiv": "2505.18512",
+    "DBLP": "journals/corr/abs-2505-18512",
+    "DOI": "10.48550/arXiv.2505.18512",
+    "CorpusId": 278904463
+   },
+   "title": "AcuRank: Uncertainty-Aware Adaptive Computation for Listwise Reranking",
+   "venue": "Neural Information Processing Systems",
+   "year": 2025,
+   "citationCount": 17,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.18512, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2287336807",
+     "name": "Soyoung Yoon"
+    },
+    {
+     "authorId": "2325208920",
+     "name": "Gyuwan Kim"
+    },
+    {
+     "authorId": "2303859635",
+     "name": "Gyu-Hwung Cho"
+    },
+    {
+     "authorId": "2287694374",
+     "name": "Seung-won Hwang"
+    }
+   ],
+   "abstract": "Listwise reranking with large language models (LLMs) enhances top-ranked results in retrieval-based applications. Due to the limit in context size and high inference cost of long context, reranking is typically performed over a fixed size of small subsets, with the final ranking aggregated from these partial results. This fixed computation disregards query difficulty and document distribution, leading to inefficiencies. We propose AcuRank, an adaptive reranking framework that dynamically adjusts both the amount and target of computation based on uncertainty estimates over document relevance. Using a Bayesian TrueSkill model, we iteratively refine relevance estimates until reaching sufficient confidence levels, and our explicit modeling of ranking uncertainty enables principled control over reranking behavior and avoids unnecessary updates to confident predictions. Results on the TREC-DL and BEIR benchmarks show that our method consistently achieves a superior accuracy-efficiency trade-off and scales better with compute than fixed-computation baselines. These results highlight the effectiveness and generalizability of our method across diverse retrieval tasks and LLM-based reranking models."
+  },
+  {
+   "paperId": "9d07c06fb16d64056472612d9bfaa68e8ee7a249",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2606-26511",
+    "ArXiv": "2606.26511",
+    "DOI": "10.48550/arXiv.2606.26511",
+    "CorpusId": 289623309
+   },
+   "title": "Temporal Validity in Retrieval Memory: Eliminating Stale-Fact Errors for AI Agents over Evolving Knowledge",
+   "venue": "arXiv.org",
+   "year": 2026,
+   "citationCount": 14,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2606.26511, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2261524563",
+     "name": "Neeraj Yadav"
+    }
+   ],
+   "abstract": "Retrieval-augmented generation (RAG) gives agents access to accumulated knowledge, but has no model of time. When a fact changes (e.g., a function is renamed or API restructured), RAG retrieves both the stale and current value with near-identical embedding similarity. The agent then either abstains or serves the superseded fact. We show this is a structural problem: on a calibrated dataset, cosine similarity distinguishes a contradicted fact from a duplicated one with AUROC 0.59 (near chance), as contradictions are often more embedding-similar to the original than rephrased duplicates. We present MemStrata, a retrieval memory maintaining temporal validity. It stores facts like RAG, preserving static recall, but when a fact's value is contradicted, a deterministic (subject, relation, object) supersession rule retires the stale value in a bi-temporal ledger - with no similarity threshold and no LLM call. Across six benchmarks run locally with a 7B model, MemStrata ties RAG on static knowledge and reaches 0.95-1.00 accuracy on evolving knowledge (where RAG reaches 0.20-0.47). The central result is the stale-fact-error rate: when required to answer, RAG serves superseded values 15-40% of the time; MemStrata drives this to ~0%, a failure class RAG cannot avoid. MemStrata achieves this at retrieval latency (~2.1s) versus ~16-18s for LLM-reranking baselines. We release the harness, datasets, and a marker-free evaluation protocol for memory under knowledge evolution."
+  },
+  {
+   "paperId": "c493134f345d065a53dca44f4ec991b4c9011cbd",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2601-14224",
+    "ArXiv": "2601.14224",
+    "DOI": "10.48550/arXiv.2601.14224",
+    "CorpusId": 284909767
+   },
+   "title": "Rerank Before You Reason: Analyzing Reranking Tradeoffs through Effective Token Cost in Deep Search Agents",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2026,
+   "citationCount": 13,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2601.14224, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "71076877",
+     "name": "Sahel Sharifymoghaddam"
+    },
+    {
+     "authorId": "2378722290",
+     "name": "Jimmy Lin"
+    }
+   ],
+   "abstract": "Deep research agents rely on iterative retrieval and reasoning to answer complex queries, but scaling test-time computation raises significant efficiency concerns. We study how to allocate reasoning budget in deep search pipelines, focusing on the role of listwise reranking. Using the BrowseComp-Plus benchmark, we analyze tradeoffs between model scale, reasoning effort, reranking depth, and total token cost via a novel effective token cost (ETC) metric. Our results show that reranking consistently improves retrieval and end-to-end accuracy, and that moderate reranking often yields larger gains than increasing search-time reasoning, achieving comparable accuracy at substantially lower cost. All our code is available at https://github.com/sahel-sh/DeepHone"
+  },
+  {
+   "paperId": "225ac76154a8f71c5e2bc853249301f190bc964e",
+   "externalIds": {
+    "ArXiv": "2603.17244",
+    "DBLP": "journals/corr/abs-2603-17244",
+    "DOI": "10.48550/arXiv.2603.17244",
+    "CorpusId": 286638576
+   },
+   "title": "Graph-Native Cognitive Memory for AI Agents: Formal Belief Revision Semantics for Versioned Memory Architectures",
+   "venue": "arXiv.org",
+   "year": 2026,
+   "citationCount": 11,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2603.17244, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2480191964",
+     "name": "Young Bin Park"
+    }
+   ],
+   "abstract": "While individual components for AI agent memory exist in prior systems, their architectural synthesis and formal grounding remain underexplored. We present Kumiho, a graph-native cognitive memory architecture grounded in formal belief revision semantics. The structural primitives required for cognitive memory -- immutable revisions, mutable tag pointers, typed dependency edges, URI-based addressing -- are identical to those required for managing agent-produced work as versionable assets, enabling a unified graph-native architecture that serves both purposes. The central formal contribution is a correspondence between the AGM belief revision framework and the operational semantics of a property graph memory system, proving satisfaction of the basic AGM postulates (K*2--K*6) and Hansson's belief base postulates (Relevance, Core-Retainment). The architecture implements a dual-store model (Redis working memory, Neo4j long-term graph) with hybrid fulltext and vector retrieval. On LoCoMo (token-level F1), Kumiho achieves 0.565 overall F1 (n=1,986) including 97.5% adversarial refusal accuracy. On LoCoMo-Plus, a Level-2 cognitive memory benchmark testing implicit constraint recall, Kumiho achieves 93.3% judge accuracy (n=401); independent reproduction by the benchmark authors yielded results in the mid-80% range, still substantially outperforming all published baselines (best: Gemini 2.5 Pro, 45.7%). Three architectural innovations drive the results: prospective indexing (LLM-generated future-scenario implications indexed at write time), event extraction (structured causal events preserved in summaries), and client-side LLM reranking. The architecture is model-decoupled: switching the answer model from GPT-4o-mini (~88%) to GPT-4o (93.3%) improves end-to-end accuracy without pipeline changes, at a total evaluation cost of ~$14 for 401 entries."
+  },
+  {
+   "paperId": "b68447c0ed749a1fe58613fc710395cfa41a8a16",
+   "externalIds": {
+    "ArXiv": "2505.13757",
+    "DBLP": "journals/corr/abs-2505-13757",
+    "DOI": "10.1145/3770855.3818844",
+    "CorpusId": 278768786
+   },
+   "title": "CoRank: LLM-Based Compact Reranking with Document Features for Scientific Retrieval",
+   "venue": "Knowledge Discovery and Data Mining",
+   "year": 2025,
+   "citationCount": 10,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3770855.3818844",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.13757, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2352937670",
+     "name": "Run-Chu Tian"
+    },
+    {
+     "authorId": "2289902301",
+     "name": "Xue-Qiang Xu"
+    },
+    {
+     "authorId": "2057050247",
+     "name": "Bowen Jin"
+    },
+    {
+     "authorId": "2353235200",
+     "name": "Seongku Kang"
+    },
+    {
+     "authorId": "2257136881",
+     "name": "Jia-Wei Han"
+    }
+   ],
+   "abstract": "Scientific retrieval is essential for advancing scientific knowledge discovery. Within this process, document reranking plays a critical role in refining first-stage retrieval results. Recently, LLMs have become popular reranking backbones for their strong domain knowledge. However, standard LLM listwise reranking faces challenges in the scientific domain. First-stage retrieval is often suboptimal in the scientific domain, so relevant documents are ranked lower. Meanwhile, conventional listwise reranking places the full text of candidates into the context window, limiting the number of candidates that can be considered. As a result, many relevant documents are excluded before reranking, constraining overall retrieval performance. To address these challenges, we explore semantic-feature-based compact document representations (e.g., categories, sections, and keywords) and propose CoRank, a training-free, model-agnostic reranking framework for scientific retrieval. It presents a three-stage solution: (i) offline extraction of document features, (ii) coarse-grained reranking using these compact representations, and (iii) fine-grained reranking on full texts of the top candidates from (ii). This integrated process addresses suboptimal first-stage retrieval: Compact representations allow more documents to fit within the context window, improving candidate set coverage, while the final fine-grained ranking ensures a more accurate ordering. Experiments on 5 academic retrieval datasets show that CoRank significantly improves reranking performance across different LLM backbones (average nDCG@10 from 50.6 to 55.5). Overall, these results underscore the interaction between information extraction and information retrieval, demonstrating how structured semantic features can enhance reranking in the scientific domain. Code and other reproducibility materials are available."
+  },
+  {
+   "paperId": "74584466870c56fa876de323062cb39c3b747f82",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2604-17906",
+    "ArXiv": "2604.17906",
+    "DOI": "10.18653/v1/2026.findings-acl.481",
+    "CorpusId": 287635567
+   },
+   "title": "Bayesian Active Learning with Gaussian Processes Guided by LLM Relevance Scoring for Dense Passage Retrieval",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2026,
+   "citationCount": 10,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2026.findings-acl.481.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2604.17906, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2289381834",
+     "name": "Junyoung Kim"
+    },
+    {
+     "authorId": "2123355559",
+     "name": "A. Korikov"
+    },
+    {
+     "authorId": "2327358272",
+     "name": "Jiazhou Liang"
+    },
+    {
+     "authorId": "2305632788",
+     "name": "Justin Cui"
+    },
+    {
+     "authorId": "2323816111",
+     "name": "Y. Liu"
+    },
+    {
+     "authorId": "2323783533",
+     "name": "Qian-Feng Wen"
+    },
+    {
+     "authorId": "2380774925",
+     "name": "Mark Zhao"
+    },
+    {
+     "authorId": "1732536",
+     "name": "Scott Sanner"
+    }
+   ],
+   "abstract": "While Large Language Models (LLMs) exhibit exceptional zero-shot relevance modeling, their high computational cost necessitates framing passage retrieval as a budget-constrained global optimization problem. Existing approaches passively rely on first-stage dense retrievers, which leads to two limitations: (1) failing to retrieve relevant passages in semantically distinct clusters, and (2) failing to propagate relevance signals to the broader corpus. To address these limitations, we propose Bayesian Active Learning with Gaussian Processes guided by LLM relevance scoring (BAGEL), a novel framework that propagates sparse LLM relevance signals across the embedding space to guide global exploration. BAGEL models the multimodal relevance distribution across the entire embedding space with a query-specific Gaussian Process (GP) based on LLM relevance scores. Subsequently, it iteratively selects passages for scoring by strategically balancing the exploitation of high-confidence regions with the exploration of uncertain areas. Extensive experiments across four benchmark datasets and two LLM backbones demonstrate that BAGEL effectively explores and captures complex relevance distributions and outperforms LLM reranking methods under the same LLM budget on all four datasets."
+  },
+  {
+   "paperId": "2afc7217f31582349f3ade80112bcdce146cfb39",
+   "externalIds": {
+    "ArXiv": "2605.11864",
+    "DBLP": "journals/corr/abs-2605-11864",
+    "DOI": "10.48550/arXiv.2605.11864",
+    "CorpusId": 288258104
+   },
+   "title": "Very Efficient Listwise Multimodal Reranking for Long Documents",
+   "venue": "arXiv.org",
+   "year": 2026,
+   "citationCount": 9,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.11864, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2286626710",
+     "name": "Yiqun Sun"
+    },
+    {
+     "authorId": "2294610029",
+     "name": "Peng Wei"
+    },
+    {
+     "authorId": "2421689212",
+     "name": "Lawrence B. Hsieh"
+    }
+   ],
+   "abstract": "Listwise reranking is a key yet computationally expensive component in vision-centric retrieval and multimodal retrieval-augmented generation (M-RAG) over long documents. While recent VLM-based rerankers achieve strong accuracy, their practicality is often limited by long visual-token sequences and multi-step autoregressive decoding. We propose ZipRerank, a highly efficient listwise multimodal reranker that directly addresses both bottlenecks. It reduces input length via a lightweight query-image early interaction mechanism and eliminates autoregressive decoding by scoring all candidates in a single forward pass. To enable effective learning, ZipRerank adopts a two-stage training strategy: (i) listwise pretraining on large-scale text data rendered as images, and (ii) multimodal finetuning with VLM-teacher-distilled soft-ranking supervision. Extensive experiments on the MMDocIR benchmark show that ZipRerank matches or surpasses state-of-the-art multimodal rerankers while reducing LLM inference latency by up to an order of magnitude, making it well-suited for latency-sensitive real-world systems. The code is available at https://github.com/dukesun99/ZipRerank."
+  },
+  {
+   "paperId": "5dbc88ee6d293ca14b0f48b56ac7bba2b264fa02",
+   "externalIds": {
+    "ArXiv": "2510.14824",
+    "DBLP": "journals/corr/abs-2510-14824",
+    "DOI": "10.48550/arXiv.2510.14824",
+    "CorpusId": 282138650
+   },
+   "title": "Supervised Fine-Tuning or Contrastive Learning? Towards Better Multimodal LLM Reranking",
+   "venue": "International Conference on Learning Representations",
+   "year": 2025,
+   "citationCount": 8,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.14824, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2261750616",
+     "name": "Ziqi Dai"
+    },
+    {
+     "authorId": "2262020955",
+     "name": "Xin Zhang"
+    },
+    {
+     "authorId": "2239393068",
+     "name": "Ming-Xin Li"
+    },
+    {
+     "authorId": "2107949588",
+     "name": "Yanzhao Zhang"
+    },
+    {
+     "authorId": "8427191",
+     "name": "Ding-Kun Long"
+    },
+    {
+     "authorId": "35930962",
+     "name": "Peng-Jun Xie"
+    },
+    {
+     "authorId": "2257796182",
+     "name": "Mei-Shan Zhang"
+    },
+    {
+     "authorId": "2262199692",
+     "name": "Wenjie Li"
+    },
+    {
+     "authorId": "2371141410",
+     "name": "Min Zhang"
+    }
+   ],
+   "abstract": "In information retrieval, training reranking models mainly focuses on two types of objectives: metric learning (e.g. contrastive loss to increase the predicted scores on relevant query-document pairs) and classification (binary label prediction of relevance vs. irrelevance). For BERT-style encoders, various studies have shown that contrastive learning (CL) can be more effective than discriminative (classification) learning. However, for large language models (LLMs), classification via supervised fine-tuning (SFT), which predicts''yes''(resp.''no'') token for relevant (resp. irrelevant) pairs, appears more promising as it aligns well with the generative nature of LLMs. This divergence raises a central question: which objective is intrinsically better suited to LLM-based reranking, and what mechanism underlies the difference? In this work, we conduct a comprehensive comparison and analysis between CL and SFT for reranking, taking the universal multimodal retrieval (UMR) as the experimental playground. We first decompose the objectives into two components: weight, which controls the magnitude of those updates, and direction, which guides the model updates, then present a unified framework for understanding their interactions. Through probing experiments, we find that SFT provides a substantially stronger weighting scheme than CL, whereas the preferred scoring direction shows no clear winner. Taken together, these results point to a consistent advantage of SFT over CL for LLM reranking. To further validate our findings, we conduct large-scale training with SFT and present new state-of-the-art rerankers on the MRB benchmark. We also provide ablations on SFT settings and expect our findings to benefit future research and applications in this area."
+  },
+  {
+   "paperId": "79cb4c064d15408078c491ca046ea07696b33436",
+   "externalIds": {
+    "DBLP": "conf/www/JinPZCZXLFZDM25",
+    "ArXiv": "2502.00709",
+    "DOI": "10.1145/3701716.3717575",
+    "CorpusId": 276094957
+   },
+   "title": "RankFlow: A Multi-Role Collaborative Reranking Workflow Utilizing Large Language Models",
+   "venue": "The Web Conference",
+   "year": 2025,
+   "citationCount": 6,
+   "openAccessPdf": {
+    "url": "https://dl.acm.org/doi/pdf/10.1145/3701716.3717575",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2502.00709, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2308012469",
+     "name": "Can Jin"
+    },
+    {
+     "authorId": "2282596442",
+     "name": "Hong-Wu Peng"
+    },
+    {
+     "authorId": "2347472958",
+     "name": "Anxiang Zhang"
+    },
+    {
+     "authorId": "2349308838",
+     "name": "Nuo Chen"
+    },
+    {
+     "authorId": "2204629618",
+     "name": "Jia-Hui Zhao"
+    },
+    {
+     "authorId": "2269747590",
+     "name": "Xi Xie"
+    },
+    {
+     "authorId": "151484554",
+     "name": "Kuangzheng Li"
+    },
+    {
+     "authorId": "2174198712",
+     "name": "Shuya Feng"
+    },
+    {
+     "authorId": "2307465950",
+     "name": "Kai Zhong"
+    },
+    {
+     "authorId": "2265671362",
+     "name": "Caiwen Ding"
+    },
+    {
+     "authorId": "1711560",
+     "name": "Dimitris N. Metaxas"
+    }
+   ],
+   "abstract": "In an Information Retrieval (IR) system, reranking plays a pivotal role by ordering candidate passages based on their relevance to a specific query. This process necessitates a fine-grained understanding of the variations among passages associated with the query. However, existing zero-shot reranking methods often rely on the original queries and passages from the dataset without modification, which can sometimes be vague, ambiguous, or redundant. In this work, we introduce RankFlow, a multi-role reranking framework designed to address these limitations and enhance reranking performance. RankFlow decomposes the reranking task into four components by leveraging large language models to perform four distinct roles: the query Rewriter, the pseudo Answerer, the passage Summarizer, and the Reranker. This structured approach enables RankFlowto (1) more accurately interpret queries, (2) utilize the vast pre-trained knowledge of LLMs, (3) distill passages into concise representations, and (4) comprehensively evaluate passage relevance, resulting in significantly improved reranking outcomes. Our experimental results demonstrate that RankFlow surpasses state-of-the-art methods on well-established IR benchmarks, including TREC-DL, BEIR, and NovelEval. Notably, on the less contaminated NovelEval dataset, RankFlow achieves an improvement of over 5 points in NDCG@10 than RankGPT-4. Furthermore, we conduct extensive studies to examine the individual contributions of each role in RankFlow."
+  },
+  {
+   "paperId": "174606c8251933e5888cb5a6baf21df277e81ea7",
+   "externalIds": {
+    "ArXiv": "2604.10150",
+    "DBLP": "conf/acl/LvGYLCLWC26",
+    "DOI": "10.48550/arXiv.2604.10150",
+    "CorpusId": 287425577
+   },
+   "title": "Learning from Emptiness: De-biasing Listwise Rerankers with Content-Agnostic Probability Calibration",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2026,
+   "citationCount": 6,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2604.10150, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2348321909",
+     "name": "Hang Lv"
+    },
+    {
+     "authorId": "2218562902",
+     "name": "Hongchao Gu"
+    },
+    {
+     "authorId": "2396556080",
+     "name": "Ruiqi Yang"
+    },
+    {
+     "authorId": "2298043979",
+     "name": "Liang Li"
+    },
+    {
+     "authorId": "8157135",
+     "name": "Zulong Chen"
+    },
+    {
+     "authorId": "1862782",
+     "name": "De-Fu Lian"
+    },
+    {
+     "authorId": "2308662978",
+     "name": "Hao Wang"
+    },
+    {
+     "authorId": "2113754294",
+     "name": "En-Hong Chen"
+    }
+   ],
+   "abstract": "Generative listwise reranking leverages global context for superior retrieval but is plagued by intrinsic position bias, where models exhibit structural sensitivity to input order independent of relevance. Existing mitigations present a dilemma: inference-time aggregation incurs prohibitive latency, while training-based methods often fail to eradicate ingrained priors, particularly in compact models. To resolve this dilemma, we propose CapCal (Content-Agnostic Probability Calibration), a training-free framework that mechanically decouples positional bias from ranking decisions. By estimating the bias distribution via content-free placeholders, CapCal rectifies output logits through an entropy-adaptive contrastive mechanism. Evaluations across 10 benchmarks confirm that CapCal achieves superior performance among training-free methods while preserving single-pass efficiency. Notably, it unlocks the latent potential of lightweight models (e.g., 0.6B), delivering absolute NDCG gains exceeding 10 points and outperforming both permutation-based aggregation and data-augmentation baselines."
+  },
+  {
+   "paperId": "37f9f8f4b11ed2ecd7db067e5dc7c0af8ece6d65",
+   "externalIds": {
+    "DBLP": "conf/wsdm/SeetharamanBD26",
+    "ArXiv": "2506.14086",
+    "DOI": "10.1145/3779211.3795735",
+    "CorpusId": 279410803
+   },
+   "title": "InsertRank: LLMs can reason over BM25 scores to Improve Listwise Reranking",
+   "venue": "WSDM Companion",
+   "year": 2025,
+   "citationCount": 5,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3779211.3795735",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2506.14086, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2031487978",
+     "name": "Rahul Seetharaman"
+    },
+    {
+     "authorId": "2367274072",
+     "name": "Aman Bansal"
+    },
+    {
+     "authorId": "4834571",
+     "name": "Kaustubh D. Dhole"
+    }
+   ],
+   "abstract": "Large Language Models (LLMs) have demonstrated significant strides across various information retrieval tasks, particularly as rerankers, owing to their strong generalization and knowledgetransfer capabilities acquired from extensive pretraining. In parallel, the rise of LLM-based chat interfaces has raised user expectations, encouraging users to pose more complex queries that necessitate retrieval by \"reasoning\" over documents rather than through simple keyword matching or semantic similarity. While some recent efforts have exploited reasoning abilities of LLMs for reranking such queries, considerable potential for improvement remains. In that regards, we introduce InsertRank, an LLM-based reranker that leverages lexical signals like BM25 scores during reranking to further improve retrieval performance. InsertRank demonstrates improved retrieval effectiveness on - BRIGHT, a reasoning benchmark spanning 12 diverse domains, and R2MED, a specialized medical reasoning retrieval benchmark spanning 8 different tasks. We conduct an exhaustive evaluation and several ablation studies and demonstrate that InsertRank consistently improves retrieval effectiveness across multiple families of LLMs, including GPT, Gemini, and Deepseek models. With Deepseek-R1, InsertRank achieves a score of 37.5 on the BRIGHT benchmark. and 51.1 on the R2MED benchmark, surpassing previous methods. In addition, we additionally demonstrate the effectiveness of InsertRank on standard benchmarks like TREC DL 19, 20 and TREC HARD, further demonstrating the robustness of this method. In addition, we also demonstrate the effectiveness of our method with BERT based retriever scores, thus illustrating how including feedback from the first stage retriever can be helpful to guide a listwise LLM reranker."
+  },
+  {
+   "paperId": "1846067101543eeaa3522bd30ecfe83d0c8da913",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2601-20623",
+    "ArXiv": "2601.20623",
+    "DOI": "10.1145/3805712.3809723",
+    "CorpusId": 285102307
+   },
+   "title": "When Vision Meets Texts in Listwise Reranking",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2026,
+   "citationCount": 5,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3805712.3809723",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2601.20623, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2298577156",
+     "name": "Hong-Yi Cai"
+    }
+   ],
+   "abstract": "Recent advancements in information retrieval have highlighted the potential of integrating visual and textual information, yet effective reranking for image-text documents remains challenging due to the modality gap and scarcity of aligned datasets. Meanwhile, existing approaches often rely on large models (7B--32B parameters) with reasoning-based distillation, incurring unnecessary computational overhead while primarily focusing on textual modalities. In this paper, we propose Rank-Nexus, a multimodal image-text document reranker that performs listwise qualitative reranking on retrieved lists incorporating both images and texts. To bridge the modality gap, we introduce a progressive cross-modal training strategy. We first train each modality separately: leveraging abundant text reranking data, we distill ranking knowledge into the text branch using GPT-4o as the teacher model. For images, where labeled data is scarce, we construct distilled pairs from multimodal large language model (MLLM) captions on image retrieval benchmarks. Subsequently, we train on a joint image-text reranking dataset. Rank-Nexus achieves outstanding performance on text reranking benchmarks (TREC, BEIR) and the challenging image reranking benchmarks (INQUIRE, MMDocIR), using only a lightweight 2B pretrained visual-language model. This efficient design ensures strong generalization across diverse multimodal scenarios without excessive parameters or reasoning overhead."
+  },
+  {
+   "paperId": "ecf2984a2a3e0a84a3a9ff98d113f675ff7937dc",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2510-00887",
+    "ArXiv": "2510.00887",
+    "DOI": "10.1145/3773966.3779404",
+    "CorpusId": 281706519
+   },
+   "title": "On Listwise Reranking for Corpus Feedback",
+   "venue": "Web Search and Data Mining",
+   "year": 2025,
+   "citationCount": 4,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3773966.3779404",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.00887, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Book"
+   ],
+   "authors": [
+    {
+     "authorId": "2287336807",
+     "name": "Soyoung Yoon"
+    },
+    {
+     "authorId": "2127124912",
+     "name": "Jongho Kim"
+    },
+    {
+     "authorId": "2330255634",
+     "name": "Daeyong Kwon"
+    },
+    {
+     "authorId": "2283940055",
+     "name": "Avishek Anand"
+    },
+    {
+     "authorId": "2287694374",
+     "name": "Seung-won Hwang"
+    }
+   ],
+   "abstract": "Reranker improves retrieval performance by capturing document interactions. At one extreme, graph-aware adaptive retrieval (GAR) represents an information-rich regime, requiring a pre-computed document similarity graph in reranking. However, as such graphs are often unavailable, or incur quadratic memory costs even when available, graph-free rerankers leverage large language model (LLM) calls to achieve competitive performance. We introduce L2G, a novel framework that implicitly induces document graphs from listwise reranker logs. By converting reranker signals into a graph structure, L2G enables scalable graph-based retrieval without the overhead of explicit graph computation. Results on the TREC-DL and BEIR subset show that L2G matches the effectiveness of oracle-based graph methods, while incurring zero additional LLM calls."
+  },
+  {
+   "paperId": "b80547bace2832f0ef83f1c4f8d3ce21c32ff0b4",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2606-11700",
+    "ArXiv": "2606.11700",
+    "DOI": "10.48550/arXiv.2606.11700",
+    "CorpusId": 289166903
+   },
+   "title": "CompRank: Efficient LLM Reranking via Token-Level Compression and Decoding-Free Scoring",
+   "venue": "arXiv.org",
+   "year": 2026,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2606.11700, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2374281493",
+     "name": "Xuan Lu"
+    },
+    {
+     "authorId": "2374415798",
+     "name": "Hao-Hang Huang"
+    },
+    {
+     "authorId": "2349424865",
+     "name": "Ying-Qi Fan"
+    },
+    {
+     "authorId": "2362718503",
+     "name": "Jun-Long Tong"
+    },
+    {
+     "authorId": "2191206519",
+     "name": "Yuxuan Zhang"
+    },
+    {
+     "authorId": "2282612003",
+     "name": "Ping Nie"
+    },
+    {
+     "authorId": "2385420268",
+     "name": "Rui Meng"
+    },
+    {
+     "authorId": "2312845925",
+     "name": "Xiao-Yu Shen"
+    }
+   ],
+   "abstract": "Large language model (LLM) rerankers have become an important component of modern retrieval and retrieval-augmented generation pipelines, but their high computational cost limits their applicability to long candidate lists. In this paper, we propose \\textbf{CompRank}, a token-efficient reranking framework that reduces redundant computation by aligning reranker design with the sparsity of ranking signals. CompRank decouples document representations from candidate order and query context, enabling reusable document-side states; applies segment-wise token compression to reduce query--document interaction cost; and introduces a CopyNet-style objective that directly aligns attention-based document scoring with training supervision. Experiments on seven BEIR datasets show that CompRank achieves strong reranking performance while retaining only 10.2\\% of document tokens, reaching an average NDCG@10 of 39.2 compared with 39.7 under full-token attention. Further scaling experiments on TREC-COVID show that CompRank remains stable when evaluated on candidate lists of up to 500 documents after training on 30-document lists, while achieving $4.9\\times$--$9.5\\times$ end-to-end speedup over generation-based listwise reranking and approximately $1.3\\times$ speedup over the full-token CompRank variant. These results suggest that token-level compression and decoding-free attention scoring provide an effective path toward scalable LLM-based reranking."
+  },
+  {
+   "paperId": "af908890326257054e07a7e44639786e35fb5414",
+   "externalIds": {
+    "ArXiv": "2510.22733",
+    "DOI": "10.18653/2026.emnlp-main.2171",
+    "CorpusId": 282390094
+   },
+   "title": "E2Rank: Unifying Text Embedding and Listwise Reranking for Effective and Efficient Search",
+   "venue": "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+   "year": 2025,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2026.emnlp-main.2171.pdf",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2510.22733, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2260822142",
+     "name": "Qi Liu"
+    },
+    {
+     "authorId": "2107949588",
+     "name": "Yanzhao Zhang"
+    },
+    {
+     "authorId": "2239393068",
+     "name": "Ming-Xin Li"
+    },
+    {
+     "authorId": "8427191",
+     "name": "Ding-Kun Long"
+    },
+    {
+     "authorId": "35930962",
+     "name": "Peng-Jun Xie"
+    },
+    {
+     "authorId": "2265811336",
+     "name": "Jiaxin Mao"
+    }
+   ],
+   "abstract": "Text embedding models deliver competitive retrieval performance with high efficiency, but their ranking fidelity remains limited compared to LLM-based listwise rerankers, which capture fine-grained query-document and document-document interactions at high computational cost. We propose E2Rank (Efficient Embedding-based Ranking), a unified framework that extends a single text embedding model to perform both retrieval and listwise reranking via continued training under a listwise ranking objective. The key insight is to treat the listwise prompt---constructed from the query and its top-K candidates---as a pseudo-relevance feedback (PRF) query, enabling reranking via cosine similarity against precomputed document embeddings without autoregressive decoding. Empirically, E2Rank achieves state-of-the-art results on BEIR, competitive performance on the reasoning-intensive BRIGHT benchmark, significantly lower latency than existing LLM-based rerankers, and improved embedding performance on MTEB---all within a single model."
+  },
+  {
+   "paperId": "735408668f7a5c5f34727fd00bb66c758248a199",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2608-22767",
+    "ArXiv": "2608.22767",
+    "DOI": "10.48550/arXiv.2608.22767",
+    "CorpusId": 291329404
+   },
+   "title": "The Retriever Should Remember: Experience-Amortized Reranking for Long-Term Agent Memory",
+   "venue": "arXiv.org",
+   "year": 2026,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2608.22767, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2375174244",
+     "name": "Qi Feng"
+    },
+    {
+     "authorId": "2288212897",
+     "name": "Chris Ding"
+    },
+    {
+     "authorId": "2599803",
+     "name": "Ji-Cong Fan"
+    }
+   ],
+   "abstract": "Long-term language-model agents accumulate memories across interactions, but their retrievers typically do not accumulate retrieval experience. Semantic retrieval is efficient, but embedding similarity does not always reflect whether a memory contains evidence relevant to the current query. Large language model (LLM) rerankers provide stronger query-conditioned relevance scores, yet stateless reranking repeatedly scores a large candidate pool and discards these scores after each query. We introduce EARM, an experience-amortized reranking framework that treats previously acquired LLM relevance scores as reusable retrieval experience. EARM stores sparse query--memory relevance scores in an online matrix, learns their shared structure through causal matrix completion, and combines a small set of newly observed scores with estimated scores to rerank the remaining candidates. The scoring budget decreases as experience accumulates, changing LLM reranking from a repeated per-query expense into a retrieval capability learned over an agent's lifetime. Experiments on long-term conversational memory show that mixed observed-and-estimated reranking improves answer accuracy over semantic retrieval by up to 6.62% and remains effective when only 17.5% of candidates receive direct LLM relevance scores, thereby substantially reducing the inference overhead of LLM reranking. These results motivate a broader view of agent memory: a long-lived agent should remember not only past content, but also how that content has proved useful for retrieval."
+  },
+  {
+   "paperId": "6e29f8748cfdc25b04156ef114935f4c1f62b23a",
+   "externalIds": {
+    "ArXiv": "2511.15383",
+    "DBLP": "journals/corr/abs-2511-15383",
+    "DOI": "10.48550/arXiv.2511.15383",
+    "CorpusId": 283103205
+   },
+   "title": "A Compliance-Preserving Retrieval System for Aircraft MRO Task Search",
+   "venue": "Conference of the European Chapter of the Association for Computational Linguistics",
+   "year": 2025,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2511.15383, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference",
+    "Review"
+   ],
+   "authors": [
+    {
+     "authorId": "1958757208",
+     "name": "Byungho Jo"
+    }
+   ],
+   "abstract": "Aircraft Maintenance Technicians (AMTs) spend up to 30% of work time searching manuals, a documented efficiency bottleneck in MRO operations where every procedure must be traceable to certified sources. We present a compliance-preserving retrieval system that adapts LLM reranking and semantic search to aviation MRO environments by operating alongside, rather than replacing, certified legacy viewers. The system constructs revision-robust embeddings from ATA chapter hierarchies and uses vision-language parsing to structure certified content, allowing technicians to preview ranked tasks and access verified procedures in existing viewers. Evaluation on 49k synthetic queries achieves>90% retrieval accuracy, while bilingual controlled studies with 10 licensed AMTs demonstrate 90.9% top-10 success rate and 95% reduction in lookup time, from 6-15 minutes to 18 seconds per task. These gains provide concrete evidence that semantic retrieval can operate within strict regulatory constraints and meaningfully reduce operational workload in real-world multilingual MRO workflows."
+  },
+  {
+   "paperId": "6bda496fbcdd3447227a25f61bebd978f0f7c3e7",
+   "externalIds": {
+    "DBLP": "journals/tmlr/BoerRK26",
+    "ArXiv": "2505.09246",
+    "CorpusId": 278602478
+   },
+   "title": "Autofocus Retrieval: An Effective Pipeline for Multi-Hop Question Answering With Semi-Structured Knowledge",
+   "venue": "Trans. Mach. Learn. Res.",
+   "year": 2025,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2505.09246, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "145537989",
+     "name": "Derian Boer"
+    },
+    {
+     "authorId": "2361127869",
+     "name": "Stephen Roth"
+    },
+    {
+     "authorId": "2319407349",
+     "name": "Stefan Kramer"
+    }
+   ],
+   "abstract": "In many real-world settings, machine learning models and interactive systems have access to both structured knowledge, e.g., knowledge graphs or tables, and unstructured content, e.g., natural language documents. Yet, most rely on either. Semi-Structured Knowledge Bases (SKBs) bridge this gap by linking unstructured content to nodes within structured data. In this work, we present Autofocus-Retriever (AF-Retriever), a modular framework for SKB-based, multi-hop question answering. It combines structural and textual retrieval through novel integration steps and optimizations, achieving the best zero- and one-shot results across all three STaRK QA benchmarks, which span diverse domains and evaluation metrics. AF-Retriever's average first-hit rate surpasses the second-best method by 32.1%. Its performance is driven by (1) leveraging exchangeable large language models (LLMs) to extract entity attributes and relational constraints for both parsing and reranking the top-k answers, (2) vector similarity search for ranking both extracted entities and final answers, (3) a novel incremental scope expansion procedure that prepares for the reranking on a configurable amount of suitable candidates that fulfill the given constraints the most, and (4) a hybrid retrieval strategy that reduces error susceptibility. In summary, while constantly adjusting the focus like an optical autofocus, AF-Retriever delivers a configurable amount of answer candidates in four constraint-driven retrieval steps, which are then supplemented and ranked through four additional processing steps. An ablation study and a detailed error analysis, including a comparison of three different LLM reranking strategies, provide component-level insights. The source code is available at https://github.com/kramerlab/AF-Retriever ."
+  },
+  {
+   "paperId": "516fd2b85a51199155fdb67fe55198ab32eff5a3",
+   "externalIds": {
+    "ArXiv": "2601.22008",
+    "DBLP": "conf/ecir/JuLYVY26",
+    "DOI": "10.48550/arXiv.2601.22008",
+    "CorpusId": 285140828
+   },
+   "title": "LANCER: LLM Reranking for Nugget Coverage",
+   "venue": "European Conference on Information Retrieval",
+   "year": 2026,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2601.22008, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2360616724",
+     "name": "Jia-Huei Ju"
+    },
+    {
+     "authorId": "2467204973",
+     "name": "François G. Landry"
+    },
+    {
+     "authorId": "2296599846",
+     "name": "Eugene Yang"
+    },
+    {
+     "authorId": "2273374171",
+     "name": "Suzan Verberne"
+    },
+    {
+     "authorId": "2396530225",
+     "name": "Andrew Yates"
+    }
+   ],
+   "abstract": "Unlike short-form retrieval-augmented generation (RAG), such as factoid question answering, long-form RAG requires retrieval to provide documents covering a wide range of relevant information. Automated report generation exemplifies this setting: it requires not only relevant information but also a more elaborate response with comprehensive information. Yet, existing retrieval methods are primarily optimized for relevance ranking rather than information coverage. To address this limitation, we propose LANCER, an LLM-based reranking method for nugget coverage. LANCER predicts what sub-questions should be answered to satisfy an information need, predicts which documents answer these sub-questions, and reranks documents in order to provide a ranked list covering as many information nuggets as possible. Our empirical results show that LANCER enhances the quality of retrieval as measured by nugget coverage metrics, achieving higher $\\alpha$-nDCG and information coverage than other LLM-based reranking methods. Our oracle analysis further reveals that sub-question generation plays an essential role."
+  },
+  {
+   "paperId": "03e8814aebd36523c521e60fba26c7e28acb1210",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2605-20683",
+    "ArXiv": "2605.20683",
+    "DOI": "10.1145/3805712.3809871",
+    "CorpusId": 288651834
+   },
+   "title": "Layer-wise Token Compression for Efficient Document Reranking",
+   "venue": "Annual International ACM SIGIR Conference on Research and Development in Information Retrieval",
+   "year": 2026,
+   "citationCount": 3,
+   "openAccessPdf": {
+    "url": "https://doi.org/10.1145/3805712.3809871",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2605.20683, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Book",
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2372437457",
+     "name": "Sheng-Yao Zhuang"
+    },
+    {
+     "authorId": "2461898223",
+     "name": "Zhi-Chao Xu"
+    },
+    {
+     "authorId": "49548657",
+     "name": "Ivano Lauriola"
+    }
+   ],
+   "abstract": "Transformer-based document cross-encoder rerankers are a central component of modern information retrieval systems. Despite their success, these models suffer from high computational costs due to processing long query-document sequences at inference time. A known approach to improve efficiency is token compression, which consists of aggregating groups of tokens together in the initial embedding layer, reducing the effective number of tokens and making the computation faster. While token compression has proven to be successful for bi-encoder retrievers, we empirically observed that this approach may be ineffective for cross-encoder rerankers. In this paper, we propose Layer-wise Token Compression (LTC), which applies adaptive token pooling at intermediate transformer layers. Through extensive ablation studies on MS MARCO passage and document ranking tasks, we demonstrate that compression at middle layers preserves ranking quality while increasing inference QPS by up to 25% for passage ranking and up to 116% for document ranking. We also extend LTC to listwise LLM rerankers and show that the same approach can be easily applied to long-context listwise reranking, where the QPS improvements are even greater. More surprisingly, when applying rerankers trained on short passages to long-document ranking tasks, models trained with compression outperform their uncompressed counterparts, suggesting that compression may act as a beneficial regularizer that encourages length-invariant representations."
+  },
+  {
+   "paperId": "fa090d58e3dac25cac6a9aea8b07a4fe3a242de4",
+   "externalIds": {
+    "DBLP": "conf/clef/AvdeikoTVP26",
+    "CorpusId": 292666404
+   },
+   "title": "MedCascade: A Multi-Stage Cascaded Retrieval and Generation System for Biomedical Question Answering",
+   "venue": "Conference and Labs of the Evaluation Forum",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://ceur-ws.org/Vol-4283/paper8.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2508191304",
+     "name": "Artem Avdeiko"
+    },
+    {
+     "authorId": "2508192121",
+     "name": "Pelinsu Topaloglu"
+    },
+    {
+     "authorId": "2508192991",
+     "name": "Teresa Vaccari"
+    },
+    {
+     "authorId": "46227908",
+     "name": "Georgios Peikos"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "e758c256439aadec451ff9b69979362f8ec60040",
+   "externalIds": {
+    "DBLP": "conf/clef/MunawarAAS26",
+    "CorpusId": 292667151
+   },
+   "title": "CheckMate at CheckThat! 2026: Fusion-Based Retrieval, Reasoning-Trace Ranking, and Citation-Controlled Article Generation",
+   "venue": "Conference and Labs of the Evaluation Forum",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://ceur-ws.org/Vol-4283/paper75.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2446754797",
+     "name": "Taha Munawar"
+    },
+    {
+     "authorId": "2508199062",
+     "name": "Abdullah Amir"
+    },
+    {
+     "authorId": "2283064501",
+     "name": "Faisal Alvi"
+    },
+    {
+     "authorId": "2283063382",
+     "name": "Abdul Samad"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "d0cb46faac4f8039c7ab1bb836a2cbc12f1eb168",
+   "externalIds": {
+    "DBLP": "conf/ieeecai/MiyajiMMM25",
+    "DOI": "10.1109/CAI64502.2025.00016",
+    "CorpusId": 279986618
+   },
+   "title": "Empowering Business Decisions and Knowledge Management Through Advanced RAG-Driven QA Systems",
+   "venue": "Conference on Algebraic Informatics",
+   "year": 2025,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1109/CAI64502.2025.00016?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1109/CAI64502.2025.00016, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2370783580",
+     "name": "Renato Miyaji"
+    },
+    {
+     "authorId": "2370783576",
+     "name": "Renato Moulin"
+    },
+    {
+     "authorId": "2370782845",
+     "name": "Samuel Monção"
+    },
+    {
+     "authorId": "2370783184",
+     "name": "Leonardo Machado"
+    }
+   ],
+   "abstract": "In recent decades, the rapid evolution of Artificial Intelligence (AI) has revolutionized business processes, enabling significant improvements in knowledge management, analytics, and decision-making. This paper explores the application of Advanced Retrieval-Augmented Generation (RAG) techniques in corporate databases to enhance data exploration and decision support in business environments through the development of a Question Answering (QA) system. The QA system is designed to assist with technical problem-solving and business information management in a case study conducted within a consulting firm. To process the diverse resources, we employed OpenAl's Whisper for audio transcription, while we used Python's Un-structured library alongside Pytesseract and OpenCV to perform document parsing and Optical Character Recognition (OCR). We evaluated the QA system powered by OpenAl's GPT-4o-mini using a range of Query Augmentation techniques including Hyde, Query Rewrite, Rephrasal, and Step Back Prompting, as well as Reranking methods such as mT5, BM25, BGE m3, and RankGPT. To evaluate the system, we employed RAGAS framework to create a meaningful test set and to assess the performance, using Answer Relevancy and Faithfulness. The combination of Step Back Prompting and RankGPT achieved an improvement of 19.9% in Answer Relevancy compared to Naive RAG, marking a significant advancement over traditional Large Language Models (LLMs) without RAG integration. This study highlights the potential of RAG-enhanced QA solutions for advancing knowledge management and decision support in business contexts."
+  },
+  {
+   "paperId": "cddb3785b3b9a29bf591665704bf2798252bf3e6",
+   "externalIds": {
+    "DBLP": "conf/clef/HemamouD26",
+    "CorpusId": 292667315
+   },
+   "title": "Retrieve, Rerank, Survive: LLM-Listwise Pipelines for Job-Person and Job-Skill Matching at TalentCLEF 2026",
+   "venue": "Conference and Labs of the Evaluation Forum",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://ceur-ws.org/Vol-4283/paper479.pdf, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2340156725",
+     "name": "Léo Hemamou"
+    },
+    {
+     "authorId": "2118139179",
+     "name": "Robin Dupont"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "c38e59b523c7821a6da5fb274234b4013553752c",
+   "externalIds": {
+    "DBLP": "conf/coling/QuinnPYPB25",
+    "CorpusId": 279238272
+   },
+   "title": "Regulatory Question-Answering using Generative AI",
+   "venue": "COLING Workshops",
+   "year": 2025,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://aclanthology.org/2025.regnlp-1.16/, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2219035314",
+     "name": "Devin Quinn"
+    },
+    {
+     "authorId": "1768138171",
+     "name": "Sumit Pai"
+    },
+    {
+     "authorId": "103693111",
+     "name": "Imane Yousfi"
+    },
+    {
+     "authorId": "2322499485",
+     "name": "Nirmala Pudota"
+    },
+    {
+     "authorId": "3106278",
+     "name": "Sanmitra Bhattacharya"
+    }
+   ],
+   "abstract": null
+  },
+  {
+   "paperId": "a8213aab43e1fcdf6a6ddafe5160707c1b1bbb9b",
+   "externalIds": {
+    "DOI": "10.51903/jtie.v5i1.537",
+    "CorpusId": 289496560
+   },
+   "title": "LLM-Inspired Offline Reranking for Financial Search: Query Rewriting, Hybrid Retrieval, and Listwise Relevance Ranking on FiQA",
+   "venue": "Journal of Technology Informatics and Engineering",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "https://jtie.stekom.ac.id/index.php/jtie/article/download/537/346",
+    "status": "GOLD",
+    "license": "CCBYSA",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.51903/jtie.v5i1.537?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.51903/jtie.v5i1.537, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2442292514",
+     "name": "Siquan Meng"
+    },
+    {
+     "authorId": "2404577671",
+     "name": "Jing Chen"
+    },
+    {
+     "authorId": "2444104952",
+     "name": "Isa Zheng"
+    }
+   ],
+   "abstract": "Financial search has high practical value because investors and retail users often ask natural-language questions whose wording differs from relevant financial passages. This paper evaluates a multi-stage retrieval pipeline on FiQA, a financial question-answering retrieval collection in BEIR. The systems include BM25, Dense LSA, BM25-LSA hybrid retrieval, reciprocal-rank fusion, a compact linear reranker, fixed pointwise and listwise relevance rubrics inspired by LLM reranking, query rewriting, and the proposed query rewriting plus hybrid retrieval plus listwise reranking pipeline. The evaluation used the full 57,638-document FiQA corpus, 6,648 available queries, and the 648-query BEIR FiQA test qrels with 1,706 binary relevance judgments. BM25 was the best-performing system, with nDCG@10 = 0.2285, MAP = 0.1863, MRR = 0.2994, and Recall@100 = 0.5207. The proposed full pipeline underperformed BM25. The listwise rubric ranked second on nDCG@10 (0.2228) and improved over the pointwise rubric, suggesting that candidate-list normalization can be useful in this setting. The rubric rerankers are fixed local scoring rules, so these results should be read as an evaluation of LLM-inspired ranking logic rather than as a benchmark of an actual prompt-based LLM reranker. Dense LSA retrieval alone was weak (nDCG@10 = 0.0287), which shows the limitation of a conservative non-neural dense baseline in financial semantic matching. Query rewriting reduced average effectiveness. The findings recommend strong lexical baselines, conservative rewrite gating, and careful evaluation before adopting prompt-based or model-based LLM rerankers in financial search."
+  },
+  {
+   "paperId": "9c8f579c61ae6d16dcaa4e9259f69b90872ad665",
+   "externalIds": {
+    "DBLP": "conf/slt/QianMLLKG24",
+    "ArXiv": "2309.07606",
+    "DOI": "10.1109/SLT61566.2024.10832363",
+    "CorpusId": 261822655
+   },
+   "title": "Zero-Shot Audio Topic Reranking Using Large Language Models",
+   "venue": "Spoken Language Technology Workshop",
+   "year": 2023,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "https://arxiv.org/pdf/2309.07606",
+    "status": "GREEN",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2309.07606, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "10769548",
+     "name": "Mengjie Qian"
+    },
+    {
+     "authorId": "50397234",
+     "name": "Rao Ma"
+    },
+    {
+     "authorId": "2190750613",
+     "name": "Adian Liusie"
+    },
+    {
+     "authorId": "2791396",
+     "name": "Erfan Loweimi"
+    },
+    {
+     "authorId": "145962472",
+     "name": "K. Knill"
+    },
+    {
+     "authorId": "1740397",
+     "name": "M. Gales"
+    }
+   ],
+   "abstract": "Multimodal Video Search by Examples (MVSE) investigates using video clips as the query term for information retrieval, rather than the more traditional text query. This enables far richer search modalities such as images, speaker, content, topic, and emotion. A key element for this process is highly rapid and flexible search to support large archives, which in MVSE is facilitated by representing video attributes with embeddings. This work aims to compensate for any performance loss from this rapid archive search by examining reranking approaches. In particular, zero-shot reranking methods using large language models (LLMs) are investigated as these are applicable to any video archive audio content. Performance is evaluated for topic-based retrieval on a publicly available video archive, the BBC Rewind corpus. Results demonstrate that reranking significantly improves retrieval ranking without requiring any task-specific in-domain training data. Furthermore, three sources of information (ASR transcriptions, automatic summaries and synopses) as input for LLM reranking were compared. To gain a deeper understanding and further insights into the performance differences and limitations of these text sources, we employ a fact-checking approach to analyse the information consistency among them."
+  },
+  {
+   "paperId": "7463f12b0312c3af202a9102404a7bf39b12e39b",
+   "externalIds": {
+    "DBLP": "conf/semeval/LupartMAA26",
+    "ArXiv": "2606.11945",
+    "DOI": "10.18653/v1/2026.semeval-1.373",
+    "CorpusId": 289166503
+   },
+   "title": "uva-irlab-conv at SemEval-2026 Task 8: Multi-Turn RAG with Learned Sparse Retrieval and Listwise Reranking",
+   "venue": "SemEval@ACL",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2026.semeval-1.373.pdf",
+    "status": "HYBRID",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2606.11945, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2149408866",
+     "name": "Simon Lupart"
+    },
+    {
+     "authorId": "2229798775",
+     "name": "Kidist Amde Mekonnen"
+    },
+    {
+     "authorId": "2277449569",
+     "name": "Zahra Abbasiantaeb"
+    },
+    {
+     "authorId": "3390352",
+     "name": "Mohammad Aliannejadi"
+    }
+   ],
+   "abstract": "This report describes our participation in SemEval-2026 Task 8 on multi-turn retrieval and question answering. The task evaluates conversational systems across four domains (finance, cloud documentation, government, Wikipedia), and includes unanswerable queries where the available collection does not contain sufficient evidence to produce a complete response. We propose a multi-turn retrieval-augmented generation pipeline that combines learned sparse retrieval with LLM-based reranking and generation. Using sparse retrieval as the primary retrieval method, we leverage its strong generalization across domains. In addition, we make use of the long-context capabilities of LLMs for conversational query rewriting, pointwise and listwise reranking, and generating the final response, each conditioned on the full conversational history. This multi-step design enables effective integration of conversational context throughout retrieval and generation, improving robustness across domains."
+  },
+  {
+   "paperId": "6e03413acb89719007fafdb14353a6aafe0dd65e",
+   "externalIds": {
+    "DBLP": "conf/acl/AbdallahAPJ26",
+    "ArXiv": "2604.08834",
+    "DOI": "10.48550/arXiv.2604.08834",
+    "CorpusId": 287351526
+   },
+   "title": "BracketRank: Large Language Model Document Ranking via Reasoning-based Competitive Elimination",
+   "venue": "Annual Meeting of the Association for Computational Linguistics",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2604.08834, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2502045306",
+     "name": "Abdelrahman Abdallah"
+    },
+    {
+     "authorId": "2334368412",
+     "name": "Mohammed Ali"
+    },
+    {
+     "authorId": "1935823995",
+     "name": "Bhawna Piryani"
+    },
+    {
+     "authorId": "1774986",
+     "name": "A. Jatowt"
+    }
+   ],
+   "abstract": "Reasoning-intensive retrieval requires deep semantic inference beyond surface-level keyword matching, posing a challenge for current LLM-based rerankers limited by context constraints and order sensitivity. We propose \\textbf{\\BracketRank}, a framework that treats document reranking as a reasoning-driven competitive tournament. Our approach introduces three key innovations: (1) adaptive grouping based on model context limits, (2) reasoning-enhanced prompts that mandate step-by-step relevance explanations, and (3) a bracket-style elimination structure with winner and loser tracks. This design ensures robust document advancement while enabling parallel processing across competition stages. Evaluation on the BRIGHT reasoning benchmark shows that \\BracketRank achieves \\textbf{26.56 nDCG@10}, significantly outperforming state-of-the-art baselines including RankGPT-4 (17.0) and Rank-R1-14B (20.5). On TREC datasets, BracketRank achieves 77.90 nDCG@5 on DL 19 and 75.85 nDCG@5 on DL 20, exceeding all baselines, establishing that explicit reasoning within competitive elimination is a powerful paradigm for complex, multi-step retrieval tasks. https://github.com/DataScienceUIBK/BracketRank"
+  },
+  {
+   "paperId": "39b04683aed0b1b60827f76ba7d74c201e531943",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2604-26483",
+    "ArXiv": "2604.26483",
+    "DOI": "10.48550/arXiv.2604.26483",
+    "CorpusId": 287874472
+   },
+   "title": "Efficient Listwise Reranking with Compressed Document Representations",
+   "venue": "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2604.26483, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2335570100",
+     "name": "Herv'e D'ejean"
+    },
+    {
+     "authorId": "2207074",
+     "name": "Stéphane Clinchant"
+    }
+   ],
+   "abstract": "Reranking, the process of refining the output from a first-stage retriever, is often considered computationally expensive, especially when using Large Language Models (LLMs). A common approach to mitigate this cost involves utilizing smaller LLMs or controlling input length. Inspired by recent advances in document compression for retrieval-augmented generation (RAG), we introduce RRK, an efficient and effective listwise reranker compressing documents into multi-token fixed-size embedding representations. Our simple training via distillation shows that this combination of rich compressed representations and listwise reranking yields a highly efficient and effective system. In particular, our 8B-parameter model runs 3x-18x faster than smaller rerankers (0.6-4B parameters) while matching or outperforming them in effectiveness. The efficiency gains are even more striking on long-document benchmarks, where RRK widens its advantage further."
+  },
+  {
+   "paperId": "2ade6303c12f551beded7d14397899fff952691b",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2407-06716",
+    "ArXiv": "2407.06716",
+    "DOI": "10.48550/arXiv.2407.06716",
+    "CorpusId": 271064491
+   },
+   "title": "Analyzing the Effectiveness of Listwise Reranking with Positional Invariance on Temporal Generalizability",
+   "venue": "Conference and Labs of the Evaluation Forum",
+   "year": 2024,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2407.06716, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle"
+   ],
+   "authors": [
+    {
+     "authorId": "2287336807",
+     "name": "Soyoung Yoon"
+    },
+    {
+     "authorId": "2310518696",
+     "name": "Jongyoon Kim"
+    },
+    {
+     "authorId": "2287694374",
+     "name": "Seung-won Hwang"
+    }
+   ],
+   "abstract": "This working note outlines our participation in the retrieval task at CLEF 2024. We highlight the considerable gap between studying retrieval performance on static knowledge documents and understanding performance in real-world environments. Therefore, Addressing these discrepancies and measuring the temporal persistence of IR systems is crucial. By investigating the LongEval benchmark, specifically designed for such dynamic environments, our findings demonstrate the effectiveness of a listwise reranking approach, which proficiently handles inaccuracies induced by temporal distribution shifts. Among listwise rerankers, our findings show that ListT5, which effectively mitigates the positional bias problem by adopting the Fusion-in-Decoder architecture, is especially effective, and more so, as temporal drift increases, on the test-long subset."
+  },
+  {
+   "paperId": "14adc39aee7acf2a5d1cf3d18b34a77325d7b3a1",
+   "externalIds": {
+    "DBLP": "journals/corr/abs-2603-20513",
+    "ArXiv": "2603.20513",
+    "DOI": "10.48550/arXiv.2603.20513",
+    "CorpusId": 286762721
+   },
+   "title": "ReBOL: Retrieval via Bayesian Optimization with Batched LLM Relevance Observations and Query Reformulation",
+   "venue": "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+   "year": 2026,
+   "citationCount": 2,
+   "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/2603.20513, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "JournalArticle",
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2123355559",
+     "name": "A. Korikov"
+    },
+    {
+     "authorId": "1732536",
+     "name": "Scott Sanner"
+    }
+   ],
+   "abstract": "LLM-reranking is limited by the top-k documents retrieved by vector similarity, which neither enables contextual query-document token interactions nor captures multimodal relevance distributions. While LLM query reformulation attempts to improve recall by generating improved or additional queries, it is still followed by vector similarity retrieval. We thus propose to address these top-k retrieval stage failures by introducing ReBOL, which 1) uses LLM query reformulations to initialize a multimodal Bayesian Optimization (BO) posterior over document relevance, and 2) iteratively acquires document batches for LLM query-document relevance scoring followed by posterior updates to optimize relevance. After exploring query reformulation and document batch diversification techniques, we evaluate ReBOL against LLM reranker baselines on five BEIR datasets and using two LLMs (Gemini-2.5-Flash-Lite, GPT-5.2). ReBOL consistently achieves higher recall and competitive rankings, for example compared to the best LLM reranker on the Robust04 dataset with 46.5% vs. 35.0% recall@100 and 63.6% vs. 61.2% NDCG@10. We also show that ReBOL can achieve comparable latency to LLM rerankers."
+  },
+  {
+   "paperId": "fa2118f336cbf44a72eebd7d5e594358db269943",
+   "externalIds": {
+    "DOI": "10.18653/2026.arabicnlp-sharedtasks.37",
+    "CorpusId": 295438069
+   },
+   "title": "WathiqTeam at AraGenre 2026: Class-Balanced Hybrid Retrieval with Selective LLM Reranking",
+   "venue": "Proceedings of The Fourth Arabic Natural Language Processing Conference: Shared Tasks",
+   "year": 2026,
+   "citationCount": 1,
+   "openAccessPdf": {
+    "url": "https://aclanthology.org/2026.arabicnlp-sharedtasks.37.pdf",
+    "status": "BRONZE",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.18653/2026.arabicnlp-sharedtasks.37?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.18653/2026.arabicnlp-sharedtasks.37, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+   },
+   "publicationTypes": [
+    "Conference"
+   ],
+   "authors": [
+    {
+     "authorId": "2525597004",
+     "name": "Najat Bostaty"
+    },
+    {
+     "authorId": "2199409970",
+     "name": "Salam Almasri"
+    },
+    {
+     "authorId": "2525597639",
+     "name": "Bushra Al Shaabani"
+    },
+    {
+     "authorId": "2508204362",
+     "name": "Raghad Alhossny"
+    },
+    {
+     "authorId": "9330096",
+     "name": "Riad Sonbol"
+    }
+   ],
+   "abstract": null
+  }
+ ],
+ "sort": "citationCount:desc",
+ "query": "(RankGPT | \"listwise reranking\" | \"LLM reranking\") + (retrieval)"
+}

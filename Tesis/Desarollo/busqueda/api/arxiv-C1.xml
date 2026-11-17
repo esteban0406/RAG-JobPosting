@@ -1,0 +1,779 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/F38UN9zjH87naLmf/ZBgD/6akAA</id>
+  <title>arXiv Query: search_query=(abs:"retrieval-augmented generation" OR abs:"dense retrieval" OR abs:"semantic search" OR abs:"neural ranking") AND (abs:job OR abs:recruitment OR abs:vacancy OR abs:"job matching" OR abs:"job search") AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:02Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:%22retrieval-augmented+generation%22+OR+(abs:%22dense+retrieval%22+OR+(abs:%22semantic+search%22+OR+abs:%22neural+ranking%22)))+AND+((abs:job+OR+(abs:recruitment+OR+(abs:vacancy+OR+(abs:%22job+matching%22+OR+abs:%22job+search%22))))+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>23</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2603.17386v1</id>
+    <title>PJB: A Reasoning-Aware Benchmark for Person-Job Retrieval</title>
+    <updated>2026-03-18T06:08:06Z</updated>
+    <link href="https://arxiv.org/abs/2603.17386v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.17386v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As retrieval models converge on generic benchmarks, the pressing question is no longer "who scores higher" but rather "where do systems fail, and why?" Person-job matching is a domain that urgently demands such diagnostic capability -- it requires systems not only to verify explicit constraints but also to perform skill-transfer inference and job-competency reasoning, yet existing benchmarks provide no systematic diagnostic support for this task. We introduce PJB (Person-Job Benchmark), a reasoning-aware retrieval evaluation dataset that uses complete job descriptions as queries and complete resumes as documents, defines relevance through job-competency judgment, is grounded in real-world recruitment data spanning six industry domains and nearly 200,000 resumes, and upgrades evaluation from "who scores higher" to "where do systems differ, and why" through domain-family and reasoning-type diagnostic labels. Diagnostic experiments using dense retrieval reveal that performance heterogeneity across industry domains far exceeds the gains from module upgrades for the same model, indicating that aggregate scores alone can severely mislead optimization decisions. At the module level, reranking yields stable improvements while query understanding not only fails to help but actually degrades overall performance when combined with reranking -- the two modules face fundamentally different improvement bottlenecks. The value of PJB lies not in yet another leaderboard of average scores, but in providing recruitment retrieval systems with a capability map that pinpoints where to invest.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T06:08:06Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Guangzhi Wang</name>
+    </author>
+    <author>
+      <name>Xiaohui Yang</name>
+    </author>
+    <author>
+      <name>Kai Li</name>
+    </author>
+    <author>
+      <name>Jiawen He</name>
+    </author>
+    <author>
+      <name>Kai Yang</name>
+    </author>
+    <author>
+      <name>Ruixuan Zhang</name>
+    </author>
+    <author>
+      <name>Zhi Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.07309v1</id>
+    <title>Semantic Search At LinkedIn</title>
+    <updated>2026-02-07T01:59:03Z</updated>
+    <link href="https://arxiv.org/abs/2602.07309v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.07309v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Semantic search with large language models (LLMs) enables retrieval by meaning rather than keyword overlap, but scaling it requires major inference efficiency advances. We present LinkedIn's LLM-based semantic search framework for AI Job Search and AI People Search, combining an LLM relevance judge, embedding-based retrieval, and a compact Small Language Model trained via multi-teacher distillation to jointly optimize relevance and engagement. A prefill-oriented inference architecture co-designed with model pruning, context compression, and text-embedding hybrid interactions boosts ranking throughput by over 75x under a fixed latency constraint while preserving near-teacher-level NDCG, enabling one of the first production LLM-based ranking systems with efficiency comparable to traditional approaches and delivering significant gains in quality and user engagement.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-07T01:59:03Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Fedor Borisyuk</name>
+    </author>
+    <author>
+      <name>Sriram Vasudevan</name>
+    </author>
+    <author>
+      <name>Muchen Wu</name>
+    </author>
+    <author>
+      <name>Guoyao Li</name>
+    </author>
+    <author>
+      <name>Benjamin Le</name>
+    </author>
+    <author>
+      <name>Shaobo Zhang</name>
+    </author>
+    <author>
+      <name>Qianqi Kay Shen</name>
+    </author>
+    <author>
+      <name>Yuchin Juan</name>
+    </author>
+    <author>
+      <name>Kayhan Behdin</name>
+    </author>
+    <author>
+      <name>Liming Dong</name>
+    </author>
+    <author>
+      <name>Kaixu Yang</name>
+    </author>
+    <author>
+      <name>Shusen Jing</name>
+    </author>
+    <author>
+      <name>Ravi Pothamsetty</name>
+    </author>
+    <author>
+      <name>Rajat Arora</name>
+    </author>
+    <author>
+      <name>Sophie Yanying Sheng</name>
+    </author>
+    <author>
+      <name>Vitaly Abdrashitov</name>
+    </author>
+    <author>
+      <name>Yang Zhao</name>
+    </author>
+    <author>
+      <name>Lin Su</name>
+    </author>
+    <author>
+      <name>Xiaoqing Wang</name>
+    </author>
+    <author>
+      <name>Chujie Zheng</name>
+    </author>
+    <author>
+      <name>Sarang Metkar</name>
+    </author>
+    <author>
+      <name>Rupesh Gupta</name>
+    </author>
+    <author>
+      <name>Igor Lapchuk</name>
+    </author>
+    <author>
+      <name>David N. Racca</name>
+    </author>
+    <author>
+      <name>Madhumitha Mohan</name>
+    </author>
+    <author>
+      <name>Yanbo Li</name>
+    </author>
+    <author>
+      <name>Haojun Li</name>
+    </author>
+    <author>
+      <name>Saloni Gandhi</name>
+    </author>
+    <author>
+      <name>Xueying Lu</name>
+    </author>
+    <author>
+      <name>Chetan Bhole</name>
+    </author>
+    <author>
+      <name>Ali Hooshmand</name>
+    </author>
+    <author>
+      <name>Xin Yang</name>
+    </author>
+    <author>
+      <name>Raghavan Muthuregunathan</name>
+    </author>
+    <author>
+      <name>Jiajun Zhang</name>
+    </author>
+    <author>
+      <name>Mathew Teoh</name>
+    </author>
+    <author>
+      <name>Adam Coler</name>
+    </author>
+    <author>
+      <name>Abhinav Gupta</name>
+    </author>
+    <author>
+      <name>Xiaojing Ma</name>
+    </author>
+    <author>
+      <name>Sundara Raman Ramachandran</name>
+    </author>
+    <author>
+      <name>Morteza Ramezani</name>
+    </author>
+    <author>
+      <name>Yubo Wang</name>
+    </author>
+    <author>
+      <name>Lijuan Zhang</name>
+    </author>
+    <author>
+      <name>Richard Li</name>
+    </author>
+    <author>
+      <name>Jian Sheng</name>
+    </author>
+    <author>
+      <name>Chanh Nguyen</name>
+    </author>
+    <author>
+      <name>Yen-Chi Chen</name>
+    </author>
+    <author>
+      <name>Chuanrui Zhu</name>
+    </author>
+    <author>
+      <name>Claire Zhang</name>
+    </author>
+    <author>
+      <name>Jiahao Xu</name>
+    </author>
+    <author>
+      <name>Deepti Kulkarni</name>
+    </author>
+    <author>
+      <name>Qing Lan</name>
+    </author>
+    <author>
+      <name>Arvind Subramaniam</name>
+    </author>
+    <author>
+      <name>Ata Fatahibaarzi</name>
+    </author>
+    <author>
+      <name>Steven Shimizu</name>
+    </author>
+    <author>
+      <name>Yanning Chen</name>
+    </author>
+    <author>
+      <name>Zhipeng Wang</name>
+    </author>
+    <author>
+      <name>Ran He</name>
+    </author>
+    <author>
+      <name>Zhengze Zhou</name>
+    </author>
+    <author>
+      <name>Qingquan Song</name>
+    </author>
+    <author>
+      <name>Yun Dai</name>
+    </author>
+    <author>
+      <name>Caleb Johnson</name>
+    </author>
+    <author>
+      <name>Ping Liu</name>
+    </author>
+    <author>
+      <name>Shaghayegh Gharghabi</name>
+    </author>
+    <author>
+      <name>Gokulraj Mohanasundaram</name>
+    </author>
+    <author>
+      <name>Juan Bottaro</name>
+    </author>
+    <author>
+      <name>Santhosh Sachindran</name>
+    </author>
+    <author>
+      <name>Qi Guo</name>
+    </author>
+    <author>
+      <name>Yunxiang Ren</name>
+    </author>
+    <author>
+      <name>Chengming Jiang</name>
+    </author>
+    <author>
+      <name>Di Mo</name>
+    </author>
+    <author>
+      <name>Luke Simon</name>
+    </author>
+    <author>
+      <name>Jianqiang Shen</name>
+    </author>
+    <author>
+      <name>Jingwei Wu</name>
+    </author>
+    <author>
+      <name>Wenjing Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.02870v2</id>
+    <title>AI Hiring with LLMs: A Context-Aware and Explainable Multi-Agent Framework for Resume Screening</title>
+    <updated>2025-05-13T16:41:54Z</updated>
+    <link href="https://arxiv.org/abs/2504.02870v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.02870v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Resume screening is a critical yet time-intensive process in talent acquisition, requiring recruiters to analyze vast volume of job applications while remaining objective, accurate, and fair. With the advancements in Large Language Models (LLMs), their reasoning capabilities and extensive knowledge bases demonstrate new opportunities to streamline and automate recruitment workflows. In this work, we propose a multi-agent framework for resume screening using LLMs to systematically process and evaluate resumes. The framework consists of four core agents, including a resume extractor, an evaluator, a summarizer, and a score formatter. To enhance the contextual relevance of candidate assessments, we integrate Retrieval-Augmented Generation (RAG) within the resume evaluator, allowing incorporation of external knowledge sources, such as industry-specific expertise, professional certifications, university rankings, and company-specific hiring criteria. This dynamic adaptation enables personalized recruitment, bridging the gap between AI automation and talent acquisition. We assess the effectiveness of our approach by comparing AI-generated scores with ratings provided by HR professionals on a dataset of anonymized online resumes. The findings highlight the potential of multi-agent RAG-LLM systems in automating resume screening, enabling more efficient and scalable hiring workflows.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-01T12:56:39Z</published>
+    <arxiv:comment>Accepted by CVPR 2025 Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Frank P. -W. Lo</name>
+    </author>
+    <author>
+      <name>Jianing Qiu</name>
+    </author>
+    <author>
+      <name>Zeyu Wang</name>
+    </author>
+    <author>
+      <name>Haibao Yu</name>
+    </author>
+    <author>
+      <name>Yeming Chen</name>
+    </author>
+    <author>
+      <name>Gao Zhang</name>
+    </author>
+    <author>
+      <name>Benny Lo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.02539v1</id>
+    <title>Synapse: Evolving Job-Person Fit with Explainable Two-phase Retrieval and LLM-guided Genetic Resume Optimization</title>
+    <updated>2026-04-02T21:44:23Z</updated>
+    <link href="https://arxiv.org/abs/2604.02539v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.02539v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern recruitment platforms operate under severe information imbalance: job seekers must search over massive, rapidly changing collections of postings, while employers are overwhelmed by high-volume, low-relevance applicant pools. Existing recruitment recommender systems typically rely on keyword matching or single-stage semantic retrieval, which struggle to capture fine-grained alignment between candidate experience and job requirements under real-world scale and cost constraints. We present Synapse, a multi-stage semantic recruitment system that separates high-recall candidate generation from high-precision semantic reranking, combining efficient dense retrieval using FAISS with an ensemble of contrastive learning and Large Language Model (LLM) reasoning. To improve transparency, Synapse incorporates a retrieval-augmented explanation layer that grounds recommendations in explicit evidence. Beyond retrieval, we introduce a novel evolutionary resume optimization framework that treats resume refinement as a black-box optimization problem. Using Differential Evolution with LLM-guided mutation operators, the system iteratively modifies candidate representations to improve alignment with screening objectives, without any labeled data. Evaluation shows that the proposed ensemble improves nDCG@10 by 22% over embedding-only retrieval baselines, while the evolutionary optimization loop consistently yields monotonic improvements in recommender scores, exceeding 60% relative gain across evaluated profiles. We plan to release code and data upon publication.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-02T21:44:23Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ansel Kaplan Erol</name>
+    </author>
+    <author>
+      <name>Seohee Yoon</name>
+    </author>
+    <author>
+      <name>Keenan Hom</name>
+    </author>
+    <author>
+      <name>Xisheng Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.21107v2</id>
+    <title>Generating patient cohorts from electronic health records using two-step retrieval-augmented text-to-SQL generation</title>
+    <updated>2025-10-17T14:29:05Z</updated>
+    <link href="https://arxiv.org/abs/2502.21107v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.21107v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Clinical cohort definition is crucial for patient recruitment and observational studies, yet translating inclusion/exclusion criteria into SQL queries remains challenging and manual. We present an automated system utilizing large language models that combines criteria parsing, two-level retrieval augmented generation with specialized knowledge bases, medical concept standardization, and SQL generation to retrieve patient cohorts with patient funnels. The system achieves 0.75 F1-score in cohort identification on EHR data, effectively capturing complex temporal and logical relationships. These results demonstrate the feasibility of automated cohort generation for epidemiological research.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-28T14:46:02Z</published>
+    <arxiv:comment>13 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Angelo Ziletti</name>
+    </author>
+    <author>
+      <name>Leonardo D'Ambrosi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.07663v1</id>
+    <title>Enhancing Talent Employment Insights Through Feature Extraction with LLM Finetuning</title>
+    <updated>2025-01-13T19:49:49Z</updated>
+    <link href="https://arxiv.org/abs/2501.07663v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.07663v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper explores the application of large language models (LLMs) to extract nuanced and complex job features from unstructured job postings. Using a dataset of 1.2 million job postings provided by AdeptID, we developed a robust pipeline to identify and classify variables such as remote work availability, remuneration structures, educational requirements, and work experience preferences. Our methodology combines semantic chunking, retrieval-augmented generation (RAG), and fine-tuning DistilBERT models to overcome the limitations of traditional parsing tools. By leveraging these techniques, we achieved significant improvements in identifying variables often mislabeled or overlooked, such as non-salary-based compensation and inferred remote work categories. We present a comprehensive evaluation of our fine-tuned models and analyze their strengths, limitations, and potential for scaling. This work highlights the promise of LLMs in labor market analytics, providing a foundation for more accurate and actionable insights into job data.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-13T19:49:49Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Karishma Thakrar</name>
+    </author>
+    <author>
+      <name>Nick Young</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.06211v2</id>
+    <title>Illocutionary Explanation Planning for Source-Faithful Explanations in Retrieval-Augmented Language Models</title>
+    <updated>2026-04-18T00:13:59Z</updated>
+    <link href="https://arxiv.org/abs/2604.06211v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.06211v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Natural language explanations produced by large language models (LLMs) are often persuasive, but not necessarily scrutable: users cannot easily verify whether the claims in an explanation are supported by evidence. In XAI, this motivates a focus on faithfulness and traceability, i.e., the extent to which an explanation's claims can be grounded in, and traced back to, an explicit source. We study these desiderata in retrieval-augmented generation (RAG) for programming education, where textbooks provide authoritative evidence. We benchmark six LLMs on 90 Stack Overflow questions grounded in three programming textbooks and quantify source faithfulness via source adherence metrics. We find that non Retrieval-Augmented Generation (RAG) models have median source adherence of 0%, while baseline RAG systems still exhibit low median adherence (22-40%, depending on the model). Motivated by Achinstein's illocutionary theory of explanation, we introduce illocutionary macro-planning as a descriptive design principle for source-faithful explanations and instantiate it with chain-of-illocution prompting (CoI), which expands a query into implicit explanatory questions that drive retrieval. Across models, CoI yields statistically significant gains (up to 63%) in source adherence, although absolute adherence remains moderate and the gains are weak or non-significant for some models. A user study with 165 retained participants (220 recruited) indicates that these gains do not harm satisfaction, relevance, or perceived correctness.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-16T11:10:29Z</published>
+    <arxiv:comment>24 pages; Accepted for publication at XAI'2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Francesco Sovrano</name>
+    </author>
+    <author>
+      <name>Alberto Bacchelli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.10726v1</id>
+    <title>Building AI Agents to Improve Job Referral Requests to Strangers</title>
+    <updated>2025-12-28T05:59:56Z</updated>
+    <link href="https://arxiv.org/abs/2601.10726v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.10726v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper develops AI agents that help job seekers write effective requests for job referrals in a professional online community. The basic workflow consists of an improver agent that rewrites the referral request and an evaluator agent that measures the quality of revisions using a model trained to predict the probability of receiving referrals from other users. Revisions suggested by the LLM (large language model) increase predicted success rates for weaker requests while reducing them for stronger requests. Enhancing the LLM with Retrieval-Augmented Generation (RAG) prevents edits that worsen stronger requests while it amplifies improvements for weaker requests. Overall, using LLM revisions with RAG increases the predicted success rate for weaker requests by 14\% without degrading performance on stronger requests. Although improvements in model-predicted success do not guarantee more referrals in the real world, they provide low-cost signals for promising features before running higher-stakes experiments on real users.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-28T05:59:56Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Ross Chu</name>
+    </author>
+    <author>
+      <name>Yuting Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.02879v1</id>
+    <title>Efficient Neural Query Auto Completion</title>
+    <updated>2020-08-06T21:28:36Z</updated>
+    <link href="https://arxiv.org/abs/2008.02879v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.02879v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query Auto Completion (QAC), as the starting point of information retrieval tasks, is critical to user experience. Generally it has two steps: generating completed query candidates according to query prefixes, and ranking them based on extracted features. Three major challenges are observed for a query auto completion system: (1) QAC has a strict online latency requirement. For each keystroke, results must be returned within tens of milliseconds, which poses a significant challenge in designing sophisticated language models for it. (2) For unseen queries, generated candidates are of poor quality as contextual information is not fully utilized. (3) Traditional QAC systems heavily rely on handcrafted features such as the query candidate frequency in search logs, lacking sufficient semantic understanding of the candidate.
+  In this paper, we propose an efficient neural QAC system with effective context modeling to overcome these challenges. On the candidate generation side, this system uses as much information as possible in unseen prefixes to generate relevant candidates, increasing the recall by a large margin. On the candidate ranking side, an unnormalized language model is proposed, which effectively captures deep semantics of queries. This approach presents better ranking performance over state-of-the-art neural ranking methods and reduces $\sim$95\% latency compared to neural language modeling methods. The empirical results on public datasets show that our model achieves a good balance between accuracy and efficiency. This system is served in LinkedIn job search with significant product impact observed.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-06T21:28:36Z</published>
+    <arxiv:comment>Accepted at CIKM 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sida Wang</name>
+    </author>
+    <author>
+      <name>Weiwei Guo</name>
+    </author>
+    <author>
+      <name>Huiji Gao</name>
+    </author>
+    <author>
+      <name>Bo Long</name>
+    </author>
+    <arxiv:doi>10.1145/3340531.3412701</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3340531.3412701" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.05257v1</id>
+    <title>Career-Aware Resume Tailoring via Multi-Source Retrieval-Augmented Generation with Provenance Tracking: A Case Study</title>
+    <updated>2026-05-06T04:22:49Z</updated>
+    <link href="https://arxiv.org/abs/2605.05257v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.05257v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-assisted resume tailoring systems commonly operate on a single uploaded resume, which limits their ability to recover relevant experience omitted from the current draft and makes it difficult for users to distinguish grounded edits from model-generated suggestions. This paper presents Resume Tailor, an agentic resume-tailoring system that maintains a longitudinal career vault in a vector database and uses multi-source retrieval-augmented generation (RAG) to assemble job-specific resume content from historical resumes and structured career records. The system is implemented as a 12-node LangGraph pipeline with typed state management, hybrid semantic-lexical confidence scoring, provenance-aware fallback generation, anti-hallucination guardrails, and a conditional review loop. We report a pilot evaluation on nine job descriptions (JDs) across software engineering, data analytics, and business analysis roles using a single candidate's career history. For six JDs where the candidate held at least one prior role in the same occupational category, enabling the career vault improved Applicant Tracking System (ATS)-style fit scores by an average of 7.8 points. For two JDs requiring domain-specific expertise absent from the vault, scores decreased by an average of 8.0 points. One partially overlapping role showed a modest gain of 2 points. These results suggest that longitudinal retrieval can improve resume tailoring when relevant prior experience exists, while also highlighting the need for confidence-gated retrieval when domain overlap is weak.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-06T04:22:49Z</published>
+    <arxiv:comment>6 pages, 1 figure, 5 tables. Also available on SSRN</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Kumar Abhinav</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.15189v3</id>
+    <title>Face the Facts! Evaluating RAG-based Pipelines for Professional Fact-Checking</title>
+    <updated>2025-10-29T05:47:44Z</updated>
+    <link href="https://arxiv.org/abs/2412.15189v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.15189v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Natural Language Processing and Generation systems have recently shown the potential to complement and streamline the costly and time-consuming job of professional fact-checkers. In this work, we lift several constraints of current state-of-the-art pipelines for automated fact-checking based on the Retrieval-Augmented Generation (RAG) paradigm. Our goal is to benchmark, following professional fact-checking practices, RAG-based methods for the generation of verdicts - i.e., short texts discussing the veracity of a claim - evaluating them on stylistically complex claims and heterogeneous, yet reliable, knowledge bases. Our findings show a complex landscape, where, for example, LLM-based retrievers outperform other retrieval techniques, though they still struggle with heterogeneous knowledge bases; larger models excel in verdict faithfulness, while smaller models provide better context adherence, with human evaluations favouring zero-shot and one-shot approaches for informativeness, and fine-tuned models for emotional alignment.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-19T18:57:11Z</published>
+    <arxiv:comment>Code and data at https://github.com/drusso98/face-the-facts - Accepted for publication at INLG 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Daniel Russo</name>
+    </author>
+    <author>
+      <name>Stefano Menini</name>
+    </author>
+    <author>
+      <name>Jacopo Staiano</name>
+    </author>
+    <author>
+      <name>Marco Guerini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.05787v1</id>
+    <title>Constraint-Aware Conversational Job Recommendation in Code-Mixed Low-Resource Settings</title>
+    <updated>2026-10-05T04:36:18Z</updated>
+    <link href="https://arxiv.org/abs/2610.05787v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.05787v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conversational job recommendation requires jointly modeling semantic relevance, user preferences, eligibility requirements, and the noisy language used in real-world career discussions. These challenges are especially pronounced in low-resource, code-mixed settings, where strict constraint matching can incorrectly eliminate otherwise suitable jobs. We introduce JobCCC, a conversational job recommendation benchmark for Bangladesh comprising 22,410 structured job postings and 988 multi-turn career-advice dialogues derived from regional Reddit communities. Each dialogue is annotated with evolving seeker preferences and linked to a ground-truth job, and is evaluated in semantically equivalent English and Romanized Bangla--English variants. We compare sparse BM25 retrieval, multilingual dense retrieval, and their hard-constraint-filtered counterparts against Weighted Soft-Constraint-Aware Ranking (W-SCAR), our multi-criteria ranking framework that combines lexical relevance, semantic relevance, and graded utilities for experience, location, education, and salary using the Technique for Order Preference by Similarity to Ideal Solution (TOPSIS). Experiments reveal that strict filtering consistently degrades retrieval because incomplete extraction and brittle attribute matching irreversibly remove relevant jobs. W-SCAR avoids destructive pruning and achieves more balanced performance across the two language conditions, obtaining 37.37% and 38.43% Hit@10 on English and Banglish, respectively. The code and dataset are publicly available at \href{https://github.com/M-Jawad01/Conversational-Job-Recommendation-System-LLM}{GitHub} and \href{https://huggingface.co/datasets/Armans33115/JobCCC-Conversational-Job-Recommendation-Bangladesh}{Hugging Face}, respectively.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-05T04:36:18Z</published>
+    <arxiv:comment>Submitted to WSDM 2027</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Md Arman Hossain</name>
+    </author>
+    <author>
+      <name>Mubashir Jawad</name>
+    </author>
+    <author>
+      <name>Fariha Khandaker Moon</name>
+    </author>
+    <author>
+      <name>Sonia Binte Siraj</name>
+    </author>
+    <author>
+      <name>Masfiqur Rahaman</name>
+    </author>
+    <author>
+      <name>Raihan ul Islam</name>
+    </author>
+    <author>
+      <name>Ahmed Wasif Reza</name>
+    </author>
+    <author>
+      <name>Nafis Sadeq</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.24449v1</id>
+    <title>Evaluating RAG for French immigration law: a benchmark and baseline study</title>
+    <updated>2026-07-27T13:55:35Z</updated>
+    <link href="https://arxiv.org/abs/2607.24449v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.24449v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>International recruitment in France requires navigating a layered legal framework absent from existing legal AI benchmarks. We present a publicly available benchmark and first comparative evaluation for this domain, covering permit-type recommendation, required-document retrieval, and legal citation coverage. Comparing a parametric LLM baseline against dense retrieval augmentation at two model scales (Qwen3.5-9B and -27B) on 52 annotated synthetic profiles, we find that retrieval improves administrative guidance at both scales, most notably permit-type accuracy. Our results confirm that retrieval grounding is important for more reliable administrative guidance in this domain, and motivate further investigation of hybrid retrieval strategies.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T13:55:35Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>International workshop on AI for Human Resources and Public Employment Services (ECML-PKDD 2026)</arxiv:journal_ref>
+    <author>
+      <name>Annia Abtout</name>
+    </author>
+    <author>
+      <name>Julien Delaunay</name>
+    </author>
+    <author>
+      <name>Monika Ewa Rakoczy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.34179v1</id>
+    <title>RAGWarrant: Evidence-Preserving Governance for RAG Policy Promotion Under Quality, Cost, Latency, and Risk Constraints</title>
+    <updated>2026-09-28T02:58:06Z</updated>
+    <link href="https://arxiv.org/abs/2609.34179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.34179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation systems are extensively instrumented with metrics, benchmarks, traces, and automated judges, but these tools do not decide whether a proposed policy change is safe to release. We present RAGWarrant, an open-source promotion-control framework that treats deployment as a constrained evidence decision rather than a leaderboard choice. RAGWarrant normalizes evaluator outputs and operational telemetry, applies predeclared quality and hard-risk gates, assigns evidence-class claim ceilings, preserves negative outcomes, and emits auditable PROMOTE, BLOCK, REJECT, or INCONCLUSIVE decisions. We evaluate the framework across T2-RAGBench, MultiHop-RAG, CRAG, HotpotQA, synthetic reproduction, and bounded local generative experiments. On HotpotQA, operational savings were blocked because answer quality fell beyond the declared margin. A bounded CRAG study selected a lower-cost quality-tied policy, but related generative gains were unstable and a held-out guardrail failed closed. We claim an auditable promotion-control abstraction, not optimizer superiority, human validation, or production readiness. The tagged artifact reproduces from a fresh clone, runs as a hardened Docker job, accepts external evaluator exports, and verifies artifact integrity.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-28T02:58:06Z</published>
+    <arxiv:comment>19 pages, 6 figures, 7 tables. Preprint v0.1.1-rc1. Code and artifacts: https://github.com/RAGWarrant/ragwarrant-governance</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Richard Krueger</name>
+    </author>
+    <author>
+      <name>Lucas Krause</name>
+    </author>
+    <author>
+      <name>Zach Pocquette</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.07285v2</id>
+    <title>Why teaching resists automation in an AI-inundated era: Human judgment, non-modular work, and the limits of delegation</title>
+    <updated>2026-07-03T14:14:54Z</updated>
+    <link href="https://arxiv.org/abs/2604.07285v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.07285v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Debates about artificial intelligence (AI) in education often portray teaching as a modular and procedural job that can increasingly be automated or delegated to technology. This brief communication paper argues that such claims depend on treating teaching as more separable than it is in practice. Drawing on recent literature and empirical studies of large language models and retrieval-augmented generation systems, I argue that although AI can support some bounded functions, instructional work remains difficult to automate in meaningful ways because it is inherently interpretive, relational, and grounded in professional judgment. More fundamentally, teaching and learning are shaped by human cognition, behavior, motivation, and social interaction in ways that cannot be fully specified, predicted, or exhaustively modeled. Tasks that may appear separable in principle derive their instructional value in practice from ongoing contextual interpretation across learners, situations, and relationships. As long as educational practice relies on emergent understanding of human cognition and learning, teaching remains a form of professional work that resists automation. AI may improve access to information and support selected instructional activities, but it does not remove the need for human judgment and relational accountability that effective teaching requires.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-08T16:49:24Z</published>
+    <arxiv:comment>Revised version; accepted for publication in TechTrends</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Songhee Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.14767v1</id>
+    <title>An LLM-Powered Agent for Real-Time Analysis of the Vietnamese IT Job Market</title>
+    <updated>2025-09-26T03:03:12Z</updated>
+    <link href="https://arxiv.org/abs/2511.14767v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.14767v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Individuals entering Vietnam's dynamic Information Technology (IT) job market face a critical gap in reliable career guidance. Existing market reports are often outdated, while the manual analysis of thousands of job postings is impractical for most. To address this challenge, we present the AI Job Market Consultant, a novel conversational agent that delivers deep, data-driven insights directly from the labor market in real-time. The foundation of our system is a custom-built dataset created via an automated pipeline that crawls job portals using Playwright and leverages the Large Language Model (LLM) to intelligently structure unstructured posting data. The core of our system is a tool-augmented AI agent, based on the ReAct agentic framework, which enables the ability of autonomously reasoning, planning, and executing actions through a specialized toolbox for SQL queries, semantic search, and data visualization. Our prototype successfully collected and analyzed 3,745 job postings, demonstrating its ability to answer complex, multi-step queries, generate on-demand visualizations, and provide personalized career advice grounded in real-world data. This work introduces a new paradigm for labor market analysis, showcasing how specialized agentic AI systems can democratize access to timely, trustworthy career intelligence for the next generation of professionals.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-26T03:03:12Z</published>
+    <arxiv:comment>Accepted at ACOMPA 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Minh-Thuan Nguyen</name>
+    </author>
+    <author>
+      <name>Thien Vo-Thanh</name>
+    </author>
+    <author>
+      <name>Thai-Duy Dinh</name>
+    </author>
+    <author>
+      <name>Xuan-Quang Phan</name>
+    </author>
+    <author>
+      <name>Tan-Ha Mai</name>
+    </author>
+    <author>
+      <name>Lam-Son Lê</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.15859v1</id>
+    <title>From Transcripts to AI Agents: Knowledge Extraction, RAG Integration, and Robust Evaluation of Conversational AI Assistants</title>
+    <updated>2026-01-26T07:44:47Z</updated>
+    <link href="https://arxiv.org/abs/2602.15859v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.15859v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building reliable conversational AI assistants for customer-facing industries remains challenging due to noisy conversational data, fragmented knowledge, and the requirement for accurate human hand-off - particularly in domains that depend heavily on real-time information. This paper presents an end-to-end framework for constructing and evaluating a conversational AI assistant directly from historical call transcripts. Incoming transcripts are first graded using a simplified adaptation of the PIPA framework, focusing on observation alignment and appropriate response behavior, and are filtered to retain only high-quality interactions exhibiting coherent flow and effective human agent responses. Structured knowledge is then extracted from curated transcripts using large language models (LLMs) and deployed as the sole grounding source in a Retrieval-Augmented Generation (RAG) pipeline. Assistant behavior is governed through systematic prompt tuning, progressing from monolithic prompts to lean, modular, and governed designs that ensure consistency, safety, and controllable execution. Evaluation is conducted using a transcript-grounded user simulator, enabling quantitative measurement of call coverage, factual accuracy, and human escalation behavior. Additional red teaming assesses robustness against prompt injection, out-of-scope, and out-of-context attacks. Experiments are conducted in the Real Estate and Specialist Recruitment domains, which are intentionally challenging and currently suboptimal for automation due to their reliance on real-time data. Despite these constraints, the assistant autonomously handles approximately 30 percents of calls, achieves near-perfect factual accuracy and rejection behavior, and demonstrates strong robustness under adversarial testing.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-26T07:44:47Z</published>
+    <arxiv:comment>9 pages, 2 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Krittin Pachtrachai</name>
+    </author>
+    <author>
+      <name>Petmongkon Pornpichitsuwan</name>
+    </author>
+    <author>
+      <name>Wachiravit Modecrua</name>
+    </author>
+    <author>
+      <name>Touchapon Kraisingkorn</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.14436v1</id>
+    <title>When Content is Goliath and Algorithm is David: The Style and Semantic Effects of Generative Search Engine</title>
+    <updated>2025-09-17T21:19:13Z</updated>
+    <link href="https://arxiv.org/abs/2509.14436v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.14436v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generative search engines (GEs) leverage large language models (LLMs) to deliver AI-generated summaries with website citations, establishing novel traffic acquisition channels while fundamentally altering the search engine optimization landscape. To investigate the distinctive characteristics of GEs, we collect data through interactions with Google's generative and conventional search platforms, compiling a dataset of approximately ten thousand websites across both channels. Our empirical analysis reveals that GEs exhibit preferences for citing content characterized by significantly higher predictability for underlying LLMs and greater semantic similarity among selected sources. Through controlled experiments utilizing retrieval augmented generation (RAG) APIs, we demonstrate that these citation preferences emerge from intrinsic LLM tendencies to favor content aligned with their generative expression patterns. Motivated by applications of LLMs to optimize website content, we conduct additional experimentation to explore how LLM-based content polishing by website proprietors alters AI summaries, finding that such polishing paradoxically enhances information diversity within AI summaries. Finally, to assess the user-end impact of LLM-induced information increases, we design a generative search engine and recruit Prolific participants to conduct a randomized controlled experiment involving an information-seeking and writing task. We find that higher-educated users exhibit minimal changes in their final outputs' information diversity but demonstrate significantly reduced task completion time when original sites undergo polishing. Conversely, lower-educated users primarily benefit through enhanced information density in their task outputs while maintaining similar completion times across experimental groups.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-17T21:19:13Z</published>
+    <arxiv:comment>59 pages, 6 figures, 20 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lijia Ma</name>
+    </author>
+    <author>
+      <name>Juan Qin</name>
+    </author>
+    <author>
+      <name>Xingchen Xu</name>
+    </author>
+    <author>
+      <name>Yong Tan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.03180v1</id>
+    <title>Type-Aware Retrieval-Augmented Generation with Dependency Closure for Solver-Executable Industrial Optimization Modeling</title>
+    <updated>2026-03-03T17:41:34Z</updated>
+    <link href="https://arxiv.org/abs/2603.03180v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.03180v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated industrial optimization modeling requires reliable translation of natural-language requirements into solver-executable code. However, large language models often generate non-compilable models due to missing declarations, type inconsistencies, and incomplete dependency contexts. We propose a type-aware retrieval-augmented generation (RAG) method that enforces modeling entity types and minimal dependency closure to ensure executability. Unlike existing RAG approaches that index unstructured text, our method constructs a domain-specific typed knowledge base by parsing heterogeneous sources, such as academic papers and solver code, into typed units and encoding their mathematical dependencies in a knowledge graph. Given a natural-language instruction, it performs hybrid retrieval and computes a minimal dependency-closed context, the smallest set of typed symbols required for solver-executable code, via dependency propagation over the graph. We validate the method on two constraint-intensive industrial cases: demand response optimization in battery production and flexible job shop scheduling. In the first case, our method generates an executable model incorporating demand-response incentives and load-reduction constraints, achieving peak shaving while preserving profitability; conventional RAG baselines fail. In the second case, it consistently produces compilable models that reach known optimal solutions, demonstrating robust cross-domain generalization; baselines fail entirely. Ablation studies confirm that enforcing type-aware dependency closure is essential for avoiding structural hallucinations and ensuring executability, addressing a critical barrier to deploying large language models in complex engineering optimization tasks.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-03T17:41:34Z</published>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Y. Zhong</name>
+    </author>
+    <author>
+      <name>R. Huang</name>
+    </author>
+    <author>
+      <name>M. Wang</name>
+    </author>
+    <author>
+      <name>Z. Guo</name>
+    </author>
+    <author>
+      <name>YC. Li</name>
+    </author>
+    <author>
+      <name>M. Yu</name>
+    </author>
+    <author>
+      <name>Z. Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.31342v1</id>
+    <title>Stale-Document Poisoning: When Outdated Retrieval Overrides Correct Model Answers</title>
+    <updated>2026-09-25T14:43:43Z</updated>
+    <link href="https://arxiv.org/abs/2609.31342v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.31342v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation (RAG) is often used to address outdated knowledge by providing external evidence. But retrieval helps only when that evidence is still valid. We identify a temporal alignment failure, stale-document poisoning, in which outdated evidence makes a model wrong despite answering correctly without retrieval. We construct a benchmark of 317 verified knowledge reversals across medicine, law, software, and platform policy, grounded in dated official sources. Across 12 models, recent medical reversals are harder than long-established ones. More importantly, outdated retrieval flips 30% of Llama and 37% of Qwen answers even without instructions to trust the document; explicit follow instructions raise these rates to 66% and 75%. Across four open models and four domains, poisoning ranges from 17-91%, while matched up-to-date evidence is followed in 97-100% of trials. To isolate temporal applicability, we keep the historical evidence unchanged across 50 reversals and vary only the evaluation date. A clear pattern emerges: dates alone produce only modest adaptation, but when models are explicitly told when the old evidence stops applying, the larger models switch to the appropriate answer almost perfectly. Causal interventions confirm that this validity information directly shapes the final decision. The same internal components also support broader comparison tasks, suggesting that temporal applicability can recruit a general reasoning mechanism used for other comparisons. Finally, a fixed recency-aware hybrid re-ranker reduces poisoning by 4.6-10.0 points when dates are accurate, with gains that depend on reliable temporal metadata. Reliable RAG therefore requires selective trust: models must determine not only what retrieved evidence says, but whether it still applies.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-25T14:43:43Z</published>
+    <arxiv:comment>17 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Md Shamim Ahmed</name>
+    </author>
+    <author>
+      <name>Lukas Galke Poech</name>
+    </author>
+    <author>
+      <name>Richard Röttger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.20634v1</id>
+    <title>Jev-as-a-Judge for RAG Claim Verification: Confidence-Gated Cascading Between a Non-Generative Verifier and a Frontier LLM</title>
+    <updated>2026-09-30T15:32:51Z</updated>
+    <link href="https://arxiv.org/abs/2610.20634v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.20634v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retrieval-augmented generation asks one question at volume: does this evidence support this claim? The answer is one bit, yet most pipelines obtain it from a text generator and pay generation prices for the prose wrapped around it. We compare a non-generative decision model, which returns a typed value from a declared enumeration together with a native probability and no text, against a frontier LLM configured as an engineer would deploy it for binary classification. Both answer the same 495 human-labelled claims from LLM-AggreFact, so every comparison is within-item. We report three things. First, the two systems are statistically indistinguishable on the metric this task is conventionally scored by, a paired difference of -0.56 points, Jev minus Astra, at a 187-fold cost difference. Second, that tie carries almost no information about deployment: the systems disagree on 15.2% of claims, and the cheaper one admits 23.2% of the claims annotators marked unsupported against the frontier model's 14.1%. A component whose job is to catch unsupported claims should be judged on that rate, and the conventional headline hides it. Third, because the errors differ they compose: routing the claims the cheap model is confident about and escalating the rest reaches 74.10 at USD 2.92 per thousand claims against 73.83 at USD 8.93, with the threshold chosen out of fold. But a matched random-escalation control at in-sample thresholds, spending the same budget by coin flip, does as well, so what buys the saving is the escalation share and not the probability that picks what to escalate. Measured against the cheap model it is built from, the cascade costs 61-fold more for 0.83 points, 95% CI [-3.36, 4.86], and it is the more permissive guard of the two. Equal accuracy conceals unequal errors. All predictions, prompts, pricing and code are released.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-30T15:32:51Z</published>
+    <arxiv:comment>31 pages, 6 figures. Code and data: https://github.com/adorosario/jev-rag-claim-verification</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Alden Do Rosario</name>
+    </author>
+    <author>
+      <name>Kirollos Atef</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.16638v1</id>
+    <title>VacancySBERT: the approach for representation of titles and skills for semantic similarity search in the recruitment domain</title>
+    <updated>2023-07-31T13:21:15Z</updated>
+    <link href="https://arxiv.org/abs/2307.16638v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.16638v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The paper focuses on deep learning semantic search algorithms applied in the HR domain. The aim of the article is developing a novel approach to training a Siamese network to link the skills mentioned in the job ad with the title. It has been shown that the title normalization process can be based either on classification or similarity comparison approaches. While classification algorithms strive to classify a sample into predefined set of categories, similarity search algorithms take a more flexible approach, since they are designed to find samples that are similar to a given query sample, without requiring pre-defined classes and labels. In this article semantic similarity search to find candidates for title normalization has been used. A pre-trained language model has been adapted while teaching it to match titles and skills based on co-occurrence information. For the purpose of this research fifty billion title-descriptions pairs had been collected for training the model and thirty three thousand title-description-normalized title triplets, where normalized job title was picked up manually by job ad creator for testing purposes. As baselines FastText, BERT, SentenceBert and JobBert have been used. As a metric of the accuracy of the designed algorithm is Recall in top one, five and ten model's suggestions. It has been shown that the novel training objective lets it achieve significant improvement in comparison to other generic and specific text encoders. Two settings with treating titles as standalone strings, and with included skills as additional features during inference have been used and the results have been compared in this article. Improvements by 10% and 21.5% have been achieved using VacancySBERT and VacancySBERT (with skills) respectively. The benchmark has been developed as open-source to foster further research in the area.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-31T13:21:15Z</published>
+    <arxiv:comment>8 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Applied Aspects of Information Technology, 1(6), 52-59 (2023)</arxiv:journal_ref>
+    <author>
+      <name>Maiia Bocharova</name>
+    </author>
+    <author>
+      <name>Eugene Malakhov</name>
+    </author>
+    <author>
+      <name>Vitaliy Mezhuyev</name>
+    </author>
+    <arxiv:doi>10.15276/aait.06.2023.4</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.15276/aait.06.2023.4" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.07279v2</id>
+    <title>Leveraging User Behavior History for Personalized Email Search</title>
+    <updated>2021-03-17T23:02:20Z</updated>
+    <link href="https://arxiv.org/abs/2102.07279v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.07279v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An effective email search engine can facilitate users' search tasks and improve their communication efficiency. Users could have varied preferences on various ranking signals of an email, such as relevance and recency based on their tasks at hand and even their jobs. Thus a uniform matching pattern is not optimal for all users. Instead, an effective email ranker should conduct personalized ranking by taking users' characteristics into account. Existing studies have explored user characteristics from various angles to make email search results personalized. However, little attention has been given to users' search history for characterizing users. Although users' historical behaviors have been shown to be beneficial as context in Web search, their effect in email search has not been studied and remains unknown. Given these observations, we propose to leverage user search history as query context to characterize users and build a context-aware ranking model for email search. In contrast to previous context-dependent ranking techniques that are based on raw texts, we use ranking features in the search history. This frees us from potential privacy leakage while giving a better generalization power to unseen users. Accordingly, we propose a context-dependent neural ranking model (CNRM) that encodes the ranking features in users' search history as query context and show that it can significantly outperform the baseline neural model without using the context. We also investigate the benefit of the query context vectors obtained from CNRM on the state-of-the-art learning-to-rank model LambdaMart by clustering the vectors and incorporating the cluster information. Experimental results show that significantly better results can be achieved on LambdaMart as well, indicating that the query clusters can characterize different users and effectively turn the ranking model personalized.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-15T00:15:46Z</published>
+    <arxiv:comment>In proceedings of the Web Conference 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Keping Bi</name>
+    </author>
+    <author>
+      <name>Pavel Metrikov</name>
+    </author>
+    <author>
+      <name>Chunyuan Li</name>
+    </author>
+    <author>
+      <name>Byungki Byun</name>
+    </author>
+    <arxiv:doi>10.1145/3442381.3450110</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3442381.3450110" title="doi"/>
+  </entry>
+</feed>

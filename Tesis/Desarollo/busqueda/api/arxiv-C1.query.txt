@@ -1,0 +1,1 @@
+(abs:"retrieval-augmented generation" OR abs:"dense retrieval" OR abs:"semantic search" OR abs:"neural ranking") AND (abs:job OR abs:recruitment OR abs:vacancy OR abs:"job matching" OR abs:"job search") AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:[201901010000 TO 202612312359]

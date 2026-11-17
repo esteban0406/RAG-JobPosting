@@ -1,0 +1,371 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/z14joqGC8YDEUzeCD8xQW5LLXKc</id>
+  <title>arXiv Query: search_query=(abs:"assessor disagreement" OR abs:"inter-assessor agreement" OR abs:"relevance judgments") AND (abs:variation OR abs:reliability) AND (abs:"test collection" OR abs:"system ranking") AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:15Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:%22assessor+disagreement%22+OR+(abs:%22inter-assessor+agreement%22+OR+abs:%22relevance+judgments%22))+AND+((abs:variation+OR+abs:reliability)+AND+((abs:%22test+collection%22+OR+abs:%22system+ranking%22)+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22)))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>13</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2408.16312v3</id>
+    <title>SynDL: A Large-Scale Synthetic Test Collection for Passage Retrieval</title>
+    <updated>2025-01-25T16:30:57Z</updated>
+    <link href="https://arxiv.org/abs/2408.16312v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.16312v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale test collections play a crucial role in Information Retrieval (IR) research. However, according to the Cranfield paradigm and the research into publicly available datasets, the existing information retrieval research studies are commonly developed on small-scale datasets that rely on human assessors for relevance judgments - a time-intensive and expensive process. Recent studies have shown the strong capability of Large Language Models (LLMs) in producing reliable relevance judgments with human accuracy but at a greatly reduced cost. In this paper, to address the missing large-scale ad-hoc document retrieval dataset, we extend the TREC Deep Learning Track (DL) test collection via additional language model synthetic labels to enable researchers to test and evaluate their search systems at a large scale. Specifically, such a test collection includes more than 1,900 test queries from the previous years of tracks. We compare system evaluation with past human labels from past years and find that our synthetically created large-scale test collection can lead to highly correlated system rankings.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-29T07:20:56Z</published>
+    <arxiv:comment>9 pages, resource paper, WWW 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hossein A. Rahmani</name>
+    </author>
+    <author>
+      <name>Xi Wang</name>
+    </author>
+    <author>
+      <name>Emine Yilmaz</name>
+    </author>
+    <author>
+      <name>Nick Craswell</name>
+    </author>
+    <author>
+      <name>Bhaskar Mitra</name>
+    </author>
+    <author>
+      <name>Paul Thomas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.00731v1</id>
+    <title>STCALIR: Semi-Synthetic Test Collection for Algerian Legal Information Retrieval</title>
+    <updated>2026-04-01T10:50:28Z</updated>
+    <link href="https://arxiv.org/abs/2604.00731v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.00731v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Test collections are essential for evaluating retrieval and re-ranking models. However, constructing such collections is challenging due to the high cost of manual annotation, particularly in specialized domains like Algerian legal texts, where high-quality corpora and relevance judgments are scarce. To address this limitation, we propose STCALIR, a framework for generating semi-synthetic test collections directly from raw legal documents. The pipeline follows the Cranfield paradigm, maintaining its core components of topics, corpus, and relevance judgments, while significantly reducing manual effort through automated multi-stage retrieval and filtering, achieving a 99% reduction in annotation workload. We validate STCALIR using the Mr. TyDi benchmark, demonstrating that the resulting semi-synthetic relevance judgments yield retrieval effectiveness comparable to human-annotated evaluations (Hit@10 \approx 0.785). Furthermore, system-level rankings derived from these labels exhibit strong concordance with human-based evaluations, as measured by Kendall's τ (0.89) and Spearman's \r{ho} (0.92). Overall, STCALIR offers a reproducible and cost-efficient solution for constructing reliable test collections in low-resource legal domains.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-01T10:50:28Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>M'hamed Amine Hatem</name>
+    </author>
+    <author>
+      <name>Sofiane Batata</name>
+    </author>
+    <author>
+      <name>Amine Mammasse</name>
+    </author>
+    <author>
+      <name>Faiçal Azouaou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.07767v1</id>
+    <title>Synthetic Test Collections for Retrieval Evaluation</title>
+    <updated>2024-05-13T14:11:09Z</updated>
+    <link href="https://arxiv.org/abs/2405.07767v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.07767v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Test collections play a vital role in evaluation of information retrieval (IR) systems. Obtaining a diverse set of user queries for test collection construction can be challenging, and acquiring relevance judgments, which indicate the appropriateness of retrieved documents to a query, is often costly and resource-intensive. Generating synthetic datasets using Large Language Models (LLMs) has recently gained significant attention in various applications. In IR, while previous work exploited the capabilities of LLMs to generate synthetic queries or documents to augment training data and improve the performance of ranking models, using LLMs for constructing synthetic test collections is relatively unexplored. Previous studies demonstrate that LLMs have the potential to generate synthetic relevance judgments for use in the evaluation of IR systems. In this paper, we comprehensively investigate whether it is possible to use LLMs to construct fully synthetic test collections by generating not only synthetic judgments but also synthetic queries. In particular, we analyse whether it is possible to construct reliable synthetic test collections and the potential risks of bias such test collections may exhibit towards LLM-based models. Our experiments indicate that using LLMs it is possible to construct synthetic test collections that can reliably be used for retrieval evaluation.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-13T14:11:09Z</published>
+    <arxiv:comment>SIGIR 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hossein A. Rahmani</name>
+    </author>
+    <author>
+      <name>Nick Craswell</name>
+    </author>
+    <author>
+      <name>Emine Yilmaz</name>
+    </author>
+    <author>
+      <name>Bhaskar Mitra</name>
+    </author>
+    <author>
+      <name>Daniel Campos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.25602v2</id>
+    <title>TRUE: A Reproducible Framework for LLM-Driven Relevance Judgment in Information Retrieval</title>
+    <updated>2026-01-11T00:24:50Z</updated>
+    <link href="https://arxiv.org/abs/2509.25602v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.25602v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>LLM-based relevance judgment generation has become a crucial approach in advancing evaluation methodologies in Information Retrieval (IR). It has progressed significantly, often showing high correlation with human judgments as reflected in LLMJudge leaderboards \cite{rahmani2025judging}. However, existing methods for relevance judgments, rely heavily on sensitive prompting strategies, lacking standardized workflows for generating reliable labels. To fill this gap, we reintroduce our method, \textit{Task-aware Rubric-based Evaluation} (TRUE), for relevance judgment generation. Originally developed for usefulness evaluation in search sessions, we extend TRUE to mitigate the gap in relevance judgment due to its demonstrated effectiveness and reproducible workflow. This framework leverages iterative data sampling and reasoning to evaluate relevance judgments across multiple factors including intent, coverage, specificity, accuracy and usefulness. In this paper, we evaluate TRUE on the TREC DL 2019, 2020 and LLMJudge datasets and our results show that TRUE achieves strong performance on the system-ranking LLM leaderboards. The primary focus of this work is to provide a reproducible framework for LLM-based relevance judgments, and we further analyze the effectiveness of TRUE across multiple dimensions.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-29T23:58:47Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Mouly Dewan</name>
+    </author>
+    <author>
+      <name>Jiqun Liu</name>
+    </author>
+    <author>
+      <name>Chirag Shah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.02408v1</id>
+    <title>GenTREC: The First Test Collection Generated by Large Language Models for Evaluating Information Retrieval Systems</title>
+    <updated>2025-01-05T00:27:36Z</updated>
+    <link href="https://arxiv.org/abs/2501.02408v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.02408v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building test collections for Information Retrieval evaluation has traditionally been a resource-intensive and time-consuming task, primarily due to the dependence on manual relevance judgments. While various cost-effective strategies have been explored, the development of such collections remains a significant challenge. In this paper, we present GenTREC , the first test collection constructed entirely from documents generated by a Large Language Model (LLM), eliminating the need for manual relevance judgments. Our approach is based on the assumption that documents generated by an LLM are inherently relevant to the prompts used for their generation. Based on this heuristic, we utilized existing TREC search topics to generate documents. We consider a document relevant only to the prompt that generated it, while other document-topic pairs are treated as non-relevant. To introduce realistic retrieval challenges, we also generated non-relevant documents, ensuring that IR systems are tested against a diverse and robust set of materials. The resulting GenTREC collection comprises 96,196 documents, 300 topics, and 18,964 relevance "judgments". We conducted extensive experiments to evaluate GenTREC in terms of document quality, relevance judgment accuracy, and evaluation reliability. Notably, our findings indicate that the ranking of IR systems using GenTREC is compatible with the evaluations conducted using traditional TREC test collections, particularly for P@100, MAP, and RPrec metrics. Overall, our results show that our proposed approach offers a promising, low-cost alternative for IR evaluation, significantly reducing the burden of building and maintaining future IR evaluation resources.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-05T00:27:36Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Mehmet Deniz Türkmen</name>
+    </author>
+    <author>
+      <name>Mucahid Kutlu</name>
+    </author>
+    <author>
+      <name>Bahadir Altun</name>
+    </author>
+    <author>
+      <name>Gokalp Cosgun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.08896v1</id>
+    <title>LLMJudge: LLMs for Relevance Judgments</title>
+    <updated>2024-08-09T23:15:41Z</updated>
+    <link href="https://arxiv.org/abs/2408.08896v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.08896v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The LLMJudge challenge is organized as part of the LLM4Eval workshop at SIGIR 2024. Test collections are essential for evaluating information retrieval (IR) systems. The evaluation and tuning of a search system is largely based on relevance labels, which indicate whether a document is useful for a specific search and user. However, collecting relevance judgments on a large scale is costly and resource-intensive. Consequently, typical experiments rely on third-party labelers who may not always produce accurate annotations. The LLMJudge challenge aims to explore an alternative approach by using LLMs to generate relevance judgments. Recent studies have shown that LLMs can generate reliable relevance judgments for search systems. However, it remains unclear which LLMs can match the accuracy of human labelers, which prompts are most effective, how fine-tuned open-source LLMs compare to closed-source LLMs like GPT-4, whether there are biases in synthetically generated data, and if data leakage affects the quality of generated labels. This challenge will investigate these questions, and the collected data will be released as a package to support automatic relevance judgment research in information retrieval and search.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-09T23:15:41Z</published>
+    <arxiv:comment>LLMJudge Challenge Overview, 3 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hossein A. Rahmani</name>
+    </author>
+    <author>
+      <name>Emine Yilmaz</name>
+    </author>
+    <author>
+      <name>Nick Craswell</name>
+    </author>
+    <author>
+      <name>Bhaskar Mitra</name>
+    </author>
+    <author>
+      <name>Paul Thomas</name>
+    </author>
+    <author>
+      <name>Charles L. A. Clarke</name>
+    </author>
+    <author>
+      <name>Mohammad Aliannejadi</name>
+    </author>
+    <author>
+      <name>Clemencia Siro</name>
+    </author>
+    <author>
+      <name>Guglielmo Faggioli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.04633v2</id>
+    <title>Topic-Specific Classifiers are Better Relevance Judges than Prompted LLMs</title>
+    <updated>2026-01-23T14:11:22Z</updated>
+    <link href="https://arxiv.org/abs/2510.04633v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.04633v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The unjudged document problem, where systems that did not contribute to the original judgement pool may retrieve documents without a relevance judgement, is a key obstacle to the reuseability of test collections in information retrieval. While the de facto standard to deal with the problem is to treat unjudged documents as non-relevant, many alternatives have been proposed, such as the use of large language models (LLMs) as a relevance judge (LLM-as-a-judge). However, this has been criticized, among other things, as circular, since the same LLM can be used as the ranker and the judge. We propose to train topic-specific relevance classifiers instead: By finetuning monoT5 with independent LoRA weight adaptation on the judgments of a single assessor for a single topic's pool, we align it to that assessor's notion of relevance for the topic. The system rankings obtained through our classifier's relevance judgments achieve a Spearmans' $ρ$ correlation of $&gt;0.94$ with ground truth system rankings. As little as 128 initial human judgments per topic suffice to improve the comparability of models, compared to treating unjudged documents as non-relevant, while achieving more reliability than existing LLM-as-a-judge approaches. Topic-specific relevance classifiers are thus a lightweight and straightforward way to tackle the unjudged document problem, while maintaining human judgments as the gold standard for retrieval evaluation. Code, models, and data are made openly available.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-06T09:38:13Z</published>
+    <arxiv:comment>10 pages, 3 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lukas Gienapp</name>
+    </author>
+    <author>
+      <name>Martin Potthast</name>
+    </author>
+    <author>
+      <name>Andrew Yates</name>
+    </author>
+    <author>
+      <name>Harrisen Scells</name>
+    </author>
+    <author>
+      <name>Eugene Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.07142v1</id>
+    <title>Validating Synthetic Usage Data in Living Lab Environments</title>
+    <updated>2023-10-11T02:36:38Z</updated>
+    <link href="https://arxiv.org/abs/2310.07142v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.07142v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluating retrieval performance without editorial relevance judgments is challenging, but instead, user interactions can be used as relevance signals. Living labs offer a way for small-scale platforms to validate information retrieval systems with real users. If enough user interaction data are available, click models can be parameterized from historical sessions to evaluate systems before exposing users to experimental rankings. However, interaction data are sparse in living labs, and little is studied about how click models can be validated for reliable user simulations when click data are available in moderate amounts.
+  This work introduces an evaluation approach for validating synthetic usage data generated by click models in data-sparse human-in-the-loop environments like living labs. We ground our methodology on the click model's estimates about a system ranking compared to a reference ranking for which the relative performance is known. Our experiments compare different click models and their reliability and robustness as more session log data becomes available. In our setup, simple click models can reliably determine the relative system performance with already 20 logged sessions for 50 queries. In contrast, more complex click models require more session data for reliable estimates, but they are a better choice in simulated interleaving experiments when enough session data are available. While it is easier for click models to distinguish between more diverse systems, it is harder to reproduce the system ranking based on the same retrieval algorithm with different interpolation weights. Our setup is entirely open, and we share the code to reproduce the experiments.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-11T02:36:38Z</published>
+    <arxiv:comment>25 pages + appendix and references, accepted JDIQ journal paper</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>Journal of Data and Information Quality 2023</arxiv:journal_ref>
+    <author>
+      <name>Timo Breuer</name>
+    </author>
+    <author>
+      <name>Norbert Fuhr</name>
+    </author>
+    <author>
+      <name>Philipp Schaer</name>
+    </author>
+    <arxiv:doi>10.1145/3623640</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3623640" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.05334v1</id>
+    <title>The Effect of Document Summarization on LLM-Based Relevance Judgments</title>
+    <updated>2025-12-05T00:26:13Z</updated>
+    <link href="https://arxiv.org/abs/2512.05334v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.05334v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Relevance judgments are central to the evaluation of Information Retrieval (IR) systems, but obtaining them from human annotators is costly and time-consuming. Large Language Models (LLMs) have recently been proposed as automated assessors, showing promising alignment with human annotations. Most prior studies have treated documents as fixed units, feeding their full content directly to LLM assessors. We investigate how text summarization affects the reliability of LLM-based judgments and their downstream impact on IR evaluation. Using state-of-the-art LLMs across multiple TREC collections, we compare judgments made from full documents with those based on LLM-generated summaries of different lengths. We examine their agreement with human labels, their effect on retrieval effectiveness evaluation, and their influence on IR systems' ranking stability. Our findings show that summary-based judgments achieve comparable stability in systems' ranking to full-document judgments, while introducing systematic shifts in label distributions and biases that vary by model and dataset. These results highlight summarization as both an opportunity for more efficient large-scale IR evaluation and a methodological choice with important implications for the reliability of automatic judgments.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-05T00:26:13Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Samaneh Mohtadi</name>
+    </author>
+    <author>
+      <name>Kevin Roitero</name>
+    </author>
+    <author>
+      <name>Stefano Mizzaro</name>
+    </author>
+    <author>
+      <name>Gianluca Demartini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.10301v2</id>
+    <title>Towards Understanding Bias in Synthetic Data for Evaluation</title>
+    <updated>2025-10-04T03:28:49Z</updated>
+    <link href="https://arxiv.org/abs/2506.10301v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.10301v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Test collections are crucial for evaluating Information Retrieval (IR) systems. Creating a diverse set of user queries for these collections can be challenging, and obtaining relevance judgments, which indicate how well retrieved documents match a query, is often costly and resource-intensive. Recently, generating synthetic datasets using Large Language Models (LLMs) has gained attention in various applications. While previous work has used LLMs to generate synthetic queries or documents to improve ranking models, using LLMs to create synthetic test collections is still relatively unexplored. Previous work~\cite{rahmani2024synthetic} showed that synthetic test collections have the potential to be used for system evaluation, however, more analysis is needed to validate this claim. In this paper, we thoroughly investigate the reliability of synthetic test collections constructed using LLMs, where LLMs are used to generate synthetic queries, labels, or both. In particular, we examine the potential biases that might occur when such test collections are used for evaluation. We first empirically show the presence of such bias in evaluation results and analyse the effects it might have on system evaluation. We further validate the presence of such bias using a linear mixed-effects model. Our analysis shows that while the effect of bias present in evaluation results obtained using synthetic test collections could be significant, for e.g.~computing absolute system performance, its effect may not be as significant in comparing relative system performance. Codes and data are available at: https://github.com/rahmanidashti/BiasSyntheticData.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-12T02:25:42Z</published>
+    <arxiv:comment>CIKM 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Hossein A. Rahmani</name>
+    </author>
+    <author>
+      <name>Varsha Ramineni</name>
+    </author>
+    <author>
+      <name>Emine Yilmaz</name>
+    </author>
+    <author>
+      <name>Nick Craswell</name>
+    </author>
+    <author>
+      <name>Bhaskar Mitra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.19076v1</id>
+    <title>LLM-Evaluation Tropes: Perspectives on the Validity of LLM-Evaluations</title>
+    <updated>2025-04-27T02:14:21Z</updated>
+    <link href="https://arxiv.org/abs/2504.19076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.19076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) are increasingly used to evaluate information retrieval (IR) systems, generating relevance judgments traditionally made by human assessors. Recent empirical studies suggest that LLM-based evaluations often align with human judgments, leading some to suggest that human judges may no longer be necessary, while others highlight concerns about judgment reliability, validity, and long-term impact. As IR systems begin incorporating LLM-generated signals, evaluation outcomes risk becoming self-reinforcing, potentially leading to misleading conclusions.
+  This paper examines scenarios where LLM-evaluators may falsely indicate success, particularly when LLM-based judgments influence both system development and evaluation. We highlight key risks, including bias reinforcement, reproducibility challenges, and inconsistencies in assessment methodologies. To address these concerns, we propose tests to quantify adverse effects, guardrails, and a collaborative framework for constructing reusable test collections that integrate LLM judgments responsibly. By providing perspectives from academia and industry, this work aims to establish best practices for the principled use of LLMs in IR evaluation.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-27T02:14:21Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>In Proceedings of the 2025 International ACM SIGIR Conference on Innovative Concepts and Theories in Information Retrieval (ICTIR). Association for Computing Machinery, New York, NY, USA, 218-229</arxiv:journal_ref>
+    <author>
+      <name>Laura Dietz</name>
+    </author>
+    <author>
+      <name>Oleg Zendel</name>
+    </author>
+    <author>
+      <name>Peter Bailey</name>
+    </author>
+    <author>
+      <name>Charles Clarke</name>
+    </author>
+    <author>
+      <name>Ellese Cotterill</name>
+    </author>
+    <author>
+      <name>Jeff Dalton</name>
+    </author>
+    <author>
+      <name>Faegheh Hasibi</name>
+    </author>
+    <author>
+      <name>Mark Sanderson</name>
+    </author>
+    <author>
+      <name>Nick Craswell</name>
+    </author>
+    <arxiv:doi>10.1145/3731120.3744588</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3731120.3744588" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.11086v1</id>
+    <title>Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?</title>
+    <updated>2022-01-26T17:47:51Z</updated>
+    <link href="https://arxiv.org/abs/2201.11086v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.11086v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural retrieval models are generally regarded as fundamentally different from the retrieval techniques used in the late 1990's when the TREC ad hoc test collections were constructed. They thus provide the opportunity to empirically test the claim that pooling-built test collections can reliably evaluate retrieval systems that did not contribute to the construction of the collection (in other words, that such collections can be reusable). To test the reusability claim, we asked TREC assessors to judge new pools created from new search results for the TREC-8 ad hoc collection. These new search results consisted of five new runs (one each from three transformer-based models and two baseline runs that use BM25) plus the set of TREC-8 submissions that did not previously contribute to pools. The new runs did retrieve previously unseen documents, but the vast majority of those documents were not relevant. The ranking of all runs by mean evaluation score when evaluated using the official TREC-8 relevance judgment set and the newly expanded relevance set are almost identical, with Kendall's tau correlations greater than 0.99. Correlations for individual topics are also high. The TREC-8 ad hoc collection was originally constructed using deep pools over a diverse set of runs, including several effective manual runs. Its judgment budget, and hence construction cost, was relatively large. However, it does appear that the expense was well-spent: even with the advent of neural techniques, the collection has stood the test of time and remains a reliable evaluation instrument as retrieval techniques have advanced.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-26T17:47:51Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ellen M. Voorhees</name>
+    </author>
+    <author>
+      <name>Ian Soboroff</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.01862v1</id>
+    <title>Judging with Personality and Confidence: A Study on Personality-Conditioned LLM Relevance Assessment</title>
+    <updated>2026-01-05T07:46:29Z</updated>
+    <link href="https://arxiv.org/abs/2601.01862v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.01862v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent studies have shown that prompting can enable large language models (LLMs) to simulate specific personality traits and produce behaviors that align with those traits. However, there is limited understanding of how these simulated personalities influence critical web search decisions, specifically relevance assessment. Moreover, few studies have examined how simulated personalities impact confidence calibration, specifically the tendencies toward overconfidence or underconfidence. This gap exists even though psychological literature suggests these biases are trait-specific, often linking high extraversion to overconfidence and high neuroticism to underconfidence. To address this gap, we conducted a comprehensive study evaluating multiple LLMs, including commercial models and open-source models, prompted to simulate Big Five personality traits. We tested these models across three test collections (TREC DL 2019, TREC DL 2020, and LLMJudge), collecting two key outputs for each query-document pair: a relevance judgment and a self-reported confidence score.
+  The findings show that personalities such as low agreeableness consistently align more closely with human labels than the unprompted condition. Additionally, low conscientiousness performs well in balancing the suppression of both overconfidence and underconfidence. We also observe that relevance scores and confidence distributions vary systematically across different personalities. Based on the above findings, we incorporate personality-conditioned scores and confidence as features in a random forest classifier. This approach achieves performance that surpasses the best single-personality condition on a new dataset (TREC DL 2021), even with limited training data. These findings highlight that personality-derived confidence offers a complementary predictive signal, paving the way for more reliable and human-aligned LLM evaluators.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-05T07:46:29Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Nuo Chen</name>
+    </author>
+    <author>
+      <name>Hanpei Fang</name>
+    </author>
+    <author>
+      <name>Piaohong Wang</name>
+    </author>
+    <author>
+      <name>Jiqun Liu</name>
+    </author>
+    <author>
+      <name>Tetsuya Sakai</name>
+    </author>
+    <author>
+      <name>Xiao-Ming Wu</name>
+    </author>
+  </entry>
+</feed>

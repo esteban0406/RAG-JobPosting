@@ -1,0 +1,1291 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/722oyxYjZWR+Nf0OdCavagzkAQw</id>
+  <title>arXiv Query: search_query=(abs:JobBERT OR abs:ESCO OR abs:"skill extraction" OR abs:occupation) AND (abs:embedding OR abs:representation OR abs:retrieval) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:23Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:JobBERT+OR+(abs:ESCO+OR+(abs:%22skill+extraction%22+OR+abs:occupation)))+AND+((abs:embedding+OR+(abs:representation+OR+abs:retrieval))+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>123</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2603.03134v1</id>
+    <title>UniSkill: A Dataset for Matching University Curricula to Professional Competencies</title>
+    <updated>2026-03-03T16:05:57Z</updated>
+    <link href="https://arxiv.org/abs/2603.03134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.03134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Skill extraction and recommendation systems have been studied from recruiter, applicant, and education perspectives. While AI applications in job advertisements have received broad attention, deficiencies in the instructed skills side remain a challenge. In this work, we address the scarcity of publicly available datasets by releasing both manually annotated and synthetic datasets of skills from the European Skills, Competences, Qualifications and Occupations (ESCO) taxonomy and university course pairs and publishing corresponding annotation guidelines. Specifically, we match graduate-level university courses with skills from the Systems Analysts and Management and Organization Analyst ESCO occupation groups at two granularities: course title with a skill, and course sentence with a skill. We train language models on this dataset to serve as a baseline for retrieval and recommendation systems for course-to-skill and skill-to-course matching. We evaluate the models on a portion of the annotated data. Our BERT model achieves 87% F1-score, showing that course and skill matching is a feasible task.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-03T16:05:57Z</published>
+    <arxiv:comment>LREC 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Nurlan Musazade</name>
+    </author>
+    <author>
+      <name>Joszef Mezei</name>
+    </author>
+    <author>
+      <name>Mike Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.22885v1</id>
+    <title>Leveraging LLMs For Turkish Skill Extraction</title>
+    <updated>2026-01-30T12:06:27Z</updated>
+    <link href="https://arxiv.org/abs/2601.22885v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.22885v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Skill extraction is a critical component of modern recruitment systems, enabling efficient job matching, personalized recommendations, and labor market analysis. Despite Türkiye's significant role in the global workforce, Turkish, a morphologically complex language, lacks both a skill taxonomy and a dedicated skill extraction dataset, resulting in underexplored research in skill extraction for Turkish. This article seeks the answers to three research questions: 1) How can skill extraction be effectively performed for this language, in light of its low resource nature? 2)~What is the most promising model? 3) What is the impact of different Large Language Models (LLMs) and prompting strategies on skill extraction (i.e., dynamic vs. static few-shot samples, varying context information, and encouraging causal reasoning)? The article introduces the first Turkish skill extraction dataset and performance evaluations of automated skill extraction using LLMs. The manually annotated dataset contains 4,819 labeled skill spans from 327 job postings across different occupation areas. The use of LLM outperforms supervised sequence labeling when used in an end-to-end pipeline, aligning extracted spans with standardized skills in the ESCO taxonomy more effectively. The best-performing configuration, utilizing Claude Sonnet 3.7 with dynamic few-shot prompting for skill identification, embedding-based retrieval, and LLM-based reranking for skill linking, achieves an end-to-end performance of 0.56, positioning Turkish alongside similar studies in other languages, which are few in the literature. Our findings suggest that LLMs can improve skill extraction performance in low-resource settings, and we hope that our work will accelerate similar research on skill extraction for underrepresented languages.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-30T12:06:27Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ezgi Arslan İltüzer</name>
+    </author>
+    <author>
+      <name>Özgür Anıl Özlü</name>
+    </author>
+    <author>
+      <name>Vahid Farajijobehdar</name>
+    </author>
+    <author>
+      <name>Gülşen Eryiğit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.03539v1</id>
+    <title>Large Language Models as Batteries-Included Zero-Shot ESCO Skills Matchers</title>
+    <updated>2023-07-07T12:04:12Z</updated>
+    <link href="https://arxiv.org/abs/2307.03539v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.03539v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding labour market dynamics requires accurately identifying the skills required for and possessed by the workforce. Automation techniques are increasingly being developed to support this effort. However, automatically extracting skills from job postings is challenging due to the vast number of existing skills. The ESCO (European Skills, Competences, Qualifications and Occupations) framework provides a useful reference, listing over 13,000 individual skills. However, skills extraction remains difficult and accurately matching job posts to the ESCO taxonomy is an open problem. In this work, we propose an end-to-end zero-shot system for skills extraction from job descriptions based on large language models (LLMs). We generate synthetic training data for the entirety of ESCO skills and train a classifier to extract skill mentions from job posts. We also employ a similarity retriever to generate skill candidates which are then re-ranked using a second LLM. Using synthetic data achieves an RP@10 score 10 points higher than previous distant supervision approaches. Adding GPT-4 re-ranking improves RP@10 by over 22 points over previous methods. We also show that Framing the task as mock programming when prompting the LLM can lead to better performance than natural language prompts, especially with weaker LLMs. We demonstrate the potential of integrating large language models at both ends of skills matching pipelines. Our approach requires no human annotations and achieve extremely promising results on skills extraction against ESCO.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-07T12:04:12Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Recsys in HR @ Recsys 2023</arxiv:journal_ref>
+    <author>
+      <name>Benjamin Clavié</name>
+    </author>
+    <author>
+      <name>Guillaume Soulié</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.10094v1</id>
+    <title>Semantic Synergy: Unlocking Policy Insights and Learning Pathways Through Advanced Skill Mapping</title>
+    <updated>2025-03-13T06:41:26Z</updated>
+    <link href="https://arxiv.org/abs/2503.10094v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.10094v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This research introduces a comprehensive system based on state-of-the-art natural language processing, semantic embedding, and efficient search techniques for retrieving similarities and thus generating actionable insights from raw textual information. The system automatically extracts and aggregates normalized competencies from multiple documents (such as policy files and curricula vitae) and creates strong relationships between recognized competencies, occupation profiles, and related learning courses. To validate its performance, we conducted a multi-tier evaluation that included both explicit and implicit skill references in synthetic and real-world documents. The results showed near-human-level accuracy, with F1 scores exceeding 0.95 for explicit skill detection and above 0.93 for implicit mentions. The system thereby establishes a sound foundation for supporting in-depth collaboration across the AE4RIA network. The methodology involves a multi-stage pipeline based on extensive preprocessing and data cleaning, semantic embedding and segmentation via SentenceTransformer, and skill extraction using a FAISS-based search method. The extracted skills are associated with occupation frameworks (as formulated in the ESCO ontology) and with learning paths offered through the Sustainable Development Goals Academy. Moreover, interactive visualization software, implemented with Dash and Plotly, presents graphs and tables for real-time exploration and informed decision-making by those involved in policymaking, training and learning supply, career transitions, and recruitment. Overall, this system, backed by rigorous validation, offers promising prospects for improved policymaking, human resource development, and lifelong learning by providing structured and actionable insights from raw, complex textual information.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-13T06:41:26Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Phoebe Koundouri</name>
+    </author>
+    <author>
+      <name>Conrad Landis</name>
+    </author>
+    <author>
+      <name>Georgios Feretzakis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.09119v1</id>
+    <title>Contrastive Bi-Encoder Models for Multi-Label Skill Extraction: Enhancing ESCO Ontology Matching with BERT and Attention Mechanisms</title>
+    <updated>2026-01-14T03:43:45Z</updated>
+    <link href="https://arxiv.org/abs/2601.09119v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.09119v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fine-grained labor market analysis increasingly relies on mapping unstructured job advertisements to standardized skill taxonomies such as ESCO. This mapping is naturally formulated as an Extreme Multi-Label Classification (XMLC) problem, but supervised solutions are constrained by the scarcity and cost of large-scale, taxonomy-aligned annotations--especially in non-English settings where job-ad language diverges substantially from formal skill definitions. We propose a zero-shot skill extraction framework that eliminates the need for manually labeled job-ad training data. The framework uses a Large Language Model (LLM) to synthesize training instances from ESCO definitions, and introduces hierarchically constrained multi-skill generation based on ESCO Level-2 categories to improve semantic coherence in multi-label contexts. On top of the synthetic corpus, we train a contrastive bi-encoder that aligns job-ad sentences with ESCO skill descriptions in a shared embedding space; the encoder augments a BERT backbone with BiLSTM and attention pooling to better model long, information-dense requirement statements. An upstream RoBERTa-based binary filter removes non-skill sentences to improve end-to-end precision. Experiments show that (i) hierarchy-conditioned generation improves both fluency and discriminability relative to unconstrained pairing, and (ii) the resulting multi-label model transfers effectively to real-world Chinese job advertisements, achieving strong zero-shot retrieval performance (F1@5 = 0.72) and outperforming TF--IDF and standard BERT baselines. Overall, the proposed pipeline provides a scalable, data-efficient pathway for automated skill coding in labor economics and workforce analytics.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="econ.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-14T03:43:45Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yongming Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.24640v1</id>
+    <title>Efficient Text Encoders for Labor Market Analysis</title>
+    <updated>2025-05-30T14:27:25Z</updated>
+    <link href="https://arxiv.org/abs/2505.24640v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.24640v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Labor market analysis relies on extracting insights from job advertisements, which provide valuable yet unstructured information on job titles and corresponding skill requirements. While state-of-the-art methods for skill extraction achieve strong performance, they depend on large language models (LLMs), which are computationally expensive and slow. In this paper, we propose \textbf{ConTeXT-match}, a novel contrastive learning approach with token-level attention that is well-suited for the extreme multi-label classification task of skill classification. \textbf{ConTeXT-match} significantly improves skill extraction efficiency and performance, achieving state-of-the-art results with a lightweight bi-encoder model. To support robust evaluation, we introduce \textbf{Skill-XL}, a new benchmark with exhaustive, sentence-level skill annotations that explicitly address the redundancy in the large label space. Finally, we present \textbf{JobBERT V2}, an improved job title normalization model that leverages extracted skills to produce high-quality job title representations. Experiments demonstrate that our models are efficient, accurate, and scalable, making them ideal for large-scale, real-time labor market analysis.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-30T14:27:25Z</published>
+    <arxiv:comment>This work has been submitted to the IEEE for possible publication</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>IEEE Access, vol. 0, Jul. 2025</arxiv:journal_ref>
+    <author>
+      <name>Jens-Joris Decorte</name>
+    </author>
+    <author>
+      <name>Jeroen Van Hautte</name>
+    </author>
+    <author>
+      <name>Chris Develder</name>
+    </author>
+    <author>
+      <name>Thomas Demeester</name>
+    </author>
+    <arxiv:doi>10.1109/ACCESS.2025.3589147</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ACCESS.2025.3589147" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.17092v1</id>
+    <title>NNOSE: Nearest Neighbor Occupational Skill Extraction</title>
+    <updated>2024-01-30T15:18:29Z</updated>
+    <link href="https://arxiv.org/abs/2401.17092v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.17092v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The labor market is changing rapidly, prompting increased interest in the automatic extraction of occupational skills from text. With the advent of English benchmark job description datasets, there is a need for systems that handle their diversity well. We tackle the complexity in occupational skill datasets tasks -- combining and leveraging multiple datasets for skill extraction, to identify rarely observed skills within a dataset, and overcoming the scarcity of skills across datasets. In particular, we investigate the retrieval-augmentation of language models, employing an external datastore for retrieving similar skills in a dataset-unifying manner. Our proposed method, \textbf{N}earest \textbf{N}eighbor \textbf{O}ccupational \textbf{S}kill \textbf{E}xtraction (NNOSE) effectively leverages multiple datasets by retrieving neighboring skills from other datasets in the datastore. This improves skill extraction \emph{without} additional fine-tuning. Crucially, we observe a performance gain in predicting infrequent patterns, with substantial gains of up to 30\% span-F1 in cross-dataset settings.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-30T15:18:29Z</published>
+    <arxiv:comment>Accepted at EACL 2024 Main</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mike Zhang</name>
+    </author>
+    <author>
+      <name>Rob van der Goot</name>
+    </author>
+    <author>
+      <name>Min-Yen Kan</name>
+    </author>
+    <author>
+      <name>Barbara Plank</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.21525v1</id>
+    <title>Job Skill Extraction via LLM-Centric Multi-Module Framework</title>
+    <updated>2026-04-23T10:46:07Z</updated>
+    <link href="https://arxiv.org/abs/2604.21525v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.21525v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Span-level skill extraction from job advertisements underpins candidate-job matching and labor-market analytics, yet generative large language models (LLMs) often yield malformed spans, boundary drift, and hallucinations, especially with long-tail terms and cross-domain shift. We present SRICL, an LLM-centric framework that combines semantic retrieval (SR), in-context learning (ICL), and supervised fine-tuning (SFT) with a deterministic verifier. SR pulls in-domain annotated sentences and definitions from ESCO to form format-constrained prompts that stabilize boundaries and handle coordination. SFT aligns output behavior, while the verifier enforces pairing, non-overlap, and BIO legality with minimal retries. On six public span-labeled corpora of job-ad sentences across sectors and languages, SRICL achieves substantial STRICT-F1 improvements over GPT-3.5 prompting baselines and sharply reduces invalid tags and hallucinated spans, enabling dependable sentence-level deployment in low-resource, multi-domain settings.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-23T10:46:07Z</published>
+    <arxiv:comment>5 pages, 5 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Guojing Li</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+      <arxiv:affiliation>Renmin University of China</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Zichuan Fu</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Junyi Li</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Faxue Liu</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Wenxia Zhou</name>
+      <arxiv:affiliation>Renmin University of China</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Yejing Wang</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jingtong Gao</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Maolin Wang</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Rungen Liu</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Wenlin Zhang</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Xiangyu Zhao</name>
+      <arxiv:affiliation>City University of Hong Kong</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.08071v1</id>
+    <title>Skill Extraction from Job Postings using Weak Supervision</title>
+    <updated>2022-09-16T17:35:19Z</updated>
+    <link href="https://arxiv.org/abs/2209.08071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.08071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Aggregated data obtained from job postings provide powerful insights into labor market demands, and emerging skills, and aid job matching. However, most extraction approaches are supervised and thus need costly and time-consuming annotation. To overcome this, we propose Skill Extraction with Weak Supervision. We leverage the European Skills, Competences, Qualifications and Occupations taxonomy to find similar skills in job ads via latent representations. The method shows a strong positive signal, outperforming baselines based on token-level and syntactic patterns.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-16T17:35:19Z</published>
+    <arxiv:comment>Accepted in RecSys in HR'22: The 2nd Workshop on Recommender Systems for Human Resources, in conjunction with the 16th ACM Conference on Recommender Systems</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mike Zhang</name>
+    </author>
+    <author>
+      <name>Kristian Nørgaard Jensen</name>
+    </author>
+    <author>
+      <name>Rob van der Goot</name>
+    </author>
+    <author>
+      <name>Barbara Plank</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.20186v1</id>
+    <title>When Occupation-derived Skills Don't Help: On the Limits of Skill-Augmented Career Path Prediction</title>
+    <updated>2026-10-14T13:37:47Z</updated>
+    <link href="https://arxiv.org/abs/2610.20186v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.20186v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Skills are widely assumed to play a central role in career transitions, motivating their use in career path prediction (CPP) systems. In this work, we critically examine whether explicit skill representations provide complementary signal beyond text-based job representations. We evaluate multiple strategies for incorporating skills into CPP models, including score fusion and neural architectures, under two conditions: predicted skills and ground-truth ESCO annotations. Surprisingly, across two benchmark datasets, none of these settings yield substantial improvements over strong text-only baselines. Even when using ground-truth skills, gains remain marginal and inconsistent. Through detailed analysis, we identify key factors underlying this result: high redundancy between textual and skill representations, limited discriminative power of ESCO's taxonomy, and representational collapse in skill embeddings. Furthermore, we find that skill prediction difficulty correlates with overall sample difficulty, limiting the potential for complementary signals. Our findings challenge the common assumption that explicit skill modeling inherently benefits career prediction and suggest that dense text representations already capture most skill-relevant information.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-14T13:37:47Z</published>
+    <arxiv:comment>RecSys in HR</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ege Süalp</name>
+    </author>
+    <author>
+      <name>Elena Senger</name>
+    </author>
+    <author>
+      <name>Toine Bogers</name>
+    </author>
+    <author>
+      <name>Barbara Plank</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.24222v2</id>
+    <title>Measuring Digital Labour Market Transitions with a Digital Semantic Score: An AI-Based Methodology Applied to the Dutch Labour Market</title>
+    <updated>2026-09-18T09:48:13Z</updated>
+    <link href="https://arxiv.org/abs/2608.24222v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.24222v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The digital transformation of the Dutch labour market is reshaping occupational language, career pathways, and job-related skills. Addressing these changes requires granular labour market intelligence. This paper develops an AI-based methodology to analyse digitalisation using data covering millions of Dutch job profiles. The methodology combines embedding-based similarity search and large language model classification to map unstructured job information to harmonised ESCO occupations. We also introduce a Digital Semantic Score that measures how strongly job titles and skills are associated with digital concepts relative to a non-digital reference. Using embeddings and cosine similarity to transparent digital and non-digital anchor groups, this indicator moves beyond keyword-based approaches by capturing broader digital meanings in occupational language and worker skill profiles. It enables analysis across occupations, career transitions, emerging job-title vocabulary, and skill digitality. The findings reveal that digitalisation is unevenly distributed across the labour market. Digital job-title language is most prominent among managerial, professional and ICT-related occupations, but is increasingly visible in hybrid business, marketing and automation-related roles. Career-transition analyses show that movement toward digital work is pathway-dependent, while skill analyses highlight the multidimensional nature of digital capability, encompassing technical, hybrid and business-systems skills. By combining profile data, AI-supported occupational classification and semantic scoring, this study advances AI-driven labour market analytics and provides a scalable framework for monitoring digital labour market change. The methodology helps identify emerging skill needs, support reskilling strategies, and inform policies addressing skills mismatches and labour shortages in the Netherlands.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-25T08:27:35Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sadegh Shahmohammadi</name>
+    </author>
+    <author>
+      <name>Xavier Pinho</name>
+    </author>
+    <author>
+      <name>Mairi Bowdler</name>
+    </author>
+    <author>
+      <name>Suhendan Adiguzel-van Zoelen</name>
+    </author>
+    <author>
+      <name>Joost van Genabeek</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.05073v1</id>
+    <title>Hierarchical Classification of Transversal Skills in Job Ads Based on Sentence Embeddings</title>
+    <updated>2024-01-10T11:07:32Z</updated>
+    <link href="https://arxiv.org/abs/2401.05073v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.05073v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper proposes a classification framework aimed at identifying correlations between job ad requirements and transversal skill sets, with a focus on predicting the necessary skills for individual job descriptions using a deep learning model. The approach involves data collection, preprocessing, and labeling using ESCO (European Skills, Competences, and Occupations) taxonomy. Hierarchical classification and multi-label strategies are used for skill identification, while augmentation techniques address data imbalance, enhancing model robustness. A comparison between results obtained with English-specific and multi-language sentence embedding models reveals close accuracy. The experimental case studies detail neural network configurations, hyperparameters, and cross-validation results, highlighting the efficacy of the hierarchical approach and the suitability of the multi-language model for the diverse European job market. Thus, a new approach is proposed for the hierarchical classification of transversal skills from job ads.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-10T11:07:32Z</published>
+    <arxiv:comment>19 pages, 6 figures, 6 tables, 43 references</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Information, vol. 15, no. 3, article number 151, 18 pag., 2024</arxiv:journal_ref>
+    <author>
+      <name>Florin Leon</name>
+    </author>
+    <author>
+      <name>Marius Gavrilescu</name>
+    </author>
+    <author>
+      <name>Sabina-Adriana Floria</name>
+    </author>
+    <author>
+      <name>Alina-Adriana Minea</name>
+    </author>
+    <arxiv:doi>10.3390/info15030151</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.3390/info15030151" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.11431v2</id>
+    <title>SkillNER: Mining and Mapping Soft Skills from any Text</title>
+    <updated>2021-07-12T18:12:46Z</updated>
+    <link href="https://arxiv.org/abs/2101.11431v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.11431v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In today's digital world, there is an increasing focus on soft skills. On the one hand, they facilitate innovation at companies, but on the other, they are unlikely to be automated soon. Researchers struggle with accurately approaching quantitatively the study of soft skills due to the lack of data-driven methods to retrieve them. This limits the possibility for psychologists and HR managers to understand the relation between humans and digitalisation. This paper presents SkillNER, a novel data-driven method for automatically extracting soft skills from text. It is a named entity recognition (NER) system trained with a support vector machine (SVM) on a corpus of more than 5000 scientific papers. We developed this system by measuring the performance of our approach against different training models and validating the results together with a team of psychologists. Finally, SkillNER was tested in a real-world case study using the job descriptions of ESCO (European Skill/Competence Qualification and Occupation) as textual source. The system enabled the detection of communities of job profiles based on their shared soft skills and communities of soft skills based on their shared job profiles. This case study demonstrates that the tool can automatically retrieve soft skills from a large corpus in an efficient way, proving useful for firms, institutions, and workers. The tool is open and available online to foster quantitative methods for the study of soft skills.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-22T11:14:05Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Expert Systems With Applications 184 (2021) 115544</arxiv:journal_ref>
+    <author>
+      <name>Silvia Fareri</name>
+    </author>
+    <author>
+      <name>Nicola Melluso</name>
+    </author>
+    <author>
+      <name>Filippo Chiarello</name>
+    </author>
+    <author>
+      <name>Gualtiero Fantoni</name>
+    </author>
+    <arxiv:doi>10.1016/j.eswa.2021.115544</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.eswa.2021.115544" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.35806v1</id>
+    <title>From Lexical Baselines to Agentic Retrieval-Augmented Generation: Structured Skill and Responsibility-Level Extraction with the SFIA Framework</title>
+    <updated>2026-09-19T07:58:51Z</updated>
+    <link href="https://arxiv.org/abs/2609.35806v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.35806v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated skill extraction underpins workforce planning, yet most systems represent skills as flat labels with no notion of the responsibility level at which a skill is practiced. The Skills Framework for the Information Age (SFIA) captures exactly this dimension, defining 147 professional skills across seven responsibility levels, but no automated LLM-based extraction targeting SFIA has been reported. We formalize the task as structured prediction of (skill, level) pairs from free text and ask three questions: how accurately can text be mapped onto SFIA's closed vocabulary, which strategies reliably predict the level alongside the skill, and do agentic designs improve on simpler retrieval and prompting? We evaluate five strategies (a lexical baseline, dense retrieval with LLM reranking, a zero-shot schema-constrained LLM, single-agent agentic RAG, and a three-agent retriever--matcher--verifier crew) against expert-mapped European ICT role profiles, all drawing on an SFIA~9 corpus built by a fully automated agentic pipeline that we release. Retrieval-based matching identifies the most skills while generative strategies are markedly more precise; only strategies assigning the level as an explicit decision predict it reliably, with similarity-based selection more than twice as inaccurate; and the crew doubles latency without improving accuracy, so added agent roles do not automatically benefit closed-taxonomy matching. These results provide the first reproducible baseline for structured, level-aware skill extraction against SFIA.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-19T07:58:51Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ranuga Disansa</name>
+    </author>
+    <author>
+      <name>U. S. Samarasinghe</name>
+    </author>
+    <author>
+      <name>Lasith Gunawardena</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.15636v1</id>
+    <title>Career Path Prediction using Resume Representation Learning and Skill-based Matching</title>
+    <updated>2023-10-24T08:56:06Z</updated>
+    <link href="https://arxiv.org/abs/2310.15636v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.15636v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The impact of person-job fit on job satisfaction and performance is widely acknowledged, which highlights the importance of providing workers with next steps at the right time in their career. This task of predicting the next step in a career is known as career path prediction, and has diverse applications such as turnover prevention and internal job mobility. Existing methods to career path prediction rely on large amounts of private career history data to model the interactions between job titles and companies. We propose leveraging the unexplored textual descriptions that are part of work experience sections in resumes. We introduce a structured dataset of 2,164 anonymized career histories, annotated with ESCO occupation labels. Based on this dataset, we present a novel representation learning approach, CareerBERT, specifically designed for work history data. We develop a skill-based model and a text-based model for career path prediction, which achieve 35.24% and 39.61% recall@10 respectively on our dataset. Finally, we show that both approaches are complementary as a hybrid approach achieves the strongest result with 43.01% recall@10.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-24T08:56:06Z</published>
+    <arxiv:comment>Accepted to the 3nd Workshop on Recommender Systems for Human Resources (RecSys in HR 2023) as part of RecSys 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jens-Joris Decorte</name>
+    </author>
+    <author>
+      <name>Jeroen Van Hautte</name>
+    </author>
+    <author>
+      <name>Johannes Deleu</name>
+    </author>
+    <author>
+      <name>Chris Develder</name>
+    </author>
+    <author>
+      <name>Thomas Demeester</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.02056v1</id>
+    <title>CareerBERT: Matching Resumes to ESCO Jobs in a Shared Embedding Space for Generic Job Recommendations</title>
+    <updated>2025-03-03T21:14:14Z</updated>
+    <link href="https://arxiv.org/abs/2503.02056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.02056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapidly evolving labor market, driven by technological advancements and economic shifts, presents significant challenges for traditional job matching and consultation services. In response, we introduce an advanced support tool for career counselors and job seekers based on CareerBERT, a novel approach that leverages the power of unstructured textual data sources, such as resumes, to provide more accurate and comprehensive job recommendations. In contrast to previous approaches that primarily focus on job recommendations based on a fixed set of concrete job advertisements, our approach involves the creation of a corpus that combines data from the European Skills, Competences, and Occupations (ESCO) taxonomy and EURopean Employment Services (EURES) job advertisements, ensuring an up-to-date and well-defined representation of general job titles in the labor market. Our two-step evaluation approach, consisting of an application-grounded evaluation using EURES job advertisements and a human-grounded evaluation using real-world resumes and Human Resources (HR) expert feedback, provides a comprehensive assessment of CareerBERT's performance. Our experimental results demonstrate that CareerBERT outperforms both traditional and state-of-the-art embedding approaches while showing robust effectiveness in human expert evaluations. These results confirm the effectiveness of CareerBERT in supporting career consultants by generating relevant job recommendations based on resumes, ultimately enhancing the efficiency of job consultations and expanding the perspectives of job seekers. This research contributes to the field of NLP and job recommendation systems, offering valuable insights for both researchers and practitioners in the domain of career consulting and job matching.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-03T21:14:14Z</published>
+    <arxiv:comment>Accepted at Expert Systems with Applications. In Press, see https://doi.org/10.1016/j.eswa.2025.127043</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Julian Rosenberger</name>
+    </author>
+    <author>
+      <name>Lukas Wolfrum</name>
+    </author>
+    <author>
+      <name>Sven Weinzierl</name>
+    </author>
+    <author>
+      <name>Mathias Kraus</name>
+    </author>
+    <author>
+      <name>Patrick Zschech</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.08561v1</id>
+    <title>A Representation-Level Assessment of Bias Mitigation in Foundation Models</title>
+    <updated>2026-03-17T12:43:52Z</updated>
+    <link href="https://arxiv.org/abs/2604.08561v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.08561v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate how successful bias mitigation reshapes the embedding space of encoder-only and decoder-only foundation models, offering an internal audit of model behaviour through representational analysis. Using BERT and Llama2 as representative architectures, we assess the shifts in associations between gender and occupation terms by comparing baseline and bias-mitigated variants of the models. Our findings show that bias mitigation reduces gender-occupation disparities in the embedding space, leading to more neutral and balanced internal representations. These representational shifts are consistent across both model types, suggesting that fairness improvements can manifest as interpretable and geometric transformations. These results position embedding analysis as a valuable tool for understanding and validating the effectiveness of debiasing methods in foundation models. To further promote the assessment of decoder-only models, we introduce WinoDec, a dataset consisting of 4,000 sequences with gender and occupation terms, and release it to the general public. (https://github.com/winodec/wino-dec)</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-17T12:43:52Z</published>
+    <arxiv:comment>Accepted at ECML-PKDD 2025 (5th Workshop on Bias and Fairness in AI)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Svetoslav Nizhnichenkov</name>
+    </author>
+    <author>
+      <name>Rahul Nair</name>
+    </author>
+    <author>
+      <name>Elizabeth Daly</name>
+    </author>
+    <author>
+      <name>Brian Mac Namee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.18977v1</id>
+    <title>Computational Job Market Analysis with Natural Language Processing</title>
+    <updated>2024-04-29T14:52:38Z</updated>
+    <link href="https://arxiv.org/abs/2404.18977v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.18977v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>[Abridged Abstract]
+  Recent technological advances underscore labor market dynamics, yielding significant consequences for employment prospects and increasing job vacancy data across platforms and languages. Aggregating such data holds potential for valuable insights into labor market demands, new skills emergence, and facilitating job matching for various stakeholders. However, despite prevalent insights in the private sector, transparent language technology systems and data for this domain are lacking. This thesis investigates Natural Language Processing (NLP) technology for extracting relevant information from job descriptions, identifying challenges including scarcity of training data, lack of standardized annotation guidelines, and shortage of effective extraction methods from job ads. We frame the problem, obtaining annotated data, and introducing extraction methodologies. Our contributions include job description datasets, a de-identification dataset, and a novel active learning algorithm for efficient model training. We propose skill extraction using weak supervision, a taxonomy-aware pre-training methodology adapting multilingual language models to the job market domain, and a retrieval-augmented model leveraging multiple skill extraction datasets to enhance overall performance. Finally, we ground extracted information within a designated taxonomy.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-29T14:52:38Z</published>
+    <arxiv:comment>Ph.D. Thesis (315 total pages, 52 figures). The thesis slightly modified with https://github.com/google-research/arxiv-latex-cleaner. ISBN (electronic): 978-87-7949-414-5</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mike Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.06792v1</id>
+    <title>On the Mutual Influence of Gender and Occupation in LLM Representations</title>
+    <updated>2025-03-09T22:11:30Z</updated>
+    <link href="https://arxiv.org/abs/2503.06792v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.06792v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We examine LLM representations of gender for first names in various occupational contexts to study how occupations and the gender perception of first names in LLMs influence each other mutually. We find that LLMs' first-name gender representations correlate with real-world gender statistics associated with the name, and are influenced by the co-occurrence of stereotypically feminine or masculine occupations. Additionally, we study the influence of first-name gender representations on LLMs in a downstream occupation prediction task and their potential as an internal metric to identify extrinsic model biases. While feminine first-name embeddings often raise the probabilities for female-dominated jobs (and vice versa for male-dominated jobs), reliably using these internal gender representations for bias detection remains challenging.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-09T22:11:30Z</published>
+    <arxiv:comment>In submission</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haozhe An</name>
+    </author>
+    <author>
+      <name>Connor Baumler</name>
+    </author>
+    <author>
+      <name>Abhilasha Sancheti</name>
+    </author>
+    <author>
+      <name>Rachel Rudinger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.09605v1</id>
+    <title>JobBERT: Understanding Job Titles through Skills</title>
+    <updated>2021-09-20T15:00:10Z</updated>
+    <link href="https://arxiv.org/abs/2109.09605v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.09605v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Job titles form a cornerstone of today's human resources (HR) processes. Within online recruitment, they allow candidates to understand the contents of a vacancy at a glance, while internal HR departments use them to organize and structure many of their processes. As job titles are a compact, convenient, and readily available data source, modeling them with high accuracy can greatly benefit many HR tech applications. In this paper, we propose a neural representation model for job titles, by augmenting a pre-trained language model with co-occurrence information from skill labels extracted from vacancies. Our JobBERT method leads to considerable improvements compared to using generic sentence encoders, for the task of job title normalization, for which we release a new evaluation benchmark.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-20T15:00:10Z</published>
+    <arxiv:comment>Accepted to the International workshop on Fair, Effective And Sustainable Talent management using data science (FEAST) as part of ECML-PKDD 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jens-Joris Decorte</name>
+    </author>
+    <author>
+      <name>Jeroen Van Hautte</name>
+    </author>
+    <author>
+      <name>Thomas Demeester</name>
+    </author>
+    <author>
+      <name>Chris Develder</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.14482v2</id>
+    <title>Is a Prestigious Job the same as a Prestigious Country? A Case Study on Multilingual Sentence Embeddings and European Countries</title>
+    <updated>2023-10-25T09:13:34Z</updated>
+    <link href="https://arxiv.org/abs/2305.14482v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.14482v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study how multilingual sentence representations capture European countries and occupations and how this differs across European languages. We prompt the models with templated sentences that we machine-translate into 12 European languages and analyze the most prominent dimensions in the embeddings.Our analysis reveals that the most prominent feature in the embedding is the geopolitical distinction between Eastern and Western Europe and the country's economic strength in terms of GDP. When prompted specifically for job prestige, the embedding space clearly distinguishes high and low-prestige jobs. The occupational dimension is uncorrelated with the most dominant country dimensions in three out of four studied models. The exception is a small distilled model that exhibits a connection between occupational prestige and country of origin, which is a potential source of nationality-based discrimination. Our findings are consistent across languages.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-23T19:24:42Z</published>
+    <arxiv:comment>10 pages, 1 figure; Findings of EMNLP 2023, camera-ready</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jindřich Libovický</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.10495v2</id>
+    <title>IPOD: An Industrial and Professional Occupations Dataset and its Applications to Occupational Data Mining and Analysis</title>
+    <updated>2020-04-26T16:50:11Z</updated>
+    <link href="https://arxiv.org/abs/1910.10495v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.10495v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Occupational data mining and analysis is an important task in understanding today's industry and job market. Various machine learning techniques are proposed and gradually deployed to improve companies' operations for upstream tasks, such as employee churn prediction, career trajectory modelling and automated interview. Job titles analysis and embedding, as the fundamental building blocks, are crucial upstream tasks to address these occupational data mining and analysis problems. In this work, we present the Industrial and Professional Occupations Dataset (IPOD), which consists of over 190,000 job titles crawled from over 56,000 profiles from Linkedin. We also illustrate the usefulness of IPOD by addressing two challenging upstream tasks, including: (i) proposing Title2vec, a contextual job title vector representation using a bidirectional Language Model (biLM) approach; and (ii) addressing the important occupational Named Entity Recognition problem using Conditional Random Fields (CRF) and bidirectional Long Short-Term Memory with CRF (LSTM-CRF). Both CRF and LSTM-CRF outperform human and baselines in both exact-match accuracy and F1 scores. The dataset and pre-trained embeddings are available at https://www.github.com/junhua/ipod.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-22T08:30:26Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Junhua Liu</name>
+    </author>
+    <author>
+      <name>Yung Chuen Ng</name>
+    </author>
+    <author>
+      <name>Kristin L. Wood</name>
+    </author>
+    <author>
+      <name>Kwan Hui Lim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.15925v2</id>
+    <title>MultiContrievers: Analysis of Dense Retrieval Representations</title>
+    <updated>2024-10-04T13:37:12Z</updated>
+    <link href="https://arxiv.org/abs/2402.15925v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.15925v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dense retrievers compress source documents into (possibly lossy) vector representations, yet there is little analysis of what information is lost versus preserved, and how it affects downstream tasks. We conduct the first analysis of the information captured by dense retrievers compared to the language models they are based on (e.g., BERT versus Contriever). We use 25 MultiBert checkpoints as randomized initialisations to train MultiContrievers, a set of 25 contriever models. We test whether specific pieces of information -- such as gender and occupation -- can be extracted from contriever vectors of wikipedia-like documents. We measure this extractability via information theoretic probing. We then examine the relationship of extractability to performance and gender bias, as well as the sensitivity of these results to many random initialisations and data shuffles. We find that (1) contriever models have significantly increased extractability, but extractability usually correlates poorly with benchmark performance 2) gender bias is present, but is not caused by the contriever representations 3) there is high sensitivity to both random initialisation and to data shuffle, suggesting that future retrieval research should test across a wider spread of both.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-24T23:01:21Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Seraphina Goldfarb-Tarrant</name>
+    </author>
+    <author>
+      <name>Pedro Rodriguez</name>
+    </author>
+    <author>
+      <name>Jane Dwivedi-Yu</name>
+    </author>
+    <author>
+      <name>Patrick Lewis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.14027v1</id>
+    <title>Diversity matters: Robustness of bias measurements in Wikidata</title>
+    <updated>2023-02-27T18:38:10Z</updated>
+    <link href="https://arxiv.org/abs/2302.14027v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.14027v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the widespread use of knowledge graphs (KG) in various automated AI systems and applications, it is very important to ensure that information retrieval algorithms leveraging them are free from societal biases. Previous works have depicted biases that persist in KGs, as well as employed several metrics for measuring the biases. However, such studies lack the systematic exploration of the sensitivity of the bias measurements, through varying sources of data, or the embedding algorithms used. To address this research gap, in this work, we present a holistic analysis of bias measurement on the knowledge graph. First, we attempt to reveal data biases that surface in Wikidata for thirteen different demographics selected from seven continents. Next, we attempt to unfold the variance in the detection of biases by two different knowledge graph embedding algorithms - TransE and ComplEx. We conduct our extensive experiments on a large number of occupations sampled from the thirteen demographics with respect to the sensitive attribute, i.e., gender. Our results show that the inherent data bias that persists in KG can be altered by specific algorithm bias as incorporated by KG embedding learning algorithms. Further, we show that the choice of the state-of-the-art KG embedding algorithm has a strong impact on the ranking of biased occupations irrespective of gender. We observe that the similarity of the biased occupations across demographics is minimal which reflects the socio-cultural differences around the globe. We believe that this full-scale audit of the bias measurement pipeline will raise awareness among the community while deriving insights related to design choices of data and algorithms both and refrain from the popular dogma of ``one-size-fits-all''.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-27T18:38:10Z</published>
+    <arxiv:comment>11 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>15th ACM Web Science 2023</arxiv:journal_ref>
+    <author>
+      <name>Paramita Das</name>
+    </author>
+    <author>
+      <name>Sai Keerthana Karnam</name>
+    </author>
+    <author>
+      <name>Anirban Panda</name>
+    </author>
+    <author>
+      <name>Bhanu Prakash Reddy Guda</name>
+    </author>
+    <author>
+      <name>Soumya Sarkar</name>
+    </author>
+    <author>
+      <name>Animesh Mukherjee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.19329v1</id>
+    <title>Mitigating Test-Time Bias for Fair Image Retrieval</title>
+    <updated>2023-05-23T21:31:16Z</updated>
+    <link href="https://arxiv.org/abs/2305.19329v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.19329v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the challenge of generating fair and unbiased image retrieval results given neutral textual queries (with no explicit gender or race connotations), while maintaining the utility (performance) of the underlying vision-language (VL) model. Previous methods aim to disentangle learned representations of images and text queries from gender and racial characteristics. However, we show these are inadequate at alleviating bias for the desired equal representation result, as there usually exists test-time bias in the target retrieval set. So motivated, we introduce a straightforward technique, Post-hoc Bias Mitigation (PBM), that post-processes the outputs from the pre-trained vision-language model. We evaluate our algorithm on real-world image search datasets, Occupation 1 and 2, as well as two large-scale image-text datasets, MS-COCO and Flickr30k. Our approach achieves the lowest bias, compared with various existing bias-mitigation methods, in text-based image retrieval result while maintaining satisfactory retrieval performance. The source code is publicly available at \url{https://anonymous.4open.science/r/Fair_Text_based_Image_Retrieval-D8B2}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-23T21:31:16Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Fanjie Kong</name>
+    </author>
+    <author>
+      <name>Shuai Yuan</name>
+    </author>
+    <author>
+      <name>Weituo Hao</name>
+    </author>
+    <author>
+      <name>Ricardo Henao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.01582v1</id>
+    <title>KG-First, LLM-Fallback: A Hybrid Microservice for Grounded Skill Search and Explanation</title>
+    <updated>2026-05-02T19:07:56Z</updated>
+    <link href="https://arxiv.org/abs/2605.01582v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.01582v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Authoritative competency frameworks such as ESCO, ROME, and O*NET are essential for aligning education with labor market needs, yet their technical complexity and structural heterogeneity hinder practical adoption by educators. This paper introduces SkillGraph-Service, an interoperable microservice designed to bridge this gap by unifying these resources into a provenance-preserving Knowledge Graph (KG). Adopting a KG-first, LLM-fallback architecture, the system combines symbolic rigor with sub-symbolic flexibility. It implements a lightweight hybrid retrieval engine (fusing SQLite FTS5 and HNSW vector search) to handle the vocabulary mismatch in educator queries, and utilizes Large Language Models (LLMs) strictly for constrained ranking and audience-aware explanation. Empirical evaluation on a multilingual dataset reveals that the proposed hybrid strategy achieves superior retrieval effectiveness (nDCG@5&gt;0.94) with sub-200 ms latency, rendering computationally expensive cross-encoder re-ranking may be unnecessary for this domain. Furthermore, an analysis of generated explanations highlights a trade-off between fluency and faithfulness: while JSON-constrained LLMs ensure high citation precision, deterministic templates remain the most reliable method for maximizing evidence coverage. The resulting architecture offers a practical, scalable, and auditable solution for integrating complex skill data into digital learning ecosystems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-02T19:07:56Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ngoc Luyen Le</name>
+    </author>
+    <author>
+      <name>Marie-Hélène Abel</name>
+    </author>
+    <author>
+      <name>Bertrand Laforge</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.17184v1</id>
+    <title>AISA: AI Safety Assistant Framework for Continuous Improvement of Highway Construction</title>
+    <updated>2026-08-17T22:48:01Z</updated>
+    <link href="https://arxiv.org/abs/2608.17184v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.17184v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Job Safety Analysis (JSA) and pre-task planning can benefit from prior incident records, yet historical accident data is often stored as unstructured narratives that are difficult to consult at the point of planning. A novel framework centered on large language models (LLMs) for highway construction safety reporting and planning is proposed as a foundation for future agentic applications, prioritizing deterministic, local inferencing. The first aim is to enable classification and quality scoring of incident narratives for existing and future reporting purposes. The second is to evaluate retrieval of relevant historical accidents, related imagery, and trusted industry documents for incorporation into daily safety plans. Neural probes were trained to classify incidents along four multiclass and two binary Occupational Injury and Illness Classification System (OIICS) fields and to derive an overall quality score, evaluated on a test set of over 15,000 narratives and a held-out set of 100 author-labeled records, benchmarked against a majority-vote LLM ensemble. The retrieval of historical accidents, reference imagery, and industry documents was benchmarked across embedding models using standard information retrieval metrics. OIICS classification reached 75% held-out accuracy, though the two binary flags were degenerate. The quality score, while meaningful on one database, was distorted on out-of-distribution fatalities in the held-out dataset. Accident retrieval recovered relevant incidents far above chance, performing best on lexically distinct construction activities. On document question answering, an open-weight decoder embedding model surpassed proprietary models. Overall, this work provides a new framework rooted in local inferencing and text embedding models for future agentic applications, with emphasis on bridging external data to JSA reports.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-17T22:48:01Z</published>
+    <arxiv:comment>17 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mason Smetana</name>
+    </author>
+    <author>
+      <name>Trevor Neece</name>
+    </author>
+    <author>
+      <name>Lev Khazanovich</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.09647v2</id>
+    <title>Ultra-Fast, Low-Storage, Highly Effective Coarse-grained Selection in Retrieval-based Chatbot by Using Deep Semantic Hashing</title>
+    <updated>2020-12-18T12:48:59Z</updated>
+    <link href="https://arxiv.org/abs/2012.09647v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.09647v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the coarse-grained selection module in retrieval-based chatbot. Coarse-grained selection is a basic module in a retrieval-based chatbot, which constructs a rough candidate set from the whole database to speed up the interaction with customers. So far, there are two kinds of approaches for coarse-grained selection module: (1) sparse representation; (2) dense representation. To the best of our knowledge, there is no systematic comparison between these two approaches in retrieval-based chatbots, and which kind of method is better in real scenarios is still an open question. In this paper, we first systematically compare these two methods from four aspects: (1) effectiveness; (2) index stoarge; (3) search time cost; (4) human evaluation. Extensive experiment results demonstrate that dense representation method significantly outperforms the sparse representation, but costs more time and storage occupation. In order to overcome these fatal weaknesses of dense representation method, we propose an ultra-fast, low-storage, and highly effective Deep Semantic Hashing Coarse-grained selection method, called DSHC model. Specifically, in our proposed DSHC model, a hashing optimizing module that consists of two autoencoder models is stacked on a trained dense representation model, and three loss functions are designed to optimize it. The hash codes provided by hashing optimizing module effectively preserve the rich semantic and similarity information in dense vectors. Extensive experiment results prove that, our proposed DSHC model can achieve much faster speed and lower storage than sparse representation, with limited performance loss compared with dense representation. Besides, our source codes have been publicly released for future research.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-17T14:54:59Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Tian Lan</name>
+    </author>
+    <author>
+      <name>Xian-Ling Mao</name>
+    </author>
+    <author>
+      <name>Xiaoyan Gao</name>
+    </author>
+    <author>
+      <name>Wei Wei</name>
+    </author>
+    <author>
+      <name>Heyan Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.12170v1</id>
+    <title>Discovering Differences in the Representation of People using Contextualized Semantic Axes</title>
+    <updated>2022-10-21T18:02:19Z</updated>
+    <link href="https://arxiv.org/abs/2210.12170v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.12170v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A common paradigm for identifying semantic differences across social and temporal contexts is the use of static word embeddings and their distances. In particular, past work has compared embeddings against "semantic axes" that represent two opposing concepts. We extend this paradigm to BERT embeddings, and construct contextualized axes that mitigate the pitfall where antonyms have neighboring representations. We validate and demonstrate these axes on two people-centric datasets: occupations from Wikipedia, and multi-platform discussions in extremist, men's communities over fourteen years. In both studies, contextualized semantic axes can characterize differences among instances of the same word type. In the latter study, we show that references to women and the contexts around them have become more detestable over time.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-21T18:02:19Z</published>
+    <arxiv:comment>10 pages, 6 figures, EMNLP 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Li Lucy</name>
+    </author>
+    <author>
+      <name>Divya Tadimeti</name>
+    </author>
+    <author>
+      <name>David Bamman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.14072v1</id>
+    <title>Detecting race and gender bias in visual representation of AI on web search engines</title>
+    <updated>2021-06-26T18:04:05Z</updated>
+    <link href="https://arxiv.org/abs/2106.14072v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.14072v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Web search engines influence perception of social reality by filtering and ranking information. However, their outputs are often subjected to bias that can lead to skewed representation of subjects such as professional occupations or gender. In our paper, we use a mixed-method approach to investigate presence of race and gender bias in representation of artificial intelligence (AI) in image search results coming from six different search engines. Our findings show that search engines prioritize anthropomorphic images of AI that portray it as white, whereas non-white images of AI are present only in non-Western search engines. By contrast, gender representation of AI is more diverse and less skewed towards a specific gender that can be attributed to higher awareness about gender bias in search outputs. Our observations indicate both the the need and the possibility for addressing bias in representation of societally relevant subjects, such as technological innovation, and emphasize the importance of designing new approaches for detecting bias in information retrieval systems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-26T18:04:05Z</published>
+    <arxiv:comment>16 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>In Advances in Bias and Fairness in Information Retrieval (pp. 36-50). Springer (2021)</arxiv:journal_ref>
+    <author>
+      <name>Mykola Makhortykh</name>
+    </author>
+    <author>
+      <name>Aleksandra Urman</name>
+    </author>
+    <author>
+      <name>Roberto Ulloa</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-030-78818-6_5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-030-78818-6_5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.13318v2</id>
+    <title>WebXSkill: Skill Learning for Autonomous Web Agents</title>
+    <updated>2026-08-31T07:02:14Z</updated>
+    <link href="https://arxiv.org/abs/2604.13318v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.13318v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Autonomous web agents powered by large language models (LLMs) remain brittle on long-horizon browser workflows. A key bottleneck is a grounding gap in existing skill formulations: textual workflow skills provide natural language guidance but cannot be directly executed, while code-based skills execute without giving the agent step-level guidance for adaptation or recovery. We introduce WebXSkill, a framework that bridges this gap with executable skills, each pairing a parameterized action program with step-level natural-language guidance. WebXSkill operates in three stages: skill extraction mines reusable action subsequences from readily available synthetic agent trajectories and abstracts them into parameterized skills, skill organization indexes them into a URL-based graph for context-aware retrieval, and skill deployment exposes two complementary modes, grounded mode for fully automated execution and guided mode where skills serve as step-by-step instructions the agent follows with its native planning. WebXSkill demonstrates consistent improvements on WebArena, WebVoyager, and Online-Mind2Web. We further find that better skill deployment mode depends on a model's plan and execution capability. The code is available at https://github.com/aiming-lab/WebXSkill.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-14T21:48:15Z</published>
+    <arxiv:comment>Accepted to Findings of EMNLP2026</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Zhaoyang Wang</name>
+    </author>
+    <author>
+      <name>Qianhui Wu</name>
+    </author>
+    <author>
+      <name>Xuchao Zhang</name>
+    </author>
+    <author>
+      <name>Chaoyun Zhang</name>
+    </author>
+    <author>
+      <name>Wenlin Yao</name>
+    </author>
+    <author>
+      <name>Fazle Elahi Faisal</name>
+    </author>
+    <author>
+      <name>Baolin Peng</name>
+    </author>
+    <author>
+      <name>Si Qin</name>
+    </author>
+    <author>
+      <name>Suman Nath</name>
+    </author>
+    <author>
+      <name>Qingwei Lin</name>
+    </author>
+    <author>
+      <name>Chetan Bansal</name>
+    </author>
+    <author>
+      <name>Dongmei Zhang</name>
+    </author>
+    <author>
+      <name>Saravan Rajmohan</name>
+    </author>
+    <author>
+      <name>Jianfeng Gao</name>
+    </author>
+    <author>
+      <name>Huaxiu Yao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.03873v2</id>
+    <title>Representation of professions in entertainment media: Insights into frequency and sentiment trends through computational text analysis</title>
+    <updated>2021-10-11T07:31:08Z</updated>
+    <link href="https://arxiv.org/abs/2110.03873v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.03873v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Societal ideas and trends dictate media narratives and cinematic depictions which in turn influences people's beliefs and perceptions of the real world. Media portrayal of culture, education, government, religion, and family affect their function and evolution over time as people interpret and perceive these representations and incorporate them into their beliefs and actions. It is important to study media depictions of these social structures so that they do not propagate or reinforce negative stereotypes, or discriminate against any demographic section. In this work, we examine media representation of professions and provide computational insights into their incidence, and sentiment expressed, in entertainment media content. We create a searchable taxonomy of professional groups and titles to facilitate their retrieval from speaker-agnostic text passages like movie and television (TV) show subtitles. We leverage this taxonomy and relevant natural language processing (NLP) models to create a corpus of professional mentions in media content, spanning more than 136,000 IMDb titles over seven decades (1950-2017). We analyze the frequency and sentiment trends of different occupations, study the effect of media attributes like genre, country of production, and title type on these trends, and investigate if the incidence of professions in media subtitles correlate with their real-world employment statistics. We observe increased media mentions of STEM, arts, sports, and entertainment occupations in the analyzed subtitles, and a decreased frequency of manual labor jobs and military occupations. The sentiment expressed toward lawyers, police, and doctors is becoming negative over time, whereas astronauts, musicians, singers, and engineers are mentioned favorably. Professions that employ more people have increased media frequency, supporting our hypothesis that media acts as a mirror to society.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-08T03:05:08Z</published>
+    <arxiv:comment>27 pages, 15 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sabyasachee Baruah</name>
+    </author>
+    <author>
+      <name>Krishna Somandepalli</name>
+    </author>
+    <author>
+      <name>Shrikanth Narayanan</name>
+    </author>
+    <arxiv:doi>10.1371/journal.pone.0267812</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1371/journal.pone.0267812" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.08055v1</id>
+    <title>Learning Job Title Representation from Job Description Aggregation Network</title>
+    <updated>2024-06-12T10:12:52Z</updated>
+    <link href="https://arxiv.org/abs/2406.08055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.08055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learning job title representation is a vital process for developing automatic human resource tools. To do so, existing methods primarily rely on learning the title representation through skills extracted from the job description, neglecting the rich and diverse content within. Thus, we propose an alternative framework for learning job titles through their respective job description (JD) and utilize a Job Description Aggregator component to handle the lengthy description and bidirectional contrastive loss to account for the bidirectional relationship between the job title and its description. We evaluated the performance of our method on both in-domain and out-of-domain settings, achieving a superior performance over the skill-based approach.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-12T10:12:52Z</published>
+    <arxiv:comment>to be published in Findings of the Association for Computational Linguistics: ACL 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Napat Laosaengpha</name>
+    </author>
+    <author>
+      <name>Thanit Tativannarat</name>
+    </author>
+    <author>
+      <name>Chawan Piansaddhayanon</name>
+    </author>
+    <author>
+      <name>Attapol Rutherford</name>
+    </author>
+    <author>
+      <name>Ekapol Chuangsuwanich</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.14579v1</id>
+    <title>Fine-Tuning Strategy, Not Just Data: A Statistically Rigorous Audit of Gender and Stereotypical Bias in Embedding Models for HR Recommendation Systems</title>
+    <updated>2026-10-10T04:57:38Z</updated>
+    <link href="https://arxiv.org/abs/2610.14579v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.14579v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Embedding models underpin modern job-candidate matching: resumes, job descriptions, and queries are encoded as dense vectors, and recommendations come from nearest-neighbor retrieval over that space. Any social bias in the embeddings therefore feeds directly into HR recommendations. We audit six multilingual sentence-embedding models (LaBSE- and E5-family, both public and custom fine-tuned) using Bias-in-Bios (occupational gender bias) and StereoSet (stereotypes across profession, race, gender, and religion). We treat statistical validity as a first-class concern: we identify a non-independence error in a naive significance test, where pooling non-independent pairwise similarities inflated a trivial 0.0046 mean difference to $p \approx 0$, and replace it with a profession-level paired Wilcoxon signed-rank test, individual-resampling bootstrap confidence intervals, and permutation tests for StereoSet. Under the corrected methodology, knowledge-distillation (KD) fine-tuning of E5-Base significantly increases measured bias on Bias-in-Bios ($Δ= -0.177$, $p &lt; 10^{-8}$; more negative means more bias), although this measure is sensitive to global embedding geometry. The KD result is corroborated by pro-stereotype patterns in the StereoSet profession category (uncorrected $p &lt; 0.05$). Binary-classification fine-tuning of the same base model shows no statistically distinguishable change ($p = 0.218$). Fine-tuning strategy is thus an actionable design lever for practitioners building HR recommenders. We also report which benchmark categories are underpowered, and note that two domain-adapted models could not be included in significance testing due to a software-access constraint, which limits our conclusions.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-10T04:57:38Z</published>
+    <arxiv:comment>8 pages, 4 figures, 5 tables. Accepted at RecSys in HR '26 (The 6th Workshop on Recommender Systems for Human Resources)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ekta Yadav</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.12989v3</id>
+    <title>A Multi-Stage Framework with Taxonomy-Guided Reasoning for Occupation Classification Using Large Language Models</title>
+    <updated>2025-10-31T14:56:12Z</updated>
+    <link href="https://arxiv.org/abs/2503.12989v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.12989v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automatically annotating job data with standardized occupations from taxonomies, known as occupation classification, is crucial for labor market analysis. However, this task is often hindered by data scarcity and the challenges of manual annotations. While large language models (LLMs) hold promise due to their extensive world knowledge and in-context learning capabilities, their effectiveness depends on their knowledge of occupational taxonomies, which remains unclear. In this study, we assess the ability of LLMs to generate precise taxonomic entities from taxonomy, highlighting their limitations, especially for smaller models. To address these challenges, we propose a multi-stage framework consisting of inference, retrieval, and reranking stages, which integrates taxonomy-guided reasoning examples to enhance performance by aligning outputs with taxonomic knowledge. Evaluations on a large-scale dataset show that our framework not only enhances occupation and skill classification tasks, but also provides a cost-effective alternative to frontier models like GPT-4o, significantly reducing computational costs while maintaining strong performance. This makes it a practical and scalable solution for occupation classification and related tasks across LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-17T09:44:50Z</published>
+    <arxiv:comment>Accepted to ICWSM'26</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Palakorn Achananuparp</name>
+    </author>
+    <author>
+      <name>Ee-Peng Lim</name>
+    </author>
+    <author>
+      <name>Yao Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.31556v2</id>
+    <title>Vision-Language Models Suppress Female Representations Under Ambiguous Input</title>
+    <updated>2026-08-31T08:58:13Z</updated>
+    <link href="https://arxiv.org/abs/2605.31556v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.31556v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Alignment teaches vision-language models (VLMs) to avoid expressing demographic biases, and when gender is clearly visible they largely succeed. Far less is known about ambiguous inputs (a worker in full gear, a figure seen from behind), cases common in practice yet rarely studied. We find that minimal prompting pressure exposes occupation-gender defaults when prompting ambiguous input images, with models collapsing to male even for strongly female-stereotyped occupations. But do these outputs reflect what models actually encode internally? We introduce LALS (Latent Association Leaning Score), a zero-shot metric that projects visual-token activations into the model's text-embedding space to measure concept associations per token and layer. Across 15 occupations, over 800 gender-ambiguous images, and four VLMs, internal representations and outputs often become systematically decoupled: models often encode a female association internally yet output male. Layer-wise analysis reveals an asymmetric filter: male signal amplifies end-to-end while female signal peaks mid-network and is suppressed before generation. A color ablation shows that culturally loaded visual cues such as clothing color further modulate these internal associations.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-29T17:20:02Z</published>
+    <arxiv:comment>Accepted at EMNLP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Arnau Marin-Llobet</name>
+    </author>
+    <author>
+      <name>Simon Henniger</name>
+    </author>
+    <author>
+      <name>Mahzarin R. Banaji</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.03116v2</id>
+    <title>Equalizing Gender Biases in Neural Machine Translation with Word Embeddings Techniques</title>
+    <updated>2019-06-02T22:20:06Z</updated>
+    <link href="https://arxiv.org/abs/1901.03116v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.03116v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural machine translation has significantly pushed forward the quality of the field. However, there are remaining big issues with the output translations and one of them is fairness. Neural models are trained on large text corpora which contain biases and stereotypes. As a consequence, models inherit these social biases. Recent methods have shown results in reducing gender bias in other natural language processing tools such as word embeddings. We take advantage of the fact that word embeddings are used in neural machine translation to propose a method to equalize gender biases in neural machine translation using these representations. Specifically, we propose, experiment and analyze the integration of two debiasing techniques over GloVe embeddings in the Transformer translation architecture. We evaluate our proposed system on the WMT English-Spanish benchmark task, showing gains up to one BLEU point. As for the gender bias evaluation, we generate a test set of occupations and we show that our proposed system learns to equalize existing biases from the baseline system.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-10T12:06:31Z</published>
+    <arxiv:comment>This paper has been accepted for publication at the 1st ACL Workshop on Gender Bias for Natural Language Processing (2019)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Joel Escudé Font</name>
+    </author>
+    <author>
+      <name>Marta R. Costa-jussà</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.15373v2</id>
+    <title>PART: Pre-trained Authorship Representation Transformer</title>
+    <updated>2025-05-09T09:18:49Z</updated>
+    <link href="https://arxiv.org/abs/2209.15373v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.15373v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Authors writing documents imprint identifying information within their texts: vocabulary, registry, punctuation, misspellings, or even emoji usage. Previous works use hand-crafted features or classification tasks to train their authorship models, leading to poor performance on out-of-domain authors. Using stylometric representations is more suitable, but this by itself is an open research challenge. In this paper, we propose PART, a contrastively trained model fit to learn \textbf{authorship embeddings} instead of semantics. We train our model on ~1.5M texts belonging to 1162 literature authors, 17287 blog posters and 135 corporate email accounts; a heterogeneous set with identifiable writing styles. We evaluate the model on current challenges, achieving competitive performance. We also evaluate our model on test splits of the datasets achieving zero-shot 72.39\% accuracy when bounded to 250 authors, a 54\% and 56\% higher than RoBERTa embeddings. We qualitatively assess the representations with different data visualizations on the available datasets, observing features such as gender, age, or occupation of the author.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-30T11:08:39Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Javier Huertas-Tato</name>
+    </author>
+    <author>
+      <name>Alejandro Martin</name>
+    </author>
+    <author>
+      <name>David Camacho</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.12424v3</id>
+    <title>VisoGender: A dataset for benchmarking gender bias in image-text pronoun resolution</title>
+    <updated>2023-12-12T16:08:18Z</updated>
+    <link href="https://arxiv.org/abs/2306.12424v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.12424v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce VisoGender, a novel dataset for benchmarking gender bias in vision-language models. We focus on occupation-related biases within a hegemonic system of binary gender, inspired by Winograd and Winogender schemas, where each image is associated with a caption containing a pronoun relationship of subjects and objects in the scene. VisoGender is balanced by gender representation in professional roles, supporting bias evaluation in two ways: i) resolution bias, where we evaluate the difference between pronoun resolution accuracies for image subjects with gender presentations perceived as masculine versus feminine by human annotators and ii) retrieval bias, where we compare ratios of professionals perceived to have masculine and feminine gender presentations retrieved for a gender-neutral search query. We benchmark several state-of-the-art vision-language models and find that they demonstrate bias in resolving binary gender in complex scenes. While the direction and magnitude of gender bias depends on the task and the model being evaluated, captioning models are generally less biased than Vision-Language Encoders. Dataset and code are available at https://github.com/oxai/visogender</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-21T17:59:51Z</published>
+    <arxiv:comment>NeurIPS Datasets and Benchmarks 2023. Data and code available at https://github.com/oxai/visogender</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Siobhan Mackenzie Hall</name>
+    </author>
+    <author>
+      <name>Fernanda Gonçalves Abrantes</name>
+    </author>
+    <author>
+      <name>Hanwen Zhu</name>
+    </author>
+    <author>
+      <name>Grace Sodunke</name>
+    </author>
+    <author>
+      <name>Aleksandar Shtedritski</name>
+    </author>
+    <author>
+      <name>Hannah Rose Kirk</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1901.09451v1</id>
+    <title>Bias in Bios: A Case Study of Semantic Representation Bias in a High-Stakes Setting</title>
+    <updated>2019-01-27T22:36:16Z</updated>
+    <link href="https://arxiv.org/abs/1901.09451v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1901.09451v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a large-scale study of gender bias in occupation classification, a task where the use of machine learning may lead to negative outcomes on peoples' lives. We analyze the potential allocation harms that can result from semantic representation bias. To do so, we study the impact on occupation classification of including explicit gender indicators---such as first names and pronouns---in different semantic representations of online biographies. Additionally, we quantify the bias that remains when these indicators are "scrubbed," and describe proxy behavior that occurs in the absence of explicit gender indicators. As we demonstrate, differences in true positive rates between genders are correlated with existing gender imbalances in occupations, which may compound these imbalances.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-01-27T22:36:16Z</published>
+    <arxiv:comment>Accepted at ACM Conference on Fairness, Accountability, and Transparency (ACM FAT*), 2019</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Maria De-Arteaga</name>
+    </author>
+    <author>
+      <name>Alexey Romanov</name>
+    </author>
+    <author>
+      <name>Hanna Wallach</name>
+    </author>
+    <author>
+      <name>Jennifer Chayes</name>
+    </author>
+    <author>
+      <name>Christian Borgs</name>
+    </author>
+    <author>
+      <name>Alexandra Chouldechova</name>
+    </author>
+    <author>
+      <name>Sahin Geyik</name>
+    </author>
+    <author>
+      <name>Krishnaram Kenthapadi</name>
+    </author>
+    <author>
+      <name>Adam Tauman Kalai</name>
+    </author>
+    <arxiv:doi>10.1145/3287560.3287572</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3287560.3287572" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.03881v2</id>
+    <title>Fairness in Image Search: A Study of Occupational Stereotyping in Image Retrieval and its Debiasing</title>
+    <updated>2023-08-22T16:09:59Z</updated>
+    <link href="https://arxiv.org/abs/2305.03881v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.03881v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-modal search engines have experienced significant growth and widespread use in recent years, making them the second most common internet use. While search engine systems offer a range of services, the image search field has recently become a focal point in the information retrieval community, as the adage goes, "a picture is worth a thousand words". Although popular search engines like Google excel at image search accuracy and agility, there is an ongoing debate over whether their search results can be biased in terms of gender, language, demographics, socio-cultural aspects, and stereotypes. This potential for bias can have a significant impact on individuals' perceptions and influence their perspectives.
+  In this paper, we present our study on bias and fairness in web search, with a focus on keyword-based image search. We first discuss several kinds of biases that exist in search systems and why it is important to mitigate them. We narrow down our study to assessing and mitigating occupational stereotypes in image search, which is a prevalent fairness issue in image retrieval. For the assessment of stereotypes, we take gender as an indicator. We explore various open-source and proprietary APIs for gender identification from images. With these, we examine the extent of gender bias in top-tanked image search results obtained for several occupational keywords. To mitigate the bias, we then propose a fairness-aware re-ranking algorithm that optimizes (a) relevance of the search result with the keyword and (b) fairness w.r.t genders identified. We experiment on 100 top-ranked images obtained for 10 occupational keywords and consider random re-ranking and re-ranking based on relevance as baselines. Our experimental results show that the fairness-aware re-ranking algorithm produces rankings with better fairness scores and competitive relevance scores than the baselines.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-06T00:24:44Z</published>
+    <arxiv:comment>20 Pages, Work uses Proprietary Search Systems from the year 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Swagatika Dash</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.13840v1</id>
+    <title>Whose Side Are You On? Investigating the Political Stance of Large Language Models</title>
+    <updated>2024-03-15T04:02:24Z</updated>
+    <link href="https://arxiv.org/abs/2403.13840v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.13840v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) have gained significant popularity for their application in various everyday tasks such as text generation, summarization, and information retrieval. As the widespread adoption of LLMs continues to surge, it becomes increasingly crucial to ensure that these models yield responses that are politically impartial, with the aim of preventing information bubbles, upholding fairness in representation, and mitigating confirmation bias. In this paper, we propose a quantitative framework and pipeline designed to systematically investigate the political orientation of LLMs. Our investigation delves into the political alignment of LLMs across a spectrum of eight polarizing topics, spanning from abortion to LGBTQ issues. Across topics, the results indicate that LLMs exhibit a tendency to provide responses that closely align with liberal or left-leaning perspectives rather than conservative or right-leaning ones when user queries include details pertaining to occupation, race, or political affiliation. The findings presented in this study not only reaffirm earlier observations regarding the left-leaning characteristics of LLMs but also surface particular attributes, such as occupation, that are particularly susceptible to such inclinations even when directly steered towards conservatism. As a recommendation to avoid these models providing politicised responses, users should be mindful when crafting queries, and exercise caution in selecting neutral prompt language.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-15T04:02:24Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Pagnarasmey Pit</name>
+    </author>
+    <author>
+      <name>Xingjun Ma</name>
+    </author>
+    <author>
+      <name>Mike Conway</name>
+    </author>
+    <author>
+      <name>Qingyu Chen</name>
+    </author>
+    <author>
+      <name>James Bailey</name>
+    </author>
+    <author>
+      <name>Henry Pit</name>
+    </author>
+    <author>
+      <name>Putrasmey Keo</name>
+    </author>
+    <author>
+      <name>Watey Diep</name>
+    </author>
+    <author>
+      <name>Yu-Gang Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.04377v3</id>
+    <title>Multi-Modal Semantic Parsing for the Interpretation of Tombstone Inscriptions</title>
+    <updated>2025-08-11T12:11:31Z</updated>
+    <link href="https://arxiv.org/abs/2507.04377v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.04377v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tombstones are historically and culturally rich artifacts, encapsulating individual lives, community memory, historical narratives and artistic expression. Yet, many tombstones today face significant preservation challenges, including physical erosion, vandalism, environmental degradation, and political shifts. In this paper, we introduce a novel multi-modal framework for tombstones digitization, aiming to improve the interpretation, organization and retrieval of tombstone content. Our approach leverages vision-language models (VLMs) to translate tombstone images into structured Tombstone Meaning Representations (TMRs), capturing both image and text information. To further enrich semantic parsing, we incorporate retrieval-augmented generation (RAG) for integrate externally dependent elements such as toponyms, occupation codes, and ontological concepts. Compared to traditional OCR-based pipelines, our method improves parsing accuracy from an F1 score of 36.1 to 89.5. We additionally evaluate the model's robustness across diverse linguistic and cultural inscriptions, and simulate physical degradation through image fusion to assess performance under noisy or damaged conditions. Our work represents the first attempt to formalize tombstone understanding using large vision-language models, presenting implications for heritage preservation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-06T12:50:07Z</published>
+    <arxiv:comment>ACMMM 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiao Zhang</name>
+    </author>
+    <author>
+      <name>Johan Bos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.02780v1</id>
+    <title>A Large-scale Industrial and Professional Occupation Dataset</title>
+    <updated>2020-04-25T10:45:48Z</updated>
+    <link href="https://arxiv.org/abs/2005.02780v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.02780v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There has been growing interest in utilizing occupational data mining and analysis. In today's job market, occupational data mining and analysis is growing in importance as it enables companies to predict employee turnover, model career trajectories, screen through resumes and perform other human resource tasks. A key requirement to facilitate these tasks is the need for an occupation-related dataset. However, most research use proprietary datasets or do not make their dataset publicly available, thus impeding development in this area. To solve this issue, we present the Industrial and Professional Occupation Dataset (IPOD), which comprises 192k job titles belonging to 56k LinkedIn users. In addition to making IPOD publicly available, we also: (i) manually annotate each job title with its associated level of seniority, domain of work and location; and (ii) provide embedding for job titles and discuss various use cases. This dataset is publicly available at https://github.com/junhua/ipod.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-25T10:45:48Z</published>
+    <arxiv:primary_category term="cs.SI"/>
+    <author>
+      <name>Junhua Liu</name>
+    </author>
+    <author>
+      <name>Yung Chuen Ng</name>
+    </author>
+    <author>
+      <name>Kwan Hui Lim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.13682v1</id>
+    <title>Collective Memory and Narrative Cohesion: A Computational Study of Palestinian Refugee Oral Histories in Lebanon</title>
+    <updated>2025-01-23T14:07:49Z</updated>
+    <link href="https://arxiv.org/abs/2501.13682v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.13682v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study uses the Palestinian Oral History Archive (POHA) to investigate how Palestinian refugee groups in Lebanon sustain a cohesive collective memory of the Nakba through shared narratives. Grounded in Halbwachs' theory of group memory, we employ statistical analysis of pairwise similarity of narratives, focusing on the influence of shared gender and location. We use textual representation and semantic embeddings of narratives to represent the interviews themselves. Our analysis demonstrates that shared origin is a powerful determinant of narrative similarity across thematic keywords, landmarks, and significant figures, as well as in semantic embeddings of the narratives. Meanwhile, shared residence fosters cohesion, with its impact significantly amplified when paired with shared origin. Additionally, women's narratives exhibit heightened thematic cohesion, particularly in recounting experiences of the British occupation, underscoring the gendered dimensions of memory formation. This research deepens the understanding of collective memory in diasporic settings, emphasizing the critical role of oral histories in safeguarding Palestinian identity and resisting erasure.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-23T14:07:49Z</published>
+    <arxiv:comment>Appeared in the 1st International Workshop on Nakba Narratives as Language Resources as part of COLING 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ghadeer Awwad</name>
+    </author>
+    <author>
+      <name>Lavinia Dunagan</name>
+    </author>
+    <author>
+      <name>David Gamba</name>
+    </author>
+    <author>
+      <name>Tamara N. Rayan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.30152v1</id>
+    <title>Estimating Grammatical Gender Directions in Contextual Embeddings under Controlled and Natural Contexts</title>
+    <updated>2026-06-29T11:29:05Z</updated>
+    <link href="https://arxiv.org/abs/2606.30152v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.30152v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contextual language models conflate grammatical gender and social semantic bias in gendered languages such as Spanish. Existing gender debiasing approaches only operate on static word embeddings leaving contextual representations unexplored for this two dimensional gender disentanglement. To address the this issue, we make the first attempt to disentangle grammatical gender from semantic contamination for contextual embeddings. We construct both controlled templates and natural Wikipedia contexts to build balanced datasets of inanimate nouns, and design a framework equipped with centroid, Support Vector Machine (SVM) and Linear Discriminant Analysis (LDA) gender direction estimators as well as contamination-aware weighting strategies. A set of dual-objective evaluation metrics is proposed to balance the suppression of grammatical gender leakage on inanimate nouns and the preservation of semantic gender distinctions for occupation terms. The results reveal that unweighted controlled contexts yield the purest grammatical gender direction, and the centroid estimator achieves better performance than discriminative baselines.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T11:29:05Z</published>
+    <arxiv:comment>18 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Huanping Xiao</name>
+    </author>
+    <author>
+      <name>Yingji Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.08368v1</id>
+    <title>Gender mobility in the labor market with skills-based matching models</title>
+    <updated>2023-07-17T10:06:21Z</updated>
+    <link href="https://arxiv.org/abs/2307.08368v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.08368v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Skills-based matching promises mobility of workers between different sectors and occupations in the labor market. In this case, job seekers can look for jobs they do not yet have experience in, but for which they do have relevant skills. Currently, there are multiple occupations with a skewed gender distribution. For skills-based matching, it is unclear if and how a shift in the gender distribution, which we call gender mobility, between occupations will be effected. It is expected that the skills-based matching approach will likely be data-driven, including computational language models and supervised learning methods.
+  This work, first, shows the presence of gender segregation in language model-based skills representation of occupations. Second, we assess the use of these representations in a potential application based on simulated data, and show that the gender segregation is propagated by various data-driven skills-based matching models.These models are based on different language representations (bag of words, word2vec, and BERT), and distance metrics (static and machine learning-based). Accordingly, we show how skills-based matching approaches can be evaluated and compared on matching performance as well as on the risk of gender segregation. Making the gender segregation bias of models more explicit can help in generating healthy trust in the use of these models in practice.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-17T10:06:21Z</published>
+    <arxiv:comment>This paper was presented during the AAAI Spring Symposium 2023 (AI Trustworthiness Assessment (AITA) track)</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Ajaya Adhikari</name>
+    </author>
+    <author>
+      <name>Steven Vethman</name>
+    </author>
+    <author>
+      <name>Daan Vos</name>
+    </author>
+    <author>
+      <name>Marc Lenz</name>
+    </author>
+    <author>
+      <name>Ioana Cocu</name>
+    </author>
+    <author>
+      <name>Ioannis Tolios</name>
+    </author>
+    <author>
+      <name>Cor J. Veenman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.20371v3</id>
+    <title>Gender, Race, and Intersectional Bias in Resume Screening via Language Model Retrieval</title>
+    <updated>2026-08-30T00:33:50Z</updated>
+    <link href="https://arxiv.org/abs/2407.20371v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.20371v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Artificial intelligence (AI) hiring tools have revolutionized resume screening, and large language models (LLMs) have the potential to do the same. However, given the biases which are embedded within LLMs, it is unclear whether they can be used in this scenario without disadvantaging groups based on their protected attributes. In this work, we investigate the possibilities of using LLMs in a resume screening setting via a document retrieval framework that simulates job candidate selection. Using that framework, we then perform a resume audit study to determine whether a selection of Massive Text Embedding (MTE) models are biased in resume screening scenarios. We simulate this for nine occupations, using a collection of over 500 publicly available resumes and 500 job descriptions. We find that the MTEs are biased, significantly favoring White-associated names in 85.1\% of cases and female-associated names in only 11.1\% of cases, with a minority of cases showing no statistically significant differences. Further analyses show that Black males are disadvantaged in up to 100\% of cases, replicating real-world patterns of bias in employment settings, and validate three hypotheses of intersectionality. We also find an impact of document length as well as the corpus frequency of names in the selection of resumes. These findings have implications for widely used AI tools that are automating employment, fairness, and tech policy.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-29T18:42:39Z</published>
+    <arxiv:comment>Proceedings of the 2024 AAAI/ACM Conference on AI, Ethics, and Society; code available at https://github.com/kyrawilson/Resume-Screening-Bias Revised 8/29/2026 to include errata description Revised 8/29/2026 to include description of errata</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Kyra Wilson</name>
+    </author>
+    <author>
+      <name>Aylin Caliskan</name>
+    </author>
+    <arxiv:doi>10.1609/aies.v7i1.31748</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1609/aies.v7i1.31748" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.00154v1</id>
+    <title>Rethinking travel behavior modeling representations through embeddings</title>
+    <updated>2019-08-31T07:05:43Z</updated>
+    <link href="https://arxiv.org/abs/1909.00154v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.00154v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper introduces the concept of travel behavior embeddings, a method for re-representing discrete variables that are typically used in travel demand modeling, such as mode, trip purpose, education level, family type or occupation. This re-representation process essentially maps those variables into a latent space called the \emph{embedding space}. The benefit of this is that such spaces allow for richer nuances than the typical transformations used in categorical variables (e.g. dummy encoding, contrasted encoding, principal components analysis). While the usage of latent variable representations is not new per se in travel demand modeling, the idea presented here brings several innovations: it is an entirely data driven algorithm; it is informative and consistent, since the latent space can be visualized and interpreted based on distances between different categories; it preserves interpretability of coefficients, despite being based on Neural Network principles; and it is transferrable, in that embeddings learned from one dataset can be reused for other ones, as long as travel behavior keeps consistent between the datasets.
+  The idea is strongly inspired on natural language processing techniques, namely the word2vec algorithm. Such algorithm is behind recent developments such as in automatic translation or next word prediction. Our method is demonstrated using a model choice model, and shows improvements of up to 60\% with respect to initial likelihood, and up to 20% with respect to likelihood of the corresponding traditional model (i.e. using dummy variables) in out-of-sample evaluation. We provide a new Python package, called PyTre (PYthon TRavel Embeddings), that others can straightforwardly use to replicate our results or improve their own models. Our experiments are themselves based on an open dataset (swissmetro).</summary>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-08-31T07:05:43Z</published>
+    <arxiv:primary_category term="econ.EM"/>
+    <author>
+      <name>Francisco C. Pereira</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.22249v1</id>
+    <title>Pushing the Performance Envelope of DNN-based Recommendation Systems Inference on GPUs</title>
+    <updated>2024-10-29T17:13:54Z</updated>
+    <link href="https://arxiv.org/abs/2410.22249v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.22249v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Personalized recommendation is a ubiquitous application on the internet, with many industries and hyperscalers extensively leveraging Deep Learning Recommendation Models (DLRMs) for their personalization needs (like ad serving or movie suggestions). With growing model and dataset sizes pushing computation and memory requirements, GPUs are being increasingly preferred for executing DLRM inference. However, serving newer DLRMs, while meeting acceptable latencies, continues to remain challenging, making traditional deployments increasingly more GPU-hungry, resulting in higher inference serving costs. In this paper, we show that the embedding stage continues to be the primary bottleneck in the GPU inference pipeline, leading up to a 3.2x embedding-only performance slowdown.
+  To thoroughly grasp the problem, we conduct a detailed microarchitecture characterization and highlight the presence of low occupancy in the standard embedding kernels. By leveraging direct compiler optimizations, we achieve optimal occupancy, pushing the performance by up to 53%. Yet, long memory latency stalls continue to exist. To tackle this challenge, we propose specialized plug-and-play-based software prefetching and L2 pinning techniques, which help in hiding and decreasing the latencies. Further, we propose combining them, as they complement each other. Experimental evaluations using A100 GPUs with large models and datasets show that our proposed techniques improve performance by up to 103% for the embedding stage, and up to 77% for the overall DLRM inference pipeline.</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.PF" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-29T17:13:54Z</published>
+    <arxiv:comment>This work has been accepted in the 57th MICRO (https://microarch.org/micro57/program/). Please check appendix for details on reproducing our work including codebase and steps</arxiv:comment>
+    <arxiv:primary_category term="cs.AR"/>
+    <author>
+      <name>Rishabh Jain</name>
+    </author>
+    <author>
+      <name>Vivek M. Bhasi</name>
+    </author>
+    <author>
+      <name>Adwait Jog</name>
+    </author>
+    <author>
+      <name>Anand Sivasubramaniam</name>
+    </author>
+    <author>
+      <name>Mahmut T. Kandemir</name>
+    </author>
+    <author>
+      <name>Chita R. Das</name>
+    </author>
+  </entry>
+</feed>

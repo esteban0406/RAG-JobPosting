@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/oAJBcTzbXmvrFd3c3Jx4J/YqjFw</id>
+  <title>arXiv Query: search_query=(abs:pooling OR abs:"incomplete judgments" OR abs:"unjudged documents") AND (abs:"test collection") AND (abs:retrieval) AND (cat:cs.IR OR cat:cs.CL) AND submittedDate:"201901010000 TO 202612312359"&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-11-17T03:11:19Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(abs:pooling+OR+(abs:%22incomplete+judgments%22+OR+abs:%22unjudged+documents%22))+AND+(abs:%22test+collection%22+AND+(abs:retrieval+AND+((cat:cs.IR+OR+cat:cs.CL)+AND+submittedDate:%22201901010000+TO+202612312359%22)))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>13</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2510.04633v2</id>
+    <title>Topic-Specific Classifiers are Better Relevance Judges than Prompted LLMs</title>
+    <updated>2026-01-23T14:11:22Z</updated>
+    <link href="https://arxiv.org/abs/2510.04633v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.04633v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The unjudged document problem, where systems that did not contribute to the original judgement pool may retrieve documents without a relevance judgement, is a key obstacle to the reuseability of test collections in information retrieval. While the de facto standard to deal with the problem is to treat unjudged documents as non-relevant, many alternatives have been proposed, such as the use of large language models (LLMs) as a relevance judge (LLM-as-a-judge). However, this has been criticized, among other things, as circular, since the same LLM can be used as the ranker and the judge. We propose to train topic-specific relevance classifiers instead: By finetuning monoT5 with independent LoRA weight adaptation on the judgments of a single assessor for a single topic's pool, we align it to that assessor's notion of relevance for the topic. The system rankings obtained through our classifier's relevance judgments achieve a Spearmans' $ρ$ correlation of $&gt;0.94$ with ground truth system rankings. As little as 128 initial human judgments per topic suffice to improve the comparability of models, compared to treating unjudged documents as non-relevant, while achieving more reliability than existing LLM-as-a-judge approaches. Topic-specific relevance classifiers are thus a lightweight and straightforward way to tackle the unjudged document problem, while maintaining human judgments as the gold standard for retrieval evaluation. Code, models, and data are made openly available.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-06T09:38:13Z</published>
+    <arxiv:comment>10 pages, 3 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Lukas Gienapp</name>
+    </author>
+    <author>
+      <name>Martin Potthast</name>
+    </author>
+    <author>
+      <name>Andrew Yates</name>
+    </author>
+    <author>
+      <name>Harrisen Scells</name>
+    </author>
+    <author>
+      <name>Eugene Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2004.13486v1</id>
+    <title>On the Reliability of Test Collections for Evaluating Systems of Different Types</title>
+    <updated>2020-04-28T13:22:26Z</updated>
+    <link href="https://arxiv.org/abs/2004.13486v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.13486v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As deep learning based models are increasingly being used for information retrieval (IR), a major challenge is to ensure the availability of test collections for measuring their quality. Test collections are generated based on pooling results of various retrieval systems, but until recently this did not include deep learning systems. This raises a major challenge for reusable evaluation: Since deep learning based models use external resources (e.g. word embeddings) and advanced representations as opposed to traditional methods that are mainly based on lexical similarity, they may return different types of relevant document that were not identified in the original pooling. If so, test collections constructed using traditional methods are likely to lead to biased and unfair evaluation results for deep learning (neural) systems. This paper uses simulated pooling to test the fairness and reusability of test collections, showing that pooling based on traditional systems only can lead to biased evaluation of deep learning systems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-28T13:22:26Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Emine Yilmaz</name>
+    </author>
+    <author>
+      <name>Nick Craswell</name>
+    </author>
+    <author>
+      <name>Bhaskar Mitra</name>
+    </author>
+    <author>
+      <name>Daniel Campos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.13292v3</id>
+    <title>Understanding and Predicting Characteristics of Test Collections in Information Retrieval</title>
+    <updated>2022-06-05T23:44:25Z</updated>
+    <link href="https://arxiv.org/abs/2012.13292v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.13292v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Research community evaluations in information retrieval, such as NIST's Text REtrieval Conference (TREC), build reusable test collections by pooling document rankings submitted by many teams. Naturally, the quality of the resulting test collection thus greatly depends on the number of participating teams and the quality of their submitted runs. In this work, we investigate: i) how the number of participants, coupled with other factors, affects the quality of a test collection; and ii) whether the quality of a test collection can be inferred prior to collecting relevance judgments from human assessors. Experiments conducted on six TREC collections illustrate how the number of teams interacts with various other factors to influence the resulting quality of test collections. We also show that the reusability of a test collection can be predicted with high accuracy when the same document collection is used for successive years in an evaluation campaign, as is common in TREC.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-24T15:26:52Z</published>
+    <arxiv:comment>Accepted as a full paper at iConference 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Md Mustafizur Rahman</name>
+    </author>
+    <author>
+      <name>Mucahid Kutlu</name>
+    </author>
+    <author>
+      <name>Matthew Lease</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.11752v1</id>
+    <title>Query-specific Variable Depth Pooling via Query Performance Prediction towards Reducing Relevance Assessment Effort</title>
+    <updated>2023-04-23T21:36:49Z</updated>
+    <link href="https://arxiv.org/abs/2304.11752v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.11752v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Due to the massive size of test collections, a standard practice in IR evaluation is to construct a 'pool' of candidate relevant documents comprised of the top-k documents retrieved by a wide range of different retrieval systems - a process called depth-k pooling. A standard practice is to set the depth (k) to a constant value for each query constituting the benchmark set. However, in this paper we argue that the annotation effort can be substantially reduced if the depth of the pool is made a variable quantity for each query, the rationale being that the number of documents relevant to the information need can widely vary across queries. Our hypothesis is that a lower depth for the former class of queries and a higher depth for the latter can potentially reduce the annotation effort without a significant change in retrieval effectiveness evaluation. We make use of standard query performance prediction (QPP) techniques to estimate the number of potentially relevant documents for each query, which is then used to determine the depth of the pool. Our experiments conducted on standard test collections demonstrate that this proposed method of employing query-specific variable depths is able to adequately reflect the relative effectiveness of IR systems with a substantially smaller annotation effort.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-23T21:36:49Z</published>
+    <arxiv:comment>To appear in SIGIR 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Debasis Ganguly</name>
+    </author>
+    <author>
+      <name>Emine Yilmaz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2011.00479v1</id>
+    <title>Cheap IR Evaluation: Fewer Topics, No Relevance Judgements, and Crowdsourced Assessments</title>
+    <updated>2020-11-01T11:22:05Z</updated>
+    <link href="https://arxiv.org/abs/2011.00479v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2011.00479v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To evaluate Information Retrieval (IR) effectiveness, a possible approach is to use test collections, which are composed of a collection of documents, a set of description of information needs (called topics), and a set of relevant documents to each topic. Test collections are modelled in a competition scenario: for example, in the well known TREC initiative, participants run their own retrieval systems over a set of topics and they provide a ranked list of retrieved documents; some of the retrieved documents (usually the first ranked) constitute the so called pool, and their relevance is evaluated by human assessors; the document list is then used to compute effectiveness metrics and rank the participant systems. Private Web Search companies also run their in-house evaluation exercises; although the details are mostly unknown, and the aims are somehow different, the overall approach shares several issues with the test collection approach.
+  The aim of this work is to: (i) develop and improve some state-of-the-art work on the evaluation of IR effectiveness while saving resources, and (ii) propose a novel, more principled and engineered, overall approach to test collection based effectiveness evaluation.
+  [...]</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-11-01T11:22:05Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Kevin Roitero</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.06936v1</id>
+    <title>TripJudge: A Relevance Judgement Test Collection for TripClick Health Retrieval</title>
+    <updated>2022-08-14T23:11:25Z</updated>
+    <link href="https://arxiv.org/abs/2208.06936v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.06936v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Robust test collections are crucial for Information Retrieval research. Recently there is a growing interest in evaluating retrieval systems for domain-specific retrieval tasks, however these tasks often lack a reliable test collection with human-annotated relevance assessments following the Cranfield paradigm. In the medical domain, the TripClick collection was recently proposed, which contains click log data from the Trip search engine and includes two click-based test sets. However the clicks are biased to the retrieval model used, which remains unknown, and a previous study shows that the test sets have a low judgement coverage for the Top-10 results of lexical and neural retrieval models. In this paper we present the novel, relevance judgement test collection TripJudge for TripClick health retrieval. We collect relevance judgements in an annotation campaign and ensure the quality and reusability of TripJudge by a variety of ranking methods for pool creation, by multiple judgements per query-document pair and by an at least moderate inter-annotator agreement. We compare system evaluation with TripJudge and TripClick and find that that click and judgement-based evaluation can lead to substantially different system rankings.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-14T23:11:25Z</published>
+    <arxiv:comment>To be published at CIKM 2022 as resource paper</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Sophia Althammer</name>
+    </author>
+    <author>
+      <name>Sebastian Hofstätter</name>
+    </author>
+    <author>
+      <name>Suzan Verberne</name>
+    </author>
+    <author>
+      <name>Allan Hanbury</name>
+    </author>
+    <arxiv:doi>10.1145/3511808.3557714</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3511808.3557714" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.11086v1</id>
+    <title>Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?</title>
+    <updated>2022-01-26T17:47:51Z</updated>
+    <link href="https://arxiv.org/abs/2201.11086v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.11086v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural retrieval models are generally regarded as fundamentally different from the retrieval techniques used in the late 1990's when the TREC ad hoc test collections were constructed. They thus provide the opportunity to empirically test the claim that pooling-built test collections can reliably evaluate retrieval systems that did not contribute to the construction of the collection (in other words, that such collections can be reusable). To test the reusability claim, we asked TREC assessors to judge new pools created from new search results for the TREC-8 ad hoc collection. These new search results consisted of five new runs (one each from three transformer-based models and two baseline runs that use BM25) plus the set of TREC-8 submissions that did not previously contribute to pools. The new runs did retrieve previously unseen documents, but the vast majority of those documents were not relevant. The ranking of all runs by mean evaluation score when evaluated using the official TREC-8 relevance judgment set and the newly expanded relevance set are almost identical, with Kendall's tau correlations greater than 0.99. Correlations for individual topics are also high. The TREC-8 ad hoc collection was originally constructed using deep pools over a diverse set of runs, including several effective manual runs. Its judgment budget, and hence construction cost, was relatively large. However, it does appear that the expense was well-spent: even with the advent of neural techniques, the collection has stood the test of time and remains a reliable evaluation instrument as retrieval techniques have advanced.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-26T17:47:51Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ellen M. Voorhees</name>
+    </author>
+    <author>
+      <name>Ian Soboroff</name>
+    </author>
+    <author>
+      <name>Jimmy Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.12906v3</id>
+    <title>CSFCube -- A Test Collection of Computer Science Research Articles for Faceted Query by Example</title>
+    <updated>2021-11-07T15:06:54Z</updated>
+    <link href="https://arxiv.org/abs/2103.12906v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.12906v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Query by Example is a well-known information retrieval task in which a document is chosen by the user as the search query and the goal is to retrieve relevant documents from a large collection. However, a document often covers multiple aspects of a topic. To address this scenario we introduce the task of faceted Query by Example in which users can also specify a finer grained aspect in addition to the input query document. We focus on the application of this task in scientific literature search. We envision models which are able to retrieve scientific papers analogous to a query scientific paper along specifically chosen rhetorical structure elements as one solution to this problem. In this work, the rhetorical structure elements, which we refer to as facets, indicate objectives, methods, or results of a scientific paper. We introduce and describe an expert annotated test collection to evaluate models trained to perform this task. Our test collection consists of a diverse set of 50 query documents in English, drawn from computational linguistics and machine learning venues. We carefully follow the annotation guideline used by TREC for depth-k pooling (k = 100 or 250) and the resulting data collection consists of graded relevance scores with high annotation agreement. State of the art models evaluated on our dataset show a significant gap to be closed in further work. Our dataset may be accessed here: https://github.com/iesl/CSFCube</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-24T01:02:12Z</published>
+    <arxiv:comment>Accepted to the NeurIPS 2021 Track on Datasets and Benchmarks</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Sheshera Mysore</name>
+    </author>
+    <author>
+      <name>Tim O'Gorman</name>
+    </author>
+    <author>
+      <name>Andrew McCallum</name>
+    </author>
+    <author>
+      <name>Hamed Zamani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.09992v1</id>
+    <title>HC4: A New Suite of Test Collections for Ad Hoc CLIR</title>
+    <updated>2022-01-24T22:52:11Z</updated>
+    <link href="https://arxiv.org/abs/2201.09992v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.09992v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>HC4 is a new suite of test collections for ad hoc Cross-Language Information Retrieval (CLIR), with Common Crawl News documents in Chinese, Persian, and Russian, topics in English and in the document languages, and graded relevance judgments. New test collections are needed because existing CLIR test collections built using pooling of traditional CLIR runs have systematic gaps in their relevance judgments when used to evaluate neural CLIR methods. The HC4 collections contain 60 topics and about half a million documents for each of Chinese and Persian, and 54 topics and five million documents for Russian. Active learning was used to determine which documents to annotate after being seeded using interactive search and judgment. Documents were judged on a three-grade relevance scale. This paper describes the design and construction of the new test collections and provides baseline results for demonstrating their utility for evaluating systems.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-24T22:52:11Z</published>
+    <arxiv:comment>16 pages, 2 figures, accepted at ECIR 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Dawn Lawrie</name>
+    </author>
+    <author>
+      <name>James Mayfield</name>
+    </author>
+    <author>
+      <name>Douglas Oard</name>
+    </author>
+    <author>
+      <name>Eugene Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.05600v1</id>
+    <title>Can We Use Large Language Models to Fill Relevance Judgment Holes?</title>
+    <updated>2024-05-09T07:39:19Z</updated>
+    <link href="https://arxiv.org/abs/2405.05600v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.05600v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Incomplete relevance judgments limit the re-usability of test collections. When new systems are compared against previous systems used to build the pool of judged documents, they often do so at a disadvantage due to the ``holes'' in test collection (i.e., pockets of un-assessed documents returned by the new system). In this paper, we take initial steps towards extending existing test collections by employing Large Language Models (LLM) to fill the holes by leveraging and grounding the method using existing human judgments. We explore this problem in the context of Conversational Search using TREC iKAT, where information needs are highly dynamic and the responses (and, the results retrieved) are much more varied (leaving bigger holes). While previous work has shown that automatic judgments from LLMs result in highly correlated rankings, we find substantially lower correlates when human plus automatic judgments are used (regardless of LLM, one/two/few shot, or fine-tuned). We further find that, depending on the LLM employed, new runs will be highly favored (or penalized), and this effect is magnified proportionally to the size of the holes. Instead, one should generate the LLM annotations on the whole document pool to achieve more consistent rankings with human-generated labels. Future work is required to prompt engineering and fine-tuning LLMs to reflect and represent the human annotations, in order to ground and align the models, such that they are more fit for purpose.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-09T07:39:19Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Zahra Abbasiantaeb</name>
+    </author>
+    <author>
+      <name>Chuan Meng</name>
+    </author>
+    <author>
+      <name>Leif Azzopardi</name>
+    </author>
+    <author>
+      <name>Mohammad Aliannejadi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.13777v1</id>
+    <title>SciFact-Open: Towards open-domain scientific claim verification</title>
+    <updated>2022-10-25T05:45:00Z</updated>
+    <link href="https://arxiv.org/abs/2210.13777v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.13777v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While research on scientific claim verification has led to the development of powerful systems that appear to approach human performance, these approaches have yet to be tested in a realistic setting against large corpora of scientific literature. Moving to this open-domain evaluation setting, however, poses unique challenges; in particular, it is infeasible to exhaustively annotate all evidence documents. In this work, we present SciFact-Open, a new test collection designed to evaluate the performance of scientific claim verification systems on a corpus of 500K research abstracts. Drawing upon pooling techniques from information retrieval, we collect evidence for scientific claims by pooling and annotating the top predictions of four state-of-the-art scientific claim verification models. We find that systems developed on smaller corpora struggle to generalize to SciFact-Open, exhibiting performance drops of at least 15 F1. In addition, analysis of the evidence in SciFact-Open reveals interesting phenomena likely to appear when claim verification systems are deployed in practice, e.g., cases where the evidence supports only a special case of the claim. Our dataset is available at https://github.com/dwadden/scifact-open.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-25T05:45:00Z</published>
+    <arxiv:comment>EMNLP Findings 2022. GitHub: https://github.com/dwadden/scifact-open-2022</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>David Wadden</name>
+    </author>
+    <author>
+      <name>Kyle Lo</name>
+    </author>
+    <author>
+      <name>Bailey Kuehl</name>
+    </author>
+    <author>
+      <name>Arman Cohan</name>
+    </author>
+    <author>
+      <name>Iz Beltagy</name>
+    </author>
+    <author>
+      <name>Lucy Lu Wang</name>
+    </author>
+    <author>
+      <name>Hannaneh Hajishirzi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.09632v1</id>
+    <title>Searching for Scientific Evidence in a Pandemic: An Overview of TREC-COVID</title>
+    <updated>2021-04-19T20:49:45Z</updated>
+    <link href="https://arxiv.org/abs/2104.09632v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.09632v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an overview of the TREC-COVID Challenge, an information retrieval (IR) shared task to evaluate search on scientific literature related to COVID-19. The goals of TREC-COVID include the construction of a pandemic search test collection and the evaluation of IR methods for COVID-19. The challenge was conducted over five rounds from April to July, 2020, with participation from 92 unique teams and 556 individual submissions. A total of 50 topics (sets of related queries) were used in the evaluation, starting at 30 topics for Round 1 and adding 5 new topics per round to target emerging topics at that state of the still-emerging pandemic. This paper provides a comprehensive overview of the structure and results of TREC-COVID. Specifically, the paper provides details on the background, task structure, topic structure, corpus, participation, pooling, assessment, judgments, results, top-performing systems, lessons learned, and benchmark datasets.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-19T20:49:45Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Kirk Roberts</name>
+    </author>
+    <author>
+      <name>Tasmeer Alam</name>
+    </author>
+    <author>
+      <name>Steven Bedrick</name>
+    </author>
+    <author>
+      <name>Dina Demner-Fushman</name>
+    </author>
+    <author>
+      <name>Kyle Lo</name>
+    </author>
+    <author>
+      <name>Ian Soboroff</name>
+    </author>
+    <author>
+      <name>Ellen Voorhees</name>
+    </author>
+    <author>
+      <name>Lucy Lu Wang</name>
+    </author>
+    <author>
+      <name>William R Hersh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.09775v3</id>
+    <title>An Information Retrieval Approach to Building Datasets for Hate Speech Detection</title>
+    <updated>2021-11-10T01:40:51Z</updated>
+    <link href="https://arxiv.org/abs/2106.09775v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.09775v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building a benchmark dataset for hate speech detection presents various challenges. Firstly, because hate speech is relatively rare, random sampling of tweets to annotate is very inefficient in finding hate speech. To address this, prior datasets often include only tweets matching known "hate words". However, restricting data to a pre-defined vocabulary may exclude portions of the real-world phenomenon we seek to model. A second challenge is that definitions of hate speech tend to be highly varying and subjective. Annotators having diverse prior notions of hate speech may not only disagree with one another but also struggle to conform to specified labeling guidelines. Our key insight is that the rarity and subjectivity of hate speech are akin to that of relevance in information retrieval (IR). This connection suggests that well-established methodologies for creating IR test collections can be usefully applied to create better benchmark datasets for hate speech. To intelligently and efficiently select which tweets to annotate, we apply standard IR techniques of {\em pooling} and {\em active learning}. To improve both consistency and value of annotations, we apply {\em task decomposition} and {\em annotator rationale} techniques. We share a new benchmark dataset for hate speech detection on Twitter that provides broader coverage of hate than prior datasets. We also show a dramatic drop in accuracy of existing detection models when tested on these broader forms of hate. Annotator rationales we collect not only justify labeling decisions but also enable future work opportunities for dual-supervision and/or explanation generation in modeling. Further details of our approach can be found in the supplementary materials.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-17T19:25:39Z</published>
+    <arxiv:comment>Accepted as a full paper at 35th Conference on Neural Information Processing Systems (NeurIPS 2021) Track on Datasets and Benchmarks. (https://openreview.net/group?id=NeurIPS.cc/2021/Track/Datasets_and_Benchmarks/Round2)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Md Mustafizur Rahman</name>
+    </author>
+    <author>
+      <name>Dinesh Balakrishnan</name>
+    </author>
+    <author>
+      <name>Dhiraj Murthy</name>
+    </author>
+    <author>
+      <name>Mucahid Kutlu</name>
+    </author>
+    <author>
+      <name>Matthew Lease</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,7 @@
+# Recursos que el navegador guarda junto a cada página (imágenes, scripts): no hacen falta.
+*_files/
+# Textos completos descargados para E4 (no se versionan; se citan por DOI o arXiv).
+textos/
+# Páginas de resultados guardadas por el autor (13 MB): se conservan en local; lo versionado es la extracción (resultados-scholar-acm.csv).
+google scholar/
+ACM Library/
