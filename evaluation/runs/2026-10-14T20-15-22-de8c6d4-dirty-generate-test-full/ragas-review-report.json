@@ -1,0 +1,299 @@
+{
+  "labels": [
+    "evaluation/runs/2026-10-14T20-15-22-de8c6d4-dirty-generate-test-full/review1-rev.csv",
+    "evaluation/runs/2026-10-14T20-15-22-de8c6d4-dirty-generate-test-full/ragas-review-parte2-labels.csv"
+  ],
+  "source": {
+    "en-no-01": "review1-rev",
+    "es-ex-07": "review1-rev",
+    "en-co-09": "review1-rev",
+    "es-no-04": "review1-rev",
+    "en-no-03": "review1-rev",
+    "en-sv-08": "review1-rev",
+    "en-co-04": "review1-rev",
+    "en-no-14": "review1-rev",
+    "en-ex-08": "review1-rev",
+    "es-sv-04": "review1-rev",
+    "en-co-01": "review1-rev",
+    "es-co-06": "ragas-review-parte2-labels",
+    "en-co-08": "ragas-review-parte2-labels",
+    "es-ex-03": "ragas-review-parte2-labels",
+    "en-sv-03": "ragas-review-parte2-labels",
+    "en-ex-04": "ragas-review-parte2-labels",
+    "en-no-02": "ragas-review-parte2-labels",
+    "en-sv-01": "ragas-review-parte2-labels",
+    "en-ex-05": "ragas-review-parte2-labels",
+    "en-sv-09": "ragas-review-parte2-labels"
+  },
+  "answers_per_reviewer": {
+    "review1-rev": 11,
+    "ragas-review-parte2-labels": 9
+  },
+  "agreement": [
+    {
+      "reviewers": [
+        "review1-rev",
+        "ragas-review-parte2-labels"
+      ],
+      "units": 20,
+      "exact_agreement": 0.7,
+      "kappa_three_way": 0.33333333333333315,
+      "units_S_or_N_in_both": 12,
+      "agreement_S_N": 1.0,
+      "kappa_S_N": NaN,
+      "confusion": {
+        "S/S": 12,
+        "S/N": 0,
+        "S/-": 5,
+        "N/S": 0,
+        "N/N": 0,
+        "N/-": 1,
+        "-/S": 0,
+        "-/N": 0,
+        "-/-": 2
+      }
+    }
+  ],
+  "n_answers": 20,
+  "units": {
+    "S": 359,
+    "N": 6,
+    "-": 62
+  },
+  "answers_with_unsupported": 6,
+  "human_mean": 0.9798724863845831,
+  "human": {
+    "en-no-01": 1.0,
+    "es-ex-07": 1.0,
+    "en-co-09": 0.9,
+    "es-no-04": 0.9545454545454546,
+    "en-no-03": 1.0,
+    "en-sv-08": 1.0,
+    "en-co-04": 0.9285714285714286,
+    "en-no-14": 0.967741935483871,
+    "en-ex-08": 0.9375,
+    "es-sv-04": 1.0,
+    "en-co-01": 0.9090909090909091,
+    "es-co-06": 1.0,
+    "en-co-08": 1.0,
+    "es-ex-03": 1.0,
+    "en-sv-03": 1.0,
+    "en-ex-04": 1.0,
+    "en-no-02": 1.0,
+    "en-sv-01": 1.0,
+    "en-ex-05": 1.0,
+    "en-sv-09": 1.0
+  },
+  "unsupported": [
+    {
+      "queryId": "en-co-09",
+      "reviewer": "review1-rev",
+      "unit": "Based on the provided job postings, here are the Engineering Manager roles with a salary range exceeding $200,000:"
+    },
+    {
+      "queryId": "es-no-04",
+      "reviewer": "review1-rev",
+      "unit": "Requisitos clave: 5+ años de experiencia en ventas SaaS de ciclo completo, enfoque en nuevos negocios a nivel empresarial (Fortune 1000/Global 5000)."
+    },
+    {
+      "queryId": "en-co-04",
+      "reviewer": "review1-rev",
+      "unit": "Based on the job postings provided, here are the Senior Product Designer roles that are remote and offer a salary of at least $140,000:"
+    },
+    {
+      "queryId": "en-no-14",
+      "reviewer": "review1-rev",
+      "unit": "Key Skills: Advanced modeling, enterprise planning tools (Pigment, Adaptive, Workday), accounting fundamentals (accruals, close cycle)."
+    },
+    {
+      "queryId": "en-ex-08",
+      "reviewer": "review1-rev",
+      "unit": "Based on the provided job postings, here are the roles specifically focused on Salesforce Development:"
+    },
+    {
+      "queryId": "en-co-01",
+      "reviewer": "review1-rev",
+      "unit": "Based on the job postings provided, here are the remote Python backend roles with a salary range that exceeds $150,000:"
+    }
+  ],
+  "judges": {
+    "ragas-gpt-6-sol_reasoning_none_temperature_0": {
+      "n": 20,
+      "judge_mean": 0.9368235574776992,
+      "human_mean": 0.9798724863845831,
+      "mean_abs_diff": 0.06069582352958507,
+      "pearson": -0.1320892877017851,
+      "per_answer": {
+        "en-no-01": {
+          "human": 1.0,
+          "judge": 1.0
+        },
+        "es-ex-07": {
+          "human": 1.0,
+          "judge": 0.8636363636363636
+        },
+        "en-co-09": {
+          "human": 0.9,
+          "judge": 0.9230769230769231
+        },
+        "es-no-04": {
+          "human": 0.9545454545454546,
+          "judge": 0.8787878787878788
+        },
+        "en-no-03": {
+          "human": 1.0,
+          "judge": 0.78125
+        },
+        "en-sv-08": {
+          "human": 1.0,
+          "judge": 1.0
+        },
+        "en-co-04": {
+          "human": 0.9285714285714286,
+          "judge": 0.9333333333333333
+        },
+        "en-no-14": {
+          "human": 0.967741935483871,
+          "judge": 1.0
+        },
+        "en-ex-08": {
+          "human": 0.9375,
+          "judge": 0.9629629629629629
+        },
+        "es-sv-04": {
+          "human": 1.0,
+          "judge": 0.9615384615384616
+        },
+        "en-co-01": {
+          "human": 0.9090909090909091,
+          "judge": 1.0
+        },
+        "es-co-06": {
+          "human": 1.0,
+          "judge": 0.8666666666666667
+        },
+        "en-co-08": {
+          "human": 1.0,
+          "judge": 0.9285714285714286
+        },
+        "es-ex-03": {
+          "human": 1.0,
+          "judge": 1.0
+        },
+        "en-sv-03": {
+          "human": 1.0,
+          "judge": 0.88
+        },
+        "en-ex-04": {
+          "human": 1.0,
+          "judge": 0.9565217391304348
+        },
+        "en-no-02": {
+          "human": 1.0,
+          "judge": 1.0
+        },
+        "en-sv-01": {
+          "human": 1.0,
+          "judge": 0.9090909090909091
+        },
+        "en-ex-05": {
+          "human": 1.0,
+          "judge": 0.9310344827586207
+        },
+        "en-sv-09": {
+          "human": 1.0,
+          "judge": 0.96
+        }
+      }
+    },
+    "ragas-llama3.1_8b-ctx16k": {
+      "n": 20,
+      "judge_mean": 0.7418498935275251,
+      "human_mean": 0.9798724863845831,
+      "mean_abs_diff": 0.24960989444435966,
+      "pearson": -0.09721702118315487,
+      "per_answer": {
+        "en-no-01": {
+          "human": 1.0,
+          "judge": 0.16666666666666666
+        },
+        "es-ex-07": {
+          "human": 1.0,
+          "judge": 0.23076923076923078
+        },
+        "en-co-09": {
+          "human": 0.9,
+          "judge": 1.0
+        },
+        "es-no-04": {
+          "human": 0.9545454545454546,
+          "judge": 0.85
+        },
+        "en-no-03": {
+          "human": 1.0,
+          "judge": 0.9090909090909091
+        },
+        "en-sv-08": {
+          "human": 1.0,
+          "judge": 0.9142857142857143
+        },
+        "en-co-04": {
+          "human": 0.9285714285714286,
+          "judge": 0.9444444444444444
+        },
+        "en-no-14": {
+          "human": 0.967741935483871,
+          "judge": 0.9047619047619048
+        },
+        "en-ex-08": {
+          "human": 0.9375,
+          "judge": 0.4
+        },
+        "es-sv-04": {
+          "human": 1.0,
+          "judge": 0.9444444444444444
+        },
+        "en-co-01": {
+          "human": 0.9090909090909091,
+          "judge": 0.6
+        },
+        "es-co-06": {
+          "human": 1.0,
+          "judge": 0.9444444444444444
+        },
+        "en-co-08": {
+          "human": 1.0,
+          "judge": 0.4
+        },
+        "es-ex-03": {
+          "human": 1.0,
+          "judge": 0.6666666666666666
+        },
+        "en-sv-03": {
+          "human": 1.0,
+          "judge": 1.0
+        },
+        "en-ex-04": {
+          "human": 1.0,
+          "judge": 0.6875
+        },
+        "en-no-02": {
+          "human": 1.0,
+          "judge": 0.8421052631578947
+        },
+        "en-sv-01": {
+          "human": 1.0,
+          "judge": 0.9090909090909091
+        },
+        "en-ex-05": {
+          "human": 1.0,
+          "judge": 0.75
+        },
+        "en-sv-09": {
+          "human": 1.0,
+          "judge": 0.7727272727272727
+        }
+      }
+    }
+  }
+}

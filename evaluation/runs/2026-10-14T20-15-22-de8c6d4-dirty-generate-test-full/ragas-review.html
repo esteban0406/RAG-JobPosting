@@ -127,6 +127,10 @@
 
 <h3 id="g-reglas">4. Casos dudosos</h3>
 <ol>
+<li><b>Solo importa si el dato está a la izquierda.</b> No marques N porque la oferta no encaje con la consulta, porque
+  el dato no te parezca útil para quien buscó, ni porque la respuesta deje fuera algo que la oferta sí dice: lo que la
+  respuesta <b>no</b> menciona no cuenta. Se juzga solo lo que la fila afirma. Si una oferta pide "Python, Docker y
+  AWS" y la fila dice "Python y AWS", es <b>S</b>.</li>
 <li><b>Toda la fila tiene que estar respaldada.</b> Si la fila dice varias cosas (por ejemplo, cinco habilidades) y
   una sola no aparece o es distinta, márcala <b>N</b>. Si quieres, anota en la nota de abajo qué parte faltaba.</li>
 <li><b>Busca en todas las ofertas de la izquierda</b> y en todas sus partes (encabezado, requisitos, responsabilidades,
@@ -317,7 +321,7 @@ function render() {
       b.onclick = ev => { ev.stopPropagation(); setLabel(k, cls === "X" ? "-" : cls); };
       btns.appendChild(b);
     });
-    const t = document.createElement("div"); t.textContent = u;
+    const t = document.createElement("div"); t.textContent = (k + 1) + ". " + u;
     row.appendChild(btns); row.appendChild(t);
     row.onclick = () => { cur = k; render(); highlight(u); };
     box.appendChild(row);
