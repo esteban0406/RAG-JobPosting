@@ -127,7 +127,7 @@ Páginas de `borradores/vista-previa-final.pdf` compilada el 25-nov (105 págs.)
 | D3 | Explicación de 0,820 frente a 0,832 (mismas listas y etiquetas; agrupamiento de 3 frente a 6 sistemas, 13,7 frente a 15,0 relevantes por consulta) | 50 |
 | D4 | Pie de la tabla 5.4 y párrafo: la selección se juzgó con el juez local (κ 0,508); el aporte del reordenamiento se confirmó con el juez final (+0,097). Verificado: las corridas `…18-22-24…-s1` y `…18-34-01…-s2` solo tienen `qrels.localhost_11434_llama3.1_8b` | 50 |
 | D5 | Sin cambio: se resuelve al etiquetar la versión entregada | 99 |
-| D6 | Fuera de este plan (E4) | — |
+| D6 | Resuelto el 25-nov (noche): nueva §3.1 «Búsqueda bibliográfica» y Anexo A.9 (cadenas, bases, cribado, criterios y las dos rondas de verificación); la frase de la p. 24 se apoya en los conteos de `busqueda/cribado.csv` (41 candidatos de empleo, 33 de 2025-2026, RAG/LLM desde 2024) y declara la lectura parcial del texto completo | 21, 22, 88-91 |
 | E1, E3 | «De los 1.977 pares … una muestra del 20 % (401 pares), estratificada … por la etiqueta del juez local, el único disponible al extraerla»; los 272 pares posteriores no están en la muestra | 37 |
 | E2 | Anexo A.8: salida de hasta 4.096 tokens (RAGAS fija 1.024 por defecto); el contexto cabe en la ventana del modelo; los 16.384 eran del juez local (D2) | 90 |
 
@@ -148,7 +148,7 @@ Lectura completa de los nueve archivos, a pedido del autor, buscando incoherenci
 
 **Verificado sin cambios:** cifras de la prosa de Resultados frente a las tablas generadas (PE2, iteraciones, latencia, agregación, restricciones); las dos figuras del Cap. 6, regeneradas desde la corrida E1 e idénticas píxel a píxel a las usadas; conteos de la taxonomía (5/4/3; silenciosas 4/4/2); referencias cruzadas (sin indefinidas).
 
-**Pendiente conocido, fuera de esta ronda:** la frase del Estado del arte sobre la búsqueda bibliográfica (D6, E4) y la etiqueta del repositorio (D5).
+**Pendiente conocido:** la etiqueta del repositorio (D5). D6 se resolvió después (ver la fila D6 de la sección G).
 
 ## Siguiente paso
 

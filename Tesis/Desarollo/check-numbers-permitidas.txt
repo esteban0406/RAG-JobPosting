@@ -222,3 +222,30 @@
 0,886 | M06 | fidelidad de la Iteración 2 en las mismas 18
 0,845 | M06 | relevancia de las 21 consultas en español respondidas en inglés (Iteración 1; idioma por palabras vacías; recalculado el 25-nov)
 0,910 | M06 | relevancia de las 4 respondidas en español
+
+# ---------------------------------------------------------------- búsqueda bibliográfica (Tesis/Desarollo/busqueda-bibliografica.md y busqueda/cribado.csv)
+1.847 | M03,B01 | resultados revisados (unión de las cuatro bases)
+1.395 | M03,B01 | registros únicos
+1.329 | B01 | registros dentro del periodo
+928 | B01 | excluidos por título
+401 | M03,B01 | quedan tras el título (coincide en valor con los pares de la muestra de kappa)
+264 | B01 | excluidos por resumen
+137 | M03,B01 | candidatos del asistente
+149 | M03,B01 | candidatos finales a texto completo (cribado.csv, decision_final)
+41 | M03,B01 | candidatos de la línea de empleo (cribado.csv)
+33 | M03 | candidatos de empleo de 2025 o 2026 (cribado.csv, year)
+263 | B01 | registros en más de una base
+520 | B01 | Google Scholar: 8 × 60 + 40
+450 | B01 | ACM DL: 9 × 50
+330 | B01 | arXiv: suma por cadena
+547 | B01 | Semantic Scholar: suma por cadena
+202 | B01 | resultados de C1 en Semantic Scholar
+0,743 | B01 | acuerdo de la primera ronda de cribado
+0,29 | B01 | kappa de la primera ronda de cribado
+48 | B01 | desacuerdos de la primera ronda
+43 | B01 | propuestas aceptadas por el autor
+0,80 | B01 | proporción confirmada en la segunda ronda (40 de 50)
+0,40 | B01 | proporción confirmada en la primera ronda (20 de 50)
+119 | B01 | candidatos del asistente sin desacuerdo
+66 | M03,B01 | registros fuera del periodo 2019-2026
+40 | B01 | resultados revisados de C3 en Google Scholar (falta su página 3); exclusiones confirmadas en la segunda ronda
