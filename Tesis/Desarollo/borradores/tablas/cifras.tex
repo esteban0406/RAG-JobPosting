@@ -1,0 +1,120 @@
+% Generado por evaluation/analysis/tables.py (cifras); no editar a mano.
+% Cifras clave de la prosa, con la misma fuente que las tablas de Resultados.
+
+\newcommand{\cNdcgCompleta}{0{,}816} % nDCG@10, qdrant-hybrid-rerank
+\newcommand{\cNdcgCompletaDos}{0{,}82} % nDCG@10, qdrant-hybrid-rerank, dos decimales
+\newcommand{\cNdcgCompletaEn}{\mbox{0.82}} % nDCG@10, qdrant-hybrid-rerank, inglés
+\newcommand{\cNdcgBM}{0{,}558} % nDCG@10, bm25
+\newcommand{\cNdcgBMDos}{0{,}56} % nDCG@10, bm25, dos decimales
+\newcommand{\cNdcgBMEn}{\mbox{0.56}} % nDCG@10, bm25, inglés
+\newcommand{\cNdcgDenso}{0{,}678} % nDCG@10, qdrant-hnsw
+\newcommand{\cNdcgDensoDos}{0{,}68} % nDCG@10, qdrant-hnsw, dos decimales
+\newcommand{\cNdcgDensoEn}{\mbox{0.68}} % nDCG@10, qdrant-hnsw, inglés
+\newcommand{\cNdcgIlike}{0{,}064} % nDCG@10, ilike
+\newcommand{\cNdcgIlikeDos}{0{,}06} % nDCG@10, ilike, dos decimales
+\newcommand{\cNdcgIlikeEn}{\mbox{0.06}} % nDCG@10, ilike, inglés
+\newcommand{\cNdcgFiltros}{0{,}723} % nDCG@10, qdrant-filtered
+\newcommand{\cNdcgFiltrosDos}{0{,}72} % nDCG@10, qdrant-filtered, dos decimales
+\newcommand{\cNdcgFiltrosEn}{\mbox{0.72}} % nDCG@10, qdrant-filtered, inglés
+\newcommand{\cNdcgHibrida}{0{,}719} % nDCG@10, qdrant-hybrid
+\newcommand{\cNdcgHibridaDos}{0{,}72} % nDCG@10, qdrant-hybrid, dos decimales
+\newcommand{\cNdcgHibridaEn}{\mbox{0.72}} % nDCG@10, qdrant-hybrid, inglés
+\newcommand{\cNdcgBMFiltros}{0{,}595} % nDCG@10, bm25-filtered
+\newcommand{\cNdcgBMFiltrosDos}{0{,}60} % nDCG@10, bm25-filtered, dos decimales
+\newcommand{\cNdcgBMFiltrosEn}{\mbox{0.60}} % nDCG@10, bm25-filtered, inglés
+\newcommand{\cNdcgBMFiltrosReord}{0{,}695} % nDCG@10, bm25-filtered-rerank
+\newcommand{\cNdcgBMFiltrosReordDos}{0{,}69} % nDCG@10, bm25-filtered-rerank, dos decimales
+\newcommand{\cNdcgBMFiltrosReordEn}{\mbox{0.69}} % nDCG@10, bm25-filtered-rerank, inglés
+\newcommand{\cNdcgCompletaSinHibrida}{0{,}824} % nDCG@10, qdrant-filtered-rerank
+\newcommand{\cNdcgCompletaSinHibridaDos}{0{,}82} % nDCG@10, qdrant-filtered-rerank, dos decimales
+\newcommand{\cNdcgCompletaSinHibridaEn}{\mbox{0.82}} % nDCG@10, qdrant-filtered-rerank, inglés
+\newcommand{\cNdcgCompletaSinFiltros}{0{,}792} % nDCG@10, qdrant-hybrid-rerank-nofilter
+\newcommand{\cNdcgCompletaSinFiltrosDos}{0{,}79} % nDCG@10, qdrant-hybrid-rerank-nofilter, dos decimales
+\newcommand{\cNdcgCompletaSinFiltrosEn}{\mbox{0.79}} % nDCG@10, qdrant-hybrid-rerank-nofilter, inglés
+\newcommand{\cDifCompletaBM}{\ensuremath{+0{,}258}} % completa frente a BM25
+\newcommand{\cDifCompletaBMIC}{\ensuremath{+0{,}258} [\ensuremath{+0{,}202}; \ensuremath{+0{,}315}]} % completa frente a BM25, con IC del 95 %
+\newcommand{\cDifDensoBM}{\ensuremath{+0{,}120}} % denso Qdrant HNSW frente a BM25
+\newcommand{\cDifFiltros}{\ensuremath{+0{,}045}} % escalera: qdrant-filtered frente a qdrant-hnsw
+\newcommand{\cDifFiltrosIC}{\ensuremath{+0{,}045} [\ensuremath{+0{,}017}; \ensuremath{+0{,}076}]} % escalera: qdrant-filtered frente a qdrant-hnsw, con IC del 95 %
+\newcommand{\cDifFiltrosDos}{\ensuremath{+0{,}04}} % escalera: qdrant-filtered frente a qdrant-hnsw, dos decimales
+\newcommand{\cDifFiltrosEn}{\mbox{+0.04}} % escalera: qdrant-filtered frente a qdrant-hnsw, inglés
+\newcommand{\cDifFiltrosEnTres}{\mbox{+0.045}} % escalera: qdrant-filtered frente a qdrant-hnsw, tres decimales, inglés
+\newcommand{\cDifHibrida}{\ensuremath{-0{,}004}} % escalera: qdrant-hybrid frente a qdrant-filtered
+\newcommand{\cDifHibridaIC}{\ensuremath{-0{,}004} [\ensuremath{-0{,}034}; \ensuremath{+0{,}027}]} % escalera: qdrant-hybrid frente a qdrant-filtered, con IC del 95 %
+\newcommand{\cDifReord}{\ensuremath{+0{,}097}} % escalera: qdrant-hybrid-rerank frente a qdrant-hybrid
+\newcommand{\cDifReordIC}{\ensuremath{+0{,}097} [\ensuremath{+0{,}070}; \ensuremath{+0{,}126}]} % escalera: qdrant-hybrid-rerank frente a qdrant-hybrid, con IC del 95 %
+\newcommand{\cDifReordDos}{\ensuremath{+0{,}10}} % escalera: qdrant-hybrid-rerank frente a qdrant-hybrid, dos decimales
+\newcommand{\cDifReordEn}{\mbox{+0.10}} % escalera: qdrant-hybrid-rerank frente a qdrant-hybrid, inglés
+\newcommand{\cDifReordEnTres}{\mbox{+0.097}} % escalera: qdrant-hybrid-rerank frente a qdrant-hybrid, tres decimales, inglés
+\newcommand{\cDifCompletaDenso}{\ensuremath{+0{,}138}} % escalera: qdrant-hybrid-rerank frente a qdrant-hnsw
+\newcommand{\cDifCompletaDensoIC}{\ensuremath{+0{,}138} [\ensuremath{+0{,}101}; \ensuremath{+0{,}178}]} % escalera: qdrant-hybrid-rerank frente a qdrant-hnsw, con IC del 95 %
+\newcommand{\cDifCompletaDensoDos}{\ensuremath{+0{,}14}} % escalera: qdrant-hybrid-rerank frente a qdrant-hnsw, dos decimales
+\newcommand{\cDifCompletaDensoEn}{\mbox{+0.14}} % escalera: qdrant-hybrid-rerank frente a qdrant-hnsw, inglés
+\newcommand{\cDifCompletaDensoEnTres}{\mbox{+0.138}} % escalera: qdrant-hybrid-rerank frente a qdrant-hnsw, tres decimales, inglés
+\newcommand{\cDifFiltrosRestr}{\ensuremath{+0{,}178}} % filtros en las consultas con restricciones (diferencia de medias)
+\newcommand{\cCumplDenso}{0{,}407} % C@5, qdrant-hnsw
+\newcommand{\cCumplDensoDos}{0{,}41} % C@5, qdrant-hnsw, dos decimales
+\newcommand{\cCumplDensoEn}{\mbox{0.41}} % C@5, qdrant-hnsw, inglés
+\newcommand{\cCumplFiltros}{0{,}953} % C@5, qdrant-filtered
+\newcommand{\cCumplFiltrosDos}{0{,}95} % C@5, qdrant-filtered, dos decimales
+\newcommand{\cCumplFiltrosEn}{\mbox{0.95}} % C@5, qdrant-filtered, inglés
+\newcommand{\cCumplCompleta}{0{,}973} % C@5, qdrant-hybrid-rerank
+\newcommand{\cCumplCompletaDos}{0{,}97} % C@5, qdrant-hybrid-rerank, dos decimales
+\newcommand{\cCumplCompletaEn}{\mbox{0.97}} % C@5, qdrant-hybrid-rerank, inglés
+\newcommand{\cCumplCompletaSinFiltros}{0{,}653} % C@5, qdrant-hybrid-rerank-nofilter
+\newcommand{\cCumplCompletaSinFiltrosDos}{0{,}65} % C@5, qdrant-hybrid-rerank-nofilter, dos decimales
+\newcommand{\cCumplCompletaSinFiltrosEn}{\mbox{0.65}} % C@5, qdrant-hybrid-rerank-nofilter, inglés
+\newcommand{\cCumplBM}{0{,}433} % C@5, bm25
+\newcommand{\cCumplBMDos}{0{,}43} % C@5, bm25, dos decimales
+\newcommand{\cCumplBMEn}{\mbox{0.43}} % C@5, bm25, inglés
+\newcommand{\cNdcgCompletaEs}{0{,}763} % nDCG@10 en español, completa
+\newcommand{\cNdcgCompletaEsDos}{0{,}76} % nDCG@10 en español, completa, dos decimales
+\newcommand{\cNdcgCompletaEsEn}{\mbox{0.76}} % nDCG@10 en español, completa, inglés
+\newcommand{\cNdcgBMEs}{0{,}334} % nDCG@10 en español, BM25
+\newcommand{\cNdcgBMEsDos}{0{,}33} % nDCG@10 en español, BM25, dos decimales
+\newcommand{\cNdcgBMEsEn}{\mbox{0.33}} % nDCG@10 en español, BM25, inglés
+\newcommand{\cNdcgBMEnParalela}{0{,}615} % nDCG@10 de las contrapartes en inglés, BM25
+\newcommand{\cNdcgBMEnParalelaDos}{0{,}62} % nDCG@10 de las contrapartes en inglés, BM25, dos decimales
+\newcommand{\cNdcgBMEnParalelaEn}{\mbox{0.62}} % nDCG@10 de las contrapartes en inglés, BM25, inglés
+\newcommand{\cNdcgBMFiltrosReordEnParalela}{0{,}763} % nDCG@10 de las contrapartes en inglés, BM25 + filtros + reordenamiento
+\newcommand{\cNdcgBMFiltrosReordEnParalelaDos}{0{,}76} % nDCG@10 de las contrapartes en inglés, BM25 + filtros + reordenamiento, dos decimales
+\newcommand{\cNdcgBMFiltrosReordEnParalelaEn}{\mbox{0.76}} % nDCG@10 de las contrapartes en inglés, BM25 + filtros + reordenamiento, inglés
+\newcommand{\cOfertas}{1.068} % ofertas del corpus congelado
+\newcommand{\cOfertasEn}{\mbox{1,068}} % ofertas del corpus congelado, inglés
+\newcommand{\cConsultasPrueba}{100} % consultas del conjunto de prueba
+\newcommand{\cConsultasRecuperacion}{85} % consultas de recuperación
+\newcommand{\cNecesidades}{60} % necesidades de información
+\newcommand{\cIlikeVacias}{78} % consultas sin resultados con ILIKE
+\newcommand{\cParesJuzgados}{2.249} % pares juzgados por el juez final
+\newcommand{\cParesJuzgadosEn}{\mbox{2,249}} % pares juzgados por el juez final, inglés
+\newcommand{\cSistemas}{13} % sistemas comparados
+\newcommand{\cKappaBin}{0{,}786} % kappa binario del juez final en validación
+\newcommand{\cKappaBinDos}{0{,}79} % kappa binario del juez final en validación, dos decimales
+\newcommand{\cKappaBinEn}{\mbox{0.79}} % kappa binario del juez final en validación, inglés
+\newcommand{\cKappaBinIC}{0{,}786 [0{,}706; 0{,}858]} % kappa binario del juez final con IC del 95 %
+\newcommand{\cKappaLocal}{0{,}508} % kappa binario del juez local en validación
+\newcommand{\cParesValidacion}{298} % pares de validación
+\newcommand{\cParesCalibracion}{103} % pares de calibración
+\newcommand{\cFidelidad}{0{,}901} % fidelidad media, juez final
+\newcommand{\cFidelidadDos}{0{,}90} % fidelidad media, juez final, dos decimales
+\newcommand{\cFidelidadEn}{\mbox{0.90}} % fidelidad media, juez final, inglés
+\newcommand{\cFidelidadHumana}{0{,}980} % fidelidad media de la verificación humana
+\newcommand{\cRespuestasRevisadas}{20} % respuestas de la verificación humana
+\newcommand{\cMsReord}{811} % mediana del reordenamiento (ms)
+\newcommand{\cMsContexto}{835} % mediana del contexto completo (ms)
+\newcommand{\cSegPrimerToken}{1{,}96} % mediana clasificación + contexto + TTFT (s)
+\newcommand{\cRecallQdrant}{0{,}982} % recall de Qdrant, 500.000 vectores, filtro del 1 %
+\newcommand{\cRecallQdrantDos}{0{,}98} % recall de Qdrant, 500.000 vectores, filtro del 1 %, dos decimales
+\newcommand{\cRecallQdrantEn}{\mbox{0.98}} % recall de Qdrant, 500.000 vectores, filtro del 1 %, inglés
+\newcommand{\cMsQdrant}{1{,}73} % p50 de Qdrant (ms), mismo escenario
+\newcommand{\cMsQdrantEn}{\mbox{1.7}} % p50 de Qdrant (ms), una cifra decimal, inglés
+\newcommand{\cMsQdrantUno}{1{,}7} % p50 de Qdrant (ms), una cifra decimal
+\newcommand{\cRecallPgIterativo}{0{,}876} % recall de pgvector con barrido iterativo, ef_search = 64
+\newcommand{\cRecallPgIterativoDos}{0{,}88} % recall de pgvector con barrido iterativo, ef_search = 64, dos decimales
+\newcommand{\cRecallPgIterativoEn}{\mbox{0.88}} % recall de pgvector con barrido iterativo, ef_search = 64, inglés
+\newcommand{\cRecallPgIterativoMax}{0{,}899} % máximo recall de pgvector con barrido iterativo
+\newcommand{\cRecallPgIterativoMaxDos}{0{,}90} % máximo recall de pgvector con barrido iterativo, dos decimales
+\newcommand{\cRecallPgIterativoMaxEn}{\mbox{0.90}} % máximo recall de pgvector con barrido iterativo, inglés
+\newcommand{\cMsPgExacto}{9} % p50 de la búsqueda exacta forzada (ms)
+\newcommand{\cRecallPgExacto}{1{,}0} % recall de la búsqueda exacta forzada, una cifra decimal
+\newcommand{\cRecallPgExactoEn}{\mbox{1.0}} % recall de la búsqueda exacta forzada, inglés

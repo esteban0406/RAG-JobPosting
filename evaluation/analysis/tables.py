@@ -5,8 +5,10 @@ Usage (from the repository root, image jobai-analysis):
 
 Writes one .tex per table (the whole table environment: caption, label and
 tabular) to --out (default Tesis/Desarollo/borradores/tablas/); the chapter
-includes them with \\input. The prose that comments a table stays in the chapter
-and is checked with Tesis/Desarollo/check-numbers.py.
+includes them with \\input. It also writes cifras.tex: one \\newcommand per figure
+that the prose repeats (abstract, Introduction, Discussion, Conclusions), read by
+the preamble. The rest of the prose's figures are checked with
+Tesis/Desarollo/check-numbers.py.
 
 --check compares every generated table with the table of the same \\label in a
 chapter that still has the tables written by hand: the sequences of numbers must
@@ -509,6 +511,147 @@ def bench_synthetic(ef: int = 64) -> str:
                  "y completitud (mediana de tres corridas)", "|l|l|c|c|c|", rows, small=True)
 
 
+# ---------------------------------------------------------------- key figures of the prose
+
+DATASET = Path("evaluation/datasets/queries.v2.draft.jsonl")
+RAGAS_REVIEW = GENERATE / "ragas-review-report.json"
+
+
+def cifras() -> str:
+    """\\newcommand for the figures the prose repeats (abstract, Introduction, Discussion,
+    Conclusions), from the same files as the tables. Each decimal figure comes in three
+    variants: <name> (as in the tables), <name>Dos (two decimals) and <name>En (two
+    decimals, decimal point, for the abstract); differences also have <name>EnTres (three
+    decimals, English). Spanish differences carry their sign and are wrapped in
+    \\ensuremath; English variants are wrapped in \\mbox, because Spanish babel turns
+    the decimal point into a comma in math mode. Both work in text and in math."""
+    data = summary()
+    steps = pd.read_csv(ANALYSIS / "ladder.csv").set_index(["measure", "system", "reference", "subset"])
+    tests = pd.read_csv(ANALYSIS / "significance.csv").set_index(["measure", "system", "baseline"])
+    defs: list[tuple[str, str, str]] = []  # (name, value, comment)
+
+    def plain(name: str, value: float, decimals: int, comment: str, short: int | None = 2) -> None:
+        defs.append((name, num(value, decimals), comment))
+        if short is not None:
+            defs.append((name + "Dos", num(value, short), comment + ", dos decimales"))
+            defs.append((name + "En", f"\\mbox{{{num(value, short).replace('{,}', '.')}}}", comment + ", inglés"))
+
+    def diff(name: str, value: float, comment: str, ci: tuple[float, float] | None = None, short: bool = False) -> None:
+        sign = lambda v, d: (lambda t: t if t.startswith("-") else "+" + t)(num(v, d))
+        defs.append((name, f"\\ensuremath{{{sign(value, 3)}}}", comment))
+        if ci is not None:
+            defs.append((name + "IC", f"\\ensuremath{{{sign(value, 3)}}} [\\ensuremath{{{sign(ci[0], 3)}}}; "
+                                      f"\\ensuremath{{{sign(ci[1], 3)}}}]", comment + ", con IC del 95 %"))
+        if short:
+            defs.append((name + "Dos", f"\\ensuremath{{{sign(value, 2)}}}", comment + ", dos decimales"))
+            defs.append((name + "En", f"\\mbox{{{sign(value, 2).replace('{,}', '.')}}}", comment + ", inglés"))
+            defs.append((name + "EnTres", f"\\mbox{{{sign(value, 3).replace('{,}', '.')}}}",
+                         comment + ", tres decimales, inglés"))
+
+    def count(name: str, value: int, comment: str) -> None:
+        defs.append((name, thousands(value), comment))
+        if value >= 1000:
+            defs.append((name + "En", f"\\mbox{{{value:,}}}", comment + ", inglés"))
+
+    def ndcg(group: str, system: str) -> float:
+        return data.at[(group, system), "nDCG@10"]
+
+    # PE1, nDCG@10 over the 60 needs.
+    for name, system in [("Completa", "qdrant-hybrid-rerank"), ("BM", "bm25"), ("Denso", "qdrant-hnsw"),
+                         ("Ilike", "ilike"), ("Filtros", "qdrant-filtered"), ("Hibrida", "qdrant-hybrid"),
+                         ("BMFiltros", "bm25-filtered"), ("BMFiltrosReord", "bm25-filtered-rerank"),
+                         ("CompletaSinHibrida", "qdrant-filtered-rerank"),
+                         ("CompletaSinFiltros", "qdrant-hybrid-rerank-nofilter")]:
+        plain(f"cNdcg{name}", ndcg("all", system), 3, f"nDCG@10, {system}")
+    row = tests.loc[("nDCG@10", "qdrant-hybrid-rerank", "bm25")]
+    diff("cDifCompletaBM", row["mean_diff"], "completa frente a BM25", (row["ci95_low"], row["ci95_high"]))
+    diff("cDifDensoBM", tests.loc[("nDCG@10", "qdrant-hnsw", "bm25"), "mean_diff"], "denso Qdrant HNSW frente a BM25")
+    for name, system, reference in [("Filtros", "qdrant-filtered", "qdrant-hnsw"),
+                                    ("Hibrida", "qdrant-hybrid", "qdrant-filtered"),
+                                    ("Reord", "qdrant-hybrid-rerank", "qdrant-hybrid"),
+                                    ("CompletaDenso", "qdrant-hybrid-rerank", "qdrant-hnsw")]:
+        row = steps.loc[("nDCG@10", system, reference, "all")]
+        diff(f"cDif{name}", row["mean_diff"], f"escalera: {system} frente a {reference}",
+             (row["ci95_low"], row["ci95_high"]), short=name != "Hibrida")
+    diff("cDifFiltrosRestr", ndcg("category=constraint", "qdrant-filtered") - ndcg("category=constraint", "qdrant-hnsw"),
+         "filtros en las consultas con restricciones (diferencia de medias)")
+    # Constraint compliance in the top 5 (needs with constraints).
+    for name, system in [("Denso", "qdrant-hnsw"), ("Filtros", "qdrant-filtered"), ("Completa", "qdrant-hybrid-rerank"),
+                         ("CompletaSinFiltros", "qdrant-hybrid-rerank-nofilter"), ("BM", "bm25")]:
+        plain(f"cCumpl{name}", data.at[("all", system), "C@5"], 3, f"C@5, {system}")
+    # Language: Spanish queries and their English counterparts.
+    plain("cNdcgCompletaEs", ndcg("lang=es", "qdrant-hybrid-rerank"), 3, "nDCG@10 en español, completa")
+    plain("cNdcgBMEs", ndcg("lang=es", "bm25"), 3, "nDCG@10 en español, BM25")
+    plain("cNdcgBMEnParalela", ndcg("lang=en-parallel", "bm25"), 3, "nDCG@10 de las contrapartes en inglés, BM25")
+    plain("cNdcgBMFiltrosReordEnParalela", ndcg("lang=en-parallel", "bm25-filtered-rerank"), 3,
+          "nDCG@10 de las contrapartes en inglés, BM25 + filtros + reordenamiento")
+    # Counts of the retrieval run.
+    config = json.loads((RETRIEVE / "config.json").read_text())
+    ilike_answered = {line.split()[0] for line in (RETRIEVE / "ilike.trec").read_text().splitlines() if line.strip()}
+    count("cOfertas", config["corpus"]["jobs"], "ofertas del corpus congelado")
+    count("cConsultasPrueba", sum(1 for l in DATASET.read_text().splitlines() if l.strip() and not l.startswith("//")),
+          "consultas del conjunto de prueba")
+    count("cConsultasRecuperacion", config["queries"], "consultas de recuperación")
+    count("cNecesidades", needs_count(), "necesidades de información")
+    count("cIlikeVacias", config["queries"] - len(ilike_answered), "consultas sin resultados con ILIKE")
+    count("cParesJuzgados", sum(1 for l in (RETRIEVE / "pool.jsonl").read_text().splitlines() if l.strip()),
+          "pares juzgados por el juez final")
+    count("cSistemas", len(PE1_SYSTEMS) + len(POST_HOC_SYSTEMS), "sistemas comparados")
+    # Judge.
+    final, local = kappa(FINAL_JUDGE), kappa("localhost_11434_llama3.1_8b")
+    val = final["validation"]
+    plain("cKappaBin", val["kappa_binary"], 3, "kappa binario del juez final en validación")
+    low, high = val["kappa_binary_ci95"]
+    defs.append(("cKappaBinIC", f"{num(val['kappa_binary'], 3)} [{num(low, 3)}; {num(high, 3)}]",
+                 "kappa binario del juez final con IC del 95 %"))
+    plain("cKappaLocal", local["validation"]["kappa_binary"], 3, "kappa binario del juez local en validación", None)
+    count("cParesValidacion", val["n"], "pares de validación")
+    count("cParesCalibracion", final["calibration"]["n"], "pares de calibración")
+    # PE2: faithfulness of the final configuration and its human check.
+    ragas_final = pd.read_csv(RAGAS_FINAL)
+    plain("cFidelidad", ragas_final["faithfulness"].mean(), 3, "fidelidad media, juez final")
+    review = json.loads(RAGAS_REVIEW.read_text())
+    plain("cFidelidadHumana", review["human_mean"], 3, "fidelidad media de la verificación humana", None)
+    count("cRespuestasRevisadas", review["n_answers"], "respuestas de la verificación humana")
+    # PE3: Iteration 2, Qdrant, medians.
+    local_summary = json.loads((LATENCY_LOCAL[("2", "qdrant")] / "summary.json").read_text())["local"]
+    defs.append(("cMsReord", num(local_summary["rerankMs"]["p50"], 0), "mediana del reordenamiento (ms)"))
+    defs.append(("cMsContexto", num(local_summary["contextMs"]["p50"], 0), "mediana del contexto completo (ms)"))
+    generation = latency_records(LATENCY_GENERATION["2"])
+    generation = generation[generation["kind"] == "generation"]
+    first_token = p50_p95(generation[["classifyMs", "contextMs", "ttftMs"]].sum(axis=1) / 1000)[0]
+    defs.append(("cSegPrimerToken", num(first_token, 2), "mediana clasificación + contexto + TTFT (s)"))
+    # PE4: 500,000 vectors, 1 % filter, ef_search = 64.
+    bench = pd.read_csv(BENCH, keep_default_na=False)
+    hard = bench[(bench["dataset"] == "synth-500000") & (bench["filter"] == "1pct")]
+    qdrant = hard[(hard["engine"] == "qdrant") & (hard["ef"] == 64)].iloc[0]
+    iterative = hard[(hard["engine"] == "pgvector") & (hard["iterative"] == "relaxed_order")]
+    exact = pd.DataFrame([json.loads(l) for l in BENCH_EXACT_FILTERED.read_text().splitlines() if l.strip()])
+    exact = exact[(exact["dataset"] == "synth-500000") & (exact["filter"] == "1pct") & (exact["ef"] == 64)]
+    plain("cRecallQdrant", qdrant["recall"], 3, "recall de Qdrant, 500.000 vectores, filtro del 1 %")
+    defs.append(("cMsQdrant", num(qdrant["p50_ms"], 2), "p50 de Qdrant (ms), mismo escenario"))
+    defs.append(("cMsQdrantEn", f"\\mbox{{{num(qdrant['p50_ms'], 1).replace('{,}', '.')}}}", "p50 de Qdrant (ms), una cifra decimal, inglés"))
+    defs.append(("cMsQdrantUno", num(qdrant["p50_ms"], 1), "p50 de Qdrant (ms), una cifra decimal"))
+    plain("cRecallPgIterativo", iterative.loc[iterative["ef"] == 64, "recall"].iloc[0], 3,
+          "recall de pgvector con barrido iterativo, ef_search = 64")
+    plain("cRecallPgIterativoMax", iterative["recall"].max(), 3, "máximo recall de pgvector con barrido iterativo")
+    defs.append(("cMsPgExacto", num(exact["p50_ms"].median(), 0), "p50 de la búsqueda exacta forzada (ms)"))
+    plain("cRecallPgExacto", exact["recall"].median(), 1, "recall de la búsqueda exacta forzada, una cifra decimal",
+          None)
+    defs.append(("cRecallPgExactoEn", f"\\mbox{{{num(exact['recall'].median(), 1).replace('{,}', '.')}}}",
+                 "recall de la búsqueda exacta forzada, inglés"))
+
+    names = [n for n, _, _ in defs]
+    duplicates = {n for n in names if names.count(n) > 1}
+    bad = [n for n in names if not re.fullmatch(r"c[A-Za-z]+", n)]
+    if duplicates or bad:
+        raise ValueError(f"macro names: duplicated {duplicates}, invalid {bad}")
+    lines = ["% Generado por evaluation/analysis/tables.py (cifras); no editar a mano.",
+             "% Cifras clave de la prosa, con la misma fuente que las tablas de Resultados.", ""]
+    lines += [f"\\newcommand{{\\{n}}}{{{v}}} % {c}" for n, v, c in defs]
+    return "\n".join(lines) + "\n"
+
+
 TABLES = {
     "res-kappa-cal": kappa_calibration,
     "res-kappa-val": kappa_validation,
@@ -580,6 +723,9 @@ def main() -> None:
         path = args.out / f"{name}.tex"
         path.write_text(tex, encoding="utf-8")
         print(path)
+    path = args.out / "cifras.tex"
+    path.write_text(cifras(), encoding="utf-8")
+    print(path)
 
 
 if __name__ == "__main__":
