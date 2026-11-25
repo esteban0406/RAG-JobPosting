@@ -1,0 +1,224 @@
+# Cifras permitidas por check-numbers.py sin estar en una tabla generada ni en cifras.tex.
+# Formato: valor | archivos (prefijos del nombre, p. ej. M06,B01; o *) | motivo o fuente
+#
+# Abreviaturas de las fuentes (todas bajo evaluation/runs/ salvo que se diga otra cosa):
+#   E1    2026-11-17T01-31-32-1a7ec43-dirty-retrieve-test-e1 (PE1, 13 sistemas, juez final)
+#   FIN   2026-10-14T19-15-49-565eff3-retrieve-test-full (corrida final de 9 sistemas; kappa-*.json)
+#   GEN   2026-10-14T20-15-22-de8c6d4-dirty-generate-test-full (PE2; ragas-*.csv, ragas-review-report.json)
+#   LAT1  2026-10-14T01-06-11-717ba41-dirty-latency-qdrant-generation
+#   LAT2  2026-11-01T17-44-24-a951cf6-latency-qdrant-test-full-generation
+#   BENCH evaluation/bench/results/ (summary.csv, results-scan-limit/)
+#   DEV   evaluation/datasets/rerank-variants.dev*.json
+#   §F    verificado en la auditoría del 25-nov (Tesis/Desarollo/auditoria-cifras.md, sección F)
+#
+# Las cifras que la ronda de corrección va a cambiar (resumen y Conclusiones anteriores a E1,
+# Anexo A.8, E2) NO están aquí a propósito: el verificador las marca hasta corregirlas.
+
+# ---------------------------------------------------------------- constantes del diseño
+50 | * | 50 fragmentos de la primera etapa y BM25 de 50 ofertas; filtros del 50 % del benchmark (diseño)
+128 | * | ef_construction = 128 (HNSW_EF_CONSTRUCTION) y valor de la rejilla de ef_search
+32 | M04,M06 | valor de la rejilla de ef_search {16, 32, 64, 128, 256, 512}
+512 | * | valor máximo de la rejilla de ef_search
+40 | M05 | ef_search = 40 (config.json de E1, efSearch)
+768 | * | dimensiones de multilingual-e5-base
+800 | * | ventana deslizante de 800 caracteres (backend/src/ingestion/chunk.service.ts)
+2.000 | B01,M05 | RERANK_DOCUMENT_CHARS = 2000 (backend/src/retrieval/retrieval-pipeline.service.ts)
+2.400 | B01,M06 | MAX_JOB_CONTEXT_CHARS = 2400 (backend/src/rag/rag.service.ts, B01); unas 2.400 qps de pgvector con 500.000 sin filtro (BENCH, §F)
+10.000 | * | permutaciones de la prueba de aleatorización (metrics.py) y cota inferior del salario plausible
+1.000.000 | M06,B01 | MAX_PLAUSIBLE_SALARY (backend/src/ingestion/salary-normalizer.ts)
+0,134 | M05,M06 | RERANK_MIN_SCORE (backend/src/config/config.schema.ts), calibrado en desarrollo
+0,132 | M05 | mejor puntaje más bajo en desarrollo (calibración del umbral, DEV)
+0,5 | M05,M06 | umbral de similitud de la Iteración 1 (A3); desviación del ruido del benchmark; 0,5 ms
+0,75 | B01 | b = 0,75 de BM25 (backend/src/retrieval/bm25.ts)
+34 | B01 | palabras vacías de BM25 (STOPWORDS, backend/src/retrieval/bm25.ts)
+0,05 | M04,M06,B01 | alfa = 0,05 y margen de 0,05 de la regla de elección del juez (fijada antes de anotar)
+0,02 | M05 | regla de selección del reordenador (preregistrada)
+0,01 | M05,M06 | regla de 20 frente a 30 candidatas (M05); 0,01 a 0,09 del benchmark con e5-base-v2 (BENCH, §F)
+14 | M04,M05,M06 | 14 comparaciones de la familia de líneas base (diseño); fechas «14 de octubre»; 14 de 20 respuestas (GEN, ragas-review-report.json)
+1.024 | M06,B01 | límite de tokens del segundo intento de Claude Sonnet 5.5 (sufijo max_tokens_1024 de su kappa-*.json); max_tokens por defecto de RAGAS (comentario en ragas_eval.py, B01)
+4.096 | M06,B01 | ventana por defecto de Ollama (D2, M06) y --max-tokens 4096 de ragas_eval.py (B01)
+35 | M06 | pausa de 35 s entre solicitudes (configuración de LAT2)
+0.8.2 | M04 | versión de pgvector fijada (docker-compose)
+1.19.1 | M04 | versión de Qdrant fijada (docker-compose)
+0.8 | B01 | versión de pgvector desde la que hay barrido iterativo
+3600 | M05 | AMD Ryzen 5 3600 (equipo de evaluación)
+3060 | M05 | GeForce RTX 3060 (equipo de evaluación)
+1.000 | M04,M06,M10,B01 | umbral de 1.000 ms (Bai2017); unas 1.000 consultas del benchmark real; unas 1.000 qps de Qdrant (BENCH, §F)
+500 | M04,M06 | umbral de 500 ms (Arapakis2014, Bai2017)
+20.000 | M06 | hnsw.max_scan_tuples por defecto (documentación de pgvector)
+
+17 | M05 | fecha de las corridas (16-17 de noviembre, tabla 5.1)
+
+# ---------------------------------------------------------------- literatura (fuente: la referencia citada)
+21,5 | M03 | Zhang et al. (JobBERT/red siamesa), mejora de hasta 21,5 %
+27 | M03 | Nogueira2019, +27 % relativo en MRR@10
+12.751 | M03 | Li2023 (BIRD), pares pregunta-consulta
+37 | M03 | Li2023 (BIRD), dominios
+
+# ---------------------------------------------------------------- corpus y conjuntos (Cap. 4 y Anexos)
+4.013 | M04,M06 | fragmentos del corpus (config.json de E1, corpus.chunks)
+895 | M04 | ofertas de Findwork (corpus congelado, §F)
+162 | M04 | ofertas de Jobicy (corpus congelado)
+682 | M04,M06 | ofertas marcadas como remotas (corpus congelado; A2)
+493 | M04 | ofertas con salario plausible (corpus congelado)
+386 | M04 | ofertas no marcadas como remotas (1.068 − 682)
+36 | M04 | 386 / 1.068
+84 | M04,M06,B01 | % de Findwork (895 / 1.068); consultas con resultados de BM25 (E1, bm25.trec, §F)
+75 | M04 | consultas de prueba en inglés (queries.v2.draft.jsonl)
+28 | M04,M05,M06 | consultas de desarrollo (DEV); 28 desacuerdos del juez final en validación (FIN, §F)
+1.977 | M04,M06 | pares del agrupamiento de la corrida final (FIN, pool.jsonl)
+231 | B01 | ofertas con fragmentación parcial (corpus congelado)
+467 | B01 | longitud media de los fragmentos (corpus congelado)
+150.000 | B01 | mediana de los salarios informados (corpus congelado)
+3.200 | M04,B01 | corpus de abril de 2026 (antecedentes, steps.md de abril)
+90,7 | M04,B01 | precisión de la iteración de abril con Llama 3.1 8B (antecedentes, tabla del Anexo)
+98,7 | M04,B01 | precisión de la iteración de abril con Gemini (antecedentes, tabla del Anexo)
+66,7 | B01 | antecedentes de abril (tabla del Anexo)
+92,0 | B01 | antecedentes de abril (tabla del Anexo)
+0,656 | B01 | antecedentes de abril (tabla del Anexo)
+0,702 | B01 | antecedentes de abril (tabla del Anexo)
+0,967 | B01 | antecedentes de abril (tabla del Anexo)
+0,995 | B01 | antecedentes de abril (tabla del Anexo)
+0,994 | B01 | antecedentes de abril (tabla del Anexo)
+427 | B01 | unidades de la verificación humana de RAGAS (GEN, ragas-review-report.json: 359 + 6 + 62)
+0,002 | B01,M06 | similitud de los pares de ejemplo (B01); +0,002 y −0,002 (E1 ladder.csv; escalera del juez local, §F)
+
+# ---------------------------------------------------------------- Artefacto (Cap. 5)
+25,7 | M05,M06 | EXPLAIN ANALYZE de la consulta original (tabla del Cap. 5; B1)
+2,8 | M05,M06 | EXPLAIN ANALYZE de la consulta reescrita con IVFFlat (B1)
+24,8 | M05,M06 | EXPLAIN ANALYZE con HNSW y barrido secuencial
+2,0 | M05,M06 | EXPLAIN ANALYZE con el índice forzado; 2,0 GB de índice (BENCH, §F)
+99,85 | M05,M06 | coincidencia de la búsqueda exacta con e5-base-v2 (200 consultas)
+99,75 | M05,M06 | coincidencia de la búsqueda exacta con los vectores multilingües
+0,742 | M05 | DEV, sin reordenamiento
+0,757 | M05 | DEV, P@5 sin reordenamiento
+0,804 | M05 | DEV, bge-reranker-v2-m3
+0,814 | M05 | DEV, P@5 de bge-reranker-v2-m3
+0,798 | M05 | DEV, bge fusionado con RRF
+0,800 | M05 | DEV, P@5 de bge fusionado con RRF
+0,820 | M05 | DEV, nDCG@10 de Qwen3-Reranker-0.6B, 30 candidatas (agrupamiento de 6 sistemas)
+0,864 | M05 | DEV, P@5 de Qwen3-Reranker-0.6B
+0,812 | M05 | DEV, Qwen con instrucción y RRF
+0,879 | M05,M06 | DEV, P@5 de Qwen con instrucción (con y sin RRF); relevancia de las consultas en inglés de la Iteración 1 (E2, recalculado el 25-nov)
+0,019 | M05 | DEV, distancia de Qwen sin instrucción a la mejor variante (§F)
+0,832 | M05 | DEV, agrupamiento de 3 sistemas, 30 candidatas (§F, D3)
+0,830 | M05 | DEV, agrupamiento de 3 sistemas, 20 candidatas (§F, D3)
+13,7 | M05 | relevantes por consulta en la etapa 2 de la selección (549 pares, 3 sistemas; runs/2026-10-14T18-34-01-…-s2, §F)
+15,0 | M05,M06 | relevantes por consulta en la etapa 1 (614 pares, 6 sistemas; runs/2026-10-14T18-22-24-…-s1); etiqueta 0 en E1 (M06)
+1.184 | M05 | mediana de la latencia de recuperación con 30 candidatas (DEV, §F)
+788 | M05 | mediana de la latencia de recuperación con 20 candidatas (DEV, §F)
+
+# ---------------------------------------------------------------- Resultados (Cap. 6), verificadas en §F
+272 | M04,M06 | pares nuevos de E1 (2.249 − 1.977)
+19,5 | M06 | etiqueta 3 (E1, qrels por necesidad)
+8,3 | M06 | etiqueta 2
+57,1 | M06 | etiqueta 1
+46 | M06 | relevantes nuevos de E1
+0,012 | M06 | bajada mínima de nDCG@10 de los ocho sistemas no ILIKE (E1 frente a FIN)
+0,018 | M06 | bajada máxima
+10,4 | M06 | relevantes por necesidad (E1)
+0,91 | M06 | techo de P@5 (E1)
+0,75 | M06,M10 | techo de P@10 (E1); 0,75 s añadidos hasta el primer token (LAT1 frente a LAT2); mediana de similitud 0,75 (A3)
+0,19 | M06 | kappa binario mínimo con las etiquetas sin revisar (FIN, §F)
+0,37 | M06 | kappa binario máximo con las etiquetas sin revisar
+63 | M06 | pares revisados con discrepancia (FIN, §F)
+40 | M06 | pares sin discrepancia
+0,26 | M06,B01 | margen de los candidatos sobre GPT-4o (kappa-*.json de FIN)
+0,022 | M06,B01 | diferencia entre GPT-6 Sol y Claude Sonnet 5.5 (kappa-*.json de FIN)
+0,811 | M06 | IC del kappa ponderado (kappa de GPT-6 Sol, validación)
+0,880 | M06 | IC del kappa ponderado
+91 | M06 | relevantes según el juez final en validación (FIN, §F)
+0,429 | M06 | IC del kappa del juez local
+0,590 | M06 | IC del kappa del juez local
+70 | M06 | sesgo del juez local (FIN, §F)
+34 | M06 | necesidades con relevantes nuevos (E1); pares que cambiaron de lado (FIN)
+32 | M06 | necesidades con menos de 10 relevantes (E1)
+0,067 | M06 | IC de denso frente a BM25 (E1 significance.csv)
+65 | M06 | primera oferta relevante (E1, completa)
+77 | M06 | consultas con al menos una oferta de etiqueta 3 (E1); 77 s de carga de Qdrant (BENCH)
+74 | M06 | 0,667 / 0,91
+0,0014 | M06 | p_Holm mínimo con 10.000 permutaciones y 14 comparaciones (E1 significance.csv)
+0,005 | M06 | pg-hnsw frente a pg-exact (E1 ladder.csv)
+0,009 | M06 | IC
+0,029 | M06 | p_Holm
+0,083 | M06 | P@5, filtros (E1 ladder.csv)
+0,123 | M06 | P@5, reordenamiento (E1 ladder.csv)
+0,11 | M06 | p_Holm de completa frente a sin filtros (E1 posthoc.csv)
+0,077 | M06 | escalera con el juez local (§F)
+0,73 | M06 | nDCG@10 de e5-base-v2 en la primera corrida (juez local, §F)
+0,153 | M06 | denso − BM25 en desajuste de vocabulario (E1 summary.csv)
+0,129 | M06 | denso − BM25 en restricciones
+0,079 | M06 | denso − BM25 en ruidosas
+0,8 | M06,M10 | 0,811 s de reordenamiento redondeado (LAT2 local, res-pe3-local); umbral de 0,8 de nDCG@10
+0,105 | M06 | reordenamiento en restricciones (E1 summary.csv)
+0,040 | M06 | híbrida en ruidosas (E1 summary.csv)
+0,047 | M06 | híbrida en restricciones
+0,547 | M06 | C@5 filtros frente a denso (E1 ladder.csv)
+0,353 | M06 | IC
+0,727 | M06 | IC
+0,28 | M06 | BM25 en inglés paralelo − español (0,615 − 0,334)
+0,092 | M06 | multilingüe frente a e5-base-v2 en español (E1 ladder.csv)
+0,013 | M06 | IC
+0,170 | M06 | IC
+0,033 | M06 | p sin ajustar
+0,17 | M06 | p_Holm
+0,011 | M06 | IC en inglés
+0,036 | M06 | multilingüe − e5-base-v2 en las contrapartes; híbrida en contrapartes en inglés
+0,091 | M06 | híbrida en español
+0,15 | M06 | completa en español − BM25 en inglés paralelo (0,763 − 0,615)
+0,882 | M06 | precisión de la compuerta 15/17 (E3, sin recalcular, §F)
+0,92 | M06 | mediana de la fidelidad (GEN)
+0,89 | M06 | mediana de la relevancia (GEN)
+0,18 | M06 | Pearson de la relevancia entre jueces (GEN)
+67 | M06 | respuestas con relevancia del juez local (GEN)
+0,81 | M06 | mínimo del juez final en las cinco respuestas con fidelidad 0 del juez local (GEN)
+359 | M06 | unidades sostenidas (GEN, ragas-review-report.json)
+365 | M06 | unidades verificables (359 + 6)
+0,937 | M06 | media del juez final en las 20 respuestas revisadas (ragas-review-report.json)
+0,061 | M06 | diferencia absoluta media (ragas-review-report.json)
+0,13 | M06 | Pearson (ragas-review-report.json, −0,132)
+98 | M06 | 359 / 365
+1,0 | M06 | fidelidad humana 1,0; recall 1,0 de la búsqueda exacta (BENCH)
+150,000 | M06 | cita textual de una respuesta (en inglés)
+1000 | M06 | cita textual (Fortune 1000)
+5000 | M06 | cita textual (Global 5000)
+54 | M06 | embedding de la Iteración 1 redondeado (53,7 ms, res-pe3-local)
+26 | M06 | búsqueda densa en pgvector redondeada (25,3-25,8 ms, res-pe3-local); listas que cambian con HNSW (E1 trec, B3)
+97 | M06 | 811 / 835; C@5 de la completa en %
+0,3 | M06 | generación completa − TTFT (res-pe3-generacion)
+1.666 | M06 | mediana de caracteres de la Iteración 2 (LAT2, §F)
+1.350 | M06 | mediana de caracteres de la Iteración 1, 1.354,5 redondeada (LAT1; B4)
+0,976 | M06 | recall con e5-base-v2, ef_search = 16 (BENCH, §F)
+6.700 | M06 | qps mínimas de pgvector en el corpus real (BENCH, §F)
+8.400 | M06 | qps máximas
+0,23 | M06 | estadístico KS de la calibración del benchmark (BENCH)
+1,88 | M06 | pgvector, ef_search = 256 (BENCH, §F)
+3,30 | M06 | Qdrant, ef_search = 128 (BENCH)
+4,21 | M06 | pgvector, ef_search = 512 (BENCH, §F)
+0,87 | M06 | recall mínimo de pgvector con barrido iterativo y filtro del 1 % (BENCH)
+5.000 | M06 | filas filtradas (1 % de 500.000)
+133 | M06 | construcción del índice de pgvector, s (BENCH, §F)
+360 | M06 | construcción del índice de Qdrant, s (BENCH, §F)
+1,86 | M06 | tamaño de Qdrant, GB (BENCH, §F)
+7,8 | M04,M06 | memoria pico de PostgreSQL, GB (BENCH, §F)
+900 | M06 | qps de Qdrant con 500.000 sin filtro (BENCH)
+0,66 | M06 | similitud mínima con e5-base-v2 (A3, sin recalcular)
+544.127 | M06 | salario promedio antes de A5 (sin recalcular, §F)
+86.528.000 | M06 | salario de una oferta de despacho (A5)
+158.786 | M06 | salario promedio después de A5
+16.384 | M06,B01 | ventana del juez local de RAGAS tras corregir D2 (descripción de D2 y su mención en el Anexo A.8)
+269 | M06 | pares emparejados con el prompt anterior (D6, sin recalcular)
+401 | M04,M06 | pares de la muestra de kappa (FIN, kappa-sample.csv)
+90 | M06,M10 | generaciones de LAT1 (30 × 3); 90 % = fidelidad media 0,901 (M10)
+2,5 | M06 | umbral de TTFT del análisis de la falla de los reintentos (LAT1)
+7,1 | M06 | mediana de TTFT con reintentos (LAT1)
+41 | M06 | C@5 sin filtros en % (0,407)
+0,74 | M06 | recall en el corpus real con filtro del 50 % y ef_search = 16 (BENCH)
+
+# ---------------------------------------------------------------- E2 (node evaluation/analysis/e2_context_compliance.mjs jobs.json, corregido el 25-nov)
+35,6 | M06 | C@5 del contexto de la Iteración 1 en las 18 consultas comunes con filtros esperados (0,356)
+0,924 | M06 | fidelidad de la Iteración 1 en esas 18
+0,956 | M06 | C@5 del contexto de la Iteración 2 en las mismas 18
+0,886 | M06 | fidelidad de la Iteración 2 en las mismas 18
+0,845 | M06 | relevancia de las 21 consultas en español respondidas en inglés (Iteración 1; idioma por palabras vacías; recalculado el 25-nov)
+0,910 | M06 | relevancia de las 4 respondidas en español
