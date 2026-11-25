@@ -9,6 +9,21 @@
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
+## ▶ Estado al 25-nov-2026 (noche) — LEER PRIMERO
+
+**Reunión con el director (~24-nov):** dio comentarios de forma (el autor aún no los comparte) y **no quiere cambiar los objetivos**: OE2–OE4 conservan su texto y el documento se ajusta para responderlos (OE4 se declara cumplido en parte en la fidelidad).
+
+**Ronda de coherencia de cifras: HECHA el 25-nov, pendiente de la revisión del autor.** Plan aprobado en `~/.claude/plans/ya-me-reuni-con-rustling-kite-of-284e7b54-a53b-405e-bcdf-a573e5b4fcf6.md`. Registro completo, con la corrección y la página nueva de cada fila, en **`auditoria-cifras.md`** (secciones A–F: hallazgos; G: correcciones aplicadas).
+- **Macros generadas:** `tables.py` escribe `borradores/tablas/cifras.tex` (117 `\newcommand` `\cXxx`; variantes `…Dos`, `…En`, `…EnTres`; las inglesas en `\mbox{}` porque babel en español cambia el punto por coma en modo matemático). `build-preview-final.sh` hace `\input{tablas/cifras}` en el preámbulo. **Al pasar a `Plantilla/`, agregar ese `\input` a `main.tex`.** Resumen, abstract y Conclusiones usan las macros.
+- **Verificador estricto:** `check-numbers.py` reescrito (todos los capítulos y anexos, token exacto, sin `steps.md`); lista de permitidas con fuente en `check-numbers-permitidas.txt`. Estado: 0 cifras sin fuente. **`steps.md` ya no es fuente de cifras.**
+- **E2 corregido:** `e2_context_compliance.mjs` usa las mismas 18 consultas en ambas iteraciones; Iteración 2: cumplimiento 0,956 y fidelidad 0,886. Requiere `job-posting-db` arriba (se levantó y se volvió a detener).
+- **Capítulos nuevos en `borradores/`:** `M01-Introduction-final.tex`, `M02-Chapter1-final.tex`, `M03-Chapter2-final.tex`, `M05-Chapter4-final.tex` (Cap. 5 con el esquema aprobado el 17-nov: tabla 5.1 en tres columnas, origen de los parámetros, fragmentación fuera del alcance, 0,820 frente a 0,832, juez local en la selección del reordenador).
+- **Decisiones del autor del 25-nov:** auditoría aprobada tal cual; B4 «unos 1.350»; D4 declararlo; diferencias del resumen con tres decimales (+0,045 y +0,097), porque 0,0446 da +0,04 a dos decimales.
+- **Revisión final de coherencia (25-nov, noche):** lectura completa; correcciones en `auditoria-cifras.md`, sección H. Decisiones del autor: sin páginas en blanco (`openany`, aplicado en `build-preview-final.sh`) y objetivos de la Introducción con el texto oficial del Cap. 2.
+- Vista previa: `borradores/vista-previa-final.pdf`, 100 págs., sin errores ni referencias indefinidas; resumen y abstract en las pp. 3-4.
+
+**Siguiente:** (1) el autor revisa la vista previa; (2) comentarios de forma del director, cuando los comparta; (3) E4, siglas y bibliografía; (4) al aprobar, `borradores/` y `borradores/tablas/` a `Plantilla/` (en `main.tex`: `\input{tablas/cifras}` en el preámbulo y `openany` en `\documentclass`), nota al director, *fast-forward* de `main` y etiqueta (D5). Nada de esta ronda está commiteado.
+
 ## ▶ Ejecución de la ronda de corrección (desde el 16-nov, noche) — LEER PRIMERO
 
 ### ▶▶ Próxima sesión (desde el 18-nov) — empezar aquí
