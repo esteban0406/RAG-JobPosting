@@ -9,7 +9,118 @@
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
-## ▶ Estado al 26-nov-2026: comentarios de forma del director — LEER PRIMERO
+## ▶ Estado al 26-nov-2026 (noche): plan de corrección final — LEER PRIMERO
+
+**Situación.** El 26-nov el autor pidió una lectura «como jurado», lo más exigente posible. La revisión completa (20 observaciones de fondo, estructura, estado del arte, forma y 10 preguntas probables de la sustentación) está en **`Tesis/Desarollo/revision-jurado-26nov.md`**. Los puntos se citan abajo como I.1-I.20. Con eso se aprobó este plan. **Entrega: domingo 29-nov.** El autor dedica casi todo el tiempo de estos días a la tesis. Hoy (26-nov, noche) solo se documentó en el portátil; **la ejecución empieza en el PC con GPU** (RTX 3060), que sí corre `embedding-server` y el reordenador.
+
+**El flujo, los comandos de `tables.py`/`figures.py`, las reglas de redacción del director y el entorno siguen en «Cómo retomar» de la sección siguiente (26-nov, historial). Se aplican igual.**
+
+### Restricciones y decisiones del autor (26-nov)
+- **Los objetivos no cambian** (aprobados por el director). El documento se ajusta para responderlos.
+- Hay créditos de OpenAI, Anthropic y **Groq** (el autor confirma acceso suficiente para unas 255 generaciones nuevas con qwen/qwen3.8-27b). No hay anotadores humanos nuevos.
+- **Recalcular todas las cifras con el agrupamiento final (e2)**, como se hizo en §6.1. Las tablas y macros se regeneran; `check-numbers.py` marca la prosa que hay que actualizar.
+- **El release del corpus se mantiene completo y sin párrafo de justificación** (el autor: fines académicos, ofertas ya vencidas). Solo se prepara como respuesta oral (Bloque D).
+- **Integridad:** las etiquetas de relevancia (103 de calibración y 298 de validación) **son del autor**, según esta bitácora («Validación del juez (autor, 14-15 nov): 298 pares anotados») y la tesis (§6.2, §6.8.6). Así se siguen declarando. En la sesión del 26-nov el autor dijo que dos amigos anotaron la validación, una mitad cada uno; no hay ningún registro ni archivo que lo respalde, así que **no se escribe en la tesis**, salvo que aparezcan sus archivos de anotación. A terceros solo se atribuye lo documentado: la verificación de fidelidad de 20 respuestas (dos anotadores externos) y las 15 consultas fuera de dominio. La validación se refuerza con un segundo juez validado (A3) y con las etiquetas humanas que ya existen (A5).
+
+### Primer paso en el PC (A0)
+`git pull` → levantar Postgres con el snapshot del corpus, Qdrant y `embedding-server` (:8000 multilingual-e5-base + reordenador; :8001 e5-base-v2) → `cd backend && pnpm build` → prueba de Groq: `eval:generate --limit 5` → seguir con A1.
+
+### Bloque A — Experimentos (se lanzan primero porque tardan)
+
+**A1. Sistemas nuevos** en `backend/src/cli/commands/eval-retrieve.command.ts` (`SYSTEM_NAMES` l. 45-62, *factories* l. 172-229, helper `pipelineSystem(name, hybrid, rerank, {filtered, lexicalOnly})` l. 125-139):
+- *Factorial 2³ sobre {filtros F, híbrida H, reordenamiento R}.* Ya existen D, F, FH, FR, FHR y HR (= «completa sin filtros»). Faltan `qdrant-hybrid-nofilter` (H sin filtro, sin R) y `qdrant-rerank-nofilter` (R sin filtro, sin H): una línea cada uno.
+- *Iteración 1 real* `qdrant-e5base-it1`: e5-base-v2, 15 fragmentos, umbral 0,5 y 5 ofertas, sobre la colección `eval_job_chunks_e5base` y el servidor :8001 que ya usa `qdrant-e5base`. `DenseSystem` (`backend/src/eval/systems/dense.system.ts:9,32`) tiene `topK` fijo en 50: hay que aceptar `topK` y `threshold` (el umbral ya existe en `SearchOptions`, `storage/vector-store/vector-store.interface.ts:59-69`). Regla exacta de la Iteración 1 en `backend/src/eval/eval.service.ts:13` (legado). Reemplaza el «se aproxima» de §6, §6.8.6 y Tabla 4.2.
+- *BM25, sensibilidad (no ajuste):* `Bm25System` (`backend/src/eval/systems/bm25.system.ts`) debe pasar `{k1, b}` a `Bm25Index` (`retrieval/bm25.ts:60-63`, que ya los acepta). Rejilla k1 ∈ {0,9; 1,2; 1,6} × b ∈ {0,4; 0,75; 0,9}, más `bm25-filtered` con los mejores valores. El mejor BM25 en prueba se reporta como **cota optimista** frente al pipeline (responde a I.11).
+
+**A2. Corrida final «e2»:** `eval:retrieve` con los 13 sistemas actuales + los nuevos, sobre el conjunto de prueba. **Verificar que los `.trec` de los 13 sistemas sean idénticos** a los de `evaluation/runs/2026-11-17T01-31-32-1a7ec43-dirty-retrieve-test-e1`; si alguno cambia, investigar antes de seguir. Después `eval:pool --run <e2>`.
+
+**A3. Juicios:**
+- GPT-6 Sol (`--judge-provider openai-compatible`, el mismo id que la corrida e1) sobre los pares nuevos; la caché reutiliza los 2.249.
+- **Claude Sonnet 5.5 sobre todo el agrupamiento** (≈ 2.146 llamadas o más; hoy solo tiene los 103 de calibración) con la receta del juez alternativo de `backend/src/cli/main.ts:45-46`: `eval:judge --run <dir> --judge-provider anthropic --judge-model claude-sonnet-5-5 --judge-temperature none --judge-thinking between_tools --judge-max-tokens 1024`, con `JUDGE_API_KEY`. Estimar el costo con unos 20 pares antes de lanzarlo. Se puede empezar sobre e1 en segundo plano mientras se programa A1.
+- `kappa.py` para Sonnet en los 298 de validación (`evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full/kappa-sample.csv` + `kappa-key.jsonl`). Si κ binario > 0,60, el juez alternativo queda validado según §4.5.
+
+**A4. Métricas con los dos jueces:** `metrics.py <e2> --qrels qrels.<juez>.txt` con cada juez. `tables.py` tiene las rutas fijas (`RETRIEVE` l. 39, `FINAL_JUDGE` l. 40, `ANALYSIS` l. 41, `KAPPA_RUN` l. 43): apuntarlo a e2 y agregarle `--judge` para una **tabla de robustez** (escalera, complementarios y factorial con ambos jueces; regla de §4.5: solo se afirma lo que se mantiene con ambos). El factorial (efectos principales e interacciones de F, H y R, aleatorización pareada) es una familia nueva, descriptiva y declarada como posterior.
+
+**A5. Verificación con etiquetas humanas** (sin llamadas): script nuevo `evaluation/analysis/human_check.py`. Cruza los 401 pares humanos con los `.trec` de e2 (consulta → `infoNeedId` por `queries.jsonl`). Calcula (1) el nDCG@10 de lista condensada solo con etiquetas humanas, es decir, la ganancia del reordenador sin juez LLM, y (2) el desacuerdo entre juez y humano separando las ofertas que el reordenador sube de las que baja (duda de Fröbe, I.13). Hay unas 2-3 ofertas etiquetadas por consulta en el top 10 (169 de 843 en la configuración completa). La muestra está estratificada por categoría × nota del juez (`eval-kappa-export.command.ts:24-72`) y salió del agrupamiento anterior: declararlo.
+
+**A6. Fidelidad por peldaño** (completa el OE4 sin cambiar su texto; I.7):
+- `eval-generate.command.ts`: flag `--no-filter` (hoy el filtro siempre se aplica, l. 86) y guardar `RETRIEVAL_HYBRID` y `RERANK_ENABLED` en `config.json` (hoy no se registran; ponerlos también en `--label`).
+- Peldaños por variables de entorno (`config/config.schema.ts:103,108,113`) con `VECTOR_BACKEND=qdrant`: D (sin filtro, sin H, sin R), D+F, D+F+H y completo. El completo se vuelve a correr; la caché `evaluation/generations/` devuelve lo mismo si el contexto es idéntico. Groq, qwen3.8-27b, temperatura 0, 85 consultas. La compuerta (`RERANK_MIN_SCORE` 0,134) solo actúa con R.
+- RAGAS con GPT-6 Sol en cada peldaño, con comparaciones entre peldaños consecutivos.
+
+**A7. Métrica de contexto en RAGAS** (I.4): en `evaluation/ragas/ragas_eval.py` agregar `ContextPrecisionWithoutReference` y/o `ContextRelevance` al diccionario `metrics` (l. 156) y una rama en `score()` (l. 104-109); unas diez líneas, y la caché las separa por nombre de métrica. Antes verificar que ragas 0.4.3 las exporta: `docker run --rm jobai-ragas python -c "import ragas.metrics.collections as m; print(dir(m))"`. Correrla en la Iteración 1 (`2026-10-14T00-59-39-717ba41-dirty-generate-full`), en la Iteración 2 (`2026-10-14T20-15-22-de8c6d4-dirty-generate-test-full`) y en los peldaños de A6. **Probar si detecta A4** en las 18 consultas con restricciones y reescribir el hallazgo según lo que salga.
+
+**A8. Prueba de carga sin LLM:** comando nuevo `eval:load`, basado en `eval-latency.command.ts`. Ejecuta `buildContext` con filtros en caché con 1, 2, 4 y 8 trabajadores simultáneos sobre las 85 consultas y mide consultas por segundo y p50/p95 de la construcción del contexto en la RTX 3060. Hoy no existe ninguna prueba de concurrencia del pipeline (solo `bench.py` del motor vectorial).
+
+**A9. Costo en dinero por consulta:** no se registran tokens en ninguna caché. Volver a tokenizar sin conexión los prompts de clasificación y de generación (`answers.jsonl` trae pregunta, contextos y respuesta; el prompt del sistema se reconstruye) con el tokenizador de Qwen3 y multiplicar por el precio de Groq. Sumar el costo de la evaluación según los paneles de OpenAI y Anthropic. Va como párrafo y tabla breve en §6.5.
+
+**Si falta tiempo, se cae en este orden:** A8 → rejilla BM25 → A9. **No se cae nunca:** A3 + A4, A5, A6 + A7.
+
+### Bloque B — Texto (fondo)
+- **B1.** Por qué la recuperación es *la* pregunta en RAG (la generación depende de lo recuperado) y la «G» medida con PE2 por peldaño: Introducción, §2.1, §4.2 (I.1).
+- **B2.** Contribución de ingeniería: qué se construyó en la tesis frente a lo que existía (sacado de `git log`), con una tabla breve de requisitos funcionales y no funcionales. Cap. 5, sección nueva (I.2).
+- **B3.** Hallazgo de RAGAS reescrito según A7: resumen, abstract, §6.4, §6.7.6, §6.8.5, Cap. 7.
+- **B4.** Vacío precisado frente a Hossain et al. y JobMatchAI: §3.1, Tabla 3.1 (I.15).
+- **B5.** Resultados nuevos: segundo juez, factorial, Iteración 1 real, sensibilidad de BM25, verificación humana, fidelidad por peldaño, carga y costo. Caps. 4, 5 (§5.3), 6 y 7.
+- **B6.** OE4 «se cumple en parte» → cumplido, si A6 sale: §6.8.6, Cap. 7.
+- **B7.** Sección nueva **Consideraciones éticas y de datos** (§4.10): sesgo y equidad en el reclutamiento con IA, currículos y Ley 1581 de 2012 (personalización desactivada en la evaluación, corpus sin datos personales) y uso de LLM. **Sin justificar la licencia del corpus.**
+- **B8.** Estudio de caso con sustento en §4.1: citar a Runeson & Höst (2009), verificándolo en Crossref antes de agregarlo al `.bib`. La frase de DSR de la Justificación se queda (la pidió el director).
+- **B9.** Ejemplo cualitativo (una consulta: top 3 de BM25 frente al del pipeline y un extracto de la respuesta) en §6.3, y **captura de JobAI** en el Cap. 5. La captura la toma el autor.
+- **B10.** Anexos generados por script: prompt del juez (`backend/src/eval/relevance/umbrela.ts`, v2), prompt del generador y lista de las 100 consultas de prueba con su categoría (`evaluation/datasets/`).
+- **B11.** Marco teórico ampliado (~1,5 págs.) en §2.6: fórmula de BM25, bi-encoder frente a cross-encoder, aprendizaje contrastivo, Cranfield y agrupamiento.
+- **B12.** Matizar las conclusiones por categoría (§6.3.3), la fidelidad «conservadora» (§6.8.2) y «reproducible» (§4.9: se repite el análisis, no el experimento). Identificadores exactos de los modelos con su entrada bibliográfica.
+- **B13.** Conclusiones con un párrafo inicial que responda directo «¿en qué medida?» y con menos cifras.
+- **B14.** Recortar las repeticiones entre la Introducción y el Cap. 2.
+- **B15.** Limitaciones (§6.8.6, Tabla 4.4) actualizadas con la nueva robustez.
+
+### Bloque C — Forma
+1. **Preliminares:** página de aceptación (`FrontMatter/F01-Approval.tex`) en `main.tex`, agradecimientos que escribe el autor (con mención a los anotadores de fidelidad) y glosario de términos en inglés (`F06`).
+2. **Bibliografía:**
+   - copia local `apalike-es.bst`, con «y», «En» y «págs.»;
+   - quitar `pagebackref` del `hyperref`;
+   - completar los autores donde hoy dice «et al.» (Gao 2023b, Li 2023, Wang 2021, Shen 2024) y el año de Johnson.
+3. **Siglas que faltan:** IC, API, JSON, JWT, UUID, REST, CPU, MS MARCO, MTEB, MIRACL, BIRD, TAG, UMBRELA, CLEF, p50/p95. Sacar κ de la lista.
+4. **Figuras y tablas:**
+   - «Fuente: elaboración propia» en todas, con una macro;
+   - el título en la misma posición en todas las figuras;
+   - en `figures.py`: tipografía serif, separador de miles «.» y barras de IC en la Fig. 6.2;
+   - Fig. 5.3 sin chocar con el logo;
+   - Tabla 6.14 sin líneas verticales;
+   - título de la Tabla A.1 sin «diseño-evaluación».
+5. **Títulos sin guion de corte:** §2.6.3, §3.2 y B.6.
+6. **Redacción:**
+   - «compuerta de sin resultados» → «compuerta de ausencia de resultados»;
+   - «plan B» → «juez alternativo»;
+   - «arnés» definido en el glosario;
+   - cursivas consistentes en los términos en inglés.
+7. **Detalles:** precisar «100 consultas» en el resumen (60 necesidades + 15 de agregación); unidad consultas/necesidades en §6.3.1; A.9 pasa a un anexo propio.
+
+### Bloque D — Sustentación
+`Tesis/Desarollo/sustentacion-preguntas.md`: respuestas a las 10 preguntas de la revisión (sección V). Incluye la licencia del corpus (fines académicos, ofertas vencidas) y el anotador único.
+
+### Cronograma
+| Día | Experimentos | Texto |
+|---|---|---|
+| Jue 26 (noche) | A0; código de A1, A6 (`--no-filter`) y A7; Sonnet sobre e1 en segundo plano; A2 | C2, C3, C5 |
+| Vie 27 | A2 (verificar e2) → A3 → A4; A5; A6 con Groq + A7; A8; A9 | B7, B1, B2, B8, B10 |
+| Sáb 28 | `tables.py` y `figures.py` con e2 y los dos jueces | B3-B6, B9, B11-B15; C1, C4, C6, C7; `check-numbers.py` |
+| Dom 29 | — | Lectura completa como jurado; `Plantilla/`; esta bitácora; commits; etiqueta `entrega-final`; push; D; **entrega** |
+
+### Verificación
+- **e2:** los 13 `.trec` idénticos a e1; `tables.py --check` sin diferencias inesperadas.
+- **Juez alternativo:** κ binario de Sonnet > 0,60 en validación; si no, la robustez se presenta como descriptiva.
+- **RAGAS:** cada métrica cubre 83/85 respuestas, y se reportan los NaN.
+- **Compilación y cifras:** `build-preview-final.sh` → «ninguno»; `check-numbers.py` → 0 cifras sin fuente.
+- **Páginas:** renderizar con `pdftoppm` cada figura y tabla nueva y revisar superposiciones.
+- **Plantilla:** `latexmk` en `Plantilla/` y `pdftotext` + `diff` contra la vista previa: 0 líneas.
+- **Release:** `git tag entrega-final` sobre el commit entregado.
+
+### Pendientes anteriores que siguen vigentes
+- Confirmar en el texto citado las 8 cifras con (\*) de `check-numbers-permitidas.txt`.
+- Nota al director con los cambios.
+- *Fast-forward* de `main` solo con confirmación del autor (dispara `docker-publish`).
+
+## Estado al 26-nov-2026: comentarios de forma del director (historial; su «Cómo retomar» sigue vigente)
 
 ### Cómo retomar (cualquier máquina)
 
