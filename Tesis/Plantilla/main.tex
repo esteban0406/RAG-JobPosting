@@ -12,7 +12,7 @@
 
 % Enlaces largos (repositorio, release del corpus): xurl permite cortarlos en cualquier carácter.
 \usepackage{xurl}
-\usepackage[pagebackref=true,breaklinks=true]{hyperref}
+\usepackage[breaklinks=true]{hyperref}
 \hypersetup{
 	pdftitle={Evaluaci\'on por componentes de un pipeline de Retrieval-Augmented Generation para la b\'usqueda de empleo remoto: el caso JobAI},
 	pdfauthor={Luis Esteban Pe\~na Rodr\'iguez}, 
@@ -40,6 +40,17 @@
 
 % Marca visible para datos que se completar\'an con los resultados de la evaluaci\'on.
 \input{tablas/cifras}
+% Títulos de sección sin guion de corte (revisión del 26-nov): los de report.cls,
+% con los mismos tamaños y espacios, alineados a la izquierda y sin partir palabras.
+\makeatletter
+\newcommand{\singuion}{\raggedright\hyphenpenalty=10000\exhyphenpenalty=10000}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.5ex \@plus -1ex \@minus -.2ex}{2.3ex \@plus.2ex}{\normalfont\Large\bfseries\singuion}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}{1.5ex \@plus .2ex}{\normalfont\large\bfseries\singuion}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-3.25ex\@plus -1ex \@minus -.2ex}{1.5ex \@plus .2ex}{\normalfont\normalsize\bfseries\singuion}}
+\makeatother
 \newcommand{\pendiente}[1]{\textcolor{red}{[Pendiente: #1]}}
 
 
@@ -128,7 +139,7 @@
     % \input{BackMatter/B10-Index}
     
 	% Incluye las referencias
-    \bibliographystyle{apalike}
+    \bibliographystyle{apalike-es}
  	\bibliography{Bibliography/referencias}
 
 \end{document}

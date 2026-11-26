@@ -96,7 +96,7 @@ La Figura~\ref{fig:art-pipeline} resume el recorrido de una consulta y la Tabla~
         \hline
         Reordenamiento & Desactivado; se conservan las 5 primeras de la fusión & Qwen3-Reranker-0.6B \citep{Zhang2025Qwen3} sobre las 20 primeras candidatas; se conservan 5 ofertas & Igual que la de referencia \\
         \hline
-        Compuerta de sin resultados & No aplica: depende del reordenamiento & Umbral de 0,134 sobre el mejor puntaje & Igual; las métricas de recuperación se calculan sin ella \\
+        Compuerta de ausencia de resultados & No aplica: depende del reordenamiento & Umbral de 0,134 sobre el mejor puntaje & Igual; las métricas de recuperación se calculan sin ella \\
         \hline
         Análisis estructurado (ingesta) & \texttt{gpt-oss-120b} (Groq) & \texttt{gpt-oss-120b} (Groq) & Corpus analizado con Llama 3.1 8B, local (Anexo~\ref{anx:corpus}) \\
         \hline
@@ -251,7 +251,7 @@ La Figura~\ref{fig:art-iter2} compara el pipeline antes y después de la iteraci
         \node[half, new] (b2) at (8.45,-3.63) {Búsqueda densa (multilingual-e5-base): 50 fragmentos, con filtro};
         \node[half, new] (b3) at (11.95,-3.63) {BM25: 50 ofertas, con el mismo filtro};
         \node[box, new] (b4) at (10.2,-5.54) {Fusión RRF y reordenamiento de 20 candidatas $\rightarrow$ 5 ofertas};
-        \node[box, new] (b5) at (10.2,-7.26) {Compuerta de sin resultados sobre el mejor puntaje};
+        \node[box, new] (b5) at (10.2,-7.26) {Compuerta de ausencia de resultados sobre el mejor puntaje};
         \node[box, new] (b6) at (10.2,-8.98) {Generación en el idioma de la pregunta};
         \draw[arr] (b0) -- (b1);
         \draw[arr] (b1) -- (b2); \draw[arr] (b1) -- (b3);

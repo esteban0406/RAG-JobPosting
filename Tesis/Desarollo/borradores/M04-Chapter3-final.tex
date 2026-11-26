@@ -50,7 +50,7 @@ El conjunto de prueba tiene 75 consultas en inglés, el idioma de las ofertas, r
     \end{tabular}
 \end{table}
 
-Las decisiones de configuración (modelo de reordenamiento, número de candidatas y umbral de la compuerta de sin resultados) se toman con un conjunto de desarrollo de 20 necesidades, formuladas en 28 consultas (20 en inglés y 8 en español) sin solapamiento con las de prueba, más 10 consultas fuera de dominio que solo sirven para calibrar el umbral; sus resultados no se reportan como resultados del sistema. Para probar la compuerta con consultas que no redactó el autor, en un análisis complementario agregado después de la corrida final, una persona sin formación técnica escribe 15 consultas fuera de dominio a partir de una instrucción breve; se congelan antes de correr el pipeline y se verifica en el corpus, sin mirar puntajes, que ninguna oferta las responde.
+Las decisiones de configuración (modelo de reordenamiento, número de candidatas y umbral de la compuerta de ausencia de resultados) se toman con un conjunto de desarrollo de 20 necesidades, formuladas en 28 consultas (20 en inglés y 8 en español) sin solapamiento con las de prueba, más 10 consultas fuera de dominio que solo sirven para calibrar el umbral; sus resultados no se reportan como resultados del sistema. Para probar la compuerta con consultas que no redactó el autor, en un análisis complementario agregado después de la corrida final, una persona sin formación técnica escribe 15 consultas fuera de dominio a partir de una instrucción breve; se congelan antes de correr el pipeline y se verifica en el corpus, sin mirar puntajes, que ninguna oferta las responde.
 
 Se evalúa la configuración de referencia de JobAI, definida en el repositorio e identificada por el \textit{commit} que acompaña a cada corrida, con una diferencia: el corpus congelado se analizó con un modelo local y no con el de la configuración de referencia (Anexo~\ref{anx:corpus}). La Tabla~\ref{tab:art-config} compara la configuración de referencia con la desplegada y con la evaluada. Durante la evaluación la temperatura de generación es 0 y las respuestas y clasificaciones se guardan en caché, de modo que todos los sistemas usan las mismas clasificaciones. Las consultas se envían sin usuario autenticado, para que la personalización por currículo no se confunda con la recuperación, y las métricas de recuperación se calculan sin la compuerta, cuyo efecto se reporta aparte.
 
@@ -170,7 +170,7 @@ La Tabla~\ref{tab:met-validez} resume las amenazas principales y cómo se mitiga
         \hline
         \textbf{Tipo} & \textbf{Amenaza} & \textbf{Mitigación} \\
         \hline
-        Interna & Sesgos del juez automático, incluido el que favorece a los sistemas que ordenan con LLM \citep{Frobe2025}. & Validación humana, kappa y plan B con un segundo juez; juez final de otra familia que el generador y el reordenador, lo que no elimina el sesgo. \\
+        Interna & Sesgos del juez automático, incluido el que favorece a los sistemas que ordenan con LLM \citep{Frobe2025}. & Validación humana, kappa y un juez alternativo; juez final de otra familia que el generador y el reordenador, lo que no elimina el sesgo. \\
         \hline
         Interna & El juez local es el modelo que analizó el corpus y redactó el resumen que indexa la búsqueda densa. & Solo se usa en el desarrollo; el juez final es de otra familia. \\
         \hline
