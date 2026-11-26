@@ -30,7 +30,7 @@ La Tabla~\ref{tab:met-iteraciones} resume los resultados registrados en el histo
 \section{Corpus}
 \label{anx:corpus}
 
-El análisis estructurado con el modelo local Llama 3.1 8B falló por completo en 25 ofertas (2,3\,\%), a las que se aplicó la fragmentación por ventana deslizante, y fue parcial, sin resumen, en otras 231. Los fragmentos tienen una longitud media de 467 caracteres. El corpus tiene tres sesgos conocidos, que se tienen en cuenta al interpretar los resultados:
+El corpus se descargó el 10 de octubre de 2026. La copia publicada, \texttt{corpus-2026-10-14}, es el mismo corpus, con los mismos identificadores y textos, después de volver a codificarlo con el modelo multilingüe y de aplicar la regla de salarios plausibles (Sección~\ref{sec:res-corpus}); su manifiesto registra la huella del texto de ambas copias. El análisis estructurado con el modelo local Llama 3.1 8B falló por completo en 25 ofertas (2,3\,\%), a las que se aplicó la fragmentación por ventana deslizante, y fue parcial, sin resumen, en otras 231. Los fragmentos tienen una longitud media de 467 caracteres. El corpus tiene tres sesgos conocidos, que se tienen en cuenta al interpretar los resultados:
 \begin{itemize}
     \item Los conectores de Remotive y Jobicy descartan las ofertas sin salario explícito, lo que explica su baja participación.
     \item La API de Findwork interrumpió la descarga al alcanzar su límite de solicitudes, y aun así aporta el 84\,\% del corpus, de modo que este está dominado por una sola fuente.
@@ -310,7 +310,7 @@ Una observación cualitativa motivó incluir la fusión con RRF entre las varian
 \chapter{Mapa del repositorio}
 \label{anx:repositorio}
 
-El software de este trabajo está publicado en \url{https://github.com/esteban0406/RAG-JobPosting}. La versión que corresponde a este documento se identifica con la etiqueta \texttt{borrador-2-director}. La Tabla~\ref{tab:anx-repositorio} indica dónde se encuentra cada componente.
+El software de este trabajo está publicado en \url{https://github.com/esteban0406/RAG-JobPosting}. La versión que corresponde a este documento se identifica con la etiqueta \texttt{entrega-final}. La Tabla~\ref{tab:anx-repositorio} indica dónde se encuentra cada componente.
 
 \begin{table}[!htb]
     \centering

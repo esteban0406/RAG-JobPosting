@@ -121,7 +121,7 @@ Los algoritmos se ofrecen de dos formas. La primera es una extensión de un moto
 
 Esta literatura muestra que los motores dedicados están diseñados para escalas y patrones de acceso en los que una extensión relacional puede quedarse corta, en particular la búsqueda con filtros \citep{Sanca2024}. No establece, sin embargo, a partir de qué escala ni con qué selectividad la diferencia importa en la práctica, y una extensión relacional conserva ventajas operativas: transacciones, integridad referencial y una sola base de datos que administrar.
 
-\textbf{Relación con JobAI.} JobAI almacenaba sus vectores en pgvector. La revisión del sistema mostró que su lentitud se debía a una consulta que no usaba el índice y no al motor (Capítulo~\ref{cap:artefacto}). Por eso este trabajo no da por justificada la migración a Qdrant, sino que la evalúa como parte del costo de la búsqueda: ambos motores quedan detrás de una interfaz común y se comparan con la metodología de \citet{Aumuller2020}, sobre datos reales y sintéticos, con y sin filtros (Sección~\ref{sec:met-preguntas}).
+\textbf{Relación con JobAI.} JobAI almacenaba sus vectores en pgvector. La revisión del sistema mostró que su lentitud se debía a una consulta que no usaba el índice y no al motor (Capítulo~\ref{cap:artefacto}). Por eso este trabajo no da por justificada la migración a Qdrant, sino que la evalúa como parte del costo de la búsqueda: ambos motores quedan detrás de una interfaz común y se comparan con la metodología de \citet{Aumuller2020}, sobre datos reales y sintéticos, con y sin filtros (Sección~\ref{sec:met-benchmark}).
 
 \section{Clasificación de consultas y text-to-SQL}
 \label{sec:estado-arte-hibrido}
@@ -159,4 +159,4 @@ La evaluación de un sistema RAG también debe considerar cómo falla. \citet{Ba
 
 La latencia es un costo porque los usuarios la perciben. En la búsqueda web, un retraso añadido menor que 500~ms no se distingue, y uno mayor que 1.000~ms se nota con mucha probabilidad, sobre todo entre los usuarios de un sistema rápido \citep{Arapakis2014,Bai2017}. En la búsqueda móvil la tolerancia es mayor, pero los retrasos de más de 7 a 10~s empeoran claramente la experiencia \citep{Arapakis2021}. Son estudios de buscadores web, en los que la respuesta es una lista de resultados y no un texto generado.
 
-\textbf{Relación con JobAI.} Los umbrales de \citet{Arapakis2014} y \citet{Bai2017} sirven de referencia para el retraso que agregan los componentes del pipeline, con la advertencia de que provienen de otro tipo de interfaz (Sección~\ref{sec:met-enfoque}).
+\textbf{Relación con JobAI.} Los umbrales de \citet{Arapakis2014} y \citet{Bai2017} sirven de referencia para el retraso que agregan los componentes del pipeline, con la advertencia de que provienen de otro tipo de interfaz (Sección~\ref{sec:met-metricas}).
