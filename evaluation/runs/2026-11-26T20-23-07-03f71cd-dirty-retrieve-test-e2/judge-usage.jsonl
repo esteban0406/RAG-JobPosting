@@ -1,0 +1,3 @@
+{"judge":"anthropic:claude-sonnet-5-5@temperature=default,thinking=between_tools,max_tokens=1024","at":"2026-11-26T21:05:45.509Z","newJudgments":20,"calls":20,"inputTokens":24125,"outputTokens":408}
+{"judge":"api.openai.com:gpt-6-sol@reasoning=none","at":"2026-11-26T21:07:20.713Z","newJudgments":155,"calls":155,"inputTokens":120582,"outputTokens":1395}
+{"judge":"anthropic:claude-sonnet-5-5@temperature=default,thinking=between_tools,max_tokens=1024","at":"2026-11-26T21:27:50.531Z","newJudgments":736,"calls":736,"inputTokens":877620,"outputTokens":37676}

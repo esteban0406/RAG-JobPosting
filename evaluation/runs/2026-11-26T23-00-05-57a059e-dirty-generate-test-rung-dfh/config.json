@@ -1,0 +1,18 @@
+{
+  "command": "eval:generate",
+  "gitSha": "57a059e-dirty",
+  "createdAt": "2026-11-26T23:05:39.868Z",
+  "model": "qwen/qwen3.8-27b",
+  "classifier": "1a83eda83188",
+  "vectorBackend": "qdrant",
+  "filtered": true,
+  "retrievalHybrid": true,
+  "rerankEnabled": false,
+  "queries": 85,
+  "newlyGenerated": 4,
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "label": "test-rung-dfh",
+  "temperature": 0,
+  "delayMs": 20000,
+  "noFilter": false
+}

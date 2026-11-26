@@ -1,0 +1,9 @@
+cell,system,mean
+D,qdrant-hnsw,0.6773069653751259
+F,qdrant-filtered,0.7218069639096725
+H,qdrant-hybrid-nofilter,0.6886413321863906
+R,qdrant-rerank-nofilter,0.792069314979102
+FH,qdrant-hybrid,0.7182559662054101
+FR,qdrant-filtered-rerank,0.8236443015111933
+HR,qdrant-hybrid-rerank-nofilter,0.7911682450679343
+FHR,qdrant-hybrid-rerank,0.8153483304997576
