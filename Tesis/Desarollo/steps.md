@@ -9,7 +9,21 @@
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
-## ▶ Estado al 25-nov-2026, unión del portátil y el PC — LEER PRIMERO
+## ▶ Estado al 26-nov-2026: comentarios de forma del director — LEER PRIMERO
+
+El director comentó `borrador-2-director` (~24-nov). Se aplican por capítulo, con revisión del autor; **hechos y pasados a `Plantilla/` (26-nov):**
+- **Reglas generales (todo el documento):** escritura concisa y en prosa, sin listas ni viñetas (excepciones acordadas: objetivos específicos, PE1–PE4, catálogo de fallas A1–D8 y listas técnicas de los Anexos); sin subsecciones de un solo párrafo; **sin Design Science Research** (solo una frase en la Justificación del Cap. 2) ni su vocabulario («artefacto» → sistema/pipeline/JobAI, sin «evaluación formativa/sumativa», «exaptación» ni «objetivos de la solución»); «Retrieval-Augmented Generation» completo solo en su primera aparición (Introducción; el resumen y el abstract lo definen aparte) y después «RAG», incluidos la pregunta y el objetivo general.
+- **Declaración de IA eliminada** (F06); el uso de IA se dice donde ocurre (§3.1 y A.9 cribado, §4.5 jueces, Cap. 5 modelos).
+- **Introducción** en prosa continua, sin subsecciones; objetivos en prosa (la lista oficial sigue en el Cap. 2).
+- **Cap. 2:** Justificación unida en tres párrafos; Alcance sin viñetas; Marco teórico en tres subsecciones con **tres figuras TikZ propias** (`fig:marco-lexica-semantica`, `fig:marco-rag`, `fig:marco-hnsw`; la de HNSW va sin flotar al inicio de §2.6.3 para no quedar sola en una página).
+- **Cap. 3:** empieza por la tabla de trabajos relacionados (§3.1, con el método de búsqueda resumido y el detalle en A.9) y cierra esa sección con el vacío; sin la sección de DSR ni la Síntesis.
+- **Síntesis de §6.7 eliminada**; lo no repetido (conteos, Barnett, lección del arnés) pasó al comienzo de §6.7, ahora «Fallas encontradas durante la evaluación».
+- **Cap. 4:** solo métodos, en presente impersonal, 8 secciones sin subsecciones (~3.300 palabras, antes ~5.050). Enfoque = estudio de caso con dos iteraciones y evaluación *offline*; los tres criterios (a)(b)(c) se conservan (`sec:met-enfoque`). Lo que se hizo se movió: antecedentes de abril → inicio de «Iteración 1» del Cap. 5 (`sec:art-antecedentes`); composición del corpus y necesidades reemplazadas → §6.1.
+- Vista previa y `Plantilla/`: 112 págs., sin errores, mismo texto; `check-numbers.py` limpio.
+
+**Siguiente:** Cap. 5 (título sin «artefacto», enlace del corpus, más diagramas), luego Caps. 6 y 7 con las mismas reglas. Pendiente de antes: confirmar las 8 cifras (\*) de `check-numbers-permitidas.txt`.
+
+## ▶ Estado al 25-nov-2026, unión del portátil y el PC
 
 **Qué pasó:** la rama divergió desde `5b4bbe3`. El portátil tenía sin subir los 7 commits del 17-nov (`ec767ca` → `6943f5b`: reescritura de Introducción, Preliminares, Estado del arte, Artefacto, Conclusiones, resumen; siglas, declaración de IA, T1–T9, `.bib` con 49 entradas, borradores en `Plantilla/`, etiqueta local `borrador-2-director`). El PC subió el 25-nov 6 commits (`8b24ecf` → `1c98816`, sección siguiente) hechos sobre el texto **anterior** al 17-nov: su auditoría (`auditoria-cifras.md`) se hizo sobre la vista previa del 17-nov a las 00:04, y sus M01/M02/M03 eran casi la plantilla vieja.
 - **La versión que recibió el director es la del portátil:** `~/Downloads/borrador-2-director.pdf` (120 págs., creado el 17-nov a las 18:37 = etiqueta `borrador-2-director` → `6943f5b`). Por decisión del autor, **el texto del portátil es la base** y encima se aplicaron las correcciones del PC que seguían aplicando.

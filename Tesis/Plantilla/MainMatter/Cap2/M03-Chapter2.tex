@@ -1,11 +1,60 @@
-Este capítulo revisa la literatura en torno a los componentes de un pipeline RAG para la búsqueda de empleo y a su evaluación. Empieza por el método de la revisión. Sigue con el problema, la búsqueda léxica y sus límites, y con los sistemas de emparejamiento de empleo, que se resumen en una tabla de trabajos relacionados. Después trata el fundamento de RAG y cada componente que este trabajo evalúa, los motores de almacenamiento vectorial y la clasificación de consultas. Las últimas secciones revisan la evaluación de la recuperación y de los sistemas RAG, la latencia percibida y el marco metodológico. Cada sección termina con su relación con JobAI.
+Este capítulo parte de los trabajos más cercanos a JobAI, que la Tabla~\ref{tab:ea-trabajos} compara, y desde ellos revisa la literatura de cada elemento que esos trabajos combinan y que este trabajo evalúa: la búsqueda léxica que sirve de línea base, RAG y sus componentes, los motores de almacenamiento vectorial, la clasificación de consultas, la evaluación con colecciones de prueba y jueces, la evaluación de sistemas RAG y la latencia percibida. Cada sección termina con su relación con JobAI.
 
-\section{Método de la revisión}
+\section{Trabajos relacionados}
+\label{sec:estado-arte-tabla}
+\label{sec:estado-arte-empleo}
 \label{sec:estado-arte-metodo}
 
-La revisión combina la literatura reunida durante el desarrollo del trabajo con una búsqueda estructurada complementaria, hecha después del primer borrador para cubrir los vacíos identificados en una revisión interna de ese borrador. Esa búsqueda se hizo el 16 de noviembre de 2026 en cuatro bases: Google Scholar y ACM Digital Library, consultadas a mano, y arXiv (categorías cs.IR y cs.CL) y Semantic Scholar, consultadas mediante sus interfaces públicas. Usó nueve cadenas en inglés, una por tema del capítulo (empleo, evaluación de RAG por componentes, jueces LLM, variación entre evaluadores, juicios incompletos, representaciones del dominio laboral, expansión de la consulta, reordenamiento con LLM y latencia), y el periodo 2019--2026. De cada cadena y base se revisaron los primeros resultados, por lo general 50 o 60 (Anexo~\ref{anx:busqueda}). Los trabajos anteriores a 2019 que el capítulo necesita entraron por búsqueda hacia atrás desde los incluidos.
+Los trabajos que revisa este capítulo provienen de la literatura reunida durante el desarrollo y de una búsqueda estructurada complementaria, hecha el 16 de noviembre de 2026 en Google Scholar, ACM Digital Library, arXiv y Semantic Scholar con nueve cadenas en inglés, una por tema del capítulo, para el periodo 2019--2026; los trabajos anteriores entraron por búsqueda hacia atrás desde los incluidos. De los 1.395 registros únicos, el cribado por título y resumen, que hizo un asistente de IA y verificó el autor en dos rondas a ciegas, dejó 149 candidatos, y cada cita nueva se verificó en Crossref, arXiv o la página oficial de las actas. La búsqueda no pretende ser una revisión sistemática, y la lectura del texto completo fue parcial: se priorizó la línea de empleo, la más cercana a este trabajo, y aun en ella se leyó menos de la mitad de los candidatos. El Anexo~\ref{anx:busqueda} detalla las cadenas, las bases, los criterios y la verificación del cribado.
 
-Un trabajo entraba si estaba revisado por pares, o era un \textit{preprint} verificable, y aportaba a una de cinco líneas: recuperación o RAG en el empleo con consulta textual y alguna evaluación; evaluación de pipelines RAG por componentes; evaluación \textit{offline}, con jueces LLM, variación entre evaluadores y juicios incompletos; componentes que este trabajo usa o discute, y latencia percibida en la búsqueda. Los 1.847 resultados se redujeron a 1.395 registros únicos, 401 pasaron la lectura del título y 149 pasaron a la lectura del texto completo. El cribado lo hizo un asistente de IA y lo verificó el autor en dos rondas a ciegas. En la primera, el acuerdo fue bajo ($\kappa = 0{,}29$), porque el criterio escrito era más amplio que el aplicado; tras precisar el criterio, el autor confirmó 40 de 50 exclusiones tomadas al azar, y los 10 desacuerdos se resolvieron con el criterio precisado: 7 trabajos entraron y 3 quedaron fuera. Cada cita que aportó esta búsqueda se verificó en Crossref, arXiv o la página oficial de las actas. Las cadenas, los registros y la decisión sobre cada trabajo están en el repositorio. La búsqueda no pretende ser una revisión sistemática: Google Scholar no respeta del todo los operadores booleanos, y en ACM Digital Library las cadenas se aplicaron a todos los campos. La lectura del texto completo, además, fue parcial: se priorizó la línea de empleo, la más cercana a este trabajo, y aun en ella se leyó menos de la mitad de los candidatos, en parte porque varios son de acceso pago; de los demás se leyó el resumen.
+La Tabla~\ref{tab:ea-trabajos} compara los trabajos de emparejamiento de empleo más cercanos a este, y los párrafos que la siguen los sitúan en sus líneas de investigación. Las cifras son las que reporta cada trabajo y no son comparables entre sí, porque los corpus, las consultas y los juicios difieren.
+
+{\footnotesize
+\begin{longtable}{|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{3.3cm}|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}p{2.6cm}|}
+    \caption{Trabajos relacionados en el emparejamiento de empleo}
+    \label{tab:ea-trabajos} \\
+    \hline
+    \textbf{Trabajo} & \textbf{Dirección y corpus} & \textbf{Comparación} & \textbf{Juicios y métricas} & \textbf{Hallazgo} \\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{Trabajo} & \textbf{Dirección y corpus} & \textbf{Comparación} & \textbf{Juicios y métricas} & \textbf{Hallazgo} \\
+    \hline
+    \endhead
+    \citet{Borisyuk2026} & Buscador y reclutador; producción de LinkedIn & Juez LLM destilado en modelos pequeños & Juez LLM de 8B validado con ejemplos humanos ($\kappa$ lineal 0,77); NDCG@10 & El juez LLM sostiene el entrenamiento y la evaluación a escala \\
+    \hline
+    \citet{Erol2026} & Hoja de vida $\rightarrow$ ofertas; unas 120.000 ofertas de LinkedIn & \textit{Embeddings} frente a reordenamientos y su combinación & Conjunto pequeño anotado a mano; nDCG@10 & El reordenamiento mejora, con potencia estadística limitada \\
+    \hline
+    \citet{Vyas2026} & Buscador $\rightarrow$ cargos; 1.283 cargos públicos de Nueva York & Combinaciones de BM25, semántica y grafo de habilidades, con latencia & 30 consultas, dos anotadores ($\kappa \approx 0{,}85$); NDCG@10 0,81 & +7\,\% sobre BM25, con intervalos amplios \\
+    \hline
+    \citet{Hossain2026} & Buscador $\rightarrow$ ofertas, conversacional; 22.410 ofertas, 988 diálogos & BM25 y densa, con y sin filtros duros; inglés y bengalí romanizado & Una oferta relevante anotada por diálogo; Hit@10 & BM25 gana con texto romanizado y la densa en inglés \\
+    \hline
+    \citet{Srihari2025JobSphere} & Buscador $\rightarrow$ ofertas; portal público de Punyab & RAG multilingüe frente al portal anterior & Sin descripción de los juicios; P@10 0,68 frente a 0,34 & Mejora frente a la búsqueda por palabras clave \\
+    \hline
+    \citet{Yoruk2025} & Buscador $\rightarrow$ ofertas; 250 participantes & Agente con RAG frente a la búsqueda tradicional & Sin descripción de quién define una oferta adecuada; precisión en las 5 primeras & +42\,\% de precisión en un experimento A/B \\
+    \hline
+    \citet{Julianto2026} & Reclutador $\rightarrow$ hojas de vida; 247.480 perfiles & BM25, bi-encoder, RAG y \textit{cross-encoder}, por separado y combinados & P@K, NDCG@K, MRR y latencia & El pipeline completo duplica la P@3 del bi-encoder \\
+    \hline
+    \citet{Fabregat2026} & Oferta $\rightarrow$ hojas de vida; conjunto sintético en inglés y español & Sistemas participantes en TalentCLEF 2026 & Juicios de la tarea; MAP & Panorama de técnicas: etapas múltiples, fusión, reordenamiento \\
+    \hline
+    \citet{Thuma2026} & Oferta $\rightarrow$ hojas de vida (TalentCLEF) & Densa, BM25 expandido y su fusión & Juicios de la tarea; MAP y MRR & La fusión ayuda en un idioma y perjudica entre idiomas \\
+    \hline
+    \citet{Tran2026QTPride} & Oferta $\rightarrow$ hojas de vida (TalentCLEF) & Texto completo frente a vistas estructuradas con LLM, fusionadas con RRF & Juicios de la tarea; MAP & Las vistas estructuradas suman poco \\
+    \hline
+    Este trabajo & Buscador $\rightarrow$ ofertas; 1.068 ofertas reales, inglés y español & Escalera de componentes; BM25 con y sin los mismos filtros & Juez LLM validado con 298 pares humanos; nDCG@10, cumplimiento de restricciones (C@5), fidelidad, latencia & Capítulo~\ref{cap:resultados} \\
+    \hline
+\end{longtable}
+}
+
+La industria del reclutamiento en línea adoptó pronto la búsqueda semántica con representaciones densas. \citet{HaThuc2017} documentan el paso de LinkedIn Talent Search de una búsqueda por palabras clave a una búsqueda por ejemplos: el reclutador indica uno o varios candidatos ideales y el sistema aprende a construir la consulta y el \textit{ranking} a partir de ellos. A mayor escala, \citet{Shen2024} describen cómo LinkedIn incorporó la recuperación aprendida, densa y generativa, a su sistema de búsqueda y recomendación de empleo, y la misma plataforma usa un modelo de lenguaje para interpretar la consulta y extraer de ella atributos estructurados \citep{Liu2025}. Su sistema actual de búsqueda semántica se entrena y se evalúa con un juez LLM de relevancia que aplica la política de producto y que alcanza un $\kappa$ lineal de 0,77 frente a ejemplos etiquetados por personas \citep{Borisyuk2026}; para servirlo en producción, ese juez se destila en modelos pequeños \citep{Behdin2025}. Otros trabajos usan un modelo de lenguaje que genera, a partir del currículo, la descripción de un empleo adecuado para la persona \citep{ZhengGIRL2023}.
+
+Una segunda línea construye representaciones del dominio laboral. \citet{Decorte2021} aumentan un modelo de lenguaje preentrenado con la coocurrencia de habilidades extraídas de vacantes, y su modelo, JobBERT, supera a los codificadores de oraciones genéricos en la normalización de títulos de cargo. \citet{Bocharova2023} siguen la misma idea con VacancySBERT y reportan mejoras de hasta 21,5\,\% sobre modelos genéricos. ESCO, la clasificación multilingüe europea de habilidades, competencias, cualificaciones y ocupaciones, ofrece un vocabulario común para el emparejamiento \citep{leVrang2014}; CareerBERT la usa para llevar currículos y ocupaciones a un mismo espacio de \textit{embeddings} y la evalúa con ofertas reales y con expertos de recursos humanos \citep{Rosenberger2025}.
+
+La evaluación compartida más cercana es la tarea A de TalentCLEF 2026: dada una oferta, ordenar hojas de vida, en inglés y en español, sobre un conjunto sintético preparado por la organización \citep{Fabregat2026}. Varias participaciones combinan, como JobAI, una lista densa y una léxica. La fusión de una búsqueda densa con BM25 expandido mejoró el MAP en inglés y en español, pero empeoró la búsqueda entre idiomas, donde ganó la densa sola \citep{Thuma2026}. Otras fusionaron con RRF varias vistas de la hoja de vida \citep{Poerwanto2026,Tran2026QTPride} o reordenaron una primera etapa densa \citep{Palomino2026}. En QTPride, las vistas estructuradas extraídas con un LLM sumaron poco sobre el texto completo \citep{Tran2026QTPride}.
+
+En la dirección de JobAI, de quien busca hacia las ofertas, las evaluaciones son más escasas y menos controladas. Synapse recupera ofertas con \textit{embeddings} y las reordena; sus autores reportan una mejora del nDCG@10, pero sobre un conjunto de prueba pequeño anotado a mano que, según ellos, limita la potencia estadística \citep{Erol2026}. JobMatchAI combina BM25, búsqueda semántica y un grafo de habilidades, compara cada combinación de canales con BM25 sobre 30 consultas con juicios de dos anotadores y mide su latencia, aunque calcula las métricas antes de aplicar las restricciones duras \citep{Vyas2026}. Un recomendador conversacional en Bangladés compara BM25 y la búsqueda densa con y sin filtros duros, relaja el filtro cuando no deja candidatas, como JobAI, y muestra que BM25 gana con texto romanizado y la densa en inglés; cada diálogo tiene una sola oferta relevante anotada \citep{Hossain2026}. Los sistemas con RAG suelen reportar mejoras frente a la búsqueda por palabras clave sin describir cómo se juzgó la relevancia \citep{Yoruk2025,Srihari2025JobSphere}. En la dirección contraria, la del reclutador, hay ablaciones con BM25 y \textit{cross-encoder} sobre hojas de vida \citep{Julianto2026} y evaluaciones con RAGAS \citep{Tran2025}.
+
+\textbf{Relación con JobAI.} JobAI no entrena representaciones propias: usa un modelo de \textit{embeddings} general y un pipeline RAG con componentes disponibles. Los trabajos más cercanos en diseño son JobMatchAI, por su comparación de canales frente a BM25, y el recomendador de \citet{Hossain2026}, por sus líneas base léxica y densa con los mismos filtros. Entre los trabajos revisados, ninguno mide si las ofertas devueltas cumplen las restricciones de la consulta, y el juez LLM validado contra personas solo aparece en un sistema industrial \citep{Borisyuk2026}. La evaluación de este trabajo reúne esos elementos. Falta, por tanto, una evaluación repetible que mida, en la búsqueda de empleo desde quien busca, cuánto aporta cada componente frente a BM25 y cuánto cuesta, con un juez validado y sus límites declarados. Las secciones siguientes revisan la literatura de cada uno de esos elementos, y el Capítulo~\ref{cap:metodologia} los reúne en un protocolo de evaluación.
 
 \section{Búsqueda léxica y sus límites en el reclutamiento}
 \label{sec:estado-arte-keyword}
@@ -18,20 +67,7 @@ Que la búsqueda léxica tenga esta limitación no la convierte en una línea ba
 
 \textbf{Relación con JobAI.} La plataforma ofrece en su panel una búsqueda por subcadena sobre el título y la empresa, que la evaluación conserva como línea base de la propia plataforma. La comparación principal, sin embargo, se hace contra BM25, también con los mismos filtros que el pipeline (Capítulo~\ref{cap:metodologia}).
 
-\section{Recuperación semántica en el emparejamiento de empleo}
-\label{sec:estado-arte-empleo}
-
-La industria del reclutamiento en línea adoptó pronto la búsqueda semántica con representaciones densas. \citet{HaThuc2017} documentan el paso de LinkedIn Talent Search de una búsqueda por palabras clave a una búsqueda por ejemplos: el reclutador indica uno o varios candidatos ideales y el sistema aprende a construir la consulta y el \textit{ranking} a partir de ellos. A mayor escala, \citet{Shen2024} describen cómo LinkedIn incorporó la recuperación aprendida, densa y generativa, a su sistema de búsqueda y recomendación de empleo, y la misma plataforma usa un modelo de lenguaje para interpretar la consulta y extraer de ella atributos estructurados \citep{Liu2025}. Su sistema actual de búsqueda semántica se entrena y se evalúa con un juez LLM de relevancia que aplica la política de producto y que alcanza un $\kappa$ lineal de 0,77 frente a ejemplos etiquetados por personas \citep{Borisyuk2026}; para servirlo en producción, ese juez se destila en modelos pequeños \citep{Behdin2025}. Otros trabajos usan un modelo de lenguaje que genera, a partir del currículo, la descripción de un empleo adecuado para la persona \citep{ZhengGIRL2023}.
-
-Una segunda línea construye representaciones del dominio laboral. \citet{Decorte2021} aumentan un modelo de lenguaje preentrenado con la coocurrencia de habilidades extraídas de vacantes, y su modelo, JobBERT, supera a los codificadores de oraciones genéricos en la normalización de títulos de cargo. \citet{Bocharova2023} siguen la misma idea con VacancySBERT y reportan mejoras de hasta 21,5\,\% sobre modelos genéricos. ESCO, la clasificación multilingüe europea de habilidades, competencias, cualificaciones y ocupaciones, ofrece un vocabulario común para el emparejamiento \citep{leVrang2014}; CareerBERT la usa para llevar currículos y ocupaciones a un mismo espacio de \textit{embeddings} y la evalúa con ofertas reales y con expertos de recursos humanos \citep{Rosenberger2025}.
-
-La evaluación compartida más cercana es la tarea A de TalentCLEF 2026: dada una oferta, ordenar hojas de vida, en inglés y en español, sobre un conjunto sintético preparado por la organización \citep{Fabregat2026}. Varias participaciones combinan, como JobAI, una lista densa y una léxica. La fusión de una búsqueda densa con BM25 expandido mejoró el MAP en inglés y en español, pero empeoró la búsqueda entre idiomas, donde ganó la densa sola \citep{Thuma2026}. Otras fusionaron con RRF varias vistas de la hoja de vida \citep{Poerwanto2026,Tran2026QTPride} o reordenaron una primera etapa densa \citep{Palomino2026}. En QTPride, las vistas estructuradas extraídas con un LLM sumaron poco sobre el texto completo \citep{Tran2026QTPride}.
-
-En la dirección de JobAI, de quien busca hacia las ofertas, las evaluaciones son más escasas y menos controladas. Synapse recupera ofertas con \textit{embeddings} y las reordena; sus autores reportan una mejora del nDCG@10, pero sobre un conjunto de prueba pequeño anotado a mano que, según ellos, limita la potencia estadística \citep{Erol2026}. JobMatchAI combina BM25, búsqueda semántica y un grafo de habilidades, compara cada combinación de canales con BM25 sobre 30 consultas con juicios de dos anotadores y mide su latencia, aunque calcula las métricas antes de aplicar las restricciones duras \citep{Vyas2026}. Un recomendador conversacional en Bangladés compara BM25 y la búsqueda densa con y sin filtros duros, relaja el filtro cuando no deja candidatas, como JobAI, y muestra que BM25 gana con texto romanizado y la densa en inglés; cada diálogo tiene una sola oferta relevante anotada \citep{Hossain2026}. Los sistemas con RAG suelen reportar mejoras frente a la búsqueda por palabras clave sin describir cómo se juzgó la relevancia \citep{Yoruk2025,Srihari2025JobSphere}. En la dirección contraria, la del reclutador, hay ablaciones con BM25 y \textit{cross-encoder} sobre hojas de vida \citep{Julianto2026} y evaluaciones con RAGAS \citep{Tran2025}. La Tabla~\ref{tab:ea-trabajos} resume los trabajos más cercanos.
-
-\textbf{Relación con JobAI.} JobAI no entrena representaciones propias: usa un modelo de \textit{embeddings} general y un pipeline RAG con componentes disponibles. Los trabajos más cercanos en diseño son JobMatchAI, por su comparación de canales frente a BM25, y el recomendador de \citet{Hossain2026}, por sus líneas base léxica y densa con los mismos filtros. Entre los trabajos revisados, ninguno mide si las ofertas devueltas cumplen las restricciones de la consulta, y el juez LLM validado contra personas solo aparece en un sistema industrial \citep{Borisyuk2026}. La evaluación de este trabajo reúne esos elementos.
-
-\section{Retrieval-Augmented Generation}
+\section{RAG}
 \label{sec:estado-arte-rag}
 
 La recuperación densa moderna parte de dos trabajos. \citet{Reimers2019} adaptaron BERT con redes siamesas para producir \textit{embeddings} de oraciones comparables con la similitud coseno, lo que redujo de unas 65 horas a unos 5 segundos la búsqueda del par más similar entre 10.000 oraciones. \citet{Karpukhin2020} mostraron que un recuperador con dos codificadores, entrenado con pocas preguntas y pasajes, superaba a BM25 entre 9 y 19 puntos porcentuales en la exactitud de los 20 primeros pasajes en preguntas de dominio abierto.
@@ -41,6 +77,7 @@ RAG fue propuesto por \citet{Lewis2020} como una arquitectura que combina un rec
 La revisión de \citet{Gao2023} organiza la evolución posterior en tres niveles. El RAG \emph{ingenuo} indexa, recupera una vez y genera. El RAG \emph{avanzado} agrega optimizaciones antes de la recuperación, como la reformulación de la consulta, y después de ella, como el reordenamiento y la compresión del contexto. El RAG \emph{modular} descompone el pipeline en componentes intercambiables con flujos condicionales, como el enrutamiento entre estrategias de recuperación. La misma revisión trata, entre los recuperadores, la recuperación híbrida que combina representaciones dispersas y densas. Señala como retos abiertos la calidad de la recuperación, porque fragmentos irrelevantes degradan la respuesta aun con un buen generador, y la persistencia de alucinaciones cuando el contexto es insuficiente.
 
 \textbf{Relación con JobAI.} Antes de este trabajo, la recuperación de JobAI era un RAG ingenuo: una sola búsqueda densa sin reordenamiento. Su enrutamiento entre una ruta semántica y una de agregación SQL ya correspondía a un rasgo del RAG modular (Sección~\ref{sec:estado-arte-hibrido}). La Iteración~2 incorpora componentes del RAG avanzado, y la evaluación mide el aporte de cada uno.
+
 
 \section{Componentes del RAG avanzado}
 \label{sec:estado-arte-componentes}
@@ -84,7 +121,7 @@ Los algoritmos se ofrecen de dos formas. La primera es una extensión de un moto
 
 Esta literatura muestra que los motores dedicados están diseñados para escalas y patrones de acceso en los que una extensión relacional puede quedarse corta, en particular la búsqueda con filtros \citep{Sanca2024}. No establece, sin embargo, a partir de qué escala ni con qué selectividad la diferencia importa en la práctica, y una extensión relacional conserva ventajas operativas: transacciones, integridad referencial y una sola base de datos que administrar.
 
-\textbf{Relación con JobAI.} JobAI almacenaba sus vectores en pgvector. La revisión del artefacto mostró que su lentitud se debía a una consulta que no usaba el índice y no al motor (Capítulo~\ref{cap:artefacto}). Por eso este trabajo no da por justificada la migración a Qdrant, sino que la evalúa como parte del costo de la búsqueda: ambos motores quedan detrás de una interfaz común y se comparan con la metodología de \citet{Aumuller2020}, sobre datos reales y sintéticos, con y sin filtros (Sección~\ref{sec:met-preguntas}).
+\textbf{Relación con JobAI.} JobAI almacenaba sus vectores en pgvector. La revisión del sistema mostró que su lentitud se debía a una consulta que no usaba el índice y no al motor (Capítulo~\ref{cap:artefacto}). Por eso este trabajo no da por justificada la migración a Qdrant, sino que la evalúa como parte del costo de la búsqueda: ambos motores quedan detrás de una interfaz común y se comparan con la metodología de \citet{Aumuller2020}, sobre datos reales y sintéticos, con y sin filtros (Sección~\ref{sec:met-preguntas}).
 
 \section{Clasificación de consultas y text-to-SQL}
 \label{sec:estado-arte-hibrido}
@@ -115,68 +152,11 @@ Otra parte de la literatura evalúa por componentes y por casos difíciles. BERG
 
 La evaluación de un sistema RAG también debe considerar cómo falla. \citet{Barnett2024} reportan la experiencia de construir tres sistemas RAG en dominios distintos e identifican siete puntos de falla: la información no está en el corpus, el documento relevante no queda entre los primeros, no llega al contexto, el modelo no la extrae, la respuesta tiene un formato equivocado, una especificidad incorrecta o está incompleta. Concluyen que la validación de un sistema RAG solo es posible durante su operación y que su robustez se construye de forma evolutiva.
 
-\textbf{Relación con JobAI.} La evaluación mide la fidelidad y la relevancia de las respuestas con RAGAS, y además mide salidas intermedias del pipeline: la lista de ofertas de cada componente y el cumplimiento de las restricciones. La compuerta de sin resultados responde al problema del rechazo que documentan \citet{Chen2024RGB} y \citet{Peng2025}, y se evalúa con consultas fuera de dominio. Las fallas encontradas durante las iteraciones se registran como hallazgos de la evaluación formativa y se relacionan con los puntos de falla de \citet{Barnett2024}, sin plantear su detección como una pregunta de investigación.
+\textbf{Relación con JobAI.} La evaluación mide la fidelidad y la relevancia de las respuestas con RAGAS, y además mide salidas intermedias del pipeline: la lista de ofertas de cada componente y el cumplimiento de las restricciones. La compuerta de sin resultados responde al problema del rechazo que documentan \citet{Chen2024RGB} y \citet{Peng2025}, y se evalúa con consultas fuera de dominio. Las fallas encontradas durante las iteraciones se registran y se relacionan con los puntos de falla de \citet{Barnett2024}, sin plantear su detección como una pregunta de investigación.
 
 \section{Latencia percibida en la búsqueda}
 \label{sec:estado-arte-latencia}
 
 La latencia es un costo porque los usuarios la perciben. En la búsqueda web, un retraso añadido menor que 500~ms no se distingue, y uno mayor que 1.000~ms se nota con mucha probabilidad, sobre todo entre los usuarios de un sistema rápido \citep{Arapakis2014,Bai2017}. En la búsqueda móvil la tolerancia es mayor, pero los retrasos de más de 7 a 10~s empeoran claramente la experiencia \citep{Arapakis2021}. Son estudios de buscadores web, en los que la respuesta es una lista de resultados y no un texto generado.
 
-\textbf{Relación con JobAI.} Los umbrales de \citet{Arapakis2014} y \citet{Bai2017} sirven de referencia para el retraso que agregan los componentes del pipeline, con la advertencia de que provienen de otro tipo de interfaz (Sección~\ref{sec:met-dsr}).
-
-\section{Design Science Research}
-\label{sec:estado-arte-dsr}
-
-Design Science Research (DSR) se distingue de la investigación conductual en sistemas de información en que no busca explicar o predecir un fenómeno, sino diseñar y evaluar con rigor un artefacto que resuelve un problema relevante. \citet{Hevner2004} lo formalizan en siete lineamientos, entre ellos que el artefacto es una contribución identificable, que su utilidad debe demostrarse con métodos de evaluación rigurosos y que la investigación debe comunicarse a audiencias técnicas y de gestión. Proponen además dos ciclos complementarios: el de \emph{relevancia}, que conecta el artefacto con las necesidades de su entorno, y el de \emph{rigor}, que lo conecta con la base de conocimiento existente. El volumen editado por \citet{HevnerChatterjee2010} consolida la teoría y la práctica de DSR con un tercer ciclo, el de \emph{diseño}, que construye y evalúa el artefacto de forma iterativa. \citet{GregorHevner2013} clasifican las contribuciones según la madurez del problema y de la solución; llaman \emph{exaptación} a extender una solución conocida a un problema nuevo, y exigen mostrar que la extensión no es trivial.
-
-\citet{Peffers2007} operacionalizan estos principios en seis actividades: identificación del problema, definición de objetivos, diseño y desarrollo, demostración, evaluación y comunicación. Reconocen distintos puntos de entrada al ciclo, entre ellos uno centrado en el diseño y desarrollo, apropiado cuando la investigación parte de un artefacto existente. \citet{Venable2016} proponen FEDS, un marco para diseñar la evaluación en DSR que distingue la evaluación \emph{formativa}, que orienta el diseño mientras se construye, de la \emph{sumativa}, que juzga el resultado.
-
-\textbf{Relación con JobAI.} Este trabajo adopta el punto de entrada centrado en el diseño y desarrollo, porque JobAI ya existía. Combina una evaluación formativa, cuyos hallazgos orientaron las dos iteraciones de diseño, con una evaluación sumativa de la configuración final, y su contribución es una exaptación (Capítulo~\ref{cap:metodologia}).
-
-\section{Trabajos relacionados}
-\label{sec:estado-arte-tabla}
-
-La Tabla~\ref{tab:ea-trabajos} compara los trabajos de emparejamiento de empleo más cercanos a este. Las cifras son las que reporta cada trabajo y no son comparables entre sí, porque los corpus, las consultas y los juicios difieren.
-
-{\footnotesize
-\begin{longtable}{|>{\raggedright\arraybackslash}p{2.2cm}|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{3.3cm}|>{\raggedright\arraybackslash}p{2.9cm}|>{\raggedright\arraybackslash}p{2.6cm}|}
-    \caption{Trabajos relacionados en el emparejamiento de empleo}
-    \label{tab:ea-trabajos} \\
-    \hline
-    \textbf{Trabajo} & \textbf{Dirección y corpus} & \textbf{Comparación} & \textbf{Juicios y métricas} & \textbf{Hallazgo} \\
-    \hline
-    \endfirsthead
-    \hline
-    \textbf{Trabajo} & \textbf{Dirección y corpus} & \textbf{Comparación} & \textbf{Juicios y métricas} & \textbf{Hallazgo} \\
-    \hline
-    \endhead
-    \citet{Borisyuk2026} & Buscador y reclutador; producción de LinkedIn & Juez LLM destilado en modelos pequeños & Juez LLM de 8B validado con ejemplos humanos ($\kappa$ lineal 0,77); NDCG@10 & El juez LLM sostiene el entrenamiento y la evaluación a escala \\
-    \hline
-    \citet{Erol2026} & Hoja de vida $\rightarrow$ ofertas; unas 120.000 ofertas de LinkedIn & \textit{Embeddings} frente a reordenamientos y su combinación & Conjunto pequeño anotado a mano; nDCG@10 & El reordenamiento mejora, con potencia estadística limitada \\
-    \hline
-    \citet{Vyas2026} & Buscador $\rightarrow$ cargos; 1.283 cargos públicos de Nueva York & Combinaciones de BM25, semántica y grafo de habilidades, con latencia & 30 consultas, dos anotadores ($\kappa \approx 0{,}85$); NDCG@10 0,81 & +7\,\% sobre BM25, con intervalos amplios \\
-    \hline
-    \citet{Hossain2026} & Buscador $\rightarrow$ ofertas, conversacional; 22.410 ofertas, 988 diálogos & BM25 y densa, con y sin filtros duros; inglés y bengalí romanizado & Una oferta relevante anotada por diálogo; Hit@10 & BM25 gana con texto romanizado y la densa en inglés \\
-    \hline
-    \citet{Srihari2025JobSphere} & Buscador $\rightarrow$ ofertas; portal público de Punyab & RAG multilingüe frente al portal anterior & Sin descripción de los juicios; P@10 0,68 frente a 0,34 & Mejora frente a la búsqueda por palabras clave \\
-    \hline
-    \citet{Yoruk2025} & Buscador $\rightarrow$ ofertas; 250 participantes & Agente con RAG frente a la búsqueda tradicional & Sin descripción de quién define una oferta adecuada; precisión en las 5 primeras & +42\,\% de precisión en un experimento A/B \\
-    \hline
-    \citet{Julianto2026} & Reclutador $\rightarrow$ hojas de vida; 247.480 perfiles & BM25, bi-encoder, RAG y \textit{cross-encoder}, por separado y combinados & P@K, NDCG@K, MRR y latencia & El pipeline completo duplica la P@3 del bi-encoder \\
-    \hline
-    \citet{Fabregat2026} & Oferta $\rightarrow$ hojas de vida; conjunto sintético en inglés y español & Sistemas participantes en TalentCLEF 2026 & Juicios de la tarea; MAP & Panorama de técnicas: etapas múltiples, fusión, reordenamiento \\
-    \hline
-    \citet{Thuma2026} & Oferta $\rightarrow$ hojas de vida (TalentCLEF) & Densa, BM25 expandido y su fusión & Juicios de la tarea; MAP y MRR & La fusión ayuda en un idioma y perjudica entre idiomas \\
-    \hline
-    \citet{Tran2026QTPride} & Oferta $\rightarrow$ hojas de vida (TalentCLEF) & Texto completo frente a vistas estructuradas con LLM, fusionadas con RRF & Juicios de la tarea; MAP & Las vistas estructuradas suman poco \\
-    \hline
-    Este trabajo & Buscador $\rightarrow$ ofertas; 1.068 ofertas reales, inglés y español & Escalera de componentes; BM25 con y sin los mismos filtros & Juez LLM validado con 298 pares humanos; nDCG@10, cumplimiento de restricciones (C@5), fidelidad, latencia & Capítulo~\ref{cap:resultados} \\
-    \hline
-\end{longtable}
-}
-
-\section{Síntesis}
-
-La literatura revisada permite cuatro afirmaciones. Primero, la búsqueda léxica tiene una limitación estructural en el reclutamiento, pero BM25 es una línea base robusta que un sistema denso no siempre supera. Segundo, cada componente del RAG avanzado tiene respaldo propio (los filtros en la búsqueda aproximada, la fusión híbrida, la expansión, el reordenamiento y los modelos multilingües), pero su aporte se ha medido sobre todo en colecciones de propósito general, y para algunos, como la fusión híbrida y la expansión, la evidencia es mixta. Tercero, en el empleo, las evaluaciones controladas se concentran en la dirección del reclutador y en las tareas compartidas, mientras que los sistemas con RAG para quien busca suelen evaluarse sin describir sus juicios. Cuarto, los jueces LLM permiten evaluar a escala, pero con sesgos documentados que exigen validarlos contra personas.
-
-Falta, por tanto, una evaluación repetible que mida, en la búsqueda de empleo desde quien busca, cuánto aporta cada componente frente a BM25 y cuánto cuesta, con un juez validado y sus límites declarados. El Capítulo~\ref{cap:metodologia} traduce este vacío en un protocolo de evaluación.
+\textbf{Relación con JobAI.} Los umbrales de \citet{Arapakis2014} y \citet{Bai2017} sirven de referencia para el retraso que agregan los componentes del pipeline, con la advertencia de que provienen de otro tipo de interfaz (Sección~\ref{sec:met-enfoque}).

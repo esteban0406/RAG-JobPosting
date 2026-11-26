@@ -2,31 +2,31 @@
 \section{Planteamiento del problema}
 \label{sec:problema}
 
-La búsqueda de empleo remoto se reparte entre muchas plataformas: agregadores generalistas, portales especializados y bolsas de empleo de las propias empresas. Cada una tiene su catálogo y sus filtros, y muchas resuelven la búsqueda de la misma manera: comparan los términos de la consulta con los del título o la descripción de la oferta. Ese mecanismo funciona cuando quien busca y quien publica nombran el cargo con las mismas palabras, y falla cuando no lo hacen.
+La búsqueda de empleo remoto se reparte entre muchas plataformas: agregadores generalistas, portales especializados y bolsas de empleo de las propias empresas. Cada una tiene su catálogo y sus filtros, y muchas buscan de la misma manera, comparando los términos de la consulta con los del título o la descripción de la oferta. El mecanismo funciona cuando quien busca y quien publica nombran el cargo con las mismas palabras, y falla cuando no lo hacen.
 
-La literatura de emparejamiento de empleo documenta esta limitación desde hace tiempo. \citet{HaThuc2017} describen cómo LinkedIn pasó de una búsqueda de candidatos por palabras clave a una búsqueda por ejemplos, porque las palabras clave no capturaban lo que el reclutador buscaba. \citet{Bocharova2023} atribuyen a la variación léxica entre títulos equivalentes, como \enquote{Software Engineer} y \enquote{Backend Developer}, una pérdida sistemática de coincidencias, y proponen representaciones semánticas entrenadas para el dominio. La revisión bibliométrica de \citet{RojasGaleano2022} muestra que esta limitación es uno de los motivos centrales de la investigación en inteligencia artificial aplicada al emparejamiento entre ofertas y currículos.
+La literatura de emparejamiento de empleo documenta esta limitación desde hace tiempo. \citet{HaThuc2017} describen cómo LinkedIn pasó de buscar candidatos por palabras clave a buscarlos por ejemplos, porque las palabras clave no capturaban lo que el reclutador quería. \citet{Bocharova2023} atribuyen a la variación léxica entre títulos equivalentes, como \enquote{Software Engineer} y \enquote{Backend Developer}, una pérdida sistemática de coincidencias, y proponen representaciones semánticas entrenadas para el dominio. La revisión bibliométrica de \citet{RojasGaleano2022} muestra que esta limitación es uno de los motivos centrales de la investigación en inteligencia artificial aplicada al emparejamiento entre ofertas y currículos.
 
-Las grandes plataformas ya adoptaron alternativas. LinkedIn recupera ofertas con representaciones densas aprendidas \citep{Shen2024} y usa un modelo de lenguaje para interpretar la consulta y extraer de ella atributos estructurados \citep{Liu2025}. Otros trabajos usan modelos de lenguaje para generar recomendaciones de empleo \citep{ZhengGIRL2023}. Estas soluciones, sin embargo, se entrenan y se evalúan con datos de interacción propietarios, a los que no tiene acceso un agregador pequeño.
+Las grandes plataformas ya adoptaron alternativas. LinkedIn recupera ofertas con representaciones densas aprendidas \citep{Shen2024} y usa un modelo de lenguaje para extraer de la consulta atributos estructurados \citep{Liu2025}, y otros trabajos generan recomendaciones de empleo con modelos de lenguaje \citep{ZhengGIRL2023}. Todas estas soluciones, sin embargo, se entrenan y se evalúan con datos de interacción propietarios, a los que un agregador pequeño no tiene acceso.
 
-La generación aumentada por recuperación (\textit{Retrieval-Augmented Generation}, RAG) \citep{Lewis2020} ofrece una alternativa construida con componentes disponibles. Un sistema RAG recupera los fragmentos más cercanos a la consulta en un espacio de \textit{embeddings} y le pide a un modelo de lenguaje que redacte la respuesta a partir de ellos. La revisión de \citet{Gao2023} distingue un RAG \emph{ingenuo}, con una sola búsqueda densa, de un RAG \emph{avanzado}, que agrega optimizaciones como el reordenamiento de los resultados, y discute además la recuperación híbrida, que combina representaciones léxicas y densas. Cada etapa promete mejorar la recuperación, y cada una tiene un costo en latencia y en complejidad. Entre esos costos está el del almacenamiento vectorial, que fija el tiempo de la etapa de búsqueda; por eso este trabajo lo estudia como parte del costo y no como un componente de la calidad.
+RAG \citep{Lewis2020} ofrece una alternativa con componentes disponibles: recupera los fragmentos más cercanos a la consulta en un espacio de \textit{embeddings} y le pide a un modelo de lenguaje que redacte la respuesta a partir de ellos. \citet{Gao2023} distinguen un RAG \emph{ingenuo}, con una sola búsqueda densa, de uno \emph{avanzado}, que agrega optimizaciones como el reordenamiento o la recuperación híbrida, que combina representaciones léxicas y densas. Cada etapa promete mejorar la recuperación y cada una cuesta latencia y complejidad. Entre esos costos está el del almacenamiento vectorial, que fija el tiempo de la búsqueda; por eso este trabajo lo estudia como parte del costo y no de la calidad.
 
-Dos vacíos motivan este trabajo. El primero es de evidencia. Para la búsqueda de empleo no se sabe cuánto mejora un pipeline RAG la recuperación frente a una línea base léxica fuerte como BM25, ni qué componente explica esa mejora. La pregunta no es trivial: en la comparación de \citet{Thakur2021} sobre 18 colecciones, BM25 resultó una línea base robusta que varios modelos densos no superaron fuera de su dominio de entrenamiento, y los modelos de reordenamiento obtuvieron los mejores resultados a un alto costo computacional. El segundo vacío es de evaluación. Un sistema RAG responde con fluidez aunque su recuperación, sus datos o su enrutamiento fallen, porque el modelo de lenguaje redacta una respuesta plausible con lo que recibe. \citet{Barnett2024} identifican siete puntos de falla en la ingeniería de estos sistemas y concluyen que su validación solo es posible durante la operación. Las métricas habituales de RAG, como la fidelidad, puntúan la respuesta final \citep{Es2024}, y no está claro que registren las fallas de las etapas anteriores. Este trabajo no convierte esa duda en una pregunta de investigación: mide las salidas intermedias porque la pregunta lo exige, y registra como hallazgos de la evaluación formativa las fallas que encontró en el camino.
+Dos vacíos motivan el trabajo. El primero es de evidencia: en la búsqueda de empleo no se sabe cuánto mejora un pipeline RAG la recuperación frente a una línea base léxica fuerte como BM25, ni qué componente explica esa mejora. La pregunta no es trivial, porque en la comparación de \citet{Thakur2021} sobre 18 colecciones BM25 resultó una línea base robusta que varios modelos densos no superaron fuera de su dominio de entrenamiento, y los reordenadores obtuvieron los mejores resultados a un alto costo computacional. El segundo vacío es de evaluación: un sistema RAG responde con fluidez aunque su recuperación, sus datos o su enrutamiento fallen, porque el modelo de lenguaje redacta una respuesta plausible con lo que recibe. \citet{Barnett2024} identifican siete puntos de falla en la ingeniería de estos sistemas y concluyen que solo pueden validarse durante la operación, mientras que las métricas habituales, como la fidelidad, puntúan la respuesta final \citep{Es2024}. Este trabajo no convierte esa duda en una pregunta de investigación, pero mide las salidas intermedias porque la pregunta lo exige y registra las fallas que encontró en el camino.
 
-Este trabajo estudia ambos vacíos con un caso concreto: JobAI, una plataforma que agrega ofertas de tres fuentes públicas orientadas al empleo remoto y responde consultas en lenguaje natural mediante un pipeline RAG. JobAI es un artefacto preexistente, desarrollado por el autor sin un protocolo de evaluación formal. Sirve como caso de estudio porque su pipeline admite activar y desactivar componentes de forma aislada. Que las fuentes estén orientadas al empleo remoto no significa que todas las ofertas lo sean (Sección~\ref{sec:met-corpus}): la modalidad es una condición que quien busca expresa en la consulta y que el pipeline debe respetar, y se evalúa como tal.
+Ambos vacíos se estudian con un caso concreto: JobAI, una plataforma que agrega ofertas de tres fuentes públicas orientadas al empleo remoto y responde consultas en lenguaje natural mediante un pipeline RAG. Es un sistema preexistente, desarrollado por el autor sin un protocolo de evaluación formal, y sirve como caso de estudio porque su pipeline permite activar y desactivar componentes de forma aislada. Que las fuentes estén orientadas al empleo remoto no significa que todas las ofertas lo sean (Sección~\ref{sec:met-corpus}): la modalidad es una condición que quien busca expresa en la consulta y que el pipeline debe respetar, y se evalúa como tal.
 
 \section{Pregunta de investigación}
 
 \begin{quote}
-\textit{¿En qué medida un pipeline de Retrieval-Augmented Generation mejora la recuperación de ofertas de empleo frente a la búsqueda por palabras clave, qué componentes del pipeline explican esa mejora y con qué costo en latencia?}
+\textit{¿En qué medida un pipeline RAG mejora la recuperación de ofertas de empleo frente a la búsqueda por palabras clave, qué componentes del pipeline explican esa mejora y con qué costo en latencia?}
 \end{quote}
 
-La forma de evaluar un artefacto que ya existía es una decisión metodológica, no una pregunta de investigación. Se trata en el Capítulo~\ref{cap:metodologia}.
+Cómo evaluar un sistema que ya existía es una decisión metodológica y no una pregunta de investigación; se trata en el Capítulo~\ref{cap:metodologia}.
 
 \section{Objetivos}
 
 \subsection{Objetivo general}
 
-Evaluar en qué medida un pipeline de \textit{Retrieval-Augmented Generation} aplicado a la búsqueda de empleo remoto mejora la calidad de la recuperación frente a la búsqueda por palabras clave, e identificar el aporte y el costo de cada uno de sus componentes, usando la plataforma JobAI como caso de estudio.
+Evaluar en qué medida un pipeline RAG aplicado a la búsqueda de empleo remoto mejora la calidad de la recuperación frente a la búsqueda por palabras clave, e identificar el aporte y el costo de cada uno de sus componentes, usando la plataforma JobAI como caso de estudio.
 
 \subsection{Objetivos específicos}
 
@@ -39,51 +39,151 @@ Evaluar en qué medida un pipeline de \textit{Retrieval-Augmented Generation} ap
 
 \section{Justificación}
 
-\paragraph{Práctica.} Un buscador que no reconoce las ofertas compatibles que usan otras palabras las deja fuera de los resultados, y quien busca solo puede compensarlo probando más consultas. Los sistemas de búsqueda de empleo con RAG que se han publicado suelen reportar mejoras frente a la búsqueda por palabras clave sin describir quién decidió qué oferta era relevante \citep{Yoruk2025,Srihari2025JobSphere}; el Capítulo~\ref{cap:estado-arte} lo revisa. Una evaluación por componentes indica cuáles vale la pena implementar y cuánto cuestan, una información útil para cualquier plataforma pequeña que considere un pipeline RAG.
+Un buscador que no reconoce las ofertas compatibles que usan otras palabras las deja fuera de los resultados, y quien busca solo puede compensarlo probando más consultas. Las plataformas pequeñas que quieren resolverlo con un pipeline RAG encuentran poca orientación en la literatura: los sistemas de búsqueda de empleo con RAG que se han publicado suelen reportar mejoras frente a la búsqueda por palabras clave sin describir quién decidió qué oferta era relevante \citep{Yoruk2025,Srihari2025JobSphere}, como revisa el Capítulo~\ref{cap:estado-arte}. Una evaluación por componentes les dice cuáles vale la pena implementar y cuánto cuesta cada uno.
 
-\paragraph{Teórica.} La investigación en emparejamiento de empleo se ha concentrado en modelos de \textit{ranking} y recomendación entrenados con datos de interacción \citep{HaThuc2017,Shen2024,Bocharova2023}. La literatura de RAG, por su parte, se evalúa sobre todo en colecciones de preguntas y respuestas de dominio general \citep{Gao2023}. Este trabajo cruza ambas líneas con un caso evaluado de forma repetible: mide el aporte de la búsqueda densa, los filtros, la búsqueda híbrida, el reordenamiento y un modelo multilingüe sobre ofertas reales, frente a una línea base léxica fuerte.
+Esa evaluación también ocupa un espacio entre dos líneas de investigación que rara vez se tocan. La de emparejamiento de empleo se ha concentrado en modelos de \textit{ranking} y recomendación entrenados con datos de interacción \citep{HaThuc2017,Shen2024,Bocharova2023}, y la de RAG se evalúa sobre todo en colecciones de preguntas y respuestas de dominio general \citep{Gao2023}. Este trabajo las cruza al medir, sobre ofertas reales y frente a una línea base léxica fuerte, el aporte de la búsqueda densa, los filtros, la búsqueda híbrida, el reordenamiento y un modelo multilingüe.
 
-\paragraph{Metodológica.} El protocolo propuesto separa las decisiones de configuración del conjunto de prueba, valida al juez automático contra juicios humanos y registra cada respuesta, juicio y versión del código. Además, al aplicarse a un artefacto existente, deja un registro de las fallas que aparecieron al prepararlo y ejecutarlo, con el origen de cada detección, útil para quien evalúe un sistema RAG en otro dominio.
+Para que esas mediciones sean confiables, el trabajo sigue la lógica de diseño y evaluación iterativa de Design Science Research \citep{Hevner2004} y la concreta en un protocolo repetible, que separa las decisiones de configuración del conjunto de prueba, valida al juez automático contra juicios humanos y registra cada respuesta, juicio y versión del código. Al aplicarse a un sistema en funcionamiento, el protocolo deja además un registro de las fallas que aparecieron al prepararlo y ejecutarlo, con el origen de cada detección, que puede servir a quien evalúe un sistema RAG en otro dominio.
 
 \section{Alcance y limitaciones}
 \label{sec:alcance}
 
-El trabajo evalúa la configuración de referencia de JobAI (Capítulo~\ref{cap:artefacto}) sobre un corpus congelado de ofertas de tres agregadores públicos orientados al empleo remoto: Remotive, Jobicy y Findwork. Mide la calidad de la recuperación, la fidelidad de las respuestas, la latencia por etapa y el comportamiento de dos motores de almacenamiento vectorial, según el protocolo del Capítulo~\ref{cap:metodologia}.
+El trabajo evalúa la configuración de referencia de JobAI (Capítulo~\ref{cap:artefacto}) sobre un corpus congelado de ofertas de tres agregadores públicos orientados al empleo remoto: Remotive, Jobicy y Findwork. Según el protocolo del Capítulo~\ref{cap:metodologia}, mide la calidad de la recuperación, la fidelidad de las respuestas, la latencia por etapa y el comportamiento de dos motores de almacenamiento vectorial.
 
-Quedan fuera del alcance:
-\begin{itemize}
-    \item La evaluación con usuarios reales: el trabajo mide la calidad técnica del pipeline, no la experiencia de uso ni la adopción.
-    \item El diálogo de varios turnos. La plataforma incluye el historial reciente de la conversación en la generación, pero la recuperación usa solo la consulta actual, y la evaluación trata cada consulta de forma aislada.
-    \item La personalización por currículo, que se desactiva durante la evaluación para no confundir su efecto con el de la recuperación.
-    \item La estrategia de fragmentación de las ofertas, heredada del diseño anterior a este trabajo. Evaluarla exigiría volver a fragmentar y codificar el corpus y rehacer los juicios de relevancia; queda como trabajo futuro.
-    \item La generalización a otros dominios, idiomas de las ofertas o modelos de \textit{embeddings} de otras familias.
-    \item La comparación con todos los motores vectoriales del mercado: se comparan pgvector y Qdrant como representantes de una extensión sobre un motor relacional y de un motor dedicado.
-    \item La calidad de los datos de origen, que se toman como dados, aunque el trabajo documenta los defectos que afectan a la evaluación.
-    \item El despliegue público de la plataforma, cuya configuración difiere de la evaluada (Tabla~\ref{tab:art-config}).
-\end{itemize}
+La evaluación es técnica y no incluye usuarios reales, de modo que no mide la experiencia de uso ni la adopción. Trata además cada consulta de forma aislada: la plataforma incluye el historial reciente de la conversación en la generación, pero la recuperación usa solo la consulta actual, y el diálogo de varios turnos no se evalúa. La personalización por currículo se desactiva durante la evaluación para no confundir su efecto con el de la recuperación.
+
+Algunas partes del diseño no se varían. La fragmentación de las ofertas viene del diseño anterior a este trabajo, y evaluarla exigiría volver a fragmentar y codificar el corpus y rehacer los juicios de relevancia, por lo que queda como trabajo futuro. De los motores vectoriales se comparan solo pgvector y Qdrant, como representantes de una extensión sobre un motor relacional y de un motor dedicado, y los resultados no se generalizan a otros dominios, a ofertas en otros idiomas ni a modelos de \textit{embeddings} de otras familias.
+
+Por último, los datos de origen se toman como dados, aunque el trabajo documenta los defectos que afectan a la evaluación, y el despliegue público de la plataforma queda fuera porque su configuración difiere de la evaluada (Tabla~\ref{tab:art-config}).
 
 \section{Marco teórico conceptual}
 \label{sec:marco-teorico}
 
-Esta sección introduce el vocabulario necesario para seguir el documento. El Capítulo~\ref{cap:estado-arte} revisa la literatura de cada concepto y su relación con JobAI.
+Esta sección presenta los tres conceptos que el resto del documento da por conocidos: cómo se compara una consulta con una oferta, qué agrega RAG a un modelo de lenguaje y cómo se buscan vectores a gran escala. El Capítulo~\ref{cap:estado-arte} revisa la literatura de cada uno.
 
-\subsection{Recuperación léxica y desajuste de vocabulario}
+\subsection{Recuperación léxica y semántica}
+\label{sec:marco-lexica}
 
-Un sistema de recuperación léxica representa cada documento por sus términos y lo puntúa según los términos que comparte con la consulta. El modelo de referencia es Okapi BM25 \citep{Robertson2009}, que pondera cada término coincidente por su rareza en la colección y normaliza por la longitud del documento. Su limitación es el \emph{desajuste de vocabulario}: dos textos equivalentes que no comparten términos no se relacionan. En el reclutamiento aparece como sinonimia entre habilidades (\enquote{JS} y \enquote{JavaScript}), variación entre títulos de cargo y diferencias entre cómo una persona describe lo que busca y cómo una oferta describe el cargo. La búsqueda por subcadena, del tipo \texttt{ILIKE} de SQL, es una forma aún más simple de búsqueda léxica: exige que el texto de la consulta aparezca literalmente.
+Un sistema de recuperación léxica representa cada documento por sus términos y lo puntúa según los que comparte con la consulta. El modelo de referencia es Okapi BM25 \citep{Robertson2009}, que pondera cada término coincidente por su rareza en la colección y normaliza por la longitud del documento; la búsqueda por subcadena, del tipo \texttt{ILIKE} de SQL, es una forma aún más simple, que exige que el texto de la consulta aparezca literalmente. Ambas comparten una limitación, el \emph{desajuste de vocabulario}: dos textos equivalentes que no comparten términos no se relacionan. En el reclutamiento aparece como sinonimia entre habilidades (\enquote{JS} y \enquote{JavaScript}), como variación entre títulos de cargo y como diferencia entre la forma en que una persona describe lo que busca y la forma en que una oferta describe el cargo. El panel izquierdo de la Figura~\ref{fig:marco-lexica-semantica} muestra un caso: la consulta y la oferta no comparten ninguna palabra, de modo que un sistema léxico no las relaciona.
 
-\subsection{Modelos de lenguaje de gran escala}
+La recuperación semántica resuelve ese caso con \textit{embeddings}. Un \textit{embedding} es un vector que un modelo entrenado asigna a cada texto de modo que los textos de significado parecido quedan cerca, y la cercanía se mide típicamente con la similitud coseno, el coseno del ángulo entre los dos vectores. En ese espacio, la consulta y la oferta del ejemplo quedan próximas aunque no compartan términos (panel derecho de la figura), y recuperar las ofertas más relevantes equivale a buscar los vecinos más cercanos del vector de la consulta.
 
-Los modelos de lenguaje de gran escala (\textit{Large Language Models}, LLM) se preentrenan sobre grandes volúmenes de texto y producen lenguaje fluido a partir de instrucciones. Su conocimiento queda fijado en sus parámetros al terminar el entrenamiento. No conocen datos posteriores ni datos privados, como el catálogo de una plataforma de empleo, y tienden a \enquote{alucinar}, es decir, a producir afirmaciones plausibles pero no sustentadas cuando les falta información \citep{Gao2023}.
+\begin{figure}[htbp!]
+    \centering
+    \caption{Recuperación léxica y semántica de la misma consulta}
+    \label{fig:marco-lexica-semantica}
+    \begin{tikzpicture}[
+        term/.style={draw, rounded corners=2pt, font=\scriptsize, inner sep=2pt, fill=gray!10},
+        doc/.style={draw, rounded corners, align=left, font=\small, text width=3.9cm, inner sep=4pt},
+        dot/.style={circle, fill=gray!45, inner sep=1.3pt},
+        key/.style={circle, fill=AzulInstitucional, inner sep=1.8pt},
+        arr/.style={->, >=stealth}
+    ]
+        % (a) Coincidencia léxica
+        \node[font=\small\bfseries] at (2.0,3.3) {(a) Coincidencia léxica};
+        \node[doc] (q) at (2.0,2.45) {Consulta:\\\enquote{trabajo con datos}};
+        \node[term] at (0.9,1.55) {trabajo};
+        \node[term] at (2.0,1.55) {con};
+        \node[term] at (3.1,1.55) {datos};
+        \node[font=\scriptsize, text=AzulInstitucional] at (2.0,0.85) {$\cap$ = ninguno};
+        \node[term] at (1.3,0.15) {analytics};
+        \node[term] at (2.7,0.15) {engineer};
+        \node[doc] (o) at (2.0,-0.75) {Oferta:\\\enquote{Analytics Engineer}};
+        \node[font=\scriptsize, align=center, text width=4.0cm] at (2.0,-1.85) {Sin términos en común:\\BM25 e \texttt{ILIKE} no la recuperan.};
+        % (b) Espacio de embeddings
+        \node[font=\small\bfseries] at (9.0,3.3) {(b) Espacio de \textit{embeddings}};
+        \draw[gray!60] (6.2,-1.4) rectangle (11.8,2.9);
+        \coordinate (O) at (6.6,-1.0);
+        \foreach \x/\y in {7.4/0.2, 8.1/-0.6, 9.6/-0.9, 10.9/-0.4, 11.2/0.8, 7.0/1.7, 7.8/2.4, 10.2/2.5, 9.0/0.4}
+            \node[dot] at (\x,\y) {};
+        \node[key, label={[font=\scriptsize]above:consulta}] (vq) at (10.0,1.9) {};
+        \node[key, label={[font=\scriptsize]right:Analytics Engineer}] (vo) at (10.6,1.3) {};
+        \node[dot, label={[font=\scriptsize]left:Enfermero/a}] at (11.2,-0.75) {};
+        \draw[arr, AzulInstitucional] (O) -- (vq);
+        \draw[arr, AzulInstitucional] (O) -- (vo);
+        \draw[AzulInstitucional] (8.334,-0.003) arc[start angle=29.9, end angle=40.5, radius=2.0];
+        \node[font=\scriptsize, text=AzulInstitucional] at (8.55,0.33) {$\theta$};
+        \node[font=\scriptsize, align=center, text width=5.2cm] at (9.0,-1.85) {Cercanía = similitud coseno ($\cos\theta$).\\La oferta queda entre las más cercanas.};
+    \end{tikzpicture}
+\end{figure}
 
-\subsection{Retrieval-Augmented Generation}
+\subsection{RAG}
+\label{sec:marco-rag}
 
-RAG \citep{Lewis2020} combina un componente de recuperación, que busca en una base de conocimiento externa los fragmentos más relevantes para la consulta, con un LLM que redacta la respuesta a partir de ellos. \citet{Gao2023} llaman \emph{ingenuo} al RAG con una única búsqueda y \emph{avanzado} al que agrega optimizaciones antes y después de ella. Dos de esas optimizaciones son centrales aquí: la \emph{búsqueda híbrida}, que combina una lista léxica y una densa, por ejemplo con la fusión por rangos recíprocos (RRF) \citep{Cormack2009}, y el \emph{reordenamiento}, que aplica a las primeras candidatas un modelo más costoso, típicamente un \textit{cross-encoder} que lee juntas la consulta y cada candidata \citep{Nogueira2019}. La \emph{fidelidad} de una respuesta mide si cada afirmación se sostiene en el contexto recuperado \citep{Es2024}. El Capítulo~\ref{cap:estado-arte} revisa cada uno de estos componentes.
+Los modelos de lenguaje de gran escala (\textit{Large Language Models}, LLM) se preentrenan sobre grandes volúmenes de texto y producen lenguaje fluido a partir de instrucciones. Su conocimiento, sin embargo, queda fijado en sus parámetros al terminar el entrenamiento: no conocen datos posteriores ni privados, como el catálogo de una plataforma de empleo, y cuando les falta información tienden a \enquote{alucinar}, es decir, a producir afirmaciones plausibles pero no sustentadas \citep{Gao2023}.
 
-\subsection{Bases de datos vectoriales y búsqueda por similitud}
+RAG \citep{Lewis2020} resuelve esa limitación al anteponer una búsqueda a la generación. Como muestra la Figura~\ref{fig:marco-rag}, el sistema recupera de una base de conocimiento externa los fragmentos más relevantes para la consulta y se los entrega al LLM junto con la instrucción, de modo que la respuesta se redacta a partir de ellos y no de la memoria del modelo. \citet{Gao2023} llaman \emph{ingenuo} al RAG con una única búsqueda densa y \emph{avanzado} al que agrega etapas antes y después de ella. Tres de esas etapas son las que este trabajo evalúa: los \emph{filtros} sobre atributos estructurados, como el salario o la modalidad; la \emph{búsqueda híbrida}, que combina una lista léxica y una densa, por ejemplo con la fusión por rangos recíprocos (RRF) \citep{Cormack2009}, y el \emph{reordenamiento}, que aplica a las primeras candidatas un modelo más costoso, típicamente un \textit{cross-encoder} que lee juntas la consulta y cada candidata \citep{Nogueira2019}. Al final del flujo, la \emph{fidelidad} de una respuesta mide si cada una de sus afirmaciones se sostiene en el contexto recuperado \citep{Es2024}.
 
-Un \textit{embedding} es una representación vectorial de un texto en un espacio donde la cercanía entre vectores, típicamente medida con la similitud coseno, refleja la cercanía semántica entre los textos. Recuperar los fragmentos más relevantes equivale a buscar los vecinos más cercanos del vector de la consulta. Como la búsqueda exacta es costosa a gran escala, se usan algoritmos de búsqueda \emph{aproximada} de vecinos (ANN). El más influyente es HNSW \citep{Malkov2020}, un grafo jerárquico de navegación con búsquedas en tiempo aproximadamente logarítmico. Estos algoritmos se ofrecen como extensión de un motor relacional, como pgvector sobre PostgreSQL, o dentro de un motor dedicado a vectores, como Qdrant.
+\begin{figure}[htbp!]
+    \centering
+    \caption{Flujo de un sistema RAG y etapas del RAG avanzado}
+    \label{fig:marco-rag}
+    \begin{tikzpicture}[
+        stage/.style={draw, rounded corners, align=center, text width=2.2cm, minimum height=1.1cm, font=\small},
+        adv/.style={draw, rounded corners, align=center, text width=2.9cm, minimum height=1.0cm, font=\scriptsize, fill=gray!10},
+        store/.style={draw, cylinder, shape border rotate=90, aspect=0.15, align=center, minimum height=1.1cm, text width=2.6cm, font=\small},
+        arr/.style={->, >=stealth}
+    ]
+        \node[stage] (q) at (0,0) {Consulta};
+        \node[stage] (ret) at (3.1,0) {Recuperación};
+        \node[stage] (ctx) at (6.2,0) {$k$ fragmentos\\(contexto)};
+        \node[stage] (llm) at (9.3,0) {LLM\\(instrucción + contexto)};
+        \node[stage] (ans) at (12.4,0) {Respuesta};
+        \node[store] (kb) at (3.1,2.2) {Base de conocimiento};
+        \draw[arr] (q) -- (ret);
+        \draw[arr] (kb) -- (ret);
+        \draw[arr] (ret) -- (ctx);
+        \draw[arr] (ctx) -- (llm);
+        \draw[arr] (llm) -- (ans);
+        \draw[<->, >=stealth, dashed, AzulInstitucional] (ctx.north) to[bend left=28] node[above, font=\scriptsize, text=AzulInstitucional, align=center] {Fidelidad: ¿cada afirmación de la respuesta\\se sostiene en el contexto?} (ans.north);
+        \node[adv] (f) at (2.0,-2.6) {Filtros por atributos\\(salario, modalidad, contrato)};
+        \node[adv] (h) at (6.2,-2.6) {Búsqueda híbrida\\(lista léxica + densa, RRF)};
+        \node[adv] (r) at (10.4,-2.6) {Reordenamiento\\(\textit{cross-encoder})};
+        \draw[arr] (f) -- (h);
+        \draw[arr] (h) -- (r);
+        \draw[dashed, rounded corners] (0.15,-3.35) rectangle (12.25,-1.8);
+        \node[font=\scriptsize] at (6.2,-3.65) {RAG avanzado: etapas que se agregan a la recuperación};
+        \draw[arr, dashed] (3.1,-1.8) -- (ret.south);
+    \end{tikzpicture}
+\end{figure}
 
-\subsection{Design Science Research}
-\label{sec:marco-teorico-dsr}
+\subsection{Búsqueda aproximada de vecinos y bases de datos vectoriales}
+\label{sec:marco-vectoriales}
 
-Design Science Research (DSR) es un paradigma de investigación orientado a crear y evaluar con rigor artefactos que resuelven problemas relevantes: constructos, modelos, métodos o instanciaciones de software. \citet{Hevner2004} lo formalizan en siete lineamientos, entre ellos que el artefacto debe evaluarse con rigor y que la investigación debe producir una contribución verificable. \citet{Peffers2007} lo operacionalizan en seis actividades, con distintos puntos de entrada, entre ellos uno centrado en el diseño y el desarrollo que parte de un artefacto existente. El Capítulo~\ref{cap:metodologia} describe su aplicación a JobAI.
+\begin{center}
+    \captionof{figure}{Búsqueda en un índice HNSW}
+    \label{fig:marco-hnsw}
+    \begin{tikzpicture}[
+        n/.style={circle, fill=gray!55, inner sep=1.5pt},
+        hit/.style={circle, fill=AzulInstitucional, inner sep=2pt},
+        hop/.style={->, >=stealth, thick, AzulInstitucional},
+        down/.style={->, >=stealth, dashed, AzulInstitucional}
+    ]
+        \foreach \y/\name in {0/Capa 0 (todos los nodos), 1.25/Capa 1, 2.5/Capa 2 (pocos nodos)} {
+            \fill[gray!8] (0,\y-0.42) rectangle (9,\y+0.42);
+            \draw[gray!50] (0,\y-0.42) rectangle (9,\y+0.42);
+            \node[font=\scriptsize, anchor=west] at (9.15,\y) {\name};
+        }
+        % Capa 2
+        \node[n] (a2) at (1.0,2.58) {}; \node[n] (b2) at (5.0,2.42) {}; \node[n] (c2) at (8.0,2.58) {};
+        \draw[gray] (a2) -- (b2) -- (c2);
+        % Capa 1
+        \node[n] (a1) at (1.0,1.33) {}; \node[n] (b1) at (2.6,1.17) {}; \node[n] (c1) at (5.0,1.17) {}; \node[n] (d1) at (6.0,1.36) {}; \node[n] (e1) at (8.0,1.33) {};
+        \draw[gray] (a1) -- (b1) -- (c1) -- (d1) -- (e1); \draw[gray] (b1) to[bend left=20] (d1);
+        % Capa 0
+        \foreach \x/\y [count=\i] in {0.5/0.15, 1.0/-0.2, 1.8/0.2, 2.6/-0.15, 3.4/0.2, 4.2/-0.2, 5.0/0.1, 5.6/-0.25, 6.0/0.15, 6.7/-0.15, 7.3/0.2, 8.0/-0.1, 8.5/0.25}
+            \node[n] (z\i) at (\x,\y) {};
+        \foreach \i [evaluate=\i as \j using int(\i+1)] in {1,...,12} \draw[gray] (z\i) -- (z\j);
+        \node[hit] at (z9) {}; \node[hit] at (z10) {};
+        \node[star, star points=5, fill=AzulInstitucional, inner sep=1.6pt, label={[font=\scriptsize]below:consulta}] (qq) at (6.35,-0.05) {};
+        % Recorrido
+        \node[font=\scriptsize, anchor=south] at (a2.north) {entrada};
+        \draw[hop] (a2) -- (b2);
+        \draw[down] (b2) -- (c1);
+        \draw[hop] (c1) -- (d1);
+        \draw[down] (d1) -- (z9);
+        \draw[hop] (z9) -- (z10);
+    \end{tikzpicture}
+\end{center}
+
+Comparar la consulta con todos los vectores del corpus da el resultado exacto, pero su costo crece con el tamaño de la colección. Por eso se usan algoritmos de búsqueda \emph{aproximada} de vecinos (ANN), que sacrifican una pequeña parte del \textit{recall} a cambio de velocidad. El más influyente es HNSW \citep{Malkov2020}, que organiza los vectores en un grafo de varias capas: la superior tiene pocos nodos unidos por enlaces largos y la inferior, todos los nodos unidos con sus vecinos cercanos. La búsqueda entra por la capa superior, avanza en cada capa hacia el nodo más cercano a la consulta y baja a la siguiente, de modo que en la capa inferior solo recorre la región próxima a la respuesta (Figura~\ref{fig:marco-hnsw}). Estos índices se ofrecen como extensión de un motor relacional, como pgvector sobre PostgreSQL, que guarda los vectores junto a los demás datos de la tabla, o dentro de un motor dedicado a vectores, como Qdrant.
