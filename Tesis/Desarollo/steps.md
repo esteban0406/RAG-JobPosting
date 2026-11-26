@@ -3,13 +3,28 @@
 ## Contexto y enfoque
 
 - **Programa:** **pregrado**, Ingeniería en Ciencias de la Computación e Inteligencia Artificial, Universidad Sergio Arboleda (confirmado por el autor el 15-oct; las menciones anteriores a "Maestría" eran un error). Plantilla NTC1486 en `Tesis/Plantilla` (la clase `MIA-USA.cls` es la de la Maestría y se adapta).
-- **Fecha límite:** entrega última semana de noviembre
+- **Fecha límite:** entrega última semana de noviembre de 2026
 
-- **Enfoque:** Design Science Research (DSR). JobAI ya es el artefacto construido (`caseStudy.md` lo describe tal como estaba **antes** de la tesis; la configuración actual está en la sección "Hechos verificados en el código" y en el borrador del Cap4). El aporte académico nuevo NO es construir features grandes, sino: (a) fundamentar el problema en literatura, (b) definir metodología y métricas de evaluación, (c) evaluar el artefacto cuantitativamente (precisión de retrieval, fidelidad/groundedness de respuestas, y opcionalmente comparación contra un baseline de búsqueda por palabra clave).
+- **Enfoque:** estudio de caso con dos iteraciones de mejora y evaluación *offline* de JobAI (el sistema ya existía; `caseStudy.md` lo describe como estaba **antes** de la tesis). **Desde el 26-nov el documento ya no usa Design Science Research** (pedido del director: solo queda una frase en la Justificación del Cap. 2) ni su vocabulario. El aporte académico es fundamentar el problema en literatura, definir un protocolo de evaluación repetible y evaluar el pipeline por componentes (recuperación, fidelidad, latencia, motor vectorial).
 - **Almacenamiento vectorial:** la plataforma funciona con pgvector o Qdrant detrás de una interfaz común (hecho). La migración **no es un objetivo**: se evalúa con PE4 (desde el 19-oct ya no hay hipótesis; antes era H3).
 - **Pedido del director:** problemática fundamentada en literatura + objetivo general y 4 objetivos específicos. Primera entrega enviada el 15-oct; **respuesta recibida el 19-oct** (ver "▶ Estado al 19-oct").
 
 ## ▶ Estado al 26-nov-2026: comentarios de forma del director — LEER PRIMERO
+
+### Cómo retomar (cualquier máquina)
+
+1. **`git pull`** en `thesis/qdrant-eval` antes de tocar nada, y **commit + `git push`** al terminar (el 25-nov la rama divergió entre el portátil y el PC por no hacerlo). Último commit subido: `913bdda` (26-nov). `main` está atrás: no hacer *fast-forward* sin confirmación del autor (dispara `docker-publish`).
+2. **Dónde está el texto:** las fuentes de trabajo son `Tesis/Desarollo/borradores/*-final.tex` (más `borradores/tablas/` y `borradores/figuras-gpt6sol/`); `Tesis/Plantilla/` es la copia final y hoy es **idéntica** (mismo texto que la vista previa). Mapa borrador → plantilla: `F04`→`FrontMatter/F04-Abstract.tex`, `F05`→`FrontMatter/F05-Symbols.tex`, `M01`→`MainMatter/Cap0/M01-Introduction.tex`, `M02`→`Cap1/M02-Chapter1.tex`, `M03`→`Cap2/M03-Chapter2.tex`, `M04`→`Cap3/M04-Chapter3.tex`, `M05`→`Cap4/M05-Chapter4.tex`, `M06`→`Cap5/M06-Chapter5.tex`, `M10`→`Cap9/M10-Conclusiones.tex`, `B01`→`BackMatter/B01-Anexos.tex`; `borradores/tablas/*.tex` → `Plantilla/tablas/`; `borradores/figuras-gpt6sol/*.pdf` → `Plantilla/Images/resultados/`. `main.tex` se edita directamente en `Plantilla/` (títulos de capítulo, `openany`, `\input{tablas/cifras}`, `xurl`).
+3. **Flujo de cada cambio:** editar el borrador → `bash Tesis/Desarollo/build-preview-final.sh` (→ `borradores/vista-previa-final.pdf`, debe decir «Errores y referencias indefinidas: ninguno») → `python3 Tesis/Desarollo/check-numbers.py` (0 cifras sin fuente; las cifras nuevas sin tabla ni macro van a `check-numbers-permitidas.txt` con su fuente) → revisión del autor → copiar a `Plantilla/` y `cd Tesis/Plantilla && latexmk -pdf main.tex` (comparar con `pdftotext` + `diff`: 0 líneas) → commit por tema en inglés con `Co-Authored-By` → push.
+4. **Tablas, macros y figuras se generan, no se editan a mano** (imagen `jobai-analysis`; si no existe: `docker build -t jobai-analysis evaluation`):
+   - `docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/work -w /work jobai-analysis python evaluation/analysis/tables.py` → `borradores/tablas/res-*.tex` y `cifras.tex` (macros `\cXxx` de la prosa).
+   - `docker run --rm --user "$(id -u):$(id -g)" -e MPLCONFIGDIR=/tmp -v "$PWD":/work -w /work jobai-analysis python evaluation/analysis/figures.py evaluation/runs/2026-11-17T01-31-32-1a7ec43-dirty-retrieve-test-e1/analysis-qrels.api.openai.com_gpt-6-sol_reasoning_none Tesis/Desarollo/borradores/figuras-gpt6sol --bench evaluation/bench/results/summary.csv --latency evaluation/runs/2026-10-14T01-06-11-717ba41-dirty-latency-qdrant-generation evaluation/runs/2026-11-01T17-44-24-a951cf6-latency-qdrant-test-full-generation` → `ndcg-by-category`, `recall-latency`, `ladder`, `latency-iterations` (.pdf). Las dos primeras salen idénticas píxel a píxel aunque cambien los bytes: si no cambió nada, restaurarlas con `git checkout`.
+   - Diagramas conceptuales (Caps. 2 y 5) son TikZ dentro del capítulo. Antes de dar una figura por buena, **renderizar la página** (`pdftoppm -f N -l N -r 70 -png …`) y revisar superposiciones; el autor revisa las figuras visualmente y pide espaciado.
+   - Para ver desbordes de margen: copiar `build-preview-final.sh` sin el `trap` y con un directorio fijo, compilar y buscar `Overfull \hbox` en `main.log`; los de 82,5 y 10,9 pt en cada `\chapter` son la franja decorativa de la plantilla (ignorar).
+5. **Reglas de redacción del director (todo el documento):** ver la primera viñeta de abajo. Antes de escribir algo nuevo, aplicarlas: prosa sin listas, sin subsecciones ni `\paragraph` sueltos, sin DSR ni «artefacto», «RAG» como sigla.
+6. **Entorno del portátil:** no corre modelos locales (Ollama, `embedding-server`); sí compila LaTeX (TeX Live con `texlive-binextra`), corre `tables.py`/`figures.py` y `check-numbers.py`. Las corridas ya están en `evaluation/runs/`. El *dump* del corpus está publicado (ver abajo) y en `~/Downloads/` del portátil.
+
+### Hecho en esta ronda
 
 El director comentó `borrador-2-director` (~24-nov). Se aplican por capítulo, con revisión del autor; **hechos y pasados a `Plantilla/` (26-nov):**
 - **Reglas generales (todo el documento):** escritura concisa y en prosa, sin listas ni viñetas (excepciones acordadas: objetivos específicos, PE1–PE4, catálogo de fallas A1–D8 y listas técnicas de los Anexos); sin subsecciones de un solo párrafo; **sin Design Science Research** (solo una frase en la Justificación del Cap. 2) ni su vocabulario («artefacto» → sistema/pipeline/JobAI, sin «evaluación formativa/sumativa», «exaptación» ni «objetivos de la solución»); «Retrieval-Augmented Generation» completo solo en su primera aparición (Introducción; el resumen y el abstract lo definen aparte) y después «RAG», incluidos la pregunta y el objetivo general.
@@ -22,16 +37,24 @@ El director comentó `borrador-2-director` (~24-nov). Se aplican por capítulo, 
 - Vista previa y `Plantilla/`: 112 págs., sin errores, mismo texto; `check-numbers.py` limpio.
 
 - **Corpus publicado (26-nov, decisión del autor):** `corpus-2026-10-14-clean.dump` (SHA-256 `5c23afbe…9871`, tablas `Job` y `JobChunk`, sin datos de usuarios) en el *release* `corpus-2026-10-14` del repositorio (https://github.com/esteban0406/RAG-JobPosting/releases/tag/corpus-2026-10-14), con atribución a Remotive, Jobicy y Findwork. Antes la tesis decía que no se publicaba; se actualizaron §4.9, Conclusiones (Objetivo 2), Anexo C (fila nueva en el mapa) e Introducción. Nota: los términos de Findwork no están publicados y Remotive pide no enviar sus ofertas a terceros; el autor decidió publicarlo completo.
-- **Cap. 5 (26-nov, pendiente de revisión):** título «Diseño y desarrollo de JobAI»; tres figuras nuevas (`fig:art-ingesta`, `fig:art-iter1`, `fig:art-iter2`); listas y párrafos titulados pasados a prosa; la subsección del reordenador integrada en §5.4; enlace del corpus en el párrafo de la ingesta.
+- **Cap. 5 (26-nov, aprobado y subido):** título «Diseño y desarrollo de JobAI»; tres figuras nuevas (`fig:art-ingesta`, `fig:art-iter1`, `fig:art-iter2`); listas y párrafos titulados pasados a prosa; la subsección del reordenador integrada en §5.4; enlace del corpus en el párrafo de la ingesta.
 
-- **Caps. 6, 7 y Anexos (26-nov, pendiente de revisión):** el director no hizo más comentarios; se aplicaron las mismas reglas. Cap. 6: introducción sin evaluación sumativa/formativa, «artefacto» → sistema, sin `\paragraph`, agregación y latencia en prosa, Limitaciones en cuatro párrafos (juicio, material de prueba, decisiones tras ver resultados, alcance de lo medido), Discusión condensada (≈ −4 % de palabras en el capítulo; el catálogo de fallas, que se conserva por acuerdo, y los resultados detallados son la mayor parte). **Dos figuras nuevas generadas por `figures.py`** desde los datos (`ladder.pdf` → `fig:res-escalera`, nDCG@10 y C@5 por peldaño con BM25 y BM25 + filtros; `latency-iterations.pdf` → `fig:res-latencia`, medianas de clasificación, contexto y TTFT por iteración); `figures.py` recibe `--latency ITER1_RUN ITER2_RUN`; las dos figuras anteriores se regeneran idénticas. Cap. 7: objetivos sin títulos, Objetivo 4 en dos párrafos (calidad; costo y generación), trabajo futuro en tres párrafos (se unieron los dos de fragmentación). Anexos: «Detalles de JobAI». Ningún «artefacto» ni DSR queda fuera de la frase de la Justificación y de las etiquetas `cap:artefacto`/`anx:artefacto`.
+- **Caps. 6, 7 y Anexos (26-nov, aprobado y subido):** el director no hizo más comentarios; se aplicaron las mismas reglas. Cap. 6: introducción sin evaluación sumativa/formativa, «artefacto» → sistema, sin `\paragraph`, agregación y latencia en prosa, Limitaciones en cuatro párrafos (juicio, material de prueba, decisiones tras ver resultados, alcance de lo medido), Discusión condensada (≈ −4 % de palabras en el capítulo; el catálogo de fallas, que se conserva por acuerdo, y los resultados detallados son la mayor parte). **Dos figuras nuevas generadas por `figures.py`** desde los datos (`ladder.pdf` → `fig:res-escalera`, nDCG@10 y C@5 por peldaño con BM25 y BM25 + filtros; `latency-iterations.pdf` → `fig:res-latencia`, medianas de clasificación, contexto y TTFT por iteración); `figures.py` recibe `--latency ITER1_RUN ITER2_RUN`; las dos figuras anteriores se regeneran idénticas. Cap. 7: objetivos sin títulos, Objetivo 4 en dos párrafos (calidad; costo y generación), trabajo futuro en tres párrafos (se unieron los dos de fragmentación). Anexos: «Detalles de JobAI». Ningún «artefacto» ni DSR queda fuera de la frase de la Justificación y de las etiquetas `cap:artefacto`/`anx:artefacto`.
 
 - **Tablas y enlaces dentro del margen (26-nov):** `tables.py` da ancho fijo a la primera columna de `res-posthoc` y `res-pe1-categoria`, letra pequeña a `res-kappa-cal` y `\footnotesize` a `res-bench-sint` (nuevo parámetro `font` de `table()`); Tabla 3.1 algo más angosta; `xurl` en `main.tex` para cortar enlaces largos. En el log solo quedan los desbordes de la franja decorativa de los encabezados de capítulo (plantilla).
 - **Todo pasado a `Plantilla/`, commit y push (26-nov):** 112 págs., sin errores, mismo texto que la vista previa; `check-numbers.py` limpio.
 
-**Siguiente:** confirmar las 8 cifras (\*) de `check-numbers-permitidas.txt`; nota al director con los cambios de esta ronda; *fast-forward* de `main` solo con confirmación (dispara `docker-publish`). Pendiente de antes: confirmar las 8 cifras (\*) de `check-numbers-permitidas.txt`.
+### Pendiente (en orden sugerido)
 
-## ▶ Estado al 25-nov-2026, unión del portátil y el PC
+1. **Confirmar en el texto citado las 8 cifras marcadas con (\*)** en `check-numbers-permitidas.txt` (SBERT 65 h, MTEB 112 idiomas, MIRACL 700.000 juicios, Fröbe 9–17 posiciones, Erol 120.000 ofertas, Vyas 1.283 cargos y κ ≈ 0,85, JobSphere 0,34); si alguna no coincide, corregir el Cap. 3 (tabla `tab:ea-trabajos` o §3.4–3.7).
+2. **Concisión del Cap. 6:** solo bajó ~4 % (≈ 11.900 palabras con tablas y catálogo). Si el autor quiere más, proponerle qué recortar (detalle de resultados) antes de tocarlo; el catálogo de fallas se conserva por acuerdo.
+3. **Concisión del Cap. 3:** solo se reordenó (tabla primero); no se hizo una pasada fuerte para no alterar afirmaciones de los artículos citados.
+4. **Nota al director** con los cambios de esta ronda (lista arriba) y una nueva etiqueta para la versión que se le envíe (la anterior es `borrador-2-director`, ya en `origin`).
+5. *Fast-forward* de `main` y entrega final, solo con confirmación del autor.
+
+**Riesgo conocido del corpus publicado:** los términos de Findwork (895 ofertas) no están publicados y Remotive pide no enviar sus ofertas a sitios de terceros; el autor decidió publicarlo completo. Si alguien lo objeta, la alternativa es dejar Jobicy completo y, de las otras dos, solo identificadores, URL y SHA-256.
+
+## Estado al 25-nov-2026, unión del portátil y el PC (historial)
 
 **Qué pasó:** la rama divergió desde `5b4bbe3`. El portátil tenía sin subir los 7 commits del 17-nov (`ec767ca` → `6943f5b`: reescritura de Introducción, Preliminares, Estado del arte, Artefacto, Conclusiones, resumen; siglas, declaración de IA, T1–T9, `.bib` con 49 entradas, borradores en `Plantilla/`, etiqueta local `borrador-2-director`). El PC subió el 25-nov 6 commits (`8b24ecf` → `1c98816`, sección siguiente) hechos sobre el texto **anterior** al 17-nov: su auditoría (`auditoria-cifras.md`) se hizo sobre la vista previa del 17-nov a las 00:04, y sus M01/M02/M03 eran casi la plantilla vieja.
 - **La versión que recibió el director es la del portátil:** `~/Downloads/borrador-2-director.pdf` (120 págs., creado el 17-nov a las 18:37 = etiqueta `borrador-2-director` → `6943f5b`). Por decisión del autor, **el texto del portátil es la base** y encima se aplicaron las correcciones del PC que seguían aplicando.
@@ -66,7 +89,7 @@ El director comentó `borrador-2-director` (~24-nov). Se aplican por capítulo, 
 
 ## Ejecución de la ronda de corrección (16 y 17-nov, en el portátil; historial)
 
-### ▶▶ Próxima sesión (desde el 18-nov) — empezar aquí
+### Próxima sesión del 18-nov (historial: superado por «▶ Estado al 26-nov»)
 
 **Estado al 17-nov (noche): edición de la ronda terminada; el autor considera el borrador listo para el director.** Todos los capítulos, los anexos, las siglas, la declaración de IA y el resumen están en `borradores/*-final.tex`; vista previa de 120 págs. sin errores (`bash Tesis/Desarollo/build-preview-final.sh`, con `latexmk` instalado) y `check-numbers.py` limpio. Commits del 17-nov por tema en `thesis/qdrant-eval` (sin push). Detalle de lo hecho en las entradas de abajo.
 
@@ -190,7 +213,7 @@ Se sigue la §10 de `decisiones-revision-borrador1.md` (aprobado por el autor el
 
 ## Estado al 16-nov-2026, tarde (historial: superado por «▶ Estado al 16-nov (noche)»)
 
-### ▶▶ Próxima sesión: ajustes de la revisión de `vista-previa-final.pdf` (hecho: ver «▶ Estado al 16-nov (noche)»; la revisión se guardó como `revision-borrador1.md`)
+### Próxima sesión del 16-nov: ajustes de la revisión de `vista-previa-final.pdf` (hecho: ver «▶ Estado al 16-nov (noche)»; la revisión se guardó como `revision-borrador1.md`)
 
 **Contexto.** El autor pasó `borradores/vista-previa-final.pdf` (97 págs., compilada el 16-nov; sha256 `2f4528d7cc6cc229…`) a un agente de revisión, que pidió varios ajustes. El autor los trae en la próxima sesión. Todo lo de abajo está en git (ver "Commits del 16-nov").
 
