@@ -207,7 +207,7 @@ La Tabla~\ref{tab:art-cambios} resume los cambios de la iteración. Los filtros 
 
 \begin{table}[!htb]
     \centering
-    \caption{Selección del modelo de reordenamiento en el conjunto de desarrollo (28 consultas, 30 candidatas)}
+    \caption{Selección del modelo de reordenamiento en el conjunto de desarrollo (28 consultas, 30 candidatas), con los juicios del juez local}
     \label{tab:art-rerank-dev}
     \small
     \begin{tabular}{|l|c|c|}
@@ -238,3 +238,5 @@ El modelo de reordenamiento, el número de candidatas y el umbral de la compuert
 
 
 Todas las variantes mejoraron entre 0,06 y 0,10 el nDCG@10 de la recuperación sin reordenamiento (Tabla~\ref{tab:art-rerank-dev}). Qwen3-Reranker-0.6B sin instrucción quedó a 0,019 de la mejor variante, y la regla lo eligió por ser más simple. Pasar de 30 a 20 candidatas cambió el nDCG@10 de 0,832 a 0,830 y redujo la mediana de la latencia de recuperación de 1.184 a 788~ms, así que se adoptaron 20. El 0,832 de la variante con 30 candidatas no coincide con el 0,820 de la Tabla~\ref{tab:art-rerank-dev} porque cada etapa de la regla se juzgó con su propio agrupamiento (Sección~\ref{sec:met-juicios}). Las listas de la variante son idénticas en las dos etapas y sus 540 pares comunes tienen las mismas etiquetas, pero la etapa~1 agrupó las listas de seis variantes, con 15,0 ofertas relevantes por consulta, y la etapa~2 las de tres, con 13,7. Con menos ofertas relevantes, el ordenamiento ideal con que se normaliza el nDCG es menor, y la misma lista obtiene un valor más alto. Las dos cantidades de candidatas se compararon dentro de la etapa~2, con el mismo agrupamiento, de modo que la decisión no depende de esa diferencia. El mejor puntaje más bajo entre las consultas de desarrollo fue 0,132 y el siguiente 0,134; las diez consultas fuera de dominio quedaron por debajo de 0,09, de modo que el umbral de 0,134 cumplió la condición y se adoptó.
+
+Los juicios de relevancia de esta selección los dio el juez local (Llama 3.1 8B), el único disponible entonces, cuyo acuerdo con las etiquetas humanas resultó después moderado ($\kappa$ binario de \cKappaLocal, Sección~\ref{sec:res-juez}). La regla se aplicó, por tanto, con el juez de desarrollo. El aporte del reordenamiento se confirmó después en el conjunto de prueba con el juez final (\cDifReord{} de nDCG@10, Sección~\ref{sec:res-pe1}).

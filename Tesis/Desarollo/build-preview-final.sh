@@ -31,7 +31,7 @@ cp "$B"/figuras-gpt6sol/*.pdf "$S/Images/resultados/"
 mkdir -p "$S/tablas"
 cp "$B"/tablas/*.tex "$S/tablas/"
 # Cifras clave de la prosa (\cXxx), generadas por tables.py: se leen en el preámbulo.
-sed -i 's|^\\newcommand{\\pendiente}|\\input{tablas/cifras}\n&|' "$S/main.tex"
+grep -q "input{tablas/cifras}" "$S/main.tex" || sed -i 's|^\\newcommand{\\pendiente}|\\input{tablas/cifras}\n&|' "$S/main.tex"
 grep -q "input{tablas/cifras}" "$S/main.tex" || { echo "No se pudo agregar cifras.tex al preámbulo"; exit 1; }
 # Cada capítulo empieza en la página siguiente, sin páginas en blanco (decisión del autor, 25-nov).
 sed -i 's|^\\documentclass\[12pt\]{MIA-USA}|\\documentclass[12pt,openany]{MIA-USA}|' "$S/main.tex"

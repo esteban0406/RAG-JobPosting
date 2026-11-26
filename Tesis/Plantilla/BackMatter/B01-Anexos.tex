@@ -40,7 +40,7 @@ El análisis estructurado con el modelo local Llama 3.1 8B falló por completo e
 \section{Conjuntos de consultas}
 \label{anx:consultas}
 
-Las consultas de desajuste de vocabulario pueden compartir algunos términos con las ofertas, pero no el título del cargo. Las 25 consultas en español se redactaron a partir de la distribución real de títulos y habilidades del corpus; miden la recuperación entre idiomas y el efecto del modelo de \textit{embeddings} multilingüe frente a e5-base-v2, entrenado en inglés.
+Las consultas de desajuste de vocabulario pueden compartir algunos términos con las ofertas, pero no el título del cargo. Las 25 consultas en español son traducciones de consultas en inglés, que a su vez se redactaron a partir de la distribución real de títulos y habilidades del corpus (comparten su necesidad de información); miden la recuperación entre idiomas y el efecto del modelo de \textit{embeddings} multilingüe frente a e5-base-v2, entrenado en inglés.
 
 Dos decisiones fijan la interpretación de las restricciones: una oferta sin salario informado no cumple un salario mínimo, y una consulta por trabajo \textit{freelance} acepta ofertas de contrato o \textit{freelance}, porque las fuentes etiquetan así el trabajo independiente. Las consultas sin restricciones que podrían leerse como si las tuvieran incluyen un conjunto vacío de filtros esperados. La cobertura del corpus se verificó con SQL para cada necesidad, contando las ofertas que cumplen todas sus condiciones; ocho necesidades tienen solo una o dos y se conservaron (Sección~\ref{sec:met-validez}).
 
@@ -93,7 +93,7 @@ Para las consultas de recuperación se generan respuestas mediante la ruta real 
     AR = \frac{1}{n}\sum_{i=1}^{n} \cos(\mathbf{e}_q, \mathbf{e}_{q_i}).
     \]
 \end{itemize}
-Los \textit{embeddings} de la relevancia de la respuesta son los de multilingual-e5-base, el mismo modelo con que recupera el pipeline, servido localmente (\texttt{evaluation/ragas/ragas\_eval.py}). El juez de RAGAS es el juez final de los juicios de relevancia, GPT-6 Sol, con la misma configuración: sin razonamiento y a temperatura 0. El juez debe recibir completo el contexto recuperado. Por eso su ventana de contexto se fija en 16.384 \textit{tokens} y su salida admite hasta 4.096: con valores menores, la verificación de las respuestas largas queda truncada y la métrica no puede calcularse. Se reporta la proporción de respuestas en las que alguna métrica no pudo calcularse, y la proporción de respuestas a consultas en español redactadas en otro idioma.
+Los \textit{embeddings} de la relevancia de la respuesta son los de multilingual-e5-base, el mismo modelo con que recupera el pipeline, servido localmente (\texttt{evaluation/ragas/ragas\_eval.py}). El juez de RAGAS es el juez final de los juicios de relevancia, GPT-6 Sol, con la misma configuración: sin razonamiento y a temperatura 0. Su salida admite hasta 4.096 \textit{tokens}, en lugar de los 1.024 que RAGAS fija por defecto: con ese límite, la verificación de las respuestas largas queda truncada y la métrica no puede calcularse. El contexto recuperado, cinco ofertas de hasta 2.400 caracteres cada una, cabe completo en la ventana de contexto del modelo. El juez local que se usó durante el desarrollo, en cambio, necesitó que su ventana se ampliara a 16.384 \textit{tokens} (falla D2, Sección~\ref{sec:res-fallas}). Se reporta la proporción de respuestas en las que alguna métrica no pudo calcularse, y la proporción de respuestas a consultas en español redactadas en otro idioma.
 
 La fidelidad se verifica a mano en una muestra de 20 respuestas, cinco por categoría, elegidas al azar con semilla fija. Cada respuesta se divide de forma determinista en unidades (una por línea o viñeta y, dentro de ella, una por oración), 427 en total. Cada unidad se marca como sostenida por el contexto, no sostenida (lo contradice o no aparece en él) o no verificable. La fidelidad humana de una respuesta es la proporción de unidades sostenidas entre las verificables, y se compara con la del juez. Las unidades no coinciden exactamente con las afirmaciones atómicas en que el juez descompone la respuesta, de modo que la comparación es aproximada.
 
@@ -110,6 +110,99 @@ Para que la verificación no dependiera del autor, la hicieron dos anotadores ex
 \end{itemize}
 
 La verificación necesitó dos rondas. En la primera, la guía no tenía la tercera regla, y los dos anotadores se apartaron del criterio en direcciones opuestas: uno marcó como no sostenidas unidades que omitían requisitos de la oferta, y el otro marcó como no sostenidas casi la mitad de sus unidades, incluidas cifras y títulos copiados literalmente de las ofertas, porque juzgó si la unidad servía para la búsqueda. Se agregó la tercera regla a la guía, con la aclaración de que no importa si la oferta encaja con la consulta, y se envió la misma a ambos. El segundo anotador repitió su mitad completa en una página vacía, sin ver sus marcas anteriores; el primero revisó las unidades que había marcado como no sostenidas, porque su desviación solo podía producir esa marca. Solo se reporta la segunda ronda; la primera se conserva en el repositorio.
+
+\section{Búsqueda bibliográfica}
+\label{anx:busqueda}
+
+Este anexo detalla la búsqueda que resume la Sección~\ref{sec:estado-arte-metodo}. Las cadenas de la Tabla~\ref{tab:anx-cadenas} se aplicaron sobre el título y el resumen, con el periodo 2019--2026. En Google Scholar, dos cadenas se acortaron antes de correr ninguna búsqueda para que cupieran en el límite de la base.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Cadenas de búsqueda}
+    \label{tab:anx-cadenas}
+    \footnotesize
+    \begin{tabular}{|c|>{\raggedright\arraybackslash}p{3.2cm}|>{\raggedright\arraybackslash}p{9.8cm}|}
+        \hline
+        \textbf{Id} & \textbf{Tema} & \textbf{Cadena} \\
+        \hline
+        C1 & RAG o recuperación neuronal en el empleo & (\enquote{retrieval-augmented generation} OR \enquote{dense retrieval} OR \enquote{semantic search} OR \enquote{neural ranking}) AND (job OR recruitment OR vacancy OR \enquote{job matching} OR \enquote{job search}) \\
+        \hline
+        C2 & Evaluación de RAG por componentes & (\enquote{retrieval-augmented generation} OR RAG) AND evaluation AND (component OR ablation OR retriever OR reranker) \\
+        \hline
+        C3 & Jueces LLM de relevancia & (\enquote{large language model} OR LLM) AND (\enquote{relevance judgments} OR \enquote{relevance assessment} OR \enquote{LLM-as-a-judge}) AND (retrieval OR TREC) \\
+        \hline
+        C4 & Variación entre evaluadores & (\enquote{assessor disagreement} OR \enquote{inter-assessor agreement} OR \enquote{relevance judgments}) AND (variation OR reliability) AND (\enquote{test collection} OR \enquote{system ranking}) \\
+        \hline
+        C5 & Agrupamiento y juicios incompletos & (pooling OR \enquote{incomplete judgments} OR \enquote{unjudged documents}) AND \enquote{test collection} AND retrieval \\
+        \hline
+        C6 & Representaciones del dominio laboral & (JobBERT OR ESCO OR \enquote{skill extraction} OR occupation) AND (embedding OR representation OR retrieval) \\
+        \hline
+        C7 & Expansión de la consulta & (\enquote{query expansion} OR \enquote{document expansion} OR doc2query OR HyDE OR RM3) AND retrieval \\
+        \hline
+        C8 & Reordenamiento con LLM & (RankGPT OR \enquote{listwise reranking} OR \enquote{LLM reranking}) AND retrieval \\
+        \hline
+        C9 & Latencia percibida & (latency OR \enquote{response time}) AND (\enquote{web search} OR \enquote{search engine}) AND (user OR satisfaction OR engagement) \\
+        \hline
+    \end{tabular}
+\end{table}
+
+La Tabla~\ref{tab:anx-bases} indica cómo se consultó cada base y cuántos resultados se revisaron. Las bases manuales se consultaron con la cadena tal cual y se guardaron sus páginas de resultados; de las automáticas se guardaron las respuestas de la interfaz con la consulta exacta. La búsqueda masiva de Semantic Scholar no ordena por relevancia, por lo que se tomaron los 50 trabajos más citados de cada cadena.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Bases consultadas y resultados revisados (16 de noviembre de 2026)}
+    \label{tab:anx-bases}
+    \footnotesize
+    \begin{tabular}{|>{\raggedright\arraybackslash}p{2.6cm}|>{\raggedright\arraybackslash}p{6.6cm}|>{\raggedright\arraybackslash}p{3.2cm}|c|}
+        \hline
+        \textbf{Base} & \textbf{Consulta} & \textbf{Revisados por cadena} & \textbf{Total} \\
+        \hline
+        Google Scholar & Manual (autor), periodo 2019--2026 & 60 (40 en C3) & 520 \\
+        \hline
+        ACM Digital Library & Manual (autor), todos los campos y sin filtro de fechas; el periodo se aplicó en el cribado & 50 & 450 \\
+        \hline
+        arXiv & Interfaz pública, campo resumen, categorías cs.IR y cs.CL & 50, o todos si eran menos & 330 \\
+        \hline
+        Semantic Scholar & Interfaz pública de búsqueda masiva, periodo 2019--2026 & Los 50 más citados (los 202 de C1) & 547 \\
+        \hline
+        \textbf{Total} & & & \textbf{1.847} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Los resultados se unieron por DOI, identificador de arXiv o título normalizado: 1.395 registros únicos, 263 de ellos en más de una base. La Tabla~\ref{tab:anx-cribado} resume el cribado.
+
+\begin{table}[htbp!]
+    \centering
+    \caption{Cribado de los registros}
+    \label{tab:anx-cribado}
+    \small
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Etapa} & \textbf{Entran} & \textbf{Excluidos} & \textbf{Quedan} \\
+        \hline
+        Periodo (2019--2026) & 1.395 & 66 & 1.329 \\
+        \hline
+        Título & 1.329 & 928 & 401 \\
+        \hline
+        Resumen (asistente) & 401 & 264 & 137 \\
+        \hline
+        Revisión del autor (dos rondas) & 137 & -- & 149 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\paragraph{Criterios.} Se incluyen artículos revisados por pares, o \textit{preprints} con una versión verificable, en inglés o en español, que propongan o evalúen recuperación, reordenamiento, RAG o su evaluación, o que describan un recurso del dominio laboral usado en recuperación. Se excluyen los trabajos sin evaluación empírica (salvo revisiones y trabajos de método), la recomendación de empleo basada solo en el historial de interacción, sin consulta textual, los resúmenes de una página y los duplicados, de los que se conserva la versión publicada. Un registro pasa a texto completo si cumple la inclusión y aporta a al menos una de cinco líneas:
+\begin{itemize}
+    \item \textbf{L1.} Recuperación o RAG en el empleo y el reclutamiento con consulta textual, con alguna evaluación.
+    \item \textbf{L2.} Evaluación de RAG o de pipelines de recuperación por componentes, o de sus fallas por etapa, incluida la fidelidad.
+    \item \textbf{L3.} Evaluación offline: jueces LLM de relevancia, variación entre evaluadores, agrupamiento y juicios incompletos.
+    \item \textbf{L4.} Componentes que el trabajo usa o discute: recuperación densa, búsqueda híbrida y fusión, reordenamiento, expansión de la consulta y representaciones del dominio laboral.
+    \item \textbf{L5.} Latencia y comportamiento del usuario en la búsqueda.
+\end{itemize}
+Se excluyen además la eficiencia de sistemas o del servicio de modelos sin relación con esas líneas, el RAG multimodal o con agentes, la recuperación en dominios ajenos sin transferencia a ellas, y las variantes de un método cuando ya entra el original. Las revisiones y encuestas entran como contexto de su línea.
+
+\paragraph{Verificación del cribado.} Un asistente de inteligencia artificial cribó por título y por resumen, con el motivo de cada exclusión. El autor revisó a ciegas los 137 candidatos y 50 exclusiones elegidas al azar con semilla fija. El acuerdo fue de 0,743 ($\kappa = 0{,}29$): el autor excluyó 18 candidatos, sobre todo revisiones, e incluyó 30 de las 50 exclusiones, casi todas de recuperación o RAG en general. La causa fue una diferencia de criterio: el asistente cribó con uno más estrecho que el escrito, y la instrucción al autor resumió uno más amplio. Se redactó entonces el criterio operativo de las cinco líneas y se resolvieron con él los 48 desacuerdos: el autor aceptó 43 propuestas, y de las 5 discutidas entraron 2. En una segunda ronda a ciegas, con 50 exclusiones que el autor no había visto, confirmó 40 (0,80), frente a 20 de 50 (0,40) en la primera; como esa muestra solo contiene exclusiones, se reporta la proporción confirmada y no el kappa. De sus 10 desacuerdos entraron 7. La lista final tiene 149 candidatos: 119 del cribado del asistente sin desacuerdo, 21 propuestas aceptadas en la primera ronda, 2 de las discutidas y 7 de la segunda ronda. Por línea, 41 son de empleo (L1), tres de ellos revisiones. Los registros, los motivos de cada decisión y la extracción de los textos leídos están en el repositorio del trabajo.
 
 \section{Datos sintéticos y protocolo del benchmark}
 \label{anx:sinteticos}
