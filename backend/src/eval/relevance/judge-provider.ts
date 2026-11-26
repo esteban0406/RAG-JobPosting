@@ -1,8 +1,22 @@
+export interface JudgeUsage {
+  calls: number;
+  inputTokens: number;
+  outputTokens: number;
+}
+
 export interface JudgeProvider {
   // Identifies the judge in caches and reports, e.g. "ollama:llama3.1:8b".
   readonly id: string;
+  // Tokens the provider reported for this process's calls (cost estimates).
+  readonly usage: JudgeUsage;
   complete(prompt: string): Promise<string>;
 }
+
+const emptyUsage = (): JudgeUsage => ({
+  calls: 0,
+  inputTokens: 0,
+  outputTokens: 0,
+});
 
 export interface JudgeConfig {
   provider: 'openai-compatible' | 'anthropic';
@@ -43,6 +57,7 @@ function settingsSuffix(config: JudgeConfig): string {
 // Groq. Temperature 0 so repeated judgments agree as much as possible.
 export class OpenAiCompatibleJudge implements JudgeProvider {
   readonly id: string;
+  readonly usage = emptyUsage();
 
   constructor(private readonly config: JudgeConfig) {
     const host = new URL(config.baseUrl ?? 'http://localhost:11434/v1').host;
@@ -83,13 +98,18 @@ export class OpenAiCompatibleJudge implements JudgeProvider {
       throw new Error(`Judge HTTP ${res.status}: ${await res.text()}`);
     const body = (await res.json()) as {
       choices: Array<{ message: { content: string } }>;
+      usage?: { prompt_tokens?: number; completion_tokens?: number };
     };
+    this.usage.calls++;
+    this.usage.inputTokens += body.usage?.prompt_tokens ?? 0;
+    this.usage.outputTokens += body.usage?.completion_tokens ?? 0;
     return body.choices[0]?.message.content ?? '';
   }
 }
 
 export class AnthropicJudge implements JudgeProvider {
   readonly id: string;
+  readonly usage = emptyUsage();
 
   constructor(private readonly config: JudgeConfig) {
     this.id = `anthropic:${config.model}${settingsSuffix(config)}`;
@@ -123,7 +143,11 @@ export class AnthropicJudge implements JudgeProvider {
       throw new Error(`Judge HTTP ${res.status}: ${await res.text()}`);
     const body = (await res.json()) as {
       content: Array<{ type: string; text?: string }>;
+      usage?: { input_tokens?: number; output_tokens?: number };
     };
+    this.usage.calls++;
+    this.usage.inputTokens += body.usage?.input_tokens ?? 0;
+    this.usage.outputTokens += body.usage?.output_tokens ?? 0;
     return body.content.find((c) => c.type === 'text')?.text ?? '';
   }
 }

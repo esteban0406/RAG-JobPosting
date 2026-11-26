@@ -40,8 +40,9 @@ Commands:
   eval:judge --run <run dir> [--judge-provider openai-compatible|anthropic]
              [--judge-model llama3.1:8b] [--judge-base-url URL] [--concurrency 2]
              [--judge-temperature 0|none] [--judge-reasoning-effort none] [--judge-thinking between_tools]
-             [--judge-max-tokens 64]
-      Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels.
+             [--judge-max-tokens 64] [--limit n]
+      Grade the pool with an LLM judge (API key from JUDGE_API_KEY) and write qrels;
+      prints the tokens used. --limit: at most n new pairs, no qrels (cost estimate).
       Final judge: --judge-base-url https://api.openai.com/v1 --judge-model gpt-4o.
       Plan B: --judge-provider anthropic --judge-model claude-sonnet-5-5
               --judge-temperature none --judge-thinking between_tools --judge-max-tokens 1024.
@@ -212,6 +213,7 @@ async function main(): Promise<number> {
               : undefined,
           },
           concurrency: Number(values.concurrency),
+          limit: values.limit ? Number(values.limit) : undefined,
         });
         return 0;
       case 'eval:generate':

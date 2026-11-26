@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
 import type { INestApplicationContext } from '@nestjs/common';
-import { readFileSync } from 'fs';
+import { appendFileSync, readFileSync } from 'fs';
 import { join, resolve } from 'path';
 import PQueue from 'p-queue';
 import { loadDataset } from '../../eval/dataset.js';
@@ -26,6 +26,8 @@ export interface EvalJudgeOptions {
   runDir: string;
   judge: JudgeConfig;
   concurrency: number;
+  // Judge at most this many new pairs and write no qrels (cost estimates).
+  limit?: number;
 }
 
 const UNPARSEABLE = -1;
@@ -66,6 +68,7 @@ export async function evalJudge(
 
   const grades = new Map<string, number>();
   let fresh = 0;
+  let queued = 0;
   const queue = new PQueue({ concurrency: options.concurrency });
   for (const entry of pool) {
     const job = jobs.get(entry.jobId);
@@ -85,6 +88,8 @@ export async function evalJudge(
       grades.set(`${entry.infoNeedId}|${entry.jobId}`, cached.grade);
       continue;
     }
+    if (options.limit !== undefined && queued >= options.limit) continue;
+    queued++;
     void queue.add(async () => {
       const prompt = umbrelaPrompt(entry.infoNeed, jobCard(job));
       let raw = await judge.complete(prompt);
@@ -109,6 +114,30 @@ export async function evalJudge(
     });
   }
   await queue.onIdle();
+
+  const { calls, inputTokens, outputTokens } = judge.usage;
+  logger.log(
+    `Usage: ${calls} calls, ${inputTokens} input and ${outputTokens} output tokens` +
+      (calls
+        ? ` (${Math.round(inputTokens / calls)} / ${Math.round(outputTokens / calls)} per call)`
+        : ''),
+  );
+  if (calls)
+    appendFileSync(
+      join(options.runDir, 'judge-usage.jsonl'),
+      JSON.stringify({
+        judge: judge.id,
+        at: new Date().toISOString(),
+        newJudgments: fresh,
+        ...judge.usage,
+      }) + '\n',
+    );
+  if (options.limit !== undefined) {
+    logger.log(
+      `--limit ${options.limit}: ${fresh} newly judged, no qrels written`,
+    );
+    return '';
+  }
 
   const unparseable = [...grades.values()].filter(
     (g) => g === UNPARSEABLE,
