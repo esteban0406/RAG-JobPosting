@@ -124,7 +124,7 @@ def thousands(value: int) -> str:
     return f"{value:,}".replace(",", ".")
 
 
-def table(label: str, caption: str, spec: str, rows: list[str], small: bool = False) -> str:
+def table(label: str, caption: str, spec: str, rows: list[str], small: bool = False, font: str | None = None) -> str:
     """A table environment with a rule after every row, as in the rest of the thesis."""
     lines = [
         "\\begin{table}[htbp!]",
@@ -132,7 +132,9 @@ def table(label: str, caption: str, spec: str, rows: list[str], small: bool = Fa
         f"    \\caption{{{caption}}}",
         f"    \\label{{{label}}}",
     ]
-    if small:
+    if font:
+        lines.append(f"    \\{font}")
+    elif small:
         lines.append("    \\small")
     lines += [f"    \\begin{{tabular}}{{{spec}}}", "        \\hline"]
     for row in rows:
@@ -190,7 +192,7 @@ def kappa_calibration() -> str:
     n = kappa(FINAL_JUDGE)["calibration"]["n"]
     return table("tab:res-kappa-cal",
                  f"Acuerdo de los jueces con las etiquetas humanas revisadas en los {n} pares de calibración, "
-                 "con IC bootstrap del 95\\,\\%", "|l|c|c|c|", rows)
+                 "con IC bootstrap del 95\\,\\%", "|l|c|c|c|", rows, small=True)
 
 
 def kappa_validation() -> str:
@@ -264,7 +266,8 @@ def by_category() -> str:
                         len(CATEGORIES) + 1)
     sizes = {int(per_category[c]) for c, _ in CATEGORIES}
     size = f"{sizes.pop()} necesidades por categoría" if len(sizes) == 1 else "necesidades por categoría variables"
-    return table("tab:res-pe1-categoria", f"nDCG@10 por categoría de consulta ({size})", "|l|c|c|c|c|", rows,
+    return table("tab:res-pe1-categoria", f"nDCG@10 por categoría de consulta ({size})",
+                 "|>{\\raggedright\\arraybackslash}p{4.6cm}|c|c|c|c|", rows,
                  small=True)
 
 
@@ -300,7 +303,7 @@ def post_hoc() -> str:
     tests = pd.read_csv(ANALYSIS / "posthoc.csv")
     ndcg = tests[tests["measure"] == "nDCG@10"]
     c5 = tests[tests["measure"] == "C@5"].set_index(["system", "reference"])
-    rows = [header("Comparación", "Diferencia en nDCG@10", "$p_{Holm}$", "C@5")]
+    rows = [header("Comparación", "Diferencia (nDCG@10)", "$p_{Holm}$", "C@5")]
     for _, row in ndcg.iterrows():
         key = (row["system"], row["reference"])
         c = c5.loc[key]
@@ -310,7 +313,7 @@ def post_hoc() -> str:
     return table("tab:res-posthoc",
                  f"Comparaciones complementarias: nDCG@10 con IC bootstrap del 95\\,\\% y Holm sobre "
                  f"{len(ndcg)} comparaciones ({int(ndcg['n'].iloc[0])} necesidades); C@5 del sistema y de la referencia",
-                 "|l|c|c|c|", rows, small=True)
+                 "|>{\\raggedright\\arraybackslash}p{5.3cm}|c|c|c|", rows, small=True)
 
 
 def aggregation() -> str:
@@ -508,7 +511,7 @@ def bench_synthetic(ef: int = 64) -> str:
         rows.append("\n        ".join(block))
     return table("tab:res-bench-sint",
                  f"\\textit{{Benchmark}} sintético con $ef_{{search}} = {ef}$: \\textit{{recall}}@10, latencia mediana (ms) "
-                 "y completitud (mediana de tres corridas)", "|l|l|c|c|c|", rows, small=True)
+                 "y completitud (mediana de tres corridas)", "|l|l|c|c|c|", rows, font="footnotesize")
 
 
 # ---------------------------------------------------------------- key figures of the prose

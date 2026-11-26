@@ -8,18 +8,23 @@ information needs) for BM25, dense retrieval and the full configuration (ILIKE
 scores near zero and is left to the tables). With --bench, also writes
 recall-latency.pdf: recall@10 against median latency for pgvector and Qdrant in
 three scenarios of the store benchmark (evaluation/bench/results/summary.csv).
+Also writes ladder.pdf: nDCG@10 and constraint compliance (C@5) along the
+component ladder, with BM25 and BM25 with filters for reference. With
+--latency, writes latency-iterations.pdf: median classification, context and
+time to first token per iteration, from the two generation latency runs.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter, LogLocator
+from matplotlib.ticker import FuncFormatter, LogLocator, MultipleLocator
 import numpy as np
 import pandas as pd
 
@@ -126,14 +131,103 @@ def recall_latency(bench_summary: Path, out_dir: Path) -> Path:
     return path
 
 
+# Component ladder, in reading order; lexical baselines first, then the ladder steps.
+LADDER = [
+    ("bm25", "BM25"),
+    ("bm25-filtered", "BM25\n+ filtros"),
+    ("qdrant-hnsw", "Densa"),
+    ("qdrant-filtered", "+ filtros"),
+    ("qdrant-hybrid", "+ híbrida"),
+    ("qdrant-hybrid-rerank", "+ reorde-\nnamiento"),
+]
+LEXICAL = "#eb6834"
+DENSE = "#2a78d6"
+
+
+def ladder(analysis_dir: Path, out_dir: Path) -> Path:
+    summary = pd.read_csv(analysis_dir / "summary.csv").set_index(["group", "system"])
+    fig, axes = plt.subplots(1, 2, figsize=(7.4, 2.9), sharey=True)
+    x = np.arange(len(LADDER))
+    colors = [LEXICAL if system.startswith("bm25") else DENSE for system, _ in LADDER]
+    for ax, (measure, title) in zip(axes, [("nDCG@10", "nDCG@10"), ("C@5", "Cumplimiento de restricciones (C@5)")]):
+        values = [summary.at[("all", system), measure] for system, _ in LADDER]
+        ax.bar(x, values, 0.62, color=colors, zorder=2)
+        for xi, v in zip(x, values):
+            ax.text(xi, v + 0.02, comma(v, 3), ha="center", va="bottom", fontsize=7, color=INK)
+        ax.axvline(1.5, color=GRID, linewidth=1.2, zorder=1)
+        ax.set_title(title, color=INK, fontsize=8.5)
+        ax.set_xticks(x, [label for _, label in LADDER], color=INK, fontsize=7.5)
+        ax.set_ylim(0, 1.08)
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: comma(v, 1)))
+        ax.tick_params(axis="y", colors=MUTED, labelsize=7.5)
+        ax.tick_params(axis="x", length=0)
+        ax.grid(axis="y", color=GRID, linewidth=0.8, zorder=0)
+        for side in ("top", "right", "left"):
+            ax.spines[side].set_visible(False)
+        ax.spines["bottom"].set_color(MUTED)
+    fig.tight_layout()
+    path = out_dir / "ladder.pdf"
+    fig.savefig(path)
+    plt.close(fig)
+    return path
+
+
+def latency_iterations(runs: list[Path], out_dir: Path) -> Path:
+    stages = [("classifyMs", "Clasificación", "#9b8ec4"), ("contextMs", "Contexto", DENSE), ("ttftMs", "Primer token (TTFT)", "#1baf7a")]
+    medians = []
+    for run in runs:
+        rows = [json.loads(line) for line in (run / "latency.jsonl").read_text().splitlines() if line.strip()]
+        data = pd.DataFrame(rows)
+        data = data[data["kind"] == "generation"]
+        medians.append({col: (data[col].median() / 1000 if col in data else None) for col, _, _ in stages})
+    labels = ["Iteración 1", "Iteración 2"]
+    fig, ax = plt.subplots(figsize=(6.4, 1.9))
+    for row, (label, med) in enumerate(zip(labels, medians)):
+        y = len(labels) - 1 - row
+        left = 0.0
+        unmeasured = False
+        for col, name, color in stages:
+            value = med[col]
+            if value is None:
+                unmeasured = True
+                continue
+            ax.barh(y, value, 0.5, left=left, color=color, label=name if row == 1 else None, zorder=2)
+            if value >= 0.15:
+                ax.text(left + value / 2, y, comma(value, 2), ha="center", va="center", fontsize=7, color="white")
+            left += value
+        if unmeasured:
+            ax.text(left + 0.04, y, "(clasificación no medida)", va="center", fontsize=7, color=MUTED, style="italic")
+    ax.set_yticks(range(len(labels)), labels[::-1], color=INK, fontsize=8)
+    ax.set_xlabel("Segundos (medianas por etapa)", color=MUTED, fontsize=8)
+    ax.xaxis.set_major_locator(MultipleLocator(0.5))
+    ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: comma(v, 1)))
+    ax.tick_params(axis="x", colors=MUTED, labelsize=7.5)
+    ax.tick_params(axis="y", length=0)
+    ax.grid(axis="x", color=GRID, linewidth=0.8, zorder=0)
+    for side in ("top", "right", "left"):
+        ax.spines[side].set_visible(False)
+    ax.spines["bottom"].set_color(MUTED)
+    ax.legend(frameon=False, fontsize=7.5, ncol=3, loc="upper center", bbox_to_anchor=(0.5, 1.3), labelcolor=INK)
+    fig.tight_layout()
+    path = out_dir / "latency-iterations.pdf"
+    fig.savefig(path)
+    plt.close(fig)
+    return path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("analysis_dir", type=Path)
     parser.add_argument("out_dir", type=Path)
     parser.add_argument("--bench", type=Path, help="store benchmark summary.csv")
+    parser.add_argument("--latency", type=Path, nargs=2, metavar=("ITER1_RUN", "ITER2_RUN"),
+                        help="generation latency runs of Iteration 1 and Iteration 2")
     args = parser.parse_args()
     args.out_dir.mkdir(parents=True, exist_ok=True)
     print(ndcg_by_category(args.analysis_dir, args.out_dir))
+    print(ladder(args.analysis_dir, args.out_dir))
+    if args.latency:
+        print(latency_iterations(list(args.latency), args.out_dir))
     if args.bench:
         print(recall_latency(args.bench, args.out_dir))
 
