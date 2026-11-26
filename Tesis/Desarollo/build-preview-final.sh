@@ -27,9 +27,15 @@ cp "$B/M06-Chapter5-final.tex" "$S/MainMatter/Cap5/M06-Chapter5.tex"
 cp "$B/M10-Conclusiones-final.tex" "$S/MainMatter/Cap9/M10-Conclusiones.tex"
 cp "$B/B01-Anexos-final.tex" "$S/BackMatter/B01-Anexos.tex"
 cp "$B"/figuras-gpt6sol/*.pdf "$S/Images/resultados/"
-# Tablas de Resultados generadas por evaluation/analysis/tables.py (\input{tablas/...}).
+# Tablas de Resultados y cifras.tex, generadas por evaluation/analysis/tables.py (\input{tablas/...}).
 mkdir -p "$S/tablas"
 cp "$B"/tablas/*.tex "$S/tablas/"
+# Cifras clave de la prosa (\cXxx), generadas por tables.py: se leen en el preámbulo.
+sed -i 's|^\\newcommand{\\pendiente}|\\input{tablas/cifras}\n&|' "$S/main.tex"
+grep -q "input{tablas/cifras}" "$S/main.tex" || { echo "No se pudo agregar cifras.tex al preámbulo"; exit 1; }
+# Cada capítulo empieza en la página siguiente, sin páginas en blanco (decisión del autor, 25-nov).
+sed -i 's|^\\documentclass\[12pt\]{MIA-USA}|\\documentclass[12pt,openany]{MIA-USA}|' "$S/main.tex"
+grep -q "openany" "$S/main.tex" || { echo "No se pudo agregar openany"; exit 1; }
 cd "$S"
 latexmk -pdf -interaction=nonstopmode main.tex > latexmk.out 2>&1 || { tail -20 latexmk.out; exit 1; }
 # main.log tiene bytes no UTF-8: grep -a.
