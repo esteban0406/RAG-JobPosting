@@ -1,10 +1,13 @@
 """Faithfulness and answer relevancy (RAGAS, Es et al. 2024) for an
-eval:generate run.
+eval:generate run, and optionally two context metrics: context relevance
+(are the retrieved contexts relevant to the question?) and context precision
+without reference (were they useful for the answer?).
 
 Usage (inside the jobai-ragas image, host network):
     python evaluation/ragas/ragas_eval.py <generate run dir> \
         [--judge-base-url http://localhost:11434/v1] [--judge-model llama3.1:8b]
         [--max-tokens 4096] [--reasoning-effort none] [--temperature 0]
+        [--metrics faithfulness,answer_relevancy,context_relevance,context_precision]
 
 The judge is any OpenAI-compatible endpoint (API key from JUDGE_API_KEY);
 answer relevancy embeds with the local embedding server, the same model the
@@ -13,6 +16,8 @@ evaluates new answers. Writes <run dir>/ragas-<judge>.csv.
 
 Quota, authentication and connection errors stop the run without being
 cached, so a rerun retries those answers; other failures are cached as NaN.
+The CSV holds only the metrics of the last call: list every metric wanted
+(the cached ones cost nothing).
 """
 
 from __future__ import annotations
@@ -31,7 +36,14 @@ import openai
 from openai import AsyncOpenAI
 from ragas.embeddings import BaseRagasEmbedding
 from ragas.llms import llm_factory
-from ragas.metrics.collections import AnswerRelevancy, Faithfulness
+from ragas.metrics.collections import (
+    AnswerRelevancy,
+    ContextPrecisionWithoutReference,
+    ContextRelevance,
+    Faithfulness,
+)
+
+METRICS = ("faithfulness", "answer_relevancy", "context_relevance", "context_precision")
 
 CACHE_DIR = Path(__file__).resolve().parents[1] / "ragas-cache"
 
@@ -101,10 +113,12 @@ async def score(metric_name, metric, row, judge, cache, lock, sem, key_judge=Non
         return cache[key]["value"], cache[key].get("error")
     async with sem:
         try:
-            if metric_name == "faithfulness":
+            if metric_name in ("faithfulness", "context_precision"):
                 result = await metric.ascore(
                     user_input=row["question"], response=row["answer"], retrieved_contexts=row["contexts"]
                 )
+            elif metric_name == "context_relevance":
+                result = await metric.ascore(user_input=row["question"], retrieved_contexts=row["contexts"])
             else:
                 result = await metric.ascore(user_input=row["question"], response=row["answer"])
             value, error = float(result.value), None
@@ -153,10 +167,17 @@ async def main_async(args: argparse.Namespace) -> None:
         # reasoning_effort none they accept 0, as the relevance judge uses.
         mapper = llm._map_provider_params
         llm._map_provider_params = lambda: {**mapper(), "temperature": args.temperature}
-    metrics = {
-        "faithfulness": Faithfulness(llm=llm),
-        "answer_relevancy": AnswerRelevancy(llm=llm, embeddings=E5Embeddings(args.embed_url)),
+    factories = {
+        "faithfulness": lambda: Faithfulness(llm=llm),
+        "answer_relevancy": lambda: AnswerRelevancy(llm=llm, embeddings=E5Embeddings(args.embed_url)),
+        "context_relevance": lambda: ContextRelevance(llm=llm),
+        "context_precision": lambda: ContextPrecisionWithoutReference(llm=llm),
     }
+    names = [m.strip() for m in args.metrics.split(",") if m.strip()]
+    unknown = [m for m in names if m not in factories]
+    if unknown:
+        raise SystemExit(f"unknown metrics {unknown}; known: {', '.join(METRICS)}")
+    metrics = {name: factories[name]() for name in names}
     embed_model = served_embedding_model(args.embed_url)
     key_judges = {"answer_relevancy": f"{judge}|{embed_model}"}
     print(f"judge={judge} embeddings={embed_model}")
@@ -196,6 +217,9 @@ def main() -> None:
     parser.add_argument("--limit", type=int)
     parser.add_argument("--reasoning-effort", help="e.g. none, for OpenAI reasoning models")
     parser.add_argument("--temperature", type=float, help="override the temperature RAGAS sends")
+    parser.add_argument(
+        "--metrics", default="faithfulness,answer_relevancy", help=f"comma-separated, from {', '.join(METRICS)}"
+    )
     asyncio.run(main_async(parser.parse_args()))
 
 

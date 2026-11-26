@@ -150,6 +150,22 @@ export class RetrievalPipeline {
     );
   }
 
+  // The same pipeline with another BM25 index (k1 and b sensitivity).
+  withBm25(bm25: Bm25IndexService): RetrievalPipeline {
+    return new RetrievalPipeline(
+      this.embedding,
+      this.store,
+      this.jobs,
+      bm25,
+      this.reranker,
+      this.config,
+    );
+  }
+
+  get lexicalIndex(): Bm25IndexService {
+    return this.bm25;
+  }
+
   async retrieve(
     query: string,
     options: RetrievalOptions,

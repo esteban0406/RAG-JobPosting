@@ -1,7 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { JobRepository } from '../storage/job.repository.js';
 import type { VectorFilter } from '../storage/vector-store/vector-store.interface.js';
-import { Bm25Index, jobSearchText, type Bm25Hit } from './bm25.js';
+import {
+  Bm25Index,
+  jobSearchText,
+  type Bm25Hit,
+  type Bm25Options,
+} from './bm25.js';
 import { matchesFilter, type FilterableJob } from './job-filter.js';
 
 interface LoadedIndex {
@@ -16,8 +21,17 @@ interface LoadedIndex {
 export class Bm25IndexService {
   private readonly logger = new Logger(Bm25IndexService.name);
   private loading: Promise<LoadedIndex> | null = null;
+  // Default k1 and b unless set (the evaluation's sensitivity check).
+  private params?: Bm25Options;
 
   constructor(private readonly jobs: JobRepository) {}
+
+  // A separate index over the same jobs with other k1 and b (evaluation only).
+  withParams(params: Bm25Options): Bm25IndexService {
+    const other = new Bm25IndexService(this.jobs);
+    other.params = params;
+    return other;
+  }
 
   async search(
     query: string,
@@ -50,6 +64,7 @@ export class Bm25IndexService {
     const rows = await this.jobs.findAllUnpaged();
     const index = new Bm25Index(
       rows.map((job) => ({ id: job.id, text: jobSearchText(job) })),
+      this.params,
     );
     this.logger.log(`BM25 index built over ${index.size} jobs`);
     return { index, jobs: new Map(rows.map((job) => [job.id, job])) };

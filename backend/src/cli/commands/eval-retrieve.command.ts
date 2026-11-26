@@ -40,6 +40,18 @@ import {
   writeJson,
 } from '../run-context.js';
 
+// k1 and b for the BM25 sensitivity check (not tuning: every value is reported).
+export const BM25_K1 = [0.9, 1.2, 1.6];
+export const BM25_B = [0.4, 0.75, 0.9];
+
+function bm25GridNames(prefix: 'bm25' | 'bm25-filtered'): string[] {
+  return BM25_K1.flatMap((k1) =>
+    BM25_B.filter((b) => !(k1 === 1.2 && b === 0.75)).map(
+      (b) => `${prefix}-k${k1}-b${b}`,
+    ),
+  );
+}
+
 // Baselines, the embedding-model ablation, the three dense engines and the
 // ablation ladder of the production pipeline (each rung adds one component).
 export const SYSTEM_NAMES = [
@@ -59,7 +71,33 @@ export const SYSTEM_NAMES = [
   'bm25-filtered-rerank',
   'qdrant-filtered-rerank',
   'qdrant-hybrid-rerank-nofilter',
+  // Added for the final round (e2, post hoc): the two missing cells of the
+  // 2x2x2 factorial over filters, hybrid search and reranking (qdrant-hnsw is
+  // the cell with none), the Iteration 1 retrieval exactly as it ran, and the
+  // BM25 k1/b sensitivity grid, plain and with the filters (bm25 and
+  // bm25-filtered are k1 = 1.2, b = 0.75).
+  'qdrant-hybrid-nofilter',
+  'qdrant-rerank-nofilter',
+  'qdrant-e5base-it1',
+  ...bm25GridNames('bm25'),
+  ...bm25GridNames('bm25-filtered'),
 ] as const;
+
+// "bm25-k0.9-b0.4" or "bm25-filtered-k0.9-b0.4" → its parameters; any values
+// parse, so bm25-filtered can also run with the grid's values.
+export function parseBm25Name(
+  name: string,
+): { filtered: boolean; k1: number; b: number } | undefined {
+  const m = /^bm25(-filtered)?-k(\d+(?:\.\d+)?)-b(\d+(?:\.\d+)?)$/.exec(name);
+  return m
+    ? { filtered: !!m[1], k1: Number(m[2]), b: Number(m[3]) }
+    : undefined;
+}
+
+// Iteration 1 retrieval (RagService at 717ba41): e5-base-v2, the 15 most
+// similar chunks with cosine >= 0.5, grouped by job, the best 5 jobs, no
+// filters, hybrid search or reranking.
+export const ITERATION1 = { topK: 15, threshold: 0.5, maxJobs: 5 };
 
 export interface EvalRetrieveOptions {
   dataset: string;
@@ -169,27 +207,60 @@ export async function evalRetrieve(
     ]),
   );
 
+  // e5-base-v2 collection and query server (embedding-model ablation and the
+  // Iteration 1 retrieval); one embedder so both systems share query vectors.
+  const ablation = withOverrides(config, {
+    QDRANT_COLLECTION: options.ablationCollection,
+    LOCAL_EMBEDDING_URL: options.ablationEmbedUrl,
+    LOCAL_EMBEDDING_MODEL: 'e5-base-v2',
+  });
+  let e5Embedder: ReturnType<typeof memoizedEmbedder> | undefined;
+  const e5Embed = () => {
+    if (!e5Embedder) {
+      const e5 = new EmbeddingService(ablation, app.get(CACHE_MANAGER));
+      e5Embedder = memoizedEmbedder((text) => e5.embedQuery(text));
+    }
+    return e5Embedder;
+  };
+  const e5Store = () => new QdrantVectorStore(app.get(PgVectorStore), ablation);
+
+  const bm25Variant = (name: string) => {
+    const parsed = parseBm25Name(name);
+    if (!parsed) return undefined;
+    const { filtered, k1, b } = parsed;
+    if (!filtered)
+      return async () =>
+        new Bm25System(await jobs.findAllUnpaged(), name, { k1, b });
+    const pipeline = qdrantPipeline.withBm25(
+      qdrantPipeline.lexicalIndex.withParams({ k1, b }),
+    );
+    return () =>
+      Promise.resolve<RetrievalSystem>(
+        new PipelineSystem(name, pipeline, embed, {
+          hybrid: false,
+          rerank: false,
+          filterFor,
+          lexicalOnly: true,
+          search: ann,
+        }),
+      );
+  };
+
   const factories: Record<string, () => Promise<RetrievalSystem>> = {
     ...variantSystems,
     ilike: () => Promise.resolve(new IlikeSystem(jobs)),
     bm25: async () => new Bm25System(await jobs.findAllUnpaged()),
-    'qdrant-e5base': () => {
-      const ablation = withOverrides(config, {
-        QDRANT_COLLECTION: options.ablationCollection,
-        LOCAL_EMBEDDING_URL: options.ablationEmbedUrl,
-        LOCAL_EMBEDDING_MODEL: 'e5-base-v2',
-      });
-      const e5 = new EmbeddingService(ablation, app.get(CACHE_MANAGER));
-      const store = new QdrantVectorStore(app.get(PgVectorStore), ablation);
-      return Promise.resolve(
-        new DenseSystem(
-          'qdrant-e5base',
-          store,
-          memoizedEmbedder((text) => e5.embedQuery(text)),
-          ann,
-        ),
-      );
-    },
+    'qdrant-e5base': () =>
+      Promise.resolve(
+        new DenseSystem('qdrant-e5base', e5Store(), e5Embed(), ann),
+      ),
+    'qdrant-e5base-it1': () =>
+      Promise.resolve(
+        new DenseSystem('qdrant-e5base-it1', e5Store(), e5Embed(), {
+          ...ann,
+          ...ITERATION1,
+        }),
+      ),
     'pg-exact': () =>
       Promise.resolve(
         new DenseSystem('pg-exact', app.get(PgVectorStore), embed, {
@@ -226,6 +297,14 @@ export async function evalRetrieve(
       pipelineSystem('qdrant-hybrid-rerank-nofilter', true, true, {
         filtered: false,
       }),
+    'qdrant-hybrid-nofilter': () =>
+      pipelineSystem('qdrant-hybrid-nofilter', true, false, {
+        filtered: false,
+      }),
+    'qdrant-rerank-nofilter': () =>
+      pipelineSystem('qdrant-rerank-nofilter', false, true, {
+        filtered: false,
+      }),
   };
 
   // Embed up front so the measured latency is retrieval only.
@@ -235,7 +314,7 @@ export async function evalRetrieve(
   const latencies: string[] = [];
   const runs = new Map<string, Map<string, RetrievedJob[]>>();
   for (const name of [...options.systems, ...variants.map((v) => v.name)]) {
-    const factory = factories[name];
+    const factory = factories[name] ?? bm25Variant(name);
     if (!factory)
       throw new Error(
         `Unknown system "${name}" (known: ${SYSTEM_NAMES.join(', ')})`,

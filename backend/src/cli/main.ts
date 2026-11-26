@@ -9,6 +9,7 @@ import { evalGenerate } from './commands/eval-generate.command.js';
 import { evalJudge } from './commands/eval-judge.command.js';
 import { evalKappaExport } from './commands/eval-kappa-export.command.js';
 import { evalLatency } from './commands/eval-latency.command.js';
+import { evalLoad } from './commands/eval-load.command.js';
 import { evalPool } from './commands/eval-pool.command.js';
 import {
   SYSTEM_NAMES,
@@ -44,15 +45,18 @@ Commands:
       Final judge: --judge-base-url https://api.openai.com/v1 --judge-model gpt-4o.
       Plan B: --judge-provider anthropic --judge-model claude-sonnet-5-5
               --judge-temperature none --judge-thinking between_tools --judge-max-tokens 1024.
-  eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n]
+  eval:generate --dataset <queries.jsonl> [--label name] [--temperature 0] [--delay-ms 2000] [--limit n] [--no-filter]
       Answer the retrieval queries through the RAG path; cache answers, record timings.
+      Ladder rungs: --no-filter and RETRIEVAL_HYBRID / RERANK_ENABLED (recorded in config.json).
   eval:kappa-export --run <run dir> --judgments <judge.jsonl> [--rate 0.2] [--calibration-share 0.25] [--seed 42]
       Blind, stratified sample of judged pairs for manual labeling (Cohen's kappa).
   eval:latency --dataset <queries.jsonl> [--label name] [--warmup 5] [--repetitions 30]
                [--generation-queries 30] [--generation-repetitions 3] [--delay-ms 2000] [--seed 42]
       Per-stage latency of the RAG path with the configured VECTOR_BACKEND.
   eval:aggregation --dataset <queries.jsonl> [--label name] [--delay-ms 2000]
-      Routing accuracy and result rows vs. the reference SQL for aggregation queries.`;
+      Routing accuracy and result rows vs. the reference SQL for aggregation queries.
+  eval:load --dataset <queries.jsonl> [--label name] [--workers 1,2,4,8] [--rounds 3]
+      Throughput and p50/p95 of context building (no LLM) under concurrent requests.`;
 
 // "none" omits the temperature (models that reject sampling parameters).
 function judgeTemperature(value: string): number | null {
@@ -76,6 +80,7 @@ async function main(): Promise<number> {
       recreate: { type: 'boolean', default: false },
       collections: { type: 'string' },
       'dry-run': { type: 'boolean', default: false },
+      'no-filter': { type: 'boolean', default: false },
       'batch-size': { type: 'string', default: '500' },
       queries: { type: 'string', default: '200' },
       k: { type: 'string', default: '10' },
@@ -85,6 +90,8 @@ async function main(): Promise<number> {
       warmup: { type: 'string', default: '5' },
       'generation-queries': { type: 'string', default: '30' },
       'generation-repetitions': { type: 'string', default: '3' },
+      workers: { type: 'string', default: '1,2,4,8' },
+      rounds: { type: 'string', default: '3' },
       dataset: { type: 'string' },
       systems: { type: 'string', default: SYSTEM_NAMES.join(',') },
       depth: { type: 'string', default: '10' },
@@ -214,6 +221,7 @@ async function main(): Promise<number> {
           temperature: Number(values.temperature),
           delayMs: Number(values['delay-ms']),
           limit: values.limit ? Number(values.limit) : undefined,
+          noFilter: values['no-filter'],
         });
         return 0;
       case 'eval:kappa-export':
@@ -236,6 +244,14 @@ async function main(): Promise<number> {
           temperature: Number(values.temperature),
           delayMs: Number(values['delay-ms']),
           seed: Number(values.seed),
+        });
+        return 0;
+      case 'eval:load':
+        await evalLoad(app, {
+          dataset: required(values.dataset, '--dataset'),
+          label: values.label,
+          workers: values.workers.split(',').map(Number),
+          rounds: Number(values.rounds),
         });
         return 0;
       case 'eval:aggregation':

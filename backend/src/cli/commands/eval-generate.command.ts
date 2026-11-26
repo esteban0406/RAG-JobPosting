@@ -1,5 +1,6 @@
 import { Logger } from '@nestjs/common';
 import type { INestApplicationContext } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { createHash } from 'crypto';
 import {
   appendFileSync,
@@ -29,6 +30,8 @@ export interface EvalGenerateOptions {
   temperature: number;
   delayMs: number;
   limit?: number;
+  // Skip the classifier's filters (the ladder's unfiltered rungs).
+  noFilter?: boolean;
 }
 
 interface CachedAnswer {
@@ -54,6 +57,7 @@ export async function evalGenerate(
   const rag = app.get(RagService);
   const llm = app.get(LlmService);
   const store = app.get<VectorStore>(VECTOR_STORE);
+  const config = app.get(ConfigService);
   const classifications = new ClassificationCache(
     app.get(QueryClassifierService),
     llm.modelName,
@@ -83,7 +87,9 @@ export async function evalGenerate(
   const lines: string[] = [];
   let fresh = 0;
   for (const q of queries) {
-    const filter = await classifications.filterFor(q.text);
+    const filter = options.noFilter
+      ? undefined
+      : await classifications.filterFor(q.text);
     const t0 = performance.now();
     const ctx = await rag.buildContext(q.text, filter);
     const contextMs = performance.now() - t0;
@@ -168,6 +174,10 @@ export async function evalGenerate(
     model: llm.modelName,
     classifier: classifications.version,
     vectorBackend: store.backend,
+    // The retrieval configuration behind the contexts (ladder rung).
+    filtered: !options.noFilter,
+    retrievalHybrid: config.get<string>('RETRIEVAL_HYBRID', 'true') === 'true',
+    rerankEnabled: config.get<string>('RERANK_ENABLED', 'true') === 'true',
     queries: queries.length,
     newlyGenerated: fresh,
     ...options,

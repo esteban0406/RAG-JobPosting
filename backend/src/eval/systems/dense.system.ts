@@ -11,6 +11,13 @@ export const DENSE_CHUNK_DEPTH = 50;
 
 export type QueryEmbedder = (query: string) => Promise<number[]>;
 
+export type DenseSystemOptions = Omit<SearchOptions, 'topK'> & {
+  // Chunks to retrieve (default DENSE_CHUNK_DEPTH).
+  topK?: number;
+  // Jobs returned at most, whatever the depth (the legacy pipeline kept 5).
+  maxJobs?: number;
+};
+
 // Dense retrieval through a vector store, ranked into jobs exactly like the
 // production RAG pipeline (best chunk per job).
 export class DenseSystem implements RetrievalSystem {
@@ -18,7 +25,7 @@ export class DenseSystem implements RetrievalSystem {
     readonly name: string,
     private readonly store: VectorStore,
     private readonly embed: QueryEmbedder,
-    private readonly options: Omit<SearchOptions, 'topK'> = {},
+    private readonly options: DenseSystemOptions = {},
   ) {}
 
   async retrieve(query: string, depth: number): Promise<RetrievedJob[]> {
@@ -29,12 +36,10 @@ export class DenseSystem implements RetrievalSystem {
     vector: number[],
     depth: number,
   ): Promise<RetrievedJob[]> {
-    const chunks = await this.store.search(vector, {
-      topK: DENSE_CHUNK_DEPTH,
-      ...this.options,
-    });
+    const { topK = DENSE_CHUNK_DEPTH, maxJobs, ...search } = this.options;
+    const chunks = await this.store.search(vector, { topK, ...search });
     return rankJobsFromChunks(chunks)
-      .slice(0, depth)
+      .slice(0, Math.min(depth, maxJobs ?? depth))
       .map((job) => ({ jobId: job.jobId, score: job.score }));
   }
 }
