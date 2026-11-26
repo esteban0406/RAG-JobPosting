@@ -1,0 +1,223 @@
+{
+  "command": "eval:retrieve",
+  "gitSha": "03f71cd-dirty",
+  "createdAt": "2026-11-26T20:29:32.239Z",
+  "embeddingModel": "multilingual-e5-base",
+  "embeddingServer": {
+    "embeddingModel": "intfloat/multilingual-e5-base",
+    "rerankerModel": "Qwen/Qwen3-Reranker-0.6B",
+    "device": "cuda"
+  },
+  "classifier": "1a83eda83188",
+  "filterExtraction": {
+    "scored": 24,
+    "exact": 22
+  },
+  "constraintCompliance": {
+    "ilike": {
+      "queries": 0,
+      "at5": 0,
+      "at10": 0
+    },
+    "bm25": {
+      "queries": 20,
+      "at5": 0.36,
+      "at10": 0.36500000000000005
+    },
+    "qdrant-e5base": {
+      "queries": 21,
+      "at5": 0.36190476190476195,
+      "at10": 0.3333333333333333
+    },
+    "pg-exact": {
+      "queries": 21,
+      "at5": 0.4,
+      "at10": 0.33809523809523806
+    },
+    "pg-hnsw": {
+      "queries": 21,
+      "at5": 0.4,
+      "at10": 0.33809523809523806
+    },
+    "qdrant-hnsw": {
+      "queries": 21,
+      "at5": 0.4,
+      "at10": 0.35238095238095235
+    },
+    "qdrant-filtered": {
+      "queries": 21,
+      "at5": 0.9333333333333333,
+      "at10": 0.9238095238095237
+    },
+    "qdrant-hybrid": {
+      "queries": 21,
+      "at5": 0.9333333333333333,
+      "at10": 0.9333333333333333
+    },
+    "qdrant-hybrid-rerank": {
+      "queries": 21,
+      "at5": 0.961904761904762,
+      "at10": 0.9428571428571427
+    },
+    "bm25-filtered": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-rerank": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.9400000000000001
+    },
+    "qdrant-filtered-rerank": {
+      "queries": 21,
+      "at5": 0.9428571428571427,
+      "at10": 0.9285714285714286
+    },
+    "qdrant-hybrid-rerank-nofilter": {
+      "queries": 21,
+      "at5": 0.6476190476190478,
+      "at10": 0.5047619047619047
+    },
+    "qdrant-hybrid-nofilter": {
+      "queries": 21,
+      "at5": 0.48571428571428577,
+      "at10": 0.4095238095238095
+    },
+    "qdrant-rerank-nofilter": {
+      "queries": 21,
+      "at5": 0.5904761904761905,
+      "at10": 0.3999999999999999
+    },
+    "qdrant-e5base-it1": {
+      "queries": 21,
+      "at5": 0.36190476190476195,
+      "at10": 0.36190476190476195
+    },
+    "bm25-k0.9-b0.4": {
+      "queries": 20,
+      "at5": 0.38,
+      "at10": 0.39999999999999997
+    },
+    "bm25-k0.9-b0.75": {
+      "queries": 20,
+      "at5": 0.36,
+      "at10": 0.38
+    },
+    "bm25-k0.9-b0.9": {
+      "queries": 20,
+      "at5": 0.32999999999999996,
+      "at10": 0.36
+    },
+    "bm25-k1.2-b0.4": {
+      "queries": 20,
+      "at5": 0.38,
+      "at10": 0.39999999999999997
+    },
+    "bm25-k1.2-b0.9": {
+      "queries": 20,
+      "at5": 0.36,
+      "at10": 0.365
+    },
+    "bm25-k1.6-b0.4": {
+      "queries": 20,
+      "at5": 0.41,
+      "at10": 0.395
+    },
+    "bm25-k1.6-b0.75": {
+      "queries": 20,
+      "at5": 0.37,
+      "at10": 0.37
+    },
+    "bm25-k1.6-b0.9": {
+      "queries": 20,
+      "at5": 0.35,
+      "at10": 0.36
+    },
+    "bm25-filtered-k0.9-b0.4": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-k0.9-b0.75": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-k0.9-b0.9": {
+      "queries": 20,
+      "at5": 0.93,
+      "at10": 0.93
+    },
+    "bm25-filtered-k1.2-b0.4": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-k1.2-b0.9": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-k1.6-b0.4": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-k1.6-b0.75": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.93
+    },
+    "bm25-filtered-k1.6-b0.9": {
+      "queries": 20,
+      "at5": 0.9400000000000001,
+      "at10": 0.9349999999999999
+    }
+  },
+  "corpus": {
+    "jobs": 1068,
+    "chunks": 4013
+  },
+  "queries": 85,
+  "dataset": "../evaluation/datasets/queries.v2.draft.jsonl",
+  "systems": [
+    "ilike",
+    "bm25",
+    "qdrant-e5base",
+    "pg-exact",
+    "pg-hnsw",
+    "qdrant-hnsw",
+    "qdrant-filtered",
+    "qdrant-hybrid",
+    "qdrant-hybrid-rerank",
+    "bm25-filtered",
+    "bm25-filtered-rerank",
+    "qdrant-filtered-rerank",
+    "qdrant-hybrid-rerank-nofilter",
+    "qdrant-hybrid-nofilter",
+    "qdrant-rerank-nofilter",
+    "qdrant-e5base-it1",
+    "bm25-k0.9-b0.4",
+    "bm25-k0.9-b0.75",
+    "bm25-k0.9-b0.9",
+    "bm25-k1.2-b0.4",
+    "bm25-k1.2-b0.9",
+    "bm25-k1.6-b0.4",
+    "bm25-k1.6-b0.75",
+    "bm25-k1.6-b0.9",
+    "bm25-filtered-k0.9-b0.4",
+    "bm25-filtered-k0.9-b0.75",
+    "bm25-filtered-k0.9-b0.9",
+    "bm25-filtered-k1.2-b0.4",
+    "bm25-filtered-k1.2-b0.9",
+    "bm25-filtered-k1.6-b0.4",
+    "bm25-filtered-k1.6-b0.75",
+    "bm25-filtered-k1.6-b0.9"
+  ],
+  "depth": 10,
+  "efSearch": 40,
+  "label": "test-e2",
+  "ablationCollection": "eval_job_chunks_e5base",
+  "ablationEmbedUrl": "http://localhost:8001"
+}

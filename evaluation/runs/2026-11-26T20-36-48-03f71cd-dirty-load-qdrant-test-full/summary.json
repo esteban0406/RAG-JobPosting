@@ -1,0 +1,40 @@
+{
+  "levels": [
+    {
+      "workers": 1,
+      "requests": 255,
+      "emptyContexts": 6,
+      "wallMs": 205085.777847,
+      "queriesPerSecond": 1.2433821724597474,
+      "p50Ms": 810.2117969999963,
+      "p95Ms": 873.0063715999975
+    },
+    {
+      "workers": 2,
+      "requests": 255,
+      "emptyContexts": 6,
+      "wallMs": 197268.29436399997,
+      "queriesPerSecond": 1.2926557753344454,
+      "p50Ms": 1551.3570640000398,
+      "p95Ms": 1673.9135330000136
+    },
+    {
+      "workers": 4,
+      "requests": 255,
+      "emptyContexts": 6,
+      "wallMs": 196690.65529699996,
+      "queriesPerSecond": 1.2964520333462402,
+      "p50Ms": 3097.3156289999606,
+      "p95Ms": 3789.5659304000437
+    },
+    {
+      "workers": 8,
+      "requests": 255,
+      "emptyContexts": 6,
+      "wallMs": 197520.29098399996,
+      "queriesPerSecond": 1.2910066035729775,
+      "p50Ms": 6194.642448000028,
+      "p95Ms": 6932.362220800027
+    }
+  ]
+}

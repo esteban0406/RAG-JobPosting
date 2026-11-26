@@ -1,0 +1,12 @@
+{
+  "judgments": "evaluation/judgments/api.openai.com_gpt-6-sol_reasoning_none.jsonl",
+  "kappa_run": "evaluation/runs/2026-10-14T19-15-49-565eff3-retrieve-test-full",
+  "validation": {
+    "pairs": 298,
+    "needs": 60
+  },
+  "all": {
+    "pairs": 401,
+    "needs": 60
+  }
+}
